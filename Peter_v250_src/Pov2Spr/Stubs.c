@@ -1,11 +1,11 @@
 
 /***************************************************************************\
 *																			*
-*								Doplòky jádra								*
+*								Doplňky jádra								*
 *																			*
 \***************************************************************************/
 
-// Zde jsou doplòky vyžadované pøekladaèem z jádra C++
+// Zde jsou doplňky vyžadované překladačem z jádra C++
 // POZOR - tento soubor musí zachovat jméno STUB.C !!!!
 
 int _fltused = 0x9875;
@@ -17,10 +17,10 @@ int* _errno() { return &errno; };
 //int _except_list;
 //int __CxxFrameHandler = 0;
 
-// øízení korekcí chyb procesoru
+// řízení korekcí chyb procesoru
 int _adjust_fdiv = 0;		// 1 = korigovat chyby instrukcí Pentia
 
-// nevolat funkci pøi inicializaci programu - je to destruktor 
+// nevolat funkci při inicializaci programu - je to destruktor 
 //int atexit(void(*fnc())){ /*fnc();*/ fnc; return 0; };
 
 int atexit(void*(__cdecl *fnc)())
@@ -67,7 +67,7 @@ char __decimal_point = '.';
 
 int __mb_cur_max = 2;
 
-// urèení typu znaku:
+// určení typu znaku:
 // -----------------
 //	_UPPER	0x01
 //	_LOWER	0x02

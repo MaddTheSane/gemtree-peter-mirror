@@ -1,11 +1,11 @@
 
 /***************************************************************************\
 *																			*
-*								Doplòky jádra								*
+*								Doplňky jádra								*
 *																			*
 \***************************************************************************/
 
-// Zde jsou doplòky vyžadované pøekladaèem z jádra C++
+// Zde jsou doplňky vyžadované překladačem z jádra C++
 // POZOR - tento soubor musí zachovat jméno STUB.C !!!!
 
 #pragma warning ( disable: 4100)		// hlášení - nepoužitý formální parametr
@@ -120,10 +120,10 @@ EXCEPTION_DISPOSITION __cdecl _except_handler3 (
 #endif // _M_IX86
 */
 
-// øízení korekcí chyb procesoru
+// řízení korekcí chyb procesoru
 int _adjust_fdiv = 0;		// 1 = korigovat chyby instrukcí Pentia
 
-// nevolat funkci pøi inicializaci programu - je to destruktor 
+// nevolat funkci při inicializaci programu - je to destruktor 
 int atexit(void*(__cdecl *fnc)())
 {
 	return (fnc == (void*)0) ? -1 : 0;

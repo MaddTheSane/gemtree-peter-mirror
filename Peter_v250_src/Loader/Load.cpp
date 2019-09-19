@@ -7,12 +7,12 @@
 *																			*
 \***************************************************************************/
 
-// zdrojový buffer globálních objektù
+// zdrojový buffer globálních objektů
 	int			BufObjN;
 	PETPROG*	BufObj;
 	PETPROG2*	BufObj2;
 
-// zdrojový buffer lokálních objektù
+// zdrojový buffer lokálních objektů
 	int			BufLocN;
 	PETPROG*	BufLoc;
 	PETPROG2*	BufLoc2;
@@ -23,7 +23,7 @@
 	PETPROG2*	BufEdi2;
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní adresy zaèátku dat bufferu
+// zjištění adresy začátku dat bufferu
 
 BYTE* BufAdr(int buf)
 {
@@ -41,7 +41,7 @@ BYTE* BufAdr(int buf)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmapování programového bufferu (naplnìní doplòujícího bufferu)
+// zmapování programového bufferu (naplnění doplňujícího bufferu)
 
 void LoadProg(PETPROG* prog, PETPROG2* prog2, int num)
 {
@@ -49,27 +49,27 @@ void LoadProg(PETPROG* prog, PETPROG2* prog2, int num)
 
 	PETPROG2* bufprog2 = prog2;
 
-// buffer indexù rodièù
+// buffer indexů rodičů
 	CBufInt	parent(num);
 	parent[0] = -1;
 
-// pøíznaky, že bude další položka stejné hladiny
+// příznaky, že bude další položka stejné hladiny
 	CBufBool next(num);
 
-// buffer indexù k úschovì poètu položek
+// buffer indexů k úschově počtu položek
 	CBufInt items(num);
 
-// ukazatel hloubky vnoøení
+// ukazatel hloubky vnoření
 	int level = 0;
 
 // ukazatel indexu položky
 	int index = 0;
 
-// cyklus pøes všechny položky
+// cyklus přes všechny položky
 	for (; num > 0; num--)
 	{
 
-// nastavení rodièe, inicializace parametrù
+// nastavení rodiče, inicializace parametrů
 		prog2->Parent = parent[level];
 		prog2->Items = 1;
 		prog2->Data = prog->DatIndex;
@@ -78,10 +78,10 @@ void LoadProg(PETPROG* prog, PETPROG2* prog2, int num)
 		prog2->LocalList = -1;
 		prog2->Funkce = -1;
 
-// úschova pøíznaku další položky
+// úschova příznaku další položky
 		next[level] = ((prog->Param & PETPROG_NEXT) != 0);
 
-// vnoøení na potomka
+// vnoření na potomka
 		if (prog->Param & PETPROG_CHILDS)
 		{
 			items[level] = index;
@@ -89,7 +89,7 @@ void LoadProg(PETPROG* prog, PETPROG2* prog2, int num)
 			parent[level] = index;
 		}
 
-// snížení èítaèe rodièù
+// snížení čítače rodičů
 		else
 		{
 			while (!next[level] && (level > 0))
@@ -100,7 +100,7 @@ void LoadProg(PETPROG* prog, PETPROG2* prog2, int num)
 			}
 		}
 
-// pøíprava pro další položku
+// příprava pro další položku
 		index++;
 		prog++;
 		prog2++;
@@ -110,17 +110,17 @@ void LoadProg(PETPROG* prog, PETPROG2* prog2, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textové konstanty (ukazatelé ukazují na položku konstanty)
+// načtení textové konstanty (ukazatelé ukazují na položku konstanty)
 
 double LoadNum(PETPROG* prog, PETPROG2* prog2)
 {
 // úschova indexu jména položky
 	int name = prog->Name;
 
-// pøíprava støadaèe výsledku
+// příprava střadače výsledku
 	CString txt;
 
-// cyklus pøes všechny potomky prvku
+// cyklus přes všechny potomky prvku
 	for (int i = prog2->Items - 1; i > 0; i--)
 	{
 
@@ -176,7 +176,7 @@ double LoadNum(PETPROG* prog, PETPROG2* prog2)
 		}
 	}
 
-// pokud nebylo nic naèteno, použije se text jména položky
+// pokud nebylo nic načteno, použije se text jména položky
 	if (txt.IsEmpty())
 	{
 		txt = Text.Get(name);
@@ -188,36 +188,36 @@ double LoadNum(PETPROG* prog, PETPROG2* prog2)
 		txt += _T('1');
 	}
 
-// naètení èísla
+// načtení čísla
 	return Double(txt);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmapování seznamù
+// zmapování seznamů
 
 void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 {
-// lokální promìnné
-	int	i;					// èítaè položek ve vìtvi seznamu
+// lokální proměnné
+	int	i;					// čítač položek ve větvi seznamu
 	int size;				// velikost seznamu
-	double n;				// naètené èíslo
-	int olddata;			// pùvodní index dat
+	double n;				// načtené číslo
+	int olddata;			// původní index dat
 	PETPROG* prg;			// ukazatel položek
 	PETPROG2* prg2;			// ukazatel položek
-	int list;				// index vytvoøeného seznamu
-	LISTDATA* plist;		// adresa vytvoøeného seznamu
+	int list;				// index vytvořeného seznamu
+	LISTDATA* plist;		// adresa vytvořeného seznamu
 
 // ukazatel indexu položky
 	int index = 0;
 
-// cyklus pøes všechny položky
+// cyklus přes všechny položky
 	for (; num > 0; num--)
 	{
 
 // test, zda je seznam
 		if ((prog[index].Func == IDF_LIST - IDF) &&							// je to seznam?
-			(prog2[index].List < 0) &&										// není vnoøený?
+			(prog2[index].List < 0) &&										// není vnořený?
 			((prog[index].Param & (PETPROG_OFF | PETPROG_OFF_DEP)) == 0))	// není vypnutý?
 		{
 
@@ -225,13 +225,13 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 			prg = prog + index;
 			prg2 = prog2 + index;
 
-// vytvoøení seznamu
-			list = List.New();								// vytvoøení seznamu
+// vytvoření seznamu
+			list = List.New();								// vytvoření seznamu
 			prg2->List = list;								// úschova indexu seznamu
 			plist = &List[list];							// adresa seznamu
 
 // nalezení velikosti seznamu
-			size = 1;										// pøednastavení pro pøípad neúspìchu
+			size = 1;										// přednastavení pro případ neúspěchu
 			for (i = prg2->Items - 1; i > 0; i--)
 			{
 
@@ -239,12 +239,12 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 				prg++;
 				prg2++;
 
-// naètení rozmìru seznamu
+// načtení rozměru seznamu
 				if (prg->Func == IDF_LIST_SIZE - IDF)		// je to velikost seznamu?
 				{
-					n = LoadNum(prg, prg2);					// naètení velikosti seznamu
+					n = LoadNum(prg, prg2);					// načtení velikosti seznamu
 					if (n < 1) n = 1;						// minimální velikost seznamu
-					if (n > 0x7fffffff) n = 0x7fffffff;		// maximální èíslo int
+					if (n > 0x7fffffff) n = 0x7fffffff;		// maximální číslo int
 					size = (int)(n + 0.5);					// velikost seznamu
 // 040331 - odstaveno na radu MIN	if (size > 0x100000) size = 0x100000;	// maximální velikost seznamu
 					plist->Size = size;						// úschova velikosti seznamu
@@ -256,7 +256,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 			prg = prog + index;
 			prg2 = prog2 + index;
 
-// projítí všech potomkù
+// projítí všech potomků
 			for (i = prg2->Items - 1; i > 0; i--)
 			{
 
@@ -272,7 +272,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 				switch (prg->Func)
 				{
 
-// naètení indexu seznamu
+// načtení indexu seznamu
 				case IDF_LIST_INDEX - IDF:
 					n = Real.Get(olddata);
 					if (n >= 0)
@@ -286,7 +286,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					if (plist->Index < 0) plist->Index += size;
 					break;
 
-// naètení automatické inkrementace seznamu
+// načtení automatické inkrementace seznamu
 				case IDF_LIST_AUTO - IDF:
 					n = Real.Get(olddata);
 					plist->Auto = Round(n);
@@ -294,7 +294,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 //					if (plist->Auto <= -size) plist->Auto = -(size-1);
 					break;
 
-// rozmnožení èiselné promìnné
+// rozmnožení čiselné proměnné
 				case IDF_REAL - IDF:
 					if ((size > 1) && global)
 					{
@@ -302,7 +302,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení textové promìnné
+// rozmnožení textové proměnné
 				case IDF_TEXT - IDF:
 					if ((size > 1) && global)
 					{
@@ -310,7 +310,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení logické promìnné
+// rozmnožení logické proměnné
 				case IDF_BOOL - IDF:
 					if ((size > 1) && global)
 					{
@@ -318,7 +318,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení promìnné ikony
+// rozmnožení proměnné ikony
 				case IDF_ICON - IDF:
 					if ((size > 1) && global)
 					{
@@ -326,7 +326,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení promìnné plochy
+// rozmnožení proměnné plochy
 				case IDF_MAP - IDF:
 					if ((size > 1) && global)
 					{
@@ -334,7 +334,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení promìnné obrázku
+// rozmnožení proměnné obrázku
 				case IDF_PIC - IDF:
 					if ((size > 1) && global)
 					{
@@ -342,7 +342,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení promìnné sprajtu
+// rozmnožení proměnné sprajtu
 				case IDF_SPRITE - IDF:
 					if ((size > 1) && global)
 					{
@@ -350,7 +350,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení promìnné zvuku
+// rozmnožení proměnné zvuku
 				case IDF_SND - IDF:
 					if ((size > 1) && global)
 					{
@@ -358,7 +358,7 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 					}
 					break;
 
-// rozmnožení promìnné zvuku
+// rozmnožení proměnné zvuku
 				case IDF_MUS - IDF:
 					if ((size > 1) && global)
 					{
@@ -369,28 +369,28 @@ void LoadList(PETPROG* prog, PETPROG2* prog2, int num, bool global)
 			}
 		}
 
-// pøíprava pro další položku
+// příprava pro další položku
 		index++;
 	}
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmapování lokálních objektù
+// zmapování lokálních objektů
 
 void LoadLocal()
 {
-// pøíprava ukazatelù
+// příprava ukazatelů
 	PETPROG* prog = BufLoc;
 	PETPROG2* prog2 = BufLoc2;
 	int index = 0;
 	int i;
 
-// cyklus pøes všechny lokální funkce
+// cyklus přes všechny lokální funkce
 	while (index < BufLocN)
 	{
 
-// pøíprava èítaèù indexu lokální promìnné
+// příprava čítačů indexu lokální proměnné
 		int	loclst = 0;
 		int locnum = 0;
 		int loctxt = 0;
@@ -408,11 +408,11 @@ void LoadLocal()
 		prog += i;
 		prog2 += i;
 
-// cyklus pøes všechny položky shora dolù
+// cyklus přes všechny položky shora dolů
 		for (; i > 0; i--)
 		{
 
-// adresa další (pøedešlé) položky
+// adresa další (předešlé) položky
 			index--;
 			prog--;
 			prog2--;
@@ -424,18 +424,18 @@ void LoadLocal()
 				prog2->LocalList = loclst;
 			}
 
-// test, zda to je promìnná
+// test, zda to je proměnná
 			if (prog2->Data >= 0)
 			{
 
-// pøíprava poètu prvkù promìnné
+// příprava počtu prvků proměnné
 				int n = 1;
 				if (prog2->List >= 0)
 				{
 					n = List[prog2->List].Size;
 				}
 
-// nastavení indexu lokální promìnné
+// nastavení indexu lokální proměnné
 				switch (prog->Func)
 				{
 				case IDF_REAL - IDF:
@@ -486,7 +486,7 @@ void LoadLocal()
 			}
 		}
 
-// aktualizace indexu lokálního seznamu (ukazatel zùstane za koncem vìtve)
+// aktualizace indexu lokálního seznamu (ukazatel zůstane za koncem větve)
 		i = prog2->Items;
 		int j = 0;
 		int locallist = -1;
@@ -514,18 +514,18 @@ void LoadLocal()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmapování sprajtù
+// zmapování sprajtů
 
 void LoadSprite(PETPROG* prog, PETPROG2* prog2, int num)
 {
-// lokální promìnné
-	int i = -1;				// èítaè prvkù sprajtu
+// lokální proměnné
+	int i = -1;				// čítač prvků sprajtu
 	int sprite = -1;		// index sprajtu
 	int local = -1;			// lokální index sprajtu
 	int list = -1;			// seznam
 	int locallist = -1;		// lokální seznam
 
-// cyklus pøes všechny položky
+// cyklus přes všechny položky
 	for (; num > 0; num--)
 	{
 
@@ -549,14 +549,14 @@ void LoadSprite(PETPROG* prog, PETPROG2* prog2, int num)
 			i--;
 		}
 
-// pøíprava pro další položku
+// příprava pro další položku
 		prog++;
 		prog2++;
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení jednoho textu z programu
+// načtení jednoho textu z programu
 
 CString LoadText0()
 {
@@ -586,7 +586,7 @@ CString LoadText0()
 	if (data != NULL)
 	{
 		int n = *(long*)data;					// délka textu
-		data = data + 4;						// pøeskoèení délky textu
+		data = data + 4;						// přeskočení délky textu
 
 		txt.Term();
 
@@ -602,11 +602,11 @@ CString LoadText0()
 		}
 		else
 		{
-			txt.Init(data, n);				// pøidání textu do bufferu
+			txt.Init(data, n);				// přidání textu do bufferu
 		}
 	}
 
-// posun ukazatelù textu
+// posun ukazatelů textu
 	for (lan = 0; lan < JAZYKNUM; lan++)
 	{
 		data = JazykUkaz[lan];
@@ -627,14 +627,14 @@ CString LoadText0()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení programu
+// načtení programu
 
 void Load()
 {
-// lokální promìnné
+// lokální proměnné
 	int i, j, n;
 
-// naètení èísel
+// načtení čísel
 	{
 		double* data = (double*)BufAdr(BufNumID);
 		for (i = PetAdr->piReal.Pocet; i > 0; i--)
@@ -646,9 +646,9 @@ void Load()
 		ASSERT((BYTE*)data - BufAdr(BufNumID) == PetAdr->piReal.Delka);
 	}
 
-// naètení textù
+// načtení textů
 	{
-	// nalezení zaèátkù jazykù
+	// nalezení začátků jazyků
 		int lan;
 		char* data = (char*)BufAdr(BufTxtID);
 		for (int l = PetAdr->piText.Extra2; l > 0; l--)
@@ -672,14 +672,14 @@ void Load()
 		}
 		ASSERT((BYTE*)data - BufAdr(BufTxtID) == PetAdr->piText.Delka);
 
-	// pøíprava ukazatelù jazykù
+	// příprava ukazatelů jazyků
 		for (lan = 0; lan < JAZYKNUM; lan++)
 		{
 			JazykUkaz[lan] = JazykInfo[lan].TextTab;
 		}
 		JazykUkaz0 = 0;
 
-	// naètení textù
+	// načtení textů
 		for (i = PetAdr->piText.Pocet; i > 0; i--)
 		{
 			Text.Add(LoadText0());
@@ -687,7 +687,7 @@ void Load()
 		ASSERT(Text.Num() == PetAdr->piText.Pocet);
 	}
 
-// naètení logických hodnot
+// načtení logických hodnot
 	{
 		char* data = (char*)BufAdr(BufLogID);
 		for (i = PetAdr->piBool.Pocet; i > 0; i--)
@@ -701,7 +701,7 @@ void Load()
 		ASSERT((BYTE*)data - BufAdr(BufLogID) == PetAdr->piBool.Delka);
 	}
 
-// naètení ikon
+// načtení ikon
 	{
 		BYTE* data = (BYTE*)BufAdr(BufIcoID);
 
@@ -722,7 +722,7 @@ void Load()
 		if (Icon.Num() == 0) Icon.New();
 	}
 
-// naètení ploch
+// načtení ploch
 	{
 		MAPPROG* data = (MAPPROG*)BufAdr(BufMapID);
 
@@ -749,7 +749,7 @@ void Load()
 		if (Map.Num() == 0) Map.New(15, 10);
 	}
 
-// naètení obrázkù
+// načtení obrázků
 	{
 		PICPROG* data = (PICPROG*)BufAdr(BufPicID);
 
@@ -784,7 +784,7 @@ void Load()
 		ASSERT((BYTE*)data - BufAdr(BufPicID) == PetAdr->piPic.Delka);
 	}
 
-// naètení sprajtù
+// načtení sprajtů
 	{
 		SPRITEPROG* data = (SPRITEPROG*)BufAdr(BufSprID);
 
@@ -835,7 +835,7 @@ void Load()
 		if (Sprite.Num() == 1) Sprite.New();
 	}
 
-// naètení zvukù
+// načtení zvuků
 	{
 		SOUNDPROG* data = (SOUNDPROG*)BufAdr(BufSndID);
 
@@ -867,7 +867,7 @@ void Load()
 		ASSERT((BYTE*)data - BufAdr(BufSndID) == PetAdr->piSound.Delka);
 	}
 
-// naètení hudby
+// načtení hudby
 	{
 		BYTE* data = (BYTE*)BufAdr(BufMusID);
 
@@ -887,7 +887,7 @@ void Load()
 		ASSERT((BYTE*)data - BufAdr(BufMusID) == PetAdr->piMusic.Delka);
 	}
 
-// pøíprava editoru globálních objektù
+// příprava editoru globálních objektů
 	BufObjN = PetAdr->piGlobal.Pocet;
 	BufObj2 = (PETPROG2*) MemGet(BufObjN*sizeof(PETPROG2));
 	BufObj = (PETPROG*)	BufAdr(BufObjID);
@@ -897,7 +897,7 @@ void Load()
 	TextListEnd = Text.Num();
 	LoadSprite(BufObj, BufObj2, BufObjN);
 
-// pøíprava editoru lokálních objektù
+// příprava editoru lokálních objektů
 	BufLocN = PetAdr->piLocal.Pocet;
 	BufLoc2 = (PETPROG2*) MemGet(BufLocN*sizeof(PETPROG2));
 	BufLoc = (PETPROG*)	BufAdr(BufLocID);
@@ -906,7 +906,7 @@ void Load()
 	LoadLocal();
 	LoadSprite(BufLoc, BufLoc2, BufLocN);
 
-// pøíprava editoru programu
+// příprava editoru programu
 	BufEdiN = PetAdr->piProgram.Pocet;
 	BufEdi2 = (PETPROG2*) MemGet(BufEdiN*sizeof(PETPROG2));
 	BufEdi = (PETPROG*)	BufAdr(BufEdiID);

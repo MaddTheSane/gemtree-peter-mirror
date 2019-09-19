@@ -11,7 +11,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu s plochou (vrací true = operace OK)
+// překlad výrazu s plochou (vrací true = operace OK)
 
 bool _fastcall CompMap(int index)
 {
@@ -24,7 +24,7 @@ bool _fastcall CompMap(int index)
 // kontrola, zda je položka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// větvení podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_MAP:
@@ -93,7 +93,7 @@ bool _fastcall CompMap(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem plochy
+// překlad příkazu s parametrem plochy
 
 bool CompMapPar(int index, PROCCOM func)
 {
@@ -119,7 +119,7 @@ bool CompMapPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem plochy (hledaným podle identifikace)
+// překlad příkazu s podparametrem plochy (hledaným podle identifikace)
 
 void CompMapSubPar(int index, int idf)
 {
@@ -130,12 +130,12 @@ void CompMapSubPar(int index, int idf)
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda má položka nìjaké potomky
+// kontrola, zda má položka nějaké potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus pøes všechny potomky
+// cyklus přes všechny potomky
 		do {
 
 // adresa dalšího potomka
@@ -143,7 +143,7 @@ void CompMapSubPar(int index, int idf)
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledaný prvek - naètení prvku
+// test, zda to je hledaný prvek - načtení prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompMap(index + 1))
@@ -151,7 +151,7 @@ void CompMapSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro pøíští prvek
+// posun pro příští prvek
 			posun = item2->Items;
 
 // dokud je další potomek

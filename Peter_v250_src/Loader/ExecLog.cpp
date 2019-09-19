@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*						Provádìní programu - logický výraz					*
+*						Provádění programu - logický výraz					*
 *																			*
 \***************************************************************************/
 
@@ -24,10 +24,10 @@ bool FBoolFunc()
 // úschova indexu volané funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// úschova indexu proměnné s návratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnných
+// inicializace lokálních proměnných
 	FCommand();
 
 // úschova ukazatele programu
@@ -36,7 +36,7 @@ bool FBoolFunc()
 // nová adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoření
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
@@ -49,13 +49,13 @@ bool FBoolFunc()
 // návrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení požadavku o pøerušení
+// zrušení požadavku o přerušení
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
 // návrat výsledku operace
 	bool result = Bool[Bool.Num() - res];
 
-// zrušení lokálních promìnných
+// zrušení lokálních proměnných
 	FCommand();
 
 	return result;
@@ -64,7 +64,7 @@ bool FBoolFunc()
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								proměnné									*
 *																			*
 \***************************************************************************/
 
@@ -76,7 +76,7 @@ bool FFalse() { return false; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globální promìnná (Data = index)
+// globální proměnná (Data = index)
 
 bool FBoolObj()
 {
@@ -89,14 +89,14 @@ bool FBoolObj()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globalní promìnná v seznamu (Data = index, List = seznam)
+// globalní proměnná v seznamu (Data = index, List = seznam)
 
 bool FBoolObjList()
 {
 // index seznamu
 	int list = ExecItem[-1].List;
 
-// index promìnné, inkrementace indexu seznamu
+// index proměnné, inkrementace indexu seznamu
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
@@ -106,11 +106,11 @@ bool FBoolObjList()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální promìnná (Data = index)
+// lokální proměnná (Data = index)
 
 bool FBoolLoc()
 {
-// index promìnné
+// index proměnné
 	int inx = Bool.Num() - ExecItem[-1].Data;
 
 // data
@@ -119,14 +119,14 @@ bool FBoolLoc()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální promìnná v seznamu (Data = index, List = seznam)
+// lokální proměnná v seznamu (Data = index, List = seznam)
 
 bool FBoolLocList()
 {
 // index seznamu
 	int list = List.Num() - ExecItem[-1].List;
 
-// index promìnné, inkrementace indexu seznamu
+// index proměnné, inkrementace indexu seznamu
 	int inx = Bool.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
@@ -263,31 +263,31 @@ bool FGetSpriteVisLocList()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor EQU - pro 1 prvek (porovná èíslo s nulou)
+// operátor EQU - pro 1 prvek (porovná číslo s nulou)
 
 bool FEqu1() { return FNum() == 0; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor EQU (Data = poèet prvkù - 1)
+// operátor EQU (Data = počet prvků - 1)
 
 bool FEqu()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// načtení prvního čísla
 	double num = FNum();
 
-// cyklus pøes další èísla
+// cyklus přes další čísla
 	for (; i > 0; i--)
 	{
 
-// porovnání dalšího èísla
+// porovnání dalšího čísla
 		if (FNum() != num)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
@@ -297,40 +297,40 @@ bool FEqu()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor NEQU - pro 1 prvek (porovná èíslo s nulou)
+// operátor NEQU - pro 1 prvek (porovná číslo s nulou)
 
 bool FNEqu1() { return FNum() != 0; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor NEQU (Data = poèet prvkù - 1)
+// operátor NEQU (Data = počet prvků - 1)
 
 bool FNEqu()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// načtení prvního čísla
 	double num1 = FNum();
 	double num2;
 
-// cyklus pøes další èísla
+// cyklus přes další čísla
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího èísla
+// načtení dalšího čísla
 		num2 = FNum();
 
-// porovnání dalšího èísla
+// porovnání dalšího čísla
 		if (num2 == num1)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// úschova èísla pro pøíští operaci
+// úschova čísla pro příští operaci
 		num1 = num2;
 	}
 	return true;
@@ -338,40 +338,40 @@ bool FNEqu()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor EQGR - pro 1 prvek (porovná èíslo s nulou)
+// operátor EQGR - pro 1 prvek (porovná číslo s nulou)
 
 bool FEqGr1() { return FNum() >= 0; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor EQGR (Data = poèet prvkù - 1)
+// operátor EQGR (Data = počet prvků - 1)
 
 bool FEqGr()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// načtení prvního čísla
 	double num1 = FNum();
 	double num2;
 
-// cyklus pøes další èísla
+// cyklus přes další čísla
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího èísla
+// načtení dalšího čísla
 		num2 = FNum();
 
-// porovnání dalšího èísla
+// porovnání dalšího čísla
 		if (num1 < num2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// úschova èísla pro pøíští operaci
+// úschova čísla pro příští operaci
 		num1 = num2;
 	}
 	return true;
@@ -379,40 +379,40 @@ bool FEqGr()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor EQLT - pro 1 prvek (porovná èíslo s nulou)
+// operátor EQLT - pro 1 prvek (porovná číslo s nulou)
 
 bool FEqLt1() { return FNum() <= 0; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor EQLT (Data = poèet prvkù - 1)
+// operátor EQLT (Data = počet prvků - 1)
 
 bool FEqLt()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// načtení prvního čísla
 	double num1 = FNum();
 	double num2;
 
-// cyklus pøes další èísla
+// cyklus přes další čísla
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího èísla
+// načtení dalšího čísla
 		num2 = FNum();
 
-// porovnání dalšího èísla
+// porovnání dalšího čísla
 		if (num1 > num2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// úschova èísla pro pøíští operaci
+// úschova čísla pro příští operaci
 		num1 = num2;
 	}
 	return true;
@@ -420,40 +420,40 @@ bool FEqLt()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor GR - pro 1 prvek (porovná èíslo s nulou)
+// operátor GR - pro 1 prvek (porovná číslo s nulou)
 
 bool FGr1() { return FNum() > 0; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor GR (Data = poèet prvkù - 1)
+// operátor GR (Data = počet prvků - 1)
 
 bool FGr()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// načtení prvního čísla
 	double num1 = FNum();
 	double num2;
 
-// cyklus pøes další èísla
+// cyklus přes další čísla
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího èísla
+// načtení dalšího čísla
 		num2 = FNum();
 
-// porovnání dalšího èísla
+// porovnání dalšího čísla
 		if (num1 <= num2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// úschova èísla pro pøíští operaci
+// úschova čísla pro příští operaci
 		num1 = num2;
 	}
 	return true;
@@ -461,40 +461,40 @@ bool FGr()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor LT - pro 1 prvek (porovná èíslo s nulou)
+// operátor LT - pro 1 prvek (porovná číslo s nulou)
 
 bool FLt1() { return FNum() < 0; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor LT (Data = poèet prvkù - 1)
+// operátor LT (Data = počet prvků - 1)
 
 bool FLt()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// načtení prvního čísla
 	double num1 = FNum();
 	double num2;
 
-// cyklus pøes další èísla
+// cyklus přes další čísla
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího èísla
+// načtení dalšího čísla
 		num2 = FNum();
 
-// porovnání dalšího èísla
+// porovnání dalšího čísla
 		if (num1 >= num2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// úschova èísla pro pøíští operaci
+// úschova čísla pro příští operaci
 		num1 = num2;
 	}
 	return true;
@@ -508,20 +508,20 @@ bool FLt()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor AND - pro 1 prvek (jenom vrátí hodnotu beze zmìny)
+// operátor AND - pro 1 prvek (jenom vrátí hodnotu beze změny)
 
 bool FAnd1() { return FBool(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor AND (Data = poèet prvkù - 1)
+// operátor AND (Data = počet prvků - 1)
 
 bool FAnd()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// cyklus pøes všechny prvky
+// cyklus přes všechny prvky
 	for (; i >= 0; i--)
 	{
 
@@ -529,7 +529,7 @@ bool FAnd()
 		if (!FBool())
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 0) ExecItem += ExecItem->Jump;
 			return false;
 		}
@@ -539,14 +539,14 @@ bool FAnd()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor OR (Data = poèet prvkù - 1)
+// operátor OR (Data = počet prvků - 1)
 
 bool FOr()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// cyklus pøes všechny prvky
+// cyklus přes všechny prvky
 	for (; i >= 0; i--)
 	{
 
@@ -554,7 +554,7 @@ bool FOr()
 		if (FBool())
 		{
 
-// vyhovuje - zrychlené ukonèení operace
+// vyhovuje - zrychlené ukončení operace
 			if (i > 0) ExecItem += ExecItem->Jump;
 			return true;
 		}
@@ -564,21 +564,21 @@ bool FOr()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor XOR (Data = poèet prvkù - 1)
+// operátor XOR (Data = počet prvků - 1)
 
 bool FXor()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// støadaè operace
+// střadač operace
 	bool result = false;
 
-// cyklus pøes všechny prvky
+// cyklus přes všechny prvky
 	for (; i >= 0; i--)
 	{
 
-// naètení prvku
+// načtení prvku
 		result ^= FBool();
 	}
 	return result;
@@ -614,35 +614,35 @@ bool FCompEqIco1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání shodnosti ikon (Data = poèet prvkù - 1)
+// porovnání shodnosti ikon (Data = počet prvků - 1)
 
 bool FCompEqIco()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení první ikony
+// načtení první ikony
 	CIcon icon1;
 	FIcon(icon1);
 	CIcon icon2;
 
-// cyklus pøes další ikony
+// cyklus přes další ikony
 	for (; i > 0; i--)
 	{
 
-// naètení další ikony
+// načtení další ikony
 		FIcon(icon2);
 
 // porovnání ikon
 		if (icon1 != icon2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// ikona 2 se uschová pro pøíští použití
+// ikona 2 se uschová pro příští použití
 //		icon1 = icon2;
 	}
 	return true;
@@ -666,35 +666,35 @@ bool FCompEqMap1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání shodnosti ploch (Data = poèet prvkù - 1)
+// porovnání shodnosti ploch (Data = počet prvků - 1)
 
 bool FCompEqMap()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení první plochy
+// načtení první plochy
 	CMap map1;
 	FMap(map1);
 	CMap map2;
 
-// cyklus pøes další plochy
+// cyklus přes další plochy
 	for (; i > 0; i--)
 	{
 
-// naètení další plochy
+// načtení další plochy
 		FMap(map2);
 
 // porovnání ploch
 		if (map1 != map2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// plocha 2 se uschová pro pøíští použití
+// plocha 2 se uschová pro příští použití
 //		map1 = map2;
 	}
 	return true;
@@ -714,35 +714,35 @@ bool FCompEqPic1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání shodnosti obrázkù (Data = poèet prvkù - 1)
+// porovnání shodnosti obrázků (Data = počet prvků - 1)
 
 bool FCompEqPic()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního obrázku
+// načtení prvního obrázku
 	CPicture pic1;
 	FPicture(pic1);
 	CPicture pic2;
 
-// cyklus pøes další obrázky
+// cyklus přes další obrázky
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího obrázku
+// načtení dalšího obrázku
 		FPicture(pic2);
 
-// porovnání obrázkù
+// porovnání obrázků
 		if (pic1 != pic2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// obrázek 2 se uschová pro pøíští použití
+// obrázek 2 se uschová pro příští použití
 //		pic1 = pic2;
 	}
 	return true;
@@ -761,35 +761,35 @@ bool FCompEqSpr1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání shodnosti sprajtù (Data = poèet prvkù - 1)
+// porovnání shodnosti sprajtů (Data = počet prvků - 1)
 
 bool FCompEqSpr()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního sprajtu
+// načtení prvního sprajtu
 	CSprite spr1;
 	FSprite(spr1);
 	CSprite spr2;
 
-// cyklus pøes další sprajty
+// cyklus přes další sprajty
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího sprajtu
+// načtení dalšího sprajtu
 		FSprite(spr2);
 
-// porovnání sprajtù
+// porovnání sprajtů
 		if (spr1 != spr2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// sprajt 2 se uschová pro pøíští použití
+// sprajt 2 se uschová pro příští použití
 //		spr1 = spr2;
 	}
 	return true;
@@ -808,35 +808,35 @@ bool FCompEqSnd1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání shodnosti zvukù (Data = poèet prvkù - 1)
+// porovnání shodnosti zvuků (Data = počet prvků - 1)
 
 bool FCompEqSnd()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního zvuku
+// načtení prvního zvuku
 	CSound snd1;
 	FSound(snd1);
 	CSound snd2;
 
-// cyklus pøes další zvuky
+// cyklus přes další zvuky
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího zvuku
+// načtení dalšího zvuku
 		FSound(snd2);
 
-// porovnání zvukù
+// porovnání zvuků
 		if (snd1 != snd2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// zvuk 2 se uschová pro pøíští použití
+// zvuk 2 se uschová pro příští použití
 //		snd1 = snd2;
 	}
 	return true;
@@ -855,35 +855,35 @@ bool FCompEqMus1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání shodnosti hudeb (Data = poèet prvkù - 1)
+// porovnání shodnosti hudeb (Data = počet prvků - 1)
 
 bool FCompEqMus()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení první hudby
+// načtení první hudby
 	CMusic mus1;
 	FMusic(mus1);
 	CMusic mus2;
 
-// cyklus pøes další hudby
+// cyklus přes další hudby
 	for (; i > 0; i--)
 	{
 
-// naètení další hudby
+// načtení další hudby
 		FMusic(mus2);
 
 // porovnání hudeb
 		if (mus1 != mus2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// hudba 2 se uschová pro pøíští použití
+// hudba 2 se uschová pro příští použití
 //		mus1 = mus2;
 	}
 	return true;
@@ -892,7 +892,7 @@ bool FCompEqMus()
 
 /***************************************************************************\
 *																			*
-*								obsluha textù								*
+*								obsluha textů								*
 *																			*
 \***************************************************************************/
 
@@ -908,35 +908,35 @@ bool FCompEqTxt1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání textù na shodnost (Data = poèet textù - 1)
+// porovnání textů na shodnost (Data = počet textů - 1)
 
 bool FCompEqTxt()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního textu
+// načtení prvního textu
 	CString txt1;
 	FText(txt1);
 	CString txt2;
 
-// cyklus pøes další texty
+// cyklus přes další texty
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího textu
+// načtení dalšího textu
 		FText(txt2);
 
-// porovnání textù
+// porovnání textů
 		if (txt1 != txt2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// text 2 se uschová pro pøíští použití
+// text 2 se uschová pro příští použití
 //		txt1 = txt2;
 	}
 	return true;
@@ -955,35 +955,35 @@ bool FCompGtTxt1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání textù na neshodnost (Data = poèet textù - 1)
+// porovnání textů na neshodnost (Data = počet textů - 1)
 
 bool FCompGtTxt()
 {
-// pøíprava poètu prvkù
+// příprava počtu prvků
 	int i = ExecItem[-1].Data;
 
-// naètení prvního textu
+// načtení prvního textu
 	CString txt1;
 	FText(txt1);
 	CString txt2;
 
-// cyklus pøes další texty
+// cyklus přes další texty
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího textu
+// načtení dalšího textu
 		FText(txt2);
 
-// porovnání textù
+// porovnání textů
 		if (txt1 <= txt2)
 		{
 
-// nevyhovuje - zrychlené ukonèení operace
+// nevyhovuje - zrychlené ukončení operace
 			if (i > 1) ExecItem += ExecItem->Jump;
 			return false;
 		}
 
-// text 2 se uschová pro pøíští použití
+// text 2 se uschová pro příští použití
 		txt1 = txt2;
 	}
 	return true;
@@ -998,21 +998,21 @@ bool FCompGtTxt()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení viditelnosti Petra a Petry
+// načtení viditelnosti Petra a Petry
 
 bool FGetVisible() { return Sprite[0].Visible(); }
 bool FGetVisible2() { return Sprite[1].Visible(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe Petra
+// načtení přepínače Petra
 
 bool _fastcall FGetSwc(DWORD mask)
 {
-// naètení pozice Petra
+// načtení pozice Petra
 	MAPITEM* item = PetrXYMap();
 
-// zjištìní pøepínaèe, je-li platná pozice
+// zjištění přepínače, je-li platná pozice
 	if (item != NULL)
 	{
 		return ((item->Param & mask) != 0);
@@ -1020,21 +1020,21 @@ bool _fastcall FGetSwc(DWORD mask)
 	return false;
 }
 
-bool FGetSwc1() { return FGetSwc(MAP_FLAG1); };		// pøepínaè 1 - Petr
-bool FGetSwc2() { return FGetSwc(MAP_FLAG2); };		// pøepínaè 2 - Petr
-bool FGetSwc3() { return FGetSwc(MAP_FLAG3); };		// pøepínaè 3 - Petr
-bool FGetSwc4() { return FGetSwc(MAP_FLAG4); };		// pøepínaè 4 - Petr
-bool FGetSwc5() { return FGetSwc(MAP_FLAG5); };		// pøepínaè 5 - Petr
+bool FGetSwc1() { return FGetSwc(MAP_FLAG1); };		// přepínač 1 - Petr
+bool FGetSwc2() { return FGetSwc(MAP_FLAG2); };		// přepínač 2 - Petr
+bool FGetSwc3() { return FGetSwc(MAP_FLAG3); };		// přepínač 3 - Petr
+bool FGetSwc4() { return FGetSwc(MAP_FLAG4); };		// přepínač 4 - Petr
+bool FGetSwc5() { return FGetSwc(MAP_FLAG5); };		// přepínač 5 - Petr
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe Petry
+// načtení přepínače Petry
 
 bool _fastcall FGet2Swc(DWORD mask)
 {
-// naètení pozice Petry
+// načtení pozice Petry
 	MAPITEM* item = Petr2XYMap();
 
-// zjištìní pøepínaèe, je-li platná pozice
+// zjištění přepínače, je-li platná pozice
 	if (item != NULL)
 	{
 		return ((item->Param & mask) != 0);
@@ -1042,11 +1042,11 @@ bool _fastcall FGet2Swc(DWORD mask)
 	return false;
 }
 
-bool FGetSwc12() { return FGet2Swc(MAP_FLAG1); };	// pøepínaè 1 - Petra
-bool FGetSwc22() { return FGet2Swc(MAP_FLAG2); };	// pøepínaè 2 - Petra
-bool FGetSwc32() { return FGet2Swc(MAP_FLAG3); };	// pøepínaè 3 - Petra
-bool FGetSwc42() { return FGet2Swc(MAP_FLAG4); };	// pøepínaè 4 - Petra
-bool FGetSwc52() { return FGet2Swc(MAP_FLAG5); };	// pøepínaè 5 - Petra
+bool FGetSwc12() { return FGet2Swc(MAP_FLAG1); };	// přepínač 1 - Petra
+bool FGetSwc22() { return FGet2Swc(MAP_FLAG2); };	// přepínač 2 - Petra
+bool FGetSwc32() { return FGet2Swc(MAP_FLAG3); };	// přepínač 3 - Petra
+bool FGetSwc42() { return FGet2Swc(MAP_FLAG4); };	// přepínač 4 - Petra
+bool FGetSwc52() { return FGet2Swc(MAP_FLAG5); };	// přepínač 5 - Petra
 
 
 /***************************************************************************\
@@ -1060,7 +1060,7 @@ bool FGetSwc52() { return FGet2Swc(MAP_FLAG5); };	// pøepínaè 5 - Petra
 
 bool FKeyTest()
 {
-// naètení kódu klávesy
+// načtení kódu klávesy
 	int klav = FIntR();
 
 // kód klávesy Pause
@@ -1108,19 +1108,19 @@ bool FStatusInsert() { return InsertLock; }
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// test stisku levého tlaèítka myši
+// test stisku levého tlačítka myši
 
 bool FMouseL() { return LMouseDown; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test stisku pravého tlaèítka myši
+// test stisku pravého tlačítka myši
 
 bool FMouseR() { return RMouseDown; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test kliku levým tlaèítkem myši
+// test kliku levým tlačítkem myši
 
 bool FMouseLClick()
 {
@@ -1131,7 +1131,7 @@ bool FMouseLClick()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test kliku pravým tlaèítkem myši
+// test kliku pravým tlačítkem myši
 
 bool FMouseRClick()
 {
@@ -1142,7 +1142,7 @@ bool FMouseRClick()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test dvojkliku levým tlaèítkem myši
+// test dvojkliku levým tlačítkem myši
 
 bool FMouseLDClick()
 {
@@ -1153,7 +1153,7 @@ bool FMouseLDClick()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test dvojkliku pravým tlaèítkem myši
+// test dvojkliku pravým tlačítkem myši
 
 bool FMouseRDClick()
 {
@@ -1168,9 +1168,9 @@ bool FMouseRDClick()
 
 bool FMouseRegion()
 {
-// naètení rozmìrù regionu
-	double x1 = FNum();				// poèátek X
-	double y1 = FNum();				// poèátek Y
+// načtení rozměrů regionu
+	double x1 = FNum();				// počátek X
+	double y1 = FNum();				// počátek Y
 	double x2 = FNum() + x1;		// konec X
 	double y2 = FNum() + y1;		// konec Y
 
@@ -1183,7 +1183,7 @@ bool FMouseRegion()
 
 bool FMouseItem()
 {
-// naètení èísla prvku
+// načtení čísla prvku
 	int id = FIntR();
 
 // test, zda je platný prvek okna
@@ -1191,7 +1191,7 @@ bool FMouseItem()
 	{
 		WINITEM* item = &Win[id];
 
-// pøíprava výšky rodièe
+// příprava výšky rodiče
 		int height;
 		if ((item->Typ == WINITEM_WINDOW) || (item->Typ == WINITEM_WINDOWRO))
 		{
@@ -1202,9 +1202,9 @@ bool FMouseItem()
 			height = Win[item->Parent].ClientHeight;
 		}
 
-// pøíprava rozmìrù regionu
-		double x1 = (double)item->Left/ICONWIDTH;							// poèátek X
-		double y1 = (double)(height - item->Top - item->Height)/ICONHEIGHT;	// poèátek Y
+// příprava rozměrů regionu
+		double x1 = (double)item->Left/ICONWIDTH;							// počátek X
+		double y1 = (double)(height - item->Top - item->Height)/ICONHEIGHT;	// počátek Y
 		double x2 = (double)item->Width/ICONWIDTH + x1;						// konec X
 		double y2 = (double)item->Height/ICONHEIGHT + y1;					// konec Y
 
@@ -1224,7 +1224,7 @@ bool FMouseItem()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// test pøehrávání jakéhokoliv zvuku
+// test přehrávání jakéhokoliv zvuku
 
 bool FSoundTest()
 {
@@ -1233,11 +1233,11 @@ bool FSoundTest()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test pøehrávání konkrétního zvuku
+// test přehrávání konkrétního zvuku
 
 bool FSoundTest1()
 {
-// naètení testovaného zvuku
+// načtení testovaného zvuku
 	CSound sound;
 	FSound(sound);
 
@@ -1260,7 +1260,7 @@ bool FSoundTest1()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøíznak stereo
+// příznak stereo
 
 bool FGetSoundStereo()
 {
@@ -1287,7 +1287,7 @@ bool FSoundTestPause()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test pøehrávání hudby
+// test přehrávání hudby
 
 bool FMusicTest()
 {
@@ -1316,23 +1316,23 @@ bool FMusicTestPause()
 
 bool FCDGetPause()
 {
-// aktualizace údajù o CD
+// aktualizace údajů o CD
 	CDAkt();
 
-// pøíznak pauzy CD
+// příznak pauzy CD
 	return CDPausing;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test pøehrávání CD
+// test přehrávání CD
 
 bool FCDTest()
 {
-// aktualizace údajù o CD
+// aktualizace údajů o CD
 	CDAkt();
 
-// pøíznak pøehrávání CD
+// příznak přehrávání CD
 	return CDPlaing;
 }
 
@@ -1342,38 +1342,38 @@ bool FCDTest()
 
 bool FCDGetEject()
 {
-// aktualizace údajù o CD
+// aktualizace údajů o CD
 	CDAkt();
 
-// pøíznak vysunutí CD
+// příznak vysunutí CD
 	return !CDDiskValid;
 }
 
 
 /***************************************************************************\
 *																			*
-*							obsluha souborù									*
+*							obsluha souborů									*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení souboru
+// vytvoření souboru
 
 bool FBoolFileNew()
 {
-// uzavøení souborù
+// uzavření souborů
 	FileClose();
 
-// naètení jména adresáøe
+// načtení jména adresáře
 	CString jmeno;
 	FFileName(jmeno);
 
-// jméno musí být zadáno a nesmí konèit znakem "\"
+// jméno musí být zadáno a nesmí končit znakem "\"
 	if (jmeno.IsNotEmpty() && (jmeno[jmeno.Length()-1] != '\\'))
 	{
 
-// první pokus o vytvoøení souboru
+// první pokus o vytvoření souboru
 		HANDLE file = ::CreateFile(jmeno, GENERIC_READ | GENERIC_WRITE,
 			FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,
 			FILE_ATTRIBUTE_NORMAL, NULL);
@@ -1393,14 +1393,14 @@ bool FBoolFileNew()
 		else
 		{
 
-// vytvoøení cesty k souboru
+// vytvoření cesty k souboru
 			int prev = jmeno.RevFind('\\');
 			if (prev > 0)
 			{
 				if (CreatePath(jmeno.Left(prev)))
 				{
 
-// druhý pokus o vytvoøení souboru
+// druhý pokus o vytvoření souboru
 					file = ::CreateFile(jmeno, GENERIC_READ | GENERIC_WRITE,
 						FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, CREATE_ALWAYS,
 						FILE_ATTRIBUTE_NORMAL, NULL);
@@ -1422,18 +1422,18 @@ bool FBoolFileNew()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení adresáøe
+// vytvoření adresáře
 
 bool FBoolDirNew()
 {
-// uzavøení souborù
+// uzavření souborů
 	FileClose();
 
-// naètení jména adresáøe
+// načtení jména adresáře
 	CString jmeno;
 	FFileName(jmeno);
 
-// vytvoøení adresáøe
+// vytvoření adresáře
 	if (jmeno.IsEmpty() || !CreatePath(jmeno))
 	{
 		FileError = true;
@@ -1444,18 +1444,18 @@ bool FBoolDirNew()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení souboru/adresáøe
+// zrušení souboru/adresáře
 
 bool FBoolFileDelete()
 {
-// uzavøení souborù
+// uzavření souborů
 	FileClose();
 
-// naètení jména souboru/adresáøe
+// načtení jména souboru/adresáře
 	CString jmeno;
 	FFileName(jmeno);
 
-// zrušení souboru nebo adresáøe
+// zrušení souboru nebo adresáře
 	if (jmeno.IsEmpty() ||
 		(!::DeleteFile(jmeno) &&
 		!::RemoveDirectory(jmeno)))
@@ -1469,11 +1469,11 @@ bool FBoolFileDelete()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test existence disku/souboru/adresáøe
+// test existence disku/souboru/adresáře
 
 bool FFileTest()
 {
-// naètení jména disku/adresáøe/souboru
+// načtení jména disku/adresáře/souboru
 	CString jmeno;
 	FFileName(jmeno);
 
@@ -1481,7 +1481,7 @@ bool FFileTest()
 	int delka = jmeno.Length();
 	if (delka <= 0) return false;
 
-// kontroluje se jenom disk, pøíp. root
+// kontroluje se jenom disk, příp. root
 	if (((delka == 2) && (jmeno[1] == ':')) ||
 		((delka == 3) && (jmeno[1] == ':') && (jmeno[2] == '\\')))
 	{
@@ -1502,7 +1502,7 @@ bool FFileTest()
 			&comp, &syst, name, 20) != FALSE);
 	}
 
-// kontroluje se adresáø/soubor
+// kontroluje se adresář/soubor
 	WIN32_FIND_DATA wfd;
 	HANDLE find = ::FindFirstFile(jmeno, &wfd);
 	if (find == INVALID_HANDLE_VALUE) return false;
@@ -1512,22 +1512,22 @@ bool FFileTest()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie souborù
+// kopie souborů
 
 bool FBoolFileCopy()
 {
-// uzavøení otevøených souborù
+// uzavření otevřených souborů
 	FileClose();
 
-// jména obou souborù musí být platná
+// jména obou souborů musí být platná
 	if (FileRead.IsNotEmpty() && FileWrite.IsNotEmpty())
 	{
 
-// nulování ukazatelù v souborech (kdyby se zmìnily)
+// nulování ukazatelů v souborech (kdyby se změnily)
 		FileReadOff = 0;
 		FileWriteOff = 0;
 
-// provedení kopie souborù
+// provedení kopie souborů
 		if (::CopyFile(FileRead, FileWrite, TRUE)) return true;
 	}
 
@@ -1538,22 +1538,22 @@ bool FBoolFileCopy()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun souborù
+// přesun souborů
 
 bool FBoolFileMove()
 {
-// uzavøení otevøených souborù
+// uzavření otevřených souborů
 	FileClose();
 
-// jména obou souborù musí být platná
+// jména obou souborů musí být platná
 	if (FileRead.IsNotEmpty() && FileWrite.IsNotEmpty())
 	{
 
-// nulování ukazatelù v souborech (kdyby se zmìnily)
+// nulování ukazatelů v souborech (kdyby se změnily)
 		FileReadOff = 0;
 		FileWriteOff = 0;
 
-// provedení pøesunu souborù
+// provedení přesunu souborů
 		if (::MoveFile(FileRead, FileWrite)) return true;
 	}
 
@@ -1564,18 +1564,18 @@ bool FBoolFileMove()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení atributu souboru
+// načtení atributu souboru
 
 bool _fastcall FGetFileAttrib(DWORD attrib)
 {
-// uzavøení otevøených souborù
+// uzavření otevřených souborů
 	FileClose();
 
-// musí být nìjaké jméno souboru
+// musí být nějaké jméno souboru
 	if (FileRead.IsNotEmpty())
 	{
 
-// naètení atributù souboru
+// načtení atributů souboru
 		DWORD atr = ::GetFileAttributes(FileRead);
 		if ((int)atr != -1) return ((atr & attrib) != 0);
 	}
@@ -1596,19 +1596,19 @@ bool FGetFileOFF()	{ return FGetFileAttrib(FILE_ATTRIBUTE_OFFLINE); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení logické hodnoty
+// načtení logické hodnoty
 
 bool FGetFileLogic() { return (FileReadByte() != 0); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// poskytnutí pøíznaku chyby souborù
+// poskytnutí příznaku chyby souborů
 
 bool FGetFileError() { return FileError; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// poskytnutí pøíznaku textu UNICODE
+// poskytnutí příznaku textu UNICODE
 
 bool FGetFileTextUnicode() { return FileTextUnicode; }
 
@@ -1620,19 +1620,19 @@ bool FGetFileTextUnicode() { return FileTextUnicode; }
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe z plochy
+// načtení přepínače z plochy
 
 bool _fastcall FGetMapSwc(DWORD mask)
 {
-// naètení plochy
+// načtení plochy
 	CMap map;
 	FMap(map);
 
-// naètení souøadnic
+// načtení souřadnic
 	int x = FIntR();
 	int y = FIntR();
 
-// pøepínaè na pozici
+// přepínač na pozici
 	if (((DWORD)x < (DWORD)map.Width()) && ((DWORD)y < (DWORD)map.Height()))
 	{
 		return ((map.At(x, y).Param & mask) != 0);
@@ -1640,11 +1640,11 @@ bool _fastcall FGetMapSwc(DWORD mask)
 	return false;
 }
 
-bool FGetMapSwc1() { return FGetMapSwc(MAP_FLAG1); };		// pøepínaè 1
-bool FGetMapSwc2() { return FGetMapSwc(MAP_FLAG2); };		// pøepínaè 2
-bool FGetMapSwc3() { return FGetMapSwc(MAP_FLAG3); };		// pøepínaè 3
-bool FGetMapSwc4() { return FGetMapSwc(MAP_FLAG4); };		// pøepínaè 4
-bool FGetMapSwc5() { return FGetMapSwc(MAP_FLAG5); };		// pøepínaè 5
+bool FGetMapSwc1() { return FGetMapSwc(MAP_FLAG1); };		// přepínač 1
+bool FGetMapSwc2() { return FGetMapSwc(MAP_FLAG2); };		// přepínač 2
+bool FGetMapSwc3() { return FGetMapSwc(MAP_FLAG3); };		// přepínač 3
+bool FGetMapSwc4() { return FGetMapSwc(MAP_FLAG4); };		// přepínač 4
+bool FGetMapSwc5() { return FGetMapSwc(MAP_FLAG5); };		// přepínač 5
 
 
 /***************************************************************************\
@@ -1666,7 +1666,7 @@ bool FGetConsoleOn() { return ConsoleOn; }
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// tlaèítko 1
+// tlačítko 1
 
 bool FJoystick1()
 {
@@ -1677,7 +1677,7 @@ bool FJoystick1()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// tlaèítko 2
+// tlačítko 2
 
 bool FJoystick2()
 {
@@ -1688,7 +1688,7 @@ bool FJoystick2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// tlaèítko 3
+// tlačítko 3
 
 bool FJoystick3()
 {
@@ -1699,7 +1699,7 @@ bool FJoystick3()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// tlaèítko 4
+// tlačítko 4
 
 bool FJoystick4()
 {
@@ -1747,7 +1747,7 @@ bool FGetWindowDisable()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// kliknutí na tlaèítko
+// kliknutí na tlačítko
 
 bool FButtonClick()
 {
@@ -1764,7 +1764,7 @@ bool FButtonClick()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// stav pøepínaèe
+// stav přepínače
 
 bool FGetCheckBoxOn()
 {
@@ -1791,7 +1791,7 @@ bool FGetButton3On()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zvýraznìné písmo
+// zvýrazněné písmo
 
 bool FGetFontBold()
 {
@@ -1806,7 +1806,7 @@ bool FGetFontBold()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// písmo s pevnou rozteèí
+// písmo s pevnou roztečí
 
 bool FGetFontFixed()
 {
@@ -1851,7 +1851,7 @@ bool FGetFontUnder()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeškrtnuté písmo
+// přeškrtnuté písmo
 
 bool FGetFontStrike()
 {
@@ -1866,7 +1866,7 @@ bool FGetFontStrike()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// patièkové písmo
+// patičkové písmo
 
 bool FGetFontSerif()
 {
@@ -1889,7 +1889,7 @@ bool FGetFullScreen()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe rámeèku okna
+// načtení přepínače rámečku okna
 
 bool FGetWindowFrame()
 {
@@ -1904,7 +1904,7 @@ bool FGetWindowFrame()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe nadpisu okna
+// načtení přepínače nadpisu okna
 
 bool FGetWindowCaption()
 {
@@ -1919,7 +1919,7 @@ bool FGetWindowCaption()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe okna vždy nahoøe
+// načtení přepínače okna vždy nahoře
 
 bool FGetWindowTop()
 {
@@ -1934,7 +1934,7 @@ bool FGetWindowTop()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe okna mìnitelné velikosti
+// načtení přepínače okna měnitelné velikosti
 
 bool FGetWindowSize()
 {
@@ -1949,7 +1949,7 @@ bool FGetWindowSize()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// požadavek o uzavøení okna
+// požadavek o uzavření okna
 
 bool FGetWindowMayClose()
 {
@@ -1959,7 +1959,7 @@ bool FGetWindowMayClose()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní maximalizace okna
+// zjištění maximalizace okna
 
 bool FGetWindowMaxim()
 {
@@ -1967,7 +1967,7 @@ bool FGetWindowMaxim()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní minimalizace okna
+// zjištění minimalizace okna
 
 bool FGetWindowMinim()
 {
@@ -1984,7 +1984,7 @@ bool FGetWindowMinim()
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 1
+// zjištění přepínače hry 1
 
 bool FGetGameL1()
 {
@@ -1992,7 +1992,7 @@ bool FGetGameL1()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 2
+// zjištění přepínače hry 2
 
 bool FGetGameL2()
 {
@@ -2000,7 +2000,7 @@ bool FGetGameL2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 3
+// zjištění přepínače hry 3
 
 bool FGetGameL3()
 {
@@ -2008,7 +2008,7 @@ bool FGetGameL3()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 4
+// zjištění přepínače hry 4
 
 bool FGetGameL4()
 {
@@ -2016,7 +2016,7 @@ bool FGetGameL4()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 5
+// zjištění přepínače hry 5
 
 bool FGetGameL5()
 {
@@ -2024,7 +2024,7 @@ bool FGetGameL5()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 6
+// zjištění přepínače hry 6
 
 bool FGetGameL6()
 {
@@ -2032,7 +2032,7 @@ bool FGetGameL6()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 7
+// zjištění přepínače hry 7
 
 bool FGetGameL7()
 {
@@ -2040,7 +2040,7 @@ bool FGetGameL7()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøepínaèe hry 8
+// zjištění přepínače hry 8
 
 bool FGetGameL8()
 {
@@ -2048,7 +2048,7 @@ bool FGetGameL8()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøíznaku hostitele
+// zjištění příznaku hostitele
 
 bool FGameHost()
 {
@@ -2056,7 +2056,7 @@ bool FGameHost()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøepínaèe z paketu
+// načtení přepínače z paketu
 
 bool FGetGameDataL()
 {
@@ -2072,7 +2072,7 @@ bool FGetGameDataL()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní stopbitù
+// zjištění stopbitů
 
 bool FGetComStop()
 {
@@ -2085,7 +2085,7 @@ bool FGetComStop()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// test pøijatého znaku
+// test přijatého znaku
 
 bool FComIn()
 {
@@ -2105,7 +2105,7 @@ bool FComIn()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// test povolení vysílání, protìjšek je pøipraven pøijímat data (signál CTS)
+// test povolení vysílání, protějšek je připraven přijímat data (signál CTS)
 
 bool FGetComSend()
 {
@@ -2124,7 +2124,7 @@ bool FGetComSend()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// test povolení pøíjmu, data vysílaná od protìjšku jsou platná (signál DSR)
+// test povolení příjmu, data vysílaná od protějšku jsou platná (signál DSR)
 
 bool FGetComReceive()
 {
@@ -2146,7 +2146,7 @@ bool FGetComReceive()
 // --------------------- konec vypnutí pro MINI verzi -------------------
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní módu grafického pozadí
+// zjištění módu grafického pozadí
 
 bool FGetDialogGraph()
 {
@@ -2163,7 +2163,7 @@ bool FGetDialogGraph()
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní nastavení vyplòování ploch
+// zjištění nastavení vyplňování ploch
 
 bool FGetD3DWireframe()
 {
@@ -2171,7 +2171,7 @@ bool FGetD3DWireframe()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní nastavení osvìtlení
+// zjištění nastavení osvětlení
 
 bool FGetD3DLighton()
 {
@@ -2179,7 +2179,7 @@ bool FGetD3DLighton()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní nastavení plynulého stínování
+// zjištění nastavení plynulého stínování
 
 bool FGetD3DShades()
 {
@@ -2187,7 +2187,7 @@ bool FGetD3DShades()
 }
 		   
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní filtrace zmenšených textur
+// zjištění filtrace zmenšených textur
 
 bool FGetD3DMinFilter()
 {
@@ -2195,7 +2195,7 @@ bool FGetD3DMinFilter()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní filtrace zvìtšených textur
+// zjištění filtrace zvětšených textur
 
 bool FGetD3DMagFilter()
 {
@@ -2203,7 +2203,7 @@ bool FGetD3DMagFilter()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní filtrace vzdálených textur
+// zjištění filtrace vzdálených textur
 
 bool FGetD3DMipFilter()
 {
@@ -2211,7 +2211,7 @@ bool FGetD3DMipFilter()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní nastavení vyplòování ploch objektu
+// zjištění nastavení vyplňování ploch objektu
 
 bool FGetD3DOWireframe()
 {
@@ -2223,7 +2223,7 @@ bool FGetD3DOWireframe()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní nastavení osvìtlení objektu
+// zjištění nastavení osvětlení objektu
 
 bool FGetD3DOLighton()
 {
@@ -2235,7 +2235,7 @@ bool FGetD3DOLighton()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní nastavení plynulého stínování objektu
+// zjištění nastavení plynulého stínování objektu
 
 bool FGetD3DOShades()
 {
@@ -2247,7 +2247,7 @@ bool FGetD3DOShades()
 }
 		   
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní filtrace zmenšených textur objektu
+// zjištění filtrace zmenšených textur objektu
 
 bool FGetD3DOMinFilter()
 {
@@ -2259,7 +2259,7 @@ bool FGetD3DOMinFilter()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní filtrace zvìtšených textur objektu
+// zjištění filtrace zvětšených textur objektu
 
 bool FGetD3DOMagFilter()
 {
@@ -2271,7 +2271,7 @@ bool FGetD3DOMagFilter()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní filtrace vzdálených textur objektu
+// zjištění filtrace vzdálených textur objektu
 
 bool FGetD3DOMipFilter()
 {
@@ -2283,7 +2283,7 @@ bool FGetD3DOMipFilter()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// tvoøit horní podstavu
+// tvořit horní podstavu
 
 bool FGetD3DUpper()
 {
@@ -2291,7 +2291,7 @@ bool FGetD3DUpper()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// tvoøit dolní podstavu
+// tvořit dolní podstavu
 
 bool FGetD3DLower()
 {
@@ -2299,7 +2299,7 @@ bool FGetD3DLower()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní viditelnosti objektu Direct3D
+// zjištění viditelnosti objektu Direct3D
 
 bool FGetD3DVisible()
 {
@@ -2311,7 +2311,7 @@ bool FGetD3DVisible()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní hloubkového zápisu
+// zjištění hloubkového zápisu
 
 bool FGetD3DZWrite()
 {
@@ -2323,7 +2323,7 @@ bool FGetD3DZWrite()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní hloubkového tøídìní
+// zjištění hloubkového třídění
 
 bool FGetD3DZSort()
 {
@@ -2351,7 +2351,7 @@ bool FGetActive()
 
 bool FPicPrint() 
 { 
-// naètení obrázku k tisku
+// načtení obrázku k tisku
 	CPicture pic;
 	FPicture(pic);
 	if ((pic.Width() == 0) || (pic.Height() == 0)) return false;
@@ -2382,12 +2382,12 @@ bool FPicPrint()
 	StdBitmapInfo->bmiHeader.biWidth = pic.Width();
 	StdBitmapInfo->bmiHeader.biHeight = pic.Height();
 
-	int horzres = ::GetDeviceCaps(pd.hDC, HORZRES);	// šíøka papíru v tiskových bodech
-	int horzres0 = Round(horzres * 0.95);			// užiteèná šíøka papíru v bodech
+	int horzres = ::GetDeviceCaps(pd.hDC, HORZRES);	// šířka papíru v tiskových bodech
+	int horzres0 = Round(horzres * 0.95);			// užitečná šířka papíru v bodech
 	int vertres = ::GetDeviceCaps(pd.hDC, VERTRES); // výška papíru v tiskových bodech
-	int vertres0 = Round(vertres * 0.95);			// užiteèná výška papíru v bodech
+	int vertres0 = Round(vertres * 0.95);			// užitečná výška papíru v bodech
 
-	int scale = 1;									// mìøítko * 4
+	int scale = 1;									// měřítko * 4
 
 	while ((((pic.Width() * (scale+1) + 2)/4) <= horzres0) &&
 		(((pic.Height() * (scale+1) + 2)/4) <= vertres0))
@@ -2414,7 +2414,7 @@ bool FPicPrint()
 		pic.DataData(),								// data obrázku
 		StdBitmapInfo, DIB_RGB_COLORS, SRCCOPY);
 
-// ukonèení tisku
+// ukončení tisku
 	::EndPage(pd.hDC);
 	::EndDoc(pd.hDC);
 	::DeleteDC(pd.hDC);

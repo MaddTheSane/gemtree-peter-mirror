@@ -5,34 +5,34 @@
 *																			*
 \***************************************************************************/
 
-#define		PROGBUFNUM	6				// poèet programových bufferù
+#define		PROGBUFNUM	6				// počet programových bufferů
 
-// identifikace bufferù (nemìnit poøadí - muselo by se zmìnit pøi ukládání souboru!)
+// identifikace bufferů (neměnit pořadí - muselo by se změnit při ukládání souboru!)
 #define		BufIntID	0				// interní buffer seznamu funkcí (nemá strom)
-#define		BufClsID	1				// buffer tøíd objektù
-#define		BufObjID	2				// buffer globálních objektù
-#define		BufLocID	3				// buffer lokálních objektù
+#define		BufClsID	1				// buffer tříd objektů
+#define		BufObjID	2				// buffer globálních objektů
+#define		BufLocID	3				// buffer lokálních objektů
 #define		BufEdiID	4				// buffer editace
 #define		BufStrID	5				// buffer struktur
 
-// datové buffery (musí odpovídat indexùm v SaveHead !!!!)
-#define		BufNumID	PROGBUFNUM		// (6) buffer èísel
-#define		BufTxtID	PROGBUFNUM+1	// (7) buffer textù
-#define		BufLogID	PROGBUFNUM+2	// (8) buffer logických promìnných
+// datové buffery (musí odpovídat indexům v SaveHead !!!!)
+#define		BufNumID	PROGBUFNUM		// (6) buffer čísel
+#define		BufTxtID	PROGBUFNUM+1	// (7) buffer textů
+#define		BufLogID	PROGBUFNUM+2	// (8) buffer logických proměnných
 #define		BufIcoID	PROGBUFNUM+3	// (9) buffer ikon
 #define		BufMapID	PROGBUFNUM+4	// (10) buffer ploch
-#define		BufPicID	PROGBUFNUM+5	// (11) buffer obrázkù
-#define		BufSprID	PROGBUFNUM+6	// (12) buffer sprajtù
-#define		BufSndID	PROGBUFNUM+7	// (13) buffer zvukù
+#define		BufPicID	PROGBUFNUM+5	// (11) buffer obrázků
+#define		BufSprID	PROGBUFNUM+6	// (12) buffer sprajtů
+#define		BufSndID	PROGBUFNUM+7	// (13) buffer zvuků
 #define		BufMusID	PROGBUFNUM+8	// (14) buffer hudby
 #define		BufPalID	PROGBUFNUM+9	// (15) buffer palet
 
-// Pøi zmìnì zmìnit definice i v Loader !!!!!
+// Při změně změnit definice i v Loader !!!!!
 
 #define	PR_LITE		0x0000		// prvek vypnut pro LITE verzi
 
 /////////////////////////////////////////////////////////////////////////////
-// definice stavù ikon
+// definice stavů ikon
 
 enum STATE {
 	STATE_NONE = 0,
@@ -43,24 +43,24 @@ enum STATE {
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura položky programu - 64 bajtù
+// struktura položky programu - 64 bajtů
 
 typedef struct PROGITEM_
 {
-	int			Func;				// identifikaèní èíslo funkce (= IDF_...)
+	int			Func;				// identifikační číslo funkce (= IDF_...)
 
 	int			SrcMask;			// maska zdrojových vlastností
 	int			DstMask;			// maska cílových vlastností
 	int			Param;				// parametry položky
 
-	int			RefBlok;			// referenèní blok (-1 = není)
-	int			RefIndex;			// referenèní index
+	int			RefBlok;			// referenční blok (-1 = není)
+	int			RefIndex;			// referenční index
 	int			DatBlok;			// datový blok (-1 = není)
 	int			DatIndex;			// datový index
 
-	int			Parent;				// index rodièe (-1 = není)
+	int			Parent;				// index rodiče (-1 = není)
 	int			Next;				// index následující položky (-1 = není)
-	int			Prev;				// index pøedcházející položky (-1 = není)
+	int			Prev;				// index předcházející položky (-1 = není)
 	int			Child;				// index prvniho potomka (-1 = není)
 
 	int			Icon;				// index ikony (-1 = implicitní)
@@ -68,24 +68,24 @@ typedef struct PROGITEM_
 
 	HTREEITEM	HTree;				// handle položky stromu (NULL=není)
 
-	int			Refer;				// èítaè referencí na položku
+	int			Refer;				// čítač referencí na položku
 } PROGITEM;
 
 #define	SIZEOFPROGITEM	(15*sizeof(int) + sizeof(HTREEITEM))	// velikost položky
 
 // zdrojové a cílové vlastnosti:
-#define	PR_COMMAND	0x0001		// je pøíkazem/pøijímá pøíkazy
-#define	PR_EXPRES	0x0002		// je èíselným výrazem/pøijímá èíselný výraz
-#define	PR_TEXT		0x0004		// je textem/pøijímá text
-#define	PR_BOOL		0x0008		// je logickým výrazem/pøijímá logický výraz
-#define	PR_ICON		0x0010		// je ikonou/pøijímá ikonu
-#define	PR_MAP		0x0020		// je plochou/pøijímá plochu
-#define	PR_PIC		0x0040		// je obrázkem/pøijímá obrázky
-#define	PR_SPRITE	0x0080		// je sprajtem/pøijímá sprajty
-#define	PR_SOUND	0x0100		// je zvukem/pøijímá zvuky
-#define	PR_MUSIC	0x0200		// je hudbou/pøijímá hudbu
+#define	PR_COMMAND	0x0001		// je příkazem/přijímá příkazy
+#define	PR_EXPRES	0x0002		// je číselným výrazem/přijímá číselný výraz
+#define	PR_TEXT		0x0004		// je textem/přijímá text
+#define	PR_BOOL		0x0008		// je logickým výrazem/přijímá logický výraz
+#define	PR_ICON		0x0010		// je ikonou/přijímá ikonu
+#define	PR_MAP		0x0020		// je plochou/přijímá plochu
+#define	PR_PIC		0x0040		// je obrázkem/přijímá obrázky
+#define	PR_SPRITE	0x0080		// je sprajtem/přijímá sprajty
+#define	PR_SOUND	0x0100		// je zvukem/přijímá zvuky
+#define	PR_MUSIC	0x0200		// je hudbou/přijímá hudbu
 
-#define	PR_DIGIT	0x0400		// je èíslicí/pøijímá èíslice
+#define	PR_DIGIT	0x0400		// je číslicí/přijímá číslice
 
 #define PR_ALLDATA	(	PR_EXPRES |	\
 						PR_TEXT |	\
@@ -95,7 +95,7 @@ typedef struct PROGITEM_
 						PR_PIC |	\
 						PR_SPRITE |	\
 						PR_SOUND |	\
-						PR_MUSIC)	// všechny možnosti dat (kromì pøíkazu)
+						PR_MUSIC)	// všechny možnosti dat (kromě příkazu)
 
 #define	PR_ALL		(PR_ALLDATA | PR_COMMAND) // všechny možnosti vlastností (funkce, skupina)
 
@@ -105,25 +105,25 @@ typedef struct PROGITEM_
 #define	PR_LOCK_DEP	0x0004		// prvek závisle uzamknut
 #define	PR_OFF		0x0008		// prvek vypnut
 #define	PR_OFF_DEP	0x0010		// prvek závisle vypnut
-#define	PR_ONE		0x0020		// prvek mùže mít jen 1 potomka
-#define	PR_INTERN	0x0040		// zákaz rušení a pøesunu
-#define	PR_NOMOVE	0x0080		// zákaz rušení, pøesunu a kopie
-#define PR_NEW		0x0100		// nová položka (bude pøepsána z cliboard::paste)
-#define PR_SETPAR	0x0200		// je-li možný parametr, je nutnì požadován
-#define PR_PARPAR	0x0400		// má parametr pøi použití jako pøíkaz i jako parametr
+#define	PR_ONE		0x0020		// prvek může mít jen 1 potomka
+#define	PR_INTERN	0x0040		// zákaz rušení a přesunu
+#define	PR_NOMOVE	0x0080		// zákaz rušení, přesunu a kopie
+#define PR_NEW		0x0100		// nová položka (bude přepsána z cliboard::paste)
+#define PR_SETPAR	0x0200		// je-li možný parametr, je nutně požadován
+#define PR_PARPAR	0x0400		// má parametr při použití jako příkaz i jako parametr
 #define PR_CD		0x0800		// je alternativní knihovna
-#define PR_ALTEXT	0x1000		// je alternativní pøípona souboru (JPG, MP3, RMI)
+#define PR_ALTEXT	0x1000		// je alternativní přípona souboru (JPG, MP3, RMI)
 #define PR_CD2		0x2000		// je alternativní knihovna 2
 
-#define PR_NOREFER	0x4000		// nedìlat reference na prvek
+#define PR_NOREFER	0x4000		// nedělat reference na prvek
 
-#define NOREFER		0x4000		// pøíznak v tabulce struktur
+#define NOREFER		0x4000		// příznak v tabulce struktur
 
 /////////////////////////////////////////////////////////////////////////////
-// položka inicializaèní tabulky stromù
+// položka inicializační tabulky stromů
 
 typedef struct INITTREE_ {
-	short	Level;			// hladina (0 = ROOT, NOREFER=nedìlat reference)
+	short	Level;			// hladina (0 = ROOT, NOREFER=nedělat reference)
 	short	Func;			// identifikace funkce (IDF_...)
 } INITTREE;
 
@@ -134,23 +134,23 @@ typedef struct INITTREE_ {
 class CBufProg
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné
+// proměnné
 	PROGITEM*	m_Data;			// buffer dat
-	bool*		m_Valid;		// pøíznaky platnosti položek
-	int			m_Num;			// poèet platných položek v bufferu
+	bool*		m_Valid;		// příznaky platnosti položek
+	int			m_Num;			// počet platných položek v bufferu
 	int			m_Max;			// velikost bufferu (položek)
-	int			m_Next;			// pøíští volná položka (-1 = není)
-	bool		m_Undo;			// požadavek registrace zmìn pro UNDO
+	int			m_Next;			// příští volná položka (-1 = není)
+	bool		m_Undo;			// požadavek registrace změn pro UNDO
 
-	int			m_Redraw;		// èítaè pro vypnutí pøekreslování okna (0=zapnuto)
+	int			m_Redraw;		// čítač pro vypnutí překreslování okna (0=zapnuto)
 	int			m_First;		// index první (ROOT) položky (-1 = není)
-	HWND		m_Tree;			// pøipojený strom (NULL = není)
-	int			m_Disp;			// rodiè zobrazení položek (-1 = vše, -2 = nic)
-	int			m_IconWidth;	// šíøka ikony (0 = není)
+	HWND		m_Tree;			// připojený strom (NULL = není)
+	int			m_Disp;			// rodič zobrazení položek (-1 = vše, -2 = nic)
+	int			m_IconWidth;	// šířka ikony (0 = není)
 	int			m_IconHeight;	// výška ikony (0 = není)
 	int			m_BufID;		// identifikace tohoto bufferu
 	int			m_Def;			// definovaná položka (-1 = není)
@@ -160,28 +160,28 @@ private:
 	DWORD		m_CharSet;		// znaková sada fontu
 	HFONT		m_Font;			// font (NULL=není)
 
-// vytvoøení nových dat (vrací TRUE=operace OK) (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (vrací TRUE=operace OK) (odděleno kvůli lepší optimalizaci)
 	bool NewData();
 
-// vytvoøení nové položky (vrací index položky, pøi chybì vrací -1)
+// vytvoření nové položky (vrací index položky, při chybě vrací -1)
 	int NewItem();
 
-// zrušení položky - zaøazení do volných položek (nekontroluje index)
+// zrušení položky - zařazení do volných položek (nekontroluje index)
 	void _fastcall DelItem(const int index);
 
-// pøíprava indexu stavové ikony (upravit s INDEXTOSTATEIMAGEMASK() !)
+// příprava indexu stavové ikony (upravit s INDEXTOSTATEIMAGEMASK() !)
 	int GetStateImage(int index);
 
 // nové zobrazení položky
 	void DispNewItem(int index);
 
-// zajištìní nových dat u kopírované položky (voláno též z Clipboard::Paste)
+// zajištění nových dat u kopírované položky (voláno též z Clipboard::Paste)
 	void CopyNewData(PROGITEM* item);
 
 // duplikace dat u kopírované položky
 	void CopyDupData(PROGITEM* item);
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -193,7 +193,7 @@ public:
 	void Init();
 	void Term();
 
-// zrušení všech položek v bufferu (ukládání zaène opìt po øadì od zaèátku, nemìní obsah okna)
+// zrušení všech položek v bufferu (ukládání začne opět po řadě od začátku, nemění obsah okna)
 	void DelAll();
 
 // poskytnutí bufferu dat
@@ -202,13 +202,13 @@ public:
 // poskytnutí bufferu platnosti (hodnoty TRUE a FALSE)
 	inline bool* Valid() const { return m_Valid; };
 
-// poskytnutí poètu platných položek v bufferu
+// poskytnutí počtu platných položek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu (vèetnì zrušených položek)
+// poskytnutí velikosti bufferu (včetně zrušených položek)
 	inline int Max() const { return m_Max; };
 
-// nastavení požadavku registrace zmìn pro UNDO
+// nastavení požadavku registrace změn pro UNDO
 	inline void UndoOn() { m_Undo = true; };
 	inline void UndoOff() { m_Undo = false; };
 	inline void UndoSet(const bool undo) { m_Undo = undo; };
@@ -220,7 +220,7 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return (((DWORD)index >= (DWORD)m_Max) || !m_Valid[index]); };
 
-// poskytnutí pøístupu k položce (bez kontroly indexu)
+// poskytnutí přístupu k položce (bez kontroly indexu)
 	inline PROGITEM& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -233,7 +233,7 @@ public:
 	inline const PROGITEM& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// vypnutí/zapnutí pøekreslování (musí být spárováno!)
+// vypnutí/zapnutí překreslování (musí být spárováno!)
 	void RedrawOff();
 	void RedrawOn();
 
@@ -254,14 +254,14 @@ public:
 		}
 	};
 
-// aktualizace fontu v oknì
+// aktualizace fontu v okně
 	void AktFont();
 
-// poskytnutí/nastavení rodièe zobrazení položek (aktualizuje zobrazení, -1 = vše, -2 = nic)
+// poskytnutí/nastavení rodiče zobrazení položek (aktualizuje zobrazení, -1 = vše, -2 = nic)
 	inline int Disp() const { return m_Disp; };
 	void Disp(int disp);
 
-// poskytnutí/nastavení rozmìrù ikon (zoom: TRUE = ikony 32*32)
+// poskytnutí/nastavení rozměrů ikon (zoom: TRUE = ikony 32*32)
 	inline int IconWidth() const { return m_IconWidth; };
 	inline void IconWidth(int width) { m_IconWidth = width; };
 	inline int IconHeight() const { return m_IconHeight; };
@@ -272,7 +272,7 @@ public:
 	inline int BufID() const { return m_BufID; };
 	inline void BufID(int id) { m_BufID = id; };
 
-// poskytnutí/nastavení definované položky (-1 = odznaèení)
+// poskytnutí/nastavení definované položky (-1 = odznačení)
 	inline int Def() const { return m_Def; };
 	void Def(int index);
 
@@ -294,7 +294,7 @@ public:
 // index následující položky ve stromu (cyklicky, -1 = navrátí se první položka)
 	int _fastcall NextItem(int index);
 
-// index pøedcházející položky ve stromu (cyklicky, -1 = navrátí se poslední položka)
+// index předcházející položky ve stromu (cyklicky, -1 = navrátí se poslední položka)
 	int _fastcall PrevItem(int index);
 
 // navrácení položky v UNDO operaci (vrací TRUE=operace OK)
@@ -302,23 +302,23 @@ public:
 	bool UndoIns(const PROGITEM* item, const int index);
 
 // vložení položky bez navázání dat (pro UNDO buffer)
-// vrací index položky, pøi chybì pamìti vrací -1
+// vrací index položky, při chybě paměti vrací -1
 	int Insert0(const PROGITEM* item);
 
 // zrušení položky bez navázání dat (pro UNDO buffer)
 	void Del0(int index);
 
 // vložení položky (vrací index položky) - parametry nemusí být platné
-//  parent = rodiè (-1=ROOT), after=pøedcházející položka 
-//		(-1=první, -2=poslední, -3=abecednì, -4=abecednì s pøedností skupin)
+//  parent = rodič (-1=ROOT), after=předcházející položka 
+//		(-1=první, -2=poslední, -3=abecedně, -4=abecedně s předností skupin)
 //  Položky nastavené funkcí: Parent, Next, Prev, Child, HTree, Refer,
 	int Insert(const PROGITEM* item, int parent, int after);
 
-// naètení inicializaèní tabulky bufferu (starý obsah bufferu se neruší - lze pøidávat)
-// pøi chybì pamìti vrací FALSE
+// načtení inicializační tabulky bufferu (starý obsah bufferu se neruší - lze přidávat)
+// při chybě paměti vrací FALSE
 	bool InitTab(const INITTREE* tab, const int num);
 
-// vytvoøení prázdné položky (vrací index položky, -1=chyba pamìti)
+// vytvoření prázdné položky (vrací index položky, -1=chyba paměti)
 	int New();
 
 // nalezení položky podle handle (-1 = není)
@@ -336,33 +336,33 @@ public:
 // nalezení indexu ikony k položce (-1 = neplatná)
 	int _fastcall GetIcon(const int index);
 
-// poskytnutí poètu referencí pro uživatele
+// poskytnutí počtu referencí pro uživatele
 	int GetRefer(int index);
 
-// test povolení zrušení vìtve z hlediska referencí na položky (TRUE=OK)
+// test povolení zrušení větve z hlediska referencí na položky (TRUE=OK)
 	bool TestRefer(int index);
 
-// pøekreslení ikony ve stromu
+// překreslení ikony ve stromu
 	void ReDispIcon(int icon);
 
-// test èísla funkce, zda je to objekt (s jedineèným jménem)
+// test čísla funkce, zda je to objekt (s jedinečným jménem)
 	bool _fastcall TestObj(int func);
 
 // nalezení objektu daného jména (-1 = nenalezeno) - rozlišuje velká/malá písmena
 //		name ..... hledaný text
-//		over ..... pøeskoèená položka (-1 = není)
-//		first .... první položka (-1 = od zaèátku)
-//		next ..... pøíští položka pro zastavení (-1 = po konec)
+//		over ..... přeskočená položka (-1 = není)
+//		first .... první položka (-1 = od začátku)
+//		next ..... příští položka pro zastavení (-1 = po konec)
 	int FindObj(const CMultiText& name, int over = -1, int first = -1, int next = -1);
 
-// zrušení vìtve stromu (pøi chybì pamìti vrací FALSE - stav není navrácen!)
+// zrušení větve stromu (při chybě paměti vrací FALSE - stav není navrácen!)
 	bool Del(int index);
 
-// pøesun vìtve stromu (vrací nový index položky)
-// (parent: -1 = ROOT, after: -1 = zaèátek, -2 = konec)
+// přesun větve stromu (vrací nový index položky)
+// (parent: -1 = ROOT, after: -1 = začátek, -2 = konec)
 	int Move(int parent, int after, int src);
 
-// kopie vìtve stromu - vrací cílový index položky (pøi chybì vrací <0)
-// (parent: -1 = ROOT, pos: -1 = zaèátek, -2 = konec)
+// kopie větve stromu - vrací cílový index položky (při chybě vrací <0)
+// (parent: -1 = ROOT, pos: -1 = začátek, -2 = konec)
 	int Copy(int parent, int pos, int bufID, int src);
 };

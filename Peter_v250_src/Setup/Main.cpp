@@ -1,10 +1,10 @@
 
 #include "Main.h"
 
-// Upozornìní:
+// Upozornění:
 // -----------
 // Obrázky musí mít všechny shodné palety, nelze proto používat
-// editor VC, obrázky se konvertují pomocí ALCHEMY spuštìním !KONV.BAT
+// editor VC, obrázky se konvertují pomocí ALCHEMY spuštěním !KONV.BAT
 
 /***************************************************************************\
 *																			*
@@ -14,12 +14,12 @@
 
 /*=========================================================================*\
 +																			+
-+						Globální promìnné a konstanty						+
++						Globální proměnné a konstanty						+
 +																			+
 \*=========================================================================*/
 
 //////////////////////////////////////////////////////////////////////////////
-// inicializaèní segmenty CRT (konstruktory a destruktory)
+// inicializační segmenty CRT (konstruktory a destruktory)
 
 typedef void (__cdecl *_PVFV)(void);		// ukazatel na funkci void fnc(void)
 typedef void (*PFV)(void);					// funkce void fnc(void)
@@ -29,25 +29,25 @@ _PVFV	__xc_a[] = { NULL };				// konstruktory C++
 #pragma data_seg(".CRT$XCZ")
 _PVFV	__xc_z[] = { NULL };
 
-#pragma data_seg()							// resetování na bìžnou datovou sekci
+#pragma data_seg()							// resetování na běžnou datovou sekci
 
-#pragma comment(linker, "/MERGE:.CRT=.data")	// pøipojení CRT sekcí do datové sekce
+#pragma comment(linker, "/MERGE:.CRT=.data")	// připojení CRT sekcí do datové sekce
 
 
 //////////////////////////////////////////////////////////////////////////////
-// globální promìnné
+// globální proměnné
 
-TCHAR*		CommandLine = NULL;			// pøíkazový øádek
+TCHAR*		CommandLine = NULL;			// příkazový řádek
 int			VerzeOS;					// verze systému
 OSVERSIONINFO	OSVersionInfo;			// informace o systému
 HINSTANCE	hInstance = NULL;			// instance programu
-int			ScreenWidth;				// šíøka klientské oblasti displeje
+int			ScreenWidth;				// šířka klientské oblasti displeje
 int			ScreenHeight;				// výška klientské oblasti displeje
 
-// všechny obrázky musí mít rozmìr jako plocha okna
+// všechny obrázky musí mít rozměr jako plocha okna
 CPicture	Picture0;					// obrázek 0 (bez volby)
 CPicture	Picture1;					// obrázek 1 (menu 1 - instalovat)
-CPicture	Picture2;					// obrázek 2 (menu 2 - pøidat/debrat)
+CPicture	Picture2;					// obrázek 2 (menu 2 - přidat/debrat)
 CPicture	Picture3;					// obrázek 3 (menu 3 - odinstalovat)
 CPicture	Picture4;					// obrázek 4 (menu 4 - konec)
 CPicture	Shadow;						// stín
@@ -55,51 +55,51 @@ CPicture	InstalOK;					// obrázek instalace OK
 CPicture	DInstalOK;					// obrázek odinstalace OK
 CPicture	DInstal;					// obrázek odinstalace
 
-// pozor - vlajky musí mít šíøku násobky 8 !!!! (kvùli zobrazení)
-CPicture	FlagCZ;						// èeská vlajka
+// pozor - vlajky musí mít šířku násobky 8 !!!! (kvůli zobrazení)
+CPicture	FlagCZ;						// česká vlajka
 CPicture	FlagENG;					// anglická vlajka
 
 int			KeyDisp = 0;				// zobrazený obrázek volby hlavního okna (0 až 4)
 
 int			GemtreeFaze = 0;			// fáze aktivního obrázku
-CPicture	GemLogo;					// obrázek znaku Gemtree (90 obrázkù horizontálnì s rozmìry 40x40)
+CPicture	GemLogo;					// obrázek znaku Gemtree (90 obrázků horizontálně s rozměry 40x40)
 
 BITMAPINFO* StdBitmapInfo;				// standardní záhlaví BMP
 HPALETTE	StdPalette = NULL;			// vlastní logické palety
 
 DWORD		BackColCol = 0;				// barva pozadí
-HBRUSH		BackBrush = NULL;			// štìtec pozadí
+HBRUSH		BackBrush = NULL;			// štětec pozadí
 
-TCHAR		MainFrameClass[] = _T("PeterSetupClass");	// název tøídy hlavního okna
+TCHAR		MainFrameClass[] = _T("PeterSetupClass");	// název třídy hlavního okna
 HWND		MainFrame = NULL;			// hlavní okno aplikace
 
-CText		PeterMainFrameClass(_T("PeterMainFrameClass"));	// název tøídy hlavního okna editoru Petr
-CText		PeterSetupClass(MainFrameClass);	// název tøídy instalátoru Petra
+CText		PeterMainFrameClass(_T("PeterMainFrameClass"));	// název třídy hlavního okna editoru Petr
+CText		PeterSetupClass(MainFrameClass);	// název třídy instalátoru Petra
 
 BOOL		Dither = FALSE;
 
-int			MainFrameWidth = 620;		// šíøka hlavního okna
+int			MainFrameWidth = 620;		// šířka hlavního okna
 int			MainFrameHeight = 420;		// výška hlavního okna
-#define		ClientWidth 608				// šíøka klientské oblasti (musí to být násobek 8 a stejné jako Picture)
+#define		ClientWidth 608				// šířka klientské oblasti (musí to být násobek 8 a stejné jako Picture)
 #define		ClientHeight 384			// výška klientské oblasti (musí být stejné jako Picture)
 BYTE*		ClientBuf = NULL;			// buffer k zobrazení obrázku v klientské oblasti
 
 int			OffX = MOUSEINV;			// offset stínu X (MOUSEINV = neplatné)
 int			OffY = MOUSEINV;			// offset stínu Y (MOUSEINV = neplatné)
 
-int			RelX = 0;					// kurzor myši relativnì v oknì X
-int			RelY = 0;					// kurzor myši relativnì v oknì Y
+int			RelX = 0;					// kurzor myši relativně v okně X
+int			RelY = 0;					// kurzor myši relativně v okně Y
 
-int			Waiting = 0;				// pøíznak zobrazení kurzoru èekání
+int			Waiting = 0;				// příznak zobrazení kurzoru čekání
 
-#define		TimerID 1234				// ID èasovaèe
-int			Timer = 0;					// èasovaè
+#define		TimerID 1234				// ID časovače
+int			Timer = 0;					// časovač
 
 HCURSOR		CurArrow;					// (standardní) šipka
-HCURSOR		CurWait;					// èekání
+HCURSOR		CurWait;					// čekání
 HCURSOR		CurPeter;					// kurzor Petr
 
-int			KeySelect = -1;				// výbìr volby na hlavní stránce klávesnicí (-1 = není)
+int			KeySelect = -1;				// výběr volby na hlavní stránce klávesnicí (-1 = není)
 
 int			AktPage = PAGELANG;			// aktivní stránka instalátoru
 
@@ -112,46 +112,46 @@ int			DiskReq = 0;				// požadované volné místo v MB
 
 GETDISKFREESPACEEX	pGetDiskFreeSpaceEx = NULL;	// funkce GetDiskFreeSpaceEx (NULL=není)
 
-CText		DelExe;						// spuštìní programu pøi ukonèení (Empty=není)
+CText		DelExe;						// spuštění programu při ukončení (Empty=není)
 
-CText	InstPath;						// instalaèní cesta
+CText	InstPath;						// instalační cesta
 
 //////////////////////////////////////////////////////////////////////////////
 // jazyky
 
 #define	JAZYKENG	0					// anglicky
-#define	JAZYKCZ		1					// èesky
+#define	JAZYKCZ		1					// česky
 
 int		Jazyk = JAZYKENG;				// vybraný jazyk
 
 //////////////////////////////////////////////////////////////////////////////
 // prvky okna instalátoru
 
-HIMAGELIST CheckList = NULL;			// obrázky tlaèítek
+HIMAGELIST CheckList = NULL;			// obrázky tlačítek
 
-HWND	ButtonBack = NULL;				// tlaèítko zpìt
-HWND	ButtonNext = NULL;				// tlaèítko další
-HWND	ButtonExit = NULL;				// tlaèítko ukonèení
-HWND	LineWnd = NULL;					// èára nad tlaèítky
-HWND	CheckWnd = NULL;				// okno pøepínaèù
-HWND	CheckNadp = NULL;				// nadpis pøepínaèù
-HWND	SmlouvaWnd = NULL;				// okno licenèní smlouvy
+HWND	ButtonBack = NULL;				// tlačítko zpět
+HWND	ButtonNext = NULL;				// tlačítko další
+HWND	ButtonExit = NULL;				// tlačítko ukončení
+HWND	LineWnd = NULL;					// čára nad tlačítky
+HWND	CheckWnd = NULL;				// okno přepínačů
+HWND	CheckNadp = NULL;				// nadpis přepínačů
+HWND	SmlouvaWnd = NULL;				// okno licenční smlouvy
 HWND	SmlouvaNadp = NULL;				// nadpis nad smlouvou
-HWND	PathWndNadp = NULL;				// instalaèní cesta - nadpis
-HWND	PathWnd = NULL;					// instalaèní cesta
-HWND	ButtonList = NULL;				// tlaèítko Procházet
+HWND	PathWndNadp = NULL;				// instalační cesta - nadpis
+HWND	PathWnd = NULL;					// instalační cesta
+HWND	ButtonList = NULL;				// tlačítko Procházet
 HWND	UserRam = NULL;					// rám uživatele
-HWND	LicTextNadp = NULL;				// licenèní text - nadpis
-HWND	LicTextNum = NULL;				// licenèní text - èíslo
-HWND	LicTextName = NULL;				// licenèní text - jméno
-HWND	LicTextAdr = NULL;				// licenèní text - adresa
-HWND	LicTextMest = NULL;				// licenèní text - mìsto
-HWND	LicTextIco = NULL;				// licenèní text - IÈO
+HWND	LicTextNadp = NULL;				// licenční text - nadpis
+HWND	LicTextNum = NULL;				// licenční text - číslo
+HWND	LicTextName = NULL;				// licenční text - jméno
+HWND	LicTextAdr = NULL;				// licenční text - adresa
+HWND	LicTextMest = NULL;				// licenční text - město
+HWND	LicTextIco = NULL;				// licenční text - IČO
 HWND	DiskReqNadp = NULL;				// požadované volné místo - text
-HWND	DiskReqNum = NULL;				// požadované volné místo - èíslo
+HWND	DiskReqNum = NULL;				// požadované volné místo - číslo
 HWND	DiskFreeNadp = NULL;			// volné místo cílového disku - text
-HWND	DiskFreeNum = NULL;				// volné místo cílového disku - èíslo
-HWND	ButtonCanc = NULL;				// tlaèítko pøerušení
+HWND	DiskFreeNum = NULL;				// volné místo cílového disku - číslo
+HWND	ButtonCanc = NULL;				// tlačítko přerušení
 HWND	IndWnd = NULL;					// indikátor instalace
 HWND	IndWndNadp = NULL;				// indikátor instalace - nadpis
 HWND	IndWndFile = NULL;				// indikátor instalace - soubor
@@ -160,33 +160,33 @@ HWND	IndWnd025 = NULL;				// indikátor - 25 %
 HWND	IndWnd050 = NULL;				// indikátor - 50 %
 HWND	IndWnd075 = NULL;				// indikátor - 75 %
 HWND	IndWnd100 = NULL;				// indikátor - 100 %
-HWND	FlagCZWnd = NULL;				// tlaèítko Èesky
-HWND	FlagENGWnd = NULL;				// tlaèítko Anglicky
+HWND	FlagCZWnd = NULL;				// tlačítko Česky
+HWND	FlagENGWnd = NULL;				// tlačítko Anglicky
 
 enum {
-	IDN_BUTTONBACK = 13000,				// tlaèítko Zpìt
-	IDN_BUTTONNEXT,						// tlaèítko Další
-	IDN_BUTTONEXIT,						// tlaèítko Konec
-	IDN_LINEWND,						// èára nad tlaèítky
-	IDN_CHECKWND,						// okno pøepínaèù
-	IDN_CHECKNADP,						// nadpis pøepínaèù
-	IDN_SMLOUVAWND,						// licenèní smlouva
-	IDN_SMLOUVANADP,					// nadpis licenèní smlouvy
-	IDN_PATHWNDNADP,					// instalaèní cesta - nadpis
-	IDN_PATHWND,						// instalaèní cesta
-	IDN_BUTTONLIST,						// tlaèítko Procházet
+	IDN_BUTTONBACK = 13000,				// tlačítko Zpět
+	IDN_BUTTONNEXT,						// tlačítko Další
+	IDN_BUTTONEXIT,						// tlačítko Konec
+	IDN_LINEWND,						// čára nad tlačítky
+	IDN_CHECKWND,						// okno přepínačů
+	IDN_CHECKNADP,						// nadpis přepínačů
+	IDN_SMLOUVAWND,						// licenční smlouva
+	IDN_SMLOUVANADP,					// nadpis licenční smlouvy
+	IDN_PATHWNDNADP,					// instalační cesta - nadpis
+	IDN_PATHWND,						// instalační cesta
+	IDN_BUTTONLIST,						// tlačítko Procházet
 	IDN_USERRAM,						// rám uživatele
-	IDN_LICTEXTNADP,					// licenèní text - nadpis
-	IDN_LICTEXTNUM,						// licenèní text - èíslo
-	IDN_LICTEXTNAME,					// licenèní text - jméno
-	IDN_LICTEXTADR,						// licenèní text - adresa
-	IDN_LICTEXTMEST,					// licenèní text - mìsto
-	IDN_LICTEXTICO,						// licenèní text - IÈO
+	IDN_LICTEXTNADP,					// licenční text - nadpis
+	IDN_LICTEXTNUM,						// licenční text - číslo
+	IDN_LICTEXTNAME,					// licenční text - jméno
+	IDN_LICTEXTADR,						// licenční text - adresa
+	IDN_LICTEXTMEST,					// licenční text - město
+	IDN_LICTEXTICO,						// licenční text - IČO
 	IDN_DISKREQNADP,					// požadované volné místo - text
-	IDN_DISKREQNUM,						// požadované volné místo - èíslo
+	IDN_DISKREQNUM,						// požadované volné místo - číslo
 	IDN_DISKFREENADP,					// volné místo cílového disku - text
-	IDN_DISKFREENUM,					// volné místo cílového disku - èíslo
-	IDN_BUTTONCANC,						// tlaèítko pøerušení
+	IDN_DISKFREENUM,					// volné místo cílového disku - číslo
+	IDN_BUTTONCANC,						// tlačítko přerušení
 	IDN_INDWND,							// indikátor instalace
 	IDN_INDWNDNADP,						// indikátor instalace - nadpis
 	IDN_INDWNDFILE,						// indikátor instalace - soubor
@@ -195,47 +195,47 @@ enum {
 	IDN_INDWND050,						// indikátor instalace - 50%
 	IDN_INDWND075,						// indikátor instalace - 75%
 	IDN_INDWND100,						// indikátor instalace - 100%
-	IDN_FLAGWNDCZ,						// tlaèítko Èesky
-	IDN_FLAGWNDENG,						// tlaèítko Anglicky
+	IDN_FLAGWNDCZ,						// tlačítko Česky
+	IDN_FLAGWNDENG,						// tlačítko Anglicky
 };
 
 //////////////////////////////////////////////////////////////////////////////
-// pøepínaèe instalovaných èástí
+// přepínače instalovaných částí
 
 CText		ExeFileName;				// jméno tohoto programu SETUP.EXE
 HANDLE		HFile = NULL;				// handle souboru SETUP.EXE
-INSTHEAD	Head;						// záhlaví instalaèních dat
+INSTHEAD	Head;						// záhlaví instalačních dat
 
 BOOL		Uninst = FALSE;				// je odinstalátor Uninstal.exe
 
-int			RawData = 0;				// offset zaèátku dat v souboru
+int			RawData = 0;				// offset začátku dat v souboru
 int			RawSize = 0;				// velikost dat v souboru
-int			DataOff = 0;				// offset zaèátku dat
-int			VirtAdr = 0;				// virtuální adresa k naètení dat
+int			DataOff = 0;				// offset začátku dat
+int			VirtAdr = 0;				// virtuální adresa k načtení dat
 
 int			SizeOff = 0;				// offset velikosti souboru v záhlaví
 int			SizeImageOff = 0;			// offset velikosti obrazu programu v záhlaví
 int			VirtSizeOff = 0;			// offset virtuální velikosti dat v záhlaví
-int			GDIModeOff = 0;				// offset pøíznaku GDI módu programu v záhlaví
+int			GDIModeOff = 0;				// offset příznaku GDI módu programu v záhlaví
 
 #define		PROGMAX		128				// rozsah indikátoru
 int			DataSize = 0;				// výchozí velikost instalovaných dat
 int			DataSizeOK = 0;				// velikost zpracovaných instalovaných dat
-BOOL		Storno = FALSE;				// požadavek pøerušení operace instalace
+BOOL		Storno = FALSE;				// požadavek přerušení operace instalace
 
 typedef struct GROUPITEM_ {
-	LPCTSTR name;						// jméno pøepínaèe volby
-	bool	initcheck;					// inicializaèní pøíznak volby èásti
-	bool	check;						// pøíznak volby èásti
-	bool	instal;						// pøíznak, že prvek je nainstalován
-	BYTE*	files;						// seznam souborù
+	LPCTSTR name;						// jméno přepínače volby
+	bool	initcheck;					// inicializační příznak volby části
+	bool	check;						// příznak volby části
+	bool	instal;						// příznak, že prvek je nainstalován
+	BYTE*	files;						// seznam souborů
 } GROUPITEM;
 
 #ifdef MINI
 GROUPITEM GroupsCZ[GROUPSNUM] =
 {
 	_T("hlavní program aplikace Petr"),		TRUE,	TRUE,	FALSE,	NULL,
-	_T("pøíklady vytvoøených programù"),	TRUE,	TRUE,	FALSE,	NULL,
+	_T("příklady vytvořených programů"),	TRUE,	TRUE,	FALSE,	NULL,
 	_T("ukázkové knihovny"),				TRUE,	TRUE,	FALSE,	NULL,
 };
 
@@ -249,14 +249,14 @@ GROUPITEM GroupsEN[GROUPSNUM] =
 GROUPITEM GroupsCZ[GROUPSNUM] =
 {
 	_T("hlavní program aplikace Petr"),		TRUE,	TRUE,	FALSE,	NULL,
-	_T("pøíklady vytvoøených programù"),	TRUE,	TRUE,	FALSE,	NULL,
-	_T("knihovna pøedmìtù (ikon)"),			TRUE,	TRUE,	FALSE,	NULL,
-	_T("knihovna obrázkù"),					TRUE,	TRUE,	FALSE,	NULL,
-	_T("knihovna sprajtù"),					TRUE,	TRUE,	FALSE,	NULL,
-	_T("knihovna zvukù"),					TRUE,	TRUE,	FALSE,	NULL,
+	_T("příklady vytvořených programů"),	TRUE,	TRUE,	FALSE,	NULL,
+	_T("knihovna předmětů (ikon)"),			TRUE,	TRUE,	FALSE,	NULL,
+	_T("knihovna obrázků"),					TRUE,	TRUE,	FALSE,	NULL,
+	_T("knihovna sprajtů"),					TRUE,	TRUE,	FALSE,	NULL,
+	_T("knihovna zvuků"),					TRUE,	TRUE,	FALSE,	NULL,
 	_T("knihovna hudeb"),					TRUE,	TRUE,	FALSE,	NULL,
 	_T("ostatní knihovny"),					TRUE,	TRUE,	FALSE,	NULL,
-	_T("zdroje pro generování sprajtù"),	TRUE,	TRUE,	FALSE,	NULL,
+	_T("zdroje pro generování sprajtů"),	TRUE,	TRUE,	FALSE,	NULL,
 };
 
 GROUPITEM GroupsEN[GROUPSNUM] =
@@ -328,11 +328,11 @@ int X(int cesky, int anglicky)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// sestavení obrázkù pro aktivní jazyk
+// sestavení obrázků pro aktivní jazyk
 
 void InitPic()
 {
-// pøíprava skupiny pøepínaèù
+// příprava skupiny přepínačů
 	switch (Jazyk)
 	{
 	case JAZYKCZ:
@@ -348,16 +348,16 @@ void InitPic()
 	txt += VerzeTxt;
 	txt.SetWindowText(MainFrame);
 
-// pøíprava prázdného obrázku plochy
+// příprava prázdného obrázku plochy
 	Picture0.Clear(ClientWidth, ClientHeight);
 
-// pøidání obrázku Petra
+// přidání obrázku Petra
 	Picture0.AddCopy(IDN_PETR, 25, 237);
 
-// pøidání titulku
+// přidání titulku
 	Picture0.AddCopy(X(IDN_TITLE_CZ, IDN_TITLE_EN), 170, 230);
 
-// dekódování èísla verze (x = 496, y = 326, šíøka èíslice = 12. výška èíslice = 16)
+// dekódování čísla verze (x = 496, y = 326, šířka číslice = 12. výška číslice = 16)
 #define VERZEX 496
 #define VERZEY 325
 	CPicture pic;
@@ -367,19 +367,19 @@ void InitPic()
 	Picture0.AddCopy(pic, VERZEX+12+8,		VERZEY, 12, 16, VerzeMin*12, 0);
 	Picture0.AddCopy(pic, VERZEX+12+8+12,	VERZEY, 12, 16, VerzeRel*12, 0);
 
-// pøidání linky
+// přidání linky
 	Picture0.AddCopy(IDN_LINKA, 0, 213);
 
-// pøidání textu Gemtree
+// přidání textu Gemtree
 	Picture0.AddCopy(IDN_GEMTREE, 30, 160);
 
-// pøidání adresy
+// přidání adresy
 	Picture0.AddCopy(X(IDN_ADR_CZ, IDN_ADR_EN), 0, 74);
 
-// pøidání telefonu
+// přidání telefonu
 	Picture0.AddCopy(X(IDN_PHONE_CZ, IDN_PHONE_EN), 0, 0);
 
-// pøidání voleb
+// přidání voleb
 #define MENX	230
 #define MENY	22
 #define	MENDY	50
@@ -431,7 +431,7 @@ void InitPic()
 		}
 	}
 
-// vypnuté pøepínaèe
+// vypnuté přepínače
 #define SWCX	193
 #define SWCY	19
 #define SWCDY	50
@@ -440,19 +440,19 @@ void InitPic()
 	Picture0.AddCopy(IDN_SWCOFF, SWCX, SWCY + 2*SWCDY);
 	Picture0.AddCopy(IDN_SWCOFF, SWCX, SWCY + 3*SWCDY);
 
-// kopie do ostatních obrázkù menu
+// kopie do ostatních obrázků menu
 	Picture1 = Picture0;
 	Picture2 = Picture0;
 	Picture3 = Picture0;
 	Picture4 = Picture0;
 
-// pøepínaèe ostatních obrázkù menu
+// přepínače ostatních obrázků menu
 	if (FirstInst) Picture1.AddCopy(IDN_SWCON, SWCX, SWCY + 3*SWCDY);
 	if (!FirstInst) Picture2.AddCopy(IDN_SWCON, SWCX, SWCY + 2*SWCDY);
 	if (!FirstInst) Picture3.AddCopy(IDN_SWCON, SWCX, SWCY + 1*SWCDY);
 	Picture4.AddCopy(IDN_SWCON, SWCX, SWCY + 0*SWCDY);
 
-// volby ostatních obrázkù menu
+// volby ostatních obrázků menu
 	switch (Jazyk)
 	{
 	case JAZYKCZ:
@@ -469,7 +469,7 @@ void InitPic()
 		Picture4.AddCopy(IDN_END1_EN,  MENX, MENY + 0*MENDY);
 	}
 
-// pøidání výbìrových kurzorù
+// přidání výběrových kurzorů
 #define SELX	173
 #define SELY	11
 #define SELDY	50
@@ -478,14 +478,14 @@ void InitPic()
 	Picture3.AddCopy(IDN_SELECT, SELX,	SELY + 1*SELDY);
 	Picture4.AddCopy(IDN_SELECT, SELX,	SELY + 0*SELDY);
 
-// nápovìda k volbám
+// nápověda k volbám
 #define HELPX	473
 	Picture1.AddCopy(X(IDN_SEL1_CZ, IDN_SEL1_EN), HELPX, 157);
 	Picture2.AddCopy(X(IDN_SEL2_CZ, IDN_SEL2_EN), HELPX, 99);
 	Picture3.AddCopy(X(IDN_SEL3_CZ, IDN_SEL3_EN), HELPX, 58);
 	Picture4.AddCopy(X(IDN_SEL4_CZ, IDN_SEL4_EN), HELPX, 13);
 
-// obrázek "Instalace dokonèena"
+// obrázek "Instalace dokončena"
 	InstalOK.Load(IDN_INSOK);
 	InstalOK.AddCopy(X(IDN_INSOK_CZ, IDN_INSOK_EN), 0, 0);
 
@@ -493,14 +493,14 @@ void InitPic()
 	DInstal.Load(IDN_DINST);
 	DInstal.AddCopy(X(IDN_DINST_CZ, IDN_DINST_EN), 0, 0);
 
-// obrázek "Odinstalování dokonèeno"
+// obrázek "Odinstalování dokončeno"
 	DInstalOK.Load(IDN_DINOK);
 	DInstalOK.AddCopy(X(IDN_DINOK_CZ, IDN_DINOK_EN), 0, 0);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// inicializace úseku inicializaèních/terminaèních funkcí
+// inicializace úseku inicializačních/terminačních funkcí
 
 void InitTerm(_PVFV* beg, _PVFV* end)
 {
@@ -514,14 +514,14 @@ void InitTerm(_PVFV* beg, _PVFV* end)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení cesty Program Files
+// načtení cesty Program Files
 
 CText GetProgramFiles()
 {
 // text výsledné hodnoty
 	CText txt;
 
-// otevøení klíèe
+// otevření klíče
 	HKEY hkey;
 	if (::RegOpenKeyEx(
 		HKEY_LOCAL_MACHINE,
@@ -531,7 +531,7 @@ CText GetProgramFiles()
 		&hkey) == ERROR_SUCCESS)
 	{
 
-// naètení hodnoty klíèe
+// načtení hodnoty klíče
 		DWORD type = REG_SZ;
 #define REGBUFSIZE 300
 		BYTE buf[REGBUFSIZE+1];
@@ -554,7 +554,7 @@ CText GetProgramFiles()
 			txt.TrimRight();
 		}
 
-// uzavøení klíèe
+// uzavření klíče
 		::RegCloseKey(hkey);
 	}
 
@@ -596,7 +596,7 @@ BOOL CALLBACK EnumWindowsProc(HWND hwnd, LPARAM lParam)
 
 void WinMainCRTStartup()
 {
-// úschova adresy pøíkazového øádku
+// úschova adresy příkazového řádku
 	CommandLine = ::GetCommandLine();
 
 // úschova verze systému
@@ -610,10 +610,10 @@ void WinMainCRTStartup()
 // nastavení chybového módu
 	::SetErrorMode(::SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX); 
 
-// pøíprava implicitního jazyku
+// příprava implicitního jazyku
 	switch (::GetUserDefaultLangID() & 0xff)
 	{
-	case 5:				// èesky
+	case 5:				// česky
 	case 21:			// polsky
 	case 27:			// slovensky
 		Jazyk = JAZYKCZ;
@@ -623,14 +623,14 @@ void WinMainCRTStartup()
 	ScreenWidth = ::GetSystemMetrics(SM_CXFULLSCREEN);
 	ScreenHeight = ::GetSystemMetrics(SM_CYFULLSCREEN);
 
-// inicializace správce pamìti
+// inicializace správce paměti
 	if (!MemInit()) 
 	{
 MEMERROR:
 		::MessageBox(NULL, 
-			X(_T("Nedostatek pamìti ke spuštìní instalátoru."),
+			X(_T("Nedostatek paměti ke spuštění instalátoru."),
 				_T("Insufficient memory to run installator.")),
-			X(_T("Chyba pamìti"), _T("Memory Error")),
+			X(_T("Chyba paměti"), _T("Memory Error")),
 			MB_OK | MB_ICONSTOP);
 		Exit();
 	}
@@ -659,27 +659,27 @@ MEMERROR:
 	WORD stat;
 	_asm {
 		wait						// synchronizace
-		fnstcw		stat			// uložení øídicího slova
+		fnstcw		stat			// uložení řídicího slova
 		wait						// synchronizace
-		mov			ax,stat			// stav øídicího slova
+		mov			ax,stat			// stav řídicího slova
 		and			ah,not 0xc		// implicitní zaokrouhlování
-		or			ah,3			// pøesnost 64 bitù
-		mov			stat,ax			// nový stav øídicího slova
-		fldcw		stat			// nastavení nového øídicího slova
+		or			ah,3			// přesnost 64 bitů
+		mov			stat,ax			// nový stav řídicího slova
+		fldcw		stat			// nastavení nového řídicího slova
 	}
 #endif
 
-// inicializace obsluhy obrázkù
+// inicializace obsluhy obrázků
 	if (!InitPicture()) goto MEMERROR;
 
-// inicializace globálních objektù
+// inicializace globálních objektů
 	InitTerm(__xc_a, __xc_z);
 
-// test, zda není spuštìn editor Petr (napø. pøi zobrazení knihovny na CD)
+// test, zda není spuštěn editor Petr (např. při zobrazení knihovny na CD)
 	::EnumWindows(EnumWindowsProc, 0);
 	if (PeterRun) Exit();
 
-// upøesnìní jazyku
+// upřesnění jazyku
 //	CText txt = GetReg(ProductKey0, _T("SetupLang"));
 //	if ((txt == "5") || (txt == "21") || (txt == "27")) Jazyk = JAZYKCZ;
 //	if ((txt == "7") || (txt == "9") || (txt == "12")) Jazyk = JAZYKENG;
@@ -688,10 +688,10 @@ MEMERROR:
 	if ((txt == "5") || (txt == "21") || (txt == "27")) Jazyk = JAZYKCZ;
 	if ((txt == "7") || (txt == "9") || (txt == "12")) Jazyk = JAZYKENG;
 
-// naètení knihovny RichEdit
+// načtení knihovny RichEdit
 	::LoadLibrary(_T("RICHED32.DLL"));
 
-// vytvoøení bufferu k zobrazení obrázkù
+// vytvoření bufferu k zobrazení obrázků
 	ClientBuf = (BYTE*)MemGet(ClientWidth * ClientHeight);
 
 // standardní záhlaví bitmap
@@ -705,7 +705,7 @@ MEMERROR:
 				+ StdBitmapInfo->bmiColors[BackCol].rgbBlue*256*256;
 	BackBrush = ::CreateSolidBrush(BackColCol);
 
-// vytvoøení vlastních logických palet
+// vytvoření vlastních logických palet
 	LOGPALETTE* pStdPalette = (LOGPALETTE*) MemGet(sizeof(PALETTEENTRY)*(256-1)+sizeof(LOGPALETTE));
 	MemFill(pStdPalette, sizeof(PALETTEENTRY)*(256-1)+sizeof(LOGPALETTE), 0);
 	pStdPalette->palVersion = 0x300;
@@ -729,25 +729,25 @@ MEMERROR:
 	CurArrow = ::LoadCursor(0, MAKEINTRESOURCE(IDC_ARROW));
 	CurWait = ::LoadCursor(0, MAKEINTRESOURCE(IDC_WAIT));
 
-// zajištìní knihovny rozšíøených ovládacích prvkù
+// zajištění knihovny rozšířených ovládacích prvků
 	::InitCommonControls();
 
-// obrázek checkboxù
+// obrázek checkboxů
 	CheckList = ::ImageList_LoadImage(hInstance, MAKEINTRESOURCE(IDN_CHECKBOX), 20, 10, CLR_NONE, IMAGE_BITMAP, LR_DEFAULTCOLOR);
 
-// vytvoøení hlavního okna aplikace
+// vytvoření hlavního okna aplikace
 	if (!MainFrameCreate()) 
 	{
 //RESERROR:
 		::MessageBox(NULL, 
-			X(_T("Nedostatek systémových prostøedkù ke spuštìní instalátoru."),
+			X(_T("Nedostatek systémových prostředků ke spuštění instalátoru."),
 				_T("Insufficient system resources to run installator.")),
 			X(_T("Chyba systému"), _T("System Error")),
 			MB_OK | MB_ICONSTOP);
 		Exit();
 	}
 
-// naètení cesty
+// načtení cesty
 	InstPath = GetReg(ProductKey, _T("Path"));
 
 // test, zda je první instalace
@@ -755,7 +755,7 @@ MEMERROR:
 	{
 		FirstInst = FALSE;
 
-// naètení pøepínaèù
+// načtení přepínačů
 		CText grpnum;
 		CText res;
 		for (i = 0; i < GROUPSNUM; i++)
@@ -769,12 +769,12 @@ MEMERROR:
 			GroupsEN[i].instal = val;
 		}
 
-// úschova instalaèní cesty
+// úschova instalační cesty
 		SetReg(ProductKey0, _T("LastPath"), InstPath);
 	}
 	else
 	{
-		// cesta k programùm
+		// cesta k programům
 		InstPath = GetProgramFiles();
 		if (InstPath.IsEmpty()) InstPath = _T("C:\\Program Files\\");
 		if (InstPath.LastChar() != _T('\\')) InstPath += _T('\\');
@@ -783,7 +783,7 @@ MEMERROR:
 	}
 
 
-// pøíprava obrázkù
+// příprava obrázků
 	FlagCZ.Load(IDN_FLAGCZ);
 	FlagENG.Load(IDN_FLAGENG);
 
@@ -796,7 +796,7 @@ MEMERROR:
 
 	InitPic();
 
-// pøíprava jména programu
+// příprava jména programu
 	TCHAR buf[_MAX_PATH];
 	buf[0] = 0;
 	::GetModuleFileName(hInstance, buf, _MAX_PATH);
@@ -816,7 +816,7 @@ MEMERROR:
 
 #endif // _DEBUG
 
-// rozlišení instalátoru podle jména (to je pìkná blbost!)
+// rozlišení instalátoru podle jména (to je pěkná blbost!)
 	Uninst = FALSE;
 
 	CText ttt;
@@ -834,10 +834,10 @@ MEMERROR:
 	if (ttt == _T("DINSTALL.EXE")) Uninst = TRUE;
 	if (ttt == _T("UINSTALL.EXE")) Uninst = TRUE;
 
-// test, zda nebyla chyba pamìti
+// test, zda nebyla chyba paměti
 	if (MemoryError) goto MEMERROR;
 
-// vytvoøení èasovaèe
+// vytvoření časovače
 	Timer = ::SetTimer(MainFrame, TimerID, 55, NULL);
 
 // zapnutí hlavní stránky
@@ -869,7 +869,7 @@ MEMERROR:
 		}
 	}
 
-// hlavní obslužná smyèka aplikace
+// hlavní obslužná smyčka aplikace
 	MSG msg;
 
 	while (::GetMessage(&msg, NULL, 0, 0))
@@ -883,7 +883,7 @@ MEMERROR:
 		}
 	}
 
-// zrušení èasovaèe
+// zrušení časovače
 	::KillTimer(MainFrame, Timer);
 
 // konec programu
@@ -891,7 +891,7 @@ MEMERROR:
 };
 
 //////////////////////////////////////////////////////////////////////////////
-// ukonèení programu
+// ukončení programu
 
 void Exit()
 {
@@ -903,16 +903,16 @@ void Exit()
 // zrušení palet
 	::DeleteObject(StdPalette);
 
-// ukonèení správce pamìti
+// ukončení správce paměti
 	MemTerm();
 
-// ukonèení programu
+// ukončení programu
 	ExitProcess(0);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// spuštìní programu
+// spuštění programu
 
 int Exec(CText command, CText aktdir, BOOL wait)
 {
@@ -920,7 +920,7 @@ int Exec(CText command, CText aktdir, BOOL wait)
 	command.TrimLeft();
 	if (command.IsEmpty()) return 255;
 
-// korekce aktivního adresáøe
+// korekce aktivního adresáře
 	if (aktdir.Length() > 1)
 	{
 		if (aktdir.LastChar() == '\\')
@@ -938,41 +938,41 @@ int Exec(CText command, CText aktdir, BOOL wait)
 	PROCESS_INFORMATION pi;
 	MemFill(&pi, sizeof(pi), 0);
 
-// spuštìní programu
+// spuštění programu
 	::CreateProcess(
 		NULL,								// jméno programu
-		(LPTSTR)(LPCTSTR)command,			// pøíkazový øádek
+		(LPTSTR)(LPCTSTR)command,			// příkazový řádek
 		NULL,								// ochranné atributy procesu
 		NULL,								// ochranné atributy vlákna
-		FALSE,								// dìdiènost handlù
+		FALSE,								// dědičnost handlů
 #ifdef _UNICODE
 		CREATE_UNICODE_ENVIRONMENT			// parametry
 #else
 		0
 #endif
 		| CREATE_DEFAULT_ERROR_MODE,
-		NULL,								// prostøedí
-		aktdir.IsEmpty() ? NULL : (LPCTSTR)aktdir, // výchozí adresáø
+		NULL,								// prostředí
+		aktdir.IsEmpty() ? NULL : (LPCTSTR)aktdir, // výchozí adresář
 		&si,								// adresa STARTUPINFO
 		&pi);								// adresa PROCESS_INFORMATION
 
-// èekání na ukonèení programu
+// čekání na ukončení programu
 	if (wait)
 	{
-		::WaitForSingleObject(pi.hProcess, INFINITE);	// èekání na ukonèení procesu
-		::GetExitCodeProcess(pi.hProcess, (DWORD*)&result);	// zjištìní návratového kódu
+		::WaitForSingleObject(pi.hProcess, INFINITE);	// čekání na ukončení procesu
+		::GetExitCodeProcess(pi.hProcess, (DWORD*)&result);	// zjištění návratového kódu
 	}
 
-// uzavøení handle procesu
-	::CloseHandle(pi.hProcess);				// uzavøení handle procesu
-	::CloseHandle(pi.hThread);				// uzavøení handle toku
+// uzavření handle procesu
+	::CloseHandle(pi.hProcess);				// uzavření handle procesu
+	::CloseHandle(pi.hThread);				// uzavření handle toku
 
 	return result;
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// prùbìžné zpracování zpráv
+// průběžné zpracování zpráv
 
 void PumpMessage()
 {
@@ -991,14 +991,14 @@ void PumpMessage()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// hlášení chyby ètení ze souboru SETUP.EXE (TRUE=pøerušit)
+// hlášení chyby čtení ze souboru SETUP.EXE (TRUE=přerušit)
 
 BOOL ReadError(CText jmeno)
 {
 	CText txt;
 	if (Uninst)
 	{
-		txt = X(_T(	"Chyba ètení odinstalaèních dat.\n"
+		txt = X(_T(	"Chyba čtení odinstalačních dat.\n"
 					"Soubor UNINSTAL.EXE je poškozen."),
 
 				_T(	"Error reading uninstallation data.\n"
@@ -1006,10 +1006,10 @@ BOOL ReadError(CText jmeno)
 	}
 	else
 	{
-		txt = X(_T(	"Chyba ètení instalaèních dat ze souboru ") + jmeno + _T(".\n"
-					"Pokud byl instalaèní CD-ROM vyjmut z mechaniky,\n"
-					"zasuòte jej, prosím, zpìt. Jinak se zøejmì jedná\n"
-					"o poškozený instalaèní soubor."),
+		txt = X(_T(	"Chyba čtení instalačních dat ze souboru ") + jmeno + _T(".\n"
+					"Pokud byl instalační CD-ROM vyjmut z mechaniky,\n"
+					"zasuňte jej, prosím, zpět. Jinak se zřejmě jedná\n"
+					"o poškozený instalační soubor."),
 
 				_T(	"Error reading installation data from file ") + jmeno + _T(".\n"
 					"If installation CD-ROM was removed from the drive,\n"
@@ -1019,23 +1019,23 @@ BOOL ReadError(CText jmeno)
 
 	return (::MessageBox(MainFrame,
 				txt,
-				X(_T("Chyba ètení instalaèních dat"), _T("Error Reading Installation Data")),
+				X(_T("Chyba čtení instalačních dat"), _T("Error Reading Installation Data")),
 				MB_RETRYCANCEL | MB_ICONERROR) != IDRETRY);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení informací o souborech (vrací FALSE=pøerušit)
+// načtení informací o souborech (vrací FALSE=přerušit)
 
 BOOL OpenSetup0()
 {
-// otevøení souboru SETUP.EXE
+// otevření souboru SETUP.EXE
 	HFile = ::CreateFile(ExeFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY, NULL);
 
 	if (HFile == INVALID_HANDLE_VALUE) return FALSE;
 
-// buffer k naètení záhlaví souboru
+// buffer k načtení záhlaví souboru
 	BYTE* buf;
 #define BUFSIZE 0x2000
 	buf = (BYTE*)MemGet(BUFSIZE);
@@ -1043,7 +1043,7 @@ BOOL OpenSetup0()
 	bf.Adr(buf);
 	bf.Size(BUFSIZE);
 
-// naètení zaèátku souboru
+// načtení začátku souboru
 	DWORD read;
 	if (!::ReadFile(HFile, buf, BUFSIZE, &read, NULL) || (read != BUFSIZE))
 	{
@@ -1082,7 +1082,7 @@ BOOL OpenSetup0()
 	MemFree(buf);
 	if (RawSize < 10) return FALSE;
 
-// naètení a kontrola záhlaví dat
+// načtení a kontrola záhlaví dat
 	::SetFilePointer(HFile, RawData, NULL, FILE_BEGIN);
 
 	if (!::ReadFile(HFile, &Head, sizeof(Head), &read, NULL) || 
@@ -1097,7 +1097,7 @@ BOOL OpenSetup0()
 		return FALSE;
 	}
 
-// kontrolní souèet záhlaví
+// kontrolní součet záhlaví
 	long check = 0;
 	BYTE* data = (BYTE*)&Head + 8;
 	int n = sizeof(INSTHEAD) - 8;
@@ -1118,7 +1118,7 @@ BOOL OpenSetup0()
 		data++;
 	}
 
-// naètení seznamù souborù
+// načtení seznamů souborů
 	for (int i = 0; i < GROUPSNUM; i++)
 	{
 		n = Head.Groups[i].SizeFiles;
@@ -1131,7 +1131,7 @@ BOOL OpenSetup0()
 			return FALSE;
 		}
 
-// kontrolní souèet seznamu souborù
+// kontrolní součet seznamu souborů
 		data = Groups[i].files;
 
 		for (; n > 0; n--)
@@ -1151,13 +1151,13 @@ BOOL OpenSetup0()
 		}
 	}
 
-// úschova zaèátku dat
+// úschova začátku dat
 	DataOff = ::SetFilePointer(HFile, 0, NULL, FILE_CURRENT);
 
-// uzavøení souboru SETUP.EXE
+// uzavření souboru SETUP.EXE
 	::CloseHandle(HFile);
 
-// kontrola kontrolního souètu
+// kontrola kontrolního součtu
 	return (Head.Check == check);
 }
 
@@ -1213,7 +1213,7 @@ void DispDiskReq()
 	txt = _T("  ") + txt + _T(" MB");
 	txt.SetWindowText(DiskReqNum);
 
-// blokování tlaèítka Next
+// blokování tlačítka Next
 	if (ButtonNext)
 	{
 		BOOL enable = FALSE;
@@ -1230,7 +1230,7 @@ void DispDiskReq()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní tlaèítka s fokusem (-1 = není)
+// zjištění tlačítka s fokusem (-1 = není)
 
 int GetButton()
 {
@@ -1252,7 +1252,7 @@ int GetButton()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení tlaèítka s fokusem
+// nastavení tlačítka s fokusem
 
 void SetButton(int id)
 {
@@ -1301,7 +1301,7 @@ void SetButton(int id)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zprávy pøed rozesláním do oken (TRUE = zpráva zpracována)
+// obsluha zprávy před rozesláním do oken (TRUE = zpráva zpracována)
 
 BOOL PreTranslateMessage(MSG* msg)
 {
@@ -1683,7 +1683,7 @@ BOOL PreTranslateMessage(MSG* msg)
 		}
 		break;
 
-// stisk levého tlaèítka myši
+// stisk levého tlačítka myši
 	case WM_LBUTTONDBLCLK:
 	case WM_LBUTTONDOWN:
 		if (AktPage == PAGEMAIN)
@@ -1745,11 +1745,11 @@ STARTMAIN:
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení kurzoru èekání (zahájení a ukonèení musí být do páru!)
+// zobrazení kurzoru čekání (zahájení a ukončení musí být do páru!)
 
 void BeginWaitCursor()
 {
-// zvýšení èítaèe èekání
+// zvýšení čítače čekání
 	Waiting++;
 
 // zobrazení kurzoru
@@ -1761,11 +1761,11 @@ void BeginWaitCursor()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutí kurzoru èekání (zahájení a ukonèení musí být do páru!)
+// vypnutí kurzoru čekání (zahájení a ukončení musí být do páru!)
 
 void EndWaitCursor()
 {
-// snížení èítaèe èekání
+// snížení čítače čekání
 	Waiting--;
 
 // zobrazení kurzoru
@@ -1783,15 +1783,15 @@ void EndWaitCursor()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení adresáøe (pokud existuje, je vše OK)
+// vytvoření adresáře (pokud existuje, je vše OK)
 
 BOOL CreateDir(CText txt)
 {
-// oøezání mezer
+// ořezání mezer
 	txt.TrimLeft();
 	txt.TrimRight();
 
-// oøezání koncových "\"
+// ořezání koncových "\"
 	while (txt.LastChar() == _T('\\'))
 	{
 		txt.Delete(txt.Length() - 1);
@@ -1801,40 +1801,40 @@ BOOL CreateDir(CText txt)
 // ROOT je OK
 	if (txt.IsEmpty()) return TRUE;
 
-// vytvoøení adresáøe
+// vytvoření adresáře
 	BOOL res = ::CreateDirectory(txt, NULL);
 	if (res) return TRUE;
 
-// pøi neúspìchu kontrola, zda adresáø již existuje
+// při neúspěchu kontrola, zda adresář již existuje
 	int attrib = (int)::GetFileAttributes(txt);
 	return ((attrib != -1) && (attrib & FILE_ATTRIBUTE_DIRECTORY));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení adresáøe (i vícestupòovì - vèetnì cesty)
+// vytvoření adresáře (i vícestupňově - včetně cesty)
 
 BOOL CreatePath(CText txt)
 {
-// první pokus o vytvoøení adresáøe
+// první pokus o vytvoření adresáře
 	if (CreateDir(txt)) return TRUE;
 
-// oøezání mezer
+// ořezání mezer
 	txt.TrimLeft();
 	txt.TrimRight();
 
-// oøezání koncových "\"
+// ořezání koncových "\"
 	while (txt.LastChar() == _T('\\'))
 	{
 		txt.Delete(txt.Length() - 1);
 		txt.TrimRight();
 	}
 
-// adresáø se bude zkracovat
+// adresář se bude zkracovat
 	CText txt2 = txt;
 	CText txt3;
 
-// zkracování adresáøe
+// zkracování adresáře
 	int pos;
 	while ((pos = txt2.RevFind(_T('\\'))) >= 0)
 	{
@@ -1842,7 +1842,7 @@ BOOL CreatePath(CText txt)
 		if (CreateDir(txt2)) break;
 	}
 
-// prodlužování adresáøe
+// prodlužování adresáře
 	while (txt2.Length() < txt.Length())
 	{
 		txt2.Add(_T('\\'));
@@ -1853,7 +1853,7 @@ BOOL CreatePath(CText txt)
 		if (!CreateDir(txt2)) return FALSE;
 	}
 
-// vytvoøení posledního stupnì (to je poslední pokus)
+// vytvoření posledního stupně (to je poslední pokus)
 	return CreateDir(txt);
 }
 
@@ -1862,21 +1862,21 @@ BOOL CreatePath(CText txt)
 
 #ifdef COMPACT
 
-#define MAXLENX 25					// min. délka dlouhého øetìzce
-#define MAXLEN (MAXLENX+254)		// maximální délka øetìzce
+#define MAXLENX 25					// min. délka dlouhého řetězce
+#define MAXLEN (MAXLENX+254)		// maximální délka řetězce
 #define SUBSTLEN	7				// délka nahrazená dlouhým kódem
 
 class CDekomp
 {
 private:
-	BYTE*	m_DstBeg;				// výstupní buffer - zaèátek nezpracovaných dat
+	BYTE*	m_DstBeg;				// výstupní buffer - začátek nezpracovaných dat
 	BYTE*	m_DstEnd;				// konec výstupního bufferu
 	BYTE*	m_Dst;					// ukládací adresa
 
 	BYTE*	m_SrcEnd;				// konec dat ve vstupním bufferu
-	BYTE*	m_Src;					// ètecí adresa
+	BYTE*	m_Src;					// čtecí adresa
 
-	WORD	m_Status;				// støadaè stavového slova
+	WORD	m_Status;				// střadač stavového slova
 
 public:
 	void Init()	{ m_Status = 0;	}	// inicializace
@@ -1896,7 +1896,7 @@ public:
 	inline void Src(BYTE* src) { m_Src = src; }
 	inline BYTE* Src() { return m_Src; }
 
-// naètení jednoho bitu (výstup = hodnota 0 nebo 1)
+// načtení jednoho bitu (výstup = hodnota 0 nebo 1)
 	inline int DekBit()
 	{
 		int result = m_Status & 1;
@@ -1915,22 +1915,22 @@ public:
 	}
 
 // dekomprese bloku dat
-//  Ve zdrojovém bloku je potøeba nechat za koncem dat rezervu asi tak nìjak 10 bajtù (pokud možno platných)
-//  V cílovém bloku je potøeba nechat za koncem dat rezervu asi tak nìjak 300 bajtù,
-//	pøed zaèátkem cílových dat je potøeba ponechat rezervu 32 KB starých dat.
+//  Ve zdrojovém bloku je potřeba nechat za koncem dat rezervu asi tak nějak 10 bajtů (pokud možno platných)
+//  V cílovém bloku je potřeba nechat za koncem dat rezervu asi tak nějak 300 bajtů,
+//	před začátkem cílových dat je potřeba ponechat rezervu 32 KB starých dat.
 
 	void DeKomp()
 	{
 
-// lokální promìnné
+// lokální proměnné
 		BYTE offsetL, offsetH;			// offset k opakování
 		int delka;						// délka k opakování
 
-// kontrola pøeteèení bufferù
+// kontrola přetečení bufferů
 		while ((m_Dst < m_DstEnd) && (m_Src < m_SrcEnd))
 		{
 
-// pøesun bajtu bez komprese
+// přesun bajtu bez komprese
 			if (DekBit() == 0)
 			{
 				*m_Dst = *m_Src;
@@ -1938,7 +1938,7 @@ public:
 				m_Src++;
 			}
 
-// jinak bude opakování øetìzce
+// jinak bude opakování řetězce
 			else
 			{
 				offsetH = 0;
@@ -1947,13 +1947,13 @@ public:
 // první bit délky
 				delka = DekBit();
 
-// zvýšení èítaèe délky
+// zvýšení čítače délky
 				for (;;)
 				{
 					delka++;
 					delka++;
 
-// naètení pøíznaku konce kódu
+// načtení příznaku konce kódu
 					if (DekBit() == 0) break;
 
 // dosažení maximální délky
@@ -2022,11 +2022,11 @@ public:
 					}
 				}
 
-// naètení offsetu - nižší bajt
+// načtení offsetu - nižší bajt
 				offsetL = *m_Src;
 				m_Src++;
 
-// pøenesení øetìzce (nepoužívat MemCopy - nepøenáší po bajtech!!!)
+// přenesení řetězce (nepoužívat MemCopy - nepřenáší po bajtech!!!)
 				BYTE* src2 = m_Dst - (WORD)(offsetL + offsetH*256);
 				for (; delka > 0; delka--)
 				{
@@ -2042,14 +2042,14 @@ public:
 #endif // COMPACT
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení registru
+// načtení registru
 
 CText GetReg(CText key, CText name)
 {
 // text výsledné hodnoty
 	CText txt;
 
-// otevøení klíèe
+// otevření klíče
 	HKEY hkey;
 	if (::RegOpenKeyEx(
 		HKEY_LOCAL_MACHINE,
@@ -2059,7 +2059,7 @@ CText GetReg(CText key, CText name)
 		&hkey) == ERROR_SUCCESS)
 	{
 
-// naètení hodnoty klíèe
+// načtení hodnoty klíče
 		DWORD type = REG_SZ;
 #define REGBUFSIZE 300
 		BYTE buf[REGBUFSIZE+1];
@@ -2082,7 +2082,7 @@ CText GetReg(CText key, CText name)
 			txt.TrimRight();
 		}
 
-// uzavøení klíèe
+// uzavření klíče
 		::RegCloseKey(hkey);
 	}
 
@@ -2095,7 +2095,7 @@ CText GetReg(CText key, CText name)
 
 void SetReg(CText key, CText name, CText data)
 {
-// otevøení klíèe
+// otevření klíče
 	HKEY hkey;
 	DWORD pos;
 
@@ -2120,7 +2120,7 @@ void SetReg(CText key, CText name, CText data)
 			(const BYTE*)(const char*)data,
 			data.Length()+1);
 
-// uzavøení klíèe
+// uzavření klíče
 		::RegCloseKey(hkey);
 	}
 }
@@ -2133,7 +2133,7 @@ void DelReg(CText key, CText name)
 // text výsledné hodnoty
 	CText txt;
 
-// otevøení klíèe
+// otevření klíče
 	HKEY hkey;
 	if (::RegOpenKeyEx(
 		HKEY_LOCAL_MACHINE,
@@ -2148,20 +2148,20 @@ void DelReg(CText key, CText name)
 			hkey,
 			name);
 
-// uzavøení klíèe
+// uzavření klíče
 		::RegCloseKey(hkey);
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení cesty Shell
+// načtení cesty Shell
 
 CText GetShell(LPCTSTR name)
 {
 // text výsledné hodnoty
 	CText txt;
 
-// otevøení klíèe
+// otevření klíče
 	HKEY hkey;
 	if (::RegOpenKeyEx(
 		HKEY_CURRENT_USER,
@@ -2171,7 +2171,7 @@ CText GetShell(LPCTSTR name)
 		&hkey) == ERROR_SUCCESS)
 	{
 
-// naètení hodnoty klíèe
+// načtení hodnoty klíče
 		DWORD type = REG_SZ;
 #define REGBUFSIZE 300
 		BYTE buf[REGBUFSIZE+1];
@@ -2194,7 +2194,7 @@ CText GetShell(LPCTSTR name)
 			txt.TrimRight();
 		}
 
-// uzavøení klíèe
+// uzavření klíče
 		::RegCloseKey(hkey);
 	}
 
@@ -2203,22 +2203,22 @@ CText GetShell(LPCTSTR name)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// provedení instalace a pøeinstalace
+// provedení instalace a přeinstalace
 
 void Install()
 {
 	Storno = FALSE;
 	int i,j;
 
-// cesta k ukládání souborù
+// cesta k ukládání souborů
 	CText path = InstPath;
 	if (path.LastChar() != _T('\\')) path += _T('\\');
 
-// odinstalování pøi pøeinstalování
+// odinstalování při přeinstalování
 	if (!FirstInst)
 	{
 
-// zjištìní poètu souborù (kvùli indikaci)
+// zjištění počtu souborů (kvůli indikaci)
 		DataSize = 0;
 		DataSizeOK = 0;
 		for (i = 0; i < GROUPSNUM; i++)
@@ -2232,9 +2232,9 @@ void Install()
 // záhájení odinstalování
 		if (DataSize > 0)
 		{
-			::SetWindowText(IndWndNadp, X(_T("Probíhá odinstalování èástí aplikace Petr ..."), _T("Proceeding uninstallation of the Peter application parts ...")));
+			::SetWindowText(IndWndNadp, X(_T("Probíhá odinstalování částí aplikace Petr ..."), _T("Proceeding uninstallation of the Peter application parts ...")));
 
-// cyklus pøes odinstalovávané skupiny
+// cyklus přes odinstalovávané skupiny
 			WIN32_FIND_DATA fnd;
 
 			for (i = 0; i < GROUPSNUM; i++)
@@ -2242,13 +2242,13 @@ void Install()
 				if (!Groups[i].check && Groups[i].instal)
 				{
 
-// vypnutí pøíznaku instalace
+// vypnutí příznaku instalace
 					CText grpnum;
 					grpnum.Int(i);
 					SetReg(ProductKey, _T("Group") + grpnum, _T('0'));
 					Groups[i].instal = false;
 
-// cyklus pøes všechny soubory
+// cyklus přes všechny soubory
 					BYTE* data = Groups[i].files;
 					for (j = Head.Groups[i].Files; j > 0; j--)
 					{
@@ -2259,7 +2259,7 @@ void Install()
 						data += 2*sizeof(long) + sizeof(BYTE) + ((INSTFILE*)data)->NameN;
 						name = path + name;
 
-// naètení parametrù souboru
+// načtení parametrů souboru
 						HANDLE file = ::FindFirstFile(name, &fnd);
 
 // zrušení souboru
@@ -2287,7 +2287,7 @@ void Install()
 								}
 								::DeleteFile(name);
 
-// zrušení adresáøe
+// zrušení adresáře
 								while (name.Length() > InstPath.Length())
 								{
 									int pos = name.RevFind(_T('\\'));
@@ -2297,7 +2297,7 @@ void Install()
 								}
 							}
 
-// uzavøení hledání
+// uzavření hledání
 							::FindClose(file);
 						}
 
@@ -2312,10 +2312,10 @@ void Install()
 			}
 		}
 
-		::SetWindowText(IndWndNadp, X(_T("Probíhá pøiinstalování èástí aplikace Petr ..."), _T("Proceeding add-installation of the Peter application parts ...")));
+		::SetWindowText(IndWndNadp, X(_T("Probíhá přiinstalování částí aplikace Petr ..."), _T("Proceeding add-installation of the Peter application parts ...")));
 	}
 
-// zjištìní velikosti souborù (kvùli indikaci)
+// zjištění velikosti souborů (kvůli indikaci)
 	DataSize = 0;
 	DataSizeOK = 0;
 	for (i = 0; i < GROUPSNUM; i++)
@@ -2332,7 +2332,7 @@ void Install()
 		}
 	}
 
-// není pøiinstalování (bylo jen odinstalování)
+// není přiinstalování (bylo jen odinstalování)
 	if (DataSize == 0)
 	{
 		SetPage(PAGEOK);
@@ -2344,7 +2344,7 @@ void Install()
 	CDekomp dek;
 #endif
 
-// otevøení vstupního souboru
+// otevření vstupního souboru
 	do {
 		HFile = ::CreateFile(ExeFileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING,
 			FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_SYSTEM | FILE_ATTRIBUTE_READONLY, NULL);
@@ -2372,26 +2372,26 @@ void Install()
 #define SRCBUFREZ  32							// rezerva za zdrojovými daty
 	BYTE* srcbuf = (BYTE*)MemGet(SRCBUFSIZE + 1024);
 #define DSTBUFSIZE 0x12000						// celková velikost cílového bufferu
-#define DSTBUFDATA (DSTBUFSIZE/2)				// zaèátek dat v cílovém bufferu
-#define DSTBUFREZ  1024							// rezerva za cílovými daty (a na zaèátku bufferu)
+#define DSTBUFDATA (DSTBUFSIZE/2)				// začátek dat v cílovém bufferu
+#define DSTBUFREZ  1024							// rezerva za cílovými daty (a na začátku bufferu)
 	BYTE* dstbuf = (BYTE*)MemGet(DSTBUFSIZE + 1024);
 
-// pøíprava ukazatele dat
+// příprava ukazatele dat
 	DWORD readwrite;
 	int off = DataOff;
 
-// pøi první instalaci uložení licence a odinstalátoru
+// při první instalaci uložení licence a odinstalátoru
 	if (FirstInst)
 	{
 
-// vytvoøení cílového adresáøe
+// vytvoření cílového adresáře
 		CreatePath(InstPath);
 
-// jméno odinstalaèního souboru
+// jméno odinstalačního souboru
 		CText name;
 		name = path + _T("Uninstal.exe");
 
-// vytvoøení cílového souboru
+// vytvoření cílového souboru
 		BOOL del = FALSE;
 		::SetFileAttributes(name, FILE_ATTRIBUTE_NORMAL);
 		HANDLE file = ::CreateFile(name, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -2441,23 +2441,23 @@ void Install()
 				del = TRUE;
 			}
 
-// nastavení data a èasu souboru
+// nastavení data a času souboru
 			FILETIME datetime;
 			::LocalFileTimeToFileTime(&Head.DateTime, &datetime);
 			::SetFileTime(file, NULL, NULL, &datetime);
 
-// uzavøení cílového souboru
+// uzavření cílového souboru
 			::CloseHandle(file);
 		}
 
-// pøi chybì zrušení souboru
+// při chybě zrušení souboru
 		if (del) ::DeleteFile(name);
 
 // obsluha zpráv
 		PumpMessage();
 	}
 
-// cyklus pøes všechny skupiny
+// cyklus přes všechny skupiny
 	for (i = 0; i < GROUPSNUM; i++)
 	{
 
@@ -2465,7 +2465,7 @@ void Install()
 		if (Groups[i].check && !Groups[i].instal)
 		{
 
-// naètení prvního bloku dat skupiny
+// načtení prvního bloku dat skupiny
 			BOOL ok;
 
 #ifdef COMPACT
@@ -2521,7 +2521,7 @@ void Install()
 			dek.DeKomp();
 #endif // COMPACT
 
-// cyklus pøes všechny soubory
+// cyklus přes všechny soubory
 			BYTE* data = Groups[i].files;
 			for (j = Head.Groups[i].Files; j > 0; j--)
 			{
@@ -2539,10 +2539,10 @@ void Install()
 				name = path + name;
 				name.SetWindowText(IndWndFile);
 
-// vytvoøení cílového souboru
+// vytvoření cílového souboru
 				HANDLE file = ::CreateFile(name, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// pøi neúspìchu druhý pokus - s vytvoøením adresáøe
+// při neúspěchu druhý pokus - s vytvořením adresáře
 				if (file == INVALID_HANDLE_VALUE)
 				{
 					CreatePath(name.Left(name.RevFind(_T('\\'))));
@@ -2559,18 +2559,18 @@ void Install()
 // obsluha zpráv
 				PumpMessage();
 
-// chyba - soubor nelze vytvoøit
+// chyba - soubor nelze vytvořit
 				if (file == INVALID_HANDLE_VALUE)
 				{
 					::MessageBox(MainFrame,
 						X(
 						CText(
-							_T("Chyba - nelze vytvoøit cílový soubor\n\n") +
+							_T("Chyba - nelze vytvořit cílový soubor\n\n") +
 							name +
-							_T("\n\nInstalace nemùže dále pokraèovat a bude pøerušena. Dùvodem mùže být:"
-								"\n   - pøepisovaný cílový program EXE je spuštìn"
-								"\n   - pøepisovaný cílový soubor je otevøen nìkterým programem"
-								"\n   - chybné zadání cílové složky (napø. neexistující disk)"
+							_T("\n\nInstalace nemůže dále pokračovat a bude přerušena. Důvodem může být:"
+								"\n   - přepisovaný cílový program EXE je spuštěn"
+								"\n   - přepisovaný cílový soubor je otevřen některým programem"
+								"\n   - chybné zadání cílové složky (např. neexistující disk)"
 								"\n   - plný cílový disk nebo zákaz zápisu na disk")),
 						CText(
 							_T("Error - could not create destination file\n\n") +
@@ -2589,7 +2589,7 @@ void Install()
 					return;
 				}
 
-// otevøení vstupního souboru
+// otevření vstupního souboru
 #ifndef COMPACT
 				HANDLE ifile;
 				do {
@@ -2729,8 +2729,8 @@ void Install()
 							CText(
 								_T("Chyba zápisu do cílového souboru\n\n") +
 								name +
-								_T("\n\nCílový disk je zøejmì plný."
-									"\nInstalace nemùže dále pokraèovat a bude pøerušena.")),
+								_T("\n\nCílový disk je zřejmě plný."
+									"\nInstalace nemůže dále pokračovat a bude přerušena.")),
 							CText(
 								_T("Error writing destination file\n\n") +
 								name +
@@ -2758,7 +2758,7 @@ void Install()
 // obsluha zpráv
 					PumpMessage();
 
-// kontrolní souèet bloku dat
+// kontrolní součet bloku dat
 					for (; size0 > 0; size0--)
 					{
 						check0 += *d;
@@ -2776,18 +2776,18 @@ void Install()
 					}
 				}
 
-// nastavení data a èasu souboru
+// nastavení data a času souboru
 				FILETIME datetime;
 				::LocalFileTimeToFileTime(&Head.DateTime, &datetime);
 				::SetFileTime(file, NULL, NULL, &datetime);
 
-// uzavøení cílového souboru
+// uzavření cílového souboru
 				::CloseHandle(file);
 #ifndef COMPACT
 				::CloseHandle(ifile);
 #endif
 
-// kontrola kontrolního souètu souboru
+// kontrola kontrolního součtu souboru
 				if (check != check0)
 				{
 					::DeleteFile(name);
@@ -2799,14 +2799,14 @@ void Install()
 							name +
 #ifdef COMPACT
 #ifdef MINI
-							_T("\n\nInstalaèní program PETERMIN.EXE je poškozen.") +
+							_T("\n\nInstalační program PETERMIN.EXE je poškozen.") +
 #else
-							_T("\n\nInstalaèní program PETER") VerzeFileTxt _T(".EXE je poškozen.") +
+							_T("\n\nInstalační program PETER") VerzeFileTxt _T(".EXE je poškozen.") +
 #endif
 #else
 							_T("\n\nSoubor ") + name0 + _T(" je poškozen.") +
 #endif
-								_T("\nInstalace nemùže dále pokraèovat a bude pøerušena.")),
+								_T("\nInstalace nemůže dále pokračovat a bude přerušena.")),
 
 						CText(
 							_T("Installation error of the file\n\n") +
@@ -2834,23 +2834,23 @@ void Install()
 // obsluha zpráv
 				PumpMessage();
 
-// pøerušení instalace
+// přerušení instalace
 				if (Storno)
 				{
 					if (::MessageBox(MainFrame,
 							X(
 							CText(
-								_T("Pøerušením instalace zùstanou ve složce ") +
+								_T("Přerušením instalace zůstanou ve složce ") +
 								InstPath +
-								_T("\njiž nainstalované soubory. Soubory mùžete zrušit Prùzkumníkem."
-									"\n\nOpravdu chcete instalaci pøerušit?")),
+								_T("\njiž nainstalované soubory. Soubory můžete zrušit Průzkumníkem."
+									"\n\nOpravdu chcete instalaci přerušit?")),
 							CText(
 								_T("There will remain already installed files in folder ") +
 								InstPath +
 								_T("\nif you break installation. You can delete those files by File Explorer."
 									"\n\nDo you really want to break the installation?"))),
 
-							X(_T("Pøerušení instalace"), _T("Installation Break")),
+							X(_T("Přerušení instalace"), _T("Installation Break")),
 							MB_YESNO | MB_ICONWARNING) == IDYES)
 					{
 						MemFree(srcbuf);
@@ -2891,7 +2891,7 @@ void Install()
 		SetReg(ProductKey, _T("Group") + grpnum, Groups[i].check ? _T('1') : _T('0'));
 	}
 
-// inicializace pøi první instalaci
+// inicializace při první instalaci
 	if (FirstInst)
 	{
 
@@ -2910,18 +2910,18 @@ void Install()
 			SetReg(UninstalKey, _T("UninstallString"), path + _T("Uninstal.exe"));
 		}
 
-// cesta k dokumentùm
+// cesta k dokumentům
 		CText dokumenty;
 		dokumenty = GetShell(_T("Personal"));
 		if (dokumenty.IsEmpty()) dokumenty = X(_T("C:\\Dokumenty"), _T("C:\\Dokuments"));
 
-// vytvoøení pracovního adresáøe
+// vytvoření pracovního adresáře
 		if (dokumenty.LastChar() != _T('\\')) dokumenty += _T('\\');
 		dokumenty += _T("Peter");
 		CreatePath(dokumenty);
 		SetReg(ProductKey, _T("User"), dokumenty);
 
-// vytvoøení konfiguraèního souboru (pøípadný existující soubor se pøepíše)
+// vytvoření konfiguračního souboru (případný existující soubor se přepíše)
 		CText peterini;
 		peterini = dokumenty + _T("\\Peter.ini");
 		HANDLE file = ::CreateFile(peterini, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -2951,7 +2951,7 @@ void Install()
 			::CloseHandle(file);
 		}
 
-// cesta k menu programù
+// cesta k menu programů
 		CText programs;
 		programs = GetShell(_T("Programs"));
 		if (programs.LastChar() != _T('\\')) programs += _T('\\');
@@ -2967,7 +2967,7 @@ void Install()
 		SetReg(ProductKey, _T("Desktop"), desktop);
 		if (desktop.LastChar() != _T('\\')) desktop += _T('\\');
 
-// pøikopírování datových souborù do pracovního adresáøe
+// přikopírování datových souborů do pracovního adresáře
 		CText txt;
 
 // inicializace COM knihovny
@@ -3022,11 +3022,11 @@ void Install()
 					txt.WriteNull(dest);
 					ppf->Save(dest, TRUE);
 
-// uvolnìní interface IPersistFile
+// uvolnění interface IPersistFile
 					ppf->Release();
 				}
 
-// uvolnìní interface na IShellLink
+// uvolnění interface na IShellLink
 				psl->Release();
 			}
 
@@ -3035,22 +3035,22 @@ void Install()
 		}
 	}
 
-// instalace ukonèena OK
+// instalace ukončena OK
 	SetPage(PAGEOK);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení cesty s podadresáøi (neruší soubory)
+// zrušení cesty s podadresáři (neruší soubory)
 
 void DeletePath(CText path)
 {
 	CText txt;
 
-// doplnìní "\" na konec
+// doplnění "\" na konec
 	if (path.LastChar() != _T('\\')) path += _T('\\');
 
-// vyhledání podadresáøù
+// vyhledání podadresářů
 	WIN32_FIND_DATA fnd;
 	HANDLE file = ::FindFirstFile(path + _T("*.*"), &fnd);
 	if (file != INVALID_HANDLE_VALUE)
@@ -3079,7 +3079,7 @@ void DInstall()
 {
 	BeginWaitCursor();
 
-// cesta k rušení souborù
+// cesta k rušení souborů
 	CText path = InstPath;
 	if (path.LastChar() != _T('\\')) path += _T('\\');
 
@@ -3087,7 +3087,7 @@ void DInstall()
 	int i,j;
 	WIN32_FIND_DATA fnd;
 
-// cesta k dokumentùm
+// cesta k dokumentům
 	CText dokumenty;
 	dokumenty = GetReg(ProductKey, _T("User"));
 
@@ -3101,7 +3101,7 @@ void DInstall()
 	if (desktop.LastChar() != _T('\\')) desktop += _T('\\');
 	desktop += X(_T("Petr.lnk"), _T("Peter.lnk"));
 
-// zrušení registrù cest
+// zrušení registrů cest
 	SetReg(ProductKey, _T("Path"), EmptyText);
 	DelReg(ProductKey, _T("Path"));
 	SetReg(ProductKey, _T("User"), EmptyText);
@@ -3111,7 +3111,7 @@ void DInstall()
 	SetReg(ProductKey, _T("Desktop"), EmptyText);
 	DelReg(ProductKey, _T("Desktop"));
 
-// zrušení registrù skupin
+// zrušení registrů skupin
 	CText grpnum;
 	for (i = 0; i < GROUPSNUM; i++)
 	{
@@ -3120,7 +3120,7 @@ void DInstall()
 		DelReg(ProductKey, _T("Group") + grpnum);
 	}
 
-// zrušení klíèe
+// zrušení klíče
 	::RegDeleteKey(
 		HKEY_LOCAL_MACHINE,
 		ProductKey);
@@ -3205,11 +3205,11 @@ void DInstall()
 						}
 					}
 
-// uvolnìní interface IPersistFile
+// uvolnění interface IPersistFile
 					ppf->Release();
 				}
 
-// uvolnìní interface na IShellLink
+// uvolnění interface na IShellLink
 				psl->Release();
 			}
 
@@ -3224,10 +3224,10 @@ void DInstall()
 		}
 	}
 
-// zrušení datových souborù
+// zrušení datových souborů
 	FirstInst = TRUE;
 
-// zjištìní poètu souborù (kvùli indikaci)
+// zjištění počtu souborů (kvůli indikaci)
 	DataSize = 0;
 	DataSizeOK = 0;
 	for (i = 0; i < GROUPSNUM; i++)
@@ -3235,11 +3235,11 @@ void DInstall()
 		DataSize += Head.Groups[i].Files;
 	}
 
-// cyklus pøes všechny skupiny
+// cyklus přes všechny skupiny
 	for (i = 0; i < GROUPSNUM; i++)
 	{
 
-// cyklus pøes všechny soubory
+// cyklus přes všechny soubory
 		BYTE* data = Groups[i].files;
 		for (j = Head.Groups[i].Files; j > 0; j--)
 		{
@@ -3250,7 +3250,7 @@ void DInstall()
 			data += 2*sizeof(long) + sizeof(BYTE) + ((INSTFILE*)data)->NameN;
 			name = path + name;
 
-// naètení parametrù souboru
+// načtení parametrů souboru
 			HANDLE file = ::FindFirstFile(name, &fnd);
 
 // zrušení souboru
@@ -3275,7 +3275,7 @@ void DInstall()
 					::DeleteFile(name);
 				}
 
-// uzavøení hledání
+// uzavření hledání
 				::FindClose(file);
 			}
 
@@ -3357,7 +3357,7 @@ void DInstall()
 		}
 	}
 
-// zrušení adresáøù
+// zrušení adresářů
 	DeletePath(InstPath);
 
 	EndWaitCursor();
@@ -3366,7 +3366,7 @@ void DInstall()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní informací o volném místu na cílovém disku
+// zjištění informací o volném místu na cílovém disku
 
 void GetDiskSpace()
 {
@@ -3388,11 +3388,11 @@ void GetDiskSpace()
 	CText txt;
 	txt = InstPath.Left(3);
 
-// naètení informací novìjší funkcí
+// načtení informací novější funkcí
 	if (!pGetDiskFreeSpaceEx ||
 		!pGetDiskFreeSpaceEx(txt, &DiskFreeUser, &DiskSize, &DiskFree))
 
-// naètení informací starší metodou
+// načtení informací starší metodou
 	{
 		DWORD sectc;
 		DWORD bytes;
@@ -3423,22 +3423,22 @@ void GetDiskSpace()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení èáry nad tlaèítky
+// vytvoření čáry nad tlačítky
 
 void CreateLineWnd()
 {
 	if (LineWnd == NULL)
 	{
 		LineWnd = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			NULL,											// titulek okna
 			SS_ETCHEDHORZ | WS_VISIBLE | WS_CHILD,			// styl okna
 			10,												// X
 			ClientHeight - 58,								// Y
-			ClientWidth - 20,								// šíøka
+			ClientWidth - 20,								// šířka
 			6,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_LINEWND,								// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3446,7 +3446,7 @@ void CreateLineWnd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení rámu uživatele
+// vytvoření rámu uživatele
 
 void CreateUserRam()
 {
@@ -3454,15 +3454,15 @@ void CreateUserRam()
 	if (UserRam == NULL)
 	{
 		UserRam = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			NULL,											// titulek okna
 			SS_ETCHEDFRAME | WS_VISIBLE | WS_CHILD,			// styl okna
 			320,											// X
 			40,												// Y
-			ClientWidth - 320 - 10,							// šíøka
+			ClientWidth - 320 - 10,							// šířka
 			150,											// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_USERRAM,								// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3470,7 +3470,7 @@ void CreateUserRam()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vložení položky do seznamu pøepínaèù
+// vložení položky do seznamu přepínačů
 
 void InsertCheck(int inx, BOOL check, BOOL instal, LPCTSTR text, LPCTSTR text2)
 {
@@ -3491,50 +3491,50 @@ void InsertCheck(int inx, BOOL check, BOOL instal, LPCTSTR text, LPCTSTR text2)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení okna pøepínaèù
+// vytvoření okna přepínačů
 
 void CreateCheckWnd()
 {
 	if (CheckWnd == NULL)
 	{
 
-// vytvoøení okna
+// vytvoření okna
 		CheckWnd = ::CreateWindowEx(
-			WS_EX_CLIENTEDGE,								// rozšíøený styl
-			WC_LISTVIEW,									// jméno tøídy okna
+			WS_EX_CLIENTEDGE,								// rozšířený styl
+			WC_LISTVIEW,									// jméno třídy okna
 			NULL,											// titulek okna
 			LVS_NOCOLUMNHEADER | LVS_REPORT | LVS_SHAREIMAGELISTS | LVS_SINGLESEL |
 			WS_VISIBLE | WS_CHILD,							// styl okna
 			10,												// X
 			40,												// Y
-			300,											// šíøka
+			300,											// šířka
 			220,											// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_CHECKWND,								// menu
 			hInstance,										// instance
 			NULL);											// parametry
 
-// pøipojení senzamu ikon pro výbìr
+// připojení senzamu ikon pro výběr
 		::SendMessage(CheckWnd, LVM_SETIMAGELIST, LVSIL_SMALL, (LPARAM)CheckList);
 
-// nastavení fontù v oknì
+// nastavení fontů v okně
 		::SendMessage(CheckWnd, WM_SETFONT, (WPARAM)::GetStockObject(ANSI_VAR_FONT), TRUE);
 
-// vytvoøení sloupce pøepínaèù
+// vytvoření sloupce přepínačů
 		LVCOLUMN lvc;
 		lvc.mask = LVCF_FMT | LVCF_WIDTH;
 		lvc.fmt = LVCFMT_LEFT;
 		lvc.cx = 208;
 		::SendMessage(CheckWnd, LVM_INSERTCOLUMN, 0, (LPARAM)&lvc);
 
-// vytvoøení sloupce velikostí èástí
+// vytvoření sloupce velikostí částí
 		lvc.mask = LVCF_FMT | LVCF_WIDTH | LVCF_SUBITEM;
 		lvc.fmt = LVCFMT_RIGHT;
 		lvc.cx = 64;
 		lvc.iSubItem = 1;
 		::SendMessage(CheckWnd, LVM_INSERTCOLUMN, 1, (LPARAM)&lvc);
 
-// naplnìní okna pøepínaèi
+// naplnění okna přepínači
 		CText txt;
 		for (int i = 0; i < GROUPSNUM; i++)
 		{
@@ -3543,7 +3543,7 @@ void CreateCheckWnd()
 			InsertCheck(i, Groups[i].check, Groups[i].instal, Groups[i].name, txt);
 		}
 
-// pøednastavení výbìru na první položku
+// přednastavení výběru na první položku
 		LVITEM lvi;
 		lvi.iSubItem = 0;
 		lvi.iItem = 0;
@@ -3555,7 +3555,7 @@ void CreateCheckWnd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nadpisu pøepínaèù
+// vytvoření nadpisu přepínačů
 
 void CreateCheckNadp()
 {
@@ -3564,17 +3564,17 @@ void CreateCheckNadp()
 		if (FirstInst)
 		{
 			CheckNadp = ::CreateWindowEx(
-				0,												// rozšíøený styl
-				_T("STATIC"),									// jméno tøídy okna
+				0,												// rozšířený styl
+				_T("STATIC"),									// jméno třídy okna
 				X(
-					_T("Vyberte instalované èásti a cílovou složku. Stiskem tlaèítka 'Start' zahájíte instalaci."), 
+					_T("Vyberte instalované části a cílovou složku. Stiskem tlačítka 'Start' zahájíte instalaci."), 
 					_T("Select installed parts and destination folder. By pressing 'Start' you begin installation.")),
 				SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 				0,												// X
 				10,												// Y
-				ClientWidth,									// šíøka
+				ClientWidth,									// šířka
 				18,												// výška
-				MainFrame,										// rodiè
+				MainFrame,										// rodič
 				(HMENU)IDN_CHECKNADP,							// menu
 				hInstance,										// instance
 				NULL);											// parametry
@@ -3582,17 +3582,17 @@ void CreateCheckNadp()
 		else
 		{
 			CheckNadp = ::CreateWindowEx(
-				0,												// rozšíøený styl
-				_T("STATIC"),									// jméno tøídy okna
+				0,												// rozšířený styl
+				_T("STATIC"),									// jméno třídy okna
 				X(
-					_T("Zmìòte výbìr nainstalovaných èástí. Stiskem tlaèítka 'Start' zahájíte zmìnu instalace."),
+					_T("Změňte výběr nainstalovaných částí. Stiskem tlačítka 'Start' zahájíte změnu instalace."),
 					_T("Change selection of installed parts. By pressing 'Start' you begin reinstallation.")),
 				SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 				0,												// X
 				10,												// Y
-				ClientWidth,									// šíøka
+				ClientWidth,									// šířka
 				18,												// výška
-				MainFrame,										// rodiè
+				MainFrame,										// rodič
 				(HMENU)IDN_CHECKNADP,							// menu
 				hInstance,										// instance
 				NULL);											// parametry
@@ -3602,22 +3602,22 @@ void CreateCheckNadp()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení instalaèní cesty
+// vytvoření instalační cesty
 
 void CreatePathWnd()
 {
 	if (PathWndNadp == NULL)
 	{
 		PathWndNadp = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			X(_T("Cílová složka:"), _T("Destination folder:")),	// titulek okna
 			SS_LEFT | WS_VISIBLE | WS_CHILD,				// styl okna
 			10,												// X
 			ClientHeight - 112,								// Y
-			200,											// šíøka
+			200,											// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_PATHWNDNADP,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3628,15 +3628,15 @@ void CreatePathWnd()
 	if (PathWnd == NULL)
 	{
 		PathWnd = ::CreateWindowEx(
-			WS_EX_CLIENTEDGE,								// rozšíøený styl
-			_T("EDIT"),										// jméno tøídy okna
+			WS_EX_CLIENTEDGE,								// rozšířený styl
+			_T("EDIT"),										// jméno třídy okna
 			InstPath,										// titulek okna
 			ES_AUTOHSCROLL | ES_LEFT | WS_GROUP | WS_TABSTOP | WS_VISIBLE | WS_CHILD,			// styl okna
 			20,												// X
 			ClientHeight - 93,								// Y
-			ClientWidth - 150,								// šíøka
+			ClientWidth - 150,								// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_PATHWND,								// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3646,20 +3646,20 @@ void CreatePathWnd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítek volby jazyku
+// vytvoření tlačítek volby jazyku
 
 HWND CreateFlag(int id, int y, LPCTSTR text)
 {
 	HWND wnd = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("BUTTON"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("BUTTON"),									// jméno třídy okna
 			text,											// titulek okna
 			BS_PUSHBUTTON | BS_TEXT | BS_NOTIFY | WS_GROUP | WS_TABSTOP | WS_VISIBLE | WS_CHILD,// styl okna
 			270,											// X
 			y,												// Y
-			150,											// šíøka
+			150,											// šířka
 			44,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)id,										// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3671,7 +3671,7 @@ HWND CreateFlag(int id, int y, LPCTSTR text)
 
 void CreateFlags()
 {
-	FlagCZWnd = CreateFlag(IDN_FLAGWNDCZ, 104, "Èesky (Czech)");
+	FlagCZWnd = CreateFlag(IDN_FLAGWNDCZ, 104, "Česky (Czech)");
 	FlagENGWnd = CreateFlag(IDN_FLAGWNDENG, 204, "English");
 
 	HWND foc = FlagENGWnd;
@@ -3688,20 +3688,20 @@ void CreateFlags()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítka
+// vytvoření tlačítka
 
 HWND CreateButton(int id, int x, LPCTSTR text)
 {
 	HWND wnd = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("BUTTON"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("BUTTON"),									// jméno třídy okna
 			text,											// titulek okna
 			BS_PUSHBUTTON | BS_TEXT | BS_NOTIFY | WS_GROUP | WS_TABSTOP | WS_VISIBLE | WS_CHILD,// styl okna
 			x,												// X
 			ClientHeight - 40,								// Y
-			100,											// šíøka
+			100,											// šířka
 			26,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)id,										// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3713,15 +3713,15 @@ HWND CreateButton(int id, int x, LPCTSTR text)
 HWND CreateDefButton(int id, int x, LPCTSTR text)
 {
 	HWND wnd = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("BUTTON"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("BUTTON"),									// jméno třídy okna
 			text,											// titulek okna
 			BS_DEFPUSHBUTTON | BS_TEXT | BS_NOTIFY | WS_GROUP | WS_TABSTOP | WS_VISIBLE | WS_CHILD,// styl okna
 			x,												// X
 			ClientHeight - 40,								// Y
-			100,												// šíøka
+			100,												// šířka
 			26,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)id,										// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3731,18 +3731,18 @@ HWND CreateDefButton(int id, int x, LPCTSTR text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítka Zpìt
+// vytvoření tlačítka Zpět
 
 void CreateBack()
 {
 	if (ButtonBack == NULL)
 	{
-		ButtonBack = CreateButton(IDN_BUTTONBACK, ClientWidth - 20 - 100 - 40 - 100 - 100, X(_T("< Zpìt"), _T("< Back")));
+		ButtonBack = CreateButton(IDN_BUTTONBACK, ClientWidth - 20 - 100 - 40 - 100 - 100, X(_T("< Zpět"), _T("< Back")));
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítka Další
+// vytvoření tlačítka Další
 
 void CreateNext()
 {
@@ -3762,7 +3762,7 @@ void CreateNext()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítka Konec
+// vytvoření tlačítka Konec
 
 void CreateExit()
 {
@@ -3781,7 +3781,7 @@ void CreateExit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítka Storno
+// vytvoření tlačítka Storno
 
 void CreateCanc()
 {
@@ -3792,22 +3792,22 @@ void CreateCanc()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítka Procházet
+// vytvoření tlačítka Procházet
 
 void CreateList()
 {
 	if (ButtonList == NULL)
 	{
 		ButtonList = ::CreateWindowEx(
-				0,												// rozšíøený styl
-				_T("BUTTON"),									// jméno tøídy okna
+				0,												// rozšířený styl
+				_T("BUTTON"),									// jméno třídy okna
 				X(_T("Procházet..."), _T("Browse...")),	// titulek okna
 				BS_PUSHBUTTON | BS_TEXT | BS_NOTIFY | WS_GROUP | WS_TABSTOP | WS_VISIBLE | WS_CHILD,// styl okna
 				ClientWidth - 20 - 100,							// X
 				ClientHeight - 100,								// Y
-				100,											// šíøka
+				100,											// šířka
 				26,												// výška
-				MainFrame,										// rodiè
+				MainFrame,										// rodič
 				(HMENU)IDN_BUTTONLIST,							// menu
 				hInstance,										// instance
 				NULL);											// parametry
@@ -3821,22 +3821,22 @@ void CreateList()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení indikátoru instalace
+// vytvoření indikátoru instalace
 
 void CreateIndWnd()
 {
 	if (IndWnd == NULL)
 	{
 		IndWnd = ::CreateWindowEx(
-				WS_EX_CLIENTEDGE,								// rozšíøený styl
-				PROGRESS_CLASS,									// jméno tøídy okna
+				WS_EX_CLIENTEDGE,								// rozšířený styl
+				PROGRESS_CLASS,									// jméno třídy okna
 				NULL,											// titulek okna
 				WS_CHILD | WS_VISIBLE,							// styl okna
 				20,												// X
 				200,											// Y
-				ClientWidth - 40,								// šíøka
+				ClientWidth - 40,								// šířka
 				20,												// výška
-				MainFrame,										// rodiè
+				MainFrame,										// rodič
 				(HMENU)IDN_INDWND,								// menu
 				hInstance,										// instance
 				NULL);											// parametry
@@ -3853,15 +3853,15 @@ void CreateIndWnd()
 		if (AktPage == PAGEDINSTAL)
 		{
 			IndWndNadp = ::CreateWindowEx(
-				0,												// rozšíøený styl
-				_T("STATIC"),									// jméno tøídy okna
+				0,												// rozšířený styl
+				_T("STATIC"),									// jméno třídy okna
 				X(_T("Probíhá odinstalování aplikace Petr ..."), _T("Proceeding uninstallation of the Peter application ...")),	// titulek okna
 				SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 				30,												// X
 				100,											// Y
-				ClientWidth - 60,								// šíøka
+				ClientWidth - 60,								// šířka
 				20,												// výška
-				MainFrame,										// rodiè
+				MainFrame,										// rodič
 				(HMENU)IDN_INDWNDNADP,							// menu
 				hInstance,										// instance
 				NULL);											// parametry
@@ -3869,15 +3869,15 @@ void CreateIndWnd()
 		else
 		{
 			IndWndNadp = ::CreateWindowEx(
-				0,												// rozšíøený styl
-				_T("STATIC"),									// jméno tøídy okna
+				0,												// rozšířený styl
+				_T("STATIC"),									// jméno třídy okna
 				X(_T("Probíhá instalace aplikace Petr ..."), _T("Proceeding installation of the Peter application ...")),		// titulek okna
 				SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 				30,												// X
 				100,											// Y
-				ClientWidth - 60,								// šíøka
+				ClientWidth - 60,								// šířka
 				20,												// výška
-				MainFrame,										// rodiè
+				MainFrame,										// rodič
 				(HMENU)IDN_INDWNDNADP,							// menu
 				hInstance,										// instance
 				NULL);											// parametry
@@ -3887,15 +3887,15 @@ void CreateIndWnd()
 	if (IndWndFile == NULL)
 	{
 		IndWndFile = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			NULL,											// titulek okna
 			SS_LEFT | WS_VISIBLE | WS_CHILD,				// styl okna
 			20,												// X
 			170,											// Y
-			ClientWidth - 30,								// šíøka
+			ClientWidth - 30,								// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_INDWNDFILE,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3905,15 +3905,15 @@ void CreateIndWnd()
 	if (IndWnd000 == NULL)
 	{
 		IndWnd000 = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			_T("0%"),										// titulek okna
 			SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 			5,												// X
 			225,											// Y
-			30,												// šíøka
+			30,												// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_INDWND000,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3923,15 +3923,15 @@ void CreateIndWnd()
 	if (IndWnd025 == NULL)
 	{
 		IndWnd025 = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			_T("25%"),										// titulek okna
 			SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 			5 + 1*(ClientWidth - 40)/4,						// X
 			225,											// Y
-			30,												// šíøka
+			30,												// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_INDWND025,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3941,15 +3941,15 @@ void CreateIndWnd()
 	if (IndWnd050 == NULL)
 	{
 		IndWnd050 = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			_T("50%"),										// titulek okna
 			SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 			5 + 2*(ClientWidth - 40)/4,						// X
 			225,											// Y
-			30,												// šíøka
+			30,												// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_INDWND050,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3959,15 +3959,15 @@ void CreateIndWnd()
 	if (IndWnd075 == NULL)
 	{
 		IndWnd075 = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			_T("75%"),										// titulek okna
 			SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 			5 + 3*(ClientWidth - 40)/4,						// X
 			225,											// Y
-			30,												// šíøka
+			30,												// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_INDWND075,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3977,15 +3977,15 @@ void CreateIndWnd()
 	if (IndWnd100 == NULL)
 	{
 		IndWnd100 = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			_T("100%"),										// titulek okna
 			SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 			-2 + (ClientWidth - 40),						// X
 			225,											// Y
-			30,												// šíøka
+			30,												// šířka
 			20,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_INDWND100,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -3994,22 +3994,22 @@ void CreateIndWnd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení informací o disku
+// vytvoření informací o disku
 
 void CreateDiskFree()
 {
 	if (DiskReqNadp == NULL)
 	{
 		DiskReqNadp = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			X(_T("Požadované volné místo:"), _T("Required free space:")),					// titulek okna
 			SS_LEFT | WS_VISIBLE | WS_CHILD,				// styl okna
 			330,											// X
 			210,											// Y
-			180,											// šíøka
+			180,											// šířka
 			18,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_DISKREQNADP,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -4041,15 +4041,15 @@ void CreateDiskFree()
 		txt += _T(" MB");
 
 		DiskReqNum = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			txt,											// titulek okna
 			SS_RIGHT | WS_VISIBLE | WS_CHILD,				// styl okna
 			510,											// X
 			210,											// Y
-			70,												// šíøka
+			70,												// šířka
 			18,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_DISKREQNADP,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -4059,15 +4059,15 @@ void CreateDiskFree()
 	if (DiskFreeNadp == NULL)
 	{
 		DiskFreeNadp = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			X(_T("Volné místo na cílovém disku:"), _T("Free space on destination disk:")),	// titulek okna
 			SS_LEFT | WS_VISIBLE | WS_CHILD,				// styl okna
 			330,											// X
 			235,											// Y
-			180,											// šíøka
+			180,											// šířka
 			18,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_DISKFREENADP,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -4081,15 +4081,15 @@ void CreateDiskFree()
 		txt += _T(" MB");
 
 		DiskFreeNum = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			txt,											// titulek okna
 			SS_RIGHT | WS_VISIBLE | WS_CHILD,				// styl okna
 			510,											// X
 			235,											// Y
-			70,												// šíøka
+			70,												// šířka
 			18,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_DISKFREENUM,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -4098,7 +4098,7 @@ void CreateDiskFree()
 
 	if (ButtonNext)
 	{
-// blokování tlaèítka Next
+// blokování tlačítka Next
 		BOOL enable = FALSE;
 		for (int i = 0; i < GROUPSNUM; i++)
 		{
@@ -4113,24 +4113,24 @@ void CreateDiskFree()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nadpisu smlouvy
+// vytvoření nadpisu smlouvy
 
 void CreateSmlouvaNadp()
 {
 	if (SmlouvaNadp == NULL)
 	{
 		SmlouvaNadp = ::CreateWindowEx(
-			0,												// rozšíøený styl
-			_T("STATIC"),									// jméno tøídy okna
+			0,												// rozšířený styl
+			_T("STATIC"),									// jméno třídy okna
 			X(
-				_T("Pøeètìte si, prosím, Licenèní smlouvu a stvrïte souhlas s ní stiskem 'Souhlasím'."),
+				_T("Přečtěte si, prosím, Licenční smlouvu a stvrďte souhlas s ní stiskem 'Souhlasím'."),
 				_T("Please read License Agreement and confirm agreement with it by pressing 'I Agree'.")),
 			SS_CENTER | WS_VISIBLE | WS_CHILD,				// styl okna
 			1,												// X
 			10,												// Y
-			ClientWidth - 2,								// šíøka
+			ClientWidth - 2,								// šířka
 			18,												// výška
-			MainFrame,										// rodiè
+			MainFrame,										// rodič
 			(HMENU)IDN_SMLOUVANADP,							// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -4138,7 +4138,7 @@ void CreateSmlouvaNadp()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení okna s licenèní smlouvou (nesmí být UNICODE !!!!)
+// vytvoření okna s licenční smlouvou (nesmí být UNICODE !!!!)
 
 CText smlouvatxt;
 int smlouvaoff;
@@ -4166,21 +4166,21 @@ void CreateSmlouva()
 	if (SmlouvaWnd == NULL)
 	{
 		SmlouvaWnd = ::CreateWindowEx(
-				WS_EX_CLIENTEDGE,								// rozšíøený styl
-				_T("RichEdit"),									// jméno tøídy okna
+				WS_EX_CLIENTEDGE,								// rozšířený styl
+				_T("RichEdit"),									// jméno třídy okna
 				NULL,											// titulek okna
 				ES_AUTOVSCROLL | ES_SAVESEL | ES_SUNKEN | WS_VSCROLL |
 					ES_READONLY | ES_MULTILINE | WS_CHILD,// styl okna
 				10,												// X
 				40,												// Y
-				ClientWidth - 20,								// šíøka
+				ClientWidth - 20,								// šířka
 				ClientHeight - 40 - 56,							// výška
-				MainFrame,										// rodiè
+				MainFrame,										// rodič
 				(HMENU)IDN_SMLOUVAWND,							// menu
 				hInstance,										// instance
 				NULL);											// parametry
 
-// naètení textu
+// načtení textu
 		CResource res;
 		res.Open(X(IDR_LIC_CZ, IDR_LIC_EN), _T("RTF"));
 		smlouvatxt.Set((char*)res.Adr(), res.Size());
@@ -4200,7 +4200,7 @@ void CreateSmlouva()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// vystøedìní okna proti jinému oknu
+// vystředění okna proti jinému oknu
 
 void CenterWindow(HWND child, HWND parent)
 {
@@ -4223,7 +4223,7 @@ void CenterWindow(HWND child, HWND parent)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr cílového adresáøe
+// výběr cílového adresáře
 
 UINT CALLBACK OFNHookProc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -4255,24 +4255,24 @@ UINT CALLBACK OFNHookProc(HWND hdlg, UINT uiMsg, WPARAM wParam, LPARAM lParam)
 
 void SelectDest()
 {
-// pøíprava struktury k zadání jména souboru
+// příprava struktury k zadání jména souboru
 	OPENFILENAME ofn;
 	MemFill(&ofn, sizeof(ofn), 0);
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = MainFrame;
-	ofn.lpstrFilter = X(_T("Složky souborù\0 . \0\0"), _T("File folders\0 . \0\0"));
+	ofn.lpstrFilter = X(_T("Složky souborů\0 . \0\0"), _T("File folders\0 . \0\0"));
 	ofn.Flags = OFN_HIDEREADONLY | OFN_NOCHANGEDIR | OFN_SHAREAWARE | OFN_ENABLEHOOK | OFN_ENABLESIZING |
 			OFN_NOVALIDATE | OFN_NOTESTFILECREATE | OFN_LONGNAMES | OFN_EXPLORER;
 	ofn.lpstrTitle = X(_T("Cílová složka k instalaci aplikace Petr"), _T("Destination Folder to Install the Peter Application"));
 	ofn.lpfnHook = OFNHookProc;
 
-// aktuální adresáø
+// aktuální adresář
 	CText path;
 	path = InstPath;
 	path.Delete(path.RevFind(_T('\\')));
 	ofn.lpstrInitialDir = path;
 
-// pøednastavené jméno souboru
+// přednastavené jméno souboru
 	CText name;
 	name = InstPath.Right(InstPath.Length() - (InstPath.RevFind(_T('\\')) + 1));
 	int n = name.Length() + 1;
@@ -4341,14 +4341,14 @@ void SelectDest()
 
 void RePaintFlag()
 {
-// otevøení DC okna
+// otevření DC okna
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
 	HPALETTE OldPal = ::SelectPalette(dc, StdPalette, FALSE);
 	::RealizePalette(dc);
 
-// vykreslení èeské vlajky
+// vykreslení české vlajky
 	StdBitmapInfo->bmiHeader.biWidth = FlagCZ.Width();
 	StdBitmapInfo->bmiHeader.biHeight = FlagCZ.Height();
 
@@ -4370,10 +4370,10 @@ void RePaintFlag()
 		StdBitmapInfo,
 		DIB_RGB_COLORS, SRCCOPY);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc, OldPal, FALSE);
 
-// uzavøení DC okna
+// uzavření DC okna
 	::ReleaseDC(MainFrame, dc);
 }
 
@@ -4387,7 +4387,7 @@ void SetPage(int page)
 // nová aktivní stránka
 	AktPage = page;
 
-// zrušení všech prvkù
+// zrušení všech prvků
 	if (ButtonBack)
 	{
 		::DestroyWindow(ButtonBack);
@@ -4586,15 +4586,15 @@ void SetPage(int page)
 		FlagENGWnd = NULL;
 	}
 
-// vytvoøení nového okna
+// vytvoření nového okna
 	switch (page)
 	{
-// výbìr jazyku
+// výběr jazyku
 	case PAGELANG:
 		RePaint();						// vymazání podkladu
-		CreateExit();					// vytvoøení tlaèítka Konec
-		CreateFlags();					// vytvoøení tlaèítek vlajek
-		CreateLineWnd();				// vytvoøení èáry nad tlaèítky
+		CreateExit();					// vytvoření tlačítka Konec
+		CreateFlags();					// vytvoření tlačítek vlajek
+		CreateLineWnd();				// vytvoření čáry nad tlačítky
 		::SetCursor(CurArrow);			// kurzor - šipka
 		RePaintFlag();					// vykreslení vlajek
 		break;
@@ -4627,47 +4627,47 @@ void SetPage(int page)
 		RePaint();						// vykreslení okna
 		break;
 
-// okno výbìru složek	
+// okno výběru složek	
 	case PAGESELECT:
 		RePaint();						// vymazání podkladu
-		GetDiskSpace();					// naètení informací o cílovém disku
-		CreateBack();					// vytvoøení tlaèítka Zpìt
-		CreateNext();					// vytvoøení tlaèítka Další
-		CreateExit();					// vytvoøení tlaèítka Konec
-		CreateList();					// vytvoøení tlaèítka Procházet
-		CreateLineWnd();				// vytvoøení èáry nad tlaèítky
-		CreateCheckWnd();				// vytvoøení pole pøepínaèù
-		CreateCheckNadp();				// vytvoøení nadpisu pøepínaèù
-		CreatePathWnd();				// vytvoøení textu cesty
-		CreateUserRam();				// vytvoøení uživatelského rámu
+		GetDiskSpace();					// načtení informací o cílovém disku
+		CreateBack();					// vytvoření tlačítka Zpět
+		CreateNext();					// vytvoření tlačítka Další
+		CreateExit();					// vytvoření tlačítka Konec
+		CreateList();					// vytvoření tlačítka Procházet
+		CreateLineWnd();				// vytvoření čáry nad tlačítky
+		CreateCheckWnd();				// vytvoření pole přepínačů
+		CreateCheckNadp();				// vytvoření nadpisu přepínačů
+		CreatePathWnd();				// vytvoření textu cesty
+		CreateUserRam();				// vytvoření uživatelského rámu
 		CreateDiskFree();				// zobrazení informací o disku
 
-		::SetFocus(ButtonNext);			// fokus na tlaèítko Next
+		::SetFocus(ButtonNext);			// fokus na tlačítko Next
 		::SetCursor(CurArrow);			// kurzor - šipka
 		break;	
 
 // okno instalace
 	case PAGEINSTAL:
 		RePaint();						// vymazání podkladu
-		CreateCanc();					// vytvoøení tlaèítka Storno
-		CreateIndWnd();					// vytvoøení indikátoru
-		CreateLineWnd();				// vytvoøení èáry nad tlaèítky
+		CreateCanc();					// vytvoření tlačítka Storno
+		CreateIndWnd();					// vytvoření indikátoru
+		CreateLineWnd();				// vytvoření čáry nad tlačítky
 
-		::SetFocus(ButtonCanc);			// fokus na tlaèítko Storno
+		::SetFocus(ButtonCanc);			// fokus na tlačítko Storno
 		::SetCursor(CurArrow);			// kurzor - šipka
 
-		Install();						// provedení instalace (pøíp. pøerušení)
+		Install();						// provedení instalace (příp. přerušení)
 		break;	
 
 // okno odinstalace
 	case PAGEDINSTAL:
 		RePaint();						// vymazání podkladu
-		CreateCanc();					// vytvoøení tlaèítka Storno (to jen aby tam nìco bylo)
-		::EnableWindow(ButtonCanc, FALSE);	// zákaz tlaèítka Storno
-		CreateIndWnd();					// vytvoøení indikátoru
-		CreateLineWnd();				// vytvoøení èáry nad tlaèítky
+		CreateCanc();					// vytvoření tlačítka Storno (to jen aby tam něco bylo)
+		::EnableWindow(ButtonCanc, FALSE);	// zákaz tlačítka Storno
+		CreateIndWnd();					// vytvoření indikátoru
+		CreateLineWnd();				// vytvoření čáry nad tlačítky
 
-		::SetFocus(ButtonCanc);			// fokus na tlaèítko Storno
+		::SetFocus(ButtonCanc);			// fokus na tlačítko Storno
 		::SetCursor(CurArrow);			// kurzor - šipka
 
 		DInstall();						// provedení odinstalace
@@ -4678,13 +4678,13 @@ void SetPage(int page)
 		RePaint();						// vymazání podkladu
 		if (!Uninst)
 		{
-			CreateBack();					// vytvoøení tlaèítka Zpìt
+			CreateBack();					// vytvoření tlačítka Zpět
 		}
-		CreateNext();					// vytvoøení tlaèítka Další
-		CreateExit();					// vytvoøení tlaèítka Konec
-		CreateLineWnd();				// vytvoøení èáry nad tlaèítky
+		CreateNext();					// vytvoření tlačítka Další
+		CreateExit();					// vytvoření tlačítka Konec
+		CreateLineWnd();				// vytvoření čáry nad tlačítky
 
-		::SetFocus(ButtonNext);			// fokus na tlaèítko Next
+		::SetFocus(ButtonNext);			// fokus na tlačítko Next
 		::SetCursor(CurArrow);			// kurzor - šipka
 		RePaintDInst();					// zobrazení obrázku
 		break;	
@@ -4692,10 +4692,10 @@ void SetPage(int page)
 // okno OK
 	case PAGEOK:
 		RePaint();						// vymazání podkladu
-		CreateExit();					// vytvoøení tlaèítka Storno
-		CreateLineWnd();				// vytvoøení èáry nad tlaèítky
+		CreateExit();					// vytvoření tlačítka Storno
+		CreateLineWnd();				// vytvoření čáry nad tlačítky
 
-		::SetFocus(ButtonExit);			// fokus na tlaèítko Next
+		::SetFocus(ButtonExit);			// fokus na tlačítko Next
 		::SetCursor(CurArrow);			// kurzor - šipka
 		RePaintOK();					// zobrazení obrázku OK
 		break;	
@@ -4703,10 +4703,10 @@ void SetPage(int page)
 // okno odinstalování OK
 	case PAGEDINSTOK:
 		RePaint();						// vymazání podkladu
-		CreateExit();					// vytvoøení tlaèítka Storno
-		CreateLineWnd();				// vytvoøení èáry nad tlaèítky
+		CreateExit();					// vytvoření tlačítka Storno
+		CreateLineWnd();				// vytvoření čáry nad tlačítky
 
-		::SetFocus(ButtonExit);			// fokus na tlaèítko Next
+		::SetFocus(ButtonExit);			// fokus na tlačítko Next
 		::SetCursor(CurArrow);			// kurzor - šipka
 		RePaintDInstOK();				// zobrazení obrázku OK
 		break;	
@@ -4715,24 +4715,24 @@ void SetPage(int page)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení okna
+// překreslení okna
 
 void RePaint()
 {
-// lokální promìnné
+// lokální proměnné
 	int srcinc;
 	BYTE* src;
 	BYTE* dst;
 	int i,j;
 
-// inicializaèní vymazání bufferu
+// inicializační vymazání bufferu
 	MemFill(ClientBuf, ClientWidth * ClientHeight, (char)(BYTE)BackCol);
 
 // vykreslení bude jen pro hlavní okno, v ostatních bude vymazání
 	if (AktPage == PAGEMAIN)
 	{
 
-// pøenesení stínu (jen je-li kurzor myši v oknì)
+// přenesení stínu (jen je-li kurzor myši v okně)
 		if ((OffX != MOUSEINV) && (OffY != MOUSEINV))
 		{
 			srcinc = Shadow.Width();
@@ -4840,7 +4840,7 @@ void RePaint()
 			}
 		}
 
-// pøidání obrázku
+// přidání obrázku
 		dst = ClientBuf;
 		for (i = ClientHeight; i > 0; i--)
 		{
@@ -4853,7 +4853,7 @@ void RePaint()
 		}
 	}
 
-// pøidání znaku
+// přidání znaku
 	if (AktPage == PAGEMAIN)
 	{
 		src = GemLogo.DataData() + GemtreeFaze*40;
@@ -4873,7 +4873,7 @@ void RePaint()
 		}
 	}
 
-// otevøení DC okna
+// otevření DC okna
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
@@ -4891,21 +4891,21 @@ void RePaint()
 		StdBitmapInfo,
 		DIB_RGB_COLORS, SRCCOPY);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc, OldPal, FALSE);
 
-// uzavøení DC okna
+// uzavření DC okna
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení znaku Gemtree
+// překreslení znaku Gemtree
 
 void RePaintGemtree()
 {
 
-// otevøení DC okna
+// otevření DC okna
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
@@ -4923,28 +4923,28 @@ void RePaintGemtree()
 		StdBitmapInfo,
 		DIB_RGB_COLORS, SRCCOPY);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc, OldPal, FALSE);
 
-// uzavøení DC okna
+// uzavření DC okna
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení okna instalace OK
+// překreslení okna instalace OK
 
 void RePaintOK()
 {
 
-// otevøení DC okna
+// otevření DC okna
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
 	HPALETTE OldPal = ::SelectPalette(dc, StdPalette, FALSE);
 	::RealizePalette(dc);
 
-// pøíprava obrázku
+// příprava obrázku
 	CPicture pic;
 	pic = InstalOK;
 
@@ -4959,27 +4959,27 @@ void RePaintOK()
 		StdBitmapInfo,
 		DIB_RGB_COLORS, SRCCOPY);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc, OldPal, FALSE);
 
-// uzavøení DC okna
+// uzavření DC okna
 	::ReleaseDC(MainFrame, dc);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení okna odinstalace OK
+// překreslení okna odinstalace OK
 
 void RePaintDInstOK()
 {
 
-// otevøení DC okna
+// otevření DC okna
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
 	HPALETTE OldPal = ::SelectPalette(dc, StdPalette, FALSE);
 	::RealizePalette(dc);
 
-// pøíprava obrázku
+// příprava obrázku
 	CPicture pic;
 	pic = DInstalOK;
 
@@ -4994,27 +4994,27 @@ void RePaintDInstOK()
 		StdBitmapInfo,
 		DIB_RGB_COLORS, SRCCOPY);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc, OldPal, FALSE);
 
-// uzavøení DC okna
+// uzavření DC okna
 	::ReleaseDC(MainFrame, dc);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení okna odinstalace
+// překreslení okna odinstalace
 
 void RePaintDInst()
 {
 
-// otevøení DC okna
+// otevření DC okna
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
 	HPALETTE OldPal = ::SelectPalette(dc, StdPalette, FALSE);
 	::RealizePalette(dc);
 
-// pøíprava obrázku
+// příprava obrázku
 	CPicture pic;
 	pic = DInstal;
 
@@ -5029,10 +5029,10 @@ void RePaintDInst()
 		StdBitmapInfo,
 		DIB_RGB_COLORS, SRCCOPY);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc, OldPal, FALSE);
 
-// uzavøení DC okna
+// uzavření DC okna
 	::ReleaseDC(MainFrame, dc);
 }
 
@@ -5234,28 +5234,28 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 
 	case WM_TIMER:
 		{
-// souøadnice kurzoru myši
+// souřadnice kurzoru myši
 			POINT cur;
 			::GetCursorPos(&cur);
 
-// souøadnice støedu okna
+// souřadnice středu okna
 			POINT win;
 			win.x = 0;
 			win.y = 0;
 			::ClientToScreen(MainFrame, &win);
 
-// relativní pozice kurzoru myši v oknì
+// relativní pozice kurzoru myši v okně
 			int oldx = RelX;
 			int oldy = RelY;
 			RelX = cur.x - win.x;
 			RelY = cur.y - win.y;
 
-// výpoèet posunu obrázku
+// výpočet posunu obrázku
 			int offx =  - RelX + RelX*Shadow.Width()/ClientWidth;
 			int offy = Shadow.Height() - ClientHeight
 						+ RelY - RelY*Shadow.Height()/ClientHeight;
 
-// pøi zmìnì posunu pøekreslení okna
+// při změně posunu překreslení okna
 			GemtreeFaze++;
 			if (GemtreeFaze >= GemtreeN) GemtreeFaze = 0;
 
@@ -5274,7 +5274,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 				{
 					if (RelY < -150)
 					{
-						RePaint();			// aby byl vidìt stín
+						RePaint();			// aby byl vidět stín
 					}
 					else
 					{
@@ -5305,12 +5305,12 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení hlavního okna aplikace
+// vytvoření hlavního okna aplikace
 
 
 bool MainFrameCreate()
 {
-// registrace tøídy okna
+// registrace třídy okna
 	WNDCLASS wcl;
 	wcl.style = CS_HREDRAW | CS_VREDRAW | CS_DBLCLKS;
 	wcl.lpfnWndProc = WindowProc;
@@ -5324,7 +5324,7 @@ bool MainFrameCreate()
 	wcl.lpszClassName = MainFrameClass;
 	::RegisterClass(&wcl);
 
-// zjištìní požadovaných rozmìrù okna
+// zjištění požadovaných rozměrů okna
 	RECT rc;
 	rc.left = 0;
 	rc.top = 0;
@@ -5334,17 +5334,17 @@ bool MainFrameCreate()
 	MainFrameWidth = rc.right - rc.left;
 	MainFrameHeight = rc.bottom - rc.top;
 
-// vytvoøení hlavního okna
+// vytvoření hlavního okna
 	MainFrame = ::CreateWindowEx(
-		WS_EX_APPWINDOW | WS_EX_CONTROLPARENT | WS_EX_DLGMODALFRAME,// rozšíøený styl
-		MainFrameClass,									// jméno tøídy okna
+		WS_EX_APPWINDOW | WS_EX_CONTROLPARENT | WS_EX_DLGMODALFRAME,// rozšířený styl
+		MainFrameClass,									// jméno třídy okna
 		"",												// titulek okna
 		WS_BORDER | WS_CAPTION | WS_SYSMENU | WS_VISIBLE,// styl okna
 		(ScreenWidth - MainFrameWidth)/2,				// X
 		(ScreenHeight - MainFrameHeight)/2,				// Y
-		MainFrameWidth,									// šíøka
+		MainFrameWidth,									// šířka
 		MainFrameHeight,								// výška
-		NULL,											// rodiè
+		NULL,											// rodič
 		NULL,											// menu
 		hInstance,										// instance
 		NULL);											// parametry

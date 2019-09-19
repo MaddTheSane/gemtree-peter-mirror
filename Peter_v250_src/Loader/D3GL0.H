@@ -133,7 +133,7 @@ extern	HGLRC				D3GL0Cont;		// renderovací povrch
 extern	HPALETTE			D3GL0Pal;		// palety OpenGL
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní OpenGL 1.0 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní OpenGL 1.0 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3GL0InitD3();
 void D3GL0TermD3();
@@ -152,14 +152,14 @@ void D3GL0InitPal(HDC dc);
 void D3GL0TermPal();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení kontextu zaøízení (vrací TRUE=OK)
+// vytvoření kontextu zařízení (vrací TRUE=OK)
 
 bool D3GL0InitCont();
 void D3GL0TermCont();
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahájení funkce zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3GL0Start(int type);
 void D3GL0Stop();
@@ -175,7 +175,7 @@ void D3GL0Clear();
 void D3GL0Disp();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèní matice
+// aktualizace projekční matice
 
 void D3GL0AktProj();
 
@@ -190,7 +190,7 @@ void D3GL0AktView();
 void D3GL0Begin();
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení renderování scény
+// ukončení renderování scény
 
 void D3GL0End();
 
@@ -200,42 +200,42 @@ void D3GL0End();
 void D3GL0Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování objektu pøed ukonèením ovladaèe
+// resetování objektu před ukončením ovladače
 
 void D3GL0Reset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè vyplòování ploch
+// aktualizovat přepínač vyplňování ploch
 
 void D3GL0AktWireframe();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè osvìtlení
+// aktualizovat přepínač osvětlení
 
 void D3GL0AktLightOn();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè plynulého stinování
+// aktualizovat přepínač plynulého stinování
 
 void D3GL0AktShades();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè odstraòování ploch
+// aktualizovat přepínač odstraňování ploch
 
 void D3GL0AktCulling();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zvìtšených textur
+// aktualizovat přepínač filtrace zvětšených textur
 
 void D3GL0AktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zmenšených a vzdálených textur
+// aktualizovat přepínač filtrace zmenšených a vzdálených textur
 
 void D3GL0AktMinMipFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace položky svìtla
+// aktualizace položky světla
 
 void D3GL0AktLight(int inx, D3DLITEM* item);
 
@@ -245,7 +245,7 @@ void D3GL0AktLight(int inx, D3DLITEM* item);
 void D3GL0SetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetování položky textury před ukončením ovladače
 
 void D3GL0TextureRes(D3DTITEM* item);
 
@@ -255,7 +255,7 @@ void D3GL0TextureRes(D3DTITEM* item);
 void D3GL0TextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutí pùvodní textury
+// zapnutí původní textury
 
 void D3GL0TextureOn(D3DTITEM* item, int stage);
 
@@ -270,7 +270,7 @@ void D3GL0TextureOff(int stage);
 void D3GL0MatReset(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky svìtla
+// resetování položky světla
 
 void D3GL0LightReset(int inx, D3DLITEM* item);
 
@@ -280,12 +280,12 @@ void D3GL0LightReset(int inx, D3DLITEM* item);
 void GLTexture(PICTUREDATA* picdata, BOOL mips);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvìtlení
+// aktualizace ambient osvětlení
 
 void D3GL0AktAmbient();
 
 /////////////////////////////////////////////////////////////////////////////
-// volná videopamì
+// volná videopaměť
 
 int D3GL0Free();
 
@@ -310,7 +310,7 @@ void D3GL0AktState();
 void D3GL0AktBlend(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenèní úrovnì alfa
+// aktualizace referenční úrovně alfa
 
 void D3GL0AktAlfa(D3DFITEM* item);
 
@@ -370,7 +370,7 @@ void D3GL0SetSMask(DWORD mask);
 void D3GL0Shadow(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení stínù
+// vykreslení stínů
 
 void D3GL0Shadows();
 

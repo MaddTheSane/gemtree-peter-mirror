@@ -1,26 +1,26 @@
 
 /***************************************************************************\
 *																			*
-*							Výbìr souboru k editaci							*
+*							Výběr souboru k editaci							*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globální promìnné
+// globální proměnné
 
-extern	BOOL		SelectMode;						// pøíznak módu výbìru souborù
-extern	HWND		SelectView;						// seznam souborù
-extern	HIMAGELIST	SelectImageList;				// seznam obrázkù
-//extern	CBufIcon	SelectIcon;						// ikony souborù
+extern	BOOL		SelectMode;						// příznak módu výběru souborů
+extern	HWND		SelectView;						// seznam souborů
+extern	HIMAGELIST	SelectImageList;				// seznam obrázků
+//extern	CBufIcon	SelectIcon;						// ikony souborů
 
 //extern	CBufIcon	IconSel;						// buffer ikon s velikostí 32x32
-//extern	CBufIndex	IconSelList;					// buffer indexù ikon s velikostí 32x32
-//extern	int			IconSelNext;					// pøíští ikona pro zápis
+//extern	CBufIndex	IconSelList;					// buffer indexů ikon s velikostí 32x32
+//extern	int			IconSelNext;					// příští ikona pro zápis
 
-extern	int			SelectStatusWidth;				// šíøka druhého pole stavového øádku
+extern	int			SelectStatusWidth;				// šířka druhého pole stavového řádku
 
-extern	int			SelectItemNum;					// poèet položek v seznamu
+extern	int			SelectItemNum;					// počet položek v seznamu
 
 /////////////////////////////////////////////////////////////////////////////
 // nastavení menu programu
@@ -29,37 +29,37 @@ void SelectSetMenu();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// první inicializace pøi startu programu (hlavní okno je již vytvoøeno)
+// první inicializace při startu programu (hlavní okno je již vytvořeno)
 
 void SelectStartInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení režimu výbìru souboru k editaci
+// zahájení režimu výběru souboru k editaci
 
 void SelectInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení režimu výbìru souboru k editaci
+// ukončení režimu výběru souboru k editaci
 
 void SelectTerm();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení fokusu na okno výbìru
+// nastavení fokusu na okno výběru
 
 void SelectSetFocus();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti okna
+// změna velikosti okna
 
 void SelectOnSize();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení seznamu souborù
+// načtení seznamu souborů
 
 void SelectLoad();
 
@@ -71,13 +71,13 @@ void UpdateStartOpen();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna aktuální položky (LVN_ITEMCHANGED)
+// změna aktuální položky (LVN_ITEMCHANGED)
 
 void SelectOnChange(HWND hWnd, NM_LISTVIEW* nmlv);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// otevøení souboru k editaci
+// otevření souboru k editaci
 
 void SelectOnOpen();
 
@@ -95,49 +95,49 @@ void SelectOnStart();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nového souboru
+// vytvoření nového souboru
 
 void SelectOnNew();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nového souboru kopií
+// vytvoření nového souboru kopií
 
 void SelectOnNewCopy();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operace PASTE pøi editaci jména souboru
+// operace PASTE při editaci jména souboru
 
 void SelectOnPaste();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operace CUT pøi editaci jména souboru
+// operace CUT při editaci jména souboru
 
 void SelectOnCut();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operace UNDO pøi editaci jména souboru
+// operace UNDO při editaci jména souboru
 
 void SelectOnUndo();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení adresáøe
+// vytvoření adresáře
 
 void SelectOnPath();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení souboru nebo adresáøe
+// zrušení souboru nebo adresáře
 
 void SelectOnDelete();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní informace o ikonì k zobrazení
+// zjištění informace o ikoně k zobrazení
 
 void SelectOnGetDispInfo(LV_DISPINFO* lvd);
 
@@ -149,23 +149,23 @@ BOOL SelectOnKeyDown(HWND hWnd, int key, int data);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení/ukonèení editace jména souboru/adresáøe
+// zahájení/ukončení editace jména souboru/adresáře
 
 void SelectOnRename();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace jména prvku (vrací TRUE=pøerušit editaci)
+// zahájení editace jména prvku (vrací TRUE=přerušit editaci)
 
 BOOL SelectOnBeginLabelEdit(HWND hWnd, int iItem);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení editace jména prvku
+// ukončení editace jména prvku
 
 void SelectOnEndLabelEdit(HWND hWnd, LV_ITEM* lvi);
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha èasovaèe (TRUE=obslouženo)
+// obsluha časovače (TRUE=obslouženo)
 
 BOOL SelectOnTimer(UINT timerID);

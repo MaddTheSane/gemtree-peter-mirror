@@ -19,46 +19,46 @@ MUSICDATA*	Data = NULL;				// data hudby
 int		Delka = 0;						// délka skladby v ms
 
 // zobrazení
-int		DLeft;							// souøadnice X displeje
-int		DTop;							// souøadnice Y displeje
-int		DWidth;							// šíøka displeje
+int		DLeft;							// souřadnice X displeje
+int		DTop;							// souřadnice Y displeje
+int		DWidth;							// šířka displeje
 int		DHeight;						// výška displeje
 
-// zobrazení èasu
-HWND	DispWnd = NULL;					// okno zobrazení èasu
-int		LastTime = 0;					// naposledy zobrazený èas (sekund)
+// zobrazení času
+HWND	DispWnd = NULL;					// okno zobrazení času
+int		LastTime = 0;					// naposledy zobrazený čas (sekund)
 
 // ovládání
-BOOL	Play = FALSE;					// probíhá pøehrávání
-BOOL	Loop = FALSE;					// zapnuta smyèka
-BOOL	Pause = FALSE;					// zapauzování pøehrávání
+BOOL	Play = FALSE;					// probíhá přehrávání
+BOOL	Loop = FALSE;					// zapnuta smyčka
+BOOL	Pause = FALSE;					// zapauzování přehrávání
 
-// pøehrávání a narávání
-TCHAR		FileName[MAX_PATH + 101];	// jméno pøechodného souboru
-MCIDEVICEID	DeviceID = 0;				// ID zaøízení
-DWORD		Timer = 0;					// èasovaè pro zobrazení èasu
+// přehrávání a narávání
+TCHAR		FileName[MAX_PATH + 101];	// jméno přechodného souboru
+MCIDEVICEID	DeviceID = 0;				// ID zařízení
+DWORD		Timer = 0;					// časovač pro zobrazení času
 
-#define MusicTimerID 13263				// ID èasovaèe
+#define MusicTimerID 13263				// ID časovače
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace při startu programu
 
 void StartInit()
 {
 // není soubor
 	FileName[0] = 0;
 
-// vytvoøení okna displeje
+// vytvoření okna displeje
 	DispWnd = ::CreateWindowEx(
-		WS_EX_CLIENTEDGE | WS_EX_DLGMODALFRAME, // rozšíøený styl
-		_T("STATIC"),					// tøída
+		WS_EX_CLIENTEDGE | WS_EX_DLGMODALFRAME, // rozšířený styl
+		_T("STATIC"),					// třída
 		_T("00:00"),					// text
 		WS_CHILD | SS_CENTER,			// styl
 		300,							// X
 		200,							// Y
-		200,							// šíøka
+		200,							// šířka
 		100,							// výška
-		MainFrame,						// rodiè
+		MainFrame,						// rodič
 		NULL,							// ID
 		hInstance,						// instance
 		NULL);							// data
@@ -80,10 +80,10 @@ void BegEdit(int index)
 	Index = index;
 	ASSERT(Music.IsValid(index));
 
-// vypnutí pøípadného pøehrávání
+// vypnutí případného přehrávání
 	OnStop();
 
-// kopie pøed editací
+// kopie před editací
 	Music[index].CopyWrite();
 
 // adresa dat hudby
@@ -105,7 +105,7 @@ void BegEdit(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun okna displeje
+// přesun okna displeje
 
 HDWP MoveDisp(HDWP hdwp)
 {
@@ -133,7 +133,7 @@ HDWP MoveDisp(HDWP hdwp)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení èasového údaje (v sekundách)
+// nastavení časového údaje (v sekundách)
 
 void DispSet(int time)
 {
@@ -175,13 +175,13 @@ void DispLength()
 
 void Disp()
 {
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// příprava štětce k vymazání podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štětec k vymazání plochy
 
-// vymazání plochy nahoøe nad displejem
+// vymazání plochy nahoře nad displejem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -217,27 +217,27 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// zrušení štìtce podkladu (i když podle dokumentace rušení není nutné)
+// zrušení štětce podkladu (i když podle dokumentace rušení není nutné)
 	::DeleteObject(brush);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// start pøehrávání (init = jen zjištìní délky a pøerušení)
+// start přehrávání (init = jen zjištění délky a přerušení)
 
 void OnPlay(BOOL init)
 {
-// v pauze pokraèování pauzou
+// v pauze pokračování pauzou
 	if (Pause)
 	{
 		OnPause();
 		return;
 	}
 
-// v módu pøehrávání vypnutí pøehrávání
+// v módu přehrávání vypnutí přehrávání
 	if (Play)
 	{
 		OnStop();
@@ -251,14 +251,14 @@ void OnPlay(BOOL init)
 		return;
 	}
 
-// pøíprava jména pøechodného souboru
+// příprava jména přechodného souboru
 	TCHAR tmppath[101];
 	tmppath[0] = 0;
 	::GetTempPath(100, tmppath);
 	FileName[0] = 0;
 	::GetTempFileName(tmppath, _T("PET"), 0, FileName);
 
-// vytvoøení pøechodného souboru
+// vytvoření přechodného souboru
 	HANDLE file = ::CreateFile(FileName, GENERIC_READ | GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_TEMPORARY, NULL);
 
@@ -269,11 +269,11 @@ void OnPlay(BOOL init)
 		return;
 	}
 
-// zápis dat do pøechodného souboru
+// zápis dat do přechodného souboru
 	DWORD writen;
 	BOOL res = ::WriteFile(file, Data->Data, Data->Size, &writen, NULL);
 
-// uzavøení souboru
+// uzavření souboru
 	::CloseHandle(file);
 
 // kontrola operace zápisu	
@@ -285,7 +285,7 @@ void OnPlay(BOOL init)
 		return;
 	}
 
-// otevøení výstupního zaøízení
+// otevření výstupního zařízení
     MCI_OPEN_PARMS mop;
 
     mop.lpstrDeviceType = _T("sequencer");
@@ -303,14 +303,14 @@ void OnPlay(BOOL init)
 	}
     DeviceID = mop.wDeviceID;
 
-// nastavení èasového formátu na milisekundy
+// nastavení časového formátu na milisekundy
 	MCI_SET_PARMS msp;
 	msp.dwTimeFormat = MCI_FORMAT_MILLISECONDS;
 
 	res = ::mciSendCommand(DeviceID, MCI_SET, 
 		MCI_SET_TIME_FORMAT, (DWORD) &msp);
 
-// naètení délky skladby
+// načtení délky skladby
 	MCI_STATUS_PARMS mtp;
 	mtp.dwItem = MCI_STATUS_LENGTH;
 
@@ -320,7 +320,7 @@ void OnPlay(BOOL init)
 	if (Delka < 0) Delka = 0;
 	if (Delka > 1000000000) Delka = 1000000000;
 
-// pøehrání souboru
+// přehrání souboru
     MCI_PLAY_PARMS mpp;
 
 	if (!init)
@@ -342,10 +342,10 @@ void OnPlay(BOOL init)
 		return;
 	}
 
-// spuštìní èasovaèe
+// spuštění časovače
 	Timer = ::SetTimer(MainFrame, MusicTimerID, TimerConst, NULL);
 
-// zapnutí pøíznaku pøehrávání
+// zapnutí příznaku přehrávání
 	Play = TRUE;
 
 // aktualizace voleb
@@ -354,11 +354,11 @@ void OnPlay(BOOL init)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha èasovaèe (TRUE=obslouženo)
+// obsluha časovače (TRUE=obslouženo)
 
 BOOL OnTimer(UINT timerID)
 {
-// obsluha zobrazení èasu
+// obsluha zobrazení času
 	if (timerID == MusicTimerID)
 	{
 		if (Play)
@@ -378,7 +378,7 @@ BOOL OnTimer(UINT timerID)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení pøehrávání
+// ukončení přehrávání
 
 void OnMMNotify(DWORD flags, int devID)
 {
@@ -394,25 +394,25 @@ void OnMMNotify(DWORD flags, int devID)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zastavení pøehrávání (mùže být voláno i zvenku pøi neaktivním editoru)
+// zastavení přehrávání (může být voláno i zvenku při neaktivním editoru)
 
 void OnStop()
 {
-// zastavení èasovaèe (musí být pøed zobrazením délky)
+// zastavení časovače (musí být před zobrazením délky)
 	if (Timer)
 	{
 		::KillTimer(MainFrame, Timer);
 		Timer = 0;
 	}
 
-// vypnutí pøehrávání
+// vypnutí přehrávání
 	if (Play)
 	{
 
-// pøíznak ukonèení pøehrávání
+// příznak ukončení přehrávání
 		Play = FALSE;
 
-// uzavøení pøehrávacího zaøízení
+// uzavření přehrávacího zařízení
 		if (DeviceID)
 		{
 			::mciSendCommand(DeviceID, MCI_STOP, 0, NULL);
@@ -438,14 +438,14 @@ void OnStop()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí pøíznaku opakování
+// přepnutí příznaku opakování
 
 void OnLoop()
 {
 // kontrola povolení operace
 	if (Play) return;
 
-// pøepnutí pøíznaku opakování
+// přepnutí příznaku opakování
 	Loop = !Loop;
 
 // aktualizace voleb
@@ -454,17 +454,17 @@ void OnLoop()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pozastavení pøehrávání
+// pozastavení přehrávání
 
 void OnPause()
 {
 // kontrola povolení operace
 	if (!Play) return;
 
-// pøepnutí pøíznaku opakování
+// přepnutí příznaku opakování
 	Pause = !Pause;
 
-// zastavení pøehrávání
+// zastavení přehrávání
 	if (Pause)
 	{
 		::mciSendCommand(DeviceID, MCI_PAUSE, 0, NULL);
@@ -482,31 +482,31 @@ void OnPause()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevinutí zpìt
+// převinutí zpět
 
 void OnRew()
 {
-// kontrola, zda je pøehrávání
+// kontrola, zda je přehrávání
 	if (!Play) return;
 
-// úschova pøíznaku pauzy
+// úschova příznaku pauzy
 	BOOL pause = Pause;
 
 // odpauzování, je-li zapauzováno
 	if (pause) OnPause();
 
-// pøíprava nové pozice
+// příprava nové pozice
 	MCI_PLAY_PARMS mpp;
 	mpp.dwCallback = (DWORD)MainFrame;
 	mpp.dwFrom = LastTime * 1000 - 10000;
 
-// pøeteèení hranice
+// přetečení hranice
 	while ((int)mpp.dwFrom < 0) 
 	{
 		mpp.dwFrom += Delka;
 	}
 
-// nastavení nové pozice pøehrávání
+// nastavení nové pozice přehrávání
 	::mciSendCommand(DeviceID, MCI_PLAY, MCI_NOTIFY | MCI_FROM, 
     (DWORD) &mpp);
 
@@ -515,31 +515,31 @@ void OnRew()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevinutí vpøed
+// převinutí vpřed
 
 void OnFrw()
 {
-// kontrola, zda je pøehrávání
+// kontrola, zda je přehrávání
 	if (!Play) return;
 
-// úschova pøíznaku pauzy
+// úschova příznaku pauzy
 	BOOL pause = Pause;
 
 // odpauzování, je-li zapauzováno
 	if (pause) OnPause();
 
-// pøíprava nové pozice
+// příprava nové pozice
 	MCI_PLAY_PARMS mpp;
 	mpp.dwCallback = (DWORD)MainFrame;
 	mpp.dwFrom = LastTime * 1000 + 10000;
 
-// pøeteèení hranice
+// přetečení hranice
 	while ((int)mpp.dwFrom >= Delka) 
 	{
 		mpp.dwFrom -= Delka;
 	}
 
-// nastavení nové pozice pøehrávání
+// nastavení nové pozice přehrávání
 	::mciSendCommand(DeviceID, MCI_PLAY, MCI_NOTIFY | MCI_FROM, 
     (DWORD) &mpp);
 
@@ -574,14 +574,14 @@ void UpdateMenu()
 void Copy()
 {
 	/*
-// otevøení schránky
+// otevření schránky
 	if (!::OpenClipboard(MainFrame))
 		return;
 
-// zapnutí èekacího kurzoru
+// zapnutí čekacího kurzoru
 	BeginWaitCursor();
 
-// vyprázdnìní schránky
+// vyprázdnění schránky
 	if (!::EmptyClipboard())
 	{
 		EndWaitCursor();
@@ -589,7 +589,7 @@ void Copy()
 		return;
 	}
 
-// vytvoøení globálního bufferu pro data
+// vytvoření globálního bufferu pro data
 	HGLOBAL global = ::GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, Data->Size);
 	if (global == NULL)
 	{
@@ -601,7 +601,7 @@ void Copy()
 // uzamknutí bufferu
 	BYTE* data = (BYTE*) ::GlobalLock(global);
 
-// pøenesení dat
+// přenesení dat
 	MemCopy(data, Data->Data, Data->Size);
 
 // odemknutí bufferu
@@ -610,10 +610,10 @@ void Copy()
 // uložení dat do schránky
 	::SetClipboardData(CF_WAVE, global);
 
-// uzavøení schránky
+// uzavření schránky
 	::CloseClipboard();
 
-// vypnutí èekacího kurzoru
+// vypnutí čekacího kurzoru
 	EndWaitCursor();
 
 // aktualizace voleb bloku
@@ -628,22 +628,22 @@ void Copy()
 void Paste()
 {
 	/*
-// lokální promìnné
+// lokální proměnné
 	HGLOBAL		global;			// globální buffer s daty
 	BYTE*		data;			// ukazatel na data
 	int			size;			// velikost dat souboru
-	int			channels;		// poèet kanálù
-	int			samples;		// vzorkovací kmitoèet
-	int			bits;			// poèet bitù na vzorek
+	int			channels;		// počet kanálů
+	int			samples;		// vzorkovací kmitočet
+	int			bits;			// počet bitů na vzorek
 
-// otevøení schránky
+// otevření schránky
 	if (!::OpenClipboard(MainFrame))
 		return;
 
-// zapnutí èekacího kurzoru
+// zapnutí čekacího kurzoru
 	BeginWaitCursor();
 
-// naètení dat schránky
+// načtení dat schránky
 	global = ::GetClipboardData(CF_WAVE);
 	if (global == NULL)
 	{
@@ -666,7 +666,7 @@ void Paste()
 		if (size < 0) size = 0;
 		data += 8;
 
-// kontrola popisovaèe formátu
+// kontrola popisovače formátu
 		if ((data[0] == 'W') &&
 			(data[1] == 'A') &&
 			(data[2] == 'V') &&
@@ -708,8 +708,8 @@ void Paste()
 					data += 8;
 
 // kopie dat do bufferu
-					Sound[Index].New(size);			// vytvoøení nového bufferu
-					SetModi();						// pøíznak modifikace programu
+					Sound[Index].New(size);			// vytvoření nového bufferu
+					SetModi();						// příznak modifikace programu
 					Data = Sound[Index].Data();		// adresa dat
 					BytesPerSec = samples * channels * (bits/8);
 					Data->Samples = samples;
@@ -730,10 +730,10 @@ void Paste()
 // odemknutí bufferu
 	::GlobalUnlock(global);
 
-// uzavøení schránky
+// uzavření schránky
 	::CloseClipboard();
 
-// vypnutí èekacího kurzoru
+// vypnutí čekacího kurzoru
 	EndWaitCursor();
 
 // aktualizace voleb bloku

@@ -1,20 +1,20 @@
 
 /***************************************************************************\
 *																			*
-*						Ikonové promìnné (velikost 32x32)					*
+*						Ikonové proměnné (velikost 32x32)					*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura záhlaví ikony - 24 bajtù
+// struktura záhlaví ikony - 24 bajtů
 
 typedef struct ICONDATA_
 {
-	long	Refer;					// (4) èítaè referencí na ikonu
-	long	Param;					// (4) parametry (prùhlednost ikony)
-	HICON	HIcon;					// (4) handle ikony Windows (NULL = nevytvoøena)
-	HCURSOR	Cursor;					// (4) handle kurzoru myši (NULL = nevytvoøen)
+	long	Refer;					// (4) čítač referencí na ikonu
+	long	Param;					// (4) parametry (průhlednost ikony)
+	HICON	HIcon;					// (4) handle ikony Windows (NULL = nevytvořena)
+	HCURSOR	Cursor;					// (4) handle kurzoru myši (NULL = nevytvořen)
 	long	res;					// (4) ...rezerva pro zarovnání
 	BYTE*	Data;					// (4) ukazatel na data ikony
 } ICONDATA;
@@ -30,14 +30,14 @@ extern ICONDATA EmptyIconData;		// data prázdné ikony (kurzor myši = implicit
 class CIcon
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné - pouze ukazatel na data
+// proměnné - pouze ukazatel na data
 	ICONDATA*		pData;			// ukazatel na záhlaví ikony
 
-// pøipojení dat
+// připojení dat
 	inline void Attach(ICONDATA* data)
 	{
 		ASSERT(data);
@@ -72,19 +72,19 @@ private:
 		}
 	}
 
-// vytvoøení nového záhlaví a bufferu dat ikony - staré záhlaví musí být odpojeno!
+// vytvoření nového záhlaví a bufferu dat ikony - staré záhlaví musí být odpojeno!
 	inline void NewBuffer()
 	{
-		ICONDATA* data = (ICONDATA*)MemGet(SIZEOFICONDATA); // vytvoøení záhlaví
+		ICONDATA* data = (ICONDATA*)MemGet(SIZEOFICONDATA); // vytvoření záhlaví
 		pData = data;
-		data->Refer = 1;						// poèet referencí
+		data->Refer = 1;						// počet referencí
 		data->Param = PicParamNone;				// parametry - neznámé
 		data->HIcon = NULL;						// není ikona
 		data->Cursor = NULL;					// není kurzor
-		data->Data = (BYTE*)MemGet(ICONSIZE);	// vytvoøení bufferu dat ikony
+		data->Data = (BYTE*)MemGet(ICONSIZE);	// vytvoření bufferu dat ikony
 	}
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -103,10 +103,10 @@ public:
 	inline ICONDATA* Data() const { return pData; };
 	inline BYTE* DataData() const { return pData->Data; };
 
-// poskytnutí parametrù ikony (pøi provádìní programu)
+// poskytnutí parametrů ikony (při provádění programu)
 	inline int Param() const { return pData->Param; };
 
-// nastavení parametrù ikony
+// nastavení parametrů ikony
 	inline void Param(int param) { pData->Param = param; };
 
 // kopie nových dat ikony - zajistí odpojení dat
@@ -115,36 +115,36 @@ public:
 // kopie nových dat ikony s konverzí - zajistí odpojení dat
 	void CopyKonvData(BYTE* src);
 
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastního bufferu před modifikací
 	void CopyWrite();
 
-// vyprázdnìní ikony (uvolnìní dat)
+// vyprázdnění ikony (uvolnění dat)
 	void Empty();
 
 // test, zda je ikona prázdná
 	inline BOOL IsEmpty() { return ((DWORD)pData == (DWORD)&EmptyIconData); };
 	inline BOOL IsNotEmpty() { return ((DWORD)pData != (DWORD)&EmptyIconData); };
 
-// vytvoøení nové ikony (pøipraveno k zápisu, data jsou náhodná)
+// vytvoření nové ikony (připraveno k zápisu, data jsou náhodná)
 	void New();
 
-// naètení ikony ze souboru
+// načtení ikony ze souboru
 	void LoadFile();
 
 // uložení ikony do souboru
 	bool SaveFile(CString jmeno);
 	void SaveFile();
 
-// vytvoøení ikony WINDOWS
+// vytvoření ikony WINDOWS
 	HICON HIcon();
 
-// vytvoøení kurzoru myši
+// vytvoření kurzoru myši
 	HCURSOR Cursor();
 
 // dekomprimace dat ikony (jsou-li komprimována)
 	void DeComp();
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CIcon& operator= (const CIcon& src);
 	const CIcon& operator= (ICONDATA* src);
 
@@ -166,32 +166,32 @@ public:
 class CBufIcon
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné
+// proměnné
 	CIcon*		m_Data;			// ukazatel na data
-	int			m_Num;			// poèet platných položek v bufferu
+	int			m_Num;			// počet platných položek v bufferu
 	int			m_Max;			// velikost bufferu (položek)
 
-// vytvoøení nové položky
+// vytvoření nové položky
 	inline int NewItem()
 	{
 		int i = m_Num;
 		if (i >= m_Max)
 		{
-			NewData();				// vytvoøení nových dat
+			NewData();				// vytvoření nových dat
 		}
 
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení nových dat (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (odděleno kvůli lepší optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -209,7 +209,7 @@ public:
 // poskytnutí bufferu ikon
 	inline CIcon* Data() const { return m_Data; };
 
-// poskytnutí poètu platných položek v bufferu
+// poskytnutí počtu platných položek v bufferu
 	inline int Num() const { return m_Num; };
 
 // poskytnutí velikosti bufferu
@@ -222,7 +222,7 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k položce (bez kontroly indexu)
+// poskytnutí přístupu k položce (bez kontroly indexu)
 	inline CIcon& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; };
 
@@ -241,19 +241,19 @@ public:
 // nastavení položky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const CIcon& data);
 
-// vyprázdnìní položky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprázdnění položky (bez jejího zrušení - jen pro uvolnění dat)
 	void _fastcall Empty(const int index);
 
 // zrušení položek z konce bufferu
 	void _fastcall Del(int num);
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CBufIcon& _fastcall operator= (const CBufIcon& src);
 
-// vytvoøení prázdné položky - data neinicializovaná (vrací index položky)
+// vytvoření prázdné položky - data neinicializovaná (vrací index položky)
 	int New();
 
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 	int _fastcall Add(const CIcon& data);
 	int _fastcall Add(ICONDATA* data);
 

@@ -6,7 +6,7 @@
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// položka inicializaèní tabulky funkcí
+// položka inicializační tabulky funkcí
 
 typedef struct INITFUNC_ {
 	short	SrcMask;		// maska zdrojových vlastností
@@ -15,91 +15,91 @@ typedef struct INITFUNC_ {
 	char*	Import;			// text pro import funkce
 } INITFUNC;
 
-// inicializaèní tabulka funkcí
+// inicializační tabulka funkcí
 extern	const INITFUNC InitTabFunc[];
 
 /////////////////////////////////////////////////////////////////////////////
-// editaèní pole
+// editační pole
 
-extern	int			FocusBuf;						// okno s fokusem (= èíslo bufferu, BufEdiID = editaèní pole)
+extern	int			FocusBuf;						// okno s fokusem (= číslo bufferu, BufEdiID = editační pole)
 
-extern	int			EditMode;						// aktivní editaèní pole (= èíslo bufferu)
+extern	int			EditMode;						// aktivní editační pole (= číslo bufferu)
 extern	int			EditBuf;						// editovaný buffer
 extern	int			EditItem;						// editovaná položka v bufferu
 extern	int			EditItemSprite;					// sprajt s editovanou ikonou (úschova pro historii)
 extern	int			EditItemPic;					// editovaný obrázek sprajtu (úschova pro historii)
 
-extern	int			EditX;							// souøadnice X poèátku editaèního pole
-extern	int			EditY;							// souøadnice Y poèátku editaèního pole
-extern	int			EditWidth;						// šíøka editaèního pole
-extern	int			EditHeight;						// výška editaèního pole
+extern	int			EditX;							// souřadnice X počátku editačního pole
+extern	int			EditY;							// souřadnice Y počátku editačního pole
+extern	int			EditWidth;						// šířka editačního pole
+extern	int			EditHeight;						// výška editačního pole
 
-extern	int			ToolMode;						// aktivní editaèní mód Toolbaru (=èíslo bufferu)
+extern	int			ToolMode;						// aktivní editační mód Toolbaru (=číslo bufferu)
 
-extern	UINT		FocusTimer;						// èasovaè pro nastavení fokusu
-extern	int			FocusTimerN;					// èítaè pro nastavení fokusu
+extern	UINT		FocusTimer;						// časovač pro nastavení fokusu
+extern	int			FocusTimerN;					// čítač pro nastavení fokusu
 
 /////////////////////////////////////////////////////////////////////////////
-// hlášení o zmìnì adresáøe
+// hlášení o změně adresáře
 
-extern	HANDLE		FunctionDirChange;				// hlášení o zmìnì adresáøe - funkce
-extern	HANDLE		NumberDirChange;				// hlášení o zmìnì adresáøe - èísla
-extern	HANDLE		TextDirChange;					// hlášení o zmìnì adresáøe - text
-extern	HANDLE		BoolDirChange;					// hlášení o zmìnì adresáøe - logické hodnoty
-extern	HANDLE		IconDirChange;					// hlášení o zmìnì adresáøe - ikony
-extern	HANDLE		MapDirChange;					// hlášení o zmìnì adresáøe - plochy
-extern	HANDLE		PictureDirChange;				// hlášení o zmìnì adresáøe - obrázky
-extern	HANDLE		SpriteDirChange;				// hlášení o zmìnì adresáøe - sprajty
-extern	HANDLE		SoundDirChange;					// hlášení o zmìnì adresáøe - zvuk
-extern	HANDLE		MusicDirChange;					// hlášení o zmìnì adresáøe - hudba
+extern	HANDLE		FunctionDirChange;				// hlášení o změně adresáře - funkce
+extern	HANDLE		NumberDirChange;				// hlášení o změně adresáře - čísla
+extern	HANDLE		TextDirChange;					// hlášení o změně adresáře - text
+extern	HANDLE		BoolDirChange;					// hlášení o změně adresáře - logické hodnoty
+extern	HANDLE		IconDirChange;					// hlášení o změně adresáře - ikony
+extern	HANDLE		MapDirChange;					// hlášení o změně adresáře - plochy
+extern	HANDLE		PictureDirChange;				// hlášení o změně adresáře - obrázky
+extern	HANDLE		SpriteDirChange;				// hlášení o změně adresáře - sprajty
+extern	HANDLE		SoundDirChange;					// hlášení o změně adresáře - zvuk
+extern	HANDLE		MusicDirChange;					// hlášení o změně adresáře - hudba
 
-extern	HANDLE		FunctionDirChange2;				// hlášení o zmìnì adresáøe - alternativní funkce
-extern	HANDLE		NumberDirChange2;				// hlášení o zmìnì adresáøe - alternativní èísla
-extern	HANDLE		TextDirChange2;					// hlášení o zmìnì adresáøe - alternativní text
-extern	HANDLE		BoolDirChange2;					// hlášení o zmìnì adresáøe - alternativní logické hodnoty
-extern	HANDLE		IconDirChange2;					// hlášení o zmìnì adresáøe - alternativní ikony
-extern	HANDLE		MapDirChange2;					// hlášení o zmìnì adresáøe - alternativní plochy
-extern	HANDLE		PictureDirChange2;				// hlášení o zmìnì adresáøe - alternativní obrázky
-extern	HANDLE		SpriteDirChange2;				// hlášení o zmìnì adresáøe - alternativní sprajty
-extern	HANDLE		SoundDirChange2;				// hlášení o zmìnì adresáøe - alternativní zvuk
-extern	HANDLE		MusicDirChange2;				// hlášení o zmìnì adresáøe - alternativní hudba
+extern	HANDLE		FunctionDirChange2;				// hlášení o změně adresáře - alternativní funkce
+extern	HANDLE		NumberDirChange2;				// hlášení o změně adresáře - alternativní čísla
+extern	HANDLE		TextDirChange2;					// hlášení o změně adresáře - alternativní text
+extern	HANDLE		BoolDirChange2;					// hlášení o změně adresáře - alternativní logické hodnoty
+extern	HANDLE		IconDirChange2;					// hlášení o změně adresáře - alternativní ikony
+extern	HANDLE		MapDirChange2;					// hlášení o změně adresáře - alternativní plochy
+extern	HANDLE		PictureDirChange2;				// hlášení o změně adresáře - alternativní obrázky
+extern	HANDLE		SpriteDirChange2;				// hlášení o změně adresáře - alternativní sprajty
+extern	HANDLE		SoundDirChange2;				// hlášení o změně adresáře - alternativní zvuk
+extern	HANDLE		MusicDirChange2;				// hlášení o změně adresáře - alternativní hudba
 
-extern	int			ProgDirChangeIgnore;			// èítaè pro ignorování hlášení zmìn po vlastní zmìnì
+extern	int			ProgDirChangeIgnore;			// čítač pro ignorování hlášení změn po vlastní změně
 
-extern	int			ProgStatusWidth;				// šíøka druhého pole programového øádku
+extern	int			ProgStatusWidth;				// šířka druhého pole programového řádku
 
-//#define MOUSEINV -100000							// neplatná souøadnice myši
-//extern	int			mX;								// souøadnice X myši
-//extern	int			mY;								// souøadnice Y myši
+//#define MOUSEINV -100000							// neplatná souřadnice myši
+//extern	int			mX;								// souřadnice X myši
+//extern	int			mY;								// souřadnice Y myši
 
-extern	BOOL		Modi;							// pøíznak modifikace souboru
+extern	BOOL		Modi;							// příznak modifikace souboru
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha kurzoru myši
 
-extern	int		MouseX;								// souøadnice X myši
-extern	int		MouseY;								// souøadnice Y myši
+extern	int		MouseX;								// souřadnice X myši
+extern	int		MouseY;								// souřadnice Y myši
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha editace èísla
+// obsluha editace čísla
 
-extern	HWND	EditNumWnd;						// editaèní okno èísla
+extern	HWND	EditNumWnd;						// editační okno čísla
 
 /////////////////////////////////////////////////////////////////////////////
-// editace èíselné položky plochy
+// editace číselné položky plochy
 
-extern	HWND	EditMapNumWnd;					// editaèní okno plochy (NULL=není)
+extern	HWND	EditMapNumWnd;					// editační okno plochy (NULL=není)
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha editace logických hodnot
 
-extern	HWND	EditLogWnd;						// editaèní okno logických hodnot
+extern	HWND	EditLogWnd;						// editační okno logických hodnot
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha editace textu
 
-extern	HWND	EditTextWnd;					// editaèní okno textu
+extern	HWND	EditTextWnd;					// editační okno textu
 
 /////////////////////////////////////////////////////////////////////////////
 // posuvníky pro editory
@@ -108,48 +108,48 @@ extern	HWND	HScroll;						// horizontální posuvník
 extern	HWND	VScroll;						// vertikální posuvník
 extern	BOOL	HScrollDisp;					// je horizontální posuvník
 extern	BOOL	VScrollDisp;					// je vertikální posuvník
-#define	TRACKSIRKA 16							// šíøka posuvníku
+#define	TRACKSIRKA 16							// šířka posuvníku
 
 /////////////////////////////////////////////////////////////////////////////
-// globální a lokální promìnné
+// globální a lokální proměnné
 
-extern	BOOL		ProgMode;						// pøíznak módu editace
+extern	BOOL		ProgMode;						// příznak módu editace
 //extern	HWND		EditName;						// editor jména prvku
 //extern	HWND		EditFind;						// editor textu k hledání
-extern	int			ToolBarProgN;					// poèet základních prvkù panelu nástrojù
+extern	int			ToolBarProgN;					// počet základních prvků panelu nástrojů
 
-extern	HWND		TreeCls;						// okno tøíd
-extern	HWND		TreeObj;						// okno globálních objektù
-extern	HWND		TreeLoc;						// okno lokálních objektù
+extern	HWND		TreeCls;						// okno tříd
+extern	HWND		TreeObj;						// okno globálních objektů
+extern	HWND		TreeLoc;						// okno lokálních objektů
 extern	HWND		TreeEdi;						// okno editoru
 extern	HWND		TreeStr;						// okno struktur
 
-extern	HIMAGELIST	ProgImageList;					// seznam obrázkù
-extern	HIMAGELIST	ProgImageListMedium;			// seznam støedních obrázkù
-extern	HIMAGELIST	ProgImageListSmall;				// seznam malých obrázkù
+extern	HIMAGELIST	ProgImageList;					// seznam obrázků
+extern	HIMAGELIST	ProgImageListMedium;			// seznam středních obrázků
+extern	HIMAGELIST	ProgImageListSmall;				// seznam malých obrázků
 extern	HIMAGELIST	ProgStateList;					// seznam stavových ikon
-extern	HIMAGELIST	ProgStateListMedium;			// seznam støedních stavových ikon
+extern	HIMAGELIST	ProgStateListMedium;			// seznam středních stavových ikon
 extern	HIMAGELIST	ProgStateListSmall;				// seznam malých stavových ikon
 
 
-#define CLASSFNCINDEX		0		// index FNC v bufferu tøíd
-#define CLASSICONINDEX		4		// index ICON v bufferu tøíd
-#define CLASSMAPINDEX		5		// index MAP v bufferu tøíd
-#define CLASSPICINDEX		6		// index BACK v bufferu tøíd
-#define CLASSSPRITEINDEX	9		// index SPRITE v bufferu tøíd
+#define CLASSFNCINDEX		0		// index FNC v bufferu tříd
+#define CLASSICONINDEX		4		// index ICON v bufferu tříd
+#define CLASSMAPINDEX		5		// index MAP v bufferu tříd
+#define CLASSPICINDEX		6		// index BACK v bufferu tříd
+#define CLASSSPRITEINDEX	9		// index SPRITE v bufferu tříd
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha editace jména prvku
 
-extern	BOOL		EditName;						// pøíznak probíhající editace
+extern	BOOL		EditName;						// příznak probíhající editace
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní buffery (pøipravují se jen jednou pøi startu programu)
+// inicializační buffery (připravují se jen jednou při startu programu)
 //
-// Pøi používání bufferù se poèítá s tím, že položky jsou uloženy po øadì
-// od zaèátku bufferu, poèet položek odpovídá poètu (a poøadí) funkcí.
+// Při používání bufferů se počítá s tím, že položky jsou uloženy po řadě
+// od začátku bufferu, počet položek odpovídá počtu (a pořadí) funkcí.
 
-extern	const int	FncNum;							// poèet funkcí
+extern	const int	FncNum;							// počet funkcí
 extern	CBufIcon	IconFnc;						// ikony funkcí
 
 extern	BOOL		PreviewPic;						// probíhá preview obrázku
@@ -158,15 +158,15 @@ extern	BOOL		PreviewPic;						// probíhá preview obrázku
 // buffery
 
 extern	CBufProg	BufProg[PROGBUFNUM];			// buffery programu
-extern	CBufReal	Real;							// buffer reálných èísel
-extern	CBufMultiText	Text;							// buffer textù
-extern	CBufBool	Bool;							// buffer logických promìnných
+extern	CBufReal	Real;							// buffer reálných čísel
+extern	CBufMultiText	Text;							// buffer textů
+extern	CBufBool	Bool;							// buffer logických proměnných
 extern	CBufIcon	Icon;							// buffer ikon
 extern	CBufIcon	IconState;						// buffer stavových ikon
 extern	CBufMap		Map;							// buffer ploch
-extern	CBufPic		Picture;						// buffer obrázkù
-extern	CBufSprite	Sprite;							// buffer sprajtù
-extern	CBufSound	Sound;							// buffer zvukù
+extern	CBufPic		Picture;						// buffer obrázků
+extern	CBufSprite	Sprite;							// buffer sprajtů
+extern	CBufSound	Sound;							// buffer zvuků
 extern	CBufMusic	Music;							// buffer hudby
 
 extern	CSprite		Sprite0;						// sprajt 0 (Petr)
@@ -175,17 +175,17 @@ extern	CBufIcon	Icon1;							// buffer s 1 ikonou k zobrazení
 
 //#define		ICONNUM 31								// velikost bufferu ikon (pro TRUECOLOR max. 63!)
 //extern	CBufIcon	Icon16;							// buffer ikon s velikostí 16x16
-//extern	CBufIndex	Icon16List;						// buffer indexù ikon s velikostí 16x16
-//extern	int			Icon16Next;						// pøíští ikona pro zápis
+//extern	CBufIndex	Icon16List;						// buffer indexů ikon s velikostí 16x16
+//extern	int			Icon16Next;						// příští ikona pro zápis
 //extern	CBufIcon	Icon32;							// buffer ikon s velikostí 32x32
-//extern	CBufIndex	Icon32List;						// buffer indexù ikon s velikostí 32x32
-//extern	int			Icon32Next;						// pøíští ikona pro zápis
+//extern	CBufIndex	Icon32List;						// buffer indexů ikon s velikostí 32x32
+//extern	int			Icon32Next;						// příští ikona pro zápis
 
 #define	BufInt		BufProg[BufIntID]				// interní buffer
-#define	BufCls		BufProg[BufClsID]				// buffer tøíd
+#define	BufCls		BufProg[BufClsID]				// buffer tříd
 #define	BufObj		BufProg[BufObjID]				// globální buffer
 #define BufLoc		BufProg[BufLocID]				// lokální buffer
-#define	BufEdi		BufProg[BufEdiID]				// editaèní buffer
+#define	BufEdi		BufProg[BufEdiID]				// editační buffer
 #define	BufStr		BufProg[BufStrID]				// buffer struktur
 
 extern	CBufUndo	Undo;							// buffer undo a redo
@@ -195,15 +195,15 @@ extern	int			GroupIndex;						// index do bufferu BufStr na IDF_GROUP
 /////////////////////////////////////////////////////////////////////////////
 // combobox panely
 
-extern	HWND		ToolEditIcon;					// panel nástrojù editoru ikon
-extern	HWND		ToolEditIconWidth;				// panel nástrojù volby šíøky
-extern	HWND		ToolEditMap;					// panel nástrojù editoru ploch
+extern	HWND		ToolEditIcon;					// panel nástrojů editoru ikon
+extern	HWND		ToolEditIconWidth;				// panel nástrojů volby šířky
+extern	HWND		ToolEditMap;					// panel nástrojů editoru ploch
 
 /////////////////////////////////////////////////////////////////////////////
-// tabulky pøíkazù v COMBO boxu
+// tabulky příkazů v COMBO boxu
 
 extern	int ToolBarEditPicTools[];					// nástroje EDITICON
-extern	int ToolBarEditPicWidths[];					// šíøky EDITICON
+extern	int ToolBarEditPicWidths[];					// šířky EDITICON
 extern	int ToolBarEditMapTools[];					// nástroje EDITMAP
 
 
@@ -213,13 +213,13 @@ extern	int ToolBarEditMapTools[];					// nástroje EDITMAP
 void ProgSetMenu();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace po zmìnì jazyku
+// aktualizace po změně jazyku
 
 void ProgReloadJazyk();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// první inicializace pøi startu programu (hlavní okno i SELECT je již vytvoøeno)
+// první inicializace při startu programu (hlavní okno i SELECT je již vytvořeno)
 
 void ProgStartInit();
 
@@ -231,13 +231,13 @@ void ProgInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení režimu editace souboru
+// ukončení režimu editace souboru
 
 void ProgTerm();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení sledování zmìn adresáøe
+// zahájení sledování změn adresáře
 
 void BeginDirChange(HANDLE* dir1, HANDLE* dir2, CText& path1, CText& path2);
 
@@ -249,13 +249,13 @@ void ProgUpdateInOut();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení editaèního módu Toolbar (podle ID bufferu, -1 = vypnout)
+// nastavení editačního módu Toolbar (podle ID bufferu, -1 = vypnout)
 
 void SetToolMode(int bufID);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení editaèního módu edítaèního panelu (TRUE=OK)
+// nastavení editačního módu edítačního panelu (TRUE=OK)
 
 BOOL SetEditMode(int bufID, int index);
 
@@ -278,13 +278,13 @@ void ProgUpdateUndoRedo();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení okna
+// překreslení okna
 
 void UpdateWnd(HWND wnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení nadpisù oken
+// vykreslení nadpisů oken
 
 void ProgDispNadpis();
 
@@ -296,7 +296,7 @@ void AktNameTree(int bufID, CText& txt, int refBlok, int refIndex);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení stromù
+// překreslení stromů
 
 void UpdateAllTree();
 
@@ -314,13 +314,13 @@ void ProgOnSetFocus(HWND hWnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti okna
+// změna velikosti okna
 
 void ProgOnSize();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení nadpisù oken
+// vykreslení nadpisů oken
 
 void ProgDispNadpis();
 
@@ -332,43 +332,43 @@ void ProgOnPaint();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní informace o ikonì k zobrazení
+// zjištění informace o ikoně k zobrazení
 
 void ProgOnGetDispInfo(HWND hWnd, TV_DISPINFO* tvd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení položky (napø. po hledání)
+// zobrazení položky (např. po hledání)
 
 void DispItem(int bufID, int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní bufferu programu z handle okna (NULL = není)
+// zjištění bufferu programu z handle okna (NULL = není)
 
 CBufProg* BufProgFromHandle(HWND hWnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní ID bufferu programu z handle okna (-1 = není)
+// zjištění ID bufferu programu z handle okna (-1 = není)
 
 int BufProgIDFromHandle(HWND hWnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení rozvinutí položky (vrací TRUE=zákaz zmìny)
+// zahájení rozvinutí položky (vrací TRUE=zákaz změny)
 
 BOOL ProgOnExpanding(HWND hWnd, TV_ITEM* tvi, BOOL expand);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna rozvinutí položky
+// změna rozvinutí položky
 
 void ProgOnExpand(HWND hWnd, TV_ITEM* tvi, BOOL expand);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna vybrané položky
+// změna vybrané položky
 
 void ProgOnSelChanged(HWND hWnd, NM_TREEVIEW* tv);
 
@@ -380,25 +380,25 @@ void ProgOnMouseMove(UINT flags, int x, int y);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní tlaèítka myši
+// uvolnění tlačítka myši
 
 void ProgOnButtonUp(UINT keys, BOOL right);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stisk tlaèítka myši (vrací TRUE=obslouženo)
+// stisk tlačítka myši (vrací TRUE=obslouženo)
 
 BOOL ProgOnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zvìtšení mìøítka zobrazení
+// zvětšení měřítka zobrazení
 
 void ProgOnZoomIn();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmenšení mìøítka zobrazení
+// zmenšení měřítka zobrazení
 
 void ProgOnZoomOut();
 
@@ -427,7 +427,7 @@ void SetModi();
 // vypnutí modifikace
 void ResModi();
 
-// podmínìné uložení pøi modifikaci (TRUE=pokraèovat)
+// podmíněné uložení při modifikaci (TRUE=pokračovat)
 BOOL TestModi();
 
 
@@ -438,32 +438,32 @@ BOOL ProgOnSetCursor();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu LOCK prvku pod kurzorem
+// přepnutí stavu LOCK prvku pod kurzorem
 
 void ProgOnLock();
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu OFF prvku pod kurzorem
+// přepnutí stavu OFF prvku pod kurzorem
 
 void ProgOnOff();
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu DEF_NAME prvku pod kurzorem
+// přepnutí stavu DEF_NAME prvku pod kurzorem
 
 void ProgOnDefName();
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu DEF_ICON prvku pod kurzorem
+// přepnutí stavu DEF_ICON prvku pod kurzorem
 
 void ProgOnDefIcon();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 
 void ProgAktItem();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøíznakù LOCK a OFF bufferù
+// aktualizace příznaků LOCK a OFF bufferů
 
 void UpdateLock();
 
@@ -473,18 +473,18 @@ void UpdateLock();
 void ProgOnEditIcon();
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení/ukonèení editace jména prvku
+// zahájení/ukončení editace jména prvku
 
 void ProgOnEditName();
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace jména prvku (vrací TRUE=pøerušit editaci)
+// zahájení editace jména prvku (vrací TRUE=přerušit editaci)
 
 BOOL ProgOnBeginLabelEdit(HWND hWnd, HTREEITEM hItem);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení editace jména prvku
+// ukončení editace jména prvku
 
 void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi);
 
@@ -502,7 +502,7 @@ void ProgOnRefNext();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøedešlá deklarace
+// předešlá deklarace
 
 void ProgOnRefPrev();
 
@@ -531,7 +531,7 @@ void ProgOnHScroll(int code, int pos);
 void ProgOnVScroll(int code, int pos);
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha èasovaèe (TRUE=obslouženo)
+// obsluha časovače (TRUE=obslouženo)
 
 BOOL ProgOnTimer(UINT timerID);
 
@@ -541,7 +541,7 @@ BOOL ProgOnTimer(UINT timerID);
 BOOL ProgOnChar(HWND hWnd, TCHAR znak);
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr všeho
+// výběr všeho
 
 void ProgOnAll();
 
@@ -556,7 +556,7 @@ void ProgOnDelete();
 void ProgOnCopy();
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøížení bloku
+// vystřížení bloku
 
 void ProgOnCut();
 
@@ -576,13 +576,13 @@ void ProgOnUndo();
 void ProgOnRedo();
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení fokusu na okno editoru s opoždìním
+// nastavení fokusu na okno editoru s opožděním
 
 void SetFocusEdit();
 void SetFocusEditMode(int buf, int inx);
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení souøadnic grafického editoru
+// zobrazení souřadnic grafického editoru
 
 void DispMouseXY();
 
@@ -592,7 +592,7 @@ void DispMouseXY();
 BOOL ProgOnDrawItem(DRAWITEMSTRUCT* di);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení rozmìrù obrázku/plochy
+// nastavení rozměrů obrázku/plochy
 
 void ProgOnDimen();
 
@@ -602,22 +602,22 @@ void ProgOnDimen();
 void ProgOnRastr();
 
 /////////////////////////////////////////////////////////////////////////////
-// start pøehrávání
+// start přehrávání
 
 void ProgOnPlay();
 
 /////////////////////////////////////////////////////////////////////////////
-// pozastavení nahrávání, pøehrávání
+// pozastavení nahrávání, přehrávání
 
 void ProgOnPause();
 
 /////////////////////////////////////////////////////////////////////////////
-// zastavení nahrávání i pøehrávání
+// zastavení nahrávání i přehrávání
 
 void ProgOnStop();
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí pøíznaku opakování
+// přepnutí příznaku opakování
 
 void ProgOnLoop();
 
@@ -627,12 +627,12 @@ void ProgOnLoop();
 void ProgOnRecord();
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevíjení zpìt
+// převíjení zpět
 
 void ProgOnRew();
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevíjení vpøed
+// převíjení vpřed
 
 void ProgOnFrw();
 
@@ -652,16 +652,16 @@ void PreviewPicOn();
 void PreviewPicOff();
 
 /////////////////////////////////////////////////////////////////////////////
-// zastaveòí preview, zahájení nového èítání èasu
+// zastaveňí preview, zahájení nového čítání času
 
 void PreviewStop();
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení preview pøehrávání souboru pod kurzorem
+// zahájení preview přehrávání souboru pod kurzorem
 
 void PreviewStart();
 
 /////////////////////////////////////////////////////////////////////////////
-// nulování pøíznakù naètení obrázkù pro preview
+// nulování příznaků načtení obrázků pro preview
 
 void PreviewPicNul();

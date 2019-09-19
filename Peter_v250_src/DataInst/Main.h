@@ -1,10 +1,10 @@
 
 //////////////////////////////////////////////////////////////////////////////
-// pøepínaèe preprocesoru:
+// přepínače preprocesoru:
 //	_DEBUG ............. je debugger
 //	_OPTIM ............. je optimalizace
 //	_MT ................ vícetokový režim
-//	_UNICODE ........... kódování znakù UNICODE
+//	_UNICODE ........... kódování znaků UNICODE
 //
 //	_M_IX86 ............ procesor Intel 86
 //	_M_ALPHA ........... procesor DEC Alpha
@@ -14,8 +14,8 @@
 
 //#define _MT
 
-// Pro pøekladaè nastavit úroveò varování 4 (pøepínaè /W4)
-// pro inline funkce nepoužívat "bool" ale radìji "BOOL" - lépe optimalizováno
+// Pro překladač nastavit úroveň varování 4 (přepínač /W4)
+// pro inline funkce nepoužívat "bool" ale raději "BOOL" - lépe optimalizováno
 
 //////////////////////////////////////////////////////////////////////////////
 // obsluha debuggeru
@@ -45,15 +45,15 @@
 #endif	// _UNICODE
 
 //////////////////////////////////////////////////////////////////////////////
-// standardní vnoøené sekce
+// standardní vnořené sekce
 
 #pragma warning ( disable: 4201)		// hlášení - nepojmenovaná struktura
 
 #include <windows.h>					// základní definice WINDOWS
 #include <math.h>						// matematické operace
 //#include <alphaops.h>					// matematické konstanty
-#include <tchar.h>						// obsluha znakù UNICODE/MB
-#include <commctrl.h>					// doplòkové ovládací prvky
+#include <tchar.h>						// obsluha znaků UNICODE/MB
+#include <commctrl.h>					// doplňkové ovládací prvky
 #include <richedit.h>					// RichEdit
 #include <shlobj.h>
 #include <objbase.h>
@@ -67,22 +67,22 @@
 #pragma warning ( disable: 4710)		// hlášení - funkce není inline
 
 //////////////////////////////////////////////////////////////////////////////
-// pøeddefinice tøíd
+// předdefinice tříd
 
 class CText;
 
 
 //////////////////////////////////////////////////////////////////////////////
-// globální promìnné
+// globální proměnné
 
 extern	int			VerzeOS;			// verze systému
 extern	HINSTANCE	hInstance;			// instance programu
-extern	int			ScreenWidth;		// šíøka klientské oblasti displeje
+extern	int			ScreenWidth;		// šířka klientské oblasti displeje
 extern	int			ScreenHeight;		// výška klientské oblasti displeje
 
 extern	HWND		MainFrame;			// hlavní okno aplikace
 
-extern	int			Waiting;			// pøíznak zobrazení kurzoru èekání
+extern	int			Waiting;			// příznak zobrazení kurzoru čekání
 
 #ifdef _UNICODE
 typedef	BOOL (WINAPI *GETDISKFREESPACEEX) (LPCWSTR, __int64*, __int64*, __int64*);
@@ -95,38 +95,38 @@ extern	__int64	DiskFree;			// volné místo disku (z funkce GetDiskSpace)
 extern	__int64	DiskFreeUser;		// volné místo uživatele (z funkce GetDiskSpace)
 
 //////////////////////////////////////////////////////////////////////////////
-// struktura instalaèních dat
+// struktura instalačních dat
 
-#define GROUPSNUM 2							// poèet skupin
+#define GROUPSNUM 2							// počet skupin
 
 // definice jednoho souboru v seznamu (9 B + text)
 typedef struct INSTFILE_ {
 	long			Size;					// (4) velikost souboru v bajtech (po dekompresi)
-	long			Check;					// (4) kontrolní souèet dat souboru (výchozí 0, pøièten bajt, rotace vlevo s pøenosem)
-	BYTE			NameN;					// (1) délka jména souboru vèetnì podcesty - ve znacích
-	char			Name[1];				// (n) jméno souboru (vèetnì podcesty)
+	long			Check;					// (4) kontrolní součet dat souboru (výchozí 0, přičten bajt, rotace vlevo s přenosem)
+	BYTE			NameN;					// (1) délka jména souboru včetně podcesty - ve znacích
+	char			Name[1];				// (n) jméno souboru (včetně podcesty)
 } INSTFILE;
 
 // definice jedné skupiny (16 B)
 typedef struct INSTGROUP_ {
-	long			Files;					// (4) poèet souborù ve skupinì
-	long			Size;					// (4) velikost skupiny v KB (po nainstalování) - soubory zaokrouhleny na alokaèní bloky 8 KB
-	long			SizeFiles;				// (4) velikost seznamu souborù (bajtù)
-	long			SizeGroup;				// (4) velikost komprimovaných dat (bajtù)
+	long			Files;					// (4) počet souborů ve skupině
+	long			Size;					// (4) velikost skupiny v KB (po nainstalování) - soubory zaokrouhleny na alokační bloky 8 KB
+	long			SizeFiles;				// (4) velikost seznamu souborů (bajtů)
+	long			SizeGroup;				// (4) velikost komprimovaných dat (bajtů)
 } INSTGROUP;
 
-// záhlaví instalaèních dat (16 B + skupiny)
+// záhlaví instalačních dat (16 B + skupiny)
 typedef struct INSTHEAD_ {
-	char			Ident[4];				// (4) identifikace (text "SET" + bínárnì poèet sekcí)
-	long			Check;					// (4) kontrolní souèet zbytku záhlaví vèetnì seznamu souborù
-	FILETIME		DateTime;				// (8) datum a èas souborù
+	char			Ident[4];				// (4) identifikace (text "SET" + bínárně počet sekcí)
+	long			Check;					// (4) kontrolní součet zbytku záhlaví včetně seznamu souborů
+	FILETIME		DateTime;				// (8) datum a čas souborů
 	INSTGROUP		Groups[GROUPSNUM];		// definice skupin
 } INSTHEAD;
 
 //////////////////////////////////////////////////////////////////////////////
 // pomocné konstanty
 
-#define ICONWIDTH 32								// šíøka ikon
+#define ICONWIDTH 32								// šířka ikon
 #define ICONHEIGHT 32								// výška ikon
 #define ICONSIZE (ICONWIDTH*ICONHEIGHT)				// velikost ikon v bajtech
 
@@ -136,18 +136,18 @@ typedef struct INSTHEAD_ {
 extern	int			AktPage;		// aktivní stránka instalátoru
 
 enum PAGES {
-	PAGESELECT,						// stránka výbìru prvkù k instalaci
+	PAGESELECT,						// stránka výběru prvků k instalaci
 	PAGEINSTAL,						// stránka probíhající instalace
-	PAGEOK,							// instalace ukonèena OK
+	PAGEOK,							// instalace ukončena OK
 };
 
 //////////////////////////////////////////////////////////////////////////////
-// ukonèení aplikace
+// ukončení aplikace
 
-void	Exit();						// ukonèení programu
+void	Exit();						// ukončení programu
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zprávy pøed rozesláním do oken (TRUE = zpráva zpracována)
+// obsluha zprávy před rozesláním do oken (TRUE = zpráva zpracována)
 
 BOOL PreTranslateMessage(MSG* msg);
 
@@ -157,7 +157,7 @@ BOOL PreTranslateMessage(MSG* msg);
 void SetPage(int page);
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení registru
+// načtení registru
 
 CText GetReg(CText key, CText name);
 
@@ -167,35 +167,35 @@ CText GetReg(CText key, CText name);
 void SetReg(CText key, CText name, CText data);
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení klíèe
+// zrušení klíče
 
 void DelReg(CText key, CText name);
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení hlavního okna aplikace
+// vytvoření hlavního okna aplikace
 
 bool MainFrameCreate();
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení kurzoru èekání (zahájení a ukonèení musí být do páru!)
+// zobrazení kurzoru čekání (zahájení a ukončení musí být do páru!)
 
 void BeginWaitCursor();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení informací o souborech (vrací FALSE=pøerušit)
+// načtení informací o souborech (vrací FALSE=přerušit)
 
 BOOL OpenSetup();
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutí kurzoru èekání (zahájení a ukonèení musí být do páru!)
+// vypnutí kurzoru čekání (zahájení a ukončení musí být do páru!)
 
 void EndWaitCursor();
 
 //////////////////////////////////////////////////////////////////////////////
-// vlastní vnoøené sekce
+// vlastní vnořené sekce
 
-#include "Memory.h"						// obsluha pamìti
-#include "BufText.h"					// buffer textù, textové øetìzce
+#include "Memory.h"						// obsluha paměti
+#include "BufText.h"					// buffer textů, textové řetězce
 #include "File.h"						// soubory, buffery a resource
 #include "Compress.h"					// komprese

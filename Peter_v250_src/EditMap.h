@@ -7,29 +7,29 @@
 
 namespace EditMap
 {
-extern	BOOL	MDraging;				// pøíznak tažení ikony editoru plochy
+extern	BOOL	MDraging;				// příznak tažení ikony editoru plochy
 
-// inicializace pøi startu
+// inicializace při startu
 	void StartInit();
 
 // zahájení editace
 	void BegEdit(int index);
 
-// nastavení rozmìrù plochy
+// nastavení rozměrů plochy
 	void OnDimen();
 
 // ----------- obsluha zobrazení ------------
 
-// pøepoèet rozmìrù editoru ikon a obrázkù
+// přepočet rozměrů editoru ikon a obrázků
 	void ReCalc();
 
 // zobrazení celého okna editoru
 	void Disp();
 
-// aktualizaèní pøekreslení plochy (s pøepoètem rozmìrù)
+// aktualizační překreslení plochy (s přepočtem rozměrů)
 	void ReDisp();
 
-// aktualizaèní pøekreslení plochy
+// aktualizační překreslení plochy
 	void DispAkt(HDC dc);
 
 // zapnutí/vypnutí rastru
@@ -38,15 +38,15 @@ extern	BOOL	MDraging;				// pøíznak tažení ikony editoru plochy
 // obsluha zobrazení kurzoru myši (TRUE=obslouženo)
 	BOOL OnSetCursor(int x, int y);
 
-// ---------------- obsluha posuvníkù ---------
+// ---------------- obsluha posuvníků ---------
 
-// pøesun posuvníkù pøi zmìnì rozmìrù okna
+// přesun posuvníků při změně rozměrů okna
 	HDWP MoveScroll(HDWP hdwp);
 
-// aktualizace zobrazení posuvníkù
+// aktualizace zobrazení posuvníků
 	void SetScroll();
 
-// aktualizace pozice editaèního pole
+// aktualizace pozice editačního pole
 	void SetEditMapNum();
 
 // horizontální posuvník
@@ -57,42 +57,42 @@ extern	BOOL	MDraging;				// pøíznak tažení ikony editoru plochy
 
 // -------------- obsluha editace -----------
 
-// zahájení editace èíselného parametru
+// zahájení editace číselného parametru
 	void BegEditSwcNum(int x, int y);
 
-// zmìna editovaného èísla
+// změna editovaného čísla
 	void OnChangeEditSwcNum();
 
-// ukonèení editace èísla
+// ukončení editace čísla
 	void EndEditSwcNum();
 
-// ukonèení tažení
+// ukončení tažení
 	void EndDrag();
 
-// stisk tlaèítka myši (TRUE = obslouženo)
+// stisk tlačítka myši (TRUE = obslouženo)
 	BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick);
 
 // posun myši
 	void OnMouseMove(UINT flags, int x, int y);
 
-// uvolnìní tlaèítka myši
+// uvolnění tlačítka myši
 	void OnButtonUp(UINT keys, BOOL right);
 
-// položení ikony zvnìjšku
+// položení ikony zvnějšku
 	void DragDrop(int icon);
 
 // vstup klávesy z klávesnice (TRUE=obslouženo)
 	BOOL OnKeyDown(int key);
 
-// nastavení editaèního módu
+// nastavení editačního módu
 	void SetMode(int mode);
 
-// aktualizace voleb výbìru módu
+// aktualizace voleb výběru módu
 	void UpdateMenu();
 
 // -------------- obsluha bloku -----------
 
-// výbìr všeho
+// výběr všeho
 	void SelectAll();
 
 // zrušení bloku
@@ -101,7 +101,7 @@ extern	BOOL	MDraging;				// pøíznak tažení ikony editoru plochy
 // kopie bloku
 	void Copy();
 
-// vystøížení bloku
+// vystřížení bloku
 	void Cut();
 
 // navrácení bloku
@@ -110,10 +110,10 @@ extern	BOOL	MDraging;				// pøíznak tažení ikony editoru plochy
 // aktualizace voleb bloku
 	void UpdateClipboard();
 
-// mód výplnì
+// mód výplně
 	void OnFillMap();
 
-// editaèní mód
+// editační mód
 	void OnEditMap();
 
 // -------------- obsluha UNDO -------------

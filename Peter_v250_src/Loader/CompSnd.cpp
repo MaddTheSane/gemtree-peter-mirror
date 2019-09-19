@@ -11,7 +11,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu se zvukem (vrací true = operace OK)
+// překlad výrazu se zvukem (vrací true = operace OK)
 
 bool _fastcall CompSnd(int index)
 {
@@ -24,7 +24,7 @@ bool _fastcall CompSnd(int index)
 // kontrola, zda je položka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// větvení podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_SND:
@@ -69,10 +69,10 @@ bool _fastcall CompSnd(int index)
 		return CompFunc(index, IDF_SND);	// funkce s návratem zvuku
 
 	case IDF_SOUND_CONV_8BIT:
-		return CompSndPar(index, FSoundConv8Bit);	// konverze na 8 bitù
+		return CompSndPar(index, FSoundConv8Bit);	// konverze na 8 bitů
 
 	case IDF_SOUND_CONV_16BIT:
-		return CompSndPar(index, FSoundConv16Bit);	// konverze na 16 bitù
+		return CompSndPar(index, FSoundConv16Bit);	// konverze na 16 bitů
 
 	case IDF_SOUND_CONV_STEREO:
 		return CompSndPar(index, FSoundConvStereo);	// konverze na stereo
@@ -90,7 +90,7 @@ bool _fastcall CompSnd(int index)
 		return CompSndPar(index, FSoundConv44100);	// konverze na frekvenci 44100
 
 	case IDF_SOUND_ADD:
-		return CompSndGrp(index, FSoundAdd, FSoundAdd1);	// souèet zvukù
+		return CompSndGrp(index, FSoundAdd, FSoundAdd1);	// součet zvuků
 
 	case IDF_SOUND_SPEED:							// konverze rychlosti zvuku
 		CompAddItem(FSoundSpeed);
@@ -105,7 +105,7 @@ bool _fastcall CompSnd(int index)
 		return true;
 
 	case IDF_FILE_SOUND:
-		CompAddItem(FGetFileSound);			// naètení zvuku
+		CompAddItem(FGetFileSound);			// načtení zvuku
 		return true;
 
 	case IDF_SOUND_CONV_PCM:
@@ -118,7 +118,7 @@ bool _fastcall CompSnd(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem zvuku
+// překlad příkazu s parametrem zvuku
 
 bool CompSndPar(int index, PROCCOM func)
 {
@@ -144,7 +144,7 @@ bool CompSndPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem zvuku (hledaným podle identifikace)
+// překlad příkazu s podparametrem zvuku (hledaným podle identifikace)
 
 void CompSndSubPar(int index, int idf)
 {
@@ -155,12 +155,12 @@ void CompSndSubPar(int index, int idf)
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda má položka nìjaké potomky
+// kontrola, zda má položka nějaké potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus pøes všechny potomky
+// cyklus přes všechny potomky
 		do {
 
 // adresa dalšího potomka
@@ -168,7 +168,7 @@ void CompSndSubPar(int index, int idf)
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledaný prvek - naètení prvku
+// test, zda to je hledaný prvek - načtení prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompSnd(index + 1))
@@ -176,7 +176,7 @@ void CompSndSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro pøíští prvek
+// posun pro příští prvek
 			posun = item2->Items;
 
 // dokud je další potomek

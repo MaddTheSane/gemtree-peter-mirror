@@ -3,12 +3,12 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer celých èísel							*
+*								Buffer celých čísel							*
 *																			*
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// pøidání záznamu o vložení položky do UNDO bufferu
+// přidání záznamu o vložení položky do UNDO bufferu
 
 template <> bool CBuffer<CInt>::UndoAddIns(int index)
 {
@@ -17,15 +17,15 @@ template <> bool CBuffer<CInt>::UndoAddIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení logické hodnoty ze souboru (naèítá do promìnné, vrací TRUE=operace OK)
+// načtení logické hodnoty ze souboru (načítá do proměnné, vrací TRUE=operace OK)
 
 bool CBufBool::LoadFile(BOOL& data, CText jmeno)
 {
-// naètení textového souboru
+// načtení textového souboru
 	CText txt;
 	if (!txt.LoadFile(jmeno)) return false;
 
-// odstranìní mezer a jiných oddìlovaèù
+// odstranění mezer a jiných oddělovačů
 	if (!txt.TrimLeft() || !txt.TrimRight()) return false;
 
 // konverze na velká písmena
@@ -47,7 +47,7 @@ bool CBufBool::LoadFile(BOOL& data, CText jmeno)
 			(znak ==  1 ) ||
 			(znak == '1'));
 
-// pøíznak operace OK
+// příznak operace OK
 	return true;
 }
 
@@ -57,7 +57,7 @@ bool CBufBool::LoadFile(BOOL& data, CText jmeno)
 
 bool CBufBool::SaveFile(BOOL data, CText jmeno) const
 {
-// pøíprava textu
+// příprava textu
 	CText txt;
 	if (data)
 	{

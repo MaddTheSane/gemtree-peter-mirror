@@ -2,7 +2,7 @@
 #include "Main.h"
 
 //////////////////////////////////////////////////////////////////////////////
-// inicializaèní segmenty CRT (konstruktory a destruktory)
+// inicializační segmenty CRT (konstruktory a destruktory)
 
 typedef void (__cdecl *_PVFV)(void);		// ukazatel na funkci void fnc(void)
 typedef void (*PFV)(void);					// funkce void fnc(void)
@@ -12,15 +12,15 @@ _PVFV	__xc_a[] = { NULL };				// konstruktory C++
 #pragma data_seg(".CRT$XCZ")
 _PVFV	__xc_z[] = { NULL };
 
-#pragma data_seg()							// resetování na bìžnou datovou sekci
+#pragma data_seg()							// resetování na běžnou datovou sekci
 
-#pragma comment(linker, "/MERGE:.CRT=.data")	// pøipojení CRT sekcí do datové sekce
+#pragma comment(linker, "/MERGE:.CRT=.data")	// připojení CRT sekcí do datové sekce
 
 
 //////////////////////////////////////////////////////////////////////////////
-// globální promìnné
+// globální proměnné
 
-CString		CommandLine;				// pøíkazový øádek
+CString		CommandLine;				// příkazový řádek
 int			VerzeOS;					// verze systému
 HINSTANCE	hInstance = NULL;			// instance programu
 
@@ -30,7 +30,7 @@ BITMAPINFO* StdBitmapInfo;				// standardní záhlaví BMP
 BYTE*		KonvPal;					// konverzní tabulka palet
 
 
-bool	ConsoleOn = false;		// pøíznak režimu konzoly
+bool	ConsoleOn = false;		// příznak režimu konzoly
 HANDLE	ConIn = INVALID_HANDLE_VALUE;	// handle pro vstup z konzoly
 HANDLE	ConOut = INVALID_HANDLE_VALUE;	// handle pro výstup na konzolu
 HANDLE	ConErr = INVALID_HANDLE_VALUE;	// handle pro chybový výstup na konzolu
@@ -38,9 +38,9 @@ HANDLE	ConErr = INVALID_HANDLE_VALUE;	// handle pro chybový výstup na konzolu
 bool	Dither = true;					// použít dithering
 
 //////////////////////////////////////////////////////////////////////////////
-// prázdné objekty (napø. pro návrat neplatné položky z funkce)
+// prázdné objekty (např. pro návrat neplatné položky z funkce)
 
-CString		EmptyString;				// prázdný øetìzec
+CString		EmptyString;				// prázdný řetězec
 CPicture	EmptyPicture;				// prázdný obrázek
 CSprite		EmptySprite;				// prázdný sprajt
 
@@ -61,25 +61,25 @@ const int ColLevTab[] =
 };
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// po zmìnì palet zruš soubor PALIMP.DAT a spus DEBUG verzi pro nové vygenerování
-// (pozor - generování mùže trvat desítky sekund). Potom znovu pøeklad.
+// po změně palet zruš soubor PALIMP.DAT a spusť DEBUG verzi pro nové vygenerování
+// (pozor - generování může trvat desítky sekund). Potom znovu překlad.
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// tabulka odstínù standardních barev (0 až 255) - poøadí B, G, R, F,
+// tabulka odstínů standardních barev (0 až 255) - pořadí B, G, R, F,
 const RGBQUAD ColColTab[] = 
 { 
-	0,		0,		255,		0,			//  0: èervená
+	0,		0,		255,		0,			//  0: červená
 	72,		72,		255,		0,			//  1:
 	116,	116,	255,		0,			//  2:
 	158,	166,	255,		0,			//  3:
 	210,	220,	255,		0,			//  4:
-	0,		114,	255,		0,			//  5: hnìdá
+	0,		114,	255,		0,			//  5: hnědá
 	150,	198,	255,		0,			//  6:
 	0,		182,	255,		0,			//  7: oranžová
 	96,		192,	255,		0,			//  8:
 	0,		255,	255,		0,			//  9: žlutá
 	128,	255,	255,		0,			// 10:
-	192,	255,	255,		0,			// 11: svìtle žlutá
+	192,	255,	255,		0,			// 11: světle žlutá
 	0,		255,	178,		0,			// 12: žlutozelená
 	0,		255,	0,			0,			// 13: zelená
 	128,	255,	128,		0,			// 14:
@@ -99,8 +99,8 @@ const RGBQUAD ColColTab[] =
 	255,	0,		174,		0,			// 28:
 	255,	162,	198,		0,			// 29:
 	255,	0,		255,		0,			// 30: fialová
-	255,	128,	255,		0,			// 31: svìtle fialová
-	138,	0,		255,		0,			// 32: fialovì èervená
+	255,	128,	255,		0,			// 31: světle fialová
+	138,	0,		255,		0,			// 32: fialově červená
 	192,	128,	255,		0,			// 33:
 	210,	186,	255,		0,			// 34:
 
@@ -108,36 +108,36 @@ const RGBQUAD ColColTab[] =
 	96,		96,		96,			0,			// 36: šedá (nepoužije se, vygeneruje se)
 };
 
-const int ColLev = sizeof(ColLevTab)/sizeof(ColLevTab[0]);	// poèet hladin barev
-const int ColCol = sizeof(ColColTab)/sizeof(ColColTab[0]);	// poèet odstínù barev
-const int StdColors = ResCols + ColCol*ColLev;			// poèet vlastních palet (zaèínají od 0)
+const int ColLev = sizeof(ColLevTab)/sizeof(ColLevTab[0]);	// počet hladin barev
+const int ColCol = sizeof(ColColTab)/sizeof(ColColTab[0]);	// počet odstínů barev
+const int StdColors = ResCols + ColCol*ColLev;			// počet vlastních palet (začínají od 0)
 const BYTE WhiteCol = StdColors - 2*ColLev;			// bílá barva
-const BYTE BlackCol = StdColors - 1;				// èerná barva
+const BYTE BlackCol = StdColors - 1;				// černá barva
 
 //////////////////////////////////////////////////////////////////////////////
-// lokální promìnné
+// lokální proměnné
 
 #ifdef _MT
 static	CRITICAL_SECTION	ExitCriticalSection;	// kritická sekce pro konec programu
 #endif
 
-//CString UvText(  _T("Pov2Spr v1.0 - konverze obrázkù na sprajt; (c) Miroslav Nìmeèek\n"));
-//CString HelpText(_T("   POV2SPR vstup výstup smìrù klid pohyb prodleva hladina krok dither\n")
+//CString UvText(  _T("Pov2Spr v1.0 - konverze obrázků na sprajt; (c) Miroslav Němeček\n"));
+//CString HelpText(_T("   POV2SPR vstup výstup směrů klid pohyb prodleva hladina krok dither\n")
 //				 _T("               vstup .... vstupní soubor BMP prvního obrázku\n")
 //				 _T("               výstup ... výstupní soubor SPR sprajtu\n")
-//				 _T("               smìrù .... poèet smìrù 0 až 1000\n")
-//				 _T("               klid ..... poèet klidových fází 1 až 1000\n")
-//				 _T("               pohyb .... poèet fází pohybu 0 až 1000\n")
+//				 _T("               směrů .... počet směrů 0 až 1000\n")
+//				 _T("               klid ..... počet klidových fází 1 až 1000\n")
+//				 _T("               pohyb .... počet fází pohybu 0 až 1000\n")
 //				 _T("               prodleva . prodleva mezi fázemi v milisekundách\n")
-//				 _T("               hladina .. hladina k zobrazení, 0=pøedmìty\n")
-//				 _T("               krok ..... poèet fází na jednotkovou vzdálenost\n")
+//				 _T("               hladina .. hladina k zobrazení, 0=předměty\n")
+//				 _T("               krok ..... počet fází na jednotkovou vzdálenost\n")
 //				 _T("               dither ... použít dithering 1=ano, 0=ne\n")
-//				 _T("stisknìte <Enter>... "));
+//				 _T("stiskněte <Enter>... "));
 //
 //CString WriteErr1(_T("Chyba zápisu do výstupního souboru "));
 //CString WriteErr2(_T("!\n"));
 //
-//CString ReadErr1(_T("Chyba ètení ze vstupního souboru "));
+//CString ReadErr1(_T("Chyba čtení ze vstupního souboru "));
 //CString ReadErr2(_T("!\n"));
 
 CString UvText(  _T("Pov2Spr v1.1 - pictures to sprite conversion; (c) Ing. Miroslav Nemecek\n"));
@@ -261,7 +261,7 @@ CString CommandPar(int i)
 	for (; i >= 0; i--)
 	{
 
-// nalezení zaèátku parametru
+// nalezení začátku parametru
 		while (	(pos < len) && 
 				(CommandLine[pos] <= _T(' ')) && 
 				(CommandLine[pos] > 0)) 
@@ -283,7 +283,7 @@ CString CommandPar(int i)
 		}
 	}
 
-// pøenesení parametru
+// přenesení parametru
 	text = CommandLine.Mid(beg, pos-beg);
 
 // zrušení uvozovek
@@ -304,7 +304,7 @@ CString CommandPar(int i)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// inicializace úseku inicializaèních/terminaèních funkcí
+// inicializace úseku inicializačních/terminačních funkcí
 
 void InitTerm(_PVFV* beg, _PVFV* end)
 {
@@ -329,12 +329,12 @@ void mainCRTStartup()
 // handle instance programu
 	hInstance = ::GetModuleHandle(NULL);
 
-// inicializace uzamykání ukonèení programu
+// inicializace uzamykání ukončení programu
 #ifdef _MT
 	::InitializeCriticalSection(&ExitCriticalSection);
 #endif
 
-// inicializace správce pamìti
+// inicializace správce paměti
 	if (!MemInit()) 
 	{
 		Exit(EXITCODE_MEMERR);
@@ -345,13 +345,13 @@ void mainCRTStartup()
 	WORD stat;
 	_asm {
 		wait						// synchronizace
-		fnstcw		stat			// uložení øídicího slova
+		fnstcw		stat			// uložení řídicího slova
 		wait						// synchronizace
-		mov			ax,stat			// stav øídicího slova
+		mov			ax,stat			// stav řídicího slova
 		and			ah,not 0xc		// implicitní zaokrouhlování
-		or			ah,3			// pøesnost 64 bitù
-		mov			stat,ax			// nový stav øídicího slova
-		fldcw		stat			// nastavení nového øídicího slova
+		or			ah,3			// přesnost 64 bitů
+		mov			stat,ax			// nový stav řídicího slova
+		fldcw		stat			// nastavení nového řídicího slova
 	}
 #endif
 
@@ -359,28 +359,28 @@ void mainCRTStartup()
 	EmptyPictureData.Data = (BYTE*)MemGet(ICONSIZE);
 	MemFill(EmptyPictureData.Data, ICONSIZE, BackCol);
 
-// inicializace obsluhy sprajtù
-	InitSprite();						// statická inicializace sprajtù
+// inicializace obsluhy sprajtů
+	InitSprite();						// statická inicializace sprajtů
 
-// inicializace globálních objektù
+// inicializace globálních objektů
 	InitTerm(__xc_a, __xc_z);
 
 // inicializace standardního záhlaví BMP
 	StdBitmapInfo = (BITMAPINFO*) MemGet(sizeof(BITMAPINFO) + sizeof(RGBQUAD)*255);
 	MemFill(StdBitmapInfo, sizeof(BITMAPINFO) + sizeof(RGBQUAD)*255);	// vynulování
 	StdBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);	// velikost záhlaví
-	StdBitmapInfo->bmiHeader.biWidth = ICONWIDTH;	// šíøka bitmapy
+	StdBitmapInfo->bmiHeader.biWidth = ICONWIDTH;	// šířka bitmapy
 	StdBitmapInfo->bmiHeader.biHeight = ICONHEIGHT;	// výška bitmapy
-	StdBitmapInfo->bmiHeader.biPlanes = 1;			// poèet barevných rovin
-	StdBitmapInfo->bmiHeader.biBitCount = 8;		// poèet bitù na bod
+	StdBitmapInfo->bmiHeader.biPlanes = 1;			// počet barevných rovin
+	StdBitmapInfo->bmiHeader.biBitCount = 8;		// počet bitů na bod
 	StdBitmapInfo->bmiHeader.biCompression = BI_RGB; // není komprese
-	StdBitmapInfo->bmiHeader.biClrImportant = StdColors; // poèet dùležitých palet
+	StdBitmapInfo->bmiHeader.biClrImportant = StdColors; // počet důležitých palet
 
-// vytvoøení standardních palet
-	RGBQUAD* rgb = StdBitmapInfo->bmiColors;		// zaèátek tabulky palet
+// vytvoření standardních palet
+	RGBQUAD* rgb = StdBitmapInfo->bmiColors;		// začátek tabulky palet
 
-// nemìnit paletu barvu pozadí - používá se pøi importu obrázkù
-	rgb->rgbRed =	BACKCOLOR_RED;					// prùhledná barva
+// neměnit paletu barvu pozadí - používá se při importu obrázků
+	rgb->rgbRed =	BACKCOLOR_RED;					// průhledná barva
 	rgb->rgbGreen =	BACKCOLOR_GREEN;
 	rgb->rgbBlue =	BACKCOLOR_BLUE;
 	rgb++;
@@ -393,12 +393,12 @@ void mainCRTStartup()
 	int i,j,k;
 	for (i = 0; i < (ColCol-2); i++)				// pro všechny barvy bez bílé a šedé
 	{
-		*rgb = ColColTab[i];						// pøenesení základní barvy
+		*rgb = ColColTab[i];						// přenesení základní barvy
 
 		for (j = 1; j < ColLev; j++)				// pro všechny odstíny
 		{
 			k = ColLevTab[j];						// násobící koeficient
-			rgb[j].rgbRed = (BYTE)(rgb->rgbRed*k/256);		// èervená
+			rgb[j].rgbRed = (BYTE)(rgb->rgbRed*k/256);		// červená
 			rgb[j].rgbGreen = (BYTE)(rgb->rgbGreen*k/256);	// zelená
 			rgb[j].rgbBlue = (BYTE)(rgb->rgbBlue*k/256);	// modrá
 		}
@@ -406,10 +406,10 @@ void mainCRTStartup()
 	}
 
 	i = WhiteCol;									// index bílé barvy
-	for (; i <= BlackCol; i++)						// od bílé barvy až po èernou
+	for (; i <= BlackCol; i++)						// od bílé barvy až po černou
 	{
 		k = (BlackCol-i)*255/(2*ColLev-1);			// odstín bílé barvy
-		rgb->rgbRed = (BYTE)k;						// èervená
+		rgb->rgbRed = (BYTE)k;						// červená
 		rgb->rgbGreen = (BYTE)k;					// zelená
 		rgb->rgbBlue = (BYTE)k;						// modrá
 		rgb++;										// zvýšení adresy barvy
@@ -419,7 +419,7 @@ void mainCRTStartup()
 	StdPalImport = (BYTE*)MemGet(64 * 64 * 64);		// tabulka pro import palet
 	StdPalImportDither = (BYTE*)MemGet(64 * 64 * 64 * 4);	// tabulka pro import palet s dithering
 
-// naètení tabulky importu palet
+// načtení tabulky importu palet
 	HRSRC hRes = ::FindResource(hInstance, MAKEINTRESOURCE(IDN_PALIMP), _T("LOADER"));
 	HGLOBAL hData = ::LoadResource(hInstance, hRes);
 	ASSERT((hRes != NULL) && (hData != NULL));
@@ -432,10 +432,10 @@ void mainCRTStartup()
 	if ((hRes == NULL) || (hData == NULL)) Exit(EXITCODE_LOADRES);
 	DeKomp(StdPalImportDither, 64*64*64*4, (BYTE*)::LockResource(hData)+6, ::SizeofResource(hInstance, hRes)-6);
 
-// vytvoøení konverzní tabulky palet pro ímport souborù BMP
+// vytvoření konverzní tabulky palet pro ímport souborů BMP
 	KonvPal = (BYTE*)MemGet(256);			// konverzní tabulka palet
 
-// úschova pøíkazového øádku
+// úschova příkazového řádku
 	ConsoleOut(UvText);
 	CommandLine = ::GetCommandLine();
 
@@ -486,13 +486,13 @@ void mainCRTStartup()
 
 	Dither = (Int(CommandPar(9)) != 0);
 
-// cyklus pøes všechny obrázky
+// cyklus přes všechny obrázky
 	for (int faze = 0; faze < klid+pohyb; faze++)
 	{
 		for (int smer = 0; smer < smeru; smer++)
 		{
 
-// naètení obrázku
+// načtení obrázku
 			if (!Sprite.At(faze, smer).LoadFile2(InName))
 			{
 				ConsoleOut(ReadErr1);
@@ -540,24 +540,24 @@ void mainCRTStartup()
 };
 
 //////////////////////////////////////////////////////////////////////////////
-// ukonèení programu
+// ukončení programu
 
 void Exit(int code)
 {
-// uzamknutí ukonèení programu
+// uzamknutí ukončení programu
 #ifdef _MT
 	::EnterCriticalSection(&ExitCriticalSection);
 #endif
 
-// ukonèení správce pamìti
+// ukončení správce paměti
 	MemTerm();
 
-// uvolnìní uzamykání ukonèení programu
+// uvolnění uzamykání ukončení programu
 #ifdef _MT
 	::DeleteCriticalSection(&ExitCriticalSection);
 #endif
 
-// ukonèení programu
+// ukončení programu
 	ExitProcess(code);
 }
 
@@ -566,20 +566,20 @@ void Exit(int code)
 
 void GenKonvPal(BITMAPINFO* bmp)
 {
-// lokální promìnné
-	int			i;									// èítaè barev
-	int			palet = bmp->bmiHeader.biClrUsed;	// poèet palet v bitmapì
+// lokální proměnné
+	int			i;									// čítač barev
+	int			palet = bmp->bmiHeader.biClrUsed;	// počet palet v bitmapě
 	RGBQUAD*	col = bmp->bmiColors;				// ukazatel barevných složek
 	BYTE*		pal = KonvPal;						// ukazatel konverzních palet
 	DWORD		BackColData = *(DWORD*)(StdBitmapInfo->bmiColors + BackCol); // paleta pozadí
 	DWORD		ShadColData = *(DWORD*)(StdBitmapInfo->bmiColors + ShadCol); // paleta stínu
 
-// pøíprava poètu palet
+// příprava počtu palet
 	if (palet == 0) palet = (1 << bmp->bmiHeader.biBitCount);
 	i = palet;
 	if ((palet < 1) || (palet > 256)) return;
 
-// cyklus pøes platné barvy
+// cyklus přes platné barvy
 	for (; i > 0; i--)
 	{
 		if (*(DWORD*)col == BackColData)
@@ -601,23 +601,23 @@ void GenKonvPal(BITMAPINFO* bmp)
 		col++;
 	}
 
-// vymazání zbylých neplatných barev (import na èernou barvu)
+// vymazání zbylých neplatných barev (import na černou barvu)
 	MemFill(pal, 256-palet, BlackCol);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vygenerování støední barvy (ze 4 bodù)
+// vygenerování střední barvy (ze 4 bodů)
 
 BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 {
-// lokální promìnné
-	int			r = 0;									// èervená složka
+// lokální proměnné
+	int			r = 0;									// červená složka
 	int			g = 0;									// zelená složka
 	int			b = 0;									// modrá složka
-	BYTE		n = 0;									// poèet platných bodù
+	BYTE		n = 0;									// počet platných bodů
 	RGBQUAD*	rgb;									// ukazatel palet
-	int			shad = 0;								// èítaè stínù
+	int			shad = 0;								// čítač stínů
 
 // první bod
 	if (col1 != BackCol)
@@ -628,9 +628,9 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col1;			// definice palet bodu
-			r = rgb->rgbRed;								// èervená složka
+			r = rgb->rgbRed;								// červená složka
 			g = rgb->rgbGreen;								// zelená složka
 			b = rgb->rgbBlue;								// modrá složka
 		}
@@ -645,15 +645,15 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col2;			// definice palet bodu
-			r += rgb->rgbRed;								// èervená složka
+			r += rgb->rgbRed;								// červená složka
 			g += rgb->rgbGreen;								// zelená složka
 			b += rgb->rgbBlue;								// modrá složka
 		}
 	}
 
-// tøetí bod
+// třetí bod
 	if (col3 != BackCol)
 	{
 		if (col3 == ShadCol)
@@ -662,15 +662,15 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col3;			// definice palet bodu
-			r += rgb->rgbRed;								// èervená složka
+			r += rgb->rgbRed;								// červená složka
 			g += rgb->rgbGreen;								// zelená složka
 			b += rgb->rgbBlue;								// modrá složka
 		}
 	}
 
-// ètvrtý bod
+// čtvrtý bod
 	if (col4 != BackCol)
 	{
 		if (col4 == ShadCol)
@@ -679,9 +679,9 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col4;			// definice palet bodu
-			r += rgb->rgbRed;								// èervená složka
+			r += rgb->rgbRed;								// červená složka
 			g += rgb->rgbGreen;								// zelená složka
 			b += rgb->rgbBlue;								// modrá složka
 		}
@@ -707,17 +707,17 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vygenerování støední barvy (ze 4 bodù) s ditheringem
+// vygenerování střední barvy (ze 4 bodů) s ditheringem
 
 BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 {
-// lokální promìnné
-	int			r = 0;									// èervená složka
+// lokální proměnné
+	int			r = 0;									// červená složka
 	int			g = 0;									// zelená složka
 	int			b = 0;									// modrá složka
-	BYTE		n = 0;									// poèet platných bodù
+	BYTE		n = 0;									// počet platných bodů
 	RGBQUAD*	rgb;									// ukazatel palet
-	int			shad = 0;								// èítaè stínù
+	int			shad = 0;								// čítač stínů
 
 // první bod
 	if (col1 != BackCol)
@@ -728,9 +728,9 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col1;			// definice palet bodu
-			r = rgb->rgbRed;								// èervená složka
+			r = rgb->rgbRed;								// červená složka
 			g = rgb->rgbGreen;								// zelená složka
 			b = rgb->rgbBlue;								// modrá složka
 		}
@@ -745,15 +745,15 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col2;			// definice palet bodu
-			r += rgb->rgbRed;								// èervená složka
+			r += rgb->rgbRed;								// červená složka
 			g += rgb->rgbGreen;								// zelená složka
 			b += rgb->rgbBlue;								// modrá složka
 		}
 	}
 
-// tøetí bod
+// třetí bod
 	if (col3 != BackCol)
 	{
 		if (col3 == ShadCol)
@@ -762,15 +762,15 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col3;			// definice palet bodu
-			r += rgb->rgbRed;								// èervená složka
+			r += rgb->rgbRed;								// červená složka
 			g += rgb->rgbGreen;								// zelená složka
 			b += rgb->rgbBlue;								// modrá složka
 		}
 	}
 
-// ètvrtý bod
+// čtvrtý bod
 	if (col4 != BackCol)
 	{
 		if (col4 == ShadCol)
@@ -779,9 +779,9 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zvýšení èítaèe bodù
+			n++;											// zvýšení čítače bodů
 			rgb = StdBitmapInfo->bmiColors + col4;			// definice palet bodu
-			r += rgb->rgbRed;								// èervená složka
+			r += rgb->rgbRed;								// červená složka
 			g += rgb->rgbGreen;								// zelená složka
 			b += rgb->rgbBlue;								// modrá složka
 		}
@@ -809,13 +809,13 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 /////////////////////////////////////////////////////////////////////////////
 // dekomprese dat
 
-#define MAXLENX 25					// min. délka dlouhého øetìzce
-#define MAXLEN (MAXLENX+254)		// maximální délka øetìzce
+#define MAXLENX 25					// min. délka dlouhého řetězce
+#define MAXLEN (MAXLENX+254)		// maximální délka řetězce
 #define SUBSTLEN	7				// délka nahrazená dlouhým kódem
 
 void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 {
-// naètení jednoho bitu ze stavového slova
+// načtení jednoho bitu ze stavového slova
 #define DekBit		bit = status & 1;				\
 					status >>= 1;					\
 					if (status == 0)				\
@@ -833,23 +833,23 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 
 
 	BYTE* dst = dstBuf;				// ukazatel cílové adresy
-	int dsti = 0;					// èítaè cílových dat
+	int dsti = 0;					// čítač cílových dat
 	BYTE* src = srcBuf;				// ukazatel zdrojové adresy
-	int srci = 0;					// èítaè zdrojových dat
+	int srci = 0;					// čítač zdrojových dat
 	BYTE* src2;						// pomocný ukazatel
 	int srci2;
 
-	WORD status = 0;				// støadaè stavového slova
+	WORD status = 0;				// střadač stavového slova
 	BYTE offsetL, offsetH;			// offset k opakování
 	int delka;						// délka k opakování
-	int bit;						// 1 = naètený bit
+	int bit;						// 1 = načtený bit
 
 	for (;;)
 	{
-// naètení prvního bitu pøíznaku
+// načtení prvního bitu příznaku
 		DekBit
 
-// pøesun bajtu bez komprese
+// přesun bajtu bez komprese
 		if (bit == 0)
 		{
 			if (srci >= srcNum) break;
@@ -861,7 +861,7 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 			srci++;
 		}
 
-// jinak bude opakování øetìzce
+// jinak bude opakování řetězce
 		else
 		{
 			offsetH = 0;
@@ -871,13 +871,13 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 			DekBit
 			delka = bit;
 
-// zvýšení èítaèe délky
+// zvýšení čítače délky
 			for (;;)
 			{
 				delka++;
 				delka++;
 
-// naètení pøíznaku konce kódu
+// načtení příznaku konce kódu
 				DekBit
 
 				if (bit == 0)
@@ -960,13 +960,13 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 				}
 			}
 
-// naètení offsetu - nižší bajt
+// načtení offsetu - nižší bajt
 			if (srci >= srcNum) break;
 			offsetL = *src;
 			src++;
 			srci++;
 
-// pøenesení øetìzce
+// přenesení řetězce
 			srci2 = dsti - (WORD)(offsetL + offsetH*256);
 			if (srci2 < 0) break;
 			src2 = &(dstBuf[srci2]);
@@ -987,7 +987,7 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod reálného èísla na celé èíslo se zaokrouhlením k nejbližší hodnotì
+// převod reálného čísla na celé číslo se zaokrouhlením k nejbližší hodnotě
 
 int Round(double num)
 {
@@ -996,8 +996,8 @@ int Round(double num)
 	DWORD		result;				// výsledek operace
 
 	_asm {
-		fld			num				// naètení èísla k provedení operace
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// načtení čísla k provedení operace
+		fistp		result			// převod čísla na celé číslo
 	}
 	return result;
 
@@ -1016,27 +1016,27 @@ int Round(double num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod reálného èísla na celé èíslo s oøíznutím k nule
+// převod reálného čísla na celé číslo s oříznutím k nule
 
 int Round0(double num)
 {
 #ifdef _M_IX86
 
-	WORD		oldstat;			// starý stav øídicího slova
-	WORD		newstat;			// nový stav øídicího slova
+	WORD		oldstat;			// starý stav řídicího slova
+	WORD		newstat;			// nový stav řídicího slova
 	int			result;				// výsledek operace
 
 	_asm {
-		fld			num				// naètení èísla k provedení operace
+		fld			num				// načtení čísla k provedení operace
 		wait						// synchronizace
-		fnstcw		oldstat			// uloženi øídicího slova
+		fnstcw		oldstat			// uloženi řídicího slova
 		wait						// synchronizace
-		mov			ax,oldstat		// starý stav øídicího slova
-		or			ah,0xc			// mód zaokrouhlení smìrem k nule
-		mov			newstat,ax		// nový stav øídicího slova
-		fldcw		newstat			// nastavení nového øídicího slova
-		fistp		result			// pøevod èísla na celé èíslo
-		fldcw		oldstat			// navrácení pùvodního øídicího slova
+		mov			ax,oldstat		// starý stav řídicího slova
+		or			ah,0xc			// mód zaokrouhlení směrem k nule
+		mov			newstat,ax		// nový stav řídicího slova
+		fldcw		newstat			// nastavení nového řídicího slova
+		fistp		result			// převod čísla na celé číslo
+		fldcw		oldstat			// navrácení původního řídicího slova
 	}
 	return result;
 
@@ -1048,28 +1048,28 @@ int Round0(double num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod reálného èísla na celé èíslo se zaokrouhlením nahoru (ke kladné hodnotì)
+// převod reálného čísla na celé číslo se zaokrouhlením nahoru (ke kladné hodnotě)
 
 int RoundP(double num)
 {
 #ifdef _M_IX86
 
-	WORD		oldstat;			// starý stav øídicího slova
-	WORD		newstat;			// nový stav øídicího slova
+	WORD		oldstat;			// starý stav řídicího slova
+	WORD		newstat;			// nový stav řídicího slova
 	int			result;				// výsledek operace
 
 	_asm {
-		fld			num				// naètení èísla k provedení operace
+		fld			num				// načtení čísla k provedení operace
 		wait						// synchronizace
-		fnstcw		oldstat			// uloženi øídicího slova
+		fnstcw		oldstat			// uloženi řídicího slova
 		wait						// synchronizace
-		mov			ax,oldstat		// starý stav øídicího slova
-		and			ah,not 0xc;		// vynulování øídicích bitù pro zaokrouhlení
-		or			ah,8			// mód zaokrouhlení smìrem nahoru
-		mov			newstat,ax		// nový stav øídicího slova
-		fldcw		newstat			// nastavení nového øídicího slova
-		fistp		result			// pøevod èísla na celé èíslo
-		fldcw		oldstat			// navrácení pùvodního øídicího slova
+		mov			ax,oldstat		// starý stav řídicího slova
+		and			ah,not 0xc;		// vynulování řídicích bitů pro zaokrouhlení
+		or			ah,8			// mód zaokrouhlení směrem nahoru
+		mov			newstat,ax		// nový stav řídicího slova
+		fldcw		newstat			// nastavení nového řídicího slova
+		fistp		result			// převod čísla na celé číslo
+		fldcw		oldstat			// navrácení původního řídicího slova
 	}
 	return result;
 
@@ -1090,28 +1090,28 @@ int RoundP(double num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod reálného èísla na celé èíslo se zaokrouhlením dolù (k záporné hodnotì)
+// převod reálného čísla na celé číslo se zaokrouhlením dolů (k záporné hodnotě)
 
 int RoundM(double num)
 {
 #ifdef _M_IX86
 
-	WORD		oldstat;			// starý stav øídicího slova
-	WORD		newstat;			// nový stav øídicího slova
+	WORD		oldstat;			// starý stav řídicího slova
+	WORD		newstat;			// nový stav řídicího slova
 	int			result;				// výsledek operace
 
 	_asm {
-		fld			num				// naètení èísla k provedení operace
+		fld			num				// načtení čísla k provedení operace
 		wait						// synchronizace
-		fnstcw		oldstat			// uloženi øídicího slova
+		fnstcw		oldstat			// uloženi řídicího slova
 		wait						// synchronizace
-		mov			ax,oldstat		// starý stav øídicího slova
-		and			ah,not 0xc;		// vynulování øídicích bitù pro zaokrouhlení
-		or			ah,4			// mód zaokrouhlení smìrem dolù
-		mov			newstat,ax		// nový stav øídicího slova
-		fldcw		newstat			// nastavení nového øídicího slova
-		fistp		result			// pøevod èísla na celé èíslo
-		fldcw		oldstat			// navrácení pùvodního øídicího slova
+		mov			ax,oldstat		// starý stav řídicího slova
+		and			ah,not 0xc;		// vynulování řídicích bitů pro zaokrouhlení
+		or			ah,4			// mód zaokrouhlení směrem dolů
+		mov			newstat,ax		// nový stav řídicího slova
+		fldcw		newstat			// nastavení nového řídicího slova
+		fistp		result			// převod čísla na celé číslo
+		fldcw		oldstat			// navrácení původního řídicího slova
 	}
 	return result;
 

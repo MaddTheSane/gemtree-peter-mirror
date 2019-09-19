@@ -1,11 +1,11 @@
 
 /***************************************************************************\
 *																			*
-*								Doplòky jádra								*
+*								Doplňky jádra								*
 *																			*
 \***************************************************************************/
 
-// Zde jsou doplòky vyžadované pøekladaèem z jádra C++
+// Zde jsou doplňky vyžadované překladačem z jádra C++
 // POZOR - tento soubor musí zachovat jméno STUB.C !!!!
 
 int _fltused = 0x9875;
@@ -23,7 +23,7 @@ int* _errno() { return &errno; };
 // korekce chyb procesoru Pentuim
 int _adjust_fdiv = 0;		// 1 = korigovat chyby instrukcí Pentia
 
-// nevolat funkci pøi inicializaci programu - je to destruktor 
+// nevolat funkci při inicializaci programu - je to destruktor 
 //int atexit(void(*fnc())){ /*fnc();*/ fnc; return 0; };
 
 int atexit(void*(__cdecl *fnc)())
@@ -46,20 +46,20 @@ int atexit(void*(__cdecl *fnc)())
 
 __int64 _ftol() 
 {
-	unsigned short	oldstat;		// starý stav øídicího slova
-	unsigned short	newstat;		// nový stav øídicího slova
+	unsigned short	oldstat;		// starý stav řídicího slova
+	unsigned short	newstat;		// nový stav řídicího slova
 	__int64			result;			// výsledek operace
 
 	_asm {
 		wait						// synchronizace
-		fnstcw		oldstat			// uloženi øídicího slova
+		fnstcw		oldstat			// uloženi řídicího slova
 		wait						// synchronizace
-		mov			ax,oldstat		// starý stav øídicího slova
-		or			ah,0xc			// mód zaokrouhlení smìrem k nule
-		mov			newstat,ax		// nový stav øídicího slova
-		fldcw		newstat			// nastavení nového øídicího slova
-		fistp		result			// pøevod èísla na celé èíslo
-		fldcw		oldstat			// navrácení pùvodního øídicího slova
+		mov			ax,oldstat		// starý stav řídicího slova
+		or			ah,0xc			// mód zaokrouhlení směrem k nule
+		mov			newstat,ax		// nový stav řídicího slova
+		fldcw		newstat			// nastavení nového řídicího slova
+		fistp		result			// převod čísla na celé číslo
+		fldcw		oldstat			// navrácení původního řídicího slova
 	}
 	return result;
 };
@@ -87,7 +87,7 @@ char __decimal_point = '.';
 
 int __mb_cur_max = 2;
 
-// urèení typu znaku:
+// určení typu znaku:
 // -----------------
 //	_UPPER	0x01
 //	_LOWER	0x02
@@ -141,7 +141,7 @@ int __cdecl _isctype(int c, int mask)
 // uživatelský interface (okna, kurzor, klávesnice)
 
 // "kernel32.lib"
-// systémová obsluha (soubory, texty, pamì, systém)
+// systémová obsluha (soubory, texty, paměť, systém)
 
 // zrušené knihovny:
 // ----------------

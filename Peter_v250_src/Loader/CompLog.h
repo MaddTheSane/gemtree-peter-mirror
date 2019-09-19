@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// přidání jednoho prvku do bufferu programu (vrací index prvku)
 
 inline int CompAddItem(PROCLOG func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCLOG func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad logického výrazu (vrací true = operace OK)
+// překlad logického výrazu (vrací true = operace OK)
 
 bool _fastcall CompLog(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s logickým parametrem
+// překlad příkazu s logickým parametrem
 
 bool CompLogPar(int index, PROCCOM func, int data);
 
@@ -119,13 +119,13 @@ inline bool CompLogPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou logických výrazù (data = poèet výrazù - 1)
+// překlad příkazu se skupinou logických výrazů (data = počet výrazů - 1)
 
 inline bool CompLogGrp(int index, PROCLOG func, PROCLOG func1)
 	{ return CompGroup(CompLog, index, (PROCCOM)func, (PROCCOM)func1); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s logickým podparametrem (hledaným podle identifikace)
+// překlad příkazu s logickým podparametrem (hledaným podle identifikace)
 
 void CompLogSubPar(int index, int idf, bool def);

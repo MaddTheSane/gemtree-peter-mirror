@@ -8,7 +8,7 @@
 class CFile
 {
 private:
-	HANDLE	m_File;				// handle souboru (INVALID_HANDLE_VALUE=neotevøen)
+	HANDLE	m_File;				// handle souboru (INVALID_HANDLE_VALUE=neotevřen)
 	CText	m_Name;				// jméno souboru
 
 public:
@@ -19,7 +19,7 @@ public:
 	void Init();
 	void Term();
 
-// odpojení souboru bez uzavøení (napø. konzola)
+// odpojení souboru bez uzavření (např. konzola)
 	inline void Detach() { m_File = INVALID_HANDLE_VALUE; };
 
 // poskytnutí/nastavení jména souboru
@@ -27,80 +27,80 @@ public:
 	inline CText& Name() { return m_Name; };
 	inline const CText& Name() const { return m_Name; };
 
-// poskytnutí/nastavení handle souboru (INVALID_HANDLE_VALUE = není otevøen)
+// poskytnutí/nastavení handle souboru (INVALID_HANDLE_VALUE = není otevřen)
 	inline void File(const HANDLE file) { m_File = file; };
 	inline HANDLE File() const { return m_File; };
 	inline operator HANDLE() const { return m_File; }
 
-// otevøení souboru pro ètení i zápis
+// otevření souboru pro čtení i zápis
 	BOOL Open();
 
-// otevøení souboru pro ètení
+// otevření souboru pro čtení
 	BOOL OpenRead();
 
-// otevøení souboru pro zápis
+// otevření souboru pro zápis
 	BOOL OpenWrite();
 
-// otevøení souboru bez pøístupu (nastavení vlastností)
+// otevření souboru bez přístupu (nastavení vlastností)
 	BOOL OpenNone();
 
-// otevøení adresáøe (pro nastavení vlastností)
+// otevření adresáře (pro nastavení vlastností)
 	BOOL OpenDirectory();
 
-// vytvoøení souboru
+// vytvoření souboru
 	BOOL Create();
 
-// uzavøení souboru
+// uzavření souboru
 	BOOL Close();
 
-// vytvoøení/zrušení konzoly
+// vytvoření/zrušení konzoly
 	inline BOOL AllocConsole() { return ::AllocConsole(); };
 	inline BOOL FreeConsole() { return ::FreeConsole(); };
 
-// otevøení pro standardní vstup (neuzavírat!)
+// otevření pro standardní vstup (neuzavírat!)
 	BOOL OpenInput();
 
-// otevøení pro standardní výstup (neuzavírat!)
+// otevření pro standardní výstup (neuzavírat!)
 	BOOL OpenOutput();
 
-// otevøení pro chybový výstup (neuzavírat!)
+// otevření pro chybový výstup (neuzavírat!)
 	BOOL OpenError();
 
-// ètení ze souboru
+// čtení ze souboru
 	BOOL Read(void* buf, int num);
 
 // zápis do souboru
 	BOOL Write(void* buf, int num);
 
-// zrušení souboru (musí být uzavøen)
+// zrušení souboru (musí být uzavřen)
 	BOOL Delete();
 
-// poskytnutí velikosti souboru (musí být otevøen, -1 = chyba)
+// poskytnutí velikosti souboru (musí být otevřen, -1 = chyba)
 	int Size();
 
-// poskytnutí typu souboru (musí být otevøen)
+// poskytnutí typu souboru (musí být otevřen)
 //		FILE_TYPE_UNKNOWN ... neznámý
 //		FILE_TYPE_DISK ...... diskový soubor
-//		FILE_TYPE_CHAR ...... znakové zaøízení
+//		FILE_TYPE_CHAR ...... znakové zařízení
 //		FILE_TYPE_PIPE ...... kanál
 	int Type();
 
-// poskytnutí/nastavení èasu vytvoøení (musí být otevøen)
+// poskytnutí/nastavení času vytvoření (musí být otevřen)
 	BOOL GetCreationTime(FILETIME* time);
 	BOOL SetCreationTime(FILETIME* time);
 
-// poskytnutí/nastavení èasu posledního ètení (musí být otevøen)
+// poskytnutí/nastavení času posledního čtení (musí být otevřen)
 	BOOL GetLastRead(FILETIME* time);
 	BOOL SetLastRead(FILETIME* time);
 
-// poskytnutí/nastavení èasu posledního zápisu (musí být otevøen)
+// poskytnutí/nastavení času posledního zápisu (musí být otevřen)
 	BOOL GetLastWrite(FILETIME* time);
 	BOOL SetLastWrite(FILETIME* time);
 
-// poskytnutí atributù souboru (nemusí být otevøen, -1=chyba)
+// poskytnutí atributů souboru (nemusí být otevřen, -1=chyba)
 	int Attribute();
 
-// nastavení atributù souboru (nemusí být otevøen)
+// nastavení atributů souboru (nemusí být otevřen)
 	BOOL Attribute(int atr);
 
 // resetování ukazatele v souboru
@@ -118,7 +118,7 @@ public:
 // nastavení ukazatele v souboru na konec
 	BOOL End();
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CFile& _fastcall operator= (const CFile& file);
 };
 
@@ -132,7 +132,7 @@ public:
 class CBuf
 {
 private:
-	BYTE*	m_Adr;			// adresa bufferu v pamìti
+	BYTE*	m_Adr;			// adresa bufferu v paměti
 	int		m_Size;			// velikost bufferu
 	BYTE*	m_End;			// adresa za koncem bufferu
 
@@ -182,14 +182,14 @@ public:
 
 /***************************************************************************\
 *																			*
-*					Pamìovì mapovaný soubor (jen pro ètení)				*
+*					Paměťově mapovaný soubor (jen pro čtení)				*
 *																			*
 \***************************************************************************/
 
 class CFileMap : public CBuf, private CFile
 {
 private:
-	HANDLE		m_Map;		// handle mapování (NULL=neotevøeno)
+	HANDLE		m_Map;		// handle mapování (NULL=neotevřeno)
 
 // nastavení velikosti bufferu
 	inline void Size(int size) { CBuf::Size(size); };
@@ -209,10 +209,10 @@ public:
 // poskytnutí velikosti souboru
 	inline int Size() { return CBuf::Size(); };
 
-// poskytnutí adresy v pamìti (NULL = není otevøeno)
+// poskytnutí adresy v paměti (NULL = není otevřeno)
 	inline BYTE* Adr() { return CBuf::Adr(); };
 
-// poskytnutí adresy za pamìovým oknem (NULL = není otevøeno)
+// poskytnutí adresy za paměťovým oknem (NULL = není otevřeno)
 	inline BYTE* End() { return CBuf::End(); };
 
 // kontrola platnosti adresy
@@ -223,10 +223,10 @@ public:
 	inline BOOL IsValid(void* adr, int size) { return CBuf::IsValid(adr, size); };
 	inline BOOL IsNotValid(void* adr, int size) { return CBuf::IsNotValid(adr, size); };
 
-// otevøení
+// otevření
 	BOOL Open(const CText& name);
 
-// uzavøení (pøi destrukci uzavírá automaticky)
+// uzavření (při destrukci uzavírá automaticky)
 	void Close();
 };
 
@@ -260,10 +260,10 @@ public:
 // poskytnutí velikosti souboru
 	inline int Size() { return CBuf::Size(); };
 
-// poskytnutí adresy v pamìti (NULL = není otevøeno)
+// poskytnutí adresy v paměti (NULL = není otevřeno)
 	inline BYTE* Adr() { return CBuf::Adr(); };
 
-// poskytnutí adresy za pamìovým oknem (NULL = není otevøeno)
+// poskytnutí adresy za paměťovým oknem (NULL = není otevřeno)
 	inline BYTE* End() { return CBuf::End(); };
 
 // kontrola platnosti adresy
@@ -274,21 +274,21 @@ public:
 	inline BOOL IsValid(void* adr, int size) { return CBuf::IsValid(adr, size); };
 	inline BOOL IsNotValid(void* adr, int size) { return CBuf::IsNotValid(adr, size); };
 
-// otevøení souboru s resource
+// otevření souboru s resource
 	BOOL OpenFile(LPCTSTR name);
 
-// uzavøení souboru s resource (pøi destrukci se uzavírá automaticky)
+// uzavření souboru s resource (při destrukci se uzavírá automaticky)
 	void CloseFile();
 
-// otevøení resource
+// otevření resource
 	BOOL Open(int id, LPCTSTR typ);
 
-// otevøení kopie dat (pro možnost zápisu, buffer je nutno po použití zrušit)
+// otevření kopie dat (pro možnost zápisu, buffer je nutno po použití zrušit)
 	BOOL OpenCopy(int id, LPCTSTR typ);
 
 // zrušení bufferu s kopií resource dat
 	void CloseCopy();
 
-// uzavøení resource (pøi destrukci uzavírá automaticky)
+// uzavření resource (při destrukci uzavírá automaticky)
 	void Close();
 };

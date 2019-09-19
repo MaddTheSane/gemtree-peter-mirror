@@ -15,9 +15,9 @@ typedef struct CLIPHEAD_ {
 	BYTE				Verze;			// (1) verze = 1
 	WORD				Editor;			// (2) verze editoru v tisícinách
 	WORD				Param;			// (2) parametry = 0
-	long				Data;			// (4) offset zaèátku dat (= délka záhlaví)
-	long				Pocet;			// (4) poèet datových blokù = 1
-	PETINDEX			Clip;			// tabulka indexù
+	long				Data;			// (4) offset začátku dat (= délka záhlaví)
+	long				Pocet;			// (4) počet datových bloků = 1
+	PETINDEX			Clip;			// tabulka indexů
 } CLIPHEAD;
 
 #define SIZEOFCLIPHEAD (3*sizeof(char) + sizeof(BYTE) + 2*sizeof(WORD) + 2*sizeof(long) + SIZEOFPETINDEX)
@@ -37,7 +37,7 @@ namespace ProgClip
 // zrušení bloku
 	void Delete(int bufID);
 
-// vystøižení bloku
+// vystřižení bloku
 	void Cut(int bufID);
 
 // aktualizace voleb bloku

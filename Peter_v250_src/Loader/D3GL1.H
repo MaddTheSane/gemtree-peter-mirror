@@ -43,7 +43,7 @@ extern	GLTEXCOORDPOINTER	pglTexCoordPointer;
 extern	GLVERTEXPOINTER		pglVertexPointer;
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní OpenGL 1.1 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní OpenGL 1.1 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3GL1InitD3();
 void D3GL1TermD3();
@@ -52,8 +52,8 @@ inline void D3GL1SizeView() { D3GL0SizeView(); }
 inline void D3GL1MoveView() { D3GL0MoveView(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahájení funkce zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3GL1Start(int type);
 
@@ -63,7 +63,7 @@ bool D3GL1Start(int type);
 void D3GL1Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetování položky textury před ukončením ovladače
 
 void D3GL1TextureRes(D3DTITEM* item);
 

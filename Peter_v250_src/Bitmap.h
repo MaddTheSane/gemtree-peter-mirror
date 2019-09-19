@@ -14,27 +14,27 @@
 
 typedef struct ICONDIRENTRY_
 {
-	BYTE	Width;					// šíøka
+	BYTE	Width;					// šířka
 	BYTE	Height;					// výška
-	BYTE	Colors;					// poèet barev (0 = 256 barev)
+	BYTE	Colors;					// počet barev (0 = 256 barev)
 	BYTE	Reserved;				// ... rezervováno, musí být vždy 0
-	WORD	Planes;					// poèet barevných rovin (nastaveno na 0)
-	WORD	Bits;					// poèet bitù na bod (nastaveno na 0)
+	WORD	Planes;					// počet barevných rovin (nastaveno na 0)
+	WORD	Bits;					// počet bitů na bod (nastaveno na 0)
 	DWORD	Size;					// velikost obrázku v bajtech
 	DWORD	Offset;					// offset obrázku v souboru
 } ICONDIRENTRY;
 
-#define SIZEOFICONDIRENTRY (4*sizeof(BYTE) + 2*sizeof(WORD) + 2*sizeof(DWORD)) // 16 bajtù
+#define SIZEOFICONDIRENTRY (4*sizeof(BYTE) + 2*sizeof(WORD) + 2*sizeof(DWORD)) // 16 bajtů
 
 typedef struct ICONDIR_
 {
 	WORD			Reserved;		// ... rezervováno, musí být vždy 0
 	WORD			Type;			// typ souboru (ikona = 1, kurzor = 2)
-	WORD			Count;			// poèet položek v adresáøi
+	WORD			Count;			// počet položek v adresáři
 	ICONDIRENTRY	Data[1];		// položky ikon
 } ICONDIR;
 
-#define SIZEOFICONDIR (3*sizeof(WORD))	// 6 bajtù
+#define SIZEOFICONDIR (3*sizeof(WORD))	// 6 bajtů
 
 // Obrázek ikony:
 //	BITMAPINFOHEADER	- záhlaví BMP

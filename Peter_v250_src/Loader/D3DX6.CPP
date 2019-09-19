@@ -23,11 +23,11 @@ extern	IDirectDraw2*		D3DX5DD;		// objekt DirectDraw 5 (NULL=není)
 // data
 
 // DirectDraw 6
-bool				D3DX6DDTest			= false;	// probìhl test rozhraní DirectDraw 6
+bool				D3DX6DDTest			= false;	// proběhl test rozhraní DirectDraw 6
 IDirectDraw4*		D3DX6DD				= NULL;		// objekt DirectDraw 6 (NULL=není)
 
 // Direct3D	6
-bool				D3DX6D3Test			= false;	// probìhl test rozhraní Direct3D 6
+bool				D3DX6D3Test			= false;	// proběhl test rozhraní Direct3D 6
 IDirect3D3*			D3DX6D3				= NULL;		// objekt Direct3D 6 (NULL=není)
 
 // objekty
@@ -35,15 +35,15 @@ IDirectDrawSurface4*	D3DX6Prim		= NULL;		// primární povrch
 IDirectDrawClipper*		D3DX6Clip		= NULL;		// clipper
 IDirectDrawPalette*		D3DX6Pal		= NULL;		// palety
 IDirectDrawSurface4*	D3DX6Rend		= NULL;		// renderovací povrch
-int						D3DX6RendWidth	= 0;		// aktuální šíøka renderovacího povrchu	
+int						D3DX6RendWidth	= 0;		// aktuální šířka renderovacího povrchu	
 int						D3DX6RendHeight	= 0;		// aktuální výška renderovacího povrchu	
 IDirectDrawSurface4*	D3DX6ZBuf		= NULL;		// Z buffer
-IDirect3DDevice3*		D3DX6Dev		= NULL;		// renderovací zaøízení
+IDirect3DDevice3*		D3DX6Dev		= NULL;		// renderovací zařízení
 IDirect3DViewport3*		D3DX6View		= NULL;		// viewport
 
-//DDSURFACEDESC2			D3DX6ZBufDesc;				// popisovaè Z bufferu
+//DDSURFACEDESC2			D3DX6ZBufDesc;				// popisovač Z bufferu
 
-// cílové souøadnice pro vykreslování v souøadnicích displeje
+// cílové souřadnice pro vykreslování v souřadnicích displeje
 RECT					D3DX6Dest;					// cílová oblast pro vykreslování
 D3DRECT					D3DX6Src;					// zdrojová oblast viewportu
 D3DVIEWPORT2			D3DX6ViewBuf;				// buffer nastavení pro viewport
@@ -59,20 +59,20 @@ IDirect3DVertexBuffer*	D3DX6ShadowBuf = NULL;		// buffer stínu
 //DDPIXELFORMAT			D3DX6TextFormat;			// použitý formát textur
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní DirectDraw 6 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní DirectDraw 6 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3DX6InitDD()
 {
-// test, zda již byla provádìna inicializace
+// test, zda již byla prováděna inicializace
 	if (!D3DX6DDTest)
 	{
 		D3DX6DDTest = true;
 
-// vytvoøení rozhraní DirectDraw 5
+// vytvoření rozhraní DirectDraw 5
 		if (D3DX5InitDD())
 		{
 
-// vytvoøení objektu DirectDraw 6
+// vytvoření objektu DirectDraw 6
 			if (D3DX5DD->QueryInterface(IID_IDirectDraw4, (void**)&D3DX6DD) != DD_OK)
 			{
 				D3DX6DD = NULL;
@@ -80,16 +80,16 @@ bool D3DX6InitDD()
 		}
 	}
 
-// test, zda je objekt DirectDraw 6 vytvoøen
+// test, zda je objekt DirectDraw 6 vytvořen
 	return (D3DX6DD != NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení rozhraní DirectDraw 6
+// ukončení rozhraní DirectDraw 6
 
 void D3DX6TermDD()
 {
-// ukonèení rozhraní Direct3D 6
+// ukončení rozhraní Direct3D 6
 	D3DX6TermD3();
 
 // zrušení viewportu
@@ -117,12 +117,12 @@ void D3DX6TermDD()
 		D3DX6DD = NULL;
 	}
 
-// zrušení pøíznaku, že byla inicializace
+// zrušení příznaku, že byla inicializace
 	D3DX6DDTest = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení povrchu DirectDrawSurface4 (vrací TRUE=OK)
+// vytvoření povrchu DirectDrawSurface4 (vrací TRUE=OK)
 
 bool D3DX6InitSurf(IDirectDrawSurface4** surf, DDSURFACEDESC2* ddsd)
 {
@@ -140,7 +140,7 @@ bool D3DX6InitSurf(IDirectDrawSurface4** surf, DDSURFACEDESC2* ddsd)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení primárniho povrchu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření primárniho povrchu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX6InitPrim()
 {
@@ -169,7 +169,7 @@ void D3DX6TermPrim()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení clipperu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření clipperu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX6InitClip()
 {
@@ -189,7 +189,7 @@ bool D3DX6InitClip()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení clipperu (musí se volat pøed zrušením primárního povrchu)
+// zrušení clipperu (musí se volat před zrušením primárního povrchu)
 
 void D3DX6TermClip()
 {
@@ -202,14 +202,14 @@ void D3DX6TermClip()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení palet, nejsou-li vytvoøeny (vrací TRUE=OK)
+// vytvoření palet, nejsou-li vytvořeny (vrací TRUE=OK)
 
 bool D3DX6InitPal()
 {
 	if (D3DX6Pal == NULL)
 	{
 		
-// test, zda je potøeba použít palety
+// test, zda je potřeba použít palety
 		if (!D3DX6InitPrim()) return false;
 		DDSURFACEDESC2 ddsd;
 		MemFill(&ddsd, sizeof(ddsd), 0);
@@ -219,13 +219,13 @@ bool D3DX6InitPal()
 		if (ddsd.ddpfPixelFormat.dwFlags & DDPF_PALETTEINDEXED8)
 		{
 
-// vytvoøení bufferu palet
+// vytvoření bufferu palet
 			if (SysPal == NULL)
 			{
 				SysPal = (PALETTEENTRY*)MemGet(sizeof(PALETTEENTRY)*256);
 			}
 
-// naètení systémových palet
+// načtení systémových palet
 			HDC dc = ::GetDC(NULL);
 			if (dc)
 			{
@@ -233,13 +233,13 @@ bool D3DX6InitPal()
 				::ReleaseDC(NULL, dc);
 			}
 
-// doplnìní vlastních palet
+// doplnění vlastních palet
 			MemCopy(&SysPal[ResSysPal], pStdPalette->palPalEntry, StdColors*sizeof(PALETTEENTRY));
 			int i;
 			for (i=0; i < 256; i++) SysPal[i].peFlags = D3DPAL_READONLY;
 			for (i = 10; i < 246; i++) SysPal[i].peFlags = D3DPAL_FREE | PC_RESERVED;
 
-// vytvoøení palet
+// vytvoření palet
 			if ((D3DX6DD->CreatePalette(DDPCAPS_8BIT, SysPal, &D3DX6Pal, NULL) != DD_OK) ||
 				(D3DX6Pal == NULL))
 			{
@@ -259,7 +259,7 @@ bool D3DX6InitPal()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení palet (volat pøed zrušením primárního povrchu)
+// zrušení palet (volat před zrušením primárního povrchu)
 
 void D3DX6TermPal()
 {
@@ -271,11 +271,11 @@ void D3DX6TermPal()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní Direct3D 6 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní Direct3D 6 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3DX6InitD3()
 {
-// test, zda inicializace již probìhla
+// test, zda inicializace již proběhla
 	if (!D3DX6D3Test)
 	{
 		D3DX6D3Test = true;
@@ -284,7 +284,7 @@ bool D3DX6InitD3()
 		if (D3DX6InitDD())
 		{
 
-// vytvoøení objektu Direct3D 6 (mìní pøesnost koprocesoru!)
+// vytvoření objektu Direct3D 6 (mění přesnost koprocesoru!)
 			if (D3DX6DD->QueryInterface(IID_IDirect3D3, (void**)&D3DX6D3) != DD_OK)
 			{
 				D3DX6D3 = NULL;
@@ -294,16 +294,16 @@ bool D3DX6InitD3()
 		FPUDouble();
 	}
 
-// test, zda je objekt Direct3D 6 vytvoøen
+// test, zda je objekt Direct3D 6 vytvořen
 	return (D3DX6D3 != NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení rozhraní Direct3D 6
+// ukončení rozhraní Direct3D 6
 
 void D3DX6TermD3()
 {
-// ukonèení renderování
+// ukončení renderování
 	D3DX6Stop();
 
 // zrušení objektu Direct3D 6
@@ -313,23 +313,23 @@ void D3DX6TermD3()
 		D3DX6D3 = NULL;
 	}
 
-// zrušení pøíznaku, že byla inicializace
+// zrušení příznaku, že byla inicializace
 	D3DX6D3Test = false;
 }
 	
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení renderovacího povrchu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření renderovacího povrchu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX6InitRend(bool hw)
 {
 	if (D3DX6Rend == NULL)
 	{
 
-// pøíprava typu pamìti
+// příprava typu paměti
 		DWORD memtype = 0;
 		if (hw) memtype = DDSCAPS_VIDEOMEMORY;
 
-// pøíprava popisovaèe povrchu
+// příprava popisovače povrchu
 		DDSURFACEDESC2 ddsd;
 		MemFill(&ddsd, sizeof(ddsd), 0);
 		ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
@@ -339,13 +339,13 @@ bool D3DX6InitRend(bool hw)
 		D3DX6RendHeight = D3DHeight;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_3DDEVICE | DDSCAPS_OFFSCREENPLAIN | memtype;
 
-// vytvoøení povrchu
+// vytvoření povrchu
 		if (!D3DX6InitSurf(&D3DX6Rend, &ddsd))
 		{
 			return false;
 		}
 
-// pøipojení palet
+// připojení palet
 		if ((D3DX6Pal != NULL) &&
 			(D3DX6Rend->SetPalette(D3DX6Pal) != DD_OK))
 		{
@@ -371,7 +371,7 @@ void D3DX6TermRend()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení Z-bufferu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření Z-bufferu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX6InitZBuf(bool hw, DDPIXELFORMAT* pf)
 {
@@ -383,12 +383,12 @@ bool D3DX6InitZBuf(bool hw, DDPIXELFORMAT* pf)
 			(D3DX6D3 == NULL) ||
 			(pf->dwZBufferBitDepth == 0)) return false;
 
-// pøíprava typu pamìti
+// příprava typu paměti
 		DWORD memtype = DDSCAPS_SYSTEMMEMORY;
 		if (hw) memtype = DDSCAPS_VIDEOMEMORY;
 
-// pøíprava popisovaèe povrchu
-		DDSURFACEDESC2 sd;						// popisovaè Z bufferu
+// příprava popisovače povrchu
+		DDSURFACEDESC2 sd;						// popisovač Z bufferu
 		MemFill(&sd, sizeof(sd), 0);
 
 		sd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_PIXELFORMAT;
@@ -397,7 +397,7 @@ bool D3DX6InitZBuf(bool hw, DDPIXELFORMAT* pf)
 		sd.ddsCaps.dwCaps = DDSCAPS_ZBUFFER | memtype;
 		MemCopy(&(sd.ddpfPixelFormat), pf, sizeof(DDPIXELFORMAT));
 
-// vytvoøení povrchu
+// vytvoření povrchu
 		if (!D3DX6InitSurf(&D3DX6ZBuf, &sd))
 		{
 //			sd.ddsCaps.dwCaps ^= (DDSCAPS_SYSTEMMEMORY ^ DDSCAPS_VIDEOMEMORY);
@@ -408,7 +408,7 @@ bool D3DX6InitZBuf(bool hw, DDPIXELFORMAT* pf)
 //			}
 		}
 
-// pøipojení k renderovacímu povrchu
+// připojení k renderovacímu povrchu
 		if (D3DX6Rend->AddAttachedSurface(D3DX6ZBuf) != DD_OK)
 		{
 			D3DX6TermZBuf();
@@ -437,7 +437,7 @@ void D3DX6TermZBuf()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// callback enumerace Z bufferù
+// callback enumerace Z bufferů
 
 HRESULT WINAPI D3DX6EnumZBufferCallback(DDPIXELFORMAT* pddpf, void* user)
 {
@@ -463,14 +463,14 @@ HRESULT CALLBACK D3DX6EnumPixelFormatsCallback(DDPIXELFORMAT* pf, void* user)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace zaøízení pro Z-buffer
+// inicializace zařízení pro Z-buffer
 
 bool _fastcall D3DX6InitDev2(bool hw, int type, DDPIXELFORMAT* pf)
 {
 	if (D3DX6InitZBuf(hw, pf))
 	{
 
-// vytvoøení zaøízení (mìní pøesnost koprocesoru!)
+// vytvoření zařízení (mění přesnost koprocesoru!)
 		if ((D3DX6D3->CreateDevice(*Dev3DTab[type], D3DX6Rend, &D3DX6Dev, NULL) == DD_OK) &&
 			(D3DX6Dev != NULL))
 		{
@@ -521,22 +521,22 @@ bool D3DX6InitDev3(bool hw, int type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení renderovacího zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// vytvoření renderovacího zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX6InitDev(int type)
 {
-// zrušení starých objektù
+// zrušení starých objektů
 	D3DX6Stop();
 
-// vytvoøení primárního povrchu, clipperu a palet
+// vytvoření primárního povrchu, clipperu a palet
 	if (D3DX6InitD3() &&
 		D3DX6InitPrim() &&
 		D3DX6InitClip() &&
 		D3DX6InitPal())
 	{
 
-// enumerace Z bufferù
+// enumerace Z bufferů
 		if ((D3DX6D3->EnumZBufferFormats(*Dev3DTab[type],
 				D3DX6EnumZBufferCallback, NULL) != D3D_OK) ||
 				!D3DZBufferFormatOK)
@@ -545,10 +545,10 @@ bool D3DX6InitDev(int type)
 			return false;
 		}
 
-// pøíznak HW ovladaèe
+// příznak HW ovladače
 		bool hw = (type <= 2);
 
-// vytvoøení renderovacího povrchu a Z bufferu
+// vytvoření renderovacího povrchu a Z bufferu
 		if (!(D3DX6InitRend(hw) || D3DX6InitRend(!hw)) ||
 			!(D3DX6InitDev3(hw, type) || D3DX6InitDev3(!hw, type)))
 		{
@@ -556,7 +556,7 @@ bool D3DX6InitDev(int type)
 			return false;
 		}
 		
-// enumerace formátù textur
+// enumerace formátů textur
 		D3DX6Dev->EnumTextureFormats(D3DX6EnumPixelFormatsCallback, NULL);
 		if (!D3DTextFormatOK)
 		{
@@ -568,7 +568,7 @@ bool D3DX6InitDev(int type)
 		return true;
 	}
 
-// pøi chybì zrušení vytvoøených objektù
+// při chybě zrušení vytvořených objektů
 	D3DX6Stop();
 
 	return false;
@@ -587,7 +587,7 @@ void D3DX6TermShadow()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení renderovacího zaøízení
+// zrušení renderovacího zařízení
 
 void D3DX6TermDev()
 {
@@ -621,7 +621,7 @@ void D3DX6AktBackMat()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení materiálu pozadí scény
+// vytvoření materiálu pozadí scény
 
 bool D3DX6InitBack()
 {
@@ -631,7 +631,7 @@ bool D3DX6InitBack()
 // musí existovat 3D objekt
 		if (D3DX6D3 == NULL) return false;
 
-// vytvoøení materiálu pozadí scény
+// vytvoření materiálu pozadí scény
 		if ((D3DX6D3->CreateMaterial(&D3DX6BackMat, NULL) != D3D_OK) ||
 			(D3DX6BackMat == NULL)) return false;
 
@@ -651,7 +651,7 @@ bool D3DX6InitBack()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení materiálu pozadí scény (zøejmì až po zrušení viewportu)
+// zrušení materiálu pozadí scény (zřejmě až po zrušení viewportu)
 
 void D3DX6TermBack()
 {
@@ -675,7 +675,7 @@ void D3DX6TermBackBuf()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// výpoèet nových souøadnic zobrazené oblasti
+// výpočet nových souřadnic zobrazené oblasti
 
 void D3DX6CalcView()
 {
@@ -691,22 +691,22 @@ void D3DX6CalcView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po zmìnì velikosti
+// aktualizace viewportu po změně velikosti
 
 void D3DX6SizeView()
 {
-// pøegenerování bufferu pozadí scény
+// přegenerování bufferu pozadí scény
 	D3DX6TermBackBuf();
 
-// pøegenerování bufferu stínù
+// přegenerování bufferu stínů
 	D3DX6TermShadow();
 
-// pøepoèet videportu
+// přepočet videportu
 	D3DX6CalcView();
 	D3DX6ViewBuf.dwWidth = D3DWidth;
 	D3DX6ViewBuf.dwHeight = D3DHeight;
 
-// resetování bufferù 2D obrázkù
+// resetování bufferů 2D obrázků
 	D3DFITEM* item = D3DF_Get(1);
 	int inx = item->Child;
 	while (inx > 1)
@@ -719,7 +719,7 @@ void D3DX6SizeView()
 		inx = item->Next;
 	}
 
-// zvìtšení bufferu
+// zvětšení bufferu
 	if ((D3DHeight > D3DX6RendHeight) || (D3DWidth > D3DX6RendWidth))
 	{
 		FPUDouble();
@@ -737,7 +737,7 @@ void D3DX6SizeView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po pøesunu
+// aktualizace viewportu po přesunu
 
 void D3DX6MoveView()
 {
@@ -746,34 +746,34 @@ void D3DX6MoveView()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení viewportu (vrací TRUE=inicializace OK)
+// vytvoření viewportu (vrací TRUE=inicializace OK)
 
 bool D3DX6InitView()
 {
 	if (D3DX6View == NULL)
 	{
 
-// musí existovat 3D zaøízení a 3D objekt
+// musí existovat 3D zařízení a 3D objekt
 		if (D3DX6Dev == NULL) return false;
 
-// vytvoøení viewportu
+// vytvoření viewportu
 		if ((D3DX6D3->CreateViewport(&D3DX6View, NULL) != D3D_OK) ||
 			(D3DX6View == NULL)) return false;
 
 		D3DMATERIALHANDLE mh = NULL;
 
-// pøipojení viewportu k 3D zaøízení
+// připojení viewportu k 3D zařízení
 		if ((D3DX6Dev->AddViewport(D3DX6View) != D3D_OK) ||
 			(D3DX6Dev->SetCurrentViewport(D3DX6View) != D3D_OK) ||
 
-// vytvoøení materiálu pozadí scény a pøipojení k viewportu
+// vytvoření materiálu pozadí scény a připojení k viewportu
 			!D3DX6InitBack() ||
 
 // handle materiálu
 			(D3DX6BackMat->GetHandle(D3DX6Dev, &mh) != D3D_OK) ||
 			(mh == NULL) ||
 
-// pøipojení materiálu k viewportu
+// připojení materiálu k viewportu
 			(D3DX6View->SetBackground(mh) != D3D_OK))
 		{
 			D3DX6TermView();
@@ -813,7 +813,7 @@ void D3DX6TermView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení bufferu stínu, není-li vytvoøen
+// vytvoření bufferu stínu, není-li vytvořen
 
 struct SHADOWVERTEX
 {
@@ -871,7 +871,7 @@ void D3DX6InitShadow()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení bufferu pozadí scény, není-li vytvoøen
+// vytvoření bufferu pozadí scény, není-li vytvořen
 
 struct BACKVERTEX
 {
@@ -934,34 +934,34 @@ void D3DX6InitBackBuf()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahájení funkce zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX6Start(int type)
 {
-// vytvoøení renderovacího zaøízení
+// vytvoření renderovacího zařízení
 	if (!D3DX6InitDev(type)) return false;
 
-// vytvoøení viewportu
+// vytvoření viewportu
 	if (!D3DX6InitView())
 	{
 		D3DX6Stop();
 		return false;
 	}
 
-// inicializace adres funkcí zaøízení
-	pD3Stop = D3DX6Stop;			// ukonèení funkce zaøízení
-	pD3SizeView = D3DX6SizeView;	// aktualizace viewportu po zmìnì velikosti
-	pD3MoveView = D3DX6MoveView;	// aktualizace viewportu po pøesunu
+// inicializace adres funkcí zařízení
+	pD3Stop = D3DX6Stop;			// ukončení funkce zařízení
+	pD3SizeView = D3DX6SizeView;	// aktualizace viewportu po změně velikosti
+	pD3MoveView = D3DX6MoveView;	// aktualizace viewportu po přesunu
 	pD3Disp = D3DX6Disp;			// zobrazení renderovacího bufferu
 	pD3Clear = D3DX6Clear;			// vymazání renderovací plochy
-	pD3AktProj = D3DX6AktProj;		// aktualizace projekèní matice
+	pD3AktProj = D3DX6AktProj;		// aktualizace projekční matice
 	pD3AktView = D3DX6AktView;		// aktualizace pohledové matice
 	pD3Begin = D3DX6Begin;			// zahájení renderování scény
-	pD3End = D3DX6End;				// ukonèení renderování scény
+	pD3End = D3DX6End;				// ukončení renderování scény
 	pD3Render = D3DX6Render;		// vyrenderování jednoho objektu
-	pD3Reset = D3DX6Reset;			// resetování objektu pøed ukonèením ovladaèe
-	pD3SReset = D3DX6SReset;		// resetování stínu objektu pøed ukonèením ovladaèe
+	pD3Reset = D3DX6Reset;			// resetování objektu před ukončením ovladače
+	pD3SReset = D3DX6SReset;		// resetování stínu objektu před ukončením ovladače
 	pD3AktWireframe = D3DX6AktWireframe;
 	pD3AktLightOn = D3DX6AktLightOn;
 	pD3AktShades = D3DX6AktShades;
@@ -999,7 +999,7 @@ bool D3DX6Start(int type)
 	pD3Shadow = D3DX6Shadow;
 	pD3Shadows = D3DX6Shadows;
 
-// inicializace informací o zaøízení
+// inicializace informací o zařízení
 	D3DDEVICEDESC D3DCapsHW;
 	D3DDEVICEDESC D3DCapsSW;
 	MemFill(&D3DCapsHW, sizeof(D3DDEVICEDESC), 0);
@@ -1054,7 +1054,7 @@ bool D3DX6Start(int type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení funkce zaøízení
+// ukončení funkce zařízení
 
 void D3DX6Stop()
 {
@@ -1066,7 +1066,7 @@ void D3DX6Stop()
 	D3DX6TermPal();			// zrušení palet
 	D3DX6TermClip();		// zrušení clipperu
 	D3DX6TermPrim();		// zrušení primárního povrchu
-	FPUDouble();			// návrat pøesnosti koprocesoru
+	FPUDouble();			// návrat přesnosti koprocesoru
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1081,7 +1081,7 @@ void D3DX6Clear()
 	if (D3DBackText >= 0)
 	{
 
-// vytvoøení bufferu pozadí scény
+// vytvoření bufferu pozadí scény
 		D3DX6InitBackBuf();
 
 		if (D3DX6BackBuf != NULL)
@@ -1096,7 +1096,7 @@ void D3DX6Clear()
 				0);
 		}
 
-// závìreèné vymazání Z bufferu
+// závěrečné vymazání Z bufferu
 		D3DX6View->Clear(1, &D3DX6Src, D3DCLEAR_ZBUFFER | (D3DSBufferClear ? D3DCLEAR_STENCIL : 0));
 	}
 	else
@@ -1143,7 +1143,7 @@ void D3DX6Disp()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèní matice
+// aktualizace projekční matice
 
 void D3DX6AktProj()
 {
@@ -1170,7 +1170,7 @@ void D3DX6Begin()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení renderování scény
+// ukončení renderování scény
 
 void D3DX6End()
 {
@@ -1183,10 +1183,10 @@ void D3DX6End()
 
 void D3DX6Render(D3DFITEM* item)
 {
-// Pozn.: Nefunguje souèasnì normály a barva, barva vrcholù proto lze
-//        využít jen bez svìtla, podobnì jako v DirectX 5
+// Pozn.: Nefunguje současně normály a barva, barva vrcholů proto lze
+//        využít jen bez světla, podobně jako v DirectX 5
 
-// zrušení bufferu, je-li zmìna osvìtlení
+// zrušení bufferu, je-li změna osvětlení
 	if ((void*)D3DLightOnAkt != item->Data2)
 	{
 		D3DX6Reset(item);
@@ -1196,10 +1196,10 @@ void D3DX6Render(D3DFITEM* item)
 	bool isFlare = (item->Type == D3DFTYPE_LENSFLARE);
 	bool isPic = ((item->Type == D3DFTYPE_PICTURE) || isFlare);
 
-// pøegenerování bufferu pro LensFlare
+// přegenerování bufferu pro LensFlare
 	if (isFlare) D3DX6Reset(item);
 
-// vytvoøení bufferu vektorù (Data1), není-li ještì vytvoøen
+// vytvoření bufferu vektorů (Data1), není-li ještě vytvořen
 	if (item->Data1 == NULL)
 	{
 		bool isNorm = (D3DLightOnAkt && !isPic);
@@ -1350,7 +1350,7 @@ void D3DX6Render(D3DFITEM* item)
 			fd++;
 		}
 
-// aktualizace klonù
+// aktualizace klonů
 		D3DFITEM* item2 = item;
 
 		for (;;)
@@ -1364,7 +1364,7 @@ void D3DX6Render(D3DFITEM* item)
 		}
 	}
 
-// nastavení transformaèní matice
+// nastavení transformační matice
 	D3DX6Dev->SetTransform(D3DTRANSFORMSTATE_WORLD, &item->MatrixWorld);
 
 // vyrenderování objektu
@@ -1392,7 +1392,7 @@ struct SVERTEX
 
 void D3DX6Shadow(D3DFITEM* item)
 {
-// pøíprava typu položky
+// příprava typu položky
 	int itemtype;
 
 	if (D3DSBufferFormatOK)
@@ -1404,7 +1404,7 @@ void D3DX6Shadow(D3DFITEM* item)
 		itemtype = (D3DFVF_XYZ  | D3DFVF_DIFFUSE);
 	}
 
-// vytvoøení bufferu vektorù (Data3), není-li ještì vytvoøen
+// vytvoření bufferu vektorů (Data3), není-li ještě vytvořen
 	if ((item->Data3 == NULL) && (item->ShadowFan0 > 0))
 	{
 		D3DVERTEXBUFFERDESC vb;
@@ -1449,7 +1449,7 @@ void D3DX6Shadow(D3DFITEM* item)
 		}
 	}
 
-// nastavení transformaèní matice
+// nastavení transformační matice
 	D3DX6Dev->SetTransform(D3DTRANSFORMSTATE_WORLD, &item->MatrixWorld);
 
 // vyrenderování objektu
@@ -1476,11 +1476,11 @@ void D3DX6Shadow(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování stínu objektu pøed ukonèením ovladaèe
+// resetování stínu objektu před ukončením ovladače
 
 void D3DX6SReset(D3DFITEM* item)
 {
-// resetování bufferu stínù
+// resetování bufferu stínů
 	if (item->Data3 != NULL)
 	{
 		((IDirect3DVertexBuffer*)(item->Data3))->Release();
@@ -1490,11 +1490,11 @@ void D3DX6SReset(D3DFITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování objektu pøed ukonèením ovladaèe
+// resetování objektu před ukončením ovladače
 
 void D3DX6Reset(D3DFITEM* item)
 {
-// resetování bufferu vrcholù
+// resetování bufferu vrcholů
 	if (item->Data1 != NULL)
 	{
 		((IDirect3DVertexBuffer*)(item->Data1))->Release();
@@ -1509,12 +1509,12 @@ void D3DX6Reset(D3DFITEM* item)
 		} while (item != item2);
 	}
 
-// resetování bufferu stínù
+// resetování bufferu stínů
 	D3DX6SReset(item);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè vyplòování ploch
+// aktualizovat přepínač vyplňování ploch
 
 void D3DX6AktWireframe()
 {
@@ -1523,13 +1523,13 @@ void D3DX6AktWireframe()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè osvìtlení
+// aktualizovat přepínač osvětlení
 
 void D3DX6AktLightOn() { }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè plynulého stinování
+// aktualizovat přepínač plynulého stinování
 
 void D3DX6AktShades()
 {
@@ -1538,7 +1538,7 @@ void D3DX6AktShades()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè odstraòování ploch
+// aktualizovat přepínač odstraňování ploch
 
 void D3DX6AktCulling()
 {
@@ -1563,7 +1563,7 @@ void D3DX6AktCulling()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zvìtšených textur
+// aktualizovat přepínač filtrace zvětšených textur
 
 void D3DX6AktMagFilter(int stage)
 {
@@ -1572,7 +1572,7 @@ void D3DX6AktMagFilter(int stage)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zmenšených a vzdálených textur
+// aktualizovat přepínač filtrace zmenšených a vzdálených textur
 
 void D3DX6AktMinMipFilter(int stage)
 {
@@ -1593,7 +1593,7 @@ void D3DX6AktMinMipFilter(int stage)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace položky svìtla
+// aktualizace položky světla
 
 void D3DX6AktLight(int inx, D3DLITEM* item)
 {
@@ -1626,14 +1626,14 @@ void D3DX6AktLight(int inx, D3DLITEM* item)
 				float a2 = l.dvAttenuation2;
 				float r = l.dvRange;
 
-		// pro D3DLIGHT2 je rovnice jasu svìtla = b0 + b1*(1-d/r) + b2*(1-d/r)^2
+		// pro D3DLIGHT2 je rovnice jasu světla = b0 + b1*(1-d/r) + b2*(1-d/r)^2
 		// -> ve vzdálenosti dosvitu (d=r) je jas = b0
-		// -> v místì zdroje svìtla (d=0) je jas = b0 + b1 + b2 = 1, odtud b2 = 1 - b1 - b0
-		// -> v polovièní vzdálenosti dosvitu (d=r/2) je jas = b0 + b1/2 + b2/4 = m
+		// -> v místě zdroje světla (d=0) je jas = b0 + b1 + b2 = 1, odtud b2 = 1 - b1 - b0
+		// -> v poloviční vzdálenosti dosvitu (d=r/2) je jas = b0 + b1/2 + b2/4 = m
 		//    odtud úpravami b1 = 4*m - 3*b0 - 1
 
-				float b0 = (float)(1/(1 + a1*r + a2*r*r));	// jas v bodì dosvitu
-				float m = (float)(1/(1 + a1*r/2 + a2*r*r/4)); // jas v polovièní vzdálenosti
+				float b0 = (float)(1/(1 + a1*r + a2*r*r));	// jas v bodě dosvitu
+				float m = (float)(1/(1 + a1*r/2 + a2*r*r/4)); // jas v poloviční vzdálenosti
 				float b1 = (float)(4*m - 3*b0 - 1);			// koeficient 1
 				float b2 = (float)(1 - b1 - b0);			// koeficient 2
 
@@ -1668,7 +1668,7 @@ void D3DX6AktLight(int inx, D3DLITEM* item)
 
 void D3DX6SetMaterial(D3DMITEM* item)
 {
-// vytvoøení objektu materiálu
+// vytvoření objektu materiálu
 	if (item->Data1 == NULL)
 	{
 		IDirect3DMaterial3* mat = NULL;
@@ -1698,7 +1698,7 @@ void D3DX6SetMaterial(D3DMITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetování položky textury před ukončením ovladače
 
 void D3DX6TextureRes(D3DTITEM* item)
 {
@@ -1760,13 +1760,13 @@ void D3DX6TextureSet(D3DTITEM* item, int stage)
 // data obrázku
 	PICTUREDATA* picdata = item->Pic.Data();
 
-// vytvoøení textury
+// vytvoření textury
 	if (item->Data1 == NULL)
 	{
 		tx6Width = picdata->TextWidth;
 		tx6Height = picdata->TextHeight;
 
-// poèet mipmap
+// počet mipmap
 		tx6Mip = 1;
 		if (IsMipMap && item->Mips)
 		{
@@ -1781,7 +1781,7 @@ void D3DX6TextureSet(D3DTITEM* item, int stage)
 		}
 		if (tx6Mip > picdata->TextMipMaps) tx6Mip = picdata->TextMipMaps;
 
-		// omezení poètu úrovní - pøi vyšším stupni se prolínají ikony textury terénu
+		// omezení počtu úrovní - při vyšším stupni se prolínají ikony textury terénu
 		int mipmaps = item->MipMaps;
 		if (mipmaps > 0)
 		{
@@ -1790,7 +1790,7 @@ void D3DX6TextureSet(D3DTITEM* item, int stage)
 
 		int mip0 = tx6Mip;
 
-// vytvoøení povrchu v systémové pamìti
+// vytvoření povrchu v systémové paměti
 		if ((!picdata->TextTrans && (D3DX6TextCreate(&D3DTextFormatR5G6B5, picdata->TextDataR5G6B5, 2) ||
 									D3DX6TextCreate(&D3DTextFormatA1R5G5B5, picdata->TextDataA1R5G5B5, 2))) ||
 			((D3DLowText || (picdata->TextSmooth < 1.25)) && 
@@ -1850,7 +1850,7 @@ void D3DX6TextureSet(D3DTITEM* item, int stage)
 				if (tx6Tex == NULL) break;
 			}
 
-// pro HW rasterizer pøenesení do videopamìti
+// pro HW rasterizer přenesení do videopaměti
 			if (IsHWRaster)
 			{	 
 				DDSURFACEDESC2 ddsd;
@@ -1930,7 +1930,7 @@ void D3DX6MatReset(D3DMITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky svìtla
+// resetování položky světla
 
 void D3DX6LightReset(int inx, D3DLITEM* item)
 {
@@ -1950,7 +1950,7 @@ void D3DX6LightReset(int inx, D3DLITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvìtlení
+// aktualizace ambient osvětlení
 
 void D3DX6AktAmbient()
 {
@@ -1958,7 +1958,7 @@ void D3DX6AktAmbient()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// volná videopamì
+// volná videopaměť
 
 int D3DX6Free()
 {
@@ -2042,7 +2042,7 @@ void D3DX6AktBlend(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenèní úrovnì alfa
+// aktualizace referenční úrovně alfa
 
 void D3DX6AktAlfa(D3DFITEM* item)
 {
@@ -2102,7 +2102,7 @@ void D3DX6SetAddress(int adru, int adrv, int stage)
 //}
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení zjemnìní vzdálených textur
+// nastavení zjemnění vzdálených textur
 
 void D3DX6SetBias(float bias, int stage)
 {
@@ -2191,11 +2191,11 @@ void D3DX6SetSMask(DWORD mask)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení stínù
+// vykreslení stínů
 
 void D3DX6Shadows()
 {
-// vytvoøení bufferu stínù
+// vytvoření bufferu stínů
 	D3DX6InitShadow();
 
 	if (D3DX6ShadowBuf != NULL)

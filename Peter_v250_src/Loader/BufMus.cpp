@@ -9,7 +9,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní prázdná hudba (modifikuje se poèet referencí!)
+// inicializační prázdná hudba (modifikuje se počet referencí!)
 
 BYTE	EmptyMusicData0 = 0;
 
@@ -65,20 +65,20 @@ void CMusic::Term()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastního bufferu před modifikací
 
 void CMusic::CopyWrite()
 {
 	MUSICDATA* data = pData;			// adresa starých dat
-	long* refer = &(data->Refer);		// poèet referencí
+	long* refer = &(data->Refer);		// počet referencí
 
-	if (*refer > 1)						// je nìjaký jiný majitel?
+	if (*refer > 1)						// je nějaký jiný majitel?
 	{
-		NewBuffer(data->Size);			// vytvoøení nového bufferu
+		NewBuffer(data->Size);			// vytvoření nového bufferu
 		MemCopy(pData->Data, data->Data, pData->Size);
 		pData->Res = data->Res;
 
-// odpojení starých dat - v multithread mùže nastat i zrušení
+// odpojení starých dat - v multithread může nastat i zrušení
 		if (LongDecrement(refer))
 		{
 #ifdef _MT
@@ -91,7 +91,7 @@ void CMusic::CopyWrite()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní hudby (uvolnìní dat)
+// vyprázdnění hudby (uvolnění dat)
 
 void CMusic::Empty()
 { 
@@ -101,17 +101,17 @@ void CMusic::Empty()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nové hudby (pøipraveno k zápisu, data jsou náhodná)
+// vytvoření nové hudby (připraveno k zápisu, data jsou náhodná)
 
 void CMusic::New(int size)
 {
 	Detach();						// odpojení staré hudby
-	NewBuffer(size);				// vytvoøení nového bufferu
+	NewBuffer(size);				// vytvoření nového bufferu
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení hudby ze souboru
+// načtení hudby ze souboru
 
 void CMusic::LoadFile()
 {
@@ -120,7 +120,7 @@ void CMusic::LoadFile()
 // úschova offsetu souboru
 	int oldoff = FileReadOff;
 
-// naètení záhlaví souboru
+// načtení záhlaví souboru
 	BYTE buf[16];
 	buf[0] = 0;
 	FileReadBlok(buf, 16);
@@ -141,7 +141,7 @@ void CMusic::LoadFile()
 		(buf[14] == 't') &&
 		(buf[15] == 'a'))
 
-// naètení souboru RIFF
+// načtení souboru RIFF
 	{
 		FileReadOff = oldoff;
 		New(size);
@@ -163,7 +163,7 @@ void CMusic::LoadFile()
 		return;
 	}
 
-// zjištìní konce sekcí
+// zjištění konce sekcí
 	FileReadOff = oldoff + 14;
 	for (; count > 0; count--)
 	{
@@ -182,7 +182,7 @@ void CMusic::LoadFile()
 		FileReadOff += size;
 	}
 
-// naètení dat
+// načtení dat
 	size = FileReadOff - oldoff;
 	FileReadOff = oldoff;
 	if ((size <= 16) || (size > 100000000))
@@ -202,11 +202,11 @@ void CMusic::LoadFile()
 /*
 bool CMusic::SaveFile(CString jmeno) const
 {
-// otevøení souboru
+// otevření souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// test, zda byl soubor vytvoøen
+// test, zda byl soubor vytvořen
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		return false;
@@ -216,17 +216,17 @@ bool CMusic::SaveFile(CString jmeno) const
 	DWORD write;
 	BOOL result = ::WriteFile(hFile, pData->Data, pData->Size, &write, NULL);
 
-// uzavøení souboru
+// uzavření souboru
 	::CloseHandle(hFile);
 
-// pøi chybì zrušení souboru
+// při chybě zrušení souboru
 	if (!result || (write != (DWORD)pData->Size))
 	{
 		::DeleteFile(jmeno);
 		return false;
 	}
 
-// pøíznak - uloženo OK
+// příznak - uloženo OK
 	return true;
 }
 */
@@ -241,12 +241,12 @@ void CMusic::SaveFile() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CMusic& CMusic::operator= (const CMusic& src)
 {
 	Detach();				// zrušení starých dat
-	Attach(src.pData);		// pøiøazení nových dat
+	Attach(src.pData);		// přiřazení nových dat
 	return *this;
 }
 
@@ -291,7 +291,7 @@ void CBufMusic::Term()
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nových dat (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (odděleno kvůli lepší optimalizaci)
 
 void CBufMusic::NewData()
 {
@@ -337,7 +337,7 @@ void _fastcall CBufMusic::Set(const int index, const CMusic& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní položky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprázdnění položky (bez jejího zrušení - jen pro uvolnění dat)
 
 void _fastcall CBufMusic::Empty(const int index)
 {
@@ -367,35 +367,35 @@ void _fastcall CBufMusic::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení položky (vrací index položky)
+// vytvoření položky (vrací index položky)
 
 int CBufMusic::New()
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init();		// inicializace položky
 	return result;
 }
 
 int CBufMusic::New(int size)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(size);	// inicializace položky
 	return result;
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 
 int _fastcall CBufMusic::Add(const CMusic& data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data.Data());	// inicializace položky
 	return result;
 }
 
 int _fastcall CBufMusic::Add(MUSICDATA* data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data);	// inicializace položky
 	return result;
 }
@@ -406,7 +406,7 @@ int _fastcall CBufMusic::Add(MUSICDATA* data)
 
 int _fastcall CBufMusic::Dup(const int index)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))			// je index platný?
 	{
@@ -421,7 +421,7 @@ int _fastcall CBufMusic::Dup(const int index)
 
 int _fastcall CBufMusic::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))					// je index platný?
 	{
@@ -448,19 +448,19 @@ int _fastcall CBufMusic::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CBufMusic& CBufMusic::operator= (const CBufMusic& src)
 {
 	Del(m_Num);					// zrušení starých dat
 
-	int index = 0;				// index naèítané položky
+	int index = 0;				// index načítané položky
 	int i = src.m_Num;			// velikost zdrojového bufferu
 
 	for (; i > 0; i--)			// pro všechny položky v bufferu
 	{
 		Add(src[index]);	// kopie položky
-		index++;				// inkrementace ètecího indexu
+		index++;				// inkrementace čtecího indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

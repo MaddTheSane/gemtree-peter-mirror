@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer seznamù								*
+*								Buffer seznamů								*
 *																			*
 \***************************************************************************/
 
@@ -43,13 +43,13 @@ void CBufList::Term()
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nových dat
+// vytvoření nových dat
 
 void CBufList::NewData()
 {
 	m_Max *= 2;
 	if (m_Max == 0) m_Max = 0x100;
-//	m_Max += 0x100;			// zvýšení poètu položek (o 4 KB)
+//	m_Max += 0x100;			// zvýšení počtu položek (o 4 KB)
 	MemBuf(m_Data, m_Max);	// zvýšení velikosti bufferu
 };
 
@@ -80,7 +80,7 @@ void _fastcall CBufList::AutoInc(int index)
 // nový index
 		int newindex = list->Index + list->Auto;
 
-// kontrola pøeteèení indexu
+// kontrola přetečení indexu
 		if ((DWORD)newindex >= (DWORD)list->Size)
 		{
 			while (newindex < 0) newindex += list->Size;
@@ -94,14 +94,14 @@ void _fastcall CBufList::AutoInc(int index)
 */
 
 ////////////////////////////////////////////////////////////////////
-// automatická inkrementace indexu, vrací pùvodní index (nekontroluje správnost!)
+// automatická inkrementace indexu, vrací původní index (nekontroluje správnost!)
 /*
 int _fastcall CBufList::AutoIncInx(int index)
 {
 // adresa položky seznamu
 	LISTDATA* list = m_Data + index;
 
-// úschova pùvodního indexu
+// úschova původního indexu
 	int result = list->Index;
 
 // test, zda bude inkrementace
@@ -111,7 +111,7 @@ int _fastcall CBufList::AutoIncInx(int index)
 // nový index
 		int newindex = result + list->Auto;
 
-// kontrola pøeteèení indexu
+// kontrola přetečení indexu
 		if ((DWORD)newindex >= (DWORD)list->Size)
 		{
 			while (newindex < 0) newindex += list->Size;
@@ -122,7 +122,7 @@ int _fastcall CBufList::AutoIncInx(int index)
 		list->Index = newindex;
 	}
 
-// návrat pùvodního indexu
+// návrat původního indexu
 	return result;
 }
 */
@@ -164,22 +164,22 @@ void _fastcall CBufList::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení položky (vrací index položky)
+// vytvoření položky (vrací index položky)
 
 int CBufList::New()
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result] = EmptyListData;
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 
 int _fastcall CBufList::Add(const LISTDATA& data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result] = data;		// inicializace položky
 	return result;
 }
@@ -190,7 +190,7 @@ int _fastcall CBufList::Add(const LISTDATA& data)
 
 int _fastcall CBufList::Dup(const int index)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))			// je index platný?
 	{
@@ -205,7 +205,7 @@ int _fastcall CBufList::Dup(const int index)
 
 int _fastcall CBufList::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))					// je index platný?
 	{
@@ -232,19 +232,19 @@ int _fastcall CBufList::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CBufList& CBufList::operator= (const CBufList& src)
 {
 	Del(m_Num);					// zrušení starých dat
 
-	int index = 0;				// index naèítané položky
+	int index = 0;				// index načítané položky
 	int i = src.m_Num;			// velikost zdrojového bufferu
 
 	for (; i > 0; i--)			// pro všechny položky v bufferu
 	{
 		Add(src[index]);	// kopie položky
-		index++;				// inkrementace ètecího indexu
+		index++;				// inkrementace čtecího indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

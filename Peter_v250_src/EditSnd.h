@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*								Editor zvukù								*
+*								Editor zvuků								*
 *																			*
 \***************************************************************************/
 
@@ -9,16 +9,16 @@ namespace EditSound
 {
 	extern HWND DispWnd;				// okno displeje
 
-// inicializace pøi startu
+// inicializace při startu
 	void StartInit();
 
 // zahájení editace
 	void BegEdit(int index);
 
-// pøesun okna displeje
+// přesun okna displeje
 	HDWP MoveDisp(HDWP hdwp);
 
-// nastavení èasového údaje (v sekundách)
+// nastavení časového údaje (v sekundách)
 	void DispSet(int time);
 
 // zobrazení délky zvuku
@@ -27,19 +27,19 @@ namespace EditSound
 // zobrazení
 	void Disp();
 
-// obsluha èasovaèe (TRUE=obslouženo)
+// obsluha časovače (TRUE=obslouženo)
 	BOOL OnTimer(UINT timerID);
 
-// start pøehrávání
+// start přehrávání
 	void OnPlay();
 
-// pozastavení nahrávání, pøehrávání
+// pozastavení nahrávání, přehrávání
 	void OnPause();
 
-// zastavení nahrávání i pøehrávání
+// zastavení nahrávání i přehrávání
 	void OnStop();
 
-// pøepnutí pøíznaku opakování
+// přepnutí příznaku opakování
 	void OnLoop();
 
 // start nahrávání

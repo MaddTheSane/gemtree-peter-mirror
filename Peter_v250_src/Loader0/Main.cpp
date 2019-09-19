@@ -4,15 +4,15 @@
 #pragma warning ( default: 4201)		// hlášení - nepojmenovaná struktura
 
 #pragma warning ( disable: 4100)		// hlášení - nepoužitý formální parametr
-#pragma warning ( disable: 4514)		// hlášení - odstranìna inline funkce
+#pragma warning ( disable: 4514)		// hlášení - odstraněna inline funkce
 
 #include "Resource.h"
 
 //////////////////////////////////////////////////////////////////////////////
-// Data v datovém bloku jsou nutná, aby bylo dost sekcí pro vytvoøení sekce Petra
-char DATAsize[] =									// buffer importù od pøekladaèe
+// Data v datovém bloku jsou nutná, aby bylo dost sekcí pro vytvoření sekce Petra
+char DATAsize[] =									// buffer importů od překladače
 {
-	"DATAsize"										// sem bude uložena adresa a velikost dat, souèasnì je to identifikátor
+	"DATAsize"										// sem bude uložena adresa a velikost dat, současně je to identifikátor
 };
 
 LPCTSTR ProductKey0 = "Software\\Gemtree Software\\Peter";
@@ -22,7 +22,7 @@ void WinMainCRTStartup()
 	DWORD num = 0;
 	HKEY hkey;
 
-// zjištìní jazyku spuštìného Petra
+// zjištění jazyku spuštěného Petra
 	if (::RegOpenKeyEx(
 		HKEY_LOCAL_MACHINE,
 		ProductKey0,
@@ -54,13 +54,13 @@ void WinMainCRTStartup()
 
 	switch (num)
 	{
-// èesky
+// česky
 	case 0x05:
 		nadp = "Nespustitelný program";
-		text = "Tento program byl vytvoøen programovacím nástrojem Petr\na je nyní uložen v nespustitelné formì.";
+		text = "Tento program byl vytvořen programovacím nástrojem Petr\na je nyní uložen v nespustitelné formě.";
 		break;
 
-// nìmecky
+// německy
 	case 0x07:
 		nadp = "Speicherplatzmangel";
 		text = "Dieses Programm wurde mit dem Programmiermittel Peter hergestellt.\nJetzt ist es in einer nicht startbaren Form gespeichert.";
@@ -68,8 +68,8 @@ void WinMainCRTStartup()
 
 // slovensky
 	case 0x1b:
-		nadp = "Nespustite¾ný program";
-		text = "Tento program bol vytvorený programovacím nástrojom Peter\na je teraz uložený v nespustite¾nej forme.";
+		nadp = "Nespustiteľný program";
+		text = "Tento program bol vytvorený programovacím nástrojom Peter\na je teraz uložený v nespustiteľnej forme.";
 		break;
 
 // anglicky

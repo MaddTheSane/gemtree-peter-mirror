@@ -9,8 +9,8 @@
 *																			*
 \***************************************************************************/
 
-// všeobecné informace o oknì
-bool				Resizing			= false;	// probíhá programová zmìna okna
+// všeobecné informace o okně
+bool				Resizing			= false;	// probíhá programová změna okna
 bool				AppActive			= true;		// aplikace je aktivní
 bool				AppMinim			= false;	// aplikace minimalizovaná
 
@@ -21,73 +21,73 @@ int					FullScreenBits		= 16;
 
 // celoobrazovkový režim
 bool				FullScreen			= false;	// je celoobrazovkový režim
-BOOL				OldMaximized		= FALSE;	// uschovaný pøíznak maximalizace
-int					NumVideoModes		= 0;		// poèet videomódù v tabulce
-VIDEOMODEITEM*		TabVideoModes		= NULL;		// tabulka videomódù
-bool				IsVideoModes		= false;	// seznam videomódù je inicializován
+BOOL				OldMaximized		= FALSE;	// uschovaný příznak maximalizace
+int					NumVideoModes		= 0;		// počet videomódů v tabulce
+VIDEOMODEITEM*		TabVideoModes		= NULL;		// tabulka videomódů
+bool				IsVideoModes		= false;	// seznam videomódů je inicializován
 
 // požadovaný uživatelský videomód
-int					UserScreenWidth		= 0;		// uživatelská šíøka videomódu (0=implicitní)
+int					UserScreenWidth		= 0;		// uživatelská šířka videomódu (0=implicitní)
 int					UserScreenHeight	= 0;		// uživatelská výška videomódu (0=implicitní)
-int					UserScreenBits		= 0;		// uživatelský poèet bitù (0=implicitní)
+int					UserScreenBits		= 0;		// uživatelský počet bitů (0=implicitní)
 
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
 // ----------------------------------------------------------------------------
-// !!! POZOR POZOR - funkce Direct3D pøepínají koprocesor na float pøesnost !!!
+// !!! POZOR POZOR - funkce Direct3D přepínají koprocesor na float přesnost !!!
 // ----------------------------------------------------------------------------
 
-// pøíznak aktivního režimu 3D
+// příznak aktivního režimu 3D
 bool				D3D					= false;	// je zobrazeno okno 3D
 
-// zvolené rozhraní a ovladaè
+// zvolené rozhraní a ovladač
 int					D3DIntUser			= 0;		// uživatelem zadané rozhraní 0 až D3INTERFACES-1 (0=automatický)
 int					D3DIntAkt			= 0;		// typ aktivního rozhraní (0=není,1=GL0,2=GL1,3=GL2,4=DX3,5=DX5,6=DX6,7=DX7,8=DX8)
-int					D3DDevUser			= 0;		// uživatelem zadaný typ ovladaèe 0 až D3DEVICES-1 (0=automatický)
-int					D3DDevAkt			= 0;		// typ aktivního ovladaèe (0=není,1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
+int					D3DDevUser			= 0;		// uživatelem zadaný typ ovladače 0 až D3DEVICES-1 (0=automatický)
+int					D3DDevAkt			= 0;		// typ aktivního ovladače (0=není,1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
 
-// funkce aktivního rozhraní (jsou vžy platné i bez aktivního ovladaèe)
-D3STOP				pD3Stop				= D3NoStop;			// ukonèení funkce zaøízení
-D3SIZEVIEW			pD3SizeView			= D3NoSizeView;		// aktualizace viewportu po zmìnì velikosti
-D3MOVEVIEW			pD3MoveView			= D3NoMoveView;		// aktualizace viewportu po pøesunu
+// funkce aktivního rozhraní (jsou vžy platné i bez aktivního ovladače)
+D3STOP				pD3Stop				= D3NoStop;			// ukončení funkce zařízení
+D3SIZEVIEW			pD3SizeView			= D3NoSizeView;		// aktualizace viewportu po změně velikosti
+D3MOVEVIEW			pD3MoveView			= D3NoMoveView;		// aktualizace viewportu po přesunu
 D3DISP				pD3Disp				= D3NoDisp;			// zobrazení renderovacího bufferu
 D3CLEAR				pD3Clear			= D3NoClear;		// vymazání renderovací plochy
-D3AKTPROJ			pD3AktProj			= D3NoAktProj;		// aktualizace projekèní matice
+D3AKTPROJ			pD3AktProj			= D3NoAktProj;		// aktualizace projekční matice
 D3AKTVIEW			pD3AktView			= D3NoAktView;		// aktualizace pohledové matice
 D3BEGIN				pD3Begin			= D3NoBegin;		// zahájení renderování scény
-D3END				pD3End				= D3NoEnd;			// ukonèení renderování scény
+D3END				pD3End				= D3NoEnd;			// ukončení renderování scény
 D3RENDER			pD3Render			= D3NoRender;		// vyrenderování jednoho objektu
-D3RESET				pD3Reset			= D3NoReset;		// resetování objektu pøed ukonèením ovladaèe
-D3SRESET			pD3SReset			= D3NoSReset;		// resetování stínu objektu pøed ukonèením ovladaèe
-D3AKTWIREFRAME		pD3AktWireframe		= D3NoAktWireframe;	// aktualizovat pøepínaè vyplòování ploch
-D3AKTLIGHTON		pD3AktLightOn		= D3NoAktLightOn;	// aktualizovat pøepínaè osvìtlení
-D3AKTSHADES			pD3AktShades		= D3NoAktShades;	// aktualizovat pøepínaè plynulého stínování
-D3AKTCULLING		pD3AktCulling		= D3NoAktCulling;	// aktualizovat pøepínaè odstraòování ploch
-D3AKTMAGFILTER		pD3AktMagFilter		= D3NoAktMagFilter;	// aktualizovat pøepínaè filtrace zvìtšených textur
-D3AKTMINMIPFILTER	pD3AktMinMipFilter	= D3NoAktMinMipFilter; // aktualizovat pøepínaè filtrace zmenšených a vzdálených textur
-D3AKTLIGHT			pD3AktLight			= D3NoAktLight;		// aktualizace položky svìtla
+D3RESET				pD3Reset			= D3NoReset;		// resetování objektu před ukončením ovladače
+D3SRESET			pD3SReset			= D3NoSReset;		// resetování stínu objektu před ukončením ovladače
+D3AKTWIREFRAME		pD3AktWireframe		= D3NoAktWireframe;	// aktualizovat přepínač vyplňování ploch
+D3AKTLIGHTON		pD3AktLightOn		= D3NoAktLightOn;	// aktualizovat přepínač osvětlení
+D3AKTSHADES			pD3AktShades		= D3NoAktShades;	// aktualizovat přepínač plynulého stínování
+D3AKTCULLING		pD3AktCulling		= D3NoAktCulling;	// aktualizovat přepínač odstraňování ploch
+D3AKTMAGFILTER		pD3AktMagFilter		= D3NoAktMagFilter;	// aktualizovat přepínač filtrace zvětšených textur
+D3AKTMINMIPFILTER	pD3AktMinMipFilter	= D3NoAktMinMipFilter; // aktualizovat přepínač filtrace zmenšených a vzdálených textur
+D3AKTLIGHT			pD3AktLight			= D3NoAktLight;		// aktualizace položky světla
 D3SETMATERIAL		pD3SetMaterial		= D3NoSetMaterial;	// nastavení materiálu
-D3TEXTURERES		pD3TextureRes		= D3NoTextureRes;	// resetování položky textury pøed ukonèením ovladaèe
+D3TEXTURERES		pD3TextureRes		= D3NoTextureRes;	// resetování položky textury před ukončením ovladače
 D3TEXTURESET		pD3TextureSet		= D3NoTextureSet;	// nastavení a zapnutí textury
-D3TEXTUREON			pD3TextureOn		= D3NoTextureOn;	// zapnutí pùvodní textury
+D3TEXTUREON			pD3TextureOn		= D3NoTextureOn;	// zapnutí původní textury
 D3TEXTUREOFF		pD3TextureOff		= D3NoTextureOff;	// vypnutí textury
 D3MATRESET			pD3MatReset			= D3NoMatReset;		// resetování materiálu
-D3LIGHTRESET		pD3LightReset		= D3NoLightReset;	// resetování svìtla
-D3AKTAMBIENT		pD3AktAmbient		= D3NoAktAmbient;	// aktualizace ambient osvìtlení
-D3FREE				pD3Free				= D3NoFree;			// volná videopamì
+D3LIGHTRESET		pD3LightReset		= D3NoLightReset;	// resetování světla
+D3AKTAMBIENT		pD3AktAmbient		= D3NoAktAmbient;	// aktualizace ambient osvětlení
+D3FREE				pD3Free				= D3NoFree;			// volná videopaměť
 D3AKTFOG			pD3AktFog			= D3NoAktFog;		// aktualizace mlhy
 D3FOGON				pD3FogOn			= D3NoFogOn;		// zapnutí mlhy
 D3AKTSTATE			pD3AktState			= D3NoAktState;		// aktualizace stavu
 D3AKTBLEND			pD3AktBlend			= D3NoAktBlend;		// aktualizace blending operací objektu
-D3AKTALPHA			pD3AktAlfa			= D3NoAktAlfa;		// aktualizace referenèní úrovnì alfa
+D3AKTALPHA			pD3AktAlfa			= D3NoAktAlfa;		// aktualizace referenční úrovně alfa
 D3AKTPALETTE		pD3AktPalette		= D3NoAktPalette;	// aktualizace palet
 D3SETCOLOROP		pD3SetColorOp		= D3NoSetColorOp;	// nastavení operace barev
 D3SETALPHAOP		pD3SetAlphaOp		= D3NoSetAlphaOp;	// nastavení operace alfa
 D3SETADDRESS		pD3SetAddress		= D3NoSetAddress;	// nastavení adresování textur
 //D3SETBORDER			pD3SetBorder		= D3NoSetBorder;	// nastavení barvy okolí textur
-D3SETBIAS			pD3SetBias			= D3NoSetBias;		// nastavení zjemnìní vzdálených textur
+D3SETBIAS			pD3SetBias			= D3NoSetBias;		// nastavení zjemnění vzdálených textur
 D3SETTFACTOR		pD3SetTFactor		= D3NoSetTFactor;	// nastavení barvy faktoru textur
 D3SETZFUNC			pD3SetZFunc			= D3NoSetZFunc;		// nastavení Z funkce (1 až 8, v kódu DirectX)
 D3SETZWRITE			pD3SetZWrite		= D3NoSetZWrite;	// nastavení hloubkového zápisu
@@ -96,105 +96,105 @@ D3SETSOP			pD3SetSOp			= D3NoSetSOp;		// nastavení stencil operací
 D3SETSFUNC			pD3SetSFunc			= D3NoSetSFunc;		// nastavení stencil testu
 D3SETSMASK			pD3SetSMask			= D3NoSetSMask;		// nastavení zápisové masky do stencil bufferu
 D3SHADOW			pD3Shadow			= D3NoShadow;		// vyrenderování stínu jednoho objektu
-D3SHADOWS			pD3Shadows			= D3NoShadows;		// vykreslení stínù
+D3SHADOWS			pD3Shadows			= D3NoShadows;		// vykreslení stínů
 
-// rozmìry okna Direct3D zadané uživatelem, bez omezení rozsahu
-int					D3DX0				= 0;		// poèátek X okna Direct3D (zleva) zadaný uživatelem
-int					D3DY0				= 0;		// poèátek Y okna Direct3D (zdola) zadaný uživatelem
-int					D3DW0				= 0;		// šíøka okna Direct3D zadaná uživatelem
+// rozměry okna Direct3D zadané uživatelem, bez omezení rozsahu
+int					D3DX0				= 0;		// počátek X okna Direct3D (zleva) zadaný uživatelem
+int					D3DY0				= 0;		// počátek Y okna Direct3D (zdola) zadaný uživatelem
+int					D3DW0				= 0;		// šířka okna Direct3D zadaná uživatelem
 int					D3DH0				= 0;		// výška okna Direct3D zadaná uživatelem
 
-// rozmìry okna Direct3D zadané uživatelem, s omezením na plochu (pro zobrazení grafiky)
-int					D3DX				= 0;		// poèátek X okna Direct3D (zleva) - zadáno
-int					D3DY				= 0;		// poèátek Y okna Direct3D (zdola) - zadáno
-int					D3DW				= 0;		// šíøka okna Direct3D - zadáno
+// rozměry okna Direct3D zadané uživatelem, s omezením na plochu (pro zobrazení grafiky)
+int					D3DX				= 0;		// počátek X okna Direct3D (zleva) - zadáno
+int					D3DY				= 0;		// počátek Y okna Direct3D (zdola) - zadáno
+int					D3DW				= 0;		// šířka okna Direct3D - zadáno
 int					D3DH				= 0;		// výška okna Direct3D - zadáno
 bool				D3D2D				= false;	// je zobrazena 2D grafika (spolu s oknem 3D)
 
-// skuteèné rozmìry okna Direct3D na obrazovce (omezení na klientské souøadnice okna)
-int					D3DLeft				= 0;		// skuteèný poèátek X okna Direct3D
-int					D3DTop				= 0;		// skuteèný poèátek Y okna Direct3D (shora)
-int					D3DWidth			= 0;		// skuteèná šíøka okna Direct3D
-int					D3DHeight			= 0;		// skuteèná výška okna Direct3D
-double				D3DWidthHeight2		= 1;		// odmocnina s pomìru D3DWidth/D3DHeight
+// skutečné rozměry okna Direct3D na obrazovce (omezení na klientské souřadnice okna)
+int					D3DLeft				= 0;		// skutečný počátek X okna Direct3D
+int					D3DTop				= 0;		// skutečný počátek Y okna Direct3D (shora)
+int					D3DWidth			= 0;		// skutečná šířka okna Direct3D
+int					D3DHeight			= 0;		// skutečná výška okna Direct3D
+double				D3DWidthHeight2		= 1;		// odmocnina s poměru D3DWidth/D3DHeight
 bool				D3DFull				= false;	// okno 3D využívá celou plochu hlavního okna
 
 // pozadí scény
 DWORD				D3DBackCol			= 0;		// barva pozadí scény ve formátu Petra BGR(MAXDWORD=nemazat, MAXDWORD-1=neinicializovat)
 D3DCOLOR			D3DBackColRGB		= 0xff000000;	// barva pozadí scény ve formátu RGB
 D3DCOLORVALUE		D3DBackColF			= {0, 0, 0, 1};	// barva pozadí scény ve formátu float
-bool				D3DBackColAkt		= false;	// barva pozadí zmìnìna
+bool				D3DBackColAkt		= false;	// barva pozadí změněna
 //int					D3DBackMat			= 0;		// materiál pozadí scény
 //D3DMATERIAL8		D3DBackMatMat;					// buffer materiálu pozadí scény
 int					D3DBackText			= -1;		// textura pozadí scény (-1=není)
-bool				D3DBackTextAkt		= false;	// textura pozadí zmìnìna
+bool				D3DBackTextAkt		= false;	// textura pozadí změněna
 
 // nastavení mlhy
-BOOL				D3DFogOn			= -1;		// mlha je aktuálnì zapnuta (-1 = neznámé)
+BOOL				D3DFogOn			= -1;		// mlha je aktuálně zapnuta (-1 = neznámé)
 bool				FogAkt				= true;		// mlhu je nutno aktualizovat
-bool				FogKorig			= false;	// korigovaná mlha (pøièítá se +4 k typu mlhy)
+bool				FogKorig			= false;	// korigovaná mlha (přičítá se +4 k typu mlhy)
 bool				FogOn				= false;	// mlha je zapnuta
 DWORD				FogColor			= MAXDWORD;	// barva mlhy ve formátu Petra BGR (MAXDWORD=vypnuto)
 DWORD				FogColorRGB			= 0xff000000; // barva mlhy ve formáty RGB
 D3DCOLORVALUE		FogColorF			= {0, 0, 0, 1}; // barva mlhy ve formátu float
 int					FogType				= 1;		// typ mlhy (0=lineární, 1=exponenciální, 2=kvadratická)
-double				FogStart			= 0;		// zaèátek lineární mlhy
+double				FogStart			= 0;		// začátek lineární mlhy
 double				FogEnd				= 20;		// konec lineární mlhy
 double				FogDens				= 0.1;		// hustota exponenciální a kvadratické mlhy (0 až 1)
 
-// ambient osvìtlení
-DWORD				D3DAmbientCol		= 0x404040;	// ambient osvìtlení ve formátu Petra BGR
-DWORD				D3DAmbientColRGB	= 0xff404040; // ambient osvìtlení ve formátu RGB
+// ambient osvětlení
+DWORD				D3DAmbientCol		= 0x404040;	// ambient osvětlení ve formátu Petra BGR
+DWORD				D3DAmbientColRGB	= 0xff404040; // ambient osvětlení ve formátu RGB
 #define AMBCOL ((float)0.25)
-D3DCOLORVALUE		D3DAmbientColF		= {AMBCOL, AMBCOL, AMBCOL, 1};	// ambient osvìtlení ve formátu float
-bool				D3DAmbientColAkt	= true;		// ambient osvìtlení zmìnìno
+D3DCOLORVALUE		D3DAmbientColF		= {AMBCOL, AMBCOL, AMBCOL, 1};	// ambient osvětlení ve formátu float
+bool				D3DAmbientColAkt	= true;		// ambient osvětlení změněno
 
-// projekèní matice (pozor, èlen _34 matice nesmí být < 0 !!!)
-bool				D3DProjAkt			= false;	// požadavek aktualizace projekèní matice
-double				D3DFrontClip		= 1;		// vzdálenost pøední omezující roviny
+// projekční matice (pozor, člen _34 matice nesmí být < 0 !!!)
+bool				D3DProjAkt			= false;	// požadavek aktualizace projekční matice
+double				D3DFrontClip		= 1;		// vzdálenost přední omezující roviny
 double				D3DBackClip			= 100;		// vzdálenost zadní omezující roviny
-D3DMATRIX			D3DProjMatrix;					// projekèní matice
+D3DMATRIX			D3DProjMatrix;					// projekční matice
 int					D3DProjection		= 0;		// typ projekce (0=persp, 1=orto, 2=r-persp, 3=r-orto)
 bool				D3DRightHand		= false;	// pravoruká projekce (typ projekce 2 a 3)
 
 // pohledová matice (odvozená z kamery)
 bool				D3DViewAkt			= false;	// požadavek aktualizace pohledové matice
-D3DMATRIX			D3DViewMatrix;					// pohledová matice (vytvoøená z objektu kamery)
+D3DMATRIX			D3DViewMatrix;					// pohledová matice (vytvořená z objektu kamery)
 
-// frustum (odvozeno z pohledové a projekèní matice)
+// frustum (odvozeno z pohledové a projekční matice)
 bool				D3DFrustumAkt		= false;	// aktualizovat frustum
-PLANE				D3DFrustum[6];					// 6 rovin projekèního jehlanu
+PLANE				D3DFrustum[6];					// 6 rovin projekčního jehlanu
 
-// pøepínaèe nastavení
-bool				D3DWireframeUnknown	= true;		// stav pøepínaèe vyplòování ploch neznámý
-bool				D3DWireframeAkt		= false;	// vyplòování ploch aktuálnì zapnut
-bool				D3DWireframeGlobal	= true;		// vyplòování ploch globálnì povoleno
+// přepínače nastavení
+bool				D3DWireframeUnknown	= true;		// stav přepínače vyplňování ploch neznámý
+bool				D3DWireframeAkt		= false;	// vyplňování ploch aktuálně zapnut
+bool				D3DWireframeGlobal	= true;		// vyplňování ploch globálně povoleno
 
-bool				D3DLightOnUnknown	= true;		// stav pøepínaèe osvìtlení neznámý
-bool				D3DLightOnAkt		= false;	// osvìtlení aktuálnì zapnuto
-bool				D3DLightOnGlobal	= true;		// osvìtlení globálnì povoleno
+bool				D3DLightOnUnknown	= true;		// stav přepínače osvětlení neznámý
+bool				D3DLightOnAkt		= false;	// osvětlení aktuálně zapnuto
+bool				D3DLightOnGlobal	= true;		// osvětlení globálně povoleno
 
-bool				D3DShadesUnknown	= true;		// stav pøepínaèe plynulého stínování neznámý
-bool				D3DShadesAkt		= false;	// plynulé stínování aktuálnì zapnuto
-bool				D3DShadesGlobal		= true;		// plynulé stínování globálnì povoleno
+bool				D3DShadesUnknown	= true;		// stav přepínače plynulého stínování neznámý
+bool				D3DShadesAkt		= false;	// plynulé stínování aktuálně zapnuto
+bool				D3DShadesGlobal		= true;		// plynulé stínování globálně povoleno
 
-bool				D3DCullingUnknown	= true;		// stav pøepínaèe odstraòování ploch neznámý
-short				D3DCullingAkt		= 0;		// volba zobrazených ploch (0=obì, 1=pøední, 2=zadní)
+bool				D3DCullingUnknown	= true;		// stav přepínače odstraňování ploch neznámý
+short				D3DCullingAkt		= 0;		// volba zobrazených ploch (0=obě, 1=přední, 2=zadní)
 bool				D3DCameraInvert		= false;	// je inverzní kamera, invertovat plošky
 
-bool				D3DMagFilterUnknown[MAX_STAGES]; // stav pøepínaèe filtrace zvìtšených textur neznámý
-bool				D3DMagFilterAkt[MAX_STAGES];	// filtrace zvìtšených textur zapnuta
-bool				D3DMagFilterGlobal	= true;		// filtrace zvìtšených textur globálnì povolena
+bool				D3DMagFilterUnknown[MAX_STAGES]; // stav přepínače filtrace zvětšených textur neznámý
+bool				D3DMagFilterAkt[MAX_STAGES];	// filtrace zvětšených textur zapnuta
+bool				D3DMagFilterGlobal	= true;		// filtrace zvětšených textur globálně povolena
 
-bool				D3DMinMipFilterUnknown[MAX_STAGES];	// stav pøepínaèe filtrace zmenšených a vzdálených textur neznámý
+bool				D3DMinMipFilterUnknown[MAX_STAGES];	// stav přepínače filtrace zmenšených a vzdálených textur neznámý
 bool				D3DMinFilterAkt[MAX_STAGES];	// filtrace zmenšených textur zapnuta
-bool				D3DMinFilterGlobal	= true;		// filtrace zmenšených textur globálnì povolena
+bool				D3DMinFilterGlobal	= true;		// filtrace zmenšených textur globálně povolena
 bool				D3DMipFilterAkt[MAX_STAGES];	// filtrace vzdálených textur zapnuta
-bool				D3DMipFilterGlobal	= true;		// filtrace vzdálených textur globálnì povolena
+bool				D3DMipFilterGlobal	= true;		// filtrace vzdálených textur globálně povolena
 
-int					D3DAktStage			= 0;		// aktivní stupeò textur (0 až 7)
+int					D3DAktStage			= 0;		// aktivní stupeň textur (0 až 7)
 
-bool				D3DRamp				= false;	// je ovladaè Ramp
+bool				D3DRamp				= false;	// je ovladač Ramp
 
 bool				D3DVSync			= false;	// synchronizovat s VSYN
 
@@ -202,7 +202,7 @@ bool				D3DVertFog			= false;	// pouze vektorová mlha (SW driver)
 
 bool				D3DStateAkt			= false;	// aktualizovat stav
 
-bool				D3DReturn			= false;	// blokování Alt+Enter pøi D3D módu
+bool				D3DReturn			= false;	// blokování Alt+Enter při D3D módu
 
 // formáty textur (dwRGBBitCount=0 pro neplatný formát)
 DDPIXELFORMAT		D3DTextFormatA8R8G8B8;			// formát textury D3DFMT_A8R8G8B8
@@ -216,55 +216,55 @@ DDPIXELFORMAT		D3DTextFormatX4R4G4B4;			// formát textury D3DFMT_X4R4G4B4
 bool				D3DLowText			= false;	// používat nižší kvalitu textur
 bool				D3DTextFormatOK		= false;	// nalezen platný formát textur
 
-// formáty Z-bufferù (dwZBufferBitDepth=0 pro neplatný formát) - jen pro hledání formátu Z bufferu
-DDPIXELFORMAT		D3DZBufferFormat24S8;			// formát bufferu 24 bitù, stencil 8 bitù
-DDPIXELFORMAT		D3DZBufferFormat24S4;			// formát bufferu 24 bitù, stencil 4 bity
-DDPIXELFORMAT		D3DZBufferFormat15S1;			// formát bufferu 15 bitù, stencil 1 bit
-DDPIXELFORMAT		D3DZBufferFormat32S0;			// formát bufferu 32 bitù, stencil 0 bitù
-DDPIXELFORMAT		D3DZBufferFormat24S0;			// formát bufferu 24 bitù, stencil 0 bitù
-DDPIXELFORMAT		D3DZBufferFormat16S0;			// formát bufferu 16 bitù, stencil 0 bitù
-DDPIXELFORMAT		D3DZBufferFormat8S0;			// formát bufferu 8 bitù, stencil 0 bitù
+// formáty Z-bufferů (dwZBufferBitDepth=0 pro neplatný formát) - jen pro hledání formátu Z bufferu
+DDPIXELFORMAT		D3DZBufferFormat24S8;			// formát bufferu 24 bitů, stencil 8 bitů
+DDPIXELFORMAT		D3DZBufferFormat24S4;			// formát bufferu 24 bitů, stencil 4 bity
+DDPIXELFORMAT		D3DZBufferFormat15S1;			// formát bufferu 15 bitů, stencil 1 bit
+DDPIXELFORMAT		D3DZBufferFormat32S0;			// formát bufferu 32 bitů, stencil 0 bitů
+DDPIXELFORMAT		D3DZBufferFormat24S0;			// formát bufferu 24 bitů, stencil 0 bitů
+DDPIXELFORMAT		D3DZBufferFormat16S0;			// formát bufferu 16 bitů, stencil 0 bitů
+DDPIXELFORMAT		D3DZBufferFormat8S0;			// formát bufferu 8 bitů, stencil 0 bitů
 bool				D3DZBufferFormatOK	= false;	// nalezen platný formát Z-bufferu
 
 // stencil buffer
 bool				D3DSBufferFormatOK	= false;	// nalezen Stencil buffer
-int					D3DSBufferDepth		= 0;		// hloubka Stencil bufferu (bitù)
+int					D3DSBufferDepth		= 0;		// hloubka Stencil bufferu (bitů)
 int					D3DSBufferMax		= 0;		// maximální hodnota Stencil bufferu
 bool				D3DSBufferClear		= false;	// požadavek k vymazání Stencil bufferu
-bool				D3DShadows			= true;		// povoleno používání stínù
+bool				D3DShadows			= true;		// povoleno používání stínů
 
-// vlastnosti zaøízení
-int					MaxTextureWidth		= 0x8000;	// maximální šíøka textury
+// vlastnosti zařízení
+int					MaxTextureWidth		= 0x8000;	// maximální šířka textury
 int					MaxTextureHeight	= 0x8000;	// maximální výška textury
-int					MaxTextureRepeat	= 0x8000;	// maximální poèet opakování textury
-bool				SquareTexture		= false;	// textury musí být ètvercové
-bool				TexturePow2			= true;		// rozmìr textur musí být mocnina 2 (pro MipMap je nutné)
+int					MaxTextureRepeat	= 0x8000;	// maximální počet opakování textury
+bool				SquareTexture		= false;	// textury musí být čtvercové
+bool				TexturePow2			= true;		// rozměr textur musí být mocnina 2 (pro MipMap je nutné)
 bool				IsBlending			= true;		// jsou blending operace
-bool				IsMagFilter			= true;		// podporuje filtr pøi zvìtšení
-bool				IsMinFilter			= true;		// podporuje filtr pøi zmenšení
+bool				IsMagFilter			= true;		// podporuje filtr při zvětšení
+bool				IsMinFilter			= true;		// podporuje filtr při zmenšení
 bool				IsMipMap			= true;		// podporuje mipmap textury
 bool				IsHWRaster			= false;	// je HW rasterizace
-bool				IsHWTransLight		= false;	// je HW transformace a osvìtlení
+bool				IsHWTransLight		= false;	// je HW transformace a osvětlení
 bool				IsPureDevice		= false;	// pouze HW obsluha
 bool				AlphaGreaterEqual	= true;		// lze porovnávat Alpha >=
 bool				AlphaGreater		= true;		// lze porovnávat Alpha >
-int					MaxVertexNum		= 0xf000;	// maximální poèet vrcholù skuteèný
-int					MaxVertexNum2		= MAXVERTICES;	// maximální poèet vrcholù pro renderování
-int					MaxTextureStages	= MAX_STAGES; // maximální poèet stupòù textur (nepoužívá se)
-int					MaxTextureSimult	= MAX_STAGES; // maximální poèet textur pro jeden prùchod
+int					MaxVertexNum		= 0xf000;	// maximální počet vrcholů skutečný
+int					MaxVertexNum2		= MAXVERTICES;	// maximální počet vrcholů pro renderování
+int					MaxTextureStages	= MAX_STAGES; // maximální počet stupňů textur (nepoužívá se)
+int					MaxTextureSimult	= MAX_STAGES; // maximální počet textur pro jeden průchod
 bool				IsTableFog			= true;		// podporována tabulková mlha
 bool				IsVertexFog			= true;		// podporována vrcholová mlha
 bool				IsRangeFog			= true;		// podporována vzdálenostní mlha
 
-int					D3DLevel			= 4;		// složitost objektù (2 a více)
-bool				D3DCreateUpper		= true;		// vytváøet horní podstavu objektù
-bool				D3DCreateLower		= true;		// vytváøet dolní podstavu objektù
+int					D3DLevel			= 4;		// složitost objektů (2 a více)
+bool				D3DCreateUpper		= true;		// vytvářet horní podstavu objektů
+bool				D3DCreateLower		= true;		// vytvářet dolní podstavu objektů
 int					D3D_ID				= 1;		// aktivní objekt (rám) Direct3D
 int					TerenID				= -1;		// naposledy zvolený objekt terénu (-1=není)
 
 double				D3DSmooth			= 1;		// vyhlazení textur (1=ne)
 
-// tabulka ID kódù ovladaèù Direct3D
+// tabulka ID kódů ovladačů Direct3D
 
 DEFINE_GUID( IID_IDirect3DHALDevice,    0x84E63dE0,0x46AA,0x11CF,0x81,0x6F,0x00,0x00,0xC0,0x20,0x15,0x6E );
 DEFINE_GUID( IID_IDirect3DTnLHalDevice, 0xf5049e78, 0x4861, 0x11d2, 0xa4, 0x7, 0x0, 0xa0, 0xc9, 0x6, 0x29, 0xa8);
@@ -286,43 +286,43 @@ const GUID* Dev3DTab[D3DEVICES] =
 //	&IID_IDirect3DNullDevice,		// 7 Null
 };
 
-// mìøení uplynulého èasu
-double D3DLastTime = 0;							// poslední èas renderování
-double D3DElapsedTime = 0;						// uplynulý èas od posledního renderování
-double D3DAverageTime = 0;						// støední ubìhlý èas
-double D3DAverageFreq = 0;						// støední frekvence
+// měření uplynulého času
+double D3DLastTime = 0;							// poslední čas renderování
+double D3DElapsedTime = 0;						// uplynulý čas od posledního renderování
+double D3DAverageTime = 0;						// střední uběhlý čas
+double D3DAverageFreq = 0;						// střední frekvence
 int D3DAverageFreqI = 0;						// frekvence Integer
 double D3DAverageRound = 0;						// zaokrouhlovací korekce
-int D3DValidTime = 0;							// èítaè do zahájení mìøení èasu
+int D3DValidTime = 0;							// čítač do zahájení měření času
 
-//int	D3DTimeStamp = 0;							// èítaè snímkù (jako èasové razítko)
+//int	D3DTimeStamp = 0;							// čítač snímků (jako časové razítko)
 
 #endif // _MINI
 // --------------------- konec vypnutí pro MINI verzi -------------------
 
 /////////////////////////////////////////////////////////////////////////////
-// globální a lokální promìnné
+// globální a lokální proměnné
 
-int			MainFrameStyleEx = (WS_EX_APPWINDOW | WS_EX_CONTROLPARENT | WS_EX_WINDOWEDGE); // rozšíøený styl
+int			MainFrameStyleEx = (WS_EX_APPWINDOW | WS_EX_CONTROLPARENT | WS_EX_WINDOWEDGE); // rozšířený styl
 int			MainFrameStyle = (WS_BORDER | WS_CAPTION | /* WS_CLIPCHILDREN | */ WS_MAXIMIZEBOX |
 				WS_MINIMIZEBOX | /* WS_CLIPSIBLINGS | */ WS_OVERLAPPED | WS_SYSMENU | WS_THICKFRAME); // styl okna
 
-TCHAR		MainFrameClass[] = _T("PeterProgClass");	// název tøídy hlavního okna
+TCHAR		MainFrameClass[] = _T("PeterProgClass");	// název třídy hlavního okna
 HWND		MainFrame = NULL;						// hlavní okno aplikace
 bool		MainFrameVisible = false;				// hlavní okno zobrazeno
 HWND		StatusBar = NULL;						// stavová lišta
 
-bool		StatusVisible = false;					// pøíznak viditelnosti stavového øádku
-HFONT		StatusFont = NULL;						// font stavového øádku
+bool		StatusVisible = false;					// příznak viditelnosti stavového řádku
+HFONT		StatusFont = NULL;						// font stavového řádku
 
 RECT		ClientRect;								// klientská oblast hlavního okna
-int			ClientWidth = 0;						// šíøka klientské oblasti
+int			ClientWidth = 0;						// šířka klientské oblasti
 int			ClientHeight = 0;						// výška klientské oblasti
 
-int			MainFrameX;								// souøadnice X støedu hlavního okna
-int			MainFrameY;								// souøadnice Y støedu hlavního okna
+int			MainFrameX;								// souřadnice X středu hlavního okna
+int			MainFrameY;								// souřadnice Y středu hlavního okna
 
-bool		ReqClose = false;						// požadavek uzavøení okna od uživatele
+bool		ReqClose = false;						// požadavek uzavření okna od uživatele
 
 CString		AktCaptionText;							// text titulku hlavního okna
 CString		AktStatusText;							// zobrazený text stavové lišty
@@ -331,26 +331,26 @@ HCURSOR		CurArrow;								// (standardní) šipka
 HCURSOR		CurArrow2;								// (standardní) šipka pro DirectX
 
 // stav myši (aktualizováno v PreTranslateMessage)
-bool		LMouseDown = false;						// levé tlaèítko stisknuto
-bool		LMouseClick = false;					// klik levého tlaèítka
-bool		LMouseDClick = false;					// dvojklik levého tlaèítka
+bool		LMouseDown = false;						// levé tlačítko stisknuto
+bool		LMouseClick = false;					// klik levého tlačítka
+bool		LMouseDClick = false;					// dvojklik levého tlačítka
 
-bool		RMouseDown = false;						// pravé tlaèítko stisknuto
-bool		RMouseClick = false;					// klik pravého tlaèítka
-bool		RMouseDClick = false;					// dvojklik pravého tlaèítka
+bool		RMouseDown = false;						// pravé tlačítko stisknuto
+bool		RMouseClick = false;					// klik pravého tlačítka
+bool		RMouseDClick = false;					// dvojklik pravého tlačítka
 
-POINT		MouseScreen = {MOUSEINV, MOUSEINV};		// souøadnice myši na displeji
-POINT		MouseMain = {MOUSEINV, MOUSEINV};		// souøadnice myši v hlavním oknì
-bool		MouseValid = false;						// pøíznak aktualizace souøadnice myši
+POINT		MouseScreen = {MOUSEINV, MOUSEINV};		// souřadnice myši na displeji
+POINT		MouseMain = {MOUSEINV, MOUSEINV};		// souřadnice myši v hlavním okně
+bool		MouseValid = false;						// příznak aktualizace souřadnice myši
 
-bool		ProgramFill = false;					// plnìní prvku okna programem
+bool		ProgramFill = false;					// plnění prvku okna programem
 
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 
-// buffer hledaného textu v oknì RichEdit
+// buffer hledaného textu v okně RichEdit
 #define		FINDBUFFSIZE 128						// velikost bufferu hledaného textu
-LPTSTR		FindBuff = NULL;						// buffer hledaného textu (v oknì RichEdit)
-bool		FindMatchCase = false;					// pøi hledání rozlišena velká a malá písmena
+LPTSTR		FindBuff = NULL;						// buffer hledaného textu (v okně RichEdit)
+bool		FindMatchCase = false;					// při hledání rozlišena velká a malá písmena
 bool		FindWholeWord = false;					// hledat jen celá slova
 HWND		FindDialogBox = NULL;					// handle na dialog hledání (NULL=není)
 UINT		FindMsgString = 0;						// identifikátor zprávy hledání
@@ -360,18 +360,18 @@ FINDREPLACE FindStruc;								// struktura pro hledání
 // ============================== hlavní okno ===============================
 
 /////////////////////////////////////////////////////////////////////////////
-// pøíprava požadovaných rozmìrù okna podle velikosti hlavní plochy
+// příprava požadovaných rozměrů okna podle velikosti hlavní plochy
 
 void AdjustMainFrame(RECT* wrc)
 {
-// požadované rozmìry plochy
+// požadované rozměry plochy
 	ASSERT(Map.IsValid(0));
 	int width = RoundP(ICONWIDTH * Map[0].Width() * Meritko0);
 	int height = RoundP(ICONHEIGHT * Map[0].Height() * Meritko0);
 	if (width > ScreenWidth0) width = ScreenWidth0;
 	if (height > ScreenHeight0) height = ScreenHeight0;
 
-// zjištìní požadovaných rozmìrù okna
+// zjištění požadovaných rozměrů okna
 	RECT rc;
 	rc.left = 0;
 	rc.top = 0;
@@ -389,19 +389,19 @@ void AdjustMainFrame(RECT* wrc)
 		}
 	}
 
-// korekce rozmìrù
+// korekce rozměrů
 	width = rc.right - rc.left;
 	height = rc.bottom - rc.top;
 	if (width > ScreenWidth0) width = ScreenWidth0;
 	if (height > ScreenHeight0) height = ScreenHeight0;
 
-// souøadnice
+// souřadnice
 	int left = MainFrameX - width/2;
 	if (left < 0) left = 0;
 	int top = MainFrameY - height/2;
 	if (top < 0) top = 0;
 
-// uložení rozmìrù
+// uložení rozměrů
 	wrc->left = left;
 	wrc->top = top;
 	wrc->right = left + width;
@@ -424,7 +424,7 @@ void MainFrameShow()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení hlavního okna aplikace
+// vytvoření hlavního okna aplikace
 
 bool MainFrameCreate()
 {
@@ -438,7 +438,7 @@ bool MainFrameCreate()
 		}
 	}
 
-// naètení standardních barev okenních prvkù
+// načtení standardních barev okenních prvků
 	StdColorBtnText = (::GetSysColor(COLOR_BTNTEXT) & 0xffffff);
 	StdColorBtnFace = (::GetSysColor(COLOR_BTNFACE) & 0xffffff);
 	StdBrushBtn = ::CreateSolidBrush(StdColorBtnFace);
@@ -451,7 +451,7 @@ bool MainFrameCreate()
 	StdColorHighlight = (::GetSysColor(COLOR_HIGHLIGHT) & 0xffffff);
 	StdBrushHighlight = ::CreateSolidBrush(StdColorHighlight);
 
-// registrace tøídy okna
+// registrace třídy okna
 	WNDCLASS wcl;
 	wcl.style = CS_DBLCLKS | CS_VREDRAW | CS_HREDRAW;// | CS_OWNDC;
 	wcl.lpfnWndProc = WindowProc;
@@ -465,20 +465,20 @@ bool MainFrameCreate()
 	wcl.lpszClassName = MainFrameClass;
 	::RegisterClass(&wcl);
 
-// vytvoøení hlavního okna
+// vytvoření hlavního okna
 	RECT rc;
 	AdjustMainFrame(&rc);
 
 	MainFrame = ::CreateWindowEx(
-		MainFrameStyleEx,								// rozšíøený styl
-		MainFrameClass,									// jméno tøídy okna
+		MainFrameStyleEx,								// rozšířený styl
+		MainFrameClass,									// jméno třídy okna
 		AktCaptionText,									// titulek okna
 		MainFrameStyle,									// styl okna
 		rc.left,										// X
 		rc.top,											// Y
-		rc.right - rc.left,								// šíøka
+		rc.right - rc.left,								// šířka
 		rc.bottom - rc.top,								// výška
-		NULL,											// rodiè
+		NULL,											// rodič
 		NULL,											// menu
 		hInstance,										// instance
 		NULL);											// parametry
@@ -487,7 +487,7 @@ bool MainFrameCreate()
 // aktualizace informací o displeji
 	AktDispInfo();
 
-// vytvoøení prvku okna
+// vytvoření prvku okna
 	Win.New();
 	Win[0].Wnd = MainFrame;
 	Win[0].Parent = -1;
@@ -504,7 +504,7 @@ bool MainFrameCreate()
 	Win[0].AlwaysTop = false;
 	::SetWindowLong(MainFrame, 0, 0);
 
-// vytvoøení stavové lišty - zatím nezobrazena
+// vytvoření stavové lišty - zatím nezobrazena
 #define IDN_STATUS 12524
 	StatusBar = ::CreateStatusWindow(
 		WS_CHILD | SBARS_SIZEGRIP,
@@ -513,7 +513,7 @@ bool MainFrameCreate()
 		IDN_STATUS);
 	if (StatusBar == NULL) return false;
 
-// naètení kurzorù myši
+// načtení kurzorů myši
 	CurArrow = ::LoadCursor(0, MAKEINTRESOURCE(IDC_ARROW)); ASSERT(CurArrow != NULL);
 	CurArrow2 = ::LoadCursor(hInstance, MAKEINTRESOURCE(IDC_ARROW2)); ASSERT(CurArrow2 != NULL);
 	EmptyIconData.Cursor = CurArrow;
@@ -525,8 +525,8 @@ bool MainFrameCreate()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepoèet rozmìrù okna Direct3D (podle údajù zadaných uživatelem)
-// (musí být zobrazené okno, aby byly platné údaje o oknì)
+// přepočet rozměrů okna Direct3D (podle údajů zadaných uživatelem)
+// (musí být zobrazené okno, aby byly platné údaje o okně)
 // vrací TRUE=má být okno 3D
 
 // --------------------- vypnuto pro MINI verzi --------------------
@@ -534,19 +534,19 @@ bool MainFrameCreate()
 
 bool RecalcD3D()
 {
-// pøíprava rozmìrù omezených na grafickou plochu
+// příprava rozměrů omezených na grafickou plochu
 	D3DX = D3DX0;
 	D3DY = D3DY0;
 	D3DW = D3DW0;
 	D3DH = D3DH0;
 
-// omezení poèátku X a Y okna na grafickou plochu
+// omezení počátku X a Y okna na grafickou plochu
 	if (D3DX < 0) D3DX = 0;
 	if (D3DX > Width) D3DX = Width;
 	if (D3DY < 0) D3DY = 0;
 	if (D3DY > Height) D3DY = Height;
 
-// omezení šíøky a výšky okna na grafickou plochu
+// omezení šířky a výšky okna na grafickou plochu
 	if (D3DW < 0) D3DW = 0;
 	if (D3DH < 0) D3DH = 0;
 	if ((D3DX + D3DW) > Width) D3DW = Width - D3DX;
@@ -555,7 +555,7 @@ bool RecalcD3D()
 // test, zda bude zobrazena 2D grafika
 	D3D2D = ((D3DW != Width) || (D3DH != Height));
 
-// pøíprava mìøítka a souøadnic
+// příprava měřítka a souřadnic
 	double mer = Meritko;
 	int left = DispLeft;
 	int top = DispTop;
@@ -569,7 +569,7 @@ bool RecalcD3D()
 		height = ClientHeight;
 	}
 
-// výpoèet skuteèných souøadnic okna Direct3D
+// výpočet skutečných souřadnic okna Direct3D
 	D3DLeft = RoundM(D3DX0 * mer) + left;
 	if (D3DLeft < 0) D3DLeft = 0;
 	if (D3DLeft > ClientWidth) D3DLeft = ClientWidth;
@@ -604,7 +604,7 @@ bool RecalcD3D()
 // ================================ videomód ================================
 
 /////////////////////////////////////////////////////////////////////////////
-// setøídìní videomódù displeje (na zaèátku je nejmenší rozlišení a nejnižší poèet bitù)
+// setřídění videomódů displeje (na začátku je nejmenší rozlišení a nejnižší počet bitů)
 
 void SortDisplayModes(VIDEOMODEITEM* tab, int num)
 {
@@ -663,7 +663,7 @@ void SortDisplayModes(VIDEOMODEITEM* tab, int num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace seznamu videomódù (volá se pøi prvním použití)
+// inicializace seznamu videomódů (volá se při prvním použití)
 
 void InitVideoModes()
 {
@@ -673,10 +673,10 @@ void InitVideoModes()
 	{
 		IsVideoModes = true;
 
-// vytvoøení bufferu seznamu videomódù
+// vytvoření bufferu seznamu videomódů
 		TabVideoModes = (VIDEOMODEITEM*)MemGet(MAXVIDEOMODES * sizeof(VIDEOMODEITEM));
 
-// zjištìní všech videomódù
+// zjištění všech videomódů
 		int inx = 0;
 
 		for (; NumVideoModes < MAXVIDEOMODES; inx++)
@@ -727,7 +727,7 @@ void InitVideoModes()
 			}
 		}
 
-// setøídìní videomódù
+// setřídění videomódů
 		SortDisplayModes(TabVideoModes, NumVideoModes);
 	}
 }
@@ -738,11 +738,11 @@ void InitVideoModes()
 
 int FindVideoMode(int width, int height, int bits)
 {
-// kontrola poètu videomódù
+// kontrola počtu videomódů
 	int tabn = NumVideoModes;
 	if (tabn <= 0) return -1;
 
-// implicitní šíøka a výška
+// implicitní šířka a výška
 	if (width == 0)
 	{
 		if (height == 0)
@@ -757,13 +757,13 @@ int FindVideoMode(int width, int height, int bits)
 	}
 	if (height == 0) height = width * Map[0].Height() / Map[0].Width();
 
-// omezení šíøky a výšky na maximální videomód (aby byl nalezen alespoò 1 videomód)
+// omezení šířky a výšky na maximální videomód (aby byl nalezen alespoň 1 videomód)
 	tabn -= 1;
 	VIDEOMODEITEM* tab = TabVideoModes + tabn;
 	if (width > tab->Width) width = tab->Width;
 	if (height > tab->Height) height = tab->Height;
 
-// nalezení nejvhodnìjšího videomódu v tabulkách (nejbližší vyšší)
+// nalezení nejvhodnějšího videomódu v tabulkách (nejbližší vyšší)
 	int dist = 1000000;
 	int inx = -1;
 
@@ -810,28 +810,28 @@ int FindVideoMode(int width, int height, int bits)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// stop aktivního videomódu (voláno i po neúspìšném pokusu o celoobrazovkový režim)
+// stop aktivního videomódu (voláno i po neúspěšném pokusu o celoobrazovkový režim)
 
 void StopVideoMode()
 {
-// ukonèení 3D módu
+// ukončení 3D módu
 #ifndef _MINI
 	if (FullScreen && D3D) DeSelectD3DDev();
 #endif
 
-// zapnutí módu zmìny okna
+// zapnutí módu změny okna
 	Resizing = true;
 
 // vypnutí kurzoru myši
 	::ShowCursor(FALSE);
 
-// ukonèení videomódu
+// ukončení videomódu
 	if (FullScreen)
 	{
 		::ChangeDisplaySettings(NULL, 0);
 	}
 
-// obnovení stavového øádku
+// obnovení stavového řádku
 	StatusAkt = true;
 
 // návrat pozice okna
@@ -857,14 +857,14 @@ void StopVideoMode()
 // zapnutí kurzoru myši
 	::ShowCursor(TRUE);
 
-// vypnutí módu zmìny okna
+// vypnutí módu změny okna
 	Resizing = false;
 
-// aktualizace informací o oknì	
+// aktualizace informací o okně	
 	InitClientRect(&Win[0]);
 	OnSize(&Win[0]);
 
-// požadavek k pøekreslení 2D grafiky
+// požadavek k překreslení 2D grafiky
 	AktAllIcon();
 
 // start 3D módu
@@ -888,14 +888,14 @@ void StopVideoMode()
 bool StartVideoMode()
 {
 
-// ukonèení 3D módu, pøechodnì vypnuté 3D okno
+// ukončení 3D módu, přechodně vypnuté 3D okno
 #ifndef _MINI
 	if (D3D) DeSelectD3DDev();
 	int oldX = D3DW0;
 	D3DW0 = 0;
 #endif
 
-// ukonèení pøedešlého videorežimu
+// ukončení předešlého videorežimu
 	if (FullScreen) StopVideoMode();
 
 // vypnutí kurzoru myši
@@ -904,27 +904,27 @@ bool StartVideoMode()
 // hlavní okno musí být zapnuto
 	MainFrameShow();
 
-// vypnutí stavové lišty (nesmí se teï aktualizovat, zùstal by dole prázdný pruh)
+// vypnutí stavové lišty (nesmí se teď aktualizovat, zůstal by dole prázdný pruh)
 	StatusAkt = false;
 	SetStatusVisible(false);
 
-// úschova parametrù hlavního okna
+// úschova parametrů hlavního okna
 	if (!FullScreen)
 	{
 		OldMaximized = ::IsZoomed(MainFrame);
 	}
 
-// korekce parametrù hlavního okna na fullscreen
+// korekce parametrů hlavního okna na fullscreen
 	::SetWindowLong(MainFrame, GWL_EXSTYLE, WS_EX_CONTROLPARENT);
 	::SetWindowLong(MainFrame, GWL_STYLE, WS_POPUP | WS_VISIBLE);
 
-// inicializace seznamu videomódù
+// inicializace seznamu videomódů
 	InitVideoModes();
 
-// požadavek k pøekreslení 2D grafiky
+// požadavek k překreslení 2D grafiky
 	AktAllIcon();
 
-// zapnutí módu zmìny okna
+// zapnutí módu změny okna
 	Resizing = true;
 
 // nalezení videomódu
@@ -933,11 +933,11 @@ bool StartVideoMode()
 
 	bool isup = true;
 
-// cyklus k nižším videomódùm
+// cyklus k nižším videomódům
 	for (; inx >= 0; )
 	{
 
-// popisovaè videomódu
+// popisovač videomódu
 		VIDEOMODEITEM* item = TabVideoModes + inx;
 
 // start videomódu
@@ -955,7 +955,7 @@ bool StartVideoMode()
 			FullScreenHeight = item->Height;
 			FullScreenBits = item->Bits;
 
-// úschova parametrù videomódu
+// úschova parametrů videomódu
 			ScreenWidth = item->Width;
 			ScreenHeight = item->Height;
 			ScreenWidth0 = ScreenWidth;
@@ -969,13 +969,13 @@ bool StartVideoMode()
 // zapnutí kurzoru myši
 			::ShowCursor(TRUE);
 
-// vypnutí módu zmìny okna
+// vypnutí módu změny okna
 			Resizing = false;
 
-// zapnutí pøíznaku celoobrazovkového módu
+// zapnutí příznaku celoobrazovkového módu
 			FullScreen = true;
 
-// aktualizace informací o oknì
+// aktualizace informací o okně
 			InitClientRect(&Win[0]);
 			OnSize(&Win[0]);
 
@@ -991,7 +991,7 @@ bool StartVideoMode()
 				return true;
 			}
 
-// pokraèují další pokusy
+// pokračují další pokusy
 			Resizing = true;
 			::ShowCursor(FALSE);
 			D3DW0 = 0;
@@ -1022,11 +1022,11 @@ bool StartVideoMode()
 // zapnutí kurzoru myši
 	::ShowCursor(TRUE);
 
-// vypnutí módu zmìny okna
+// vypnutí módu změny okna
 	Resizing = false;
 	StatusAkt = true;
 
-// návrat parametrù hlavního okna
+// návrat parametrů hlavního okna
 #ifndef _MINI
 	D3DW0 = oldX;
 #endif
@@ -1065,7 +1065,7 @@ void SetFullScreen(bool full)
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení módu vyplòování ploch
+// nastavení módu vyplňování ploch
 
 void SetD3DWireframe(bool on)
 {
@@ -1081,7 +1081,7 @@ void SetD3DWireframe(bool on)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení módu zapnutí osvìtlení
+// nastavení módu zapnutí osvětlení
 
 void SetD3DLightOn(bool on)
 {
@@ -1113,7 +1113,7 @@ void SetD3DShades(bool on)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení módu filtrace textur pøi zvìtšení
+// nastavení módu filtrace textur při zvětšení
 
 void SetD3DMagFilter(bool on, int stage)
 {
@@ -1129,7 +1129,7 @@ void SetD3DMagFilter(bool on, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení módu filtrace textur pøi zmenšení
+// nastavení módu filtrace textur při zmenšení
 
 void SetD3DMinMipFilter(bool min, bool mip, int stage)
 {
@@ -1147,7 +1147,7 @@ void SetD3DMinMipFilter(bool min, bool mip, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení odstraòování ploch
+// nastavení odstraňování ploch
 
 void SetD3DCullingKorig(short val)
 {
@@ -1186,27 +1186,27 @@ void SetD3DFogOn(BOOL on)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování pøepínaèù nastavení 
+// resetování přepínačů nastavení 
 
 void ResetD3DSwitch()
 {
-	D3DWireframeUnknown	= true;		// stav pøepínaèe vyplòování ploch neznámý
-	D3DLightOnUnknown	= true;		// stav pøepínaèe osvìtlení neznámý
-	D3DShadesUnknown	= true;		// stav pøepínaèe plynulého stínování neznámý
-	D3DCullingUnknown	= true;		// stav pøepínaèe odstraòování ploch neznámý
+	D3DWireframeUnknown	= true;		// stav přepínače vyplňování ploch neznámý
+	D3DLightOnUnknown	= true;		// stav přepínače osvětlení neznámý
+	D3DShadesUnknown	= true;		// stav přepínače plynulého stínování neznámý
+	D3DCullingUnknown	= true;		// stav přepínače odstraňování ploch neznámý
 	D3DFogOn = -1;					// stav zapnutí mlhy neznámý
 
 	D3DSrcBlend = BLEND_INVALID; // aktuální nastavení blending operace zdroje
 	D3DDstBlend = BLEND_INVALID; // aktuální nastavení blending operace cíle
-	D3DAlphaRef = -1;			// aktuální nastavení alfa úrovnì
+	D3DAlphaRef = -1;			// aktuální nastavení alfa úrovně
 	D3DTFactor = MAXDWORD;			// aktuální nastavení faktoru textur
 	D3DZWrite = -1;				// aktuální hodnota hloubkového zápisu
 	D3DZTest = -1;				// aktuální hodnota hloubkového testu
 
 	for (int i = 0; i < MAX_STAGES; i++)
 	{
-		D3DMagFilterUnknown[i]	= true;		// stav pøepínaèe filtrace zvìtšených textur neznámý
-		D3DMinMipFilterUnknown[i] = true;	// stav pøepínaèe filtrace zmenšených a vzdálených textur neznámý
+		D3DMagFilterUnknown[i]	= true;		// stav přepínače filtrace zvětšených textur neznámý
+		D3DMinMipFilterUnknown[i] = true;	// stav přepínače filtrace zmenšených a vzdálených textur neznámý
 		D3DColorOp[i] = -1;				// aktuální nastavení operací barev
 		D3DColorArg1[i] = -1;			// aktuální nastavení argumentu 1 operací barev
 		D3DColorArg2[i] = -1;			// aktuální nastavení argumentu 2 operací barev
@@ -1216,16 +1216,16 @@ void ResetD3DSwitch()
 		D3DAddressU[i] = -1;			// aktuální adresování textur U
 		D3DAddressV[i] = -1;			// aktuální adresování textur V
 //		D3DBorder[i] = -1;				// aktuální barva okolí textur
-		D3DBias[i] = -123456;			// aktuální zjemnìní vzdálených textur
+		D3DBias[i] = -123456;			// aktuální zjemnění vzdálených textur
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace objektù scény (volá se pøi startu programu, pøed inicializací 3D!)
+// inicializace objektů scény (volá se při startu programu, před inicializací 3D!)
 
 void Init3D()
 {
-// inicializace bufferù skupin
+// inicializace bufferů skupin
 	int i;
 	for (i = 0; i < MAX_RENDGROUP; i++)
 	{
@@ -1261,11 +1261,11 @@ void Init3D()
 // inicializace pohledové matice
 	Matrix1(&D3DViewMatrix);
 
-// vytvoøení objektu scény
+// vytvoření objektu scény
 	i = D3DF_New();
 	ASSERT(i == 0);
 
-// vytvoøení objektu kamery
+// vytvoření objektu kamery
 	i = D3DF_New();
 	ASSERT(i == 1);
 	D3DFITEM* item = D3DF_Get(i);
@@ -1273,7 +1273,7 @@ void Init3D()
 	item->TransZ = -2;
 	item->AktOwn = true;
 
-// vytvoøení implicitního svìtla
+// vytvoření implicitního světla
 	i = D3DF_New();
 	ASSERT(i == 2);
 	item = D3DF_Get(i);
@@ -1301,7 +1301,7 @@ void Init3D()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu (napø. po zmìnì velikosti okna)
+// aktualizace viewportu (např. po změně velikosti okna)
 /*
 bool UpdateViewport()
 {
@@ -1315,9 +1315,9 @@ bool UpdateViewport()
 	D3DProjAkt = true;
 	D3DViewAkt = true;
 
-// reset pøepínaèù (nìkteré ztratí hodnotu)
+// reset přepínačů (některé ztratí hodnotu)
 	ReSet3DCount = 0;				// resetování opakované inicializace
-	ReSet3DCountN = 1;				// inicializace pøíštího èítaèe
+	ReSet3DCountN = 1;				// inicializace příštího čítače
 	ReSet3D();
 
 	if (Direct3DDev != NULL)
@@ -1393,29 +1393,29 @@ void ReSet3D()
 	if (--ReSet3DCount < 0)
 	{ 
 
-// obnovení èítaèe
+// obnovení čítače
 		int i = ReSet3DCountN;
 		ReSet3DCount = i;
 		i = (i << 1);
 		if (i > 256) i = 256;
 		ReSet3DCountN = i;
 
-// restart pøepínaèù
+// restart přepínačů
 		ResetD3DSwitch();
 
-// opakovanì aktualizovat
-		D3DProjAkt = true;				// aktualizovat projekèní matici
+// opakovaně aktualizovat
+		D3DProjAkt = true;				// aktualizovat projekční matici
 		D3DViewAkt = true;				// aktualizovat pohledovou matici
 		D3DFrustumAkt = true;			// aktualizovat frustum
 		D3DBackColAkt = true;			// aktualizovat barvu pozadí
 		FogAkt = true;					// aktualizovat mlhu
-		D3DAmbientColAkt = true;		// aktualizovat ambient osvìtlení
+		D3DAmbientColAkt = true;		// aktualizovat ambient osvětlení
 		D3DStateAkt = true;				// aktualizovat stav
 	}
 }				
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní ovladaèe Direct3D
+// uvolnění ovladače Direct3D
 
 void DeSelectD3DDev()
 {
@@ -1424,30 +1424,30 @@ void DeSelectD3DDev()
 
 	FPUFloat();
 
-// èekání na dokonèení renderování
+// čekání na dokončení renderování
 	D3DVSync = false;
 	pD3Disp();
 
-// resetování bufferù
+// resetování bufferů
 	D3DM_Reset();
 	D3DF_Reset();
 	D3DL_Reset();
 	D3DT_Reset();
 
-// ukonèení funkce aktivního zaøízení
+// ukončení funkce aktivního zařízení
 	pD3Stop();
 	FPUDouble();
 
-// zrušení èísla aktivního zaøízení
+// zrušení čísla aktivního zařízení
 	D3DIntAkt = 0;
 	D3DDevAkt = 0;
 	D3D = false;
 
-// nulování èasù (pro uživatele)
+// nulování časů (pro uživatele)
 	D3DElapsedTime = 0;
 	D3DAverageFreqI = 0;
 
-// implicitní informace o zaøízení
+// implicitní informace o zařízení
 	MaxTextureWidth = 0x8000;
 	MaxTextureHeight = 0x8000;
 	MaxTextureRepeat = 0x8000;
@@ -1473,7 +1473,7 @@ void DeSelectD3DDev()
 	D3DSBufferClear = false;
 	D3DShadows = true;
 
-// nulování adres zaøízení
+// nulování adres zařízení
 	pD3Stop = D3NoStop;
 	pD3SizeView = D3NoSizeView;
 	pD3MoveView = D3NoMoveView;
@@ -1520,7 +1520,7 @@ void DeSelectD3DDev()
 	pD3Shadow = D3NoShadow;
 	pD3Shadows = D3NoShadows;
 
-// požadavek k pøekreslení 2D grafiky
+// požadavek k překreslení 2D grafiky
 	AktAllIcon();
 
 // obnovení palet
@@ -1531,7 +1531,7 @@ void DeSelectD3DDev()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání formátu textur
+// přidání formátu textur
 
 void D3DEnumPixelFormat(DDPIXELFORMAT* pf)
 {
@@ -1584,7 +1584,7 @@ void D3DEnumPixelFormat(DDPIXELFORMAT* pf)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání formátu Z-bufferu
+// přidání formátu Z-bufferu
 
 void D3DEnumZBufferFormat(DDPIXELFORMAT* pf)
 {
@@ -1645,9 +1645,9 @@ void D3DEnumZBufferFormat(DDPIXELFORMAT* pf)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr ovladaèe 3D (vrací TRUE=inicializace OK)
+// výběr ovladače 3D (vrací TRUE=inicializace OK)
 // inter = rozhraní (1=GL0,2=GL1,3=GL2,4=DX3,5=DX5,6=DX6,7=DX7,8=DX8)
-// device = ovladaè (1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
+// device = ovladač (1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
 
 bool SelectD3DDevice(int inter, int dev)
 {
@@ -1698,7 +1698,7 @@ bool SelectD3DDevice(int inter, int dev)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// automatický výbìr rozhraní
+// automatický výběr rozhraní
 
 bool SelectD3DDeviceInt(int dev)
 {
@@ -1714,17 +1714,17 @@ bool SelectD3DDeviceInt(int dev)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr uživatelského ovladaèe 3D (vrací TRUE=nastavení OK)
+// výběr uživatelského ovladače 3D (vrací TRUE=nastavení OK)
 // Pozn.: V této chvíli je již hlavní okno zobrazeno (funkce FDirect3DView())
 
-int korigSpeed = 0;		// èítaè korekce pomalého rozhraní
+int korigSpeed = 0;		// čítač korekce pomalého rozhraní
 
 bool UserD3DDevice()
 {
-// zrušení starého ovladaèe
+// zrušení starého ovladače
 	DeSelectD3DDev();
 
-// pøepoèet rozmìrù
+// přepočet rozměrů
 	if (!RecalcD3D()) return false;
 
 // vypnutí kurzoru myši
@@ -1735,13 +1735,13 @@ bool UserD3DDevice()
 	if (D3DIntUser > 0)
 	{
 
-// zadáno rozhraní i ovladaè
+// zadáno rozhraní i ovladač
 		if (D3DDevUser > 0)
 		{
 			res = SelectD3DDevice(D3DIntUser, D3DDevUser);
 		}
 
-// zadáno rozhraní, ovladaè je automatický
+// zadáno rozhraní, ovladač je automatický
 		else
 		{
 			res = (
@@ -1758,13 +1758,13 @@ bool UserD3DDevice()
 	else
 	{
 
-// zadán ovladaè, rozhraní je automatické
+// zadán ovladač, rozhraní je automatické
 		if (D3DDevUser > 0)
 		{
 			res = SelectD3DDeviceInt(D3DDevUser);
 		}
 
-// ovladaè i rozhraní jsou automatické
+// ovladač i rozhraní jsou automatické
 		else
 		{
 			res = (
@@ -1779,18 +1779,18 @@ bool UserD3DDevice()
 
 	FPUDouble();
 
-// požadavek k pøekreslení 2D grafiky
+// požadavek k překreslení 2D grafiky
 	AktAllIcon();
 
-// funkce 3D zaøízení aktivována OK
+// funkce 3D zařízení aktivována OK
 	if (res)
 	{
 		D3D = true;
 
-// aktualizace pøíznaku zapnutí mlhy
+// aktualizace příznaku zapnutí mlhy
 		D3DCheckFogOn();
 
-// korekce informací o zaøízení
+// korekce informací o zařízení
 		if (IsMipMap) TexturePow2 = true;
 		if ((DWORD)(MaxTextureWidth-1) >= 0x8000) MaxTextureWidth = 0x8000;
 		if ((DWORD)(MaxTextureHeight-1) >= 0x8000) MaxTextureHeight = 0x8000;
@@ -1835,16 +1835,16 @@ bool UserD3DDevice()
 // kvalita textur
 		D3DLowText = (pD3Free() < 5000000);
 
-// aktualizace parametrù
-		Matrix0(&D3DProjMatrix);		// nulování projekèní matice
+// aktualizace parametrů
+		Matrix0(&D3DProjMatrix);		// nulování projekční matice
 		ReSet3DCount = 0;				// resetování opakované inicializace
-		ReSet3DCountN = 1;				// inicializace pøíštího èítaèe
-		ReSet3D();						// resetování pøepínaèù a stavù
+		ReSet3DCountN = 1;				// inicializace příštího čítače
+		ReSet3D();						// resetování přepínačů a stavů
 
-// nulování øetìzce k renderování
+// nulování řetězce k renderování
 //		MemFill(D3D_Rend, 3*MAX_ZBIAS*sizeof(D3DFITEM_*), 0);
 
-// inicializace mìøení èasu
+// inicializace měření času
 		D3DLastTime = FPreciseTimer();
 		D3DElapsedTime = 0;
 		D3DAverageTime = 0;
@@ -1852,7 +1852,7 @@ bool UserD3DDevice()
 		D3DAverageFreqI = 0;
 		D3DValidTime = 10;
 
-// inicializace pøepínaèù
+// inicializace přepínačů
 		D3DVSync = true;
 		D3DVertFog = (!IsHWRaster && (D3DDevAkt != NRefDev));
 
@@ -1886,15 +1886,15 @@ bool UserD3DDevice()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèní matice
+// aktualizace projekční matice
 
 void AktProjMatrix()
 {
-	// pøední a zadní omezovací rovina
+	// přední a zadní omezovací rovina
 	double front = fabs(D3DFrontClip);
 	double back = fabs(D3DBackClip);
 
-	// oprava poøadí omezovacích rovin
+	// oprava pořadí omezovacích rovin
 	if (back < front)
 	{
 		double tmp = front;
@@ -1902,14 +1902,14 @@ void AktProjMatrix()
 		back = tmp;
 	}
 
-	// omezení rovin (èíslo je zvoleno jen
-	// pøibližnì, navíc aby bylo bezeztrátovì
-	// vyjádøené v double i float = 1/128)
+	// omezení rovin (číslo je zvoleno jen
+	// přibližně, navíc aby bylo bezeztrátově
+	// vyjádřené v double i float = 1/128)
 	double eps = 0.0078125;
 	if (front < eps) front = eps;
 	if ((back - front) < eps) back = front + eps;
 
-	// pøiblížení nejbližšího zobrazeného objektu
+	// přiblížení nejbližšího zobrazeného objektu
 	double front2 = front / 2;
 	if (D3DIntAkt >= 4) front2 /= 2;	// DirectX používá Z buffer 0 až 1, OpenGL -1 až +1
 
@@ -1945,7 +1945,7 @@ void AktProjMatrix()
 		D3DProjMatrix._34 = 1;
 	}
 
-	// koeficienty šíøky a výšky projekce
+	// koeficienty šířky a výšky projekce
 	double k = (double)D3DHeight/D3DWidth;
 	D3DProjMatrix._11 =  (float)(front*(1+k));
 	D3DProjMatrix._22 =  (float)(front*(1+1/k));
@@ -1960,11 +1960,11 @@ void AktProjMatrix()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèního jehlanu
+// aktualizace projekčního jehlanu
 
 void AktFrustum()
 {
-// pøíprava kombinované matice
+// příprava kombinované matice
 	D3DMATRIX mat;
 	MatrixMul(&mat, &D3DViewMatrix, &D3DProjMatrix);
 
@@ -2050,16 +2050,16 @@ void D3Render(bool disp)
 	if (D3D)
 	{
 
-// zapnutí snížené pøesnosti procesoru
+// zapnutí snížené přesnosti procesoru
 		FPUFloat();
 
 // restart výchozího stavu 3D
 		ReSet3D();
 
-// aktualizace všech matic objektù
+// aktualizace všech matic objektů
 		D3DF_AktMatrix();
 
-// aktualizace pohledové matice (zmìnìna v aktualizaci matice kamery)
+// aktualizace pohledové matice (změněna v aktualizaci matice kamery)
 		if (D3DViewAkt)
 		{
 			D3DCameraInvert = (((D3DF_Data[1].ScaleX < 0) && (D3DF_Data[1].ScaleY >= 0)) ||
@@ -2069,7 +2069,7 @@ void D3Render(bool disp)
 			pD3AktView();
 		}
 
-// aktualizace projekèní matice
+// aktualizace projekční matice
 		if (D3DProjAkt)
 		{
 			D3DProjAkt = false;
@@ -2077,17 +2077,17 @@ void D3Render(bool disp)
 			AktProjMatrix();
 		}
 
-// aktualizace rovin projekèního jehlanu
+// aktualizace rovin projekčního jehlanu
 		if (D3DFrustumAkt)
 		{
 			D3DFrustumAkt = false;
 			AktFrustum();
 		}
 
-// zahájení renderování scény (pro OpenGL pøíprava k aktualizaci svìtel)
+// zahájení renderování scény (pro OpenGL příprava k aktualizaci světel)
 		pD3Begin();
 
-// aktualizace svìtel (musí následovat za zahájením scény)
+// aktualizace světel (musí následovat za zahájením scény)
 		D3DL_AktLight();
 
 // aktualizace stavu
@@ -2097,7 +2097,7 @@ void D3Render(bool disp)
 			D3DStateAkt = false;
 		}
 
-// inicializace Z funkce (kvùli obsluze vymazání pozadí)
+// inicializace Z funkce (kvůli obsluze vymazání pozadí)
 		D3DZWrite = TRUE;
 		pD3SetZWrite(TRUE);
 		D3DZTest = 0;
@@ -2107,7 +2107,7 @@ void D3Render(bool disp)
 		if (D3DBackText >= 0)
 		{
 			bool filtr = D3DF_Get(0)->MagFilter[0];
-			SetD3DMinMipFilter(filtr, false, 0);	// filtr pro zmenšení - pøednastavení nutné pro generování textury
+			SetD3DMinMipFilter(filtr, false, 0);	// filtr pro zmenšení - přednastavení nutné pro generování textury
 
 			D3DM_Set(0);							// standardní materiál
 			D3DT_Akt(D3DBackText, 0);				// nastavení textury
@@ -2128,15 +2128,15 @@ void D3Render(bool disp)
 
 			bool oldfill = D3DWireframeGlobal;
 			D3DWireframeGlobal = true;
-			SetD3DWireframe(true);					// zapnutí módu výplnì
+			SetD3DWireframe(true);					// zapnutí módu výplně
 			D3DWireframeGlobal = oldfill;
 
-			SetD3DLightOn(false);					// osvìtlení vypnuto
+			SetD3DLightOn(false);					// osvětlení vypnuto
 			SetD3DShades(false);					// vypnuto plynulé stínování
 
-			SetD3DCulling(1);						// zobrazena pouze pøední strana
+			SetD3DCulling(1);						// zobrazena pouze přední strana
 
-			SetD3DMagFilter(filtr, 0);				// filtr pro zvìtšení
+			SetD3DMagFilter(filtr, 0);				// filtr pro zvětšení
 			SetD3DMinMipFilter(filtr, false, 0);	// filtr pro zmenšení
 
 			D3DFITEM item;
@@ -2166,38 +2166,38 @@ void D3Render(bool disp)
 			FogAkt = false;
 		}
 
-// aktualizace ambient osvìtlení
+// aktualizace ambient osvětlení
 		if (D3DAmbientColAkt)
 		{
 			pD3AktAmbient();
 			D3DAmbientColAkt = false;
 		}
 
-// renderování objektù ve scénì
+// renderování objektů ve scéně
 		D3DF_Render();
 
-// renderování objektù s blending
+// renderování objektů s blending
 //		D3DF_RenderBlend();
 
-// renderování 2D obrázkù
+// renderování 2D obrázků
 //		if (!D3DRamp)
 //		{
 //			D3DF_Render2D();
 //		}
 
-// ukonèení renderování scény
+// ukončení renderování scény
 		pD3End();
 
 // zobrazení scény
 		if (disp) pD3Disp();
 
-// návrat standardní pøesnosti procesoru
+// návrat standardní přesnosti procesoru
 		FPUDouble();
 
-// èítání èasového razítka
+// čítání časového razítka
 //		D3DTimeStamp++;
 
-// naètení ubìhlého pøesného èasu
+// načtení uběhlého přesného času
 		if (disp)
 		{
 			double newtime = FPreciseTimer();
@@ -2209,7 +2209,7 @@ void D3Render(bool disp)
 			if (elapsed > 0.25) D3DElapsedTime = 0.25;
 			if (elapsed > 1.25) elapsed = 1.25;
 
-// výpoèet støední frekvence
+// výpočet střední frekvence
 			if (D3DAverageTime != 0)
 			{
 				if (D3DValidTime > 0)
@@ -2287,7 +2287,7 @@ void D3Render(bool disp)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zámìna modré a èervené barvy v RGB (invertuje alpha kanál)
+// záměna modré a červené barvy v RGB (invertuje alpha kanál)
 
 DWORD XRGB(DWORD col)
 {
@@ -2309,15 +2309,15 @@ void BGRFloat(DWORD src, D3DCOLORVALUE* dst)
 // --------------------- konec vypnutí pro MINI verzi -------------------
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace klientských souøadnic (používá se také pro prvky)
-// POZOR - statusbar nemusí být ještì na správných pozicích!
+// aktualizace klientských souřadnic (používá se také pro prvky)
+// POZOR - statusbar nemusí být ještě na správných pozicích!
 
 #pragma warning ( disable: 4701)	// hlášení - neinicializovaná položka "wnd"
 
 void InitClientRect(WINITEM* item)
 {
 
-// úschova rozmìrù a polohy okna
+// úschova rozměrů a polohy okna
 	RECT wnd;
 
 	if ((item->Typ == WINITEM_WINDOW) || (item->Typ == WINITEM_WINDOWRO))
@@ -2332,7 +2332,7 @@ void InitClientRect(WINITEM* item)
 	if (item == &Win[0])
 	{
 
-// souøadnice pro DirectDraw
+// souřadnice pro DirectDraw
 		if (FullScreen)
 		{
 			ClientWidth = ScreenWidth;
@@ -2348,10 +2348,10 @@ void InitClientRect(WINITEM* item)
 			MainFrameY = (wnd.top + wnd.bottom)/2;
 		}
 
-// naètení souøadnic klientské oblasti okna
+// načtení souřadnic klientské oblasti okna
 		::GetClientRect(item->Wnd, &ClientRect);
 
-// snížení výšky o stavový øádek
+// snížení výšky o stavový řádek
 		if (StatusVisible)
 		{
 			RECT rc;
@@ -2359,14 +2359,14 @@ void InitClientRect(WINITEM* item)
 			ClientRect.bottom -= rc.bottom - rc.top;
 		}
 
-// urèení výšky a šíøky klientské oblasti
+// určení výšky a šířky klientské oblasti
 		ClientWidth = ClientRect.right - ClientRect.left;
 		ClientHeight = ClientRect.bottom - ClientRect.top;
 		item->ClientWidth = ClientWidth;
 		item->ClientHeight = ClientHeight;
 	}
 
-// klientské rozmìry pro ostatní okna a pro ostatní prvky
+// klientské rozměry pro ostatní okna a pro ostatní prvky
 	else
 	{
 		::GetClientRect(item->Wnd, &wnd);
@@ -2390,7 +2390,7 @@ void SetStatusText(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení stavového øádku
+// zobrazení stavového řádku
 
 void SetStatusVisible(bool show)
 {
@@ -2452,7 +2452,7 @@ void SetConsoleText()
 
 void SetCaptionText(CString& text)
 {
-	if (text != AktCaptionText) 					// mìní se titulek ?
+	if (text != AktCaptionText) 					// mění se titulek ?
 	{
 		AktCaptionText = text;						// úschova nového titulku
 		AktCaptionText.SetWindowText(MainFrame);	// nastavení nového titulku
@@ -2464,7 +2464,7 @@ void SetCaptionText(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøemapování klávesy
+// přemapování klávesy
 
 int MapKey(WPARAM wParam, LPARAM lParam)
 {
@@ -2514,7 +2514,7 @@ int MapKey(WPARAM wParam, LPARAM lParam)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zprávy pøed rozesláním do oken (TRUE = zpráva zpracována)
+// obsluha zprávy před rozesláním do oken (TRUE = zpráva zpracována)
 
 // obsluha v grafickém módu (provádí se i v dialogovém módu, pouze se ignoruje výsledek)
 BOOL PreTranslateMessageGraf(MSG* msg)
@@ -2555,7 +2555,7 @@ MOUSECLICK:
 
 	case WM_NCLBUTTONDBLCLK:
 	case WM_NCLBUTTONDOWN:
-//		LMouseDown = true;		// pøi kliknutí na nadpis se aktivuje, ale už neuvolní
+//		LMouseDown = true;		// při kliknutí na nadpis se aktivuje, ale už neuvolní
 		goto NCMOUSECLICK;
 
 	case WM_NCRBUTTONDBLCLK:
@@ -2966,7 +2966,7 @@ BOOL PreTranslateMessage(MSG* msg)
 	if (DialogMode || (DialogParent != 0))
 	{
 
-// pro tlaèítka náhrada dvojkliku myší obyèejným klikem
+// pro tlačítka náhrada dvojkliku myší obyčejným klikem
 		if (msg->message == WM_LBUTTONDBLCLK)
 		{
 			TCHAR buf[21];
@@ -2987,7 +2987,7 @@ BOOL PreTranslateMessage(MSG* msg)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøedešlého okna
+// aktualizace předešlého okna
 
 void AktPrevWindow()
 {
@@ -3041,8 +3041,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 		case WM_SETCURSOR:
 			{
 				POINT pt;
-				::GetCursorPos(&pt);	// naètení souøadnic myši
-				::ScreenToClient(Win[DialogParent].Wnd, &pt); // pøevod na klientské souøadnice
+				::GetCursorPos(&pt);	// načtení souřadnic myši
+				::ScreenToClient(Win[DialogParent].Wnd, &pt); // převod na klientské souřadnice
 				if (OnSetCursor(pt.x, pt.y))
 				{
 					return TRUE;
@@ -3138,7 +3138,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 			if (D3D && (item == &Win[0]))
 			{
 				ReSet3DCount = 0;				// resetování opakované inicializace
-				ReSet3DCountN = 1;				// inicializace pøíštího èítaèe
+				ReSet3DCountN = 1;				// inicializace příštího čítače
 
 				RecalcD3D();
 				FPUFloat();
@@ -3161,7 +3161,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 			if (D3D && (item == &Win[0]))
 			{
 				ReSet3DCount = 0;				// resetování opakované inicializace
-				ReSet3DCountN = 1;				// inicializace pøíštího èítaèe
+				ReSet3DCountN = 1;				// inicializace příštího čítače
 
 				RecalcD3D();
 				FPUFloat();
@@ -3266,7 +3266,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 		if (((UINT)lParam == MusicDevice) && (wParam == MCI_NOTIFY_SUCCESSFUL))
 		{
 			if (MusicEnd) OnMusicEnd();
-			MusicEnd = true;			// pøíznak ukonèení hudby
+			MusicEnd = true;			// příznak ukončení hudby
 		}
 		return 0;
 
@@ -3350,7 +3350,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 								int n = cd->nmcd.dwItemSpec;
 								HWND wnd = item->Wnd;
 
-							// pøíznak aktivní položky
+							// příznak aktivní položky
 								int state = ::SendMessage(wnd, LVM_GETITEMSTATE, n, LVIS_SELECTED);
 								BOOL sel = (state & LVIS_SELECTED);
 								BOOL focus = (::GetFocus() == wnd);
@@ -3360,7 +3360,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 								::SendMessage(wnd, LVM_GETITEMRECT, n, (LPARAM)&rc);
 								::FillRect(dc, &rc, (sel ? (focus ? StdBrushHighlight : StdBrushBtn) : item->FontBrush));
 
-							// zobrazení oddìlovacích èar a textù
+							// zobrazení oddělovacích čar a textů
 								if ((DWORD)n < (DWORD)item->TabRows)
 								{
 									::SetTextColor(dc, (sel ? (focus ? StdColorHighlightText : StdColorBtnText) : item->FontCol));
@@ -3446,7 +3446,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 						Win[id].TextValid = false;
 					}
 				}
-// pokraèuje BN_CLICKED !!!
+// pokračuje BN_CLICKED !!!
 			case BN_CLICKED:		// == STN_CLICKED
 				{
 					int id = LOWORD(wParam);
@@ -3680,7 +3680,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 				D3DT_Reset();
 
 				ReSet3DCount = 0;				// resetování opakované inicializace
-				ReSet3DCountN = 1;				// inicializace pøíštího èítaèe
+				ReSet3DCountN = 1;				// inicializace příštího čítače
 #endif // _MINI
 			}
 			else
@@ -3695,7 +3695,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 //			DirectSurface->Restore();
 //		}
 
-	// obnovení palet - jen podle nìkterých programù, nevím zda je nutné
+	// obnovení palet - jen podle některých programů, nevím zda je nutné
 //		if ((DirectSurface != NULL) && (DirectPalette != NULL))
 //		{
 //			DirectSurface->SetPalette(DirectPalette);
@@ -3750,8 +3750,8 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 	case WM_SETCURSOR:
 		{
 			POINT pt;
-			::GetCursorPos(&pt);	// naètení souøadnic myši
-			::ScreenToClient(Win[DialogParent].Wnd, &pt); // pøevod na klientské souøadnice
+			::GetCursorPos(&pt);	// načtení souřadnic myši
+			::ScreenToClient(Win[DialogParent].Wnd, &pt); // převod na klientské souřadnice
 			if (OnSetCursor(pt.x, pt.y))
 			{
 				return TRUE;
@@ -3976,7 +3976,7 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 						servitem->TopicFirst = DDETopNum;
 					}
 
-		// pøidání tématu
+		// přidání tématu
 					itop = DDETopNum;
 
 					if (itop >= DDETopMax)

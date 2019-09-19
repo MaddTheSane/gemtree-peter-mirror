@@ -3,12 +3,12 @@
 
 /***************************************************************************\
 *																			*
-*								Textové øetìzce								*
+*								Textové řetězce								*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní prázdný øetìzec (modifikuje se poèet referencí!)
+// inicializační prázdný řetězec (modifikuje se počet referencí!)
 
 STRINGDATA	EmptyStringData		= { 1, 0, -1, 0 };
 
@@ -197,7 +197,7 @@ void CString::Write(LPWSTR buf) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení délky textu (pøi prodloužení textu obsah nedefinovaný)
+// nastavení délky textu (při prodloužení textu obsah nedefinovaný)
 
 void CString::Length(int len)
 {
@@ -207,33 +207,33 @@ void CString::Length(int len)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání textu v øetìzci (-1 = nenalezeno)
+// hledání textu v řetězci (-1 = nenalezeno)
 
 int _fastcall CString::Find(const CString& str) const
 {
-// hledaný øetìzec prázdný - bude pozice 0
+// hledaný řetězec prázdný - bude pozice 0
 	int lenstr = str.pData->Length;
 	if (lenstr == 0) return 0;
 
-// hledaný øetìzec má délku 1 - pøevod na hledání znaku
+// hledaný řetězec má délku 1 - převod na hledání znaku
 	TCHAR* datastr = str.pData->Data;
 	TCHAR chr = datastr[0];
 	if (lenstr == 1) return Find(chr);
 
-// pøíprava ukazatelù
-	int i = pData->Length - lenstr;		// poèet testovaných pozic - 1
-	datastr++;							// druhý znak hledaného øetìzce
-	lenstr--;							// délka hledaného øetìzce - 1
-	TCHAR* data = pData->Data;			// zaèátek prohledávaného øetìzce
+// příprava ukazatelů
+	int i = pData->Length - lenstr;		// počet testovaných pozic - 1
+	datastr++;							// druhý znak hledaného řetězce
+	lenstr--;							// délka hledaného řetězce - 1
+	TCHAR* data = pData->Data;			// začátek prohledávaného řetězce
 
 // cyklus hledání
 	for (; i >= 0; i--)
 	{
 		if (*(data++) == chr)			// shoduje se první znak?
 		{
-			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek øetìzce?
+			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek řetězce?
 			{
-				return (data - pData->Data - 1);	// návrat pozice zaèátku øetìzce
+				return (data - pData->Data - 1);	// návrat pozice začátku řetězce
 			}
 		}
 	}
@@ -243,11 +243,11 @@ int _fastcall CString::Find(const CString& str) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání textu v øetìzci (-1 = nenalezeno)
+// hledání textu v řetězci (-1 = nenalezeno)
 
 int _fastcall CString::Find(LPCTSTR txt) const
 {
-// hledaný øetìzec prázdný - bude pozice 0
+// hledaný řetězec prázdný - bude pozice 0
 	int lenstr = 0;
 	if (txt)
 	{
@@ -255,25 +255,25 @@ int _fastcall CString::Find(LPCTSTR txt) const
 	}
 	if (lenstr == 0) return 0;
 
-// hledaný øetìzec má délku 1 - pøevod na hledání znaku
+// hledaný řetězec má délku 1 - převod na hledání znaku
 	const TCHAR* datastr = txt;
 	TCHAR chr = datastr[0];
 	if (lenstr == 1) return Find(chr);
 
-// pøíprava ukazatelù
-	int i = pData->Length - lenstr;		// poèet testovaných pozic - 1
-	datastr++;							// druhý znak hledaného øetìzce
-	lenstr--;							// délka hledaného øetìzce - 1
-	TCHAR* data = pData->Data;			// zaèátek prohledávaného øetìzce
+// příprava ukazatelů
+	int i = pData->Length - lenstr;		// počet testovaných pozic - 1
+	datastr++;							// druhý znak hledaného řetězce
+	lenstr--;							// délka hledaného řetězce - 1
+	TCHAR* data = pData->Data;			// začátek prohledávaného řetězce
 
 // cyklus hledání
 	for (; i >= 0; i--)
 	{
 		if (*(data++) == chr)			// shoduje se první znak?
 		{
-			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek øetìzce?
+			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek řetězce?
 			{
-				return (data - pData->Data - 1);	// návrat pozice zaèátku øetìzce
+				return (data - pData->Data - 1);	// návrat pozice začátku řetězce
 			}
 		}
 	}
@@ -283,7 +283,7 @@ int _fastcall CString::Find(LPCTSTR txt) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání znaku v øetìzci (-1 = nenalezeno)
+// hledání znaku v řetězci (-1 = nenalezeno)
 
 int _fastcall CString::Find(const TCHAR chr) const
 {
@@ -303,7 +303,7 @@ int _fastcall CString::Find(const TCHAR chr) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání znaku od konce øetìzce zpìt (-1 = nenalezeno)
+// hledání znaku od konce řetězce zpět (-1 = nenalezeno)
 
 int _fastcall CString::RevFind(const TCHAR chr) const
 {
@@ -322,15 +322,15 @@ int _fastcall CString::RevFind(const TCHAR chr) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// poèet øádkù textu
+// počet řádků textu
 
 int CString::LineNum() const
 {
-// pøíprava ukazatelù
-	TCHAR* data = pData->Data;		// zaèátek dat textu
-	int radky = 0;						// èítaè øádkù textu
+// příprava ukazatelů
+	TCHAR* data = pData->Data;		// začátek dat textu
+	int radky = 0;						// čítač řádků textu
 
-// spoètení øádkù
+// spočtení řádků
 	TCHAR chr;
 	do
 	{
@@ -343,26 +343,26 @@ int CString::LineNum() const
 		}
 	} while (chr);
 
-// korekce poètu øádkù, není-li poslední øádek ukonèen
+// korekce počtu řádků, není-li poslední řádek ukončen
 	int len = pData->Length;
 	if (((len >= 2) && ((pData->Data[len-2] != 13) || (pData->Data[len-1] != 10))) || (len == 1))
 	{
 		radky++;
 	}
 
-// poèet zjištìných øádkù
+// počet zjištěných řádků
 	return radky;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení øádku
+// nalezení řádku
 
 CString _fastcall CString::GetLine(int radek) const
 {
 	int delka = pData->Length;			// délka textu celkem
 
-	int zacatek = 0;						// index zaèátku øádku
-	int dalsi = 0;							// index konce øádku
+	int zacatek = 0;						// index začátku řádku
+	int dalsi = 0;							// index konce řádku
 
 	LPTSTR data = pData->Data;			// ukazatel dat
 	for (; dalsi < delka; dalsi++)
@@ -379,17 +379,17 @@ CString _fastcall CString::GetLine(int radek) const
 	}
 	if (radek > 0) zacatek = dalsi;
 
-	return Mid(zacatek, dalsi - zacatek);	// navrácení øádku
+	return Mid(zacatek, dalsi - zacatek);	// navrácení řádku
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// blok textu (-1=konec øádku nebo textu)
+// blok textu (-1=konec řádku nebo textu)
 
 CString CString::GetBlock(int begline, int begpos, int endline, int endpos) const
 {
 #define MAXNUM	0x7fffffff
 
-// korekce koncového øádku a pozice
+// korekce koncového řádku a pozice
 	if (begline < 0) begline = MAXNUM;
 	if (begpos < 0) begpos = MAXNUM;
 	if (endline < 0) endline = MAXNUM;
@@ -397,7 +397,7 @@ CString CString::GetBlock(int begline, int begpos, int endline, int endpos) cons
 
 	BOOL endmax = ((endline == MAXNUM) && (endpos == MAXNUM));
 
-// korekce poøadí poèátku a konce
+// korekce pořadí počátku a konce
 	if ((endline < begline) || ((endline == begline) && (endpos < begpos)))
 	{
 		int t = begline;
@@ -415,11 +415,11 @@ CString CString::GetBlock(int begline, int begpos, int endline, int endpos) cons
 
 	if ((endline == 0) && (endpos == 0)) return EmptyString;
 
-// pøíprava ukazatelù dat
+// příprava ukazatelů dat
 	int delka = pData->Length;			// délka textu celkem
 	LPTSTR data = pData->Data;			// ukazatel dat
 
-// nalezení øádku poèátku bloku
+// nalezení řádku počátku bloku
 	int beg = 0;
 
 	if (begline > 0)
@@ -444,7 +444,7 @@ CString CString::GetBlock(int begline, int begpos, int endline, int endpos) cons
 		}
 	}
 
-// nalezení pozice poèátku bloku
+// nalezení pozice počátku bloku
 	for (; beg < delka;)
 	{
 		if ((begpos == 0) || ((*data == 13) && (beg < (delka-1)) && (data[1] == 10)))
@@ -464,7 +464,7 @@ CString CString::GetBlock(int begline, int begpos, int endline, int endpos) cons
 	{
 		end = beg;
 
-// nalezení øádku konce bloku
+// nalezení řádku konce bloku
 		if (endline > 0)
 		{
 			for (; end < delka;)
@@ -507,7 +507,7 @@ CString CString::GetBlock(int begline, int begpos, int endline, int endpos) cons
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní øetìzce (uvolnìní dat)
+// vyprázdnění řetězce (uvolnění dat)
 
 void CString::Empty()
 { 
@@ -537,7 +537,7 @@ void CString::LowerCase()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// levá èást øetìzce
+// levá část řetězce
 
 CString _fastcall CString::Left(int count) const
 {
@@ -559,7 +559,7 @@ CString _fastcall CString::Left(int count) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pravá èást øetìzce
+// pravá část řetězce
 
 CString _fastcall CString::Right(int count) const
 {
@@ -581,7 +581,7 @@ CString _fastcall CString::Right(int count) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// støední èást øetìzce
+// střední část řetězce
 
 CString _fastcall CString::Mid(int first, int count) const
 {
@@ -607,7 +607,7 @@ CString _fastcall CString::Mid(int first, int count) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení textu z konce øetìzce
+// zrušení textu z konce řetězce
 
 void CString::Delete(int first, int count)
 {
@@ -639,11 +639,11 @@ void CString::Delete(int first, int count)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// odstranìní mezer ze zaèátku/konce øetìzce
+// odstranění mezer ze začátku/konce řetězce
 
 void CString::TrimLeft()
 {
-	CopyWrite();					// pøivlastnìní bufferu
+	CopyWrite();					// přivlastnění bufferu
 
 	TCHAR* data = pData->Data;		// ukazatel textu
 
@@ -667,7 +667,7 @@ void CString::TrimLeft()
 
 void CString::TrimRight()
 {
-	CopyWrite();					// pøivlastnìní bufferu
+	CopyWrite();					// přivlastnění bufferu
 
 	int i = pData->Length;			// délka textu
 	TCHAR* data = pData->Data + i;	// adresa za koncem textu
@@ -683,7 +683,7 @@ void CString::TrimRight()
 	}
 
 	pData->Length = i;				// nová délka textu
-	pData->Data[i] = 0;				// oznaèení konce textu
+	pData->Data[i] = 0;				// označení konce textu
 }
 
 
@@ -701,22 +701,22 @@ void CString::KorigNul()
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení èísla jména objektu (1, 2, ...)
+// nastavení čísla jména objektu (1, 2, ...)
 
 const CString DefObjName(_T('#'));	// implicitní jméno
 
 void _fastcall CString::SetNumObj(const int num)
 {
-// vypuštìní èíslic a mezer z konce jména
+// vypuštění číslic a mezer z konce jména
 	for (;;)
 	{
-		TCHAR znak = this->LastChar();	// naètení posledního znaku
+		TCHAR znak = this->LastChar();	// načtení posledního znaku
 		if ((znak == ' ') ||			// je mezera
 			(znak == 9) ||				// tabulátor
-			((znak >= '0') &&			// nebo èíslice
+			((znak >= '0') &&			// nebo číslice
 			(znak <= '9')))
 		{
-			this->Delete(this->Length() - 1, 1); // vypuštìní posledního znaku
+			this->Delete(this->Length() - 1, 1); // vypuštění posledního znaku
 		}
 		else
 		{
@@ -730,7 +730,7 @@ void _fastcall CString::SetNumObj(const int num)
 		*this = DefObjName;
 	}
 
-// èíslo se nastavuje jen pro 2 a více
+// číslo se nastavuje jen pro 2 a více
 	if (num > 1)
 	{
 		*this += _T(' ');
@@ -742,7 +742,7 @@ void _fastcall CString::SetNumObj(const int num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí posledního znaku øetìzce (pro prázdný øetìzec vrací 0)
+// poskytnutí posledního znaku řetězce (pro prázdný řetězec vrací 0)
 
 TCHAR _fastcall CString::LastChar() const
 {
@@ -758,7 +758,7 @@ TCHAR _fastcall CString::LastChar() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textu z resource
+// načtení textu z resource
 
 void CString::Load(const int nID)
 {
@@ -772,11 +772,11 @@ void CString::Load(const int nID)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ze souboru formátu TXT (false=chyba)
+// načtení ze souboru formátu TXT (false=chyba)
 /*
 bool CString::LoadFile(CString jmeno)
 {
-// otevøení souboru
+// otevření souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_READ, 
 		FILE_SHARE_READ, NULL, OPEN_EXISTING, 
 		FILE_ATTRIBUTE_NORMAL, NULL);
@@ -787,28 +787,28 @@ bool CString::LoadFile(CString jmeno)
 		return false;
 	}
 
-// zjištìní velikosti souboru
+// zjištění velikosti souboru
 	int size = (int)::SetFilePointer(hFile, 0, NULL, FILE_END);
 	::SetFilePointer(hFile, 0, NULL, FILE_BEGIN);
 	if (size < 0) size = 0;
 
-// úschova pùvodního obsahu pro pøípad chyby
+// úschova původního obsahu pro případ chyby
 	CString txt(*this);
 
-// vytvoøení nového bufferu
+// vytvoření nového bufferu
 	Detach();
 	NewBuffer(size/sizeof(TCHAR));
 
 #ifdef _UNICODE
 
-// buffer k naètení souboru
+// buffer k načtení souboru
 	char* buf = (char*)MemGet(size);
 
-// naètení souboru
+// načtení souboru
 	DWORD read;
 	::ReadFile(hFile, buf, size, &read, NULL);
 
-// naètení textu
+// načtení textu
 	::MultiByteToWideChar(CodePage, 0, buf, pData->Length, pData->Data, pData->Length+1);
 
 // zrušení bufferu
@@ -816,14 +816,14 @@ bool CString::LoadFile(CString jmeno)
 
 #else
 
-// naètení souboru
+// načtení souboru
 	DWORD read;
 	::ReadFile(hFile, pData->Data, size, &read, NULL);
 
 #endif
 
-// uzavøení souboru
-	::CloseHandle(hFile);		// uzavøení souboru
+// uzavření souboru
+	::CloseHandle(hFile);		// uzavření souboru
 
 // kontrola správnosti operace
 	if (read != (DWORD)size)
@@ -833,7 +833,7 @@ bool CString::LoadFile(CString jmeno)
 		return false;
 	}
 
-// ochrana proti naètení nuly
+// ochrana proti načtení nuly
 	int len = ::lstrlen(pData->Data);
 	if ((len < pData->Length) && (len >= 0))
 	{
@@ -841,7 +841,7 @@ bool CString::LoadFile(CString jmeno)
 		pData->Data[len] = 0;
 	}
 
-// pøíznak - naèteno OK
+// příznak - načteno OK
 	return true;
 }
 */
@@ -851,11 +851,11 @@ bool CString::LoadFile(CString jmeno)
 /*
 bool CString::SaveFile(CString jmeno) const
 {
-// otevøení souboru
+// otevření souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// test, zda byl soubor vytvoøen
+// test, zda byl soubor vytvořen
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		return false;
@@ -882,22 +882,22 @@ bool CString::SaveFile(CString jmeno) const
 
 #endif
 
-// uzavøení souboru
+// uzavření souboru
 	::CloseHandle(hFile);
 
-// pøi chybì zrušení souboru
+// při chybě zrušení souboru
 	if (!result || (write != (DWORD)(pData->Length)))
 	{
 		::DeleteFile(jmeno);
 		return false;
 	}
 
-// pøíznak - uloženo OK
+// příznak - uloženo OK
 	return true;
 }
 */
 /////////////////////////////////////////////////////////////////////////////
-// pøíprava jména pøechodného souboru
+// příprava jména přechodného souboru
 
 void CString::TempName()
 {
@@ -914,23 +914,23 @@ void CString::TempName()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastního bufferu před modifikací
 
 void CString::CopyWrite()
 {
 	STRINGDATA* data = pData;		// adresa starých dat
-	long* refer = &(data->Refer);	// poèet referencí
+	long* refer = &(data->Refer);	// počet referencí
 
-	if (*refer > 1)					// je nìjaký jiný majitel?
+	if (*refer > 1)					// je nějaký jiný majitel?
 	{
-		NewBuffer(data->Length);	// vytvoøení nového bufferu
+		NewBuffer(data->Length);	// vytvoření nového bufferu
 		MemCopy(pData->Data, data->Data, data->Length*sizeof(TCHAR));
 
-// odpojení starých dat - v multithread mùže nastat i zrušení
+// odpojení starých dat - v multithread může nastat i zrušení
 		if (LongDecrement(refer))
 		{
 #ifdef _MT
-			MemFree(data);			// pøípadné zrušení øetìzce
+			MemFree(data);			// případné zrušení řetězce
 #endif	// _MT
 		}
 	}
@@ -953,7 +953,7 @@ TCHAR _fastcall CString::Get(const int index) const
 
 
 //////////////////////////////////////////////////////////////////////////////
-// nastavení znaku na pozici s kontrolou (zajistí pøivlastnìní bufferu)
+// nastavení znaku na pozici s kontrolou (zajistí přivlastnění bufferu)
 
 void _fastcall CString::Set(const int index, const TCHAR chr)
 {
@@ -966,7 +966,7 @@ void _fastcall CString::Set(const int index, const TCHAR chr)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení textu okna
+// načtení textu okna
 
 void CString::GetWindowText(const HWND wnd)
 {
@@ -986,7 +986,7 @@ void _fastcall CString::SetWindowText(const HWND wnd) const
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení textu dialogového prvku
+// načtení textu dialogového prvku
 
 void CString::GetDialogText(const HWND wnd, int id)
 {
@@ -1018,7 +1018,7 @@ void _fastcall CString::SetDialogText(const HWND wnd, int id) const
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení aktivního adresáøe
+// načtení aktivního adresáře
 
 void CString::GetAktDir()
 {
@@ -1035,7 +1035,7 @@ void CString::GetAktDir()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// korekce textu na jméno souboru (vypuštìní zakázaných znakù, vrací opravenou pozici kurzoru)
+// korekce textu na jméno souboru (vypuštění zakázaných znaků, vrací opravenou pozici kurzoru)
 
 int CString::FileName(int curs)
 {
@@ -1065,7 +1065,7 @@ int CString::FileName(int curs)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// korekce textu na jméno cesty (vypuštìní zakázaných znakù, vrací opravenou pozici kurzoru)
+// korekce textu na jméno cesty (vypuštění zakázaných znaků, vrací opravenou pozici kurzoru)
 
 int CString::PathName(int curs)
 {
@@ -1093,16 +1093,16 @@ int CString::PathName(int curs)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze èísla INT na text
+// konverze čísla INT na text
 
 void CString::Int(int num)
 {
-// pøíprava bufferu
+// příprava bufferu
 	TCHAR buf[15];
 	TCHAR* dst = buf+15;
 	int len = 0;
 
-// pøíprava znaménka
+// příprava znaménka
 	bool sign = false;
 	if (num < 0)
 	{
@@ -1110,7 +1110,7 @@ void CString::Int(int num)
 		num = -num;
 	}
 
-// konverze èíslic
+// konverze číslic
 	do {
 		dst--;
 		*dst = (TCHAR)(((DWORD)num % 10) + '0');
@@ -1134,16 +1134,16 @@ void CString::Int(int num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze textu na èíslo INT
+// konverze textu na číslo INT
 
 int Int(LPCTSTR txt)
 {
-// pøíprava promìnných
+// příprava proměnných
 	DWORD result = 0;
 	bool sign = false;
 	TCHAR chr;
 
-// naètení znaménka
+// načtení znaménka
 	while ((chr = *txt) != 0)
 	{
 		if (chr == '-')
@@ -1160,7 +1160,7 @@ int Int(LPCTSTR txt)
 		txt++;
 	}			
 	
-// naètení èíslic
+// načtení číslic
 	while ((chr = *txt) != 0)
 	{
 		if ((chr >= '0') && (chr <= '9'))
@@ -1203,7 +1203,7 @@ int Int(LPCTSTR txt)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// pøidání 2 èíslic
+// přidání 2 číslic
 
 void _fastcall CString::Add2Dig(char num)
 {
@@ -1222,22 +1222,22 @@ void _fastcall CString::Add2Dig(char num)
 // úschova indexu
 	int len = pData->Length;
 
-// pøivlastnìní bufferu pro zápis
-	CopyWrite();			// pøivlastnìní bufferu
+// přivlastnění bufferu pro zápis
+	CopyWrite();			// přivlastnění bufferu
 
 // zvýšení velikosti bufferu
-	SizeBuffer(len+2);		// zmìna velikosti bufferu
+	SizeBuffer(len+2);		// změna velikosti bufferu
 
-// dekódování první èíslice
+// dekódování první číslice
 	pData->Data[len] = (TCHAR)(num/10 + _T('0'));
 
-// dekódování druhé èíslice
+// dekódování druhé číslice
 	pData->Data[len+1] = (TCHAR)(num % 10 + _T('0'));
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// pøidání 4 èíslic
+// přidání 4 číslic
 
 void _fastcall CString::Add4Dig(short num)
 {
@@ -1258,14 +1258,14 @@ void _fastcall CString::Add4Dig(short num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// pøidání 2 èíslic se zarovnáním mezerou
+// přidání 2 číslic se zarovnáním mezerou
 
 void _fastcall CString::Add2DigSpc(char num)
 {
-// dekódování èíslic
+// dekódování číslic
 	Add2Dig(num);
 
-// adresa pøedposledního znaku
+// adresa předposledního znaku
 	TCHAR* data = pData->Data + pData->Length - 2;
 
 // náhrada první nuly mezerou
@@ -1274,14 +1274,14 @@ void _fastcall CString::Add2DigSpc(char num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// pøidání textu se známou délkou
+// přidání textu se známou délkou
 
 void _fastcall CString::Add(LPCTSTR text, int num)
 {
 // kontrola délky textu
 	if (num <= 0) return;
 
-// pøivlastnìní bufferu pro zápis
+// přivlastnění bufferu pro zápis
 	CopyWrite();
 
 // úschova staré délky textu
@@ -1290,7 +1290,7 @@ void _fastcall CString::Add(LPCTSTR text, int num)
 // zvýšení velikosti bufferu
 	SizeBuffer(len + num);
 
-// pøidání textu
+// přidání textu
 	MemCopy(pData->Data + len, text, num*sizeof(TCHAR));
 }
 
@@ -1309,16 +1309,16 @@ void _fastcall CString::Add(WCHAR* text, int num)
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze èísla DWORD na HEX (8 èíslic)
+// konverze čísla DWORD na HEX (8 číslic)
 
 void CString::Hex(DWORD num)
 {
-// pøíprava bufferu
+// příprava bufferu
 	Detach();
 	NewBuffer(8);
 	TCHAR* dst = pData->Data + 8;
 
-// dekódování èíslic
+// dekódování číslic
 	TCHAR chr;
 	for (int i = 8; i != 0; i--)
 	{
@@ -1338,11 +1338,11 @@ void CString::Hex(DWORD num)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze èísla DOUBLE na text
+// konverze čísla DOUBLE na text
 
 void CString::Double(double num)
 {
-// pøeteèení "1#INF"
+// přetečení "1#INF"
 	if (*(ULONGLONG*)(&num) == DOUBLE_INFINITY_VALUE)
 	{
 		Detach();
@@ -1364,7 +1364,7 @@ void CString::Double(double num)
 		return;
 	}
 
-// pøíprava znaménka
+// příprava znaménka
 	bool sign = false;
 	if (num < 0)
 	{
@@ -1372,7 +1372,7 @@ void CString::Double(double num)
 		num = -num;
 	}
 
-// rozdìlení èísla na exponent a mantisu
+// rozdělení čísla na exponent a mantisu
 	int expI = 0;
 	double mantD = num;
 
@@ -1431,7 +1431,7 @@ void CString::Double(double num)
 		mantH /= 10;
 	}
 	
-// zjištìní poètu platných èíslic
+// zjištění počtu platných číslic
 	TCHAR* dst = mantT+15;
 	int digits = 15;
 	for (; digits > 1; digits--)
@@ -1440,7 +1440,7 @@ void CString::Double(double num)
 		if (*dst != '0') break;
 	}
 
-// pøíprava znaménka do výchozího bufferu
+// příprava znaménka do výchozího bufferu
 	TCHAR buf[30];
 	dst = buf;
 	if (sign)
@@ -1449,7 +1449,7 @@ void CString::Double(double num)
 		dst++;
 	}
 
-// dekódování èísla bez exponentu, èíslo >= 1
+// dekódování čísla bez exponentu, číslo >= 1
 	if ((expI < 15) && (expI >= 0))
 	{
 		for (;;)
@@ -1469,7 +1469,7 @@ void CString::Double(double num)
 	}
 	else
 
-// dekódování èísla bez exponentu, èíslo < 1
+// dekódování čísla bez exponentu, číslo < 1
 	if ((expI < 0) && (expI >= -3))
 	{
 		*dst = '0';
@@ -1493,7 +1493,7 @@ void CString::Double(double num)
 	}
 	else
 
-// dekódování èísla s exponentem
+// dekódování čísla s exponentem
 	{
 		*dst = *mantP;
 		dst++;
@@ -1545,7 +1545,7 @@ void CString::Double(double num)
 		dst++;
 	}
 
-// uložení èísla do bufferu
+// uložení čísla do bufferu
 	int len = dst - buf;
 	Detach();
 	NewBuffer(len);
@@ -1554,19 +1554,19 @@ void CString::Double(double num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze textu na èíslo DOUBLE
+// konverze textu na číslo DOUBLE
 
 double Double(LPCTSTR txt)
 {
-// pøíprava promìnných
+// příprava proměnných
 	double result = 0;			// výsledek
 	int expN = 0;				// exponent
-	double zlomek = 1;			// zlomek desetinné èásti
-	bool sign = false;			// pøíznak záporného znaménka
+	double zlomek = 1;			// zlomek desetinné části
+	bool sign = false;			// příznak záporného znaménka
 	bool signE = false;			// znaménko exponentu
-	TCHAR chr = *txt;			// naètený znak
+	TCHAR chr = *txt;			// načtený znak
 
-// naètení znaménka
+// načtení znaménka
 	while (chr != 0)
 	{
 		if (chr == '-')
@@ -1584,7 +1584,7 @@ double Double(LPCTSTR txt)
 		chr = *txt;
 	}			
 
-// naètení èísla v HEX kódu
+// načtení čísla v HEX kódu
 	if (chr == '$')
 	{
 		txt++;
@@ -1622,7 +1622,7 @@ double Double(LPCTSTR txt)
 		return result;
 	}
 
-// naètení èísla v BIN kódu
+// načtení čísla v BIN kódu
 	if (chr == '%')
 	{
 		txt++;
@@ -1652,7 +1652,7 @@ double Double(LPCTSTR txt)
 		return result;
 	}
 
-// naètení èíslic celé èásti
+// načtení číslic celé části
 	while (chr != 0)
 	{
 		if ((chr >= '0') && (chr <= '9'))
@@ -1668,7 +1668,7 @@ double Double(LPCTSTR txt)
 		chr = *txt;
 	}
 
-// naètení èíslic desetinné èásti
+// načtení číslic desetinné části
 	if ((chr == '.') || (chr == ','))
 	{
 		txt++;
@@ -1690,7 +1690,7 @@ double Double(LPCTSTR txt)
 		}
 	}
 
-// vypuštìní mezer
+// vypuštění mezer
 	while ((chr == ' ') || (chr == 9))
 	{
 		txt++;
@@ -1703,7 +1703,7 @@ double Double(LPCTSTR txt)
 		txt++;
 		chr = *txt;
 
-// vypuštìní mezer a urèení znaménka
+// vypuštění mezer a určení znaménka
 		while ((chr == ' ') || (chr == 9) || (chr == '+') || (chr == '-'))
 		{
 			if (chr == '-')
@@ -1714,7 +1714,7 @@ double Double(LPCTSTR txt)
 			chr = *txt;
 		}
 
-// naètení èíslic exponentu
+// načtení číslic exponentu
 		while (chr != 0)
 		{
 			if ((chr >= '0') && (chr <= '9'))
@@ -1730,7 +1730,7 @@ double Double(LPCTSTR txt)
 			chr = *txt;
 		}
 
-// vynásobení èísla exponentem
+// vynásobení čísla exponentem
 		if (expN != 0)
 		{
 			if (signE)
@@ -1760,7 +1760,7 @@ double Double(LPCTSTR txt)
 		}
 	}
 
-// pøíznak pøeteèení
+// příznak přetečení
 	if (chr == '#')
 	{
 		if ((txt[1] == 'I') &&
@@ -1783,12 +1783,12 @@ double Double(LPCTSTR txt)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CString& _fastcall CString::operator= (const CString& str)
 {
 	Detach();				// zrušení starých dat
-	Attach(str.pData);		// pøiøazení nových dat
+	Attach(str.pData);		// přiřazení nových dat
 	return *this;
 }
 
@@ -1845,14 +1845,14 @@ const CString& _fastcall CString::operator= (const TCHAR chr)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiètení
+// operátor přičtení
 
 const CString& _fastcall CString::operator+= (const CString& str)
 {
 	int len1 = pData->Length;
 	int len2 = str.pData->Length;
-	CopyWrite();			// pøivlastnìní bufferu
-	SizeBuffer(len1+len2);	// zmìna velikosti bufferu
+	CopyWrite();			// přivlastnění bufferu
+	SizeBuffer(len1+len2);	// změna velikosti bufferu
 	MemCopy(pData->Data + len1, str.pData->Data, len2*sizeof(TCHAR));
 	return *this;
 }
@@ -1862,8 +1862,8 @@ const CString& _fastcall CString::operator+= (LPCTSTR txt)
 	int len1 = pData->Length;
 	int len2 = 0;
 	if (txt) len2 = lstrlen(txt);
-	CopyWrite();			// pøivlastnìní bufferu
-	SizeBuffer(len1+len2);	// zmìna velikosti bufferu
+	CopyWrite();			// přivlastnění bufferu
+	SizeBuffer(len1+len2);	// změna velikosti bufferu
 	MemCopy(pData->Data + len1, txt, len2*sizeof(TCHAR));
 	return *this;
 }
@@ -1871,15 +1871,15 @@ const CString& _fastcall CString::operator+= (LPCTSTR txt)
 const CString& _fastcall CString::operator+= (const TCHAR chr)
 {
 	int len = pData->Length;
-	CopyWrite();			// pøivlastnìní bufferu
-	SizeBuffer(len+1);		// zmìna velikosti bufferu
+	CopyWrite();			// přivlastnění bufferu
+	SizeBuffer(len+1);		// změna velikosti bufferu
 	pData->Data[len] = chr;
 	return *this;
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// operátory souètu
+// operátory součtu
 
 CString _fastcall operator+ (const CString& str1, const CString& str2)
 {
@@ -2031,7 +2031,7 @@ bool _fastcall operator>=(const CString& str1, const CString& str2)
 
 /***************************************************************************\
 *																			*
-*								Buffer textù								*
+*								Buffer textů								*
 *																			*
 \***************************************************************************/
 
@@ -2068,13 +2068,13 @@ void CBufText::Term()
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nových dat
+// vytvoření nových dat
 
 void CBufText::NewData()
 {
 	m_Max *= 2;
 	if (m_Max == 0) m_Max = 0x400;
-//	m_Max += 0x400;			// zvýšení poètu položek (o 4 KB)
+//	m_Max += 0x400;			// zvýšení počtu položek (o 4 KB)
 	MemBuf(m_Data, m_Max);	// zvýšení velikosti bufferu
 };
 
@@ -2098,7 +2098,7 @@ const CString& _fastcall CBufText::Get(const int index) const
 	{
 		return m_Data[index];	// položka na daném indexu
 	}
-	return EmptyString;		// pro neplatný index vrátí prázdný øetìzec
+	return EmptyString;		// pro neplatný index vrátí prázdný řetězec
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -2114,7 +2114,7 @@ void _fastcall CBufText::Set(const int index, const CString& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní položky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprázdnění položky (bez jejího zrušení - jen pro uvolnění dat)
 
 void _fastcall CBufText::Empty(const int index)
 {
@@ -2144,22 +2144,22 @@ void _fastcall CBufText::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení položky (vrací index položky)
+// vytvoření položky (vrací index položky)
 
 int CBufText::New()
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init();		// inicializace položky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 
 int _fastcall CBufText::Add(const CString& data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data.Data());	// inicializace položky
 	return result;
 }
@@ -2167,7 +2167,7 @@ int _fastcall CBufText::Add(const CString& data)
 
 int _fastcall CBufText::Add(const WCHAR* data, int len)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data, len);	// inicializace položky
 	return result;
 }
@@ -2175,7 +2175,7 @@ int _fastcall CBufText::Add(const WCHAR* data, int len)
 
 int _fastcall CBufText::Add(const char* data, int len)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data, len);	// inicializace položky
 	return result;
 }
@@ -2186,7 +2186,7 @@ int _fastcall CBufText::Add(const char* data, int len)
 
 int _fastcall CBufText::Dup(const int index)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))			// je index platný?
 	{
@@ -2201,7 +2201,7 @@ int _fastcall CBufText::Dup(const int index)
 
 int _fastcall CBufText::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))					// je index platný?
 	{
@@ -2228,31 +2228,31 @@ int _fastcall CBufText::Dup(const int index, int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// naètení textu z resource (vrací index položky)
+// načtení textu z resource (vrací index položky)
 
 int _fastcall CBufText::Load(const int nID)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init();		// inicializace položky
-	m_Data[result].Load(nID);	// naètení textu z resource
+	m_Data[result].Load(nID);	// načtení textu z resource
 	return result;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CBufText& CBufText::operator= (const CBufText& src)
 {
 	Del(m_Num);					// zrušení starých dat
 
-	int index = 0;				// index naèítané položky
+	int index = 0;				// index načítané položky
 	int i = src.m_Num;			// velikost zdrojového bufferu
 
 	for (; i > 0; i--)			// pro všechny položky v bufferu
 	{
 		Add(src[index]);	// kopie položky
-		index++;				// inkrementace ètecího indexu
+		index++;				// inkrementace čtecího indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

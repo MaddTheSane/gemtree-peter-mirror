@@ -1,13 +1,13 @@
 
-#pragma warning ( disable: 4201)		// hl·öenÌ - nepojmenovan· struktura
-#include <windows.h>					// z·kladnÌ definice WINDOWS
-#pragma warning ( default: 4201)		// hl·öenÌ - nepojmenovan· struktura
+#pragma warning ( disable: 4201)		// hl√°≈°en√≠ - nepojmenovan√° struktura
+#include <windows.h>					// z√°kladn√≠ definice WINDOWS
+#pragma warning ( default: 4201)		// hl√°≈°en√≠ - nepojmenovan√° struktura
 
-#pragma warning ( disable: 4100)		// hl·öenÌ - nepouûit˝ form·lnÌ parametr
-#pragma warning ( disable: 4514)		// hl·öenÌ - odstranÏna inline funkce
+#pragma warning ( disable: 4100)		// hl√°≈°en√≠ - nepou≈æit√Ω form√°ln√≠ parametr
+#pragma warning ( disable: 4514)		// hl√°≈°en√≠ - odstranƒõna inline funkce
 
-// (pro kratöÌ texty stejnÏ nebude soubor menöÌ)
-char* Path =	"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH"	// dÈlka 8*64 = 512
+// (pro krat≈°√≠ texty stejnƒõ nebude soubor men≈°√≠)
+char* Path =	"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH"	// d√©lka 8*64 = 512
 				"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH"
 				"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH"
 				"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH"
@@ -16,7 +16,7 @@ char* Path =	"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH"	
 				"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH"
 				"PATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATHPATH";
 
-char* File =	"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE"	// dÈlka 8*64 = 512
+char* File =	"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE"	// d√©lka 8*64 = 512
 				"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE"
 				"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE"
 				"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE"
@@ -25,9 +25,9 @@ char* File =	"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE"	
 				"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE"
 				"FILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILEFILE";
 
-// linker hl·sÌ varov·nÌ - nekompatibilnÌ sekce
-#pragma comment(linker, "/MERGE:.data=.text")	// p¯ipojenÌ sekcÌ
-#pragma comment(linker, "/MERGE:.rdata=.text")	// p¯ipojenÌ sekcÌ
+// linker hl√°s√≠ varov√°n√≠ - nekompatibiln√≠ sekce
+#pragma comment(linker, "/MERGE:.data=.text")	// p≈ôipojen√≠ sekc√≠
+#pragma comment(linker, "/MERGE:.rdata=.text")	// p≈ôipojen√≠ sekc√≠
 
 void WinMainCRTStartup()
 {

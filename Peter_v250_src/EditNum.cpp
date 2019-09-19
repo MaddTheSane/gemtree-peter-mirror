@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Editor èísel								*
+*								Editor čísel								*
 *																			*
 \***************************************************************************/
 
@@ -14,27 +14,27 @@ namespace EditNum
 // parametry
 
 int		Index = -1;						// editovaná položka
-int		DispLeft;						// souøadnice X editaèního pole
-int		DispTop;						// souøadnice Y editaèního pole
-int		DispWidth;						// šíøka editaèního pole
-int		DispHeight;						// výška editaèního pole
+int		DispLeft;						// souřadnice X editačního pole
+int		DispTop;						// souřadnice Y editačního pole
+int		DispWidth;						// šířka editačního pole
+int		DispHeight;						// výška editačního pole
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace při startu programu
 
 void StartInit()
 {
-// vytvoøení editaèního okna
+// vytvoření editačního okna
 	EditNumWnd = ::CreateWindowEx(
-		WS_EX_CLIENTEDGE,				// rozšíøený styl
-		_T("EDIT"),						// tøída
+		WS_EX_CLIENTEDGE,				// rozšířený styl
+		_T("EDIT"),						// třída
 		NULL,							// text
 		WS_CHILD | ES_AUTOHSCROLL,		// styl
 		300,							// X
 		200,							// Y
-		100,							// šíøka
+		100,							// šířka
 		30,								// výška
-		MainFrame,						// rodiè
+		MainFrame,						// rodič
 		NULL,							// ID
 		hInstance,						// instance
 		NULL);							// data
@@ -53,7 +53,7 @@ void BegEdit(int index)
 // zobrazení okna
 	::ShowWindow(EditNumWnd, SW_SHOW);
 
-// pøíprava textu
+// příprava textu
 	ReLoad();
 
 // zobrazení
@@ -65,7 +65,7 @@ void BegEdit(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun editaèního pole
+// přesun editačního pole
 
 HDWP MoveEdit(HDWP hdwp)
 {
@@ -93,13 +93,13 @@ HDWP MoveEdit(HDWP hdwp)
 
 void Disp()
 {
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// příprava štětce k vymazání podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štětec k vymazání plochy
 
-// vymazání plochy nahoøe nad editorem
+// vymazání plochy nahoře nad editorem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -135,10 +135,10 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// zrušení štìtce podkladu (i když podle dokumentace rušení není nutné)
+// zrušení štětce podkladu (i když podle dokumentace rušení není nutné)
 	::DeleteObject(brush);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
@@ -179,11 +179,11 @@ BOOL OnChar(TCHAR znak)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr všeho
+// výběr všeho
 
 void SelectAll()
 {
-// výbìr všeho
+// výběr všeho
 	::SendMessage(EditNumWnd, EM_SETSEL, 0, (LPARAM)-1);
 
 // aktualizace voleb bloku
@@ -195,11 +195,11 @@ void SelectAll()
 
 void Delete()
 {
-// zjištìní oznaèeného úseku textu
+// zjištění označeného úseku textu
 	long int start, end;
 	::SendMessage(EditNumWnd, EM_GETSEL, (WPARAM)&start, (WPARAM)&end);
 
-// není-li nic oznaèeno, ruší se znak za kurzorem (podhození klávesy DELETE)
+// není-li nic označeno, ruší se znak za kurzorem (podhození klávesy DELETE)
 	if (start == end)
 	{
 		::SendMessage(EditNumWnd, WM_KEYDOWN,	VK_DELETE, 0x01530001);
@@ -207,7 +207,7 @@ void Delete()
 	}
 	else
 
-// jinak zrušení oznaèeného úseku
+// jinak zrušení označeného úseku
 	{
 		::SendMessage(EditNumWnd, WM_CLEAR, 0, 0);
 	}
@@ -229,7 +229,7 @@ void Copy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøížení bloku
+// vystřížení bloku
 
 void Cut()
 {
@@ -279,7 +279,7 @@ void UpdateClipboard()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna textu
+// změna textu
 
 void OnChange()
 {
@@ -289,7 +289,7 @@ void OnChange()
 		txt.GetWindowText(EditNumWnd);
 		double num = Double(txt);
 		txt.Double(num);
-		num = Double(txt);				// opakování pro pøípad zadání vyšší pøesnosti
+		num = Double(txt);				// opakování pro případ zadání vyšší přesnosti
 		if (Real[Index] != num)
 		{
 			Undo.AddRealSet(Index, Real[Index]);
@@ -304,7 +304,7 @@ void OnChange()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// znovunaètení èísla
+// znovunačtení čísla
 
 void ReLoad()
 {

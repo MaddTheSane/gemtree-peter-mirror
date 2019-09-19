@@ -14,30 +14,30 @@ namespace EditLog
 // parametry
 
 int		Index = 0;						// editovaná položka
-int		DispLeft;						// souøadnice X editaèního pole
-int		DispTop;						// souøadnice Y editaèního pole
-int		DispWidth;						// šíøka editaèního pole
-int		DispHeight;						// výška editaèního pole
+int		DispLeft;						// souřadnice X editačního pole
+int		DispTop;						// souřadnice Y editačního pole
+int		DispWidth;						// šířka editačního pole
+int		DispHeight;						// výška editačního pole
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace při startu programu
 
 void StartInit()
 {
 	CText txt;
 	txt.Load(IDN_ZAPNUTO);
 
-// vytvoøení okna pøepínaèe
+// vytvoření okna přepínače
 	EditLogWnd = ::CreateWindowEx(
-		0,								// rozšíøený styl
-		_T("BUTTON"),					// tøída
+		0,								// rozšířený styl
+		_T("BUTTON"),					// třída
 		txt,							// text
 		WS_CHILD | BS_CHECKBOX,			// styl
 		300,							// X
 		200,							// Y
-		150,							// šíøka
+		150,							// šířka
 		30,								// výška
-		MainFrame,						// rodiè
+		MainFrame,						// rodič
 		(HMENU)EDITLOGID,				// ID
 		hInstance,						// instance
 		NULL);							// data
@@ -56,7 +56,7 @@ void BegEdit(int index)
 // zobrazení okna
 	::ShowWindow(EditLogWnd, SW_SHOW);
 
-// nastavení stavu tlaèítka
+// nastavení stavu tlačítka
 	::SendMessage(EditLogWnd, BM_SETCHECK, Bool[index] ? BST_CHECKED : BST_UNCHECKED, 0);
 
 // zobrazení
@@ -65,7 +65,7 @@ void BegEdit(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun editaèního pole
+// přesun editačního pole
 
 HDWP MoveEdit(HDWP hdwp)
 {
@@ -93,13 +93,13 @@ HDWP MoveEdit(HDWP hdwp)
 
 void Disp()
 {
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// příprava štětce k vymazání podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štětec k vymazání plochy
 
-// vymazání plochy nahoøe nad editorem
+// vymazání plochy nahoře nad editorem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -135,15 +135,15 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// zrušení štìtce podkladu (i když podle dokumentace rušení není nutné)
+// zrušení štětce podkladu (i když podle dokumentace rušení není nutné)
 	::DeleteObject(brush);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí pøepínaèe
+// přepnutí přepínače
 
 void Switch()
 {

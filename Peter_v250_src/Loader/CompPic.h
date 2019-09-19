@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// přidání jednoho prvku do bufferu programu (vrací index prvku)
 
 inline int CompAddItem(PROCPIC func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCPIC func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu s obrázkem (vrací true = operace OK)
+// překlad výrazu s obrázkem (vrací true = operace OK)
 
 bool _fastcall CompPic(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem obrázku
+// překlad příkazu s parametrem obrázku
 
 bool CompPicPar(int index, PROCCOM func, int data);
 
@@ -119,13 +119,13 @@ inline bool CompPicPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou obrázkù (data = poèet výrazù - 1)
+// překlad příkazu se skupinou obrázků (data = počet výrazů - 1)
 
 inline bool CompPicGrp(int index, PROCLOG func, PROCLOG func1)
 	{ return CompGroup(CompPic, index, (PROCCOM)func, (PROCCOM)func1); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem obrázku (hledaným podle identifikace)
+// překlad příkazu s podparametrem obrázku (hledaným podle identifikace)
 
 void CompPicSubPar(int index, int idf);

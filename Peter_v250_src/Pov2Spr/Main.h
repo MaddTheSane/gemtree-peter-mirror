@@ -1,10 +1,10 @@
 
 //////////////////////////////////////////////////////////////////////////////
-// pøepínaèe preprocesoru:
+// přepínače preprocesoru:
 //	_DEBUG ............. je debugger
 //	_OPTIM ............. je optimalizace
 //	_MT ................ vícevláknový režim
-//	_UNICODE ........... kódování znakù UNICODE
+//	_UNICODE ........... kódování znaků UNICODE
 //
 //	_M_IX86 ............ procesor Intel 86
 //	_M_ALPHA ........... procesor DEC Alpha
@@ -13,7 +13,7 @@
 //	_M_PPC ............. procesor PowerPC
 
 
-// Pro pøekladaè nastavit úroveò varování 4 (pøepínaè /W4)
+// Pro překladač nastavit úroveň varování 4 (přepínač /W4)
 
 //////////////////////////////////////////////////////////////////////////////
 // obsluha debuggeru
@@ -43,15 +43,15 @@
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
-// standardní vnoøené sekce
+// standardní vnořené sekce
 
 #pragma warning ( disable: 4201)		// hlášení - nepojmenovaná struktura
 
 #include <windows.h>					// základní definice WINDOWS
 #include <math.h>						// matematické operace
 //#include <alphaops.h>					// matematické konstanty
-#include <tchar.h>						// obsluha znakù UNICODE/MB
-#include <commctrl.h>					// doplòkové ovládací prvky
+#include <tchar.h>						// obsluha znaků UNICODE/MB
+#include <commctrl.h>					// doplňkové ovládací prvky
 //#include <mmreg.h>						// multimediální definice
 #include "resource.h"
 
@@ -63,7 +63,7 @@
 #pragma warning ( disable: 4710)		// hlášení - funkce není inline
 
 //////////////////////////////////////////////////////////////////////////////
-// pøeddefinice tøíd
+// předdefinice tříd
 
 class CPicture; class CSprite;
 class CString;
@@ -71,9 +71,9 @@ class CBufPic; class CBufSprite; class CBufText;
 class CFileMap;
 
 //////////////////////////////////////////////////////////////////////////////
-// globální promìnné
+// globální proměnné
 
-extern	CString		CommandLine;		// pøíkazový øádek
+extern	CString		CommandLine;		// příkazový řádek
 extern	int			VerzeOS;			// verze systému
 extern	HINSTANCE	hInstance;			// instance programu
 
@@ -86,9 +86,9 @@ extern	BYTE*		KonvPal;			// konverzní tabulka palet
 extern	bool	Dither;					// použít dithering
 
 //////////////////////////////////////////////////////////////////////////////
-// prázdné objekty (napø. pro návrat neplatné položky z funkce)
+// prázdné objekty (např. pro návrat neplatné položky z funkce)
 
-extern	CString		EmptyString;		// prázdný øetìzec
+extern	CString		EmptyString;		// prázdný řetězec
 extern	CPicture	EmptyPicture;		// prázdný obrázek
 extern	CSprite		EmptySprite;		// prázdný sprajt
 
@@ -98,23 +98,23 @@ extern	CSprite		EmptySprite;		// prázdný sprajt
 //////////////////////////////////////////////////////////////////////////////
 // globální konstanty
 
-#define BackCol 0					// prùhledná barva (barva pozadí)
-#define ShadCol 1					// poloprùhledná barva (stín)
+#define BackCol 0					// průhledná barva (barva pozadí)
+#define ShadCol 1					// poloprůhledná barva (stín)
 
-#define ResCols 2					// poèet rezervovaných barev na poèátku barev (=pozadí a stín)
+#define ResCols 2					// počet rezervovaných barev na počátku barev (=pozadí a stín)
 
-#define BACKCOLOR_RED	149			// èervená složka barvy pozadí
+#define BACKCOLOR_RED	149			// červená složka barvy pozadí
 #define BACKCOLOR_GREEN	34			// zelená složka barvy pozadí
 #define BACKCOLOR_BLUE	140			// modrá složka barvy pozadí
 
-#define SHADCOLOR_RED	97			// èervená složka barvy stínu
+#define SHADCOLOR_RED	97			// červená složka barvy stínu
 #define SHADCOLOR_GREEN	30			// zelená složka barvy stínu
 #define SHADCOLOR_BLUE	111			// modrá složka barvy stínu
 
-extern const int ColLev;			// poèet úrovní standardních palet
-extern const int ColCol;			// poèet barev standardních palet
-extern const int StdColors;			// poèet vlastních palet (zaèínají od 0)
-//extern const BYTE BackCol;			// prùhledná barva
+extern const int ColLev;			// počet úrovní standardních palet
+extern const int ColCol;			// počet barev standardních palet
+extern const int StdColors;			// počet vlastních palet (začínají od 0)
+//extern const BYTE BackCol;			// průhledná barva
 
 //////////////////////////////////////////////////////////////////////////////
 // import palet
@@ -139,7 +139,7 @@ inline BYTE PalImport(BYTE red, BYTE green, BYTE blue)
 inline BYTE PalImport(int color)
 {
 	return StdPalImport[
-		((color & (63*4))/4) |							// èervená složka
+		((color & (63*4))/4) |							// červená složka
 		((color & (63*4*256))/(256*4/64)) |				// zelená složka
 		((color & (63*4*256*256))/(256*256*4/64/64))];	// modrá složka
 }
@@ -153,25 +153,25 @@ inline BYTE PalImportDither(BYTE red, BYTE green, BYTE blue, int x, int y)
 inline BYTE PalImportDither(int color, int x, int y)
 {
 	return StdPalImportDither[
-		(color & (63*4)) |								// èervená složka
+		(color & (63*4)) |								// červená složka
 		((color & (63*4*256))/(256/64)) |				// zelená složka
 		((color & (63*4*256*256))/(256*256/64/64)) |	// modrá složka
 		((x & 1) + (y & 1)*2)];
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// ukonèení aplikace
+// ukončení aplikace
 
-void	Exit(int code);					// ukonèení programu
+void	Exit(int code);					// ukončení programu
 
-#define	EXITCODE_MEMINIT	120			// chyba pamìti pøi inicializaci
-#define EXITCODE_MAINFRAME	115			// chyba vytvoøení hlavního okna
-#define EXITCODE_LOADRES	110			// chyba ètení resource
+#define	EXITCODE_MEMINIT	120			// chyba paměti při inicializaci
+#define EXITCODE_MAINFRAME	115			// chyba vytvoření hlavního okna
+#define EXITCODE_LOADRES	110			// chyba čtení resource
 
-#define EXITCODE_INIT		100			// hranice inicializaèních kódù
+#define EXITCODE_INIT		100			// hranice inicializačních kódů
 
-#define	EXITCODE_MEMERR		80			// chyba pamìti pøi bìhu programu
-#define EXITCODE_OK			0			// øádné ukonèení programu
+#define	EXITCODE_MEMERR		80			// chyba paměti při běhu programu
+#define EXITCODE_OK			0			// řádné ukončení programu
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -181,7 +181,7 @@ void GenKonvPal(BITMAPINFO* bmp);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vygenerování støední barvy (ze 4 bodù)
+// vygenerování střední barvy (ze 4 bodů)
 
 BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4);
 BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y);
@@ -194,35 +194,35 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zaokrouhlení èísel
+// zaokrouhlení čísel
 
-// pøevod reálného èísla na celé èíslo se zaokrouhlením k nejbližší hodnotì
+// převod reálného čísla na celé číslo se zaokrouhlením k nejbližší hodnotě
 int Round(double num);
 
-// pøevod reálného èísla na celé èíslo s oøíznutím k nule
+// převod reálného čísla na celé číslo s oříznutím k nule
 int Round0(double num);
 
-// pøevod reálného èísla na celé èíslo se zaokrouhlením nahoru (ke kladné hodnotì)
+// převod reálného čísla na celé číslo se zaokrouhlením nahoru (ke kladné hodnotě)
 int RoundP(double num);
 
-// pøevod reálného èísla na celé èíslo se zaokrouhlením dolù (k záporné hodnotì)
+// převod reálného čísla na celé číslo se zaokrouhlením dolů (k záporné hodnotě)
 int RoundM(double num);
 
 
 //////////////////////////////////////////////////////////////////////////////
 // pomocné konstanty
 
-#define ICONWIDTH 32								// šíøka ikon
+#define ICONWIDTH 32								// šířka ikon
 #define ICONHEIGHT 32								// výška ikon
 #define ICONSIZE (ICONWIDTH*ICONHEIGHT)				// velikost ikon v bajtech
 
 //////////////////////////////////////////////////////////////////////////////
-// vlastní vnoøené sekce
+// vlastní vnořené sekce
 
-#include "Memory.h"						// obsluha pamìti
+#include "Memory.h"						// obsluha paměti
 #include "Bitmap.h"						// obsluha bitmap a ikon
-#include "BufPic.h"						// buffer obrázkù (pozadí)
-#include "BufSprt.h"					// buffer sprajtù
-#include "BufText.h"					// buffer textù, textové øetìzce
-#include "File.h"						// obsluha souborù
+#include "BufPic.h"						// buffer obrázků (pozadí)
+#include "BufSprt.h"					// buffer sprajtů
+#include "BufText.h"					// buffer textů, textové řetězce
+#include "File.h"						// obsluha souborů
 #include "Compress.h"					// obsluha komprese dat

@@ -10,16 +10,16 @@
 /*
 namespace ProgExp
 {
-	TCHAR* m_Filtr = NULL;			// filtr souborù k zadání v dialogu
+	TCHAR* m_Filtr = NULL;			// filtr souborů k zadání v dialogu
 	OPENFILENAME m_Ofn;				// struktura pro dialog
 	CText m_Nadpis;					// nadpis okna dialogu
-	CText m_Path;					// výchozí adresáø
+	CText m_Path;					// výchozí adresář
 	CText m_Name;					// jméno souboru PET
 	TCHAR* m_File = NULL;			// buffer k zadání jména souboru
 	HANDLE m_Handle = NULL;			// handle souboru
 	BYTE* m_Data = NULL;			// datový buffer
-	int m_Read = 0;					// ètecí ukazatel z datového bufferu
-	int m_Num = 0;					// poèet bajtù v datovém bufferu
+	int m_Read = 0;					// čtecí ukazatel z datového bufferu
+	int m_Num = 0;					// počet bajtů v datovém bufferu
 
 	int m_GrpInx = 0;				// index hlavní skupiny (-1 = není)
 	int	m_FncInx = 0;				// index hlavní funkce
@@ -36,12 +36,12 @@ namespace ProgExp
 
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog pro výbìr programu k exportu/importu (vrací TRUE=operace OK)
-// øetìzec _T("Programy Petra (*.pet)\0*.PET\0Všechny soubory (*.*)\0*.*\0\0")
+// dialog pro výběr programu k exportu/importu (vrací TRUE=operace OK)
+// řetězec _T("Programy Petra (*.pet)\0*.PET\0Všechny soubory (*.*)\0*.*\0\0")
 
 bool InitFiltr(bool export)
 {
-// vytvoøení bufferu pro filtr
+// vytvoření bufferu pro filtr
 	MemFree(m_Filtr);
 	TCHAR* m_Filtr = (TCHAR*)MemGet(1024);
 	if (m_Filtr == NULL) return false;
@@ -57,7 +57,7 @@ bool InitFiltr(bool export)
 	m_Filtr[filtrn] = 0;
 	filtrn++;
 
-// pøidání masky souborù "*.pet"
+// přidání masky souborů "*.pet"
 	txt = _T("*.PET");
 	txt.Write(m_Filtr + filtrn);
 	filtrn += txt.Length();
@@ -65,7 +65,7 @@ bool InitFiltr(bool export)
 	m_Filtr[filtrn] = 0;
 	filtrn++;
 
-// pøidání textu "Všechny soubory"
+// přidání textu "Všechny soubory"
 	txt.Load(IDN_VSECHNY_SOUBORY);
 	txt.Add(_T(" (*.*)"));
 	txt.Write(m_Filtr + filtrn);
@@ -74,7 +74,7 @@ bool InitFiltr(bool export)
 	m_Filtr[filtrn] = 0;
 	filtrn++;
 
-// pøidání masky souborù "*.*"
+// přidání masky souborů "*.*"
 	txt = _T("*.*");
 	txt.Write(m_Filtr + filtrn);
 	filtrn += txt.Length();
@@ -85,7 +85,7 @@ bool InitFiltr(bool export)
 // koncová nula
 	m_Filtr[filtrn] = 0;
 
-// pøíprava struktury k zadání jména souboru
+// příprava struktury k zadání jména souboru
 	MemFill(&m_Ofn, sizeof(m_Ofn), 0);
 	m_Ofn.lStructSize = sizeof(m_Ofn);
 	m_Ofn.hwndOwner = MainFrame;
@@ -99,7 +99,7 @@ bool InitFiltr(bool export)
 		m_Ofn.Flags = OFN_HIDEREADONLY | OFN_NOCHANGEDIR | OFN_PATHMUSTEXIST;
 	}
 
-// pøíprava titulku okna
+// příprava titulku okna
 	if (export)
 	{
 		m_Nadpis.Load(IDN_EXPORT2);
@@ -110,11 +110,11 @@ bool InitFiltr(bool export)
 	}
 	m_Ofn.lpstrTitle = m_Nadpis;
 
-// výchozí adresáø
+// výchozí adresář
 	m_Path = ProgramPath + Cesta;
 	m_Ofn.lpstrInitialDir = m_Path;
 
-// pøednastavené jméno souboru
+// přednastavené jméno souboru
 	m_Name = Jmeno + _T(".pet");
 	int n = m_Name.Length() + 1;
 	if (n < 1024) n = 1024;
@@ -149,7 +149,7 @@ bool InitFiltr(bool export)
 		m_Name += _T(".pet");
 	}
 
-// pøíprava cesty do cílového adresáøe
+// příprava cesty do cílového adresáře
 	m_Path.Empty();
 	n = m_Name.RevFind('\\');
 	if (n >= 0)
@@ -158,7 +158,7 @@ bool InitFiltr(bool export)
 		m_Path.Delete(n + 1);
 	}
 
-// pøíprava datového bufferu
+// příprava datového bufferu
 	MemFree(m_Data);
 	m_Data = (BYTE*)MemGet(BUFSIZE);
 	if (m_Data == NULL) return false;
@@ -232,29 +232,29 @@ bool WriteText(CText txt)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// exportování jednoho prvku (bez potomkù) (vrací FALSE=chyba)
+// exportování jednoho prvku (bez potomků) (vrací FALSE=chyba)
 
 bool ExportItem(PROGITEM* item)
 {
-// index deklaraèního jména
+// index deklaračního jména
 	int deklbuf = item->RefBlok;
 	int deklinx = item->RefIndex;
 
-// z bufferu struktur zmìna na interní buffer
+// z bufferu struktur změna na interní buffer
 	if (deklbuf == BufStrID)
 	{
 		deklbuf = BufStr[deklinx].RefBlok;
 		deklinx = BufStr[deklinx].RefIndex;
 	}
 
-// z bufferu tøíd zmìna na interní buffer
+// z bufferu tříd změna na interní buffer
 	if (deklbuf == BufClsID)
 	{
 		deklbuf = BufCls[deklinx].RefBlok;
 		deklinx = BufCls[deklinx].RefIndex;
 	}
 
-// zjištìní deklaraèní položky
+// zjištění deklarační položky
 	CText name;
 	CBufText* bf;
 
@@ -280,17 +280,17 @@ bool ExportItem(PROGITEM* item)
 		return false;
 	}
 
-// test, zda je deklaraèní jméno již známé
+// test, zda je deklarační jméno již známé
 	if (bf->At(deklinx).IsEmpty())
 	{
 
-// deklaraèní jméno pro interní prvek
+// deklarační jméno pro interní prvek
 //		if (deklbuf == BufIntID)
 //		{
 //			m_NameInt[deklinx] = InitTabFunc[deklinx].Import;
 //		}
 
-// deklaraèní jméno pro globální a lokální buffer
+// deklarační jméno pro globální a lokální buffer
 //		else
 		{
 //			CText name2;
@@ -303,7 +303,7 @@ bool ExportItem(PROGITEM* item)
 //
 //			}
 
-			name = "èeský ÈESKÝ";
+			name = "český ČESKÝ";
 
 			WCHAR* buf = (WCHAR*)MemGet(1024);
 
@@ -338,31 +338,31 @@ void OnExport()
 // dialog k zadání cíle
 	if (!InitFiltr(true)) return;
 
-// pøíprava bufferu iterních jmen
+// příprava bufferu iterních jmen
 	m_NameInt.DelAll();
 	for (int i = BufInt.Max(); i > 0; i--)
 	{
 		m_NameInt.New();
 	}
 
-// pøíprava bufferu globálních jmen
+// příprava bufferu globálních jmen
 	m_NameObj.DelAll();
 	for (i = BufObj.Max(); i > 0; i--)
 	{
 		m_NameObj.New();
 	}
 
-// pøíprava bufferu lokálních jmen
+// příprava bufferu lokálních jmen
 	m_NameLoc.DelAll();
 	for (i = BufLoc.Max(); i > 0; i--)
 	{
 		m_NameLoc.New();
 	}
 
-// lokální promìnné
+// lokální proměnné
 	int index;
 
-// vytvoøení souboru
+// vytvoření souboru
 	m_Handle = ::CreateFile(m_Name, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (m_Handle == INVALID_HANDLE_VALUE) goto CHYBA;
 
@@ -399,7 +399,7 @@ void OnExport()
 
 
 
-// cyklus pøes všechny globální objekty
+// cyklus přes všechny globální objekty
 //	index = BufObj.First();
 
 
@@ -414,10 +414,10 @@ void OnExport()
 
 
 
-// vyprázdnìní zápisového bufferu
+// vyprázdnění zápisového bufferu
 	if (!WriteFlush()) goto CHYBA;
 
-// uzavøení souboru
+// uzavření souboru
 	::CloseHandle(m_Handle);
 	m_Handle = INVALID_HANDLE_VALUE;
 	return;

@@ -1,45 +1,45 @@
 
 /***************************************************************************\
 *																			*
-*								Obsluha pamìti								*
+*								Obsluha paměti								*
 *																			*
 \***************************************************************************/
 
 
-extern bool MemoryOK;			// pøíznak platného správce pamìti
+extern bool MemoryOK;			// příznak platného správce paměti
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace správce pamìti
+// inicializace správce paměti
 
 bool MemInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení správce pamìti
+// ukončení správce paměti
 
 void MemTerm();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidìlení bloku pamìti (povolena 0) (NULL=chyba)
+// přidělení bloku paměti (povolena 0) (NULL=chyba)
 
 void* _fastcall MemGet(int size);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní bloku pamìti (povoleno NULL)
+// uvolnění bloku paměti (povoleno NULL)
 
 void _fastcall MemFree(void* adr);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti bloku pamìti (povolena adresa NULL i velikost 0)
+// změna velikosti bloku paměti (povolena adresa NULL i velikost 0)
 
 void* _fastcall MemSize(void* adr, int size);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti bufferu prvkù (zadává se reference na ukazatel a poèet prvkù)
+// změna velikosti bufferu prvků (zadává se reference na ukazatel a počet prvků)
 
 #define MemBuf(adr, items)	*((void**)&adr) = MemSize((void*)adr, (items) * sizeof(adr[0]))
 
@@ -63,7 +63,7 @@ inline void operator delete (void* adr)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vícetoková inkrementace èísla LONG INT
+// vícetoková inkrementace čísla LONG INT
 
 #ifdef _MT
 #ifdef _M_IX86
@@ -89,7 +89,7 @@ inline void LongIncrement(long* num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vícetoková dekrementace èísla LONG INT (vrací true = výsledek je 0)
+// vícetoková dekrementace čísla LONG INT (vrací true = výsledek je 0)
 
 #ifdef _MT
 #ifdef _M_IX86
@@ -115,7 +115,7 @@ inline BOOL LongDecrement(long* num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naplnìní bloku pamìti konstantou
+// naplnění bloku paměti konstantou
 
 inline void MemFill(void* dst, int count, char val = 0)
 {
@@ -150,7 +150,7 @@ inline void MemCopy(void* dst, const void* src, int count)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun bloku dat
+// přesun bloku dat
 
 inline void MemMove(void* dst, const void* src, int count)
 {

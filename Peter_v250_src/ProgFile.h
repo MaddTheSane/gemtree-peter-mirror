@@ -9,24 +9,24 @@
 // index datového bloku (32 B)
 
 typedef struct PETINDEX_ {
-	long				Delka;		// (4) délka datového bloku (bajtù)
-	long				Pocet;		// (4) poèet položek v datovém bloku
-	char				Jmeno[8];	// (8) jméno datového bloku (8 znakù)
-	long				Verze;		// (4) doplòující informace 1 (= 0) (verze)
+	long				Delka;		// (4) délka datového bloku (bajtů)
+	long				Pocet;		// (4) počet položek v datovém bloku
+	char				Jmeno[8];	// (8) jméno datového bloku (8 znaků)
+	long				Verze;		// (4) doplňující informace 1 (= 0) (verze)
 									//		obrázky:	1=je komprimace
 									//		ikony	:	1=je komprimace
 									//		sprajty:	1=je komprimace
-									//		texty:		1=je vícejazyèná verze
+									//		texty:		1=je vícejazyčná verze
 									//					0=je jeden jazyk UNICODE
-	long				Extra2;		// (4) doplòující informace 2 (= 0)
-									//		texty:		poèet jazykù
-									//		import:		licenèní èíslo uživatele
-	long				Extra3;		// (4) doplòující informace 3 (= 0)
-	long				Extra4;		// (4) doplòující informace 4 (= 0)
+	long				Extra2;		// (4) doplňující informace 2 (= 0)
+									//		texty:		počet jazyků
+									//		import:		licenční číslo uživatele
+	long				Extra3;		// (4) doplňující informace 3 (= 0)
+	long				Extra4;		// (4) doplňující informace 4 (= 0)
 } PETINDEX;
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// Na pøechodnou dobu (pro zabránìní havárií u starších verzí) bude
+// Na přechodnou dobu (pro zabránění havárií u starších verzí) bude
 // jako 1. text ukládán fiktivní jazyk s prázdnými texty a LangID = 0
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -34,25 +34,25 @@ typedef struct PETINDEX_ {
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záhlaví souboru (16 + NUMOFINDEX*32 B) (indexy bufferù musí souhlasit s Buf???ID !!!)
+// záhlaví souboru (16 + NUMOFINDEX*32 B) (indexy bufferů musí souhlasit s Buf???ID !!!)
 
-#define NUMOFINDEX 16				// poèet indexù pro ukládání
+#define NUMOFINDEX 16				// počet indexů pro ukládání
 
 typedef struct PETHEAD_ {
 	char				Ident[3];		// (3) identifikace = "PET"
 	BYTE				Verze;			// (1) verze souboru = 1
 	WORD				Editor;			// (2) verze editoru v tisícinách
 	WORD				Param;			// (2) parametry = 0
-	long				Data;			// (4) offset zaèátku dat od zaèátku záhlaví (= délka záhlaví)
-	long				Pocet;			// (4) poèet datových blokù
-	PETINDEX			pi[NUMOFINDEX];	// tabulka indexù
-#define	piImport		pi[BufIntID]	// 0: (32) blok "IMPORT  " - import interních prvkù (seznam ASCIIZ jmen)
-#define	piClass			pi[BufClsID]	// 1: (32) blok "CLASS   " - tøídy
+	long				Data;			// (4) offset začátku dat od začátku záhlaví (= délka záhlaví)
+	long				Pocet;			// (4) počet datových bloků
+	PETINDEX			pi[NUMOFINDEX];	// tabulka indexů
+#define	piImport		pi[BufIntID]	// 0: (32) blok "IMPORT  " - import interních prvků (seznam ASCIIZ jmen)
+#define	piClass			pi[BufClsID]	// 1: (32) blok "CLASS   " - třídy
 #define	piGlobal		pi[BufObjID]	// 2: (32) blok "GLOBAL  " - globální objekty
 #define	piLocal			pi[BufLocID]	// 3: (32) blok "LOCAL   " - lokální objekty
 #define	piProgram		pi[BufEdiID]	// 4: (32) blok "PROGRAM " - program (obsah funkcí)
 #define	piStruc			pi[BufStrID]	// 5: (32) blok "STRUC   " - základní struktury
-#define	piReal			pi[BufNumID]	// 6: (32) blok "REAL    " - obsah èíselných promìnných
+#define	piReal			pi[BufNumID]	// 6: (32) blok "REAL    " - obsah číselných proměnných
 #define	piText			pi[BufTxtID]	// 7: (32) blok "TEXT    " - texty (text 0 = jméno programu)
 #define	piBool			pi[BufLogID]	// 8: (32) blok "BOOL    " - logické hodnoty (bajty)
 #define	piIcon			pi[BufIcoID]	// 9: (32) blok "PICTURE " - obrázky 32*32 (obrázek 0 = ikona programu)
@@ -64,7 +64,7 @@ typedef struct PETHEAD_ {
 #define	piPalette		pi[BufPalID]	// 15: (32) blok "PALETTE " - palety ve formátu BMP
 } PETHEAD;
 
-#define SIZEOFPETHEAD (3*sizeof(char) + sizeof(BYTE) + 2*sizeof(WORD) + 2*sizeof(long))	// základní velikost záhlaví (bez indexù)
+#define SIZEOFPETHEAD (3*sizeof(char) + sizeof(BYTE) + 2*sizeof(WORD) + 2*sizeof(long))	// základní velikost záhlaví (bez indexů)
 
 /////////////////////////////////////////////////////////////////////////////
 // položka programu v souboru (32 B) - používá se i pro clipboard
@@ -82,27 +82,27 @@ typedef struct PETPROG_ {
 									//		pro clipboard délka dat ikony v bajtech
 	long			Name;			// (4) text jména (-1 = implicitní)
 									//		pro clipboard délka jména v bajtech
-	long			Func;			// (4) èíslo funkce pro loader a clipboard (èíslováno od 0)
+	long			Func;			// (4) číslo funkce pro loader a clipboard (číslováno od 0)
 } PETPROG;
 
 #define SIZEOFPETPROG (8*sizeof(long))	// velikost položky programu
 
 // parametry:
-#define PETPROG_CHILDS	0x0001		// pøíznak, že jsou potomci
-#define PETPROG_NEXT	0x0002		// pøíznak, že bude potomek stejné hladiny
-#define PETPROG_EXP		0x0004		// pøíznak rozvinutí potomkù
-#define PETPROG_LOCK	0x0008		// pøíznak uzamknutí (zvýraznìní)
-#define PETPROG_OFF		0x0010		// pøíznak vypnutí (zešednutí)
-#define PETPROG_NOMOVE	0x0020		// pøíznak zákazu pøesunu položky
-#define PETPROG_INTERN	0x0040		// pøíznak interní položky (nerušit)
-#define	PETPROG_OFF_DEP	0x0080		// pøíznak závislého vypnutí (používá loader)
+#define PETPROG_CHILDS	0x0001		// příznak, že jsou potomci
+#define PETPROG_NEXT	0x0002		// příznak, že bude potomek stejné hladiny
+#define PETPROG_EXP		0x0004		// příznak rozvinutí potomků
+#define PETPROG_LOCK	0x0008		// příznak uzamknutí (zvýraznění)
+#define PETPROG_OFF		0x0010		// příznak vypnutí (zešednutí)
+#define PETPROG_NOMOVE	0x0020		// příznak zákazu přesunu položky
+#define PETPROG_INTERN	0x0040		// příznak interní položky (nerušit)
+#define	PETPROG_OFF_DEP	0x0080		// příznak závislého vypnutí (používá loader)
 
 
 /////////////////////////////////////////////////////////////////////////////
 // položka plochy v souboru (prvek plochy je stejný jako pro CMap)
 
 typedef struct MAPPROG_ {
-	long			Width;			// (4) šíøka plochy (ikon)
+	long			Width;			// (4) šířka plochy (ikon)
 	long			Height;			// (4) výška plochy (ikon)
 	MAPITEM			Data[1];		// položky plochy
 } MAPPROG;
@@ -112,7 +112,7 @@ typedef struct MAPPROG_ {
 extern	IMAGE_SECTION_HEADER	PetProgHeader;
 
 /////////////////////////////////////////////////////////////////////////////
-// popisovaè jazyku textu - jen pro vícejazyènou verzi
+// popisovač jazyku textu - jen pro vícejazyčnou verzi
 
 typedef struct TEXTPROG_ {
 	long			LangID;			// (4) identifikátor jazyku (0=fiktivní jazyk pro starší verze)
@@ -125,7 +125,7 @@ typedef struct TEXTPROG_ {
 // položka obrázku v souboru
 
 typedef struct PICPROG_ {
-	long			Width;		// šíøka obrázku v bodech
+	long			Width;		// šířka obrázku v bodech
 	long			Height;		// výška obrázku v bodech
 	BYTE			Data[1];	// data 
 								//		mód komprimace:		(4) délka komprimovaných dat
@@ -139,15 +139,15 @@ typedef struct PICPROG_ {
 // položka sprajtu v souboru 
 
 typedef struct SPRITEPROG_ {
-	long			Faze;			// (4) poèet fází celkem
-	long			Smer;			// (4) poèet smìrù
-	long			Klid;			// (4) z toho poèet klidových fází
-	WORD			Width;			// (2) šíøka obrázku
+	long			Faze;			// (4) počet fází celkem
+	long			Smer;			// (4) počet směrů
+	long			Klid;			// (4) z toho počet klidových fází
+	WORD			Width;			// (2) šířka obrázku
 	WORD			Height;			// (2) výška obrázku
-	long			Delay;			// (4) prodleva mezi dvìma fázemi (milisekund)
-	long			Level;			// (4) hladina k pøekreslování
-	double			Kroku;			// (8) poèet fází na jednotkovou vzdálenost (0 = ihned)
-	BYTE			Data[1];		// data - obrázky sprajtu (poøadí: fáze, smìr)
+	long			Delay;			// (4) prodleva mezi dvěma fázemi (milisekund)
+	long			Level;			// (4) hladina k překreslování
+	double			Kroku;			// (8) počet fází na jednotkovou vzdálenost (0 = ihned)
+	BYTE			Data[1];		// data - obrázky sprajtu (pořadí: fáze, směr)
 									//		každý obrázek v módu komprimace:	(4) délka komprimovaných dat
 									//											(x) zkomprimovaná data
 } SPRITEPROG;
@@ -159,15 +159,15 @@ typedef struct SPRITEPROG_ {
 // položka zvuku v souboru
 
 typedef struct SOUNDPROG_ {
-	long	Size;				// (4) velikost dat (bajtù) - vèetnì pøípadného záhlaví WAVEFORMATEX
-	DWORD	Samples;			// (4) vzorkovací kmitoèet
+	long	Size;				// (4) velikost dat (bajtů) - včetně případného záhlaví WAVEFORMATEX
+	DWORD	Samples;			// (4) vzorkovací kmitočet
 	WORD	Format;				// (2) formát dat (1 = PCM)
-								//		pro jiný formát než PCM je na zaèátku dat popisovaè
-								//		formátu WAVEFORMATEX s udanou velikostí doplòujících
-								//		dat "cbSize", za popisovaèem následují data
-	BYTE	Channels;			// (1) poèet kanálù (1 = mono, 2 = stereo)
-	BYTE	Bits;				// (1) poèet bitù na vzorek kanálu (8 nebo 16)
-	BYTE	Data[1];			// data (pøíp. popisovaè WAVEFORMATEX + data)
+								//		pro jiný formát než PCM je na začátku dat popisovač
+								//		formátu WAVEFORMATEX s udanou velikostí doplňujících
+								//		dat "cbSize", za popisovačem následují data
+	BYTE	Channels;			// (1) počet kanálů (1 = mono, 2 = stereo)
+	BYTE	Bits;				// (1) počet bitů na vzorek kanálu (8 nebo 16)
+	BYTE	Data[1];			// data (příp. popisovač WAVEFORMATEX + data)
 } SOUNDPROG;
 
 #define SIZEOFWAVEFORMATEX 18	// velikost záhlaví WAVEFORMATEX
@@ -181,7 +181,7 @@ class CPetProg
 {
 private:
 	PETPROG*	m_Data;				// buffer dat
-	int			m_Num;				// poèet položek v bufferu
+	int			m_Num;				// počet položek v bufferu
 	int			m_Max;				// velikost bufferu
 
 public:
@@ -190,7 +190,7 @@ public:
 	CPetProg();
 	~CPetProg();
 
-// poskytnutí poètu položek v bufferu
+// poskytnutí počtu položek v bufferu
 	inline int Num() const { return m_Num; };
 
 // poskytnutí velikosti bufferu
@@ -209,26 +209,26 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); }
 
-// poskytnutí pøístupu k položce (bez kontroly platnosti položky)
+// poskytnutí přístupu k položce (bez kontroly platnosti položky)
 	inline PETPROG& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// pøidání položky na konec bufferu (vrací index položky)
-// pøi chybì pamìti vrací -1
+// přidání položky na konec bufferu (vrací index položky)
+// při chybě paměti vrací -1
 	int _fastcall Add(const PETPROG* item);
 };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// buffer textù importu
+// buffer textů importu
 
 class CBufChar
 {
 private:
-	char*		m_Data;		// buffer textù
-	int			m_Size;		// velikost dat v bufferu (bajtù)
-	int			m_Num;		// poèet textù v bufferu
-	int			m_Max;		// velikost bufferu (bajtù)
+	char*		m_Data;		// buffer textů
+	int			m_Size;		// velikost dat v bufferu (bajtů)
+	int			m_Num;		// počet textů v bufferu
+	int			m_Max;		// velikost bufferu (bajtů)
 
 public:
 
@@ -236,7 +236,7 @@ public:
 	CBufChar();
 	~CBufChar();
 
-// poskytnutí poètu položek v bufferu
+// poskytnutí počtu položek v bufferu
 	inline int Num() const { return m_Num; };
 
 // poskytnutí velikosti bufferu (ve znacích)
@@ -251,24 +251,24 @@ public:
 // poskytnutí dat bufferu
 	inline char* Data() const { return m_Data; };
 
-// pøidání položky na konec bufferu (vrací index položky)
-// pøi chybì pamìti vrací -1
+// přidání položky na konec bufferu (vrací index položky)
+// při chybě paměti vrací -1
 	int _fastcall Add(const char* text, int len);
 	int _fastcall Add(const char* text);
 	int _fastcall Add(const CText& text);
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// buffer textù
+// buffer textů
 
 class CBufChar2
 {
 private:
-	char*		m_Data;		// buffer textù
-	int			m_Size;		// velikost dat v bufferu (bajtù)
-	int			m_Num;		// poèet textù v bufferu
-	int			m_NumVal;	// poèet platných (neprázdných) textù
-	int			m_Max;		// velikost bufferu (bajtù)
+	char*		m_Data;		// buffer textů
+	int			m_Size;		// velikost dat v bufferu (bajtů)
+	int			m_Num;		// počet textů v bufferu
+	int			m_NumVal;	// počet platných (neprázdných) textů
+	int			m_Max;		// velikost bufferu (bajtů)
 
 public:
 
@@ -276,10 +276,10 @@ public:
 	CBufChar2();
 	~CBufChar2();
 
-// poskytnutí poètu položek v bufferu
+// poskytnutí počtu položek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí poètu platných (neprázdných) textù
+// poskytnutí počtu platných (neprázdných) textů
 	inline int NumVal() const { return m_NumVal; };
 
 // poskytnutí velikosti bufferu (ve znacích)
@@ -294,8 +294,8 @@ public:
 // poskytnutí dat bufferu
 	inline char* Data() const { return m_Data; };
 
-// pøidání položky na konec bufferu (vrací index položky)
-// pøi chybì pamìti vrací -1
+// přidání položky na konec bufferu (vrací index položky)
+// při chybě paměti vrací -1
 	int _fastcall Add(const char* text, int len);
 	int _fastcall Add(const char* text);
 	int _fastcall Add(const CText& text);
@@ -303,31 +303,31 @@ public:
 
 namespace ProgFile
 {
-// promìnné
+// proměnné
 	extern const PETHEAD SaveHead;		// standardní záhlaví
 
-// mapování interních funkcí na okno struktur a tøíd
-	extern	int*	ImportBlok;		// tabulka blokù pro import funkcí
-	extern	int*	ImportIndex;		// tabulka indexù pro import funkcí
+// mapování interních funkcí na okno struktur a tříd
+	extern	int*	ImportBlok;		// tabulka bloků pro import funkcí
+	extern	int*	ImportIndex;		// tabulka indexů pro import funkcí
 
-// inicializace konverzní tabulky importu funkcí (vrací FALSE=chyba pamìti)
+// inicializace konverzní tabulky importu funkcí (vrací FALSE=chyba paměti)
 	BOOL InitImportTab();
 
-// uložení nespustitelnì (miniverze)
+// uložení nespustitelně (miniverze)
 	void SaveMini();
 
-// uložení spustitelnì (maxiverze)
+// uložení spustitelně (maxiverze)
 	void SaveMaxi();
 
 // uložení do jiného jména
 	void SaveAs();
 
-// uložení distribuèní verze
+// uložení distribuční verze
 	void SaveRel();
 
-// naètení programu
+// načtení programu
 	void Load();
 }
 
-// kontrola programu s opravou (vrací FALSE=chyba pamìti)
+// kontrola programu s opravou (vrací FALSE=chyba paměti)
 BOOL ProgramCheck();

@@ -1,13 +1,13 @@
 
 /***************************************************************************\
 *																			*
-*						Kompilace programu - èíslo							*
+*						Kompilace programu - číslo							*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// přidání jednoho prvku do bufferu programu (vrací index prvku)
 
 inline int CompAddItem(PROCNUM func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,19 +20,19 @@ inline int CompAddItem(PROCNUM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání èíselné konstanty do bufferu programu
+// přidání číselné konstanty do bufferu programu
 
 void CompAddItemNum(double data);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad èíselného výrazu (vrací true = operace OK)
+// překlad číselného výrazu (vrací true = operace OK)
 
 bool _fastcall CompNum(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s èíselným parametrem
+// překlad příkazu s číselným parametrem
 
 bool CompNumPar(int index, PROCCOM func, int data);
 
@@ -125,13 +125,13 @@ inline bool CompNumPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s èíselným podparametrem (hledaným podle identifikace)
+// překlad příkazu s číselným podparametrem (hledaným podle identifikace)
 
 void CompNumSubPar(int index, int idf, double def);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou èíselných výrazù (data = poèet výrazù - 1)
+// překlad příkazu se skupinou číselných výrazů (data = počet výrazů - 1)
 
 inline bool CompNumGrp(int index, PROCNUM func, PROCNUM func1)
 	{ return CompGroup(CompNum, index, (PROCCOM)func, (PROCCOM)func1); };

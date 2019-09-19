@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// přidání jednoho prvku do bufferu programu (vrací index prvku)
 
 inline int CompAddItem(PROCSND func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCSND func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu se zvukem (vrací true = operace OK)
+// překlad výrazu se zvukem (vrací true = operace OK)
 
 bool _fastcall CompSnd(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem zvuku
+// překlad příkazu s parametrem zvuku
 
 bool CompSndPar(int index, PROCCOM func, int data);
 
@@ -119,13 +119,13 @@ inline bool CompSndPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem zvuku (hledaným podle identifikace)
+// překlad příkazu s podparametrem zvuku (hledaným podle identifikace)
 
 void CompSndSubPar(int index, int idf);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou zvukových parametrù (data = poèet parametrù - 1)
+// překlad příkazu se skupinou zvukových parametrů (data = počet parametrů - 1)
 
 inline bool CompSndGrp(int index, PROCSND func, PROCSND func1)
 	{ return CompGroup(CompSnd, index, (PROCCOM)func, (PROCCOM)func1); };

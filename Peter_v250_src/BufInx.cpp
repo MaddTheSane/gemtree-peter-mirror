@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer pøemapování indexù						*
+*							Buffer přemapování indexů						*
 *																			*
 \***************************************************************************/
 
@@ -46,15 +46,15 @@ void CBufIndex::Term()
 void CBufIndex::DelAll()
 {
 	MemFree(m_Data);		// zrušení bufferu dat
-	m_Data = NULL;			// pøíznak neplatnosti bufferu
+	m_Data = NULL;			// příznak neplatnosti bufferu
 	m_Num = 0;				// není žádná platná položka
 	m_Max = 0;				// není žádná položka v bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení poètu položek v bufferu
-// (nové položky neinicializované, vrací FALSE=chyba pamìti)
+// nastavení počtu položek v bufferu
+// (nové položky neinicializované, vrací FALSE=chyba paměti)
 
 bool _fastcall CBufIndex::Num(const int num)
 {
@@ -64,7 +64,7 @@ bool _fastcall CBufIndex::Num(const int num)
 	if (num > m_Max)
 	{
 
-// zvìtšení bufferu
+// zvětšení bufferu
 		int newmax = (num + 0x400) & ~0xff;
 		int* newdata = (int*)MemSize(m_Data, newmax*sizeof(int));
 		if (newdata == NULL) return false;
@@ -72,14 +72,14 @@ bool _fastcall CBufIndex::Num(const int num)
 		m_Max = newmax;
 	}
 
-// nový poèet položek v bufferu
+// nový počet položek v bufferu
 	m_Num = num;
 	return true;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení poètu položek s vymazáním "-1", vrací FALSE=chyba pamìti
+// nastavení počtu položek s vymazáním "-1", vrací FALSE=chyba paměti
 
 bool _fastcall CBufIndex::NumClear(const int num)
 {
@@ -132,14 +132,14 @@ void _fastcall CBufIndex::Set(const int index, const int data)
 
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky, pøi chybì pamìti vrací <0)
+// přidání položky (vrací index položky, při chybě paměti vrací <0)
 
 int _fastcall CBufIndex::Add(const int data)
 {
 // index nové položky
 	int index = m_Num;
 
-// nastavení nového poètu položek
+// nastavení nového počtu položek
 	if (!Num(index + 1)) return -1;
 
 // inicializace položky
@@ -150,7 +150,7 @@ int _fastcall CBufIndex::Add(const int data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení (pøi chybì pamìti poèet položek nesouhlasí)
+// operátor přiřazení (při chybě paměti počet položek nesouhlasí)
 
 const CBufIndex& _fastcall CBufIndex::operator= (const CBufIndex& srcbuf)
 {

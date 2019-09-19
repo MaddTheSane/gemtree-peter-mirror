@@ -30,28 +30,28 @@ typedef	HRESULT (WINAPI *DIRECTDRAWCREATE) (GUID FAR *lpGUID, LPDIRECTDRAW FAR *
 // data
 
 // DirectDraw 3
-bool				D3DX3DDTest			= false;	// probìhl test rozhraní DirectDraw 3
+bool				D3DX3DDTest			= false;	// proběhl test rozhraní DirectDraw 3
 HINSTANCE			D3DX3DDLib			= NULL;		// handle modulu DDRAW.DLL
 DIRECTDRAWCREATE	pDirectDrawCreate	= NULL;		// funkce DirectDrawCreate (NULL=není)
 IDirectDraw*		D3DX3DD				= NULL;		// objekt DirectDraw 3 (NULL=není)
 
 // Direct3D	3
-bool				D3DX3D3Test			= false;	// probìhl test rozhraní Direct3D 3
+bool				D3DX3D3Test			= false;	// proběhl test rozhraní Direct3D 3
 IDirect3D*			D3DX3D3				= NULL;		// objekt Direct3D 3 (NULL=není)
-const GUID* D3DX3DevTab[D3DEVICES];					// tabulka identifikátorù ovladaèù
+const GUID* D3DX3DevTab[D3DEVICES];					// tabulka identifikátorů ovladačů
 
 // objekty
 IDirectDrawSurface*	D3DX3Prim			= NULL;		// primární povrch
 IDirectDrawClipper*	D3DX3Clip			= NULL;		// clipper
 IDirectDrawPalette*	D3DX3Pal			= NULL;		// palety
 IDirectDrawSurface*	D3DX3Rend			= NULL;		// renderovací povrch
-int					D3DX3RendWidth		= 0;		// aktuální šíøka renderovacího povrchu	
+int					D3DX3RendWidth		= 0;		// aktuální šířka renderovacího povrchu	
 int					D3DX3RendHeight		= 0;		// aktuální výška renderovacího povrchu	
 IDirectDrawSurface*	D3DX3ZBuf			= NULL;		// Z buffer
-IDirect3DDevice*	D3DX3Dev			= NULL;		// renderovací zaøízení
+IDirect3DDevice*	D3DX3Dev			= NULL;		// renderovací zařízení
 IDirect3DViewport*	D3DX3View			= NULL;		// viewport
 
-// cílové souøadnice pro vykreslování v souøadnicích displeje
+// cílové souřadnice pro vykreslování v souřadnicích displeje
 RECT				D3DX3Dest;						// cílová oblast pro vykreslování
 D3DRECT				D3DX3Src;						// zdrojová oblast viewportu
 D3DVIEWPORT			D3DX3ViewBuf;					// buffer nastavení pro viewport
@@ -60,29 +60,29 @@ D3DVIEWPORT			D3DX3ViewBuf;					// buffer nastavení pro viewport
 IDirect3DMaterial*	D3DX3BackMat	= NULL;			// materiál pozadí scény
 D3DMATERIAL			D3DX3BackMatBuf;				// buffer materiálu pozadí scény
 
-// transformaèní matice
+// transformační matice
 D3DMATRIXHANDLE		D3DX3WrldMat		= 0;		// matice transformace objektu
-D3DMATRIXHANDLE		D3DX3ProjMat		= 0;		// matice projekèní transformace
+D3DMATRIXHANDLE		D3DX3ProjMat		= 0;		// matice projekční transformace
 D3DMATRIXHANDLE		D3DX3ViewMat		= 0;		// matice pohledové transformace
 
 // formát textur
 //DDPIXELFORMAT		D3DX3TextFormat;				// použitý formát textur
 
-IDirect3DExecuteBuffer* D3DX3State		= NULL;		// pøíkaz pro obnovení stavu
+IDirect3DExecuteBuffer* D3DX3State		= NULL;		// příkaz pro obnovení stavu
 
-IDirect3DExecuteBuffer* D3DX3TextNull	= NULL;		// pøíkaz pro vypnutí textury
+IDirect3DExecuteBuffer* D3DX3TextNull	= NULL;		// příkaz pro vypnutí textury
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní DirectDraw 3 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní DirectDraw 3 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3DX3InitDD()
 {
-// test, zda již byla provádìna inicializace
+// test, zda již byla prováděna inicializace
 	if (!D3DX3DDTest)
 	{
 		D3DX3DDTest = true;
 
-// inicializace funkce DirectDrawCreate (mìní pøesnost koprocesoru!)
+// inicializace funkce DirectDrawCreate (mění přesnost koprocesoru!)
 		if (D3DX3DDLib == NULL)
 		{
 			D3DX3DDLib = ::LoadLibrary(_T("DDRAW.DLL"));
@@ -93,7 +93,7 @@ bool D3DX3InitDD()
 			pDirectDrawCreate = (DIRECTDRAWCREATE)::GetProcAddress(D3DX3DDLib, "DirectDrawCreate");
 		}
 
-// vytvoøení objektu DirectDraw 3
+// vytvoření objektu DirectDraw 3
 		if (pDirectDrawCreate != NULL)
 		{
 			if (pDirectDrawCreate(NULL, &D3DX3DD, NULL) != DD_OK)
@@ -109,19 +109,19 @@ bool D3DX3InitDD()
 		FPUDouble();
 	}
 
-// test, zda je objekt DirectDraw 3 vytvoøen
+// test, zda je objekt DirectDraw 3 vytvořen
 	return (D3DX3DD != NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení rozhraní DirectDraw 3
+// ukončení rozhraní DirectDraw 3
 
 void D3DX3TermDD()
 {
-// ukonèení rozhraní Direct3D 3
+// ukončení rozhraní Direct3D 3
 	D3DX3TermD3();
 
-// ukonèení závislého rozhraní DirectDraw 5
+// ukončení závislého rozhraní DirectDraw 5
 	D3DX5TermDD();
 
 // zrušení viewportu
@@ -136,10 +136,10 @@ void D3DX3TermDD()
 // ukonžení palet
 	D3DX3TermPal();
 
-// ukonèení clipperu
+// ukončení clipperu
 	D3DX3TermClip();
 
-// ukonèení primárního povrchu
+// ukončení primárního povrchu
 	D3DX3TermPrim();
 
 // zrušení objektu DirectDraw 3
@@ -149,7 +149,7 @@ void D3DX3TermDD()
 		D3DX3DD = NULL;
 	}
 
-// uvolnìní knihovny DirectDraw
+// uvolnění knihovny DirectDraw
 	if (D3DX3DDLib != NULL)
 	{
 		::FreeLibrary(D3DX3DDLib);
@@ -157,12 +157,12 @@ void D3DX3TermDD()
 	}
 	pDirectDrawCreate = NULL;
 
-// zrušení pøíznaku, že byla inicializace
+// zrušení příznaku, že byla inicializace
 	D3DX3DDTest = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení primárniho povrchu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření primárniho povrchu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX3InitPrim()
 {
@@ -198,7 +198,7 @@ void D3DX3TermPrim()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení clipperu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření clipperu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX3InitClip()
 {
@@ -218,7 +218,7 @@ bool D3DX3InitClip()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení clipperu (musí se volat pøed zrušením primárního povrchu)
+// zrušení clipperu (musí se volat před zrušením primárního povrchu)
 
 void D3DX3TermClip()
 {
@@ -231,14 +231,14 @@ void D3DX3TermClip()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení palet, nejsou-li vytvoøeny (vrací TRUE=OK)
+// vytvoření palet, nejsou-li vytvořeny (vrací TRUE=OK)
 
 bool D3DX3InitPal()
 {
 	if (D3DX3Pal == NULL)
 	{
 		
-// test, zda je potøeba použít palety
+// test, zda je potřeba použít palety
 		if (!D3DX3InitPrim()) return false;
 		DDSURFACEDESC ddsd;
 		MemFill(&ddsd, sizeof(ddsd), 0);
@@ -248,13 +248,13 @@ bool D3DX3InitPal()
 		if (ddsd.ddpfPixelFormat.dwFlags & DDPF_PALETTEINDEXED8)
 		{
 
-// vytvoøení bufferu palet
+// vytvoření bufferu palet
 			if (SysPal == NULL)
 			{
 				SysPal = (PALETTEENTRY*)MemGet(sizeof(PALETTEENTRY)*256);
 			}
 
-// naètení systémových palet
+// načtení systémových palet
 			HDC dc = ::GetDC(NULL);
 			if (dc)
 			{
@@ -262,12 +262,12 @@ bool D3DX3InitPal()
 				::ReleaseDC(NULL, dc);
 			}
 
-// doplnìní vlastních palet
+// doplnění vlastních palet
 			int i;
 			for (i=0; i < 256; i++) SysPal[i].peFlags = D3DPAL_READONLY;
 			for (i = 10; i < 246; i++) SysPal[i].peFlags = D3DPAL_FREE | PC_RESERVED;
 
-// vytvoøení palet
+// vytvoření palet
 			if ((D3DX3DD->CreatePalette(DDPCAPS_8BIT, SysPal, &D3DX3Pal, NULL) != DD_OK) ||
 				(D3DX3Pal == NULL))
 			{
@@ -287,7 +287,7 @@ bool D3DX3InitPal()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení palet (volat pøed zrušením primárního povrchu)
+// zrušení palet (volat před zrušením primárního povrchu)
 
 void D3DX3TermPal()
 {
@@ -299,7 +299,7 @@ void D3DX3TermPal()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// callback pro enumeraci ovladaèù
+// callback pro enumeraci ovladačů
 
 HRESULT WINAPI D3DX3EnumDeviceCallback(GUID* lpGUID, LPSTR devDesc, LPSTR devName,
 									   D3DDEVICEDESC* descHW, D3DDEVICEDESC* descSW, void* user)
@@ -308,7 +308,7 @@ HRESULT WINAPI D3DX3EnumDeviceCallback(GUID* lpGUID, LPSTR devDesc, LPSTR devNam
 	{
 		D3DCOLORMODEL cm = descHW->dcmColorModel;
 
-// ovladaè HAL (pøednost má RGB)
+// ovladač HAL (přednost má RGB)
 		if (cm != 0)
 		{
 			if ((D3DX3DevTab[NHALDev] == NULL) || 
@@ -320,7 +320,7 @@ HRESULT WINAPI D3DX3EnumDeviceCallback(GUID* lpGUID, LPSTR devDesc, LPSTR devNam
 
 		cm = descSW->dcmColorModel;
 
-// ovladaè HEL
+// ovladač HEL
 		if (cm != 0)
 		{
 			if ((cm & D3DCOLOR_RGB) != 0)
@@ -339,11 +339,11 @@ HRESULT WINAPI D3DX3EnumDeviceCallback(GUID* lpGUID, LPSTR devDesc, LPSTR devNam
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní Direct3D 3 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní Direct3D 3 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3DX3InitD3()
 {
-// test, zda inicializace již probìhla
+// test, zda inicializace již proběhla
 	if (!D3DX3D3Test)
 	{
 		D3DX3D3Test = true;
@@ -352,13 +352,13 @@ bool D3DX3InitD3()
 		if (D3DX3InitDD())
 		{
 
-// vytvoøení objektu Direct3D 3 (mìní pøesnost koprocesoru!)
+// vytvoření objektu Direct3D 3 (mění přesnost koprocesoru!)
 			if (D3DX3DD->QueryInterface(IID_IDirect3D, (void**)&D3DX3D3) != DD_OK)
 			{
 				D3DX3D3 = NULL;
 			}
 
-// enumerace ovladaèù
+// enumerace ovladačů
 			if (D3DX3D3 != NULL)
 			{
 				MemCopy(D3DX3DevTab, Dev3DTab, D3DEVICES*sizeof(GUID*));
@@ -372,16 +372,16 @@ bool D3DX3InitD3()
 		}
 	}
 
-// test, zda je objekt Direct3D 3 vytvoøen
+// test, zda je objekt Direct3D 3 vytvořen
 	return (D3DX3D3 != NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení rozhraní Direct3D 3
+// ukončení rozhraní Direct3D 3
 
 void D3DX3TermD3()
 {
-// ukonèení renderování
+// ukončení renderování
 	D3DX3Stop();
 
 // zrušení objektu Direct3D 3
@@ -391,12 +391,12 @@ void D3DX3TermD3()
 		D3DX3D3 = NULL;
 	}
 
-// zrušení pøíznaku, že byla inicializace
+// zrušení příznaku, že byla inicializace
 	D3DX3D3Test = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení renderovacího povrchu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření renderovacího povrchu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX3InitRend(bool hw)
 {
@@ -406,11 +406,11 @@ bool D3DX3InitRend(bool hw)
 // inicializace DirectDraw
 		if (!D3DX3InitDD()) return false;
 
-// pøíprava typu pamìti
+// příprava typu paměti
 		DWORD memtype = 0;
 		if (hw) memtype = DDSCAPS_VIDEOMEMORY;
 
-// pøíprava popisovaèe povrchu
+// příprava popisovače povrchu
 		DDSURFACEDESC ddsd;
 		MemFill(&ddsd, sizeof(ddsd), 0);
 		ddsd.dwSize = sizeof(ddsd);
@@ -421,14 +421,14 @@ bool D3DX3InitRend(bool hw)
 		D3DX3RendHeight = D3DHeight;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_3DDEVICE | DDSCAPS_OFFSCREENPLAIN | memtype;
 
-// vytvoøení povrchu
+// vytvoření povrchu
 		if ((D3DX3DD->CreateSurface(&ddsd, &D3DX3Rend, NULL) != DD_OK) ||
 			(D3DX3Rend == NULL))
 		{
 			return false;
 		}
 
-// pøipojení palet
+// připojení palet
 		if ((D3DX3Pal != NULL) &&
 			(D3DX3Rend->SetPalette(D3DX3Pal) != DD_OK))
 		{
@@ -454,7 +454,7 @@ void D3DX3TermRend()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení Z-bufferu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření Z-bufferu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX3InitZBuf(bool hw, int depth)
 {
@@ -464,11 +464,11 @@ bool D3DX3InitZBuf(bool hw, int depth)
 // kontrola renderovacího povrchu
 		if (D3DX3Rend == NULL) return false;
 
-// pøíprava typu pamìti
+// příprava typu paměti
 		DWORD memtype = DDSCAPS_SYSTEMMEMORY;
 		if (hw) memtype = DDSCAPS_VIDEOMEMORY;
 
-// pøíprava popisovaèe povrchu
+// příprava popisovače povrchu
 		DDSURFACEDESC ddsd;
 		MemFill(&ddsd, sizeof(ddsd), 0);
 		ddsd.dwSize = sizeof(ddsd);
@@ -478,14 +478,14 @@ bool D3DX3InitZBuf(bool hw, int depth)
 		ddsd.dwZBufferBitDepth = depth;
 		ddsd.ddsCaps.dwCaps = DDSCAPS_ZBUFFER | memtype;
 
-// vytvoøení povrchu
+// vytvoření povrchu
 		if ((D3DX3DD->CreateSurface(&ddsd, &D3DX3ZBuf, NULL) != DD_OK) ||
 			(D3DX3ZBuf == NULL))
 		{
 			return false;
 		}
 
-// pøipojení k renderovacímu povrchu
+// připojení k renderovacímu povrchu
 		if (D3DX3Rend->AddAttachedSurface(D3DX3ZBuf) != DD_OK)
 		{
 			D3DX3TermZBuf();
@@ -530,14 +530,14 @@ HRESULT CALLBACK D3DX3EnumPixelFormatsCallback(DDSURFACEDESC* sd, void* user)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace zaøízení pro Z-buffer
+// inicializace zařízení pro Z-buffer
 
 bool _fastcall D3DX3InitDev2(bool hw, int type, int depth)
 {
 	if (D3DX3InitZBuf(hw, depth))
 	{
 
-// vytvoøení zaøízení (mìní pøesnost koprocesoru!)
+// vytvoření zařízení (mění přesnost koprocesoru!)
 		if ((D3DX3Rend->QueryInterface(*D3DX3DevTab[type], (void**)&D3DX3Dev) == DD_OK) &&
 			(D3DX3Dev != NULL))
 		{
@@ -563,25 +563,25 @@ bool D3DX3InitDev3(bool hw, int type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení renderovacího zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// vytvoření renderovacího zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX3InitDev(int type)
 {
-// zrušení starých objektù
+// zrušení starých objektů
 	D3DX3Stop();
 
-// vytvoøení primárního povrchu, clipperu a palet
+// vytvoření primárního povrchu, clipperu a palet
 	if (D3DX3InitD3() &&
 		D3DX3InitPrim() &&
 		D3DX3InitClip() &&
 		D3DX3InitPal())
 	{
 
-// pøíznak HW ovladaèe
+// příznak HW ovladače
 		bool hw = (type <= 2);
 
-// vytvoøení renderovacího povrchu a Z bufferu
+// vytvoření renderovacího povrchu a Z bufferu
 		if (!(D3DX3InitRend(hw) || D3DX3InitRend(!hw)) ||
 			!(D3DX3InitDev3(hw, type) || D3DX3InitDev3(!hw, type)))
 		{
@@ -589,7 +589,7 @@ bool D3DX3InitDev(int type)
 			return false;
 		}
 		
-// enumerace formátù textur
+// enumerace formátů textur
 		D3DX3Dev->EnumTextureFormats(D3DX3EnumPixelFormatsCallback, NULL);
 		if (!D3DRamp && !D3DTextFormatOK)
 		{
@@ -601,14 +601,14 @@ bool D3DX3InitDev(int type)
 		return true;
 	}
 
-// pøi chybì zrušení vytvoøených objektù
+// při chybě zrušení vytvořených objektů
 	D3DX3Stop();
 
 	return false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení renderovacího zaøízení
+// zrušení renderovacího zařízení
 
 void D3DX3TermDev()
 {
@@ -640,7 +640,7 @@ void D3DX3AktBackMat()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení materiálu pozadí scény
+// vytvoření materiálu pozadí scény
 
 bool D3DX3InitBack()
 {
@@ -650,7 +650,7 @@ bool D3DX3InitBack()
 // musí existovat 3D objekt
 		if (D3DX3D3 == NULL) return false;
 
-// vytvoøení materiálu pozadí scény
+// vytvoření materiálu pozadí scény
 		if ((D3DX3D3->CreateMaterial(&D3DX3BackMat, NULL) != D3D_OK) ||
 			(D3DX3BackMat == NULL)) return false;
 
@@ -670,7 +670,7 @@ bool D3DX3InitBack()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení materiálu pozadí scény (zøejmì až po zrušení viewportu)
+// zrušení materiálu pozadí scény (zřejmě až po zrušení viewportu)
 
 void D3DX3TermBack()
 {
@@ -682,7 +682,7 @@ void D3DX3TermBack()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// výpoèet nových souøadnic zobrazené oblasti
+// výpočet nových souřadnic zobrazené oblasti
 
 void D3DX3CalcView()
 {
@@ -698,18 +698,18 @@ void D3DX3CalcView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po zmìnì velikosti
+// aktualizace viewportu po změně velikosti
 
 void D3DX3SizeView()
 {
-// pøepoèet videportu
+// přepočet videportu
 	D3DX3CalcView();
 	D3DX3ViewBuf.dwWidth = D3DWidth;
 	D3DX3ViewBuf.dwHeight = D3DHeight;
 	D3DX3ViewBuf.dvScaleX = (float)D3DWidth/2;
 	D3DX3ViewBuf.dvScaleY = (float)D3DHeight/2;
 
-// resetování bufferù 2D obrázkù
+// resetování bufferů 2D obrázků
 	D3DFITEM* item = D3DF_Get(1);
 	int inx = item->Child;
 	while (inx > 1)
@@ -722,7 +722,7 @@ void D3DX3SizeView()
 		inx = item->Next;
 	}
 
-// zvìtšení bufferu
+// zvětšení bufferu
 	if ((D3DHeight > D3DX3RendHeight) || (D3DWidth > D3DX3RendWidth))
 	{
 		FPUDouble();
@@ -740,7 +740,7 @@ void D3DX3SizeView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po pøesunu
+// aktualizace viewportu po přesunu
 
 void D3DX3MoveView()
 {
@@ -748,33 +748,33 @@ void D3DX3MoveView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení viewportu (vrací TRUE=inicializace OK)
+// vytvoření viewportu (vrací TRUE=inicializace OK)
 
 bool D3DX3InitView()
 {
 	if (D3DX3View == NULL)
 	{
 
-// musí existovat 3D zaøízení a 3D objekt
+// musí existovat 3D zařízení a 3D objekt
 		if (D3DX3Dev == NULL) return false;
 
-// vytvoøení viewportu
+// vytvoření viewportu
 		if ((D3DX3D3->CreateViewport(&D3DX3View, NULL) != D3D_OK) ||
 			(D3DX3View == NULL)) return false;
 
 		D3DMATERIALHANDLE mh = NULL;
 
-// pøipojení viewportu k 3D zaøízení
+// připojení viewportu k 3D zařízení
 		if ((D3DX3Dev->AddViewport(D3DX3View) != D3D_OK) ||
 
-// vytvoøení materiálu pozadí scény a pøipojení k viewportu
+// vytvoření materiálu pozadí scény a připojení k viewportu
 			!D3DX3InitBack() ||
 
 // handle materiálu
 			(D3DX3BackMat->GetHandle(D3DX3Dev, &mh) != D3D_OK) ||
 			(mh == NULL) ||
 
-// pøipojení materiálu k viewportu
+// připojení materiálu k viewportu
 			(D3DX3View->SetBackground(mh) != D3D_OK))
 		{
 			D3DX3TermView();
@@ -812,7 +812,7 @@ void D3DX3TermView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení transformaèních matic (vrací TRUE=operace OK)
+// vytvoření transformačních matic (vrací TRUE=operace OK)
 
 bool D3DX3InitMatrix()
 {
@@ -836,7 +836,7 @@ bool D3DX3InitMatrix()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení transformaèních matic
+// zrušení transformačních matic
 
 void D3DX3TermMatrix()
 {
@@ -864,15 +864,15 @@ void D3DX3TermMatrix()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahájení funkce zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX3Start(int type)
 {
-// vytvoøení renderovacího zaøízení
+// vytvoření renderovacího zařízení
 	if (!D3DX3InitDev(type)) return false;
 
-// vytvoøení viewportu, vytvoøení transformaèních matic
+// vytvoření viewportu, vytvoření transformačních matic
 	if (!D3DX3InitView() ||
 		!D3DX3InitMatrix())
 	{
@@ -880,7 +880,7 @@ bool D3DX3Start(int type)
 		return false;
 	}
 
-// inicializace informací o zaøízení
+// inicializace informací o zařízení
 	D3DDEVICEDESC D3DCapsHW;
 	D3DDEVICEDESC D3DCapsSW;
 	MemFill(&D3DCapsHW, sizeof(D3DDEVICEDESC), 0);
@@ -927,26 +927,26 @@ bool D3DX3Start(int type)
 	IsVertexFog = false;
 	IsRangeFog = false;
 
-// ----- nastavení globálních pøepínaèù pomocí provádìcího bufferu
+// ----- nastavení globálních přepínačů pomocí prováděcího bufferu
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 	int size = 	3*sizeof(D3DINSTRUCTION) + 8*sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 	D3DEXECUTEBUFFERDESC d;
 	d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 	d.dwFlags = D3DDEB_BUFSIZE;
 	d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 	if (D3DX3Dev->CreateExecuteBuffer(&d, &D3DX3State, NULL) == D3D_OK)
 	{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 		if ((D3DX3State->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 		{
 
-// nastavení transformaèních matic
+// nastavení transformačních matic
 			D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
 			ins->bOpcode = D3DOP_STATETRANSFORM;
 			ins->bSize = sizeof(D3DSTATE);
@@ -963,7 +963,7 @@ bool D3DX3Start(int type)
 			state->dwArg[0] = D3DX3ProjMat;
 			state++;
 
-// nastavení pøepínaèù
+// nastavení přepínačů
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_STATERENDER;
 			ins->bSize = sizeof(D3DSTATE);
@@ -986,7 +986,7 @@ bool D3DX3Start(int type)
 			state->dwArg[0] = FALSE;
 			state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_EXIT;
 			ins->bSize = 0;
@@ -994,10 +994,10 @@ bool D3DX3Start(int type)
 
 			ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 			D3DX3State->Unlock();
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 			D3DEXECUTEDATA ed;
 			MemFill(&ed, sizeof(ed), 0);
 			ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -1011,21 +1011,21 @@ bool D3DX3Start(int type)
 		return false;
 	}
 
-// ------- provádìcí buffer pro vypnutí textury
+// ------- prováděcí buffer pro vypnutí textury
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 	size = 	2*sizeof(D3DINSTRUCTION) + sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 	d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 	d.dwFlags = D3DDEB_BUFSIZE;
 	d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 	if (D3DX3Dev->CreateExecuteBuffer(&d, &D3DX3TextNull, NULL) == D3D_OK)
 	{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 		if ((D3DX3TextNull->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 		{
 			D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
@@ -1038,7 +1038,7 @@ bool D3DX3Start(int type)
 			state->dwArg[0] = NULL;
 			state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_EXIT;
 			ins->bSize = 0;
@@ -1046,11 +1046,11 @@ bool D3DX3Start(int type)
 
 			ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 			D3DX3TextNull->Unlock();
 		}
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 		D3DEXECUTEDATA ed;
 		MemFill(&ed, sizeof(ed), 0);
 		ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -1065,18 +1065,18 @@ bool D3DX3Start(int type)
 		return false;
 	}
 
-// inicializace adres funkcí zaøízení
-	pD3Stop = D3DX3Stop;			// ukonèení funkce zaøízení
-	pD3SizeView = D3DX3SizeView;	// aktualizace viewportu po zmìnì velikosti
-	pD3MoveView = D3DX3MoveView;	// aktualizace viewportu po pøesunu
+// inicializace adres funkcí zařízení
+	pD3Stop = D3DX3Stop;			// ukončení funkce zařízení
+	pD3SizeView = D3DX3SizeView;	// aktualizace viewportu po změně velikosti
+	pD3MoveView = D3DX3MoveView;	// aktualizace viewportu po přesunu
 	pD3Disp = D3DX3Disp;			// zobrazení renderovacího bufferu
 	pD3Clear = D3DX3Clear;			// vymazání renderovací plochy
-	pD3AktProj = D3DX3AktProj;		// aktualizace projekèní matice
+	pD3AktProj = D3DX3AktProj;		// aktualizace projekční matice
 	pD3AktView = D3DX3AktView;		// aktualizace pohledové matice
 	pD3Begin = D3DX3Begin;			// zahájení renderování scény
-	pD3End = D3DX3End;				// ukonèení renderování scény
+	pD3End = D3DX3End;				// ukončení renderování scény
 	pD3Render = D3DX3Render;		// vyrenderování jednoho objektu
-	pD3Reset = D3DX3Reset;			// resetování objektu pøed ukonèením ovladaèe
+	pD3Reset = D3DX3Reset;			// resetování objektu před ukončením ovladače
 	pD3AktWireframe = D3DX3AktWireframe;
 	pD3AktLightOn = D3DX3AktLightOn;
 	pD3AktShades = D3DX3AktShades;
@@ -1108,7 +1108,7 @@ bool D3DX3Start(int type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení funkce zaøízení
+// ukončení funkce zařízení
 
 void D3DX3Stop()
 {
@@ -1124,14 +1124,14 @@ void D3DX3Stop()
 		D3DX3State = NULL;
 	}
 	
-	D3DX3TermMatrix();		// zrušení transformaèních matic
+	D3DX3TermMatrix();		// zrušení transformačních matic
 	D3DX3TermView();		// zrušení viewportu
 	D3DX3TermZBuf();		// zrušení Z bufferu
 	D3DX3TermRend();		// zrušení renderovacího povrchu
 	D3DX3TermPal();			// zrušení palet
 	D3DX3TermClip();		// zrušení clipperu
 	D3DX3TermPrim();		// zrušení primárního povrchu
-	FPUDouble();			// návrat pøesnosti koprocesoru
+	FPUDouble();			// návrat přesnosti koprocesoru
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1182,7 +1182,7 @@ void D3DX3Disp()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèní matice
+// aktualizace projekční matice
 
 void D3DX3AktProj()
 {
@@ -1209,7 +1209,7 @@ void D3DX3Begin()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení renderování scény
+// ukončení renderování scény
 
 void D3DX3End()
 {
@@ -1221,21 +1221,21 @@ void D3DX3End()
 
 void D3DX3SetRenderState(D3DRENDERSTATETYPE statetype, DWORD value)
 {
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 	int size = 2*sizeof(D3DINSTRUCTION) + sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 	D3DEXECUTEBUFFERDESC d;
 	d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 	d.dwFlags = D3DDEB_BUFSIZE;
 	d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 	IDirect3DExecuteBuffer* ex = NULL;
 	if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 	{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 		if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 		{
 			D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
@@ -1248,7 +1248,7 @@ void D3DX3SetRenderState(D3DRENDERSTATETYPE statetype, DWORD value)
 			state->dwArg[0] = value;
 			state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_EXIT;
 			ins->bSize = 0;
@@ -1256,10 +1256,10 @@ void D3DX3SetRenderState(D3DRENDERSTATETYPE statetype, DWORD value)
 
 			ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 			ex->Unlock();
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 			D3DEXECUTEDATA ed;
 			MemFill(&ed, sizeof(ed), 0);
 			ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -1282,21 +1282,21 @@ void D3DX3SetRenderState(D3DRENDERSTATETYPE statetype, DWORD value)
 
 void D3DX3Render(D3DFITEM* item)
 {
-// pøi zmìnì stavu osvìtlení zrušení bufferu
+// při změně stavu osvětlení zrušení bufferu
 	if ((BOOL)D3DLightOnAkt != (BOOL)(item->Data2)) D3DX3Reset(item);
 	item->Data2 = (void*)D3DLightOnAkt;
 
 	bool isFlare = (item->Type == D3DFTYPE_LENSFLARE);
 	bool isPic = ((item->Type == D3DFTYPE_PICTURE) || isFlare);
 
-// pøegenerování bufferu pro LensFlare
+// přegenerování bufferu pro LensFlare
 	if (isFlare) D3DX3Reset(item);
 
-// vytvoøení renderovacího bufferu
+// vytvoření renderovacího bufferu
 	if (item->Data1 == NULL)
 	{
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 		int vertN = item->VertNum;
 		int faceN = item->FaceNum;
 		int size = vertN*sizeof(D3DVERTEX) +	// = sizeof(D3DTLVERTEX)
@@ -1304,18 +1304,18 @@ void D3DX3Render(D3DFITEM* item)
 					1*sizeof(D3DPROCESSVERTICES) +
 					faceN*sizeof(D3DTRIANGLE);					
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 		D3DEXECUTEBUFFERDESC d;
 		d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 		d.dwFlags = D3DDEB_BUFSIZE;
 		d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 		IDirect3DExecuteBuffer* ex = NULL;
 		if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 		{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 			if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 			{
 				D3DVERTEX* vert = (D3DVERTEX*)(d.lpData);
@@ -1365,7 +1365,7 @@ void D3DX3Render(D3DFITEM* item)
 					}
 				}
 
-// uložení dat vrcholù
+// uložení dat vrcholů
 				for (; i > 0; i--)
 				{
 					if (isPic)
@@ -1410,7 +1410,7 @@ void D3DX3Render(D3DFITEM* item)
 					vert++;
 				}
 
-// pøíkaz pro zpracování vrcholù
+// příkaz pro zpracování vrcholů
 				D3DINSTRUCTION* ins = (D3DINSTRUCTION*)vert;
 				ins->bOpcode = D3DOP_PROCESSVERTICES;
 				ins->bSize = sizeof(D3DPROCESSVERTICES);
@@ -1424,7 +1424,7 @@ void D3DX3Render(D3DFITEM* item)
 				proc->dwReserved = 0;
 				proc++;
 
-// pøíkaz pro vykreslení trojúhelníku
+// příkaz pro vykreslení trojúhelníku
 				ins = (D3DINSTRUCTION*)proc;
 				ins->bOpcode = D3DOP_TRIANGLE;
 				ins->bSize = sizeof(D3DTRIANGLE);
@@ -1457,17 +1457,17 @@ void D3DX3Render(D3DFITEM* item)
 
 				ins = (D3DINSTRUCTION*)tri;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 				ins->bOpcode = D3DOP_EXIT;
 				ins->bSize = 0;
 				ins->wCount = 0;
 
 				ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 				ex->Unlock();
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 				D3DEXECUTEDATA ed;
 				MemFill(&ed, sizeof(ed), 0);
 				ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -1476,7 +1476,7 @@ void D3DX3Render(D3DFITEM* item)
 				ed.dwInstructionLength = size - ed.dwInstructionOffset;
 				ex->SetExecuteData(&ed);
 
-// aktualizace klonù
+// aktualizace klonů
 				D3DFITEM* item2 = item;
 
 				do
@@ -1493,7 +1493,7 @@ void D3DX3Render(D3DFITEM* item)
 		}
 	}
 
-// nastavení transformaèní matice
+// nastavení transformační matice
 	D3DX3Dev->SetMatrix(D3DX3WrldMat, &item->MatrixWorld);
 
 // vykreslení objektu
@@ -1505,7 +1505,7 @@ void D3DX3Render(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování objektu pøed ukonèením ovladaèe
+// resetování objektu před ukončením ovladače
 
 void D3DX3Reset(D3DFITEM* item)
 {
@@ -1526,7 +1526,7 @@ void D3DX3Reset(D3DFITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè vyplòování ploch
+// aktualizovat přepínač vyplňování ploch
 
 void D3DX3AktWireframe()
 {
@@ -1534,13 +1534,13 @@ void D3DX3AktWireframe()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè osvìtlení
+// aktualizovat přepínač osvětlení
 
 void D3DX3AktLightOn() { }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè plynulého stinování
+// aktualizovat přepínač plynulého stinování
 
 void D3DX3AktShades()
 {
@@ -1548,7 +1548,7 @@ void D3DX3AktShades()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè odstraòování ploch
+// aktualizovat přepínač odstraňování ploch
 
 void D3DX3AktCulling()
 {
@@ -1556,7 +1556,7 @@ void D3DX3AktCulling()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zvìtšených textur
+// aktualizovat přepínač filtrace zvětšených textur
 
 void D3DX3AktMagFilter(int stage)
 {
@@ -1565,7 +1565,7 @@ void D3DX3AktMagFilter(int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zmenšených a vzdálených textur
+// aktualizovat přepínač filtrace zmenšených a vzdálených textur
 
 void D3DX3AktMinMipFilter(int stage)
 {
@@ -1576,7 +1576,7 @@ void D3DX3AktMinMipFilter(int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace položky svìtla
+// aktualizace položky světla
 
 void D3DX3AktLight(int inx, D3DLITEM* item)
 {
@@ -1626,7 +1626,7 @@ void D3DX3AktLight(int inx, D3DLITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky svìtla
+// resetování položky světla
 
 void D3DX3LightReset(int inx, D3DLITEM* item)
 {
@@ -1651,11 +1651,11 @@ void D3DX3LightReset(int inx, D3DLITEM* item)
 void D3DX3SetMaterial(D3DMITEM* item)
 {
 
-// vytvoøení objektu materiálu
+// vytvoření objektu materiálu
 	if (item->Data1 == NULL)
 	{
 
-// vytvoøení materiálu
+// vytvoření materiálu
 		IDirect3DMaterial* mat;
 		if (D3DX3D3->CreateMaterial(&mat, NULL) == D3D_OK)
 		{
@@ -1669,22 +1669,22 @@ void D3DX3SetMaterial(D3DMITEM* item)
 			dm.dwRampSize = 20;
 			mat->SetMaterial(&dm);
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 			int size = 	2*sizeof(D3DINSTRUCTION) + sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 			D3DEXECUTEBUFFERDESC d;
 			d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 			d.dwFlags = D3DDEB_BUFSIZE;
 			d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 			IDirect3DExecuteBuffer* ex;
 			if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 			{
 				item->Data2 = ex;
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 				if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 				{
 					D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
@@ -1697,7 +1697,7 @@ void D3DX3SetMaterial(D3DMITEM* item)
 					mat->GetHandle(D3DX3Dev, (D3DMATERIALHANDLE*) &(state->dwArg[0]));
 					state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 					ins = (D3DINSTRUCTION*)state;
 					ins->bOpcode = D3DOP_EXIT;
 					ins->bSize = 0;
@@ -1705,11 +1705,11 @@ void D3DX3SetMaterial(D3DMITEM* item)
 
 					ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 					ex->Unlock();
 				}
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 				D3DEXECUTEDATA ed;
 				MemFill(&ed, sizeof(ed), 0);
 				ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -1751,7 +1751,7 @@ void D3DX3MatReset(D3DMITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetování položky textury před ukončením ovladače
 
 void D3DX3TextureRes(D3DTITEM* item)
 {
@@ -1827,7 +1827,7 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 // data obrázku
 	PICTUREDATA* picdata = item->Pic.Data();
 
-// vytvoøení textury
+// vytvoření textury
 	if (item->Data1 == NULL)
 	{
 // pro Ramp se nastaví barva materiálu (z poslední MipMap)
@@ -1880,22 +1880,22 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 
 				mat->SetMaterial(&m);
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 				int size = 	2*sizeof(D3DINSTRUCTION) + sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 				D3DEXECUTEBUFFERDESC d;
 				d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 				d.dwFlags = D3DDEB_BUFSIZE;
 				d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 				IDirect3DExecuteBuffer* ex;
 				if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 				{
 					item->Data2 = ex;
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 					if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 					{
 						D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
@@ -1908,7 +1908,7 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 						mat->GetHandle(D3DX3Dev, (D3DMATERIALHANDLE*) &(state->dwArg[0]));
 						state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 						ins = (D3DINSTRUCTION*)state;
 						ins->bOpcode = D3DOP_EXIT;
 						ins->bSize = 0;
@@ -1916,11 +1916,11 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 
 						ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 						ex->Unlock();
 					}
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 					D3DEXECUTEDATA ed;
 					MemFill(&ed, sizeof(ed), 0);
 					ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -1938,7 +1938,7 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 			tx3Width = picdata->TextWidth;
 			tx3Height = picdata->TextHeight;
 
-// poèet mipmap
+// počet mipmap
 			tx3Mip = 1;
 			if (IsMipMap && item->Mips)
 			{
@@ -1953,7 +1953,7 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 			}
 			if (tx3Mip > picdata->TextMipMaps) tx3Mip = picdata->TextMipMaps;
 
-			// omezení poètu úrovní - pøi vyšším stupni se prolínají ikony textury terénu
+			// omezení počtu úrovní - při vyšším stupni se prolínají ikony textury terénu
 			int mipmaps = item->MipMaps;
 			if (mipmaps > 0)
 			{
@@ -1962,7 +1962,7 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 
 			int mip0 = tx3Mip;
 
-// vytvoøení povrchu
+// vytvoření povrchu
 			if ((!picdata->TextTrans && (D3DX3TextCreate(&D3DTextFormatR5G6B5, picdata->TextDataR5G6B5, 2) ||
 									D3DX3TextCreate(&D3DTextFormatA1R5G5B5, picdata->TextDataA1R5G5B5, 2))) ||
 				D3DX3TextCreate(&D3DTextFormatA4R4G4B4, picdata->TextDataA4R4G4B4, 2) ||
@@ -2020,7 +2020,7 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 					if (tx3Tex == NULL) break;
 				}
 
-// pro HW rasterizer pøenesení do videopamìti
+// pro HW rasterizer přenesení do videopaměti
 				if (IsHWRaster)
 				{	 
 					DDSURFACEDESC ddsd;
@@ -2070,28 +2070,28 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 		}
 	}
 
-// pøíkaz pro nastavení textury
+// příkaz pro nastavení textury
 	if ((item->Data2 == NULL) && (item->Data1 != NULL) && !D3DRamp)
 	{
 		D3DTEXTUREHANDLE h;
 		((IDirect3DTexture*)(item->Data1))->GetHandle(D3DX3Dev, &h);
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 		int size = 	2*sizeof(D3DINSTRUCTION) + sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 		D3DEXECUTEBUFFERDESC d;
 		d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 		d.dwFlags = D3DDEB_BUFSIZE;
 		d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 		IDirect3DExecuteBuffer* ex;
 		if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 		{
 			item->Data2 = ex;
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 			if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 			{
 				D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
@@ -2104,7 +2104,7 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 				state->dwArg[0] = h;
 				state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 				ins = (D3DINSTRUCTION*)state;
 				ins->bOpcode = D3DOP_EXIT;
 				ins->bSize = 0;
@@ -2112,11 +2112,11 @@ void D3DX3TextureSet(D3DTITEM* item, int stage)
 
 				ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 				ex->Unlock();
 			}
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 			D3DEXECUTEDATA ed;
 			MemFill(&ed, sizeof(ed), 0);
 			ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -2164,26 +2164,26 @@ void D3DX3TextureOff(int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvìtlení
+// aktualizace ambient osvětlení
 
 void D3DX3AktAmbient()
 {
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 	int size = 	2*sizeof(D3DINSTRUCTION) + sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 	D3DEXECUTEBUFFERDESC d;
 	d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 	d.dwFlags = D3DDEB_BUFSIZE;
 	d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 	IDirect3DExecuteBuffer* ex;
 	if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 	{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 		if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 		{
 			D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
@@ -2196,7 +2196,7 @@ void D3DX3AktAmbient()
 			state->dwArg[0] = D3DAmbientColRGB;
 			state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_EXIT;
 			ins->bSize = 0;
@@ -2204,11 +2204,11 @@ void D3DX3AktAmbient()
 
 			ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 			ex->Unlock();
 		}
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 		D3DEXECUTEDATA ed;
 		MemFill(&ed, sizeof(ed), 0);
 		ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -2223,7 +2223,7 @@ void D3DX3AktAmbient()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// volná videopamì
+// volná videopaměť
 
 int D3DX3Free()
 {
@@ -2242,25 +2242,25 @@ int D3DX3Free()
 void D3DX3AktFog()
 {
 
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 	int size = 	2*sizeof(D3DINSTRUCTION) + 5*sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 	D3DEXECUTEBUFFERDESC d;
 	d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 	d.dwFlags = D3DDEB_BUFSIZE;
 	d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 	IDirect3DExecuteBuffer* ex;
 	if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 	{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 		if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 		{
 
-// nastavení pøepínaèù
+// nastavení přepínačů
 			D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
 			ins->bOpcode = D3DOP_STATERENDER;
 			ins->bSize = sizeof(D3DSTATE);
@@ -2286,7 +2286,7 @@ void D3DX3AktFog()
 			state->dwArg[0] = *((DWORD*)&x);
 			state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_EXIT;
 			ins->bSize = 0;
@@ -2294,10 +2294,10 @@ void D3DX3AktFog()
 
 			ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 			ex->Unlock();
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 			D3DEXECUTEDATA ed;
 			MemFill(&ed, sizeof(ed), 0);
 			ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -2334,25 +2334,25 @@ void D3DX3AktState()
 
 void D3DX3AktBlend(D3DFITEM* item)
 {
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 	int size = 	2*sizeof(D3DINSTRUCTION) + 3*sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 	D3DEXECUTEBUFFERDESC d;
 	d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 	d.dwFlags = D3DDEB_BUFSIZE;
 	d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 	IDirect3DExecuteBuffer* ex;
 	if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 	{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 		if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 		{
 
-// nastavení pøepínaèù
+// nastavení přepínačů
 			D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
 			ins->bOpcode = D3DOP_STATERENDER;
 			ins->bSize = sizeof(D3DSTATE);
@@ -2370,7 +2370,7 @@ void D3DX3AktBlend(D3DFITEM* item)
 			state->dwArg[0] = (BOOL)(item->IsBlend && !D3DRamp && IsBlending);
 			state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_EXIT;
 			ins->bSize = 0;
@@ -2378,10 +2378,10 @@ void D3DX3AktBlend(D3DFITEM* item)
 
 			ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 			ex->Unlock();
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 			D3DEXECUTEDATA ed;
 			MemFill(&ed, sizeof(ed), 0);
 			ed.dwSize = sizeof(D3DEXECUTEDATA);
@@ -2395,29 +2395,29 @@ void D3DX3AktBlend(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenèní úrovnì alfa
+// aktualizace referenční úrovně alfa
 
 void D3DX3AktAlfa(D3DFITEM* item)
 {
-// pøíprava velikosti bufferu
+// příprava velikosti bufferu
 	int size = 	2*sizeof(D3DINSTRUCTION) + 3*sizeof(D3DSTATE);
 
-// pøíprava popisovaèe dat
+// příprava popisovače dat
 	D3DEXECUTEBUFFERDESC d;
 	d.dwSize = sizeof(D3DEXECUTEBUFFERDESC);
 	d.dwFlags = D3DDEB_BUFSIZE;
 	d.dwBufferSize = size;
 
-// vytvoøení provádìcího bufferu
+// vytvoření prováděcího bufferu
 	IDirect3DExecuteBuffer* ex;
 	if (D3DX3Dev->CreateExecuteBuffer(&d, &ex, NULL) == D3D_OK)
 	{
 
-// naplnìní provádìcího bufferu
+// naplnění prováděcího bufferu
 		if ((ex->Lock(&d) == D3D_OK) && (d.lpData != NULL))
 		{
 
-// nastavení pøepínaèù
+// nastavení přepínačů
 			D3DINSTRUCTION* ins = (D3DINSTRUCTION*)(d.lpData);
 			ins->bOpcode = D3DOP_STATERENDER;
 			ins->bSize = sizeof(D3DSTATE);
@@ -2434,7 +2434,7 @@ void D3DX3AktAlfa(D3DFITEM* item)
 			state->dwArg[0] = (BOOL)(item->IsAlphaRef && !D3DRamp);
 			state++;
 
-// ukonèení provádìcího bufferu
+// ukončení prováděcího bufferu
 			ins = (D3DINSTRUCTION*)state;
 			ins->bOpcode = D3DOP_EXIT;
 			ins->bSize = 0;
@@ -2442,10 +2442,10 @@ void D3DX3AktAlfa(D3DFITEM* item)
 
 			ASSERT((BYTE*)(ins + 1) == ((BYTE*)(d.lpData) + size));
 
-// odemknutí provádìcího bufferu
+// odemknutí prováděcího bufferu
 			ex->Unlock();
 
-// nastavení parametrù provádìcího bufferu
+// nastavení parametrů prováděcího bufferu
 			D3DEXECUTEDATA ed;
 			MemFill(&ed, sizeof(ed), 0);
 			ed.dwSize = sizeof(D3DEXECUTEDATA);

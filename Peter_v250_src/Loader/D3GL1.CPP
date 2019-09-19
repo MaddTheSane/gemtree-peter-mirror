@@ -29,15 +29,15 @@ GLTEXCOORDPOINTER	pglTexCoordPointer	= NULL;
 GLVERTEXPOINTER		pglVertexPointer	= NULL;
 
 // OpenGL 1.1
-bool				D3GL1D3Test			= false;	// probìhl test rozhraní OpenGL 1.1
-bool				D3GL1OK				= false;	// rozhraní OpenGL 1.1 vytvoøeno OK
+bool				D3GL1D3Test			= false;	// proběhl test rozhraní OpenGL 1.1
+bool				D3GL1OK				= false;	// rozhraní OpenGL 1.1 vytvořeno OK
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní OpenGL 1.1 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní OpenGL 1.1 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3GL1InitD3()
 {
-// test, zda inicializace již probìhla
+// test, zda inicializace již proběhla
 	if (!D3GL1D3Test)
 	{
 		D3GL1D3Test = true;
@@ -83,16 +83,16 @@ bool D3GL1InitD3()
 		}
 	}
 
-// test, zda je rozhraní OpenGL 1.1 funkèní
+// test, zda je rozhraní OpenGL 1.1 funkční
 	return D3GL1OK;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení rozhraní OpenGL 1.1
+// ukončení rozhraní OpenGL 1.1
 
 void D3GL1TermD3()
 {
-// ukonèení renderování
+// ukončení renderování
 	D3GL0Stop();
 
 // zrušení funkcí
@@ -111,14 +111,14 @@ void D3GL1TermD3()
 	pglTexCoordPointer = NULL;
 	pglVertexPointer = NULL;
 */
-// zrušení pøíznaku, že byla inicializace
+// zrušení příznaku, že byla inicializace
 	D3GL1D3Test = false;
 	D3GL1OK = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahájení funkce zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3GL1Start(int type)
 {
@@ -126,10 +126,10 @@ bool D3GL1Start(int type)
 
 	if (!D3GL0Start(type)) return false;
 
-// opakovaná inicializace, pokud byla uvolnìna knihovna OpenGL
+// opakovaná inicializace, pokud byla uvolněna knihovna OpenGL
 	D3GL1InitD3();
 
-// inicializace adres funkcí zaøízení
+// inicializace adres funkcí zařízení
 	pD3Render = D3GL1Render;		// vyrenderování jednoho objektu
 	pD3TextureRes = D3GL1TextureRes;
 	pD3TextureSet = D3GL1TextureSet;
@@ -161,7 +161,7 @@ void D3GL1Render(D3DFITEM* item)
 		pglMultMatrixf((float*)&item->MatrixWorld);
 	}
 
-// pøíprava pole normál
+// příprava pole normál
 	if (isPic)
 	{
 		pglDisableClientState(GL_NORMAL_ARRAY);
@@ -172,11 +172,11 @@ void D3GL1Render(D3DFITEM* item)
 		pglNormalPointer(GL_FLOAT, sizeof(D3DVECTOR), item->Normal);
 	}
 
-// pøíprava pole souøadnic textury
+// příprava pole souřadnic textury
 	pglEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	pglTexCoordPointer(2, GL_FLOAT, 2*sizeof(float), item->TextUV[0]);
 
-// pøíprava bufferu vrcholù
+// příprava bufferu vrcholů
 	pglEnableClientState(GL_VERTEX_ARRAY);
 
 	D3DVECTOR* buf = NULL;
@@ -229,7 +229,7 @@ void D3GL1Render(D3DFITEM* item)
 		pglVertexPointer(3, GL_FLOAT, sizeof(D3DVECTOR), item->Vertex);
 	}
 
-// pøíprava pole barev
+// příprava pole barev
 	pglEnable(GL_COLOR_MATERIAL);
 //	pglColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
@@ -254,7 +254,7 @@ void D3GL1Render(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetování položky textury před ukončením ovladače
 
 void D3GL1TextureRes(D3DTITEM* item)
 {
@@ -284,7 +284,7 @@ void D3GL1TextureSet(D3DTITEM* item, int stage)
 
 	pglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	pglBindTexture(GL_TEXTURE_2D, (GLuint)item->Data1);
-	// po pøíkazu glBindTexture jsou pøepínaèe neplatné
+	// po příkazu glBindTexture jsou přepínače neplatné
 	ResetD3DSwitch();
 }
 

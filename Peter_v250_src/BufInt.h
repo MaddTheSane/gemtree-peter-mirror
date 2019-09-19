@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer celých èísel							*
+*								Buffer celých čísel							*
 *																			*
 \***************************************************************************/
 
@@ -26,7 +26,7 @@ class CBufInt : public CBuffer<CInt>
 
 /***************************************************************************\
 *																			*
-*							Buffer logických promìnných						*
+*							Buffer logických proměnných						*
 *																			*
 \***************************************************************************/
 // pracuje s hodnotami 0 = FALSE, nenulová hodnota = TRUE
@@ -36,7 +36,7 @@ class CBufBool : public CBufInt
 
 public:
 
-// naètení logické hodnoty ze souboru (naèítá do promìnné, vrací TRUE=operace OK)
+// načtení logické hodnoty ze souboru (načítá do proměnné, vrací TRUE=operace OK)
 	bool LoadFile(BOOL& data, CText jmeno);
 
 // uložení logické hodnoty do souboru formátu LOG (vrací TRUE=operace OK)

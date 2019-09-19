@@ -7,59 +7,59 @@
 *																			*
 \***************************************************************************/
 
-#include	"ProgInit.inc"							// inicializaèní tabulka funkcí
+#include	"ProgInit.inc"							// inicializační tabulka funkcí
 
 /////////////////////////////////////////////////////////////////////////////
-// globální a lokální promìnné
+// globální a lokální proměnné
 
-BOOL		ProgMode = FALSE;						// pøíznak módu editace
-int			ToolBarProgN;							// poèet základních prvkù panelu nástrojù
+BOOL		ProgMode = FALSE;						// příznak módu editace
+int			ToolBarProgN;							// počet základních prvků panelu nástrojů
 
-HWND		TreeCls = NULL;							// okno tøíd
-HWND		TreeObj = NULL;							// okno globálních objektù
-HWND		TreeLoc = NULL;							// okno lokálních objektù
+HWND		TreeCls = NULL;							// okno tříd
+HWND		TreeObj = NULL;							// okno globálních objektů
+HWND		TreeLoc = NULL;							// okno lokálních objektů
 HWND		TreeEdi = NULL;							// okno editoru
 HWND		TreeStr = NULL;							// okno struktur
 
 #define		NADPISHEIGHT 22							// výška okna nadpisu
-int			ProgStatusWidth = 150;					// šíøka druhého pole programového øádku
+int			ProgStatusWidth = 150;					// šířka druhého pole programového řádku
 
-HIMAGELIST	ProgImageList = NULL;					// seznam obrázkù
-HIMAGELIST	ProgImageListMedium = NULL;				// seznam støedních obrázkù
-HIMAGELIST	ProgImageListSmall = NULL;				// seznam malých obrázkù
+HIMAGELIST	ProgImageList = NULL;					// seznam obrázků
+HIMAGELIST	ProgImageListMedium = NULL;				// seznam středních obrázků
+HIMAGELIST	ProgImageListSmall = NULL;				// seznam malých obrázků
 HIMAGELIST	ProgStateList = NULL;					// seznam stavových ikon
-HIMAGELIST	ProgStateListMedium = NULL;				// seznam støedních stavových ikon
+HIMAGELIST	ProgStateListMedium = NULL;				// seznam středních stavových ikon
 HIMAGELIST	ProgStateListSmall = NULL;				// seznam malých stavových ikon
 
-BOOL		Modi = FALSE;							// pøíznak modifikace souboru
+BOOL		Modi = FALSE;							// příznak modifikace souboru
 
-//BOOL		NoSelAkt = FALSE;						// neaktualizovat zmìnu výbìru
+//BOOL		NoSelAkt = FALSE;						// neaktualizovat změnu výběru
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha editace jména prvku
 
-BOOL		EditName = FALSE;						// pøíznak probíhající editace
-HWND		EditNameWnd = NULL;						// editaèní okno
+BOOL		EditName = FALSE;						// příznak probíhající editace
+HWND		EditNameWnd = NULL;						// editační okno
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha editace èísla
+// obsluha editace čísla
 
-HWND		EditNumWnd = NULL;						// editaèní okno èísla
+HWND		EditNumWnd = NULL;						// editační okno čísla
 
 /////////////////////////////////////////////////////////////////////////////
-// editace èíselné položky plochy
+// editace číselné položky plochy
 
-HWND		EditMapNumWnd = NULL;					// editaèní okno plochy (NULL=není)
+HWND		EditMapNumWnd = NULL;					// editační okno plochy (NULL=není)
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha editace logických hodnot
 
-HWND		EditLogWnd = NULL;						// editaèní okno logických hodnot
+HWND		EditLogWnd = NULL;						// editační okno logických hodnot
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha editace textu
 
-HWND		EditTextWnd = NULL;						// editaèní okno textu
+HWND		EditTextWnd = NULL;						// editační okno textu
 
 /////////////////////////////////////////////////////////////////////////////
 // posuvníky pro editory
@@ -70,74 +70,74 @@ BOOL	HScrollDisp = FALSE;						// je horizontální posuvník
 BOOL	VScrollDisp = FALSE;						// je vertikální posuvník
 
 /////////////////////////////////////////////////////////////////////////////
-// pøedìly oken
+// předěly oken
 
-BOOL		Tracking = FALSE;						// je tažení pøedìlù
-BOOL		VTracking = FALSE;						// je tažen vertikální pøedìl
-BOOL		LTracking = FALSE;						// je tažen levý pøedìl
+BOOL		Tracking = FALSE;						// je tažení předělů
+BOOL		VTracking = FALSE;						// je tažen vertikální předěl
+BOOL		LTracking = FALSE;						// je tažen levý předěl
 
-#define	TRACKOFF	3								// odchylka souøadnice pro tažení pøedìlu
+#define	TRACKOFF	3								// odchylka souřadnice pro tažení předělu
 
-int			TrackX1;								// levý vertikální pøedìl
-int			TrackY1;								// levý horizontální pøedìl
-int			TrackX2;								// pravý vertikální pøedìl
-int			TrackY2;								// pravý horizontální pøedìl
+int			TrackX1;								// levý vertikální předěl
+int			TrackY1;								// levý horizontální předěl
+int			TrackX2;								// pravý vertikální předěl
+int			TrackY2;								// pravý horizontální předěl
 
 /////////////////////////////////////////////////////////////////////////////
-// editaèní pole
+// editační pole
 
-int			FocusBuf = BufObjID;					// okno s fokusem (= èíslo bufferu, BufEdiID = editaèní pole)
-int			OldFocusBuf = -1;						// staré okno s fokusem (kvùli pøekreslení starého kurzoru)
+int			FocusBuf = BufObjID;					// okno s fokusem (= číslo bufferu, BufEdiID = editační pole)
+int			OldFocusBuf = -1;						// staré okno s fokusem (kvůli překreslení starého kurzoru)
 
-int			EditMode = -1;							// aktivní editaèní pole (= èíslo bufferu)
+int			EditMode = -1;							// aktivní editační pole (= číslo bufferu)
 int			EditBuf = BufEdiID;						// editovaný buffer
 int			EditItem = 0;							// editovaná položka v bufferu
 int			EditItemSprite = 0;						// sprajt s editovanou ikonou (úschova pro historii)
 int			EditItemPic = 0;						// editovaný obrázek sprajtu (úschova pro historii)
 
-int			EditX = 0;								// souøadnice X poèátku editaèního pole
-int			EditY = 0;								// souøadnice Y poèátku editaèního pole
-int			EditWidth = 0;							// šíøka editaèního pole
-int			EditHeight = 0;							// výška editaèního pole
+int			EditX = 0;								// souřadnice X počátku editačního pole
+int			EditY = 0;								// souřadnice Y počátku editačního pole
+int			EditWidth = 0;							// šířka editačního pole
+int			EditHeight = 0;							// výška editačního pole
 
-int			ToolMode = -1;							// aktivní editaèní mód Toolbaru (=èíslo bufferu)
+int			ToolMode = -1;							// aktivní editační mód Toolbaru (=číslo bufferu)
 
-
-/////////////////////////////////////////////////////////////////////////////
-// hlášení o zmìnì adresáøe
-
-HANDLE		FunctionDirChange	= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - funkce
-HANDLE		NumberDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - èísla
-HANDLE		TextDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - text
-HANDLE		BoolDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - logické hodnoty
-HANDLE		IconDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - ikony
-HANDLE		MapDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - plochy
-HANDLE		PictureDirChange	= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - obrázky
-HANDLE		SpriteDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - sprajty
-HANDLE		SoundDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - zvuk
-HANDLE		MusicDirChange		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - hudba
-
-HANDLE		FunctionDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní funkce
-HANDLE		NumberDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní èísla
-HANDLE		TextDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní text
-HANDLE		BoolDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní logické hodnoty
-HANDLE		IconDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní ikony
-HANDLE		MapDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní plochy
-HANDLE		PictureDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní obrázky
-HANDLE		SpriteDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní sprajty
-HANDLE		SoundDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní zvuk
-HANDLE		MusicDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe - alternativní hudba
-
-#define		ProgDirChangeTimerID 19118			// ID èasovaèe hlášení zmìny adresáøe
-UINT		ProgDirChangeTimer = 0;				// èasovaè pro hlášení zmìn adresáøe
-int			ProgDirChangeIgnore = 0;			// èítaè pro ignorování hlášení zmìn po vlastní zmìnì
 
 /////////////////////////////////////////////////////////////////////////////
-// pøechodnì editovaný prvek v bufferu tøíd
+// hlášení o změně adresáře
+
+HANDLE		FunctionDirChange	= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - funkce
+HANDLE		NumberDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - čísla
+HANDLE		TextDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - text
+HANDLE		BoolDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - logické hodnoty
+HANDLE		IconDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - ikony
+HANDLE		MapDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - plochy
+HANDLE		PictureDirChange	= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - obrázky
+HANDLE		SpriteDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - sprajty
+HANDLE		SoundDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - zvuk
+HANDLE		MusicDirChange		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - hudba
+
+HANDLE		FunctionDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní funkce
+HANDLE		NumberDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní čísla
+HANDLE		TextDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní text
+HANDLE		BoolDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní logické hodnoty
+HANDLE		IconDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní ikony
+HANDLE		MapDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní plochy
+HANDLE		PictureDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní obrázky
+HANDLE		SpriteDirChange2	= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní sprajty
+HANDLE		SoundDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní zvuk
+HANDLE		MusicDirChange2		= INVALID_HANDLE_VALUE;	// hlášení o změně adresáře - alternativní hudba
+
+#define		ProgDirChangeTimerID 19118			// ID časovače hlášení změny adresáře
+UINT		ProgDirChangeTimer = 0;				// časovač pro hlášení změn adresáře
+int			ProgDirChangeIgnore = 0;			// čítač pro ignorování hlášení změn po vlastní změně
+
+/////////////////////////////////////////////////////////////////////////////
+// přechodně editovaný prvek v bufferu tříd
 
 //CText		EditClassName;							// jméno editovaného souboru
-//BOOL		EditClassModi = FALSE;					// pøíznak nutnosti uložení dat
-//int			EditClassBuf = -1;						// editovaný buffer bufferu tøíd
+//BOOL		EditClassModi = FALSE;					// příznak nutnosti uložení dat
+//int			EditClassBuf = -1;						// editovaný buffer bufferu tříd
 //int			EditClassItem = -1;						// editovaná položka v bufferu
 //int			EditClassSprite = -1;					// sprajt s editovanou ikonou
 //int			EditClassIcon = -1;						// editovaná ikona sprajtu
@@ -145,17 +145,17 @@ int			ProgDirChangeIgnore = 0;			// èítaè pro ignorování hlášení zmìn p
 /////////////////////////////////////////////////////////////////////////////
 // obsluha kurzoru myši
 
-#define MOUSEINV -100000				// neplatná souøadnice myši
-int		MouseX = MOUSEINV;				// souøadnice X myši
-int		MouseY = MOUSEINV;				// souøadnice Y myši
+#define MOUSEINV -100000				// neplatná souřadnice myši
+int		MouseX = MOUSEINV;				// souřadnice X myši
+int		MouseY = MOUSEINV;				// souřadnice Y myši
 
 
 /////////////////////////////////////////////////////////////////////////////
-// opoždìné nastavení fokusu
+// opožděné nastavení fokusu
 
-#define		FocusTimerID 19128						// ID èasovaèe pro nastavení fokusu
-UINT		FocusTimer = 0;							// èasovaè pro nastavení fokusu
-int			FocusTimerN = 0;						// èítaè pro nastavení fokusu
+#define		FocusTimerID 19128						// ID časovače pro nastavení fokusu
+UINT		FocusTimer = 0;							// časovač pro nastavení fokusu
+int			FocusTimerN = 0;						// čítač pro nastavení fokusu
 int			FocusNextBuf = BufEdiID;				// buffer k nastavení jako aktivní
 
 int			FocusEditModeBuf = -1;					// buffer s editací (-1 = není)
@@ -164,27 +164,27 @@ int			FocusEditModeInx = -1;					// položka s editací
 /////////////////////////////////////////////////////////////////////////////
 // obsluha preview
 
-#define		PreviewTimerID 19135					// ID èasovaèe pro preview
-UINT		PreviewTimer = 0;						// èasovaè pro preview
-int			PreviewTimerN = -1;						// èítaè pro preview
+#define		PreviewTimerID 19135					// ID časovače pro preview
+UINT		PreviewTimer = 0;						// časovač pro preview
+int			PreviewTimerN = -1;						// čítač pro preview
 
 BOOL		PreviewWav = FALSE;						// probíhá preview WAV
-MCIDEVICEID	PreviewMid = 0;							// ID zaøízení pro MID
+MCIDEVICEID	PreviewMid = 0;							// ID zařízení pro MID
 BOOL		PreviewPic = FALSE;						// probíhá preview obrázku
 
-#define		PreviewPicSize 3						// poèet položek pro cachování obrázkù
+#define		PreviewPicSize 3						// počet položek pro cachování obrázků
 #define		PreviewPicAkt 0							// index aktuálního obrázku
 #define		PreviewPicNxt 1							// index následujícího obrázku
-#define		PreviewPicPre 2							// index pøedešlého obrázku
+#define		PreviewPicPre 2							// index předešlého obrázku
 
 CPicture	PreviewPicPic[PreviewPicSize];			// obrázky pro cachování
-CText		PreviewPicName[PreviewPicSize];			// jména obrázkù pro cachování (prázdný = není)
-BOOL		PreviewPicLoad[PreviewPicSize];			// pøíznaky naèítání obrázkù (TRUE = byl naèítán)
+CText		PreviewPicName[PreviewPicSize];			// jména obrázků pro cachování (prázdný = není)
+BOOL		PreviewPicLoad[PreviewPicSize];			// příznaky načítání obrázků (TRUE = byl načítán)
 
-BOOL		PreviewPicVpred = TRUE;					// pøednost obrázky smìrem vpøed
+BOOL		PreviewPicVpred = TRUE;					// přednost obrázky směrem vpřed
 
-TCHAR		PreviewTempName[MAX_PATH + 101];		// jméno pøechodného souboru pøi pøehrávání MP3
-BOOL		IsPreviewTempName = FALSE;				// pøíznak vytvoøení pøechodného souboru MP3
+TCHAR		PreviewTempName[MAX_PATH + 101];		// jméno přechodného souboru při přehrávání MP3
+BOOL		IsPreviewTempName = FALSE;				// příznak vytvoření přechodného souboru MP3
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -196,17 +196,17 @@ HWND		FindStringEdit = NULL;					// handle editoru textu k hledání
 /////////////////////////////////////////////////////////////////////////////
 // combobox panely
 
-HWND		ToolEditIcon = NULL;					// panel nástrojù editoru ikon
-HWND		ToolEditIconWidth = NULL;				// panel nástrojù volby šíøky
-HWND		ToolEditMap = NULL;						// panel nástrojù editoru ploch
+HWND		ToolEditIcon = NULL;					// panel nástrojů editoru ikon
+HWND		ToolEditIconWidth = NULL;				// panel nástrojů volby šířky
+HWND		ToolEditMap = NULL;						// panel nástrojů editoru ploch
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní buffery (pøipravují se jen jednou pøi startu programu)
+// inicializační buffery (připravují se jen jednou při startu programu)
 //
-// Pøi používání bufferù se poèítá s tím, že položky jsou uloženy po øadì
-// od zaèátku bufferu, poèet položek odpovídá poètu (a poøadí) funkcí.
+// Při používání bufferů se počítá s tím, že položky jsou uloženy po řadě
+// od začátku bufferu, počet položek odpovídá počtu (a pořadí) funkcí.
 
-const int FncNum = sizeof(InitTabFunc) / sizeof(InitTabFunc[0]);	// poèet funkcí
+const int FncNum = sizeof(InitTabFunc) / sizeof(InitTabFunc[0]);	// počet funkcí
 CBufMultiText	TextFnc;							// texty funkcí
 CBufIcon	IconFnc;								// ikony funkcí
 
@@ -214,15 +214,15 @@ CBufIcon	IconFnc;								// ikony funkcí
 // buffery
 
 CBufProg	BufProg[PROGBUFNUM];					// (0 až 5) buffery programu (0=interní)
-CBufReal	Real;									// buffer reálných èísel
-CBufMultiText	Text;								// buffer textù
-CBufBool	Bool;									// buffer logických promìnných
+CBufReal	Real;									// buffer reálných čísel
+CBufMultiText	Text;								// buffer textů
+CBufBool	Bool;									// buffer logických proměnných
 CBufIcon	Icon;									// buffer ikon
 CBufIcon	IconState;								// buffer stavových ikon
 CBufMap		Map;									// buffer ploch
-CBufPic		Picture;								// buffer obrázkù
-CBufSprite	Sprite;									// buffer sprajtù
-CBufSound	Sound;									// buffer zvukù
+CBufPic		Picture;								// buffer obrázků
+CBufSprite	Sprite;									// buffer sprajtů
+CBufSound	Sound;									// buffer zvuků
 CBufMusic	Music;									// buffer hudby
 
 CSprite		Sprite0;								// sprajt 0 (Petr)
@@ -230,18 +230,18 @@ CSprite		Sprite1;								// sprajt 1 (Petra)
 CBufIcon	Icon1;									// buffer s 1 ikonou k zobrazení
 
 //CBufIcon	Icon16;									// buffer ikon s velikostí 16x16
-//CBufIndex	Icon16List;								// buffer indexù ikon s velikostí 16x16
-//int			Icon16Next = 0;							// pøíští ikona pro zápis
+//CBufIndex	Icon16List;								// buffer indexů ikon s velikostí 16x16
+//int			Icon16Next = 0;							// příští ikona pro zápis
 //CBufIcon	Icon32;									// buffer ikon s velikostí 32x32
-//CBufIndex	Icon32List;								// buffer indexù ikon s velikostí 32x32
-//int			Icon32Next = 0;							// pøíští ikona pro zápis
+//CBufIndex	Icon32List;								// buffer indexů ikon s velikostí 32x32
+//int			Icon32Next = 0;							// příští ikona pro zápis
 
 CBufUndo	Undo;									// buffer undo a redo
 
 int			GroupIndex = -1;						// index do bufferu BufStr na IDF_GROUP
 
 /////////////////////////////////////////////////////////////////////////////
-// definice základních tlaèítek pro toolbar Program
+// definice základních tlačítek pro toolbar Program
 
 TBBUTTON ToolBarProgram[] = {
 	{	ButtonStart,		IDN_START,			TBSTATE_ENABLED, TBSTYLE_BUTTON,	0, 0},
@@ -313,7 +313,7 @@ TBBUTTON ToolBarEditSprite[] = {
 
 #define ToolBarEditSpriteNum (sizeof(ToolBarEditSprite)/sizeof(TBBUTTON))
 
-// editor obrázkù
+// editor obrázků
 TBBUTTON ToolBarEditPic[] = {
 	{	ButtonDimen,		IDN_DIMEN,			TBSTATE_ENABLED, TBSTYLE_BUTTON,	0, 0},
 	{	ButtonRastr,		IDN_RASTR,			TBSTATE_ENABLED, TBSTYLE_BUTTON | TBSTYLE_CHECK,	0, 0},
@@ -365,7 +365,7 @@ int ToolBarEditPicTools[] = {
 	-1
 };
 
-// volba šíøky pera pro kreslení
+// volba šířky pera pro kreslení
 int ToolBarEditPicWidths[] = {
 	ButtonWidth1,		IDN_WIDTH1,
 	ButtonWidth2,		IDN_WIDTH2,
@@ -403,7 +403,7 @@ MENUITEM* MenuPrg[] =
 	NULL
 };
 
-// èíslo, pøepínaè, text
+// číslo, přepínač, text
 MENUITEM* MenuNum[] =
 {
 	MenuSoubor2,
@@ -486,7 +486,7 @@ MENUITEM* MenuMus[] =
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení menu programu a fontù (lze i opakovanì)
+// nastavení menu programu a fontů (lze i opakovaně)
 
 void ProgSetMenu()
 {
@@ -558,7 +558,7 @@ void ProgSetMenu()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace po zmìnì jazyku
+// aktualizace po změně jazyku
 
 void ProgReloadBuf(CBufProg* buf)
 {
@@ -573,7 +573,7 @@ void ProgReloadBuf(CBufProg* buf)
 
 void ProgReloadJazyk()
 {
-// naètení nadpisù oken
+// načtení nadpisů oken
 	CText text;
 	text.Load(IDN_NADPISOBJ);
 	BufObj.Nadpis(text);
@@ -602,18 +602,18 @@ void ProgReloadJazyk()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// první inicializace pøi startu programu (hlavní okno i SELECT je již vytvoøeno)
+// první inicializace při startu programu (hlavní okno i SELECT je již vytvořeno)
 
 void ProgStartInit()
 {
-// inicializace bufferù programu
+// inicializace bufferů programu
 	int i;
 	for (i = 0; i < PROGBUFNUM; i++)
 	{
 		BufProg[i].BufID(i);
 	}
 
-// naètení nadpisù oken
+// načtení nadpisů oken
 	CText text;
 	text.Load(IDN_NADPISOBJ);
 	BufObj.Nadpis(text);
@@ -624,12 +624,12 @@ void ProgStartInit()
 	text.Load(IDN_NADPISCLS);
 	BufCls.Nadpis(text);
 
-// inicializace statických objektù
+// inicializace statických objektů
 	Sprite0.New(5, 4);				// sprajt 0 - Petr
 	Sprite1.New(5, 4);				// sprajt 1 - Petra
 	Sprite1.Level(900);
 
-// kontrola tabulky jmen importu (zda jsou jména jedineèná)
+// kontrola tabulky jmen importu (zda jsou jména jedinečná)
 #ifdef	_DEBUG
 	{
 		int i, j, n;
@@ -648,11 +648,11 @@ void ProgStartInit()
 	}
 #endif
 
-// naètení textù funkcí
+// načtení textů funkcí
 	int index;
-	for (i = IDF; i < IDF + FncNum; i++)		// cyklus pøes všechny ID
+	for (i = IDF; i < IDF + FncNum; i++)		// cyklus přes všechny ID
 	{
-		index = TextFnc.Load(i);				// naètení textu s resource
+		index = TextFnc.Load(i);				// načtení textu s resource
 		ASSERT(index == (i - IDF));				// ukládání musí být spojité
 
 #ifdef _DEBUG
@@ -664,14 +664,14 @@ void ProgStartInit()
 	}
 
 #ifdef _DEBUG
-	ASSERT(TextFnc.Num() == FncNum);			// poèet textù teï musí pøesnì souhlasit
+	ASSERT(TextFnc.Num() == FncNum);			// počet textů teď musí přesně souhlasit
 #endif
 
-// naètení ikon funkcí
-	IconFnc.Load(IDN_DEF_ICON, FncNum);			// naètení ikon z resource
-	ASSERT(IconFnc.Num() == FncNum);			// musí pøesnì souhlasit poèet
+// načtení ikon funkcí
+	IconFnc.Load(IDN_DEF_ICON, FncNum);			// načtení ikon z resource
+	ASSERT(IconFnc.Num() == FncNum);			// musí přesně souhlasit počet
 
-// vygenerování ikon pro HELP (odpoznámkovat a spustit vždy po pøidání dalších funkcí, pøed doplòováním HELPu)
+// vygenerování ikon pro HELP (odpoznámkovat a spustit vždy po přidání dalších funkcí, před doplňováním HELPu)
 /*
 	StdBitmapInfo->bmiColors[BackCol].rgbRed = 255;
 	StdBitmapInfo->bmiColors[BackCol].rgbGreen = 255;
@@ -688,9 +688,9 @@ void ProgStartInit()
 	}
 */
 
-// naètení stavových ikon
+// načtení stavových ikon
 	IconState.IconSize(12, 32);					// nastaveni velikosti ikon
-	IconState.Load(IDN_STATE_ICON, 4);			// naètení stavových ikon
+	IconState.Load(IDN_STATE_ICON, 4);			// načtení stavových ikon
 	ASSERT(IconState.Num() == 4);
 
 // inicializace bufferu seznamu ikon
@@ -708,17 +708,17 @@ void ProgStartInit()
 	PROGITEM* item;
 	for (i = IDF; i < IDF + FncNum; i++)
 	{
-		index = BufInt.New();						// vytvoøení nové položky
+		index = BufInt.New();						// vytvoření nové položky
 		ASSERT(index == (i - IDF));					// ukládání musí být spojité
 		item = &BufInt[index];						// adresa nové položky
-		item->Func = i;								// identifikaèní èíslo funkce
+		item->Func = i;								// identifikační číslo funkce
 		item->SrcMask = InitTabFunc[index].SrcMask;	// zdrojové vlastnosti
 		item->DstMask = InitTabFunc[index].DstMask;	// cílové vlastnosti
 		item->Param = InitTabFunc[index].Param;		// parametry
 		item->Icon = index;							// index ikony
 		item->Name = index;							// index jména
 	}
-	ASSERT(BufInt.Num() == FncNum);					// poèet funkcí musí souhlasit
+	ASSERT(BufInt.Num() == FncNum);					// počet funkcí musí souhlasit
 
 // inicializace bufferu struktur
 	BufStr.InitTab(InitTabStr, sizeof(InitTabStr)/sizeof(InitTabStr[0]));
@@ -735,7 +735,7 @@ void ProgStartInit()
 		}
 	};
 
-// inicializace editorù
+// inicializace editorů
 	EditIcon::StartInit();
 	EditNum::StartInit();
 	EditLog::StartInit();
@@ -750,7 +750,7 @@ void ProgStartInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení okna stromu
+// vytvoření okna stromu
 
 HWND CreateTree(int x, int y, int width, int height, int id)
 {
@@ -791,31 +791,31 @@ void ProgInit()
 	EditBuf = BufEdiID;
 	EditItem = 0;
 
-// nastavení tlaèítek pro režim programování
+// nastavení tlačítek pro režim programování
 	ToolBarProgN = ToolBarProgramNum;
-	ToolBarAdd(ToolBarProgram, ToolBarProgramNum); // pøidání tlaèítek
+	ToolBarAdd(ToolBarProgram, ToolBarProgramNum); // přidání tlačítek
 
 // nastavení nového menu
 	ProgSetMenu();
 	EnableCommand(IDN_START, TRUE);
 
-// inicializace bufferù
+// inicializace bufferů
 	Icon = IconFnc;
 	Text = TextFnc;
 
 //	Icon16List.NumClear(ICONNUM);
 //	Icon32List.NumClear(ICONNUM);
 
-// buffer interních funkcí musí zùstat stále stejný a nezmìnìn
+// buffer interních funkcí musí zůstat stále stejný a nezměněn
 	ASSERT(BufInt.Num() == FncNum);
 	ASSERT(Icon.Num() == FncNum);
 	ASSERT(Text.Num() == FncNum);
 	ASSERT(IconState.Num() == 4);
 
-// buffer struktur musí také zùstat nezmìnìn
+// buffer struktur musí také zůstat nezměněn
 	ASSERT(BufStr.Num() == sizeof(InitTabStr)/sizeof(InitTabStr[0]));
 
-// vynulování èítaèù referencí v bufferu struktur
+// vynulování čítačů referencí v bufferu struktur
 	int inx;
 	for (inx = BufStr.Max()-1; inx >= 0; inx--)
 	{
@@ -825,19 +825,19 @@ void ProgInit()
 		}
 	}
 
-// inicializace bufferu tøíd
+// inicializace bufferu tříd
 	BufCls.InitTab(InitTabCls, sizeof(InitTabCls)/sizeof(InitTabCls[0]));
 
-// naètení programu
+// načtení programu
 	ProgFile::Load();
 
 // kontrola programu
 	ProgramCheck();
 
-// aktualizace LOCK a OFF prvkù v buferech
+// aktualizace LOCK a OFF prvků v buferech
 	UpdateLock();
 
-// vytvoøení seznamu obrázkù
+// vytvoření seznamu obrázků
 	ProgImageList = ImageList_Create(32, 32, ILC_COLORDDB | ILC_MASK,1,1);
 	ASSERT(ProgImageList);
 	ProgImageListMedium = ImageList_Create(24, 24, ILC_COLORDDB | ILC_MASK,1,1);
@@ -851,7 +851,7 @@ void ProgInit()
 	ProgStateListSmall = IconState.GenerList(FALSE, SI_SMALL);
 	ASSERT(ProgStateListSmall);
 
-// vytvoøení oken stromù
+// vytvoření oken stromů
 	TrackX1 = ClientRect.left + ClientWidth/5;
 	TrackX2 = ClientRect.left + ClientWidth/5*4;
 	TrackY1 = ClientRect.top + ClientHeight/3*2;
@@ -876,7 +876,7 @@ void ProgInit()
 	VScroll = ::CreateWindow(_T("SCROLLBAR"), NULL, WS_CHILD | SBS_VERT,
 		0, 0, TRACKSIRKA, TRACKSIRKA, MainFrame, NULL, hInstance, 0);
 
-// napojení stromù na buffery
+// napojení stromů na buffery
 	BufObj.Tree(TreeObj);
 	BufLoc.Tree(TreeLoc);
 	BufEdi.Tree(TreeEdi);
@@ -890,14 +890,14 @@ void ProgInit()
 	BufStr.IconList(BufZoom[BufStrID]);
 	BufCls.IconList(BufZoom[BufClsID]);
 
-// nastavení fontù pro stromy
+// nastavení fontů pro stromy
 	BufCls.AktFont();
 	BufObj.AktFont();
 	BufLoc.AktFont();
 	BufStr.AktFont();
 	BufEdi.AktFont();
 
-// zobrazení stromù
+// zobrazení stromů
 	BufObj.Disp(-1);
 	BufLoc.Disp(0);
 	BufEdi.Disp(0);
@@ -907,7 +907,7 @@ void ProgInit()
 // zapnutí módu programování
 	ProgMode = TRUE;
 
-// zobrazení oken stromù
+// zobrazení oken stromů
 	ProgOnSize();
 	::ShowWindow(TreeObj, SW_SHOW);
 	::ShowWindow(TreeLoc, SW_SHOW);
@@ -915,15 +915,15 @@ void ProgInit()
 	::ShowWindow(TreeStr, SW_SHOW);
 	::ShowWindow(TreeCls, SW_SHOW);
 
-// vyprázdnìní bufferu historie editace
+// vyprázdnění bufferu historie editace
 	HistEdit::DelAll();
 	HistEdit::Update();
 
-// nastavení fokusu na okno objektù
+// nastavení fokusu na okno objektů
 	EditBuf = -1;
-	SetEditMode(BufEdiID, 0);						// zapnutí editaèního pole programu
+	SetEditMode(BufEdiID, 0);						// zapnutí editačního pole programu
 
-// nastavení fokusu na okno objektù s opoždìním (chyba v obsluze stromu v COMMCTL32.DLL)
+// nastavení fokusu na okno objektů s opožděním (chyba v obsluze stromu v COMMCTL32.DLL)
 // !!!!!!!! ProgSetFocus() havaruje (adresa 56AE90 se zneplatní - položka stromu struktur) !!!!!!!!
 	FocusBuf = BufObjID;
 	FocusNextBuf = BufObjID;
@@ -932,10 +932,10 @@ void ProgInit()
 	FocusTimer = ::SetTimer(MainFrame, FocusTimerID, TimerConst, NULL);
 //	ProgSetFocus();
 
-// nadpis editaèního okna
+// nadpis editačního okna
 	BufEdi.Nadpis(Text.GetTxt(BufObj.GetText(BufObj.SrcDat(BufLocID, 0))));
 
-// zahájení hlášení zmìn adresáøù
+// zahájení hlášení změn adresářů
 	BeginDirChange(&FunctionDirChange, &FunctionDirChange2, FunctionPath, FunctionPath2);
 	BeginDirChange(&NumberDirChange, &NumberDirChange2, NumberPath, NumberPath2);
 	BeginDirChange(&TextDirChange, &TextDirChange2, TextPath, TextPath2);
@@ -967,39 +967,39 @@ void ProgInit()
 	Sound.UndoOn();
 	Music.UndoOn();
 
-// zahájení èítání preview
+// zahájení čítání preview
 	PreviewStop();
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 	ProgAktItem();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení sledování zmìn adresáøe
+// zahájení sledování změn adresáře
 
 void BeginDirChange(HANDLE* dir1, HANDLE* dir2, CText& path1, CText& path2)
 {
 	if (*dir1 == INVALID_HANDLE_VALUE)
 	{
 		*dir1 = ::FindFirstChangeNotification(
-			path1,							// cesta k adresáøi
-			TRUE,							// hlásit podadredáøe
+			path1,							// cesta k adresáři
+			TRUE,							// hlásit podadredáře
 			FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_ATTRIBUTES);
 	}
 
 	if ((*dir2 == INVALID_HANDLE_VALUE) && path2.IsNotEmpty())
 	{
 		*dir2 = ::FindFirstChangeNotification(
-			path2,							// cesta k adresáøi
-			TRUE,							// hlásit podadredáøe
+			path2,							// cesta k adresáři
+			TRUE,							// hlásit podadredáře
 			FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME | FILE_NOTIFY_CHANGE_ATTRIBUTES);
 	}
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení režimu editace souboru
+// ukončení režimu editace souboru
 
 void ProgTerm()
 {
@@ -1007,7 +1007,7 @@ void ProgTerm()
 	if (!ProgMode) return;
 	ProgMode = FALSE;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 	if (PreviewTimer)
@@ -1018,7 +1018,7 @@ void ProgTerm()
 	PreviewTimerN = -1;
 	PreviewPicOff();
 
-// ukonèení registrace UNDO
+// ukončení registrace UNDO
 	BufCls.UndoOff();
 	BufObj.UndoOff();
 	BufLoc.UndoOff();
@@ -1035,7 +1035,7 @@ void ProgTerm()
 	Sound.UndoOff();
 	Music.UndoOff();
 
-// zrušení hlášení o zmìnì adresáøe
+// zrušení hlášení o změně adresáře
 	if (ProgDirChangeTimer)
 	{
 		::KillTimer(MainFrame, ProgDirChangeTimer);
@@ -1180,13 +1180,13 @@ void ProgTerm()
 // skrytí okna struktur
 //	::ShowWindow(TreeStr, SW_HIDE);
 
-// zrušení okna globálních objektù
+// zrušení okna globálních objektů
 	BufObj.Disp(-2);
 	BufObj.Tree(NULL);
 	::DestroyWindow(TreeObj);
 	TreeObj = NULL;
 
-// zrušení okna lokálních objektù
+// zrušení okna lokálních objektů
 	BufLoc.Disp(-2);
 	BufLoc.Tree(NULL);
 	::DestroyWindow(TreeLoc);
@@ -1205,7 +1205,7 @@ void ProgTerm()
 	TreeStr = NULL;
 	ASSERT(BufStr.Num() == sizeof(InitTabStr)/sizeof(InitTabStr[0]));
 
-// zrušení okna tøíd
+// zrušení okna tříd
 	BufCls.Disp(-2);
 	BufCls.Tree(NULL);
 	::DestroyWindow(TreeCls);
@@ -1235,7 +1235,7 @@ void ProgTerm()
 		ToolEditMap = NULL;
 	}
 
-// skrytí okna editoru èísla
+// skrytí okna editoru čísla
 	::ShowWindow(EditNumWnd, SW_HIDE);
 
 // skrytí okna editoru logických hodnot
@@ -1255,7 +1255,7 @@ void ProgTerm()
 // zrušení okna editoru plochy
 	EditMap::EndEditSwcNum();
 
-// zrušení seznamu obrázkù
+// zrušení seznamu obrázků
 	::ImageList_Destroy(ProgImageList);
 	ProgImageList = NULL;
 	::ImageList_Destroy(ProgImageListMedium);
@@ -1269,31 +1269,31 @@ void ProgTerm()
 	::ImageList_Destroy(ProgStateListSmall);
 	ProgStateListSmall = NULL;
 
-// vyprázdnìní bufferu historie editace (pøes zrušením bufferù!)
+// vyprázdnění bufferu historie editace (přes zrušením bufferů!)
 	HistEdit::DelAll();
 	HistEdit::Update();
 
-// vyprázdnìní bufferù programu (jen pracovních)
+// vyprázdnění bufferů programu (jen pracovních)
 	ASSERT(BufInt.Num() == FncNum);
 	BufObj.DelAll();
 	BufLoc.DelAll();
 	BufEdi.DelAll();
 	BufCls.DelAll();
 
-// vyprázdnìní pracovních bufferù
-	Real.DelAll();								// buffer reálných èísel
-	Text.DelAll();								// buffer textù
-	Bool.DelAll();								// buffer logických promìnných
+// vyprázdnění pracovních bufferů
+	Real.DelAll();								// buffer reálných čísel
+	Text.DelAll();								// buffer textů
+	Bool.DelAll();								// buffer logických proměnných
 	Icon.DelAll();								// buffer ikon
 	Map.DelAll();								// buffer ploch
-	Sprite.DelAll();							// buffer sprajtù
-	Sound.DelAll();								// buffer zvukù
-	Picture.DelAll();							// buffer obrázkù
+	Sprite.DelAll();							// buffer sprajtů
+	Sound.DelAll();								// buffer zvuků
+	Picture.DelAll();							// buffer obrázků
 	Music.DelAll();								// buffer hudby
 
 	Undo.DelAll();								// buffer undo a redo
 
-// zrušení všech tlaèítek v panelu nástrojù
+// zrušení všech tlačítek v panelu nástrojů
 	ToolBarClear(0);
 }
 
@@ -1306,7 +1306,7 @@ void ProgSetFocus()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// naètení okna s fokusem
+// načtení okna s fokusem
 	HWND wndOld = ::GetFocus();
 
 // vypnutí automatického focusu
@@ -1318,7 +1318,7 @@ void ProgSetFocus()
 		FocusTimer = 0;
 	}
 
-// pøíprava nového okna
+// příprava nového okna
 	HWND wndNew = MainFrame;
 
 	if ((FocusBuf != BufEdiID) || (EditMode == BufEdiID))
@@ -1354,7 +1354,7 @@ void ProgSetFocus()
 		ProgOnSetFocus(wndNew);
 //		NoSelAkt = FALSE;
 
-// zahájení èítání preview
+// zahájení čítání preview
 		PreviewStop();
 	}
 }
@@ -1368,7 +1368,7 @@ void ProgUpdateClipboard()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// aktualizace voleb pøi editaci jména
+// aktualizace voleb při editaci jména
 	if (EditName)
 	{
 		long int start, end;
@@ -1384,7 +1384,7 @@ void ProgUpdateClipboard()
 		return;
 	}
 
-// nastavení panelu nástrojù
+// nastavení panelu nástrojů
 	if (FocusBuf == BufEdiID)
 	{
 		switch(EditMode)
@@ -1454,7 +1454,7 @@ void ProgUpdateUndoRedo()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// aktualizace voleb pøi editaci jména
+// aktualizace voleb při editaci jména
 	if (EditName)
 	{
 		BOOL enable = ::SendMessage(EditNameWnd, EM_CANUNDO, 0, 0);
@@ -1463,7 +1463,7 @@ void ProgUpdateUndoRedo()
 		return;
 	}
 
-// aktualizace voleb pøi editaci èísla plochy
+// aktualizace voleb při editaci čísla plochy
 	if (EditMapNumWnd)
 	{
 		BOOL enable = ::SendMessage(EditMapNumWnd, EM_CANUNDO, 0, 0);
@@ -1472,7 +1472,7 @@ void ProgUpdateUndoRedo()
 		return;
 	}
 
-// nastavení panelu nástrojù
+// nastavení panelu nástrojů
 	Undo.UpdateUndoRedo();
 }
 
@@ -1488,7 +1488,7 @@ void ProgUpdateMenu()
 // nastavení menu
 	ProgSetMenu();
 
-// nastavení panelu nástrojù
+// nastavení panelu nástrojů
 	if (FocusBuf == BufEdiID)
 	{
 		switch(EditMode)
@@ -1522,7 +1522,7 @@ void ProgUpdateInOut()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// aktualizace voleb pøi editaci jména
+// aktualizace voleb při editaci jména
 	if (EditName)
 	{
 		EnableCommand(IDN_IN, FALSE);
@@ -1530,7 +1530,7 @@ void ProgUpdateInOut()
 		return;
 	}
 
-// nastavení panelu nástrojù
+// nastavení panelu nástrojů
 	if (FocusBuf == BufEdiID)
 	{
 		switch(EditMode)
@@ -1566,13 +1566,13 @@ void ProgOnSetFocus(HWND hWnd)
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// výbìr textu v editoru èísla
+// výběr textu v editoru čísla
 	if (hWnd == EditNumWnd)
 	{
 		::SendMessage(EditNumWnd, EM_SETSEL, 0, (LPARAM)-1);
 	}
 
-// ukonèení editace èíselného parametru plochy
+// ukončení editace číselného parametru plochy
 	if (hWnd != EditMapNumWnd)
 	{
 		EditMap::EndEditSwcNum();
@@ -1583,7 +1583,7 @@ void ProgOnSetFocus(HWND hWnd)
 	if (bufID < 0) return;
 	FocusBuf = bufID;
 
-// pøekreslení starého i nového okna
+// překreslení starého i nového okna
 	TimeRepaint(FocusBuf);
 	TimeRepaint(OldFocusBuf);
 	OldFocusBuf = FocusBuf;
@@ -1594,7 +1594,7 @@ void ProgOnSetFocus(HWND hWnd)
 //		SetEditMode(BufEdiID, 0);
 //	}
 
-// nastavení panelu nástrojù
+// nastavení panelu nástrojů
 	if (bufID == BufEdiID)
 	{
 		SetToolMode(EditMode);
@@ -1618,30 +1618,30 @@ void ProgOnSetFocus(HWND hWnd)
 	ProgUpdateInOut();
 	ProgUpdateMenu();
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 	ProgDispNadpis();
 	ProgAktItem();
 
-// zahájení èítání preview
+// zahájení čítání preview
 	PreviewStop();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti okna
+// změna velikosti okna
 
 void ProgOnSize()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// posun panelu nástrojù
+// posun panelu nástrojů
 	ToolBarResize();
 
-// zahájení pøesouvání oken
+// zahájení přesouvání oken
 	HDWP hdwp = ::BeginDeferWindowPos(30);
 
-// naètení výšky stavové lišty (i když to není potøeba)
+// načtení výšky stavové lišty (i když to není potřeba)
 	RECT rcStat;
 	::GetWindowRect(StatusBar, &rcStat);
 
@@ -1652,10 +1652,10 @@ void ProgOnSize()
 // inicializace klientské oblasti
 	InitClientRect();
 
-// aktualizace pøedìlù stavového okna
+// aktualizace předělů stavového okna
 	SetStatusWidth(ProgStatusWidth);
 
-// pøíprava pøedìlù
+// příprava předělů
 	TrackX1 = ClientRect.left + (ClientWidth*LeftWidth + Scale/2)/Scale;
 	if (TrackX1 > (ClientRect.right - 8)) TrackX1 = ClientRect.right - 8;
 	if (TrackX1 < ClientRect.left + 4) TrackX1 = ClientRect.left + 4;
@@ -1672,33 +1672,33 @@ void ProgOnSize()
 	if (TrackY2 > (ClientRect.bottom - NADPISHEIGHT - 4)) TrackY2 = ClientRect.bottom - NADPISHEIGHT - 4;
 	if (TrackY2 < ClientRect.top + NADPISHEIGHT + 4) TrackY2 = ClientRect.top + NADPISHEIGHT + 4;
 
-// rozmìry editaèního pole
+// rozměry editačního pole
 	EditX = TrackX1;
 	EditY = ClientRect.top + NADPISHEIGHT;
 	EditWidth = TrackX2 - TrackX1;
 	EditHeight = ClientHeight - NADPISHEIGHT;
 
-// zmìna velikosti okna globálních objektù
+// změna velikosti okna globálních objektů
 	hdwp = ::DeferWindowPos(hdwp, TreeObj, NULL, ClientRect.left, ClientRect.top + NADPISHEIGHT, TrackX1 - ClientRect.left, TrackY1 - ClientRect.top - NADPISHEIGHT,
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-// zmìna velikosti okna lokálních objektù
+// změna velikosti okna lokálních objektů
 	hdwp = ::DeferWindowPos(hdwp, TreeLoc, NULL, ClientRect.left, TrackY1 + NADPISHEIGHT, TrackX1 - ClientRect.left, ClientRect.bottom - TrackY1 - NADPISHEIGHT,
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-// zmìna velikosti okna editoru (i když není zobrazeno)
+// změna velikosti okna editoru (i když není zobrazeno)
 	hdwp = ::DeferWindowPos(hdwp, TreeEdi, NULL, EditX, EditY, EditWidth, EditHeight,
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-// zmìna velikosti okna struktur
+// změna velikosti okna struktur
 	hdwp = ::DeferWindowPos(hdwp, TreeStr, NULL, TrackX2, ClientRect.top + NADPISHEIGHT, ClientRect.right - TrackX2, TrackY2 - ClientRect.top - NADPISHEIGHT,
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-// zmìna velikosti okna tøíd
+// změna velikosti okna tříd
 	hdwp = ::DeferWindowPos(hdwp, TreeCls, NULL, TrackX2, TrackY2 + NADPISHEIGHT, ClientRect.right - TrackX2, ClientRect.bottom - TrackY2 - NADPISHEIGHT,
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-// nastavení posuvníkù
+// nastavení posuvníků
 	switch (EditMode)
 	{
 	case BufMapID:
@@ -1721,13 +1721,13 @@ void ProgOnSize()
 			SWP_HIDEWINDOW | SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOOWNERZORDER);
 	}
 
-// posun editaèního pole editoru èísel
+// posun editačního pole editoru čísel
 	hdwp = EditNum::MoveEdit(hdwp);	
 
-// posun editaèního pole editoru logických hodnot
+// posun editačního pole editoru logických hodnot
 	hdwp = EditLog::MoveEdit(hdwp);
 
-// posun editaèního pole editoru textu
+// posun editačního pole editoru textu
 	hdwp = EditText::MoveEdit(hdwp);	
 
 // posun displeje editoru zvuku
@@ -1736,16 +1736,16 @@ void ProgOnSize()
 // posun displeje editoru hudby
 	hdwp = EditMusic::MoveDisp(hdwp);
 
-// konec pøesouvání oken
+// konec přesouvání oken
 	::EndDeferWindowPos(hdwp);
 
-// pøekreslení okna
+// překreslení okna
 	::UpdateWindow(MainFrame);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní bufferu programu z handle okna (NULL = není)
+// zjištění bufferu programu z handle okna (NULL = není)
 
 CBufProg* BufProgFromHandle(HWND hWnd)
 {
@@ -1789,7 +1789,7 @@ CBufProg* BufProgFromHandle(HWND hWnd)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní ID bufferu programu z handle okna (-1 = není)
+// zjištění ID bufferu programu z handle okna (-1 = není)
 
 int BufProgIDFromHandle(HWND hWnd)
 {
@@ -1834,9 +1834,9 @@ int BufProgIDFromHandle(HWND hWnd)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení rozvinutí položky (vrací TRUE=zákaz zmìny)
-// (pozor - vyvolá se po dvojkliku v editaèním oknì u zrušené položky,
-//  bez zákazu rozvinutí vznikne chyba pamìti! Bez této obsluhy havaruje!)
+// zahájení rozvinutí položky (vrací TRUE=zákaz změny)
+// (pozor - vyvolá se po dvojkliku v editačním okně u zrušené položky,
+//  bez zákazu rozvinutí vznikne chyba paměti! Bez této obsluhy havaruje!)
 
 BOOL ProgOnExpanding(HWND hWnd, TV_ITEM* tvi, BOOL expand)
 {
@@ -1851,7 +1851,7 @@ BOOL ProgOnExpanding(HWND hWnd, TV_ITEM* tvi, BOOL expand)
 	int index = buf->Find(tvi->hItem);
 	if (index < 0) return TRUE;
 
-// obsluha okna tøíd
+// obsluha okna tříd
 	if (buf->BufID() == BufClsID)
 	{
 		if ((buf->At(index).Func != IDF_GROUP) &&
@@ -1877,7 +1877,7 @@ BOOL ProgOnExpanding(HWND hWnd, TV_ITEM* tvi, BOOL expand)
 		return FALSE;
 	}
 
-// pøi dvojkliku je nutno zkontrolovat místo kliknutí
+// při dvojkliku je nutno zkontrolovat místo kliknutí
 	if (LMouseDClick || RMouseDClick)
 	{
 		TV_HITTESTINFO tvh;
@@ -1892,7 +1892,7 @@ BOOL ProgOnExpanding(HWND hWnd, TV_ITEM* tvi, BOOL expand)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna rozvinutí položky
+// změna rozvinutí položky
 
 void ProgOnExpand(HWND hWnd, TV_ITEM* tvi, BOOL expand)
 {
@@ -1907,7 +1907,7 @@ void ProgOnExpand(HWND hWnd, TV_ITEM* tvi, BOOL expand)
 	int index = buf->Find(tvi->hItem);
 	if (index < 0) return;
 
-// nastavení nového pøíznaku
+// nastavení nového příznaku
 	if (expand)
 	{
 		(*buf)[index].Param |= PR_EXP;
@@ -1922,22 +1922,22 @@ void ProgOnExpand(HWND hWnd, TV_ITEM* tvi, BOOL expand)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna vybrané položky
+// změna vybrané položky
 
 void ProgOnSelChanged(HWND hWnd, NM_TREEVIEW* tv)
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 	ProgAktItem();
 
-// zahájení èítání preview
+// zahájení čítání preview
 	PreviewStop();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zvìtšení mìøítka zobrazení
+// zvětšení měřítka zobrazení
 
 void ProgOnZoomIn()
 {
@@ -1961,7 +1961,7 @@ void ProgOnZoomIn()
 		return;
 	}
 
-// nastavení pro editaèní pole
+// nastavení pro editační pole
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -1975,7 +1975,7 @@ void ProgOnZoomIn()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zmenšení mìøítka zobrazení
+// zmenšení měřítka zobrazení
 
 void ProgOnZoomOut()
 {
@@ -1999,7 +1999,7 @@ void ProgOnZoomOut()
 		return;
 	}
 
-// nastavení pro editaèní pole
+// nastavení pro editační pole
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -2013,7 +2013,7 @@ void ProgOnZoomOut()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení editaèního módu Toolbaru (podle ID bufferu, -1 = vypnout)
+// nastavení editačního módu Toolbaru (podle ID bufferu, -1 = vypnout)
 
 void SetToolMode(int bufID)
 {
@@ -2047,10 +2047,10 @@ void SetToolMode(int bufID)
 // aktualizace menu
 	ProgSetMenu();
 
-// nulování panelu nástrojù
+// nulování panelu nástrojů
 	ToolBarClear(ToolBarProgramNum);
 
-// nastavení panelu nástrojù podle editaèního módu
+// nastavení panelu nástrojů podle editačního módu
 	switch (bufID)
 	{
 	case BufEdiID:	ToolBarAdd(ToolBarEditProg, ToolBarEditProgNum);
@@ -2120,13 +2120,13 @@ void SetToolMode(int bufID)
 
 	ToolMode = bufID;
 
-// aktualizace zobrazení panelu nástrojù
+// aktualizace zobrazení panelu nástrojů
 	ProgOnSize();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutí editaèních oken (-1 = vše)
+// vypnutí editačních oken (-1 = vše)
 
 void HideEditWnd(int bufID)
 {
@@ -2136,7 +2136,7 @@ void HideEditWnd(int bufID)
 		::ShowWindow(TreeEdi, SW_HIDE);
 	}
 
-// skrytí editoru èísel
+// skrytí editoru čísel
 	if (bufID != BufNumID)
 	{
 		::ShowWindow(EditNumWnd, SW_HIDE);
@@ -2169,11 +2169,11 @@ void HideEditWnd(int bufID)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení editaèního módu edítaèního panelu (TRUE=OK) (BufPicID a -2 = editace obrázku sprajtu)
+// nastavení editačního módu edítačního panelu (TRUE=OK) (BufPicID a -2 = editace obrázku sprajtu)
 
 BOOL SetEditMode(int bufID, int index)
 {
-// pøíprava indexu dat pro hledání v buferech
+// příprava indexu dat pro hledání v buferech
 	int datblok = bufID;
 	int datindex = index;
 	if ((bufID == BufPicID) && (datindex == -2))
@@ -2242,13 +2242,13 @@ BOOL SetEditMode(int bufID, int index)
 		bufID = BufEdiID;
 	}
 
-// nastavení panelu nástrojù
+// nastavení panelu nástrojů
 	if (FocusBuf == BufEdiID)
 	{
 		SetToolMode(bufID);
 	}
 
-// vypnutí posuvníkù
+// vypnutí posuvníků
 	if (bufID != EditMode)
 	{
 		HScrollDisp = FALSE;
@@ -2262,10 +2262,10 @@ BOOL SetEditMode(int bufID, int index)
 	EditMusic::OnStop();
 	EditMap::EndEditSwcNum();
 
-// zafixování zmìn UNDO
+// zafixování změn UNDO
 	Undo.Fixup();
 
-// nastavení editaèního pole podle editaèního módu
+// nastavení editačního pole podle editačního módu
 	switch (bufID0)
 	{
 	case BufLocID:	if (BufLoc.IsValid(index) && (BufLoc[index].DatBlok == BufEdiID))
@@ -2430,11 +2430,11 @@ BOOL SetEditMode(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení prázdného editaèního pole
+// vykreslení prázdného editačního pole
 
 void ProgDispEmpty()
 {
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
 // oblast okna
@@ -2444,20 +2444,20 @@ void ProgDispEmpty()
 	rc.right = EditX + EditWidth - 2;
 	rc.bottom = EditY + EditHeight - 2;
 
-// vyplnìní okna
+// vyplnění okna
 	::FillRect(dc, &rc, (HBRUSH)::GetStockObject(LTGRAY_BRUSH));
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení rámu kolem editaèního pole
+// vykreslení rámu kolem editačního pole
 
 void ProgDispFrame()
 {
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
 // oblast okna
@@ -2467,16 +2467,16 @@ void ProgDispFrame()
 	rc.right = EditX + EditWidth;
 	rc.bottom = EditY + EditHeight;
 
-// vykreslení rámeèku
+// vykreslení rámečku
 	::DrawEdge(dc, &rc, EDGE_SUNKEN, BF_RECT);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøíprava souøadnic nadpisu okna
+// příprava souřadnic nadpisu okna
 
 void ProgNadpisRect(RECT* rc, int bufID)
 {
@@ -2515,11 +2515,11 @@ void ProgNadpisRect(RECT* rc, int bufID)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení nadpisù oken
+// vykreslení nadpisů oken
 
 void ProgDispNadpis()
 {
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení nového fontu
@@ -2528,7 +2528,7 @@ void ProgDispNadpis()
 	HFONT newfont = GetFont(&fnt);
 	HFONT oldfont = (HFONT)::SelectObject(dc, newfont);
 
-// cyklus pøes všechny buffery
+// cyklus přes všechny buffery
 	for (int bufID = 0; bufID < PROGBUFNUM; bufID++)
 	{
 		if (bufID != BufIntID)
@@ -2551,20 +2551,20 @@ void ProgDispNadpis()
 					}
 				}
 
-// pøíprava souøadnic nadpisu okna
+// příprava souřadnic nadpisu okna
 				RECT rc;
 				ProgNadpisRect(&rc, bufID);
 
-// zobrazení rámeèku kolem nadpisu
+// zobrazení rámečku kolem nadpisu
 				::DrawEdge(dc, &rc, EDGE_BUMP, BF_RECT);
 
-// posun souøadnic na vnitøek okna
+// posun souřadnic na vnitřek okna
 				rc.left += 2;
 				rc.top += 2;
 				rc.right -= 2;
 				rc.bottom -= 2;
 
-// pøíprava barvy podkladu a barvy písma
+// příprava barvy podkladu a barvy písma
 				COLORREF bcol;					// barva podkladu
 				COLORREF tcol;					// barva písma
 				if (bufID == FocusBuf)
@@ -2578,12 +2578,12 @@ void ProgDispNadpis()
 					tcol = ::GetSysColor(COLOR_INACTIVECAPTIONTEXT);
 				}
 
-// pøíprava módu k zobrazení textu
+// příprava módu k zobrazení textu
 				::SetBkColor(dc, bcol);
 				::SetBkMode(dc, OPAQUE);
 				::SetTextColor(dc, tcol);
 
-// zjištìní délky textu
+// zjištění délky textu
 				RECT rc2 = rc;
 				::DrawText(dc, txt, txt.Length(), &rc2, DT_CALCRECT);
 
@@ -2608,11 +2608,11 @@ void ProgDispNadpis()
 		}
 	}
 
-// návrat pùvodního fontu
+// návrat původního fontu
 	::SelectObject(dc, oldfont);
 	DelFont(newfont);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
@@ -2655,12 +2655,12 @@ void ProgOnPaint()
 
 			int widthbyte = (widtho + 3) & ~3;
 
-// otevøení kontextu displeje
+// otevření kontextu displeje
 			HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
-			HPALETTE OldPal;					// úschova pùvodních palet
-			OldPal = ::SelectPalette(dc,		// výbìr vlastních palet
+			HPALETTE OldPal;					// úschova původních palet
+			OldPal = ::SelectPalette(dc,		// výběr vlastních palet
 				StdPalette, FALSE);
 			::RealizePalette(dc);				// realizace palet
 
@@ -2680,7 +2680,7 @@ void ProgOnPaint()
 					src += width;
 				}
 
-// pøednastavení parametrù záhlaví bitmapy
+// přednastavení parametrů záhlaví bitmapy
 				StdBitmapInfo->bmiHeader.biWidth = widtho;
 				StdBitmapInfo->bmiHeader.biHeight = heighto;
 
@@ -2693,10 +2693,10 @@ void ProgOnPaint()
 				MemFree(buf);
 			}
 
-// pøíprava štìtce k vymazání podkladu
-			HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// příprava štětce k vymazání podkladu
+			HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štětec k vymazání plochy
 
-// vymazání plochy nahoøe nad obrázkem
+// vymazání plochy nahoře nad obrázkem
 			RECT rc;
 			rc.left = leftc;
 			rc.right = leftc + widthc;
@@ -2732,20 +2732,20 @@ void ProgOnPaint()
 				::FillRect(dc, &rc, brush);
 			}
 
-// zrušení štìtce podkladu (i když podle dokumentace rušení není nutné)
+// zrušení štětce podkladu (i když podle dokumentace rušení není nutné)
 			::DeleteObject(brush);
 
-// návrat pùvodních palet
+// návrat původních palet
 			::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 			::ReleaseDC(MainFrame, dc);
 		}
 
 // zobrazení rámu kolem plochy
 		ProgDispFrame();
 
-// zobrazení nadpisù oken
+// zobrazení nadpisů oken
 		ProgDispNadpis();
 		return;
 	}
@@ -2793,7 +2793,7 @@ void ProgOnPaint()
 				ProgDispFrame();
 	}
 
-// zobrazení nadpisù oken
+// zobrazení nadpisů oken
 	ProgDispNadpis();
 }
 
@@ -2811,7 +2811,7 @@ void ProgOnDblClk(HWND hWnd)
 	if (bufID < 0) return;
 	CBufProg* buf = &BufProg[bufID];
 
-// zjištìní aktivní položky
+// zjištění aktivní položky
 	TV_HITTESTINFO hti;					// struktura pro nalezení položky
 	hti.pt = MouseScreen;
 	::ScreenToClient(buf->Tree(), &hti.pt);
@@ -2820,7 +2820,7 @@ void ProgOnDblClk(HWND hWnd)
 	if (index < 0) return;
 	PROGITEM* item = &(*buf)[index];
 
-// kontrola, zda není klik na rozbalovací køížek
+// kontrola, zda není klik na rozbalovací křížek
 	RECT rc;
 	*(HTREEITEM*)(&rc) = item->HTree;
 	if (::SendMessage(buf->Tree(), TVM_GETITEMRECT, TRUE, (LPARAM)&rc))
@@ -2829,7 +2829,7 @@ void ProgOnDblClk(HWND hWnd)
 		if ((hti.pt.x < pozx) && (hti.pt.x > pozx - buf->IconWidth() - 4)) return;
 	}
 
-// editaèní buffer
+// editační buffer
 	if (bufID == BufEdiID)
 	{
 
@@ -2840,7 +2840,7 @@ void ProgOnDblClk(HWND hWnd)
 			return;
 		}
 
-// pøesmìrování z editoru do okna bufferù
+// přesměrování z editoru do okna bufferů
 		bufID = item->RefBlok;
 		index = item->RefIndex;
 		if (((bufID != BufObjID) && (bufID != BufLocID)) || (index < 0)) return;
@@ -2849,8 +2849,8 @@ void ProgOnDblClk(HWND hWnd)
 		item = &(*buf)[index];
 	}
 
-// nastavení editaèního módu
-	item->Param &= ~PR_NEW;				// zrušení pøíznaku nové položky
+// nastavení editačního módu
+	item->Param &= ~PR_NEW;				// zrušení příznaku nové položky
 
 	if ((item->DatBlok == BufEdiID) || (item->DatBlok == BufLocID))
 	{
@@ -2877,7 +2877,7 @@ void ProgOnEnter(HWND hWnd)
 	if (bufID < 0) return;
 	CBufProg* buf = &BufProg[bufID];
 
-// zjištìní aktivní položky
+// zjištění aktivní položky
 	int index = buf->Select();
 	if (index < 0) return;
 	PROGITEM* item = &(*buf)[index];
@@ -2892,7 +2892,7 @@ void ProgOnEnter(HWND hWnd)
 			return;
 		}
 
-// pøesmìrování z editoru do okna bufferù
+// přesměrování z editoru do okna bufferů
 		bufID = item->RefBlok;
 		index = item->RefIndex;
 		if (((bufID != BufObjID) && (bufID != BufLocID)) || (index < 0)) return;
@@ -2901,15 +2901,15 @@ void ProgOnEnter(HWND hWnd)
 		item = &(*buf)[index];
 	}
 
-// zahájení preview v oknì tøíd
+// zahájení preview v okně tříd
 	if (FocusBuf == BufClsID) PreviewStop();
 
-// nastavení editaèního módu
-	item->Param &= ~PR_NEW;				// zrušení pøíznaku nové položky
+// nastavení editačního módu
+	item->Param &= ~PR_NEW;				// zrušení příznaku nové položky
 	if (!SetEditMode(item->DatBlok, item->DatIndex)) return;
-	ProgOnSize();						// zapnutí posuvníkù
+	ProgOnSize();						// zapnutí posuvníků
 
-// zahájení pøehrávání WAV a MID
+// zahájení přehrávání WAV a MID
 	if ((FocusBuf == BufObjID) || (FocusBuf == BufLocID))
 	{
 		ProgOnPlay();
@@ -2918,14 +2918,14 @@ void ProgOnEnter(HWND hWnd)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní informace o ikonì k zobrazení
+// zjištění informace o ikoně k zobrazení
 
 void ProgOnGetDispInfo(HWND hWnd, TV_DISPINFO* tvd)
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// kontrola, zda jsou vytvoøeny platné seznamy obrázkù
+// kontrola, zda jsou vytvořeny platné seznamy obrázků
 	if ((ProgImageList == NULL) || (ProgImageListMedium == NULL) || (ProgImageListSmall == NULL)) return;
 
 // rozlišení zdrojového okna
@@ -2936,7 +2936,7 @@ void ProgOnGetDispInfo(HWND hWnd, TV_DISPINFO* tvd)
 	int index = buf->Find(tvd->item.hItem);
 	if (index < 0) return;
 
-// naètení ikony
+// načtení ikony
 	int icon = buf->GetIcon(index);
 	if (icon < 0) icon = 0;
 	ASSERT(Icon.IsValid(icon));
@@ -3035,8 +3035,8 @@ void ProgOnGetDispInfo(HWND hWnd, TV_DISPINFO* tvd)
 /////////////////////////////////////////////////////////////////////////////
 // obsluha modifikace
 
-// Pozor na pøekryv obrázkù tlaèítek - pøi uložení klávesou Ctrl+S se obrázky 
-// pøekreslí bez vymazání podkladu, šedá barva pøitom zùstane nepøekreslena.
+// Pozor na překryv obrázků tlačítek - při uložení klávesou Ctrl+S se obrázky 
+// překreslí bez vymazání podkladu, šedá barva přitom zůstane nepřekreslena.
 
 // zapnutí modifikace
 void SetModi()
@@ -3059,7 +3059,7 @@ void ResModi()
 }
 
 
-// podmínìné uložení pøi modifikaci (TRUE=pokraèovat)
+// podmíněné uložení při modifikaci (TRUE=pokračovat)
 BOOL TestModi()
 {
 	if (Modi)
@@ -3102,21 +3102,21 @@ BOOL TestModi()
 				return TRUE;
 			}
 		}
-		return FALSE;			// pro CANCEL nebo nìco jiného
+		return FALSE;			// pro CANCEL nebo něco jiného
 	}
 	return TRUE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// test kurzoru myši na pøedìlu (v klientských souøadnicích)
+// test kurzoru myši na předělu (v klientských souřadnicích)
 
 BOOL TestTrack(int x, int y, BOOL vert, BOOL left)
 {
-// úschova typu pøedìlu
+// úschova typu předělu
 	VTracking = vert;
 	LTracking = left;
 
-// pøíprava souøadnic taženého obdélníku
+// příprava souřadnic taženého obdélníku
 	RECT TrackRect;
 
 	if (vert)
@@ -3153,7 +3153,7 @@ BOOL TestTrack(int x, int y, BOOL vert, BOOL left)
 		}
 	}
 
-// test, zda je bod nad pøedìlem
+// test, zda je bod nad předělem
 	return ((x >= TrackRect.left) &&
 			(x < TrackRect.right) &&
 			(y >= TrackRect.top) &&
@@ -3172,43 +3172,43 @@ BOOL ProgOnSetCursor()
 // tažení má vlastní obsluhu
 	if (Draging) return FALSE;
 
-// nastavení kurzoru myši, je-li tažení pøedìlu
+// nastavení kurzoru myši, je-li tažení předělu
 	if (Tracking)
 	{
 		if (VTracking)
 		{
-			CurAkt = CurSplitH;		// tažení vertikálního pøedìlu
+			CurAkt = CurSplitH;		// tažení vertikálního předělu
 		}
 		else
 		{
-			CurAkt = CurSplitV;		// tažení horizontálního pøedìlu
+			CurAkt = CurSplitV;		// tažení horizontálního předělu
 		}
 
 		::SetCursor(CurAkt);		// nastavení kurzoru
 		return TRUE;
 	}
 
-// pøíprava ke zjištìní, zda je pøedìl k tažení
-//	::GetCursorPos(&MouseScreen);	// naètení souøadnic myši
+// příprava ke zjištění, zda je předěl k tažení
+//	::GetCursorPos(&MouseScreen);	// načtení souřadnic myši
 //	MouseMain = MouseScreen;
-//	::ScreenToClient(MainFrame, &MouseMain); // pøevod na klientské souøadnice
+//	::ScreenToClient(MainFrame, &MouseMain); // převod na klientské souřadnice
 
 	POINT pt = MouseMain;
 
-// test vertikálních pøedìlù
+// test vertikálních předělů
 	if (TestTrack(pt.x, pt.y, TRUE, TRUE) ||
 		TestTrack(pt.x, pt.y, TRUE, FALSE))
 	{
-		CurAkt = CurSplitH;		// tažení vertikálního pøedìlu
+		CurAkt = CurSplitH;		// tažení vertikálního předělu
 		::SetCursor(CurAkt);	// nastavení kurzoru
 		return TRUE;
 	}
 
-// test horizontálních pøedìlù
+// test horizontálních předělů
 	if (TestTrack(pt.x, pt.y, FALSE, TRUE) ||
 		TestTrack(pt.x, pt.y, FALSE, FALSE))
 	{
-		CurAkt = CurSplitV;		// tažení horizontálního pøedìlu
+		CurAkt = CurSplitV;		// tažení horizontálního předělu
 		::SetCursor(CurAkt);	// nastavení kurzoru
 		return TRUE;
 	}
@@ -3241,16 +3241,16 @@ BOOL ProgOnSetCursor()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení tažení pøedìlu (TRUE=obslouženo)
+// zahájení tažení předělu (TRUE=obslouženo)
 
 BOOL BegTrack(int x, int y, BOOL vert, BOOL left)
 {
-// test, zda je pøedìl
+// test, zda je předěl
 	if (TestTrack(x, y, vert, left))
 	{
 
-// pøíznak zahájení taŸení
-		Tracking = TRUE;				// pøíznak obsluhy tažení
+// příznak zahájení taźení
+		Tracking = TRUE;				// příznak obsluhy tažení
 
 // zahájení zachytávání myši
 		::SetCapture(MainFrame);
@@ -3261,25 +3261,25 @@ BOOL BegTrack(int x, int y, BOOL vert, BOOL left)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení tažení pøedìlu
+// ukončení tažení předělu
 
 void EndTrack()
 {
-// test, zda probíhá taŸení pøedìlu
+// test, zda probíhá taźení předělu
 	if (Tracking)
 	{
 
-// uvolnìní zachytávání myši
-		::ReleaseCapture();			// ukonèení zachytávání myši
+// uvolnění zachytávání myši
+		::ReleaseCapture();			// ukončení zachytávání myši
 
-// vypnutí pøíznaku tažení
-		Tracking = FALSE;			// vypnutí pøíznaku tažení
+// vypnutí příznaku tažení
+		Tracking = FALSE;			// vypnutí příznaku tažení
 	}
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stisk tlaèítka myši (TRUE = obslouženo)
+// stisk tlačítka myši (TRUE = obslouženo)
 
 BOOL ProgOnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 {
@@ -3290,7 +3290,7 @@ BOOL ProgOnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 	if (!Draging && !Tracking)
 	{
 
-// pøepnutí aktivního panelu
+// přepnutí aktivního panelu
 		RECT rc;
 		POINT pt;
 		pt.x = x;
@@ -3336,7 +3336,7 @@ BOOL ProgOnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 			}
 		}
 
-// zahájení tažení pøedìlu
+// zahájení tažení předělu
 		if (BegTrack(x, y, TRUE, TRUE) ||
 			BegTrack(x, y, TRUE, FALSE) ||
 			BegTrack(x, y, FALSE, TRUE) ||
@@ -3346,11 +3346,11 @@ BOOL ProgOnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 		}
 	}
 
-// pøerušení tažení
+// přerušení tažení
 	BreakDrag();
 	EndTrack();
 
-// obsluha editaèního pole
+// obsluha editačního pole
 	if ((x >= EditX) &&
 		(x < EditX + EditWidth) &&
 		(y >= EditY) &&
@@ -3379,14 +3379,14 @@ BOOL ProgOnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// posun myši pøi tažení
+// posun myši při tažení
 
 void ProgOnMouseMove(UINT flags, int x, int y)
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// pøerušení tažení
+// přerušení tažení
 	if ((flags & (MK_LBUTTON | MK_RBUTTON)) == 0)
 	{
 		BreakDrag();
@@ -3412,15 +3412,15 @@ void ProgOnMouseMove(UINT flags, int x, int y)
 		return;
 	}
 
-// obsluha tažení pøedìlu
+// obsluha tažení předělu
 	if (Tracking)
 	{
 
-// vertikální pøedìl
+// vertikální předěl
 		if (VTracking)
 		{
 
-// pùvodní souøadnice X
+// původní souřadnice X
 			int oldx;
 
 			if (LTracking)
@@ -3432,7 +3432,7 @@ void ProgOnMouseMove(UINT flags, int x, int y)
 				oldx = TrackX2;
 			}
 
-// nová souøadnice X
+// nová souřadnice X
 			int newx = x;
 			if (newx < ClientRect.left + 4) newx = ClientRect.left + 4;
 			if (newx > ClientRect.right - 4) newx = ClientRect.right - 4;
@@ -3446,11 +3446,11 @@ void ProgOnMouseMove(UINT flags, int x, int y)
 				if (newx < TrackX1 + 2*TRACKOFF) newx = TrackX1 + 2*TRACKOFF;
 			}
 
-// kontrola, zda se souøadnice mìní
+// kontrola, zda se souřadnice mění
 			if (newx != oldx)
 			{
 
-// nastavení nové souøadnice
+// nastavení nové souřadnice
 				if (LTracking)
 				{
 					TrackX1 = newx;
@@ -3468,11 +3468,11 @@ void ProgOnMouseMove(UINT flags, int x, int y)
 			}
 		}
 
-// horizontální pøedìl
+// horizontální předěl
 		else
 		{
 
-// pùvodní souøadnice Y
+// původní souřadnice Y
 			int oldy;
 
 			if (LTracking)
@@ -3484,16 +3484,16 @@ void ProgOnMouseMove(UINT flags, int x, int y)
 				oldy = TrackY2;
 			}
 
-// nová souøadnice Y 
+// nová souřadnice Y 
 			int newy = y;
 			if (newy < ClientRect.top + NADPISHEIGHT + 4) newy = ClientRect.top + NADPISHEIGHT + 4;
 			if (newy > ClientRect.bottom - NADPISHEIGHT - 4) newy = ClientRect.bottom - NADPISHEIGHT - 4;
 
-// kontrola, zda se souøadnice mìní
+// kontrola, zda se souřadnice mění
 			if (newy != oldy)
 			{
 
-// nastavení nové souøadnice
+// nastavení nové souřadnice
 				if (LTracking)
 				{
 					TrackY1 = newy;
@@ -3513,7 +3513,7 @@ void ProgOnMouseMove(UINT flags, int x, int y)
 	}
 
 
-// obsluha editaèního pole
+// obsluha editačního pole
 	if ((x >= EditX) &&
 		(x < EditX + EditWidth) &&
 		(y >= EditY) &&
@@ -3539,14 +3539,14 @@ void ProgOnMouseMove(UINT flags, int x, int y)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní tlaèítka myši
+// uvolnění tlačítka myši
 
 void ProgOnButtonUp(UINT keys, BOOL right)
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 	
-// ukonèení tažení
+// ukončení tažení
 	ProgOnEndDrag();
 	EndTrack();
 
@@ -3556,7 +3556,7 @@ void ProgOnButtonUp(UINT keys, BOOL right)
 		return;
 	}
 
-// obsluha editaèního pole
+// obsluha editačního pole
 	switch(EditMode)
 	{
 	case BufNumID:
@@ -3584,7 +3584,7 @@ void ProgOnButtonUp(UINT keys, BOOL right)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu LOCK prvku pod kurzorem
+// přepnutí stavu LOCK prvku pod kurzorem
 
 void ProgOnLock()
 {
@@ -3592,7 +3592,7 @@ void ProgOnLock()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // test, zda je okno stromu
@@ -3612,7 +3612,7 @@ void ProgOnLock()
 // prvek nesmí být závisle uzamknutý
 			if ((item->Param & PR_LOCK_DEP) || (item->Param & PR_CD & PR_CD2)) return;
 
-// pøepnutí stavu pro okno tøíd
+// přepnutí stavu pro okno tříd
 			if ((FocusBuf == BufClsID) &&
 				(item->Parent >= 0))
 			{
@@ -3644,7 +3644,7 @@ void ProgOnLock()
 				ProgDirChangeIgnore = 2;
 			}
 
-// zmìna pøíznaku uzamèení
+// změna příznaku uzamčení
 			item->Param ^= PR_LOCK;
 
 // aktualizace zobrazení prvku ve stromu
@@ -3659,13 +3659,13 @@ void ProgOnLock()
 			Undo.AddProgLock(FocusBuf, index);
 			Undo.Stop();
 
-// aktualizace prvkù v buferech
+// aktualizace prvků v buferech
 			UpdateLock();
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 			ProgAktItem();
 
-// nastavení pøíznaku modifikace
+// nastavení příznaku modifikace
 			SetModi();
 
 			if (FocusBuf == BufClsID)
@@ -3677,7 +3677,7 @@ void ProgOnLock()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu OFF prvku pod kurzorem
+// přepnutí stavu OFF prvku pod kurzorem
 
 void ProgOnOff()
 {
@@ -3685,7 +3685,7 @@ void ProgOnOff()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // test, zda je okno stromu
@@ -3705,7 +3705,7 @@ void ProgOnOff()
 // prvek nesmí být uzamknutý
 			if (item->Param & (PR_LOCK | PR_LOCK_DEP)) return;
 
-// pøepnutí stavu pro okno tøíd
+// přepnutí stavu pro okno tříd
 			if ((FocusBuf == BufClsID) &&
 				(item->Parent >= 0))
 			{
@@ -3737,7 +3737,7 @@ void ProgOnOff()
 				ProgDirChangeIgnore = 2;
 			}
 
-// zmìna pøíznaku vypnutí
+// změna příznaku vypnutí
 			item->Param ^= PR_OFF;
 
 // aktualizace zobrazení prvku ve stromu
@@ -3752,13 +3752,13 @@ void ProgOnOff()
 			Undo.AddProgOff(FocusBuf, index);
 			Undo.Stop();
 
-// aktualizace prvkù v buferech
+// aktualizace prvků v buferech
 			UpdateLock();
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 			ProgAktItem();
 
-// nastavení pøíznaku modifikace
+// nastavení příznaku modifikace
 			SetModi();
 
 			if (FocusBuf == BufClsID)
@@ -3818,13 +3818,13 @@ void AktNameTree(int bufID, CText& txt, int refBlok, int refIndex)
 		return;
 	}
 
-// lokální promìnné
+// lokální proměnné
 	CBufProg* buf = BufProg + bufID;
 	int index = buf->Max() - 1;
 	PROGITEM* item = buf->Data() + index;
 	TV_ITEM tvi;
 
-// cyklus pøes všechny položky
+// cyklus přes všechny položky
 	for (; index >= 0; index--)
 	{
 
@@ -3858,7 +3858,7 @@ void AktNameTree(int bufID, CText& txt, int refBlok, int refIndex)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu DEF_NAME prvku pod kurzorem
+// přepnutí stavu DEF_NAME prvku pod kurzorem
 
 void ProgOnDefName()
 {
@@ -3866,7 +3866,7 @@ void ProgOnDefName()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // test, zda je okno stromu
@@ -3886,7 +3886,7 @@ void ProgOnDefName()
 // prvek nesmí být uzamknutý
 			if (item->Param & (PR_LOCK | PR_LOCK_DEP)) return;
 
-// nelze pøepnout u potomka v oknì tøíd
+// nelze přepnout u potomka v okně tříd
 			if ((FocusBuf == BufClsID) && (item->Parent >= 0)) return;
 
 // duplikace textu, je-li implicitní
@@ -3898,7 +3898,7 @@ void ProgOnDefName()
 				Undo.AddProgName(FocusBuf, index, -1);
 			}
 
-// jinak zrušení pùvodního textu
+// jinak zrušení původního textu
 			else
 			{
 				Undo.AddProgName(FocusBuf, index, item->Name);
@@ -3914,7 +3914,7 @@ void ProgOnDefName()
 					&& (buf->TestObj(item->Func)))
 				{
 
-// pøíprava poèáteèní a koncové položky k hledání v lokálním bufferu
+// příprava počáteční a koncové položky k hledání v lokálním bufferu
 					int frst = -1;
 					int last = -1;
 					if (FocusBuf == BufLocID)
@@ -3927,12 +3927,12 @@ void ProgOnDefName()
 						last = buf->At(frst).Next;
 					}
 
-// kontrola, zda je jméno jedineèné
+// kontrola, zda je jméno jedinečné
 					if ((BufLoc.FindObj(txt, index, frst, last) >= 0) ||
 						(BufObj.FindObj(txt, index, -1, -1) >= 0))
 					{
 
-// nalezení jedineèného jména
+// nalezení jedinečného jména
 						int n = 0;
 						do
 						{
@@ -3956,7 +3956,7 @@ void ProgOnDefName()
 					::SendMessage(buf->Tree(), TVM_SETITEM, 0, (LPARAM)&tvi);
 				}
 
-// aktualizace textù v závislých bufferech
+// aktualizace textů v závislých bufferech
 				if (item->Refer)
 				{
 					CText txt2(txt.MultiText());
@@ -3967,13 +3967,13 @@ void ProgOnDefName()
 				}
 			}
 
-// ukonèení záznamu UNDO
+// ukončení záznamu UNDO
 			Undo.Stop();
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 			ProgAktItem();
 
-// nastavení pøíznaku modifikace
+// nastavení příznaku modifikace
 			SetModi();
 		}
 	}
@@ -3981,7 +3981,7 @@ void ProgOnDefName()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení okna
+// překreslení okna
 
 void UpdateWnd(HWND wnd)
 {
@@ -3994,7 +3994,7 @@ void UpdateWnd(HWND wnd)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení stromù
+// překreslení stromů
 
 void UpdateAllTree()
 {
@@ -4010,7 +4010,7 @@ void UpdateAllTree()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí stavu DEF_ICON prvku pod kurzorem
+// přepnutí stavu DEF_ICON prvku pod kurzorem
 
 void ProgOnDefIcon()
 {
@@ -4018,7 +4018,7 @@ void ProgOnDefIcon()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // test, zda je okno stromu
@@ -4035,7 +4035,7 @@ void ProgOnDefIcon()
 // adresa prvku
 			PROGITEM* item = &((*buf)[index]);
 
-// prvek nesmí být uzamknutý a nesmí to být okno tøíd ani struktur
+// prvek nesmí být uzamknutý a nesmí to být okno tříd ani struktur
 			if ((item->Param & (PR_LOCK | PR_LOCK_DEP)) || 
 					(FocusBuf == BufClsID) || (FocusBuf == BufStrID)) return;
 
@@ -4046,7 +4046,7 @@ void ProgOnDefIcon()
 				Undo.AddProgIcon(FocusBuf, index, -1);
 			}
 
-// jinak zrušení pùvodní ikony
+// jinak zrušení původní ikony
 			else
 			{
 				if (item->Icon != 0)
@@ -4069,13 +4069,13 @@ void ProgOnDefIcon()
 				UpdateAllTree();
 			}
 
-// ukonèení záznamu UNDO
+// ukončení záznamu UNDO
 			Undo.Stop();
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 			ProgAktItem();
 
-// nastavení pøíznaku modifikace
+// nastavení příznaku modifikace
 			SetModi();
 		}
 	}
@@ -4083,7 +4083,7 @@ void ProgOnDefIcon()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 
 void ProgAktItem()
 {
@@ -4105,7 +4105,7 @@ void ProgAktItem()
 		{
 			PROGITEM* item = &((*buf)[index]);
 
-// povolení tlaèítek (zákaz pøi uzamèení)
+// povolení tlačítek (zákaz při uzamčení)
 			BOOL enable = ((item->Param & (PR_LOCK | PR_LOCK_DEP)) == 0);
 			EnableCommand(IDN_LOCK, ((item->Param & (PR_LOCK_DEP | PR_CD | PR_CD2)) == 0));
 			EnableCommand(IDN_OFF, enable);
@@ -4118,7 +4118,7 @@ void ProgAktItem()
 			EnableCommand(IDN_EDIT_ICON, enable && !EditName &&	
 						(FocusBuf != BufClsID) && (FocusBuf != BufStrID));
 
-// zapnutí tlaèítek
+// zapnutí tlačítek
 			CheckCommand(IDN_LOCK, (item->Param & PR_LOCK));
 			CheckCommand(IDN_OFF, (item->Param & PR_OFF));
 			CheckCommand(IDN_EDIT_NAME, EditName);
@@ -4126,7 +4126,7 @@ void ProgAktItem()
 			CheckCommand(IDN_EDIT_ICON, (FocusBuf == BufEdiID) && (EditMode == BufIcoID));
 			CheckCommand(IDN_DEF_ICON, (item->Icon < 0));
 
-// pøíprava stavového textu
+// příprava stavového textu
 			txt.Load(IDN_STAT_REF);
 			txt.Add(_T(": "));
 
@@ -4136,7 +4136,7 @@ void ProgAktItem()
 			txt.Add(txt2);
 		}
 
-// tlaèítka jsou nedefinovaná - jejich zákaz
+// tlačítka jsou nedefinovaná - jejich zákaz
 		else
 		{
 			EnableCommand(IDN_LOCK, FALSE);
@@ -4166,17 +4166,17 @@ void ProgAktItem()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøíznakù LOCK a OFF jedné položky (state = TVIS_BOLD, TVIS_CUT)
+// aktualizace příznaků LOCK a OFF jedné položky (state = TVIS_BOLD, TVIS_CUT)
 
 void UpdateLockItem(CBufProg* buf, PROGITEM* item, int state)
 {
-// lokální promìnné
-	int* param;							// adresa parametrù položky
+// lokální proměnné
+	int* param;							// adresa parametrů položky
 	int oldstate;						// starý stav položky
-	int index;							// ukazatel indexu potomkù
+	int index;							// ukazatel indexu potomků
 	TV_ITEM tvi;						// položka stromu
 	
-// oprava nového stavu OFF podle deklaraèní položky
+// oprava nového stavu OFF podle deklarační položky
 	if ((item->RefBlok >= 0) && (item->RefIndex >= 0))
 	{
 		if (BufProg[item->RefBlok][item->RefIndex].Param & (PR_OFF | PR_OFF_DEP))
@@ -4185,13 +4185,13 @@ void UpdateLockItem(CBufProg* buf, PROGITEM* item, int state)
 		}
 	}
 
-// pøíprava starého stavu položky
+// příprava starého stavu položky
 	oldstate = 0;
 	param = &(item->Param);
 	if (*param & (PR_LOCK | PR_LOCK_DEP)) oldstate = TVIS_BOLD;
 	if (*param & (PR_OFF | PR_OFF_DEP)) oldstate |= TVIS_CUT;
 
-// nastavení závislých pøíznakù
+// nastavení závislých příznaků
 	*param &= ~(PR_LOCK_DEP | PR_OFF_DEP);
 	if (state & TVIS_BOLD) *param |= PR_LOCK_DEP;
 	if (state & TVIS_CUT) *param |= PR_OFF_DEP;
@@ -4210,13 +4210,13 @@ void UpdateLockItem(CBufProg* buf, PROGITEM* item, int state)
 		::SendMessage(buf->Tree(), TVM_SETITEM, 0, (LPARAM)&tvi);
 	}
 
-// nastavení parametrù datové položky
+// nastavení parametrů datové položky
 	if (((DWORD)(item->DatBlok) < (DWORD)PROGBUFNUM) && (item->DatIndex >= 0))
 	{
 		UpdateLockItem(BufProg + item->DatBlok, &(BufProg[item->DatBlok][item->DatIndex]), state);
 	}
 
-// nastavení potomkù
+// nastavení potomků
 	index = item->Child;
 	BOOL iscomment = ((item->Func == IDF_COMMENT) && (item->Parent >= 0));
 	while (buf->IsValid(index))
@@ -4236,16 +4236,16 @@ void UpdateLockItem(CBufProg* buf, PROGITEM* item, int state)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøíznakù LOCK a OFF jednoho bufferu
+// aktualizace příznaků LOCK a OFF jednoho bufferu
 
 void UpdateLockBuf(int bufID)
 {
-// lokální promìnné
+// lokální proměnné
 	CBufProg* buf = BufProg + bufID;	// buffer
 	int index = buf->First();			// index položky
 	PROGITEM* item;						// adresa položky
 
-// cyklus pøes všechny položky ROOT
+// cyklus přes všechny položky ROOT
 	while (buf->IsValid(index))
 	{
 
@@ -4261,7 +4261,7 @@ void UpdateLockBuf(int bufID)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøíznakù LOCK a OFF bufferù (LOCAL a EDIT jsou aktualizovány závisle)
+// aktualizace příznaků LOCK a OFF bufferů (LOCAL a EDIT jsou aktualizovány závisle)
 
 void UpdateLock()
 {
@@ -4270,8 +4270,8 @@ void UpdateLock()
 	UpdateLockBuf(BufObjID);
 
 // pro správné provázání zopakování návazností
-// (jinak nesprávná funkce napø. je-li globální promìnná ve skupinì
-//  a pøepíná se vypnutí celé skupiny -> v editoru se aktualizuje špatnì)
+// (jinak nesprávná funkce např. je-li globální proměnná ve skupině
+//  a přepíná se vypnutí celé skupiny -> v editoru se aktualizuje špatně)
 
 	UpdateLockBuf(BufStrID);
 	UpdateLockBuf(BufClsID);
@@ -4287,7 +4287,7 @@ void ProgOnEditIcon()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // test, zda je okno stromu
@@ -4335,7 +4335,7 @@ void ProgOnEditIcon()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení/ukonèení editace jména prvku
+// zahájení/ukončení editace jména prvku
 
 void ProgOnEditName()
 {
@@ -4343,7 +4343,7 @@ void ProgOnEditName()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // test, zda je okno stromu
@@ -4353,7 +4353,7 @@ void ProgOnEditName()
 	{
 		CBufProg* buf = BufProg + FocusBuf;
 
-// ukonèení editace
+// ukončení editace
 		if (EditName)
 		{
 			::SendMessage(buf->Tree(), TVM_ENDEDITLABELNOW, FALSE, 0);
@@ -4377,7 +4377,7 @@ void ProgOnEditName()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace jména prvku (vrací TRUE=pøerušit editaci)
+// zahájení editace jména prvku (vrací TRUE=přerušit editaci)
 
 BOOL ProgOnBeginLabelEdit(HWND hWnd, HTREEITEM hItem)
 {
@@ -4385,7 +4385,7 @@ BOOL ProgOnBeginLabelEdit(HWND hWnd, HTREEITEM hItem)
 // kontrola, zda je režim editace a zda není editace prvku
 	if (!ProgMode || EditName) return TRUE;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // rozlišení zdrojového okna
@@ -4396,14 +4396,14 @@ BOOL ProgOnBeginLabelEdit(HWND hWnd, HTREEITEM hItem)
 	int index = buf->Find(hItem);
 	if (index < 0) return TRUE;
 
-// naètení handle editaèního okna
+// načtení handle editačního okna
 	EditNameWnd = (HWND)::SendMessage(buf->Tree(), TVM_GETEDITCONTROL, 0, 0);
 	if (EditNameWnd == NULL) return TRUE;
 
-// pøíznak zahájení editace
+// příznak zahájení editace
 	EditName = TRUE;
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 	ProgAktItem();
 
 // update voleb clipboardu
@@ -4411,15 +4411,15 @@ BOOL ProgOnBeginLabelEdit(HWND hWnd, HTREEITEM hItem)
 	EnableCommand(IDN_CUT, TRUE);
 	EnableCommand(IDN_COPY, TRUE);
 
-// pøíznak povolení editace
+// příznak povolení editace
 	return FALSE;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení editace jména prvku
+// ukončení editace jména prvku
 
-// pomocná promìnná k podržení textu pro prvek
+// pomocná proměnná k podržení textu pro prvek
 CText LabelText;
 
 void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
@@ -4458,7 +4458,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 				CMultiText newtxt;
 				newtxt = oldtxt;
 
-// pøíprava nového jména
+// příprava nového jména
 				CText txt(tvi->pszText);
 				if (bufID == BufClsID)
 				{
@@ -4466,7 +4466,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 					txt.TrimRight();
 				}
 
-// kontrola, zda je text zmìnìn .... vyøazeno, aby bylo aktualizováno vždy jméno souboru v knihovnì
+// kontrola, zda je text změněn .... vyřazeno, aby bylo aktualizováno vždy jméno souboru v knihovně
 //				if (txt != oldtxt.MultiText())
 				{
 
@@ -4479,7 +4479,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 						tvi->pszText = (LPTSTR)(LPCTSTR)LabelText;
 					}
 
-// pro buffer tøíd úschova starého jména souboru
+// pro buffer tříd úschova starého jména souboru
 					CText oldname;
 					CText oldicon;
 					CText oldkey;
@@ -4495,8 +4495,8 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 // nastavení nového textu
 					newtxt.MultiText(txt);
 
-// vytvoøení nového textu nebo nastavení existujícího
-					ASSERT(FocusBuf == bufID);	// proè je zde najednou použito FocusBuf ??? !!!!!!
+// vytvoření nového textu nebo nastavení existujícího
+					ASSERT(FocusBuf == bufID);	// proč je zde najednou použito FocusBuf ??? !!!!!!
 					if (item->Name < 0)
 					{
 						item->Name = Text.Add(newtxt);
@@ -4508,11 +4508,11 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 						Text.Set(item->Name, newtxt);
 					}
 
-// v bufferu tøíd kontrola, zda jméno již existuje
+// v bufferu tříd kontrola, zda jméno již existuje
 					if ((bufID == BufClsID) && (item->Parent >= 0))
 					{
 
-// pøíprava nového jména souboru
+// příprava nového jména souboru
 						CText newname = newtxt.MultiText();
 						newname.KorigShort();
 
@@ -4546,7 +4546,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 							altname = ProgLib::m_Name.Left(ProgLib::m_Name.Length() - 3) + ProgLib::m_Ext2;
 						}
 
-// existuje soubor nebo adresáø tohoto jména?
+// existuje soubor nebo adresář tohoto jména?
 						CText oldname2(oldname);
 						oldname2.UpperCase();
 						CText newname2;
@@ -4562,7 +4562,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 
 //							if (ProgLib::m_Name == oldname) break;
 
-// zvýšení èítaèe indexu jména
+// zvýšení čítače indexu jména
 							nn++;
 							if (nn >= 10000) break;
 
@@ -4587,7 +4587,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 								newtxt.SetNumObj(nn);
 							}
 
-// zmìna textu pro položku
+// změna textu pro položku
 							if (item->Func == IDF_GROUP)
 							{
 								newtxt.MultiText(JAZYK000, txt0);
@@ -4621,7 +4621,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 						LabelText = Text.GetTxt(item->Name);
 						tvi->pszText = (LPTSTR)(LPCTSTR)LabelText;
 
-// pøejmenování souboru nebo adresáøe
+// přejmenování souboru nebo adresáře
 						if (::MoveFile(oldname, ProgLib::m_Name) && 
 							ProgLib::m_IconName.IsNotEmpty())
 						{
@@ -4659,9 +4659,9 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 						&& (buf->TestObj(item->Func)))
 					{
 
-// odstranìní mezer ze zaèátku a konce jména
-						txt.TrimLeft();						// odstranìní mezer z poèátku jména
-						txt.TrimRight();					// odstranìní mezer z konce jména
+// odstranění mezer ze začátku a konce jména
+						txt.TrimLeft();						// odstranění mezer z počátku jména
+						txt.TrimRight();					// odstranění mezer z konce jména
 						if (txt.IsEmpty() || (txt.Length() != Text.GetTxt(item->Name).Length()))
 						{
 							if (txt.IsEmpty()) txt = _T('#');	// náhradní jméno
@@ -4671,7 +4671,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 						}
 						newtxt.MultiText(txt);
 
-// pøíprava poèáteèní a koncové položky k hledání v lokálním bufferu
+// příprava počáteční a koncové položky k hledání v lokálním bufferu
 						int frst = -1;
 						int last = -1;
 						if (bufID == BufLocID)
@@ -4684,12 +4684,12 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 							last = buf->At(frst).Next;
 						}
 
-// kontrola, zda je jméno jedineèné
+// kontrola, zda je jméno jedinečné
 						if ((BufLoc.FindObj(newtxt, index, frst, last) >= 0) ||
 							(BufObj.FindObj(newtxt, index, -1, -1) >= 0))
 						{
 
-// nalezení jedineèného jména
+// nalezení jedinečného jména
 							int n = 1;
 							do {
 								n++;
@@ -4707,7 +4707,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 						}
 					}
 
-// pøi shodì s implicitním jazykem se použije implicitní text
+// při shodě s implicitním jazykem se použije implicitní text
 					oldtxt = Text.Get(item->Name);
 					if ((Jazyk != JazykDef) && (oldtxt.MultiText(Jazyk) == oldtxt.MultiText(JazykDef)))
 					{
@@ -4715,10 +4715,10 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 						Text.Set(item->Name, oldtxt);
 					}
 
-// nastavení pøíznaku modifikace
+// nastavení příznaku modifikace
 					if (bufID != BufClsID) SetModi();
 
-// aktualizace textù v závislých bufferech
+// aktualizace textů v závislých bufferech
 					if (item->Refer)
 					{
 						AktNameTree(BufObjID, txt, buf->BufID(), index);
@@ -4731,13 +4731,13 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 		}
 	}
 
-// pøíznak ukonèení editace
+// příznak ukončení editace
 	EditName = FALSE;
 	EditNameWnd = NULL;
 
 	Undo.Stop();
 
-// aktualizace pøepínaèù pro vybranou položku
+// aktualizace přepínačů pro vybranou položku
 	ProgAktItem();
 
 // update voleb clipboardu
@@ -4751,7 +4751,7 @@ void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi)
 
 BOOL ProgOnKeyDown(HWND hWnd, int key, int data)
 {
-// lokální promìnné
+// lokální proměnné
 	CBufProg* buf;					// buffer programu
 	int index;						// index položky
 	PROGITEM* item;					// adresa položky
@@ -4764,7 +4764,7 @@ BOOL ProgOnKeyDown(HWND hWnd, int key, int data)
 	if (buf)
 	{
 
-// pøepínání oken TAB
+// přepínání oken TAB
 		if (key == VK_TAB)
 		{
 			if ((::GetKeyState(VK_MENU) >= 0) && (::GetKeyState(VK_CONTROL) >= 0))
@@ -4796,7 +4796,7 @@ BOOL ProgOnKeyDown(HWND hWnd, int key, int data)
 			}
 		}
 
-// editaèní pole
+// editační pole
 		if (FocusBuf == BufEdiID)
 		{
 			switch(EditMode)
@@ -4855,7 +4855,7 @@ BOOL ProgOnKeyDown(HWND hWnd, int key, int data)
 		}
 	}
 
-// klávesy pøi editaci jména prvku (pozor na opakované vnoøení)
+// klávesy při editaci jména prvku (pozor na opakované vnoření)
 	if (EditName)
 	{
 		buf = BufProg + FocusBuf;
@@ -4893,7 +4893,7 @@ BOOL ProgOnChar(HWND hWnd, TCHAR znak)
 // kontrola, zda je režim editace
 	if (!ProgMode) return FALSE;
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -4911,7 +4911,7 @@ BOOL ProgOnChar(HWND hWnd, TCHAR znak)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace definièních ukazatelù
+// aktualizace definičních ukazatelů
 
 //void AktAllDef()
 //{
@@ -4919,7 +4919,7 @@ BOOL ProgOnChar(HWND hWnd, TCHAR znak)
 //}
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení položky (napø. po hledání)
+// zobrazení položky (např. po hledání)
 
 void DispItem(int bufID, int index)
 {
@@ -4963,10 +4963,10 @@ void DispItem(int bufID, int index)
 		}
 	}
 
-// pøepnutí na okno
+// přepnutí na okno
 	::SetFocus(buf->Tree());
 
-// pøepnutí na aktivní položku
+// přepnutí na aktivní položku
 	buf->Select(index);
 }
 
@@ -4990,7 +4990,7 @@ BOOL AktRef(int bufID, int RefBlok, int RefIndex, BOOL next)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// skok na použití položky v požadovaném smìru
+// skok na použití položky v požadovaném směru
 
 void ProgOnRefNextPrev(BOOL next)
 {
@@ -5035,7 +5035,7 @@ void ProgOnRefNext()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøedešlá deklarace
+// předešlá deklarace
 
 void ProgOnRefPrev()
 {
@@ -5059,7 +5059,7 @@ void ProgOnRefDef()
 	if (index < 0) return;
 	PROGITEM* item = &((*buf)[index]);
 
-// skok na deklaraèní položku
+// skok na deklarační položku
 	DispItem(item->RefBlok, item->RefIndex);
 }
 
@@ -5123,7 +5123,7 @@ void ProgOnFind()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// vymazání textù
+// vymazání textů
 //	SetStatusText(EmptyText);
 	SetStatusText2(EmptyText);
 
@@ -5144,22 +5144,22 @@ void ProgOnFindNextPrev(BOOL next)
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// pøíprava textu k hledání
+// příprava textu k hledání
 	CText txt(FindString);
 	txt.UpperCase();
 	if (txt.IsEmpty()) return;
 	CText name;
 	int nameN;
 
-// pøíprava aktivního bufferu
+// příprava aktivního bufferu
 	int bufID = FocusBuf;
 	CBufProg* buf = BufProg + bufID;
 
-// pøíprava poèáteèní položky
+// příprava počáteční položky
 	int index = buf->Select();
 	PROGITEM* item;
 
-// cyklus pøes všechny buffery
+// cyklus přes všechny buffery
 	for (int i = 5+1; i > 0; i--)
 	{
 
@@ -5168,7 +5168,7 @@ void ProgOnFindNextPrev(BOOL next)
 		if (first >= 0)
 		{
 
-// cyklus pøes všechny položky
+// cyklus přes všechny položky
 			for (;;)
 			{
 
@@ -5255,20 +5255,20 @@ void ProgOnFindPrev()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// horizontální posuvník editaèního pole
+// horizontální posuvník editačního pole
 
 void ProgOnHScroll(int code, int pos)
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// naètení pozice pro jiné kódy než tažení
+// načtení pozice pro jiné kódy než tažení
 	if ((code != SB_THUMBPOSITION) && (code != SB_THUMBTRACK))
 	{
 		pos = ::GetScrollPos(HScroll, SB_CTL);
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufMapID:
@@ -5288,20 +5288,20 @@ void ProgOnHScroll(int code, int pos)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vertikální posuvník editaèního pole
+// vertikální posuvník editačního pole
 
 void ProgOnVScroll(int code, int pos)
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// naètení pozice pro jiné kódy než tažení
+// načtení pozice pro jiné kódy než tažení
 	if ((code != SB_THUMBPOSITION) && (code != SB_THUMBTRACK))
 	{
 		pos = ::GetScrollPos(VScroll, SB_CTL);
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufMapID:
@@ -5321,7 +5321,7 @@ void ProgOnVScroll(int code, int pos)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr všeho
+// výběr všeho
 
 void ProgOnAll()
 {
@@ -5334,7 +5334,7 @@ void ProgOnAll()
 		::SendMessage(EditNameWnd, EM_SETSEL, 0, (LPARAM)-1);
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -5385,7 +5385,7 @@ void ProgOnDelete()
 		return;
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -5433,7 +5433,7 @@ void ProgOnCopy()
 		return;
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -5475,7 +5475,7 @@ void ProgOnCopy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøižení bloku
+// vystřižení bloku
 
 void ProgOnCut()
 {
@@ -5489,7 +5489,7 @@ void ProgOnCut()
 		return;
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -5537,7 +5537,7 @@ void ProgOnPaste()
 		return;
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	if (FocusBuf == BufEdiID)
 	{
 		switch (EditMode)
@@ -5593,7 +5593,7 @@ void ProgOnUndo()
 		return;
 	}
 
-// editace èísla plochy
+// editace čísla plochy
 	if (EditMapNumWnd)
 	{
 		::SendMessage(EditMapNumWnd, EM_UNDO, 0, 0);
@@ -5618,7 +5618,7 @@ void ProgOnRedo()
 		return;
 	}
 
-// editace èísla plochy
+// editace čísla plochy
 	if (EditMapNumWnd)
 	{
 		::SendMessage(EditMapNumWnd, EM_UNDO, 0, 0);
@@ -5629,7 +5629,7 @@ void ProgOnRedo()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nulování pøíznakù naètení obrázkù pro preview
+// nulování příznaků načtení obrázků pro preview
 
 void PreviewPicNul()
 {
@@ -5640,7 +5640,7 @@ void PreviewPicNul()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// test zmìny adresáøe
+// test změny adresáře
 
 void TestDirChange(HANDLE* dir1, HANDLE* dir2, CText& path1, CText& path2, int idf)
 {
@@ -5650,7 +5650,7 @@ void TestDirChange(HANDLE* dir1, HANDLE* dir2, CText& path1, CText& path2, int i
 // zahájení sledování
 //	BeginDirChange(dir1, dir2, path1, path2);
 
-// bìžný adresáø
+// běžný adresář
 	if (*dir1 != INVALID_HANDLE_VALUE)
 	{
 		while ((olddir1 == INVALID_HANDLE_VALUE) || (::WaitForSingleObject(*dir1, 0) == WAIT_OBJECT_0))
@@ -5700,7 +5700,7 @@ void TestDirChange(HANDLE* dir1, HANDLE* dir2, CText& path1, CText& path2, int i
 		}
 	}
 
-// alternativní adresáø
+// alternativní adresář
 	if (*dir2 != INVALID_HANDLE_VALUE)
 	{
 		while ((olddir2 == INVALID_HANDLE_VALUE) || (::WaitForSingleObject(*dir2, 0) == WAIT_OBJECT_0))
@@ -5762,7 +5762,7 @@ void TestDirChange(HANDLE* dir1, HANDLE* dir2, CText& path1, CText& path2, int i
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha èasovaèe (TRUE=obslouženo)
+// obsluha časovače (TRUE=obslouženo)
 
 BOOL ProgOnTimer(UINT timerID)
 {
@@ -5797,7 +5797,7 @@ BOOL ProgOnTimer(UINT timerID)
 		}
 	}
 
-// hlášení o zmìnì adresáøe
+// hlášení o změně adresáře
 	if (timerID == ProgDirChangeTimerID)
 	{
 		TestDirChange(&FunctionDirChange, &FunctionDirChange2, FunctionPath, FunctionPath2, IDF_FNC);
@@ -5828,7 +5828,7 @@ BOOL ProgOnTimer(UINT timerID)
 		}
 	}
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 //	case BufIcoID:
@@ -5845,7 +5845,7 @@ BOOL ProgOnTimer(UINT timerID)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení fokusu na okno editoru s opoždìním
+// nastavení fokusu na okno editoru s opožděním
 
 void SetFocusEdit()
 {
@@ -5875,7 +5875,7 @@ void SetFocusEditMode(int buf, int inx)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení souøadnic grafického editoru
+// zobrazení souřadnic grafického editoru
 
 void DispMouseXY()
 {
@@ -5931,7 +5931,7 @@ BOOL ProgOnDrawItem(DRAWITEMSTRUCT* di)
 // kontrola, zda je režim editace
 	if (!ProgMode) return FALSE;
 
-// pøíprava lokálních promìnných
+// příprava lokálních proměnných
 	HWND wnd = di->hwndItem;
 	HDC dc = di->hDC;
 	RECT* rc = &di->rcItem;
@@ -5966,10 +5966,10 @@ BOOL ProgOnDrawItem(DRAWITEMSTRUCT* di)
 		if (tab)
 		{
 
-// vytvoøení kompatibilního DC
+// vytvoření kompatibilního DC
 			HDC dc2 = ::CreateCompatibleDC(dc);
 
-// výbìr bitmapy toolbaru
+// výběr bitmapy toolbaru
 			::SelectObject(dc2, ToolBarBmp);
 
 // vykreslení ikony
@@ -5979,12 +5979,12 @@ BOOL ProgOnDrawItem(DRAWITEMSTRUCT* di)
 // zrušení DC
 			::DeleteDC(dc2);
 
-// vykreslení rámeèku kolem vybraného prvku
+// vykreslení rámečku kolem vybraného prvku
 			if ((state & ODS_SELECTED) && ((state & ODS_COMBOBOXEDIT) == 0))
 			{
 				::DrawEdge(dc, rc, EDGE_RAISED, BF_RECT);
 
-// zobrazení nápovìdy k vybranému prvku
+// zobrazení nápovědy k vybranému prvku
 				CText txt;
 				txt.Load(di->itemData);
 				if (txt.IsNotEmpty())
@@ -6001,14 +6001,14 @@ BOOL ProgOnDrawItem(DRAWITEMSTRUCT* di)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení rozmìrù obrázku/plochy
+// nastavení rozměrů obrázku/plochy
 
 void ProgOnDimen()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufMapID:
@@ -6034,7 +6034,7 @@ void ProgOnRastr()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufMapID:
@@ -6049,17 +6049,17 @@ void ProgOnRastr()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// start pøehrávání
+// start přehrávání
 
 void ProgOnPlay()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufSndID:
@@ -6073,14 +6073,14 @@ void ProgOnPlay()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zastavení nahrávání i pøehrávání
+// zastavení nahrávání i přehrávání
 
 void ProgOnStop()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufSndID:
@@ -6094,14 +6094,14 @@ void ProgOnStop()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí pøíznaku opakování
+// přepnutí příznaku opakování
 
 void ProgOnLoop()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufSndID:
@@ -6122,10 +6122,10 @@ void ProgOnRecord()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufSndID:
@@ -6135,17 +6135,17 @@ void ProgOnRecord()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pozastavení nahrávání, pøehrávání
+// pozastavení nahrávání, přehrávání
 
 void ProgOnPause()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufSndID:
@@ -6159,14 +6159,14 @@ void ProgOnPause()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevíjení zpìt
+// převíjení zpět
 
 void ProgOnRew()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufMusID:
@@ -6177,14 +6177,14 @@ void ProgOnRew()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevíjení vpøed
+// převíjení vpřed
 
 void ProgOnFrw()
 {
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// rozlišení podle editaèního módu
+// rozlišení podle editačního módu
 	switch (EditMode)
 	{
 	case BufMusID:
@@ -6202,23 +6202,23 @@ void ProgOnStart()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// ukonèení preview
+// ukončení preview
 	PreviewStop();
 
 // uložení programu
 	if (Modi) ProgFile::SaveMaxi();
 	if (Modi) return;
 
-// nastavení kódu jazyku do registrù Windows
+// nastavení kódu jazyku do registrů Windows
 	SetJazykReg(LangID);
 
-// spuštìní programu
+// spuštění programu
 	Exec(CText(_T('"')) + JmenoLoad + _T('"'), ProgramPath + Cesta, FALSE);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test indexu, zda to je obrázek v bufferu knihovny (vrací TRUE=je ok, v knihovnì je jméno)
+// test indexu, zda to je obrázek v bufferu knihovny (vrací TRUE=je ok, v knihovně je jméno)
 
 BOOL PreviewPicTest(int index)
 {
@@ -6233,7 +6233,7 @@ BOOL PreviewPicTest(int index)
 		if ((item->Parent >= 0) && (item->Func != IDF_GROUP))
 		{
 
-// pøíprava jména souboru
+// příprava jména souboru
 			ProgLib::InitName(index);
 
 // test, zda to je obrázek
@@ -6255,7 +6255,7 @@ BOOL PreviewPicTest(int index)
 
 BOOL PreviewPicCache()
 {
-// test, zda je aktivní okno tøíd a zda není editace jména položky
+// test, zda je aktivní okno tříd a zda není editace jména položky
 	if ((FocusBuf == BufClsID) && !EditName)
 	{
 
@@ -6268,8 +6268,8 @@ BOOL PreviewPicCache()
 
 // úschova aktuálního stavu položek cachování, vynulování položek
 			CPicture	pic[PreviewPicSize];			// obrázky pro cachování
-			CText		name[PreviewPicSize];			// jména obrázkù pro cachování (prázdný = není)
-			BOOL		load[PreviewPicSize];			// pøíznaky naèítání obrázkù (TRUE = byl naèítán)
+			CText		name[PreviewPicSize];			// jména obrázků pro cachování (prázdný = není)
+			BOOL		load[PreviewPicSize];			// příznaky načítání obrázků (TRUE = byl načítán)
 
 			for (int i = PreviewPicSize - 1; i >= 0; i--)
 			{
@@ -6282,13 +6282,13 @@ BOOL PreviewPicCache()
 				PreviewPicLoad[i] = FALSE;
 			}
 
-// indexy položek k naètení
+// indexy položek k načtení
 			int inx[PreviewPicSize];
 			inx[PreviewPicAkt] = index;
 			inx[PreviewPicNxt] = BufCls.NextItem(index);
 			inx[PreviewPicPre] = BufCls.PrevItem(index);
 
-// naètení položek
+// načtení položek
 			for (i = PreviewPicSize - 1; i >= 0; i--)
 			{
 				if (PreviewPicTest(inx[i]))
@@ -6330,10 +6330,10 @@ void PreviewPicOn()
 // test, zda je režim preview obrázku již zapnut
 	if (PreviewPic) return;
 
-// pøíznak zapnutí režimu preview obrázku
+// příznak zapnutí režimu preview obrázku
 	PreviewPic = TRUE;
 
-// vypnutí posuvníkù
+// vypnutí posuvníků
 	if (HScrollDisp) ::ShowWindow(HScroll, SW_HIDE);
 	if (VScrollDisp) ::ShowWindow(VScroll, SW_HIDE);
 
@@ -6343,7 +6343,7 @@ void PreviewPicOn()
 	EditMap::EndEditSwcNum();
 	HideEditWnd(-1);
 
-// pøekreslení okna
+// překreslení okna
 	ProgOnSize();
 }
 
@@ -6355,10 +6355,10 @@ void PreviewPicOff()
 // test, zda je režimu preview obrázku již vypnut
 	if (!PreviewPic) return;
 
-// pøíznak vypnutí režimu preview obrázku
+// příznak vypnutí režimu preview obrázku
 	PreviewPic = FALSE;
 
-// zapnutí posuvníkù
+// zapnutí posuvníků
 	if (HScrollDisp) ::ShowWindow(HScroll, SW_SHOW);
 	if (VScrollDisp) ::ShowWindow(VScroll, SW_SHOW);
 
@@ -6390,17 +6390,17 @@ void PreviewPicOff()
 		break;
 	}
 
-// pøekreslení okna
+// překreslení okna
 	ProgOnSize();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zastavení preview, zahájení nového èítání èasu
+// zastavení preview, zahájení nového čítání času
 
 void PreviewStop()
 {
-// ukonèení probíhajícího preview
+// ukončení probíhajícího preview
 	if (PreviewWav)
 	{
 		::PlaySound(NULL, NULL, 0);
@@ -6424,14 +6424,14 @@ void PreviewStop()
 	if ((FocusBuf == BufClsID) && !EditName)
 	{
 
-// vytvoøení èasovaèe
+// vytvoření časovače
 		if (PreviewTimer == 0)
 		{
 			PreviewTimer = ::SetTimer(MainFrame, PreviewTimerID, TimerConst, NULL);
 		}
 		PreviewTimerN = 3;
 
-// zobrazení preview obrázku (je-li již naèten)
+// zobrazení preview obrázku (je-li již načten)
 		if (PreviewPicCache())
 		{
 			if (PreviewPicLoad[PreviewPicAkt])
@@ -6449,7 +6449,7 @@ void PreviewStop()
 		}
 	}
 
-// není okno tøíd - ukonèení èasovaèe
+// není okno tříd - ukončení časovače
 	else
 	{
 		PreviewPicOff();
@@ -6469,7 +6469,7 @@ LPCTSTR TestRepeatTab[] =
 	NULL,
 	NULL,
 	_T("(opakování)"),
-	_T("(opakovanì)"),
+	_T("(opakovaně)"),
 	_T("(repeat)"),
 	_T("(repeate)"),
 	_T("(repeated)"),
@@ -6478,7 +6478,7 @@ LPCTSTR TestRepeatTab[] =
 	NULL
 };
 
-// test pøíznaku opakování ve jménì zvuku
+// test příznaku opakování ve jméně zvuku
 BOOL TestRepeat(CText name)
 {
 	name.LowerCase();
@@ -6506,14 +6506,14 @@ BOOL TestRepeat(CText name)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení preview pøehrávání souboru pod kurzorem
+// zahájení preview přehrávání souboru pod kurzorem
 
 void PreviewStart()
 {
-// nulování èítaèe proti opìtovnému vyvolání
+// nulování čítače proti opětovnému vyvolání
 	PreviewTimerN = -1;
 
-// zastavení probíhajícího pøehrávání
+// zastavení probíhajícího přehrávání
 	if (PreviewWav)
 	{
 		::PlaySound(NULL, NULL, 0);
@@ -6533,11 +6533,11 @@ void PreviewStart()
 		PreviewMid = 0;
 	}
 
-// test, zda je aktivní okno tøíd a zda není editace jména položky
+// test, zda je aktivní okno tříd a zda není editace jména položky
 	if ((FocusBuf == BufClsID) && !EditName)
 	{
 
-// zjištìní aktivní položky
+// zjištění aktivní položky
 		int index = BufCls.Select();
 		if (index >= 0)
 		{
@@ -6549,11 +6549,11 @@ void PreviewStart()
 			if ((item->Parent >= 0) && (item->Func != IDF_GROUP))
 			{
 
-// pøíprava jména souboru
+// příprava jména souboru
 				ProgLib::InitName(index);
 				CText text = Text.GetTxt(item->Name);
 
-// pøehrávání souboru WAV
+// přehrávání souboru WAV
 				if ((ProgLib::m_Ext == _T("WAV")) || (ProgLib::m_Ext == _T("MP3")))
 				{
 					CText name = ProgLib::m_Name;
@@ -6580,11 +6580,11 @@ void PreviewStart()
 					return;
 				}
 
-// pøehrávání souboru MID
+// přehrávání souboru MID
 				if (ProgLib::m_Ext == _T("MID"))
 				{
 
-// otevøení výstupního zaøízení MID
+// otevření výstupního zařízení MID
 					MCI_OPEN_PARMS mop;
 
 					mop.lpstrDeviceType = _T("sequencer");
@@ -6597,11 +6597,11 @@ void PreviewStart()
 					{
 						PreviewMid = mop.wDeviceID;
 
-// pøehrání souboru
+// přehrání souboru
 						MCI_PLAY_PARMS mpp;
 						res = ::mciSendCommand(PreviewMid, MCI_PLAY, 0, (DWORD) &mpp);
 
-// pøi chybì uzavøení zaøízení
+// při chybě uzavření zařízení
 						if (res)
 						{
 							::mciSendCommand(PreviewMid, MCI_STOP, 0, NULL);

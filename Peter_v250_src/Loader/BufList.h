@@ -1,12 +1,12 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer seznamù								*
+*								Buffer seznamů								*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura prvku seznamu (16 Bajtù)
+// struktura prvku seznamu (16 Bajtů)
 
 typedef struct LISTDATA_
 {
@@ -20,32 +20,32 @@ typedef struct LISTDATA_
 class CBufList
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné
+// proměnné
 	LISTDATA*	m_Data;		// ukazatel na data
-	int			m_Num;		// poèet platných položek v bufferu
+	int			m_Num;		// počet platných položek v bufferu
 	int			m_Max;		// velikost bufferu (položek)
 
-// vytvoøení nové položky
+// vytvoření nové položky
 	inline int NewItem()
 	{
-		int i = m_Num;				// poèet položek
+		int i = m_Num;				// počet položek
 		if (i >= m_Max)				// není další položka?
 		{
-			NewData();				// vytvoøení nových dat
+			NewData();				// vytvoření nových dat
 		}
 
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení nových dat (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (odděleno kvůli lepší optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -63,7 +63,7 @@ public:
 // poskytnutí bufferu dat
 	inline LISTDATA* Data() const { return m_Data; };
 
-// poskytnutí poètu platných položek v bufferu
+// poskytnutí počtu platných položek v bufferu
 	inline int Num() const { return m_Num; };
 
 // poskytnutí velikosti bufferu
@@ -76,7 +76,7 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k položce (bez kontroly indexu)
+// poskytnutí přístupu k položce (bez kontroly indexu)
 	inline LISTDATA& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -89,7 +89,7 @@ public:
 	inline const LISTDATA& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// zjištìní aktuálního indexu seznamu
+// zjištění aktuálního indexu seznamu
 	inline const int _fastcall Inx(int index)
 	{
 		return m_Data[index].Index;
@@ -108,7 +108,7 @@ public:
 	// nový index
 			int newindex = list->Index + list->Auto;
 
-	// kontrola pøeteèení indexu
+	// kontrola přetečení indexu
 			int size = list->Size;
 
 			if ((DWORD)newindex >= (DWORD)size)
@@ -122,13 +122,13 @@ public:
 		}
 	}
 
-// automatická inkrementace indexu, vrací pùvodní index
+// automatická inkrementace indexu, vrací původní index
 	inline int _fastcall AutoIncInx(int index)
 	{
 	// adresa položky seznamu
 		LISTDATA* list = m_Data + index;
 
-	// úschova pùvodního indexu
+	// úschova původního indexu
 		int result = list->Index;
 
 	// test, zda bude inkrementace
@@ -138,7 +138,7 @@ public:
 	// nový index
 			int newindex = result + list->Auto;
 
-	// kontrola pøeteèení indexu
+	// kontrola přetečení indexu
 			int size = list->Size;
 
 			if ((DWORD)newindex >= (DWORD)size)
@@ -151,7 +151,7 @@ public:
 			list->Index = newindex;
 		}
 
-	// návrat pùvodního indexu
+	// návrat původního indexu
 		return result;
 	}
 
@@ -164,17 +164,17 @@ public:
 // zrušení položek z konce bufferu
 	void _fastcall Del(int num);
 
-// vytvoøení prázdné položky (vrací index položky)
+// vytvoření prázdné položky (vrací index položky)
 	int New();
 
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 	int _fastcall Add(const LISTDATA& data);
 
 // duplikace položky (s kontrolou platnosti indexu, vrací index první položky)
 	int _fastcall Dup(const int index);
 	int _fastcall Dup(const int index, int num);
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CBufList& operator= (const CBufList& src);
 };
 

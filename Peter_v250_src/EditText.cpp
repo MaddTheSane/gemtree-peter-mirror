@@ -14,8 +14,8 @@ namespace EditText
 // parametry
 
 int		Index = -1;						// editovaná položka
-BOOL	Filling = FALSE;				// plnìní dat
-CText	TextRadek;						// text "øádek:"
+BOOL	Filling = FALSE;				// plnění dat
+CText	TextRadek;						// text "řádek:"
 CText	TextPozice;						// text "pozice:"
 
 HFONT	TextFont0 = NULL;				// nastavený font
@@ -40,10 +40,10 @@ DWORD CALLBACK EditStreamCallback(DWORD cookie, BYTE* buf, long num, long* bytes
 
 void SetEditText(CText text)
 {
-// vypnutí pøekreslování okna
+// vypnutí překreslování okna
 	::SendMessage(EditTextWnd, WM_SETREDRAW, FALSE, 0);
 
-// pøíprava textového proudu
+// příprava textového proudu
 	RichEditText = text;
 	RichEditData = 0;
 	EDITSTREAM stream;
@@ -52,13 +52,13 @@ void SetEditText(CText text)
 // odeslání textového proudu
 	::SendMessage(EditTextWnd, EM_STREAMIN, SF_TEXT, (LPARAM)&stream);
 
-// obnovení pøekreslování okna
+// obnovení překreslování okna
 	::SendMessage(EditTextWnd, WM_SETREDRAW, TRUE, 0);
 	::InvalidateRect(EditTextWnd, NULL, TRUE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textu editoru
+// načtení textu editoru
 
 DWORD CALLBACK InEditStreamCallback(DWORD cookie, BYTE* buf, long num, long* bytes)
 {
@@ -80,11 +80,11 @@ CText GetEditText()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// opakovaná inicializace po zmìnì jazyku
+// opakovaná inicializace po změně jazyku
 
 void StartReInit()
 {
-// inicializace statických promìnných
+// inicializace statických proměnných
 	TextRadek.Load(IDT_RADEK);
 	TextRadek.Add(' ');
 
@@ -106,7 +106,7 @@ void StartReInit()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace při startu programu
 
 HINSTANCE RichEditLib = NULL;
 
@@ -118,16 +118,16 @@ void StartInit()
 	}		
 
 	EditTextWnd = ::CreateWindowEx(
-		WS_EX_CLIENTEDGE,				// rozšíøený styl
-		_T("RichEdit"),					// tøída
+		WS_EX_CLIENTEDGE,				// rozšířený styl
+		_T("RichEdit"),					// třída
 		NULL,							// text
 		WS_CHILD | ES_AUTOVSCROLL 
 			| ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL, // styl
 		300,							// X
 		200,							// Y
-		100,							// šíøka
+		100,							// šířka
 		30,								// výška
-		MainFrame,						// rodiè
+		MainFrame,						// rodič
 		NULL,							// ID
 		hInstance,						// instance
 		NULL);							// data
@@ -151,7 +151,7 @@ void StartInit()
 
 	::SendMessage(EditTextWnd, EM_FMTLINES, FALSE, 0);
 
-// inicializace statických promìnných
+// inicializace statických proměnných
 	StartReInit();
 }
 
@@ -178,7 +178,7 @@ void BegEdit(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun editaèního pole
+// přesun editačního pole
 
 HDWP MoveEdit(HDWP hdwp)
 {
@@ -191,11 +191,11 @@ HDWP MoveEdit(HDWP hdwp)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr všeho
+// výběr všeho
 
 void SelectAll()
 {
-// výbìr všeho
+// výběr všeho
 	::SendMessage(EditTextWnd, EM_SETSEL, 0, (LPARAM)-1);
 
 // aktualizace voleb bloku
@@ -207,11 +207,11 @@ void SelectAll()
 
 void Delete()
 {
-// zjištìní oznaèeného úseku textu
+// zjištění označeného úseku textu
 	CHARRANGE sel;
 	::SendMessage(EditTextWnd, EM_EXGETSEL, 0, (LPARAM)&sel);
 
-// není-li nic oznaèeno, ruší se znak za kurzorem (podhození klávesy DELETE)
+// není-li nic označeno, ruší se znak za kurzorem (podhození klávesy DELETE)
 	if (sel.cpMin == sel.cpMax)
 	{
 		::SendMessage(EditTextWnd, WM_KEYDOWN,	VK_DELETE, 0x01530001);
@@ -219,7 +219,7 @@ void Delete()
 	}
 	else
 
-// jinak zrušení oznaèeného úseku
+// jinak zrušení označeného úseku
 	{
 		::SendMessage(EditTextWnd, WM_CLEAR, 0, 0);
 	}
@@ -241,7 +241,7 @@ void Copy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøížení bloku
+// vystřížení bloku
 
 void Cut()
 {
@@ -304,7 +304,7 @@ void UpdateClipboard()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna textu
+// změna textu
 
 void OnChange()
 {

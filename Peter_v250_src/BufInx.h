@@ -1,23 +1,23 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer pøemapování indexù						*
+*							Buffer přemapování indexů						*
 *																			*
 \***************************************************************************/
 
 class CBufIndex
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné
+// proměnné
 	int*	m_Data;			// ukazatel na data
-	int		m_Num;			// poèet položek v bufferu
+	int		m_Num;			// počet položek v bufferu
 	int		m_Max;			// velikost bufferu (položek)
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -35,12 +35,12 @@ public:
 // poskytnutí adresy dat
 	inline int* Data() const { return m_Data; };
 
-// poskytnutí/nastavení poètu položek v bufferu
-// (nové položky neinicializované, vrací FALSE=chyba pamìti)
+// poskytnutí/nastavení počtu položek v bufferu
+// (nové položky neinicializované, vrací FALSE=chyba paměti)
 	inline int Num() const { return m_Num; };
 	bool _fastcall Num(const int num);
 
-// nastavení poètu položek s vymazáním "-1", vrací FALSE=chyba pamìti
+// nastavení počtu položek s vymazáním "-1", vrací FALSE=chyba paměti
 	bool _fastcall NumClear(const int num);
 
 // vymazání všech položek v bufferu zadanou hodnotou
@@ -53,7 +53,7 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k položce (bez kontroly indexu)
+// poskytnutí přístupu k položce (bez kontroly indexu)
 	inline int& operator[] (const int index) 
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -72,9 +72,9 @@ public:
 // nastavení položky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const int data);
 
-// pøidání položky na konec bufferu (vrací index položky, pøi chybì pamìti vrací <0)
+// přidání položky na konec bufferu (vrací index položky, při chybě paměti vrací <0)
 	int _fastcall Add(const int data);
 
-// operátor pøiøazení (pøi chybì pamìti poèet položek nesouhlasí)
+// operátor přiřazení (při chybě paměti počet položek nesouhlasí)
 	const CBufIndex& _fastcall operator= (const CBufIndex& srcbuf);
 };

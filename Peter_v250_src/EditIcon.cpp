@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*							Editor ikon a obrázkù							*
+*							Editor ikon a obrázků							*
 *																			*
 \***************************************************************************/
 
@@ -13,81 +13,81 @@ namespace EditIcon
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-// výbìr barev
-BYTE	ColLeft;						// barva pro levé tlaèítko
-BYTE	ColRight;						// barva pro pravé tlaèítko
+// výběr barev
+BYTE	ColLeft;						// barva pro levé tlačítko
+BYTE	ColRight;						// barva pro pravé tlačítko
 BYTE	ColInd = 255;					// barva indikátoru barev (255 = není)
 
 // parametry ikony/obrázku
 int		BufID = -1;						// editovaný buffer (-1 = není)
-int		Index = -1;						// editovaná ikona v bufferu ikon/obrázkù (-2 = sprajt)
-int		Width = 32;						// šíøka obrázku v bodech
+int		Index = -1;						// editovaná ikona v bufferu ikon/obrázků (-2 = sprajt)
+int		Width = 32;						// šířka obrázku v bodech
 int		Height = 32;					// výška obrázku v bodech
 BYTE*	Data = NULL;					// data obrázku
 
-// zadané nové rozmìry obrázku (v bodech)
-int		NewDimWidth;					// šíøka obrázku
+// zadané nové rozměry obrázku (v bodech)
+int		NewDimWidth;					// šířka obrázku
 int		NewDimHeight;					// výška obrázku
-BOOL	NewDimPoint = FALSE;			// rozmìry zadány v bodech
-BOOL	NewDimFill = FALSE;				// probíhá programové plnìní dialogu
+BOOL	NewDimPoint = FALSE;			// rozměry zadány v bodech
+BOOL	NewDimFill = FALSE;				// probíhá programové plnění dialogu
 
-// zmìna velikosti obrázku
-int		ResizeOldWidth = 640;			// pùvodní šíøka bloku
-int		ResizeOldHeight = 480;			// pùvodní výška bloku
-int		ResizeWidth = 640;				// zadaná nová šíøka
+// změna velikosti obrázku
+int		ResizeOldWidth = 640;			// původní šířka bloku
+int		ResizeOldHeight = 480;			// původní výška bloku
+int		ResizeWidth = 640;				// zadaná nová šířka
 int		ResizeHeight = 480;				// zadaná nová výška
-double	ResizeWidthProc = 100;			// nová šíøka zadaná v procentech
+double	ResizeWidthProc = 100;			// nová šířka zadaná v procentech
 double	ResizeHeightProc = 100;			// nová výška zadaná v procentech
-BOOL	ResizeFill = FALSE;				// probíhá programové plnìní dialogu
-BOOL	ResizeAktWidth = TRUE;			// je aktivní pole šíøky
+BOOL	ResizeFill = FALSE;				// probíhá programové plnění dialogu
+BOOL	ResizeAktWidth = TRUE;			// je aktivní pole šířky
 
 enum {
-	ResizeModeStep = 0,					// rozmìry zadány v krocích
-	ResizeModePoint,					// rozmìry zadány v bodech
-	ResizeModeProc,						// rozmìry zadány v procentech
+	ResizeModeStep = 0,					// rozměry zadány v krocích
+	ResizeModePoint,					// rozměry zadány v bodech
+	ResizeModeProc,						// rozměry zadány v procentech
 };
 
-int		ResizeMode = ResizeModeProc;	// zadaný typ rozmìrù
-BOOL	ResizeModeProp = TRUE;			// zachovat pomìr stran
-BOOL	ResizeModeInt = TRUE;			// provádìt interpolaci
-BOOL	ResizeModeDith = TRUE;			// provádìt dithering
+int		ResizeMode = ResizeModeProc;	// zadaný typ rozměrů
+BOOL	ResizeModeProp = TRUE;			// zachovat poměr stran
+BOOL	ResizeModeInt = TRUE;			// provádět interpolaci
+BOOL	ResizeModeDith = TRUE;			// provádět dithering
 
-// zobrazená èást obrázku (v bodech obrázku, bez pøepoètu na displej)
-int		DispLeft = 0;					// poèátek zobrazené èásti obrázku zleva
-int		DispBottom = 0;					// poèátek zobrazené èásti obrázku zdola
-int		DispWidth = 32;					// šíøka zobrazené èásti obrázku
-int		DispHeight = 32;				// výška zobrazené èásti obrázku
-int		MidX = -1;						// nastavený støed obrázku X
-int		MidY = -1;						// nastavený støed obrázku Y
+// zobrazená část obrázku (v bodech obrázku, bez přepočtu na displej)
+int		DispLeft = 0;					// počátek zobrazené části obrázku zleva
+int		DispBottom = 0;					// počátek zobrazené části obrázku zdola
+int		DispWidth = 32;					// šířka zobrazené části obrázku
+int		DispHeight = 32;				// výška zobrazené části obrázku
+int		MidX = -1;						// nastavený střed obrázku X
+int		MidY = -1;						// nastavený střed obrázku Y
 BOOL	Rastr = TRUE;					// zobrazení rastru
 
 // aktualizace zobrazení obrázku
-int		AktLeft;						// poèátek vlevo
-int		AktTop;							// poèátek nahoøe
+int		AktLeft;						// počátek vlevo
+int		AktTop;							// počátek nahoře
 int		AktRight;						// konec vpravo
 int		AktBottom;						// konec dole
 
 // zobrazení obrázku na displeji (v bodech displeje)
-int		DLeft;							// poèátek zobrazení vlevo
-int		DTop;							// poèátek zobrazení nahoøe
-int		DWidth;							// zobrazená šíøka èásti obrázku na displeji
-int		DHeight;						// zobrazená výška èásti obrázku na displeji
-int		Zoom = 1;						// aktuální mìøítko obrázku/ikony
-int		ZoomIcon = -1;					// mìøítko ikony
-int		ZoomPic = -1;					// mìøítko obrázku
-#define MAXZOOM 64						// maximální mìøítko (mocnina 2 !!!)
+int		DLeft;							// počátek zobrazení vlevo
+int		DTop;							// počátek zobrazení nahoře
+int		DWidth;							// zobrazená šířka části obrázku na displeji
+int		DHeight;						// zobrazená výška části obrázku na displeji
+int		Zoom = 1;						// aktuální měřítko obrázku/ikony
+int		ZoomIcon = -1;					// měřítko ikony
+int		ZoomPic = -1;					// měřítko obrázku
+#define MAXZOOM 64						// maximální měřítko (mocnina 2 !!!)
 
-// pole výbìru barev
-int		ColsX;							// poèet barev horizontálnì
-int		ColsXByte;						// šíøka obrázku barev v bajtech
-int		ColsY;							// poèet barev vertikálnì
-int		ColsLeft;						// poèátek pole barev X
-int		ColsTop;						// poèátek pole barev Y
-int		ColsWidth;						// zobrazená šíøka pole barev
+// pole výběru barev
+int		ColsX;							// počet barev horizontálně
+int		ColsXByte;						// šířka obrázku barev v bajtech
+int		ColsY;							// počet barev vertikálně
+int		ColsLeft;						// počátek pole barev X
+int		ColsTop;						// počátek pole barev Y
+int		ColsWidth;						// zobrazená šířka pole barev
 int		ColsHeight;						// zobrazená výška pole barev
-int		ColsIncX;						// pøírustek barev X
-int		ColsIncY;						// pøírustek barev Y
-#define	MINCOLSIR 6						// minimální šíøka políèka k zobrazení rámu výbìru barvy
+int		ColsIncX;						// přírustek barev X
+int		ColsIncY;						// přírustek barev Y
+#define	MINCOLSIR 6						// minimální šířka políčka k zobrazení rámu výběru barvy
 
 // volba fontu
 int		FontWeight = FW_NORMAL;			// váha fontu (BOLD)
@@ -98,35 +98,35 @@ int		FontCharSet = EASTEUROPE_CHARSET; //DEFAULT_CHARSET; // znaková sada
 CText	FontText;						// zadaný text
 
 // obsluha kreslení
-int		Mode = IDN_PEN;					// editaèní mód (kód IDN_xxx)
-int		OldMode = IDN_PEN;				// uschovaný editaèní mód (kód IDN_xxx)
-int		PenWidth = 1;					// šíøka pera
+int		Mode = IDN_PEN;					// editační mód (kód IDN_xxx)
+int		OldMode = IDN_PEN;				// uschovaný editační mód (kód IDN_xxx)
+int		PenWidth = 1;					// šířka pera
 int		PenWidthID = IDN_WIDTH1;		// ID volby pera
-BOOL	Editing = FALSE;				// pøíznak probíhající editování
-int		OldX = 0;						// pùvodní souøadnice kreslení X
-int		OldY = 0;						// pùvodní souøadnice kreslení Y
-int		TopX = 0;						// poèáteèní souøadnice tažení X
-int		TopY = 0;						// poèáteèní souøadnice tažení Y
-BYTE*	PushBuf = NULL;					// buffer k meziúschovì obrázku
+BOOL	Editing = FALSE;				// příznak probíhající editování
+int		OldX = 0;						// původní souřadnice kreslení X
+int		OldY = 0;						// původní souřadnice kreslení Y
+int		TopX = 0;						// počáteční souřadnice tažení X
+int		TopY = 0;						// počáteční souřadnice tažení Y
+BYTE*	PushBuf = NULL;					// buffer k meziúschově obrázku
 
 // obsluha bloku
-BOOL	Selecting = FALSE;				// pøíznak oznaèení bloku
-BOOL	Moving = FALSE;					// pøíznak pøesouvání bloku
+BOOL	Selecting = FALSE;				// příznak označení bloku
+BOOL	Moving = FALSE;					// příznak přesouvání bloku
 BYTE*	BlokBuf = NULL;					// buffer s blokem
-int		BlokX = 0;						// poèátek bloku X
-int		BlokY = 0;						// poèátek bloku Y
-int		BlokWidth = 32;					// šíøka bloku
+int		BlokX = 0;						// počátek bloku X
+int		BlokY = 0;						// počátek bloku Y
+int		BlokWidth = 32;					// šířka bloku
 int		BlokHeight = 32;				// výška bloku
-BYTE	BlokBack;						// prùhledná barva bloku
+BYTE	BlokBack;						// průhledná barva bloku
 
-// první oznaèení bloku
-BOOL	CutMode = FALSE;				// výchozí souøadnice bloku
-int		FirstBlokX = 0;					// výchozí poèátek bloku X
-int		FirstBlokY = 0;					// výchozí poèátek bloku Y
-int		FirstBlokWidth = 0;				// výchozí šíøka bloku
+// první označení bloku
+BOOL	CutMode = FALSE;				// výchozí souřadnice bloku
+int		FirstBlokX = 0;					// výchozí počátek bloku X
+int		FirstBlokY = 0;					// výchozí počátek bloku Y
+int		FirstBlokWidth = 0;				// výchozí šířka bloku
 int		FirstBlokHeight = 0;			// výchozí výška bloku
 
-// tabulka kódù pro vykreslení tlaèítek pøi editaci bloku
+// tabulka kódů pro vykreslení tlačítek při editaci bloku
 int EditBlokTab[] = {
 	ButtonYFlip,		IDN_YFLIP,
 	ButtonXFlip,		IDN_XFLIP,
@@ -155,19 +155,19 @@ int EditBlokTab[] = {
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace při startu programu
 
 void StartInit()
 {
-// pøíprava barev
-	ColLeft = WhiteCol;					// barva levého tlaèítka
-	ColRight = BackCol;					// barva pravého tlaèítka
-	BlokBack = BackCol;					// prùhledná barva bloku
+// příprava barev
+	ColLeft = WhiteCol;					// barva levého tlačítka
+	ColRight = BackCol;					// barva pravého tlačítka
+	BlokBack = BackCol;					// průhledná barva bloku
 
-// pøíprava rozmìrù obrázku barev
-	ColsX = ColCol+1;					// poèet barev horizontálnì
+// příprava rozměrů obrázku barev
+	ColsX = ColCol+1;					// počet barev horizontálně
 	ColsXByte = (ColCol+1+3) & ~3;		// délka linky obrázku barev v bajtech
-	ColsY = ColLev;						// poèet barev vertikálnì
+	ColsY = ColLev;						// počet barev vertikálně
 
 // jméno fontu, zadaný text
 	FontName = _T("Times New Roman");	// jméno fontu
@@ -179,12 +179,12 @@ void StartInit()
 
 void BegEdit(int bufID, int index)
 {
-// nulování pøepínaèù
+// nulování přepínačů
 	Selecting = FALSE;
 	Editing = FALSE;
 	Moving = FALSE;
 
-// editace obrázkù
+// editace obrázků
 	if (bufID == BufPicID)
 	{
 		ASSERT ((index == -2) || Picture.IsValid(index));
@@ -202,9 +202,9 @@ void BegEdit(int bufID, int index)
 			pic = &(Picture[index]);	// adresa obrázku
 		}
 
-		pic->CopyWrite();			// kopie pøed zápisem
+		pic->CopyWrite();			// kopie před zápisem
 		pic->DeComp();
-		Width = pic->Width();		// šíøka obrázku
+		Width = pic->Width();		// šířka obrázku
 		Height = pic->Height();		// výška obrázku
 		Data = pic->DataData();		// adresa dat obrázku
 
@@ -237,9 +237,9 @@ void BegEdit(int bufID, int index)
 
 		editicon = &(Icon[index]);		// adresa ikony
 
-		editicon->CopyWrite();			// kopie pøed zápisem
+		editicon->CopyWrite();			// kopie před zápisem
 		editicon->DeComp();
-		Width = ICONWIDTH;				// šíøka ikony
+		Width = ICONWIDTH;				// šířka ikony
 		Height = ICONHEIGHT;			// výška ikony
 		Data = editicon->DataData();	// adresa dat ikony
 
@@ -263,16 +263,16 @@ void BegEdit(int bufID, int index)
 		Zoom = ZoomIcon;
 	}
 
-// pøíprava dat
+// příprava dat
 	BufID = bufID;						// mód editace ikon/obrázku
 	Index = index;						// index ikony/obrázku
 	PushBuf = (BYTE*)MemSize(PushBuf, Width * Height * sizeof(BYTE));
 
-// støed zvìtšení
+// střed zvětšení
 	if ((DWORD)MidX >= (DWORD)Width) MidX = Width/2;
 	if ((DWORD)MidY >= (DWORD)Height) MidY = Height/2;
 
-// pøepoèet rozložení a zobrazení obrázku
+// přepočet rozložení a zobrazení obrázku
 	Disp();
 
 // aktualizace voleb bloku
@@ -280,9 +280,9 @@ void BegEdit(int bufID, int index)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha dialogu pro zadání rozmìrù
+// obsluha dialogu pro zadání rozměrů
 
-// nastavení textu šíøky
+// nastavení textu šířky
 void DimenDialSetWidth(HWND wnd)
 {
 	CText txt;
@@ -301,7 +301,7 @@ void DimenDialSetWidth(HWND wnd)
 	NewDimFill = FALSE;
 }
 
-// naètení šíøky
+// načtení šířky
 void DimenDialGetWidth(HWND wnd)
 {
 	if (!NewDimFill)
@@ -339,7 +339,7 @@ void DimenDialSetHeight(HWND wnd)
 	NewDimFill = FALSE;
 }
 
-// naètení výšky
+// načtení výšky
 void DimenDialGetHeight(HWND wnd)
 {
 	if (!NewDimFill)
@@ -358,7 +358,7 @@ void DimenDialGetHeight(HWND wnd)
 	}
 }
 
-// nastavení pøepínaèe volby jednotek
+// nastavení přepínače volby jednotek
 void DimenDialSetSwc(HWND wnd)
 {
 	NewDimFill = TRUE;
@@ -454,18 +454,18 @@ BOOL CALLBACK DimenDialogProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení rozmìrù obrázku
+// nastavení rozměrů obrázku
 
 void OnDimen()
 {
 // kontrola režimu
 	if (BufID != BufPicID) return;
 
-// pøíprava výchozích rozmìrù
+// příprava výchozích rozměrů
 	NewDimWidth = Width;
 	NewDimHeight = Height;
 
-// zadání nových rozmìrù obrázku
+// zadání nových rozměrů obrázku
 	if (::DialogBoxParam(
 			hInstance,
 			MAKEINTRESOURCE(IDN_PICDIMEN),
@@ -473,22 +473,22 @@ void OnDimen()
 			(DLGPROC)DimenDialogProc,
 			(LPARAM)IDN_PICDIMEN) != IDOK) return;
 
-// korekce zadaných údajù
+// korekce zadaných údajů
 	if (NewDimWidth < 1) NewDimWidth = Width;
 	if (NewDimWidth > 0x8000) NewDimWidth = 0x8000;
 	if (NewDimHeight < 1) NewDimHeight = Height;
 	if (NewDimHeight > 0x8000) NewDimHeight = 0x8000;
 
-// kontrola, zda byly rozmìry zmìnìny
+// kontrola, zda byly rozměry změněny
 	if ((NewDimWidth == Width) && (NewDimHeight == Height))
 	{
 		return;
 	}
 
-// zapnutí kurzoru èekání
+// zapnutí kurzoru čekání
 	BeginWaitCursor();
 
-// vypnutí oznaèení bloku
+// vypnutí označení bloku
 	DispSelect();
 
 // zrušení módu bloku
@@ -497,12 +497,12 @@ void OnDimen()
 		SetMode(OldMode);
 	}
 
-// nulování pøepínaèù
+// nulování přepínačů
 	Selecting = FALSE;
 	Editing = FALSE;
 	Moving = FALSE;
 
-// nastavení nových rozmìrù obrázku
+// nastavení nových rozměrů obrázku
 	Width = NewDimWidth;
 	Height = NewDimHeight;
 
@@ -535,7 +535,7 @@ void OnDimen()
 	if ((DWORD)MidX >= (DWORD)Width) MidX = Width/2;
 	if ((DWORD)MidY >= (DWORD)Height) MidY = Height/2;
 
-// pøepoèet zobrazení
+// přepočet zobrazení
 	ReCalc();
 	DispLeft = MidX - DispWidth/2;
 	DispBottom = MidY - DispHeight/2;
@@ -543,19 +543,19 @@ void OnDimen()
 	SetScroll();
 	ProgOnSize();
 
-// pøekreslení displeje
+// překreslení displeje
 	Disp();
 
-// pøíznak modifikace
+// příznak modifikace
 	SetModi();
 
 // aktualizace voleb bloku
 	UpdateClipboard();
 
-// aktualizace zobrazení stromù
+// aktualizace zobrazení stromů
 	UpdateTree();
 
-// vypnutí kurzoru èekání
+// vypnutí kurzoru čekání
 	EndWaitCursor();
 }
 
@@ -564,47 +564,47 @@ void OnDimen()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepoèet rozmìrù
+// přepočet rozměrů
 
 void ReCalc()
 {
-// výpoèet horizontálních parametrù pole pro výbìr barev
-	ColsIncX = (EditWidth - 4) / ColsX;		// pøírustek barev X
-	if (ColsIncX < 1) ColsIncX = 1;			// musí být pøírustek min. 1
-	ColsWidth = ColsIncX * ColsX;				// zobrazená šíøka pole barev
+// výpočet horizontálních parametrů pole pro výběr barev
+	ColsIncX = (EditWidth - 4) / ColsX;		// přírustek barev X
+	if (ColsIncX < 1) ColsIncX = 1;			// musí být přírustek min. 1
+	ColsWidth = ColsIncX * ColsX;				// zobrazená šířka pole barev
 	ColsLeft = EditX + (EditWidth - ColsWidth)/2; // levý okraj pole barev
 
-// výpoèet vertikálních parametrù pole pro výbìr barev
-	ColsIncY = (EditHeight - 4) / 6 / ColsY;	// pøírustek barev Y
-	if (ColsIncY < 1) ColsIncY = 1;			// musí být pøírustek min. 1
-	ColsHeight = ColsIncY * ColsY;				// zobrazená šíøka pole barev
+// výpočet vertikálních parametrů pole pro výběr barev
+	ColsIncY = (EditHeight - 4) / 6 / ColsY;	// přírustek barev Y
+	if (ColsIncY < 1) ColsIncY = 1;			// musí být přírustek min. 1
+	ColsHeight = ColsIncY * ColsY;				// zobrazená šířka pole barev
 	ColsTop = EditY + EditHeight - 2 - ColsHeight; // horní okraj pole barev
 
-// pøíprava zobrazené výšky (korekce, je-li horizontální posuvník)
+// příprava zobrazené výšky (korekce, je-li horizontální posuvník)
 	DHeight = ColsTop - EditY - 2 - 1 - 4;		// výška k zobrazení
 	if (EditWidth - 4 - TRACKSIRKA < Width*Zoom)
 	{
 		DHeight -= TRACKSIRKA;				// snížený výšky o horizontální posuvník
 	}
-	if (DHeight < 1) DHeight = 1;			// minimální šíøka
+	if (DHeight < 1) DHeight = 1;			// minimální šířka
 
-// pøíprava zobrazené šíøky (korekce, je-li vertikální posuvník)
-	DWidth = EditWidth - 4 - 1 - 4;			//	šíøka k zobrazení
+// příprava zobrazené šířky (korekce, je-li vertikální posuvník)
+	DWidth = EditWidth - 4 - 1 - 4;			//	šířka k zobrazení
 	if (DHeight < Height*Zoom)
 	{
-		DWidth -= TRACKSIRKA;				// snížení šíøky o vertikální posuvník
+		DWidth -= TRACKSIRKA;				// snížení šířky o vertikální posuvník
 	}
-	if (DWidth < 1) DWidth = 1;				// minimální šíøka
+	if (DWidth < 1) DWidth = 1;				// minimální šířka
 
-// poèet zobrazených bodù
-	DispWidth = DWidth/Zoom;				// poèet zobrazených bodù horizontálnì
-	if (DispWidth < 1) DispWidth = 1;		// minimální poèet bodù horizontálnì
-	if (DispWidth > Width) DispWidth = Width; // omezení na skuteènou šíøku
-	DispHeight = DHeight/Zoom;			// poèet zobrazených bodù vertikálnì
-	if (DispHeight < 1) DispHeight = 1;		// minimální poèet bodù vertikálnì
-	if (DispHeight > Height) DispHeight = Height; // omezení na skuteènou výšku
+// počet zobrazených bodů
+	DispWidth = DWidth/Zoom;				// počet zobrazených bodů horizontálně
+	if (DispWidth < 1) DispWidth = 1;		// minimální počet bodů horizontálně
+	if (DispWidth > Width) DispWidth = Width; // omezení na skutečnou šířku
+	DispHeight = DHeight/Zoom;			// počet zobrazených bodů vertikálně
+	if (DispHeight < 1) DispHeight = 1;		// minimální počet bodů vertikálně
+	if (DispHeight > Height) DispHeight = Height; // omezení na skutečnou výšku
 
-// omezení poèátku zobrazení
+// omezení počátku zobrazení
 	if (DispLeft < 0) DispLeft = 0;
 	if (DispLeft > Width - DispWidth) 
 		DispLeft = Width - DispWidth;
@@ -612,7 +612,7 @@ void ReCalc()
 	if (DispBottom > Height - DispHeight)
 		DispBottom = Height - DispHeight;
 
-// upøesnìní údajù k zobrazení
+// upřesnění údajů k zobrazení
 	DLeft = EditX + 2 + 2 + (DWidth - Zoom*DispWidth)/2;
 //	if (DispWidth < Width) DLeft = EditX + 2;
 	DTop = EditY + 2 + 2 + (DHeight - Zoom*DispHeight)/2;
@@ -620,7 +620,7 @@ void ReCalc()
 	DWidth = Zoom*DispWidth;
 	DHeight = Zoom*DispHeight;
 
-// pøíznak zapnutí posuvníkù
+// příznak zapnutí posuvníků
 	HScrollDisp = (DispWidth < Width);
 	VScrollDisp = (DispHeight < Height);
 }
@@ -631,27 +631,27 @@ void ReCalc()
 
 void Disp()
 {
-// pøepoèet zobrazení
+// přepočet zobrazení
 	ReCalc();
 
-// nastavení posuvníkù
+// nastavení posuvníků
 	SetScroll();
 
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// výbìr vlastních palet
+	HPALETTE OldPal;					// úschova původních palet
+	OldPal = ::SelectPalette(dc,		// výběr vlastních palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
 // vykreslení obrázku
-	AktLeft = 0;						// poèátek vlevo
+	AktLeft = 0;						// počátek vlevo
 	AktRight = Width;					// konec vpravo
-	AktTop = 0;							// poèátek nahoøe
+	AktTop = 0;							// počátek nahoře
 	AktBottom = Height;					// konec dole
-	DispAkt(dc);				// pøekreslení obrázku
+	DispAkt(dc);				// překreslení obrázku
 
 // zobrazení rámu kolem obrázku
 	DispRam(dc);
@@ -662,54 +662,54 @@ void Disp()
 		DispCol(dc, col);
 	}
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizaèní pøekreslení obrázku (s pøepoètem rozmìrù)
+// aktualizační překreslení obrázku (s přepočtem rozměrů)
 
 void ReDisp()
 {
-// pøepoèet zobrazení
+// přepočet zobrazení
 	ReCalc();
 
-// nastavení posuvníkù
+// nastavení posuvníků
 	SetScroll();
 
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// výbìr vlastních palet
+	HPALETTE OldPal;					// úschova původních palet
+	OldPal = ::SelectPalette(dc,		// výběr vlastních palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
 // vykreslení obrázku
-	DispAkt(dc);				// pøekreslení obrázku
+	DispAkt(dc);				// překreslení obrázku
 
 // zobrazení rámu kolem obrázku
 	DispRam(dc);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení okrajù kolem obrázku
+// překreslení okrajů kolem obrázku
 
 void DispRam(HDC dc)
 {
-// rozmìry k zobrazení podkladu
+// rozměry k zobrazení podkladu
 	int dleft = DLeft;
 	int dright = dleft + DWidth;
 	int dtop = DTop;
@@ -719,7 +719,7 @@ void DispRam(HDC dc)
 	if (Rastr)
 	{
 
-// pøíprava a výbìr pera k zobrazení okraje
+// příprava a výběr pera k zobrazení okraje
 		HPEN pen = ::CreatePen(PS_SOLID, 1, 0x0000ff);
 		HPEN oldpen = (HPEN)::SelectObject(dc, pen);
 
@@ -761,11 +761,11 @@ void DispRam(HDC dc)
 		::SelectObject(dc, oldpen);
 		::DeleteObject(pen);
 
-// test, zda bude modrý nebo èerný okraj
+// test, zda bude modrý nebo černý okraj
 		if (Zoom > 1)
 		{
 
-// pøíprava a výbìr pera k zobrazení modrìho okraje
+// příprava a výběr pera k zobrazení modrěho okraje
 			pen = ::CreatePen(PS_SOLID, 1, 0xff0000);
 			oldpen = (HPEN)::SelectObject(dc, pen);
 
@@ -791,11 +791,11 @@ void DispRam(HDC dc)
 			::SelectObject(dc, oldpen);
 			::DeleteObject(pen);
 
-// test, zda bude èerný okraj
+// test, zda bude černý okraj
 			if (Zoom >= 8)
 			{
 
-// pøíprava a výbìr pera k zobrazení èerného okraje
+// příprava a výběr pera k zobrazení černého okraje
 				pen = ::CreatePen(PS_SOLID, 1, 0);
 				oldpen = (HPEN)::SelectObject(dc, pen);
 
@@ -822,10 +822,10 @@ void DispRam(HDC dc)
 		}
 	}
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// příprava štětce k vymazání podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štětec k vymazání plochy
 
-// vymazání plochy nahoøe nad obrázkem
+// vymazání plochy nahoře nad obrázkem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -879,13 +879,13 @@ void DispRam(HDC dc)
 		::FillRect(dc, &rc, brush);
 	}
 
-// zrušení štìtce podkladu (i když podle dokumentace rušení není nutné)
+// zrušení štětce podkladu (i když podle dokumentace rušení není nutné)
 	::DeleteObject(brush);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizaèní pøekreslení obrázku
+// aktualizační překreslení obrázku
 
 void DispAkt(HDC dc)
 {
@@ -898,20 +898,20 @@ void DispAkt(HDC dc)
 	if (AktBottom > Height - DispBottom)
 		AktBottom = Height - DispBottom;
 
-// pøíprava zdrojových souøadnic k zobrazení
+// příprava zdrojových souřadnic k zobrazení
 	int srcLeft = AktLeft;
 	int srcWidth = AktRight - srcLeft;
 
-// !!!!!!!!!!!! doplòková ochrana (havárie pøi UNDO po zmìnì velikosti obrázkù sprajtu)
+// !!!!!!!!!!!! doplňková ochrana (havárie při UNDO po změně velikosti obrázků sprajtu)
 	if (srcWidth > Width) srcWidth = Width;
 
 	int srcTop = AktTop;
 	int srcHeight = AktBottom - srcTop;
 
-// !!!!!!!!!!!! doplòková ochrana (havárie pøi UNDO po zmìnì velikosti obrázkù sprajtu)
+// !!!!!!!!!!!! doplňková ochrana (havárie při UNDO po změně velikosti obrázků sprajtu)
 	if (srcHeight > Height) srcHeight = Height;
 
-// zneplatnìní hranic k zobrazení
+// zneplatnění hranic k zobrazení
 	AktLeft = Width;
 	AktRight = 0;
 	AktTop = Height;
@@ -920,7 +920,7 @@ void DispAkt(HDC dc)
 // kontrola, zda je co zobrazit
 	if ((srcWidth <= 0) || (srcHeight <= 0)) return;
 
-// pøíprava cílových souøadnic k zobrazení
+// příprava cílových souřadnic k zobrazení
 	int dstLeft = DLeft + (srcLeft - DispLeft)*Zoom;
 	int dstTop = DTop + (srcTop - (Height - DispBottom - DispHeight))*Zoom;
 	int dstWidth = srcWidth*Zoom;
@@ -934,7 +934,7 @@ void DispAkt(HDC dc)
 		{
 			Sprite[EditItemSprite][EditItemPic].DeComp();
 
-// !!!!!!!!!!!! doplòková ochrana (havárie pøi UNDO po zmìnì velikosti obrázkù sprajtu)
+// !!!!!!!!!!!! doplňková ochrana (havárie při UNDO po změně velikosti obrázků sprajtu)
 			if ((Sprite[EditItemSprite][EditItemPic].Width() != Width) ||
 				(Sprite[EditItemSprite][EditItemPic].Height() != Height)) return;
 
@@ -944,7 +944,7 @@ void DispAkt(HDC dc)
 		{
 			Picture[Index].DeComp();
 
-// !!!!!!!!!!!! doplòková ochrana (havárie pøi UNDO po zmìnì velikosti obrázkù sprajtu)
+// !!!!!!!!!!!! doplňková ochrana (havárie při UNDO po změně velikosti obrázků sprajtu)
 			if ((Picture[Index].Width() != Width) || (Picture[Index].Height() != Height)) return;
 
 			Data = Picture[Index].DataData();
@@ -958,14 +958,14 @@ void DispAkt(HDC dc)
 
 	BYTE* data = Data + (Height - srcTop - srcHeight)*Width;
 
-// vypnutí výbìru bloku
+// vypnutí výběru bloku
 	DispSelect();
 
-// pøednastavení parametrù záhlaví bitmapy
+// přednastavení parametrů záhlaví bitmapy
 	StdBitmapInfo->bmiHeader.biWidth = dstWidth;
 	StdBitmapInfo->bmiHeader.biHeight = dstHeight;
 
-// vytvoøení bufferu k dekódování zobrazení
+// vytvoření bufferu k dekódování zobrazení
 	BYTE* buf;
 	buf = (BYTE*)MemGet(dstWidthByte * dstHeight);
 	BYTE* src = data + srcLeft;
@@ -1138,7 +1138,7 @@ void DispAkt(HDC dc)
 				{
 					for (j = srcWidth; j > 0; j--)
 					{
-// !!!!!!!!!!!! zde nastává havárie pøi UNDO po zmìnì velikosti obrázkù sprajtu (neplatná adresa src, Zoom=13)
+// !!!!!!!!!!!! zde nastává havárie při UNDO po změně velikosti obrázků sprajtu (neplatná adresa src, Zoom=13)
 						MemFill(dst, Zoom, *src);
 						src++;
 						dst += Zoom;
@@ -1161,7 +1161,7 @@ void DispAkt(HDC dc)
 		}
 	}
 
-// dekódování vertikálních hrubých èar
+// dekódování vertikálních hrubých čar
 	if (Rastr)
 	{
 		dstWidthByte += dstWidth;
@@ -1184,7 +1184,7 @@ void DispAkt(HDC dc)
 			}
 		}
 
-// dekódování horizontálních hrubých èar
+// dekódování horizontálních hrubých čar
 		col = BlueCol;
 
 		i = ICONHEIGHT - (Height - srcTop - srcHeight) % ICONHEIGHT;
@@ -1205,52 +1205,52 @@ void DispAkt(HDC dc)
 // zrušení bufferu k dekódování zobrazení
 	MemFree(buf);
 
-// zapnutí výbìru bloku
+// zapnutí výběru bloku
 	DispSelect();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení políèka výbìru barvy (s vlastním kontextem zaøízení)
+// vykreslení políčka výběru barvy (s vlastním kontextem zařízení)
 
 void DispCol(int col)
 {
-// otevøení kontextu displeje
+// otevření kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
 // nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// výbìr vlastních palet
+	HPALETTE OldPal;					// úschova původních palet
+	OldPal = ::SelectPalette(dc,		// výběr vlastních palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
 // zobrazení barvy
 	DispCol(dc, col);
 
-// návrat pùvodních palet
+// návrat původních palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnění kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení políèka výbìru barvy
+// vykreslení políčka výběru barvy
 
 void DispCol(HDC dc, int col)
 {
-// zablokování nepovolené barvy (napø. -1)
+// zablokování nepovolené barvy (např. -1)
 	if ((DWORD)col >= (DWORD)StdColors) return;
 
-// pøednastavení souøadnic pro podkladovou barvu nebo barvu stínu
+// přednastavení souřadnic pro podkladovou barvu nebo barvu stínu
 	RECT rc;
 	rc.left = ColsLeft;
 	rc.top = ColsTop;
 	if (col == ShadCol) rc.top += ColsHeight/2;
 	rc.bottom = rc.top + ColsHeight/2;
 
-// výpoèet souøadnic pro jiné barvy než podkladová
+// výpočet souřadnic pro jiné barvy než podkladová
 	if ((col != BackCol) && (col != ShadCol))
 	{
 		rc.top += ((col-ResCols) % ColLev) * ColsIncY;
@@ -1259,7 +1259,7 @@ void DispCol(HDC dc, int col)
 	}
 	rc.right = rc.left + ColsIncX;
 
-// úschova souøadnic rámu
+// úschova souřadnic rámu
 	RECT rc2;
 	rc2 = rc;
 
@@ -1267,28 +1267,28 @@ void DispCol(HDC dc, int col)
 	if ((ColsIncX >= MINCOLSIR) && (ColsIncY >= MINCOLSIR))
 	{
 
-// zobrazení rámu kolem políèka
+// zobrazení rámu kolem políčka
 		::DrawEdge(dc, &rc, EDGE_SUNKEN, BF_RECT);
 
-// korekce øámu políèka pro barvu
+// korekce řámu políčka pro barvu
 		rc.left += 2;
 		rc.top += 2;
 		rc.right -= 2;
 		rc.bottom -= 2;
 	}
 
-// zobrazení barvy políèka
+// zobrazení barvy políčka
 	HBRUSH brush = ::CreateSolidBrush(PALETTEINDEX((WORD)col));
 	::FillRect(dc, &rc, brush);
 	::DeleteObject(brush);
 
-// zobrazení rámeèku indikátoru aktivní barvy
+// zobrazení rámečku indikátoru aktivní barvy
 	if ((col == ColInd) && (rc.left < rc.right) && (rc.top < rc.bottom))
 	{
 		::DrawEdge(dc, &rc2, EDGE_RAISED, BF_RECT);
 	}
 
-// zobrazení rámeèku indikátoru levého tlaèítka
+// zobrazení rámečku indikátoru levého tlačítka
 	if (col == ColLeft)
 	{
 		rc2.left += ColsIncX/6;
@@ -1298,7 +1298,7 @@ void DispCol(HDC dc, int col)
 		::DrawEdge(dc, &rc2, EDGE_BUMP, BF_RECT);
 	}
 
-// zobrazení rámeèku indikátoru pravého tlaèítka
+// zobrazení rámečku indikátoru pravého tlačítka
 	if (col == ColRight)
 	{
 		rc2.left = rc.left + ColsIncX/4;
@@ -1311,7 +1311,7 @@ void DispCol(HDC dc, int col)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zvìtšení mìøítka
+// zvětšení měřítka
 
 void ZoomIn()
 {
@@ -1342,7 +1342,7 @@ void ZoomIn()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zmenšení mìøítka
+// zmenšení měřítka
 
 void ZoomOut()
 {
@@ -1374,7 +1374,7 @@ void ZoomOut()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace tlaèítek pro zvìtšení/zmenšení mìøítka
+// aktualizace tlačítek pro zvětšení/zmenšení měřítka
 
 void UpdateZoomInOut()
 {
@@ -1387,7 +1387,7 @@ void UpdateZoomInOut()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøekreslení ikon ve stromech
+// překreslení ikon ve stromech
 
 void UpdateTree()
 {
@@ -1413,21 +1413,21 @@ void OnRastr()
 }
 
 
-// ********************* obsluha posuvníkù **********************************
+// ********************* obsluha posuvníků **********************************
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun posuvníkù pøi zmìnì rozmìrù okna
+// přesun posuvníků při změně rozměrů okna
 
 HDWP MoveScroll(HDWP hdwp)
 {
-// lokální promìnné
+// lokální proměnné
 	int x, y, w, h;
 
-// pøepoèet zobrazení
+// přepočet zobrazení
 	ReCalc();
 
-// pøesun a zobrazení horizontálního posuvníku
+// přesun a zobrazení horizontálního posuvníku
 	x = EditX + 2;
 	y = ColsTop - TRACKSIRKA;
 	w = EditWidth - 4;
@@ -1437,7 +1437,7 @@ HDWP MoveScroll(HDWP hdwp)
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER |
 			((HScrollDisp && !PreviewPic) ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
 
-// pøesun a zobrazení vertikálního posuvníku
+// přesun a zobrazení vertikálního posuvníku
 	x = EditX + EditWidth - 2 - TRACKSIRKA;
 	y = EditY + 2;
 	w = TRACKSIRKA;
@@ -1447,7 +1447,7 @@ HDWP MoveScroll(HDWP hdwp)
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER |
 			((VScrollDisp && !PreviewPic) ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
 
-// nastavení posuvníkù
+// nastavení posuvníků
 	SetScroll();
 
 // nová hodnota HDWP
@@ -1456,20 +1456,20 @@ HDWP MoveScroll(HDWP hdwp)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace zobrazení posuvníkù
+// aktualizace zobrazení posuvníků
 
 void SetScroll()
 {
-// lokální promìnné
+// lokální proměnné
 	SCROLLINFO si;
 	si.cbSize = sizeof(SCROLLINFO);
 
 // -------- horizontální posuvník -------------
 
-// naètení stavu horizontálního posuvníku
+// načtení stavu horizontálního posuvníku
 	si.fMask = SIF_ALL;
-	::GetScrollInfo(HScroll, SB_CTL, &si);	// naètení stavu posuvníku
-	si.fMask = 0;							// pøednastavení - nic se nemìní
+	::GetScrollInfo(HScroll, SB_CTL, &si);	// načtení stavu posuvníku
+	si.fMask = 0;							// přednastavení - nic se nemění
 
 // minimální pozice
 	if (si.nMin != 0)
@@ -1499,7 +1499,7 @@ void SetScroll()
 		si.fMask |= SIF_POS;
 	}
 
-// nastavení nových parametrù posuvníku
+// nastavení nových parametrů posuvníku
 	if (si.fMask)
 	{
 		::SetScrollInfo(HScroll, SB_CTL, &si, TRUE);
@@ -1511,10 +1511,10 @@ void SetScroll()
 
 // -------- vertikální posuvník -------------
 
-// naètení stavu vertikálního posuvníku
+// načtení stavu vertikálního posuvníku
 	si.fMask = SIF_ALL;
 	::GetScrollInfo(VScroll, SB_CTL, &si);
-	si.fMask = 0;							// pøednastavení - nic se nemìní
+	si.fMask = 0;							// přednastavení - nic se nemění
 
 // minimální pozice
 	if (si.nMin != 0)
@@ -1544,7 +1544,7 @@ void SetScroll()
 		si.fMask |= SIF_POS;
 	}
 
-// nastavení nových parametrù posuvníku
+// nastavení nových parametrů posuvníku
 	if (si.fMask)
 	{
 		::SetScrollInfo(VScroll, SB_CTL, &si, TRUE);
@@ -1713,7 +1713,7 @@ void Pop()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení bodu z bufferu (nekontroluje souøadnice !)
+// načtení bodu z bufferu (nekontroluje souřadnice !)
 
 inline BYTE _fastcall GetPush(int x, int y)
 {
@@ -1722,7 +1722,7 @@ inline BYTE _fastcall GetPush(int x, int y)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení bodu v bufferu (nekontroluje souøadnice !)
+// nastavení bodu v bufferu (nekontroluje souřadnice !)
 
 inline void _fastcall SetPush(int x, int y, BYTE col)
 {
@@ -1747,7 +1747,7 @@ void SetColInd(BYTE col)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení bodu obrázku (nekontroluje souøadnice !)
+// načtení bodu obrázku (nekontroluje souřadnice !)
 
 inline BYTE _fastcall GetPoint(int x, int y)
 {
@@ -1855,7 +1855,7 @@ BOOL OnSetCursor(int x, int y)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stisk tlaèítka myši (TRUE = obslouženo)
+// stisk tlačítka myši (TRUE = obslouženo)
 
 BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 {
@@ -1880,20 +1880,20 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 	}
 
 
-// pøíprava adresy promìnné barvy
+// příprava adresy proměnné barvy
 	BYTE col;							// zvolená aktivní barva
-	BYTE* colbut;						// promìnná s aktivní barvou
+	BYTE* colbut;						// proměnná s aktivní barvou
 
 	if (right)
 	{
-		colbut = &ColRight;				// barva pro pravé tlaèítko
+		colbut = &ColRight;				// barva pro pravé tlačítko
 	}
 	else
 	{
-		colbut = &ColLeft;				// barva pro levé tlaèítko
+		colbut = &ColLeft;				// barva pro levé tlačítko
 	}
 
-	BYTE oldcol = *colbut;				// pùvodní barva
+	BYTE oldcol = *colbut;				// původní barva
 
 // volba barvy
 	if ((x >= ColsLeft) &&
@@ -1916,21 +1916,21 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 			DispCol(oldcol);
 			DispCol(col);
 
-// zmìna pozadí oznaèeného bloku pøi zmìnì barvy pravého tlaèítka
+// změna pozadí označeného bloku při změně barvy pravého tlačítka
 			if (right && (Mode == IDN_SELECT) && Selecting && CutMode)
 			{
 				MoveSelect();
 				ReDisp();
 			}
 
-// pøekreslení textu pøi zmìnì barvy levého tlaèítka
+// překreslení textu při změně barvy levého tlačítka
 			if ((Mode == IDN_TEXT) && !right)
 			{
 				ReDispText();				// zobrazení textu
 			}
 		}
 
-// v módu kapátka návrat pøedešlého módu
+// v módu kapátka návrat předešlého módu
 		if (Mode == IDN_PIPE)
 		{
 			SetMode(OldMode);
@@ -1938,11 +1938,11 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 		return TRUE;
 	}
 
-// pøíprava relativních souøadnic bodu v editaèním poli
+// příprava relativních souřadnic bodu v editačním poli
 	int sx = (x - DLeft)/Zoom + DispLeft;
 	int sy = (y - DTop)/Zoom + (Height - DispHeight - DispBottom);
 
-// test, zda je editaèní pole
+// test, zda je editační pole
 	if ((x >= DLeft) &&
 		(y >= DTop) &&
 		(sx < DispLeft + DispWidth) &&
@@ -1950,55 +1950,55 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 		(Data))
 	{
 
-// vìtvení podle editaèního módu
+// větvení podle editačního módu
 		switch (Mode)
 		{
 
-// mód pera, èáry, obdélníku, kružnice a elipsy
+// mód pera, čáry, obdélníku, kružnice a elipsy
 		case IDN_PEN:
 		case IDN_LINE:
 		case IDN_BOX:
 		case IDN_CIRCLE:
 		case IDN_ELLIPSE:
 			PushUndo();				// úschova obrázku do UNDO bufferu
-			Editing = TRUE;					// pøíznak zahájení editace
+			Editing = TRUE;					// příznak zahájení editace
 			Push();					// úschova do pomocného bufferu
-			OldX = sx;						// úschova souøadnce X
-			OldY = sy;						// úschova souøadnice Y
-			TopX = sx;						// úschova souøadnice X
-			TopY = sy;						// úschova souøadnice Y
+			OldX = sx;						// úschova souřadnce X
+			OldY = sy;						// úschova souřadnice Y
+			TopX = sx;						// úschova souřadnice X
+			TopY = sy;						// úschova souřadnice Y
 			SetPaint(sx, sy, *colbut);		// vykreslení výchozího bodu
-			SetModi();						// nastavení pøíznaku modifikace
+			SetModi();						// nastavení příznaku modifikace
 			break;
 
-// mód vyplnìného obdélníku, kruhu a oválu - neuplatní se šíøka èáry
+// mód vyplněného obdélníku, kruhu a oválu - neuplatní se šířka čáry
 		case IDN_FILLBOX:
 		case IDN_FILLCIRCLE:
 		case IDN_FILLELLIPSE:
 		case IDN_SPHERE:
 			PushUndo();				// úschova obrázku do UNDO bufferu
-			Editing = TRUE;					// pøíznak zahájení editace
+			Editing = TRUE;					// příznak zahájení editace
 			Push();					// úschova do pomocného bufferu
-			OldX = sx;						// úschova souøadnce X
-			OldY = sy;						// úschova souøadnice Y
-			TopX = sx;						// úschova souøadnice X
-			TopY = sy;						// úschova souøadnice Y
+			OldX = sx;						// úschova souřadnce X
+			OldY = sy;						// úschova souřadnice Y
+			TopX = sx;						// úschova souřadnice X
+			TopY = sy;						// úschova souřadnice Y
 			SetPoint(sx, sy, *colbut);		// vykreslení výchozího bodu
 			if (sx < AktLeft) AktLeft = sx;
 			if (sx >= AktRight) AktRight = sx+1;
 			if (sy < AktTop) AktTop = sy;
 			if (sy >= AktBottom) AktBottom = sy+1;
-			SetModi();						// nastavení pøíznaku modifikace
+			SetModi();						// nastavení příznaku modifikace
 			break;
 
 // mód spreje
 		case IDN_SPRAY:
 			PushUndo();				// úschova obrázku do UNDO bufferu
-			Editing = TRUE;					// pøíznak zahájení editace
-			OldX = sx;						// úschova souøadnice X
-			OldY = sy;						// úschova souøadnice Y
+			Editing = TRUE;					// příznak zahájení editace
+			OldX = sx;						// úschova souřadnice X
+			OldY = sy;						// úschova souřadnice Y
 			SetSpray(sx, sy, *colbut);		// vykreslení výchozího bodu
-			SetModi();						// nastavení pøíznaku modifikace
+			SetModi();						// nastavení příznaku modifikace
 			break;
 
 // mód kapátka
@@ -2014,7 +2014,7 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 			SetMode(OldMode);
 			break;
 
-// mód výplnì
+// mód výplně
 		case IDN_FILL:
 			col = GetPoint(sx, sy);
 			if (col != *colbut)
@@ -2027,17 +2027,17 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 			}
 			break;
 
-// mód výbìru a textu
+// mód výběru a textu
 		case IDN_TEXT:
 		case IDN_SELECT:
 
-// pravé tlaèítko vypne oznaèení bloku (jinak pokraèuje stejnì jako levé)
+// pravé tlačítko vypne označení bloku (jinak pokračuje stejně jako levé)
 			if (right && Selecting)
 			{
-				DispSelect();				// vypnutí zobrazení výbìru bloku
+				DispSelect();				// vypnutí zobrazení výběru bloku
 				Moving = FALSE;				// konec posunu bloku
-				Selecting = FALSE;			// zrušení pøíznaku výbìru bloku
-				Editing = FALSE;			// zrušení pøíznaku editace
+				Selecting = FALSE;			// zrušení příznaku výběru bloku
+				Editing = FALSE;			// zrušení příznaku editace
 				if (Mode == IDN_TEXT)
 				{
 					SetMode(OldMode);
@@ -2046,24 +2046,24 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 				break;
 			}
 
-// zahájení pøesunu bloku, je-li kurzor uvnitø bloku
-			if (Selecting)					// je již blok oznaèen?
+// zahájení přesunu bloku, je-li kurzor uvnitř bloku
+			if (Selecting)					// je již blok označen?
 			{
 				if (TestBlok(sx, sy))		// je kurzor v bloku?
 				{
-					Editing = TRUE;			// pøíznak zahájení editace
-					Moving = TRUE;			// pøíznak pøesunu bloku
-					OldX = sx;				// úschova souøadnice X
-					OldY = sy;				// úschova souøadnice Y
-					::SetCursor(CurRuka);	// zapnutí kurzoru pro pøesun
-					SetModi();				// pøíznak modifikace programu
+					Editing = TRUE;			// příznak zahájení editace
+					Moving = TRUE;			// příznak přesunu bloku
+					OldX = sx;				// úschova souřadnice X
+					OldY = sy;				// úschova souřadnice Y
+					::SetCursor(CurRuka);	// zapnutí kurzoru pro přesun
+					SetModi();				// příznak modifikace programu
 				}
 
-// vnì bloku se blok vypne (a zahájí se nové oznaèování)
+// vně bloku se blok vypne (a zahájí se nové označování)
 				else
 				{
-					DispSelect();			// vypnutí oznaèení bloku
-					Selecting = FALSE;		// zrušení pøíznaku výbìru bloku
+					DispSelect();			// vypnutí označení bloku
+					Selecting = FALSE;		// zrušení příznaku výběru bloku
 
 					if (Mode == IDN_TEXT)
 					{
@@ -2073,36 +2073,36 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 				}
 			}
 
-// zahájení oznaèování bloku
-			if (!Selecting)			// není blok oznaèen?
+// zahájení označování bloku
+			if (!Selecting)			// není blok označen?
 			{
 				PushUndo();			// úschova do UNDO bufferu
-				Editing = TRUE;				// pøíznak zahájení editace
+				Editing = TRUE;				// příznak zahájení editace
 				Push();				// úschova do pomocného bufferu
-				Selecting = TRUE;			// pøíznak oznaèení bloku
-				Moving = FALSE;				// není pøesun bloku
-				OldX = sx;					// úschova souøadnice X
-				OldY = sy;					// úschova souøadnice Y
-				TopX = sx;					// poèáteèní souøadnice X oznaèeného bloku
-				TopY = sy;					// poèáteèní souøadnice Y oznaèeného bloku
-				BlokX = sx;					// poèátek bloku X
-				BlokY = sy;					// poèátek bloku Y
-				BlokWidth = 1;				// šíøka bloku
+				Selecting = TRUE;			// příznak označení bloku
+				Moving = FALSE;				// není přesun bloku
+				OldX = sx;					// úschova souřadnice X
+				OldY = sy;					// úschova souřadnice Y
+				TopX = sx;					// počáteční souřadnice X označeného bloku
+				TopY = sy;					// počáteční souřadnice Y označeného bloku
+				BlokX = sx;					// počátek bloku X
+				BlokY = sy;					// počátek bloku Y
+				BlokWidth = 1;				// šířka bloku
 				BlokHeight = 1;				// výška bloku
 				BlokBuf = (BYTE*)MemSize(BlokBuf, 1*sizeof(BYTE));			// buffer pro uchování 1 bodu
 				SetBlok(0, 0, GetPoint(sx, sy)); // úschova prvního bodu
-				CutMode = !right;			// pøíznak, zda jsou údaje k vymazání
-				FirstBlokX = sx;			// výchozí poèátek bloku X
-				FirstBlokY = sy;			// výchozí poèátek bloku Y
-				FirstBlokWidth = 1;			// výchozí šíøka bloku
+				CutMode = !right;			// příznak, zda jsou údaje k vymazání
+				FirstBlokX = sx;			// výchozí počátek bloku X
+				FirstBlokY = sy;			// výchozí počátek bloku Y
+				FirstBlokWidth = 1;			// výchozí šířka bloku
 				FirstBlokHeight = 1;		// výchozí výška bloku
-				BlokBack = ColRight;		// prùhledná barva bloku
-				DispSelect();				// zapnutí oznaèení bloku
+				BlokBack = ColRight;		// průhledná barva bloku
+				DispSelect();				// zapnutí označení bloku
 			}
 			break;
 		}
 
-// pøekreslení displeje
+// překreslení displeje
 		ReDisp();
 
 // aktualizace voleb bloku
@@ -2140,11 +2140,11 @@ void OnMouseMove(UINT flags, int x, int y)
 	}
 
 
-// pøíprava relativních souøadnic bodu v editaèním poli
+// příprava relativních souřadnic bodu v editačním poli
 	int sx = (x - DLeft)/Zoom + DispLeft;
 	int sy = (y - DTop)/Zoom + (Height - DispHeight - DispBottom);
 
-// pøi editaci se souøadnice omezí na editaèní pole
+// při editaci se souřadnice omezí na editační pole
 	if (Editing)
 	{
 		if (x < DLeft)
@@ -2170,11 +2170,11 @@ void OnMouseMove(UINT flags, int x, int y)
 		}
 	}
 
-// souøadnice myši pro zobrazení
+// souřadnice myši pro zobrazení
 	MouseX = sx;
 	MouseY = Height - 1 - sy;
 
-// test, zda je editaèní pole
+// test, zda je editační pole
 	if ((x >= DLeft) &&
 		(y >= DTop) &&
 		(sx < DispLeft + DispWidth) &&
@@ -2182,11 +2182,11 @@ void OnMouseMove(UINT flags, int x, int y)
 		(Data))
 	{
 
-// test, zda je mód editace a je stisknuto nìkteré tlaèítko
+// test, zda je mód editace a je stisknuto některé tlačítko
 		if ((flags & (MK_LBUTTON | MK_RBUTTON)) && Editing)
 		{
 
-// pøíprava barvy ke kreslení
+// příprava barvy ke kreslení
 			BYTE col;
 			if (flags & MK_LBUTTON)
 			{
@@ -2197,7 +2197,7 @@ void OnMouseMove(UINT flags, int x, int y)
 				col = ColRight;
 			}
 
-// vìtvení podle editaèního módu
+// větvení podle editačního módu
 			if ((OldX != sx) || (OldY != sy))
 			{
 				switch (Mode)
@@ -2208,7 +2208,7 @@ void OnMouseMove(UINT flags, int x, int y)
 					SetLinePaint(OldX, OldY, sx, sy, col);
 					break;
 
-// kreslení èáry
+// kreslení čáry
 				case IDN_LINE:
 					Pop();
 					SetLinePaint(TopX, TopY, sx, sy, col);
@@ -2261,10 +2261,10 @@ void OnMouseMove(UINT flags, int x, int y)
 					SetKoule(TopX, TopY, sx, sy, col);
 					break;
 
-// výbìr bloku
+// výběr bloku
 				case IDN_TEXT:
 				case IDN_SELECT:
-					if (Selecting)		// je blok oznaèen?
+					if (Selecting)		// je blok označen?
 					{
 						DispSelect();
 
@@ -2322,7 +2322,7 @@ void OnMouseMove(UINT flags, int x, int y)
 				}
 			}
 
-// úschova souøadnic
+// úschova souřadnic
 			OldX = sx;
 			OldY = sy;
 
@@ -2344,7 +2344,7 @@ void OnMouseMove(UINT flags, int x, int y)
 		}
 	}
 
-// kurzor myši mimo editaèní pole - vypnutí indikace barvy
+// kurzor myši mimo editační pole - vypnutí indikace barvy
 	else
 	{
 		SetColInd(255);
@@ -2352,10 +2352,10 @@ void OnMouseMove(UINT flags, int x, int y)
 		MouseY = MOUSEINV;
 	}
 
-// pøekreslení displeje
+// překreslení displeje
 	ReDisp();
 
-// zobrazení souøadnic myši
+// zobrazení souřadnic myši
 	if (((DWORD)MouseX >= (DWORD)Width) || ((DWORD)MouseY >= (DWORD)Height))
 	{
 		MouseX = MOUSEINV;
@@ -2366,7 +2366,7 @@ void OnMouseMove(UINT flags, int x, int y)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní tlaèítka myši
+// uvolnění tlačítka myši
 
 void OnButtonUp(UINT keys, BOOL right)
 {
@@ -2375,7 +2375,7 @@ void OnButtonUp(UINT keys, BOOL right)
 		UpdateTree();
 	}
 
-// v módu pøesunu bloku navrácení kurzoru
+// v módu přesunu bloku navrácení kurzoru
 	if (Moving)
 	{
 		::SetCursor(CurSelectMove);
@@ -2441,7 +2441,7 @@ BOOL OnKeyDown(int key)
 		}
 		break;
 
-// ENTER - ukonèení zadání textu
+// ENTER - ukončení zadání textu
 	case VK_RETURN:
 		if (Mode == IDN_TEXT)
 		{
@@ -2490,7 +2490,7 @@ BOOL OnKeyDown(int key)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení editaèního módu
+// nastavení editačního módu
 
 void SetMode(int mode)
 {
@@ -2499,31 +2499,31 @@ void SetMode(int mode)
 		((EditMode != BufIcoID) && (EditMode != BufPicID)))
 		return;
 
-// volba fontu pøi zapnutí módu textu
+// volba fontu při zapnutí módu textu
 	if(mode == IDN_TEXT)
 	{
 		FontText.Empty();
 
-// pøíprava parametrù fontu
+// příprava parametrů fontu
 		LOGFONT	lf;										// parametry fontu
 		lf.lfHeight = FontSize;							// velikost fontu
-		lf.lfWidth = 0;									// šíøka fontu
+		lf.lfWidth = 0;									// šířka fontu
 		lf.lfEscapement = 0;							// únikový vektor
 		lf.lfOrientation = 0;							// orientace
 		lf.lfWeight = FontWeight;						// váha fontu (BOLD)
 		lf.lfItalic = (BYTE)FontItalic;					// kurzíva
 		lf.lfCharSet = (BYTE)FontCharSet;				// znaková sada
-		lf.lfOutPrecision = OUT_DEFAULT_PRECIS;			// pøesnost výstupu
-		lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;			// pøesnost oblasti
+		lf.lfOutPrecision = OUT_DEFAULT_PRECIS;			// přesnost výstupu
+		lf.lfClipPrecision = CLIP_DEFAULT_PRECIS;			// přesnost oblasti
 		lf.lfQuality = DEFAULT_QUALITY;					// kvalita fontu
-		lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE; // rozteè fontù
+		lf.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE; // rozteč fontů
 
 		int txtlen = FontName.Length();						// délka fontu
 		if (txtlen > (LF_FACESIZE-2)) txtlen = (LF_FACESIZE-2);	// omezení délky jména fontu
-		MemCopy(lf.lfFaceName, (LPCTSTR)FontName, txtlen); // pøenesení jména fontu
-		lf.lfFaceName[txtlen] = 0;						// oznaèení konce textu
+		MemCopy(lf.lfFaceName, (LPCTSTR)FontName, txtlen); // přenesení jména fontu
+		lf.lfFaceName[txtlen] = 0;						// označení konce textu
 
-// pøíprava parametrù dialogu
+// příprava parametrů dialogu
 		CHOOSEFONT cf;
 		cf.lStructSize = sizeof(LOGFONT);
 		cf.hwndOwner = MainFrame;
@@ -2535,15 +2535,15 @@ void SetMode(int mode)
 		if (FontWeight > ((FW_NORMAL + FW_BOLD)/2)) { cf.nFontType |= BOLD_FONTTYPE; }
 		if (FontItalic) { cf.nFontType |= ITALIC_FONTTYPE; }
 
-// volba fontu (pøi pøerušení se nic nestane)
+// volba fontu (při přerušení se nic nestane)
 		if (!::ChooseFont(&cf))
 		{
 			return;
 		}
 
-// naètení zvolených parametrù fontu
+// načtení zvolených parametrů fontu
 		FontWeight = lf.lfWeight;					// váha fontu
-		FontItalic = lf.lfItalic;					// pøíznak ITALIC
+		FontItalic = lf.lfItalic;					// příznak ITALIC
 		FontName = lf.lfFaceName;					// jméno fontu
 		FontSize = lf.lfHeight;
 		FontCharSet = lf.lfCharSet;
@@ -2556,7 +2556,7 @@ void SetMode(int mode)
 		}
 	}
 
-// nastavení šíøky pera
+// nastavení šířky pera
 	switch (mode)
 	{
 	case IDN_WIDTH1: 
@@ -2590,18 +2590,18 @@ void SetMode(int mode)
 		return;
 	}
 
-// editaèní pøíkazy
+// editační příkazy
 	if (mode == IDN_EDITBLOK)
 	{
 		EditBlok(-1);
 		return;
 	}
 
-// vypnutí oznaèení bloku
+// vypnutí označení bloku
 	DispSelect();
 	Selecting = FALSE;
 
-// kontrola, zda je zmìna
+// kontrola, zda je změna
 	if (mode == Mode) return;
 
 // úschova starého módu
@@ -2623,12 +2623,12 @@ void SetMode(int mode)
 	{
 		PushUndo();					// úschova obrázku do undo bufferu
 		Push();						// úschova do pomocného bufferu
-		Selecting = TRUE;			// pøíznak oznaèení bloku
-		BlokWidth = 10;				// šíøka bloku
+		Selecting = TRUE;			// příznak označení bloku
+		BlokWidth = 10;				// šířka bloku
 		BlokHeight = abs(FontSize)+5; // výška bloku
 		CutMode = FALSE;			// nejsou údaje k vymazání
-		BlokBack = ColRight;		// prùhledná barva bloku
-		DispSelect();				// zapnutí oznaèení bloku
+		BlokBack = ColRight;		// průhledná barva bloku
+		DispSelect();				// zapnutí označení bloku
 
 		BlokBuf = (BYTE*)MemSize(BlokBuf, BlokWidth * BlokHeight * sizeof(BYTE));	// buffer pro blok
 
@@ -2806,9 +2806,9 @@ BOOL CALLBACK BlokDialogProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti bloku
+// změna velikosti bloku
 
-// aktualizace závislých parametrù
+// aktualizace závislých parametrů
 void ResizeAktText()
 {
 	if (ResizeWidth < 1) ResizeWidth = 1;
@@ -2830,7 +2830,7 @@ void ResizeAktText()
 	}
 }
 
-// nastavení rozmìrù (all = vèetnì aktivních)
+// nastavení rozměrů (all = včetně aktivních)
 void ResizeSetText(HWND wnd, BOOL all)
 {
 	ResizeFill = TRUE;
@@ -2907,7 +2907,7 @@ void ResizeSetText(HWND wnd, BOOL all)
 	ResizeFill = FALSE;
 }
 
-// naètení zadaných rozmìrù
+// načtení zadaných rozměrů
 void ResizeGetText(HWND wnd)
 {
 	if (!ResizeFill)
@@ -2967,7 +2967,7 @@ void ResizeGetText(HWND wnd)
 	}
 }
 
-// nastavení pøepínaèù
+// nastavení přepínačů
 void ResizeSetSwc(HWND wnd)
 {
 	ResizeFill = TRUE;
@@ -3189,22 +3189,22 @@ picresize:
 }
 
 
-// zmìna velikosti obrázku nebo bloku
+// změna velikosti obrázku nebo bloku
 void EditPicResize(int width, int height, BOOL inter, BOOL dith)
 {
-// omezení zadaných údajù
+// omezení zadaných údajů
 	if (width < 1) width = 1;
 	if (width > 0x8000) width = 0x8000;
 	if (height < 1) height = 1;
 	if (height > 0x8000) height = 0x8000;
 
-// kontrola, zda se rozmìry mìní
+// kontrola, zda se rozměry mění
 	if ((width == ResizeOldWidth) && (height == ResizeOldHeight)) return;
 
-// zapnutí kurzoru èekání
+// zapnutí kurzoru čekání
 	BeginWaitCursor();
 
-// zmìna velikosti obrázku, není-li oznaèen blok
+// změna velikosti obrázku, není-li označen blok
 	if (!Selecting && (BufID == BufPicID))
 	{
 		if (Index == -2)
@@ -3239,7 +3239,7 @@ void EditPicResize(int width, int height, BOOL inter, BOOL dith)
 		if ((DWORD)MidX >= (DWORD)Width) MidX = Width/2;
 		if ((DWORD)MidY >= (DWORD)Height) MidY = Height/2;
 
-// pøepoèet zobrazení
+// přepočet zobrazení
 		ReCalc();
 		DispLeft = MidX - DispWidth/2;
 		DispBottom = MidY - DispHeight/2;
@@ -3253,10 +3253,10 @@ void EditPicResize(int width, int height, BOOL inter, BOOL dith)
 // úschova UNDO
 		PushUndo();
 
-// pøíprava bloku, není-li oznaèen
+// příprava bloku, není-li označen
 		if (!Selecting) SelectAll();
 
-// zmìna velikosti bloku
+// změna velikosti bloku
 		CPicture pic;
 
 		if (pic.New(BlokWidth, BlokHeight) &&
@@ -3270,7 +3270,7 @@ void EditPicResize(int width, int height, BOOL inter, BOOL dith)
 			MemCopy(BlokBuf, pic.DataData(), pic.Size());
 		}
 
-// korekce poèátku k zobrazení bloku
+// korekce počátku k zobrazení bloku
 		if ((BlokX > (DispLeft+DispWidth-2)) ||
 			(BlokY > (Height-DispBottom-2)) ||
 			((BlokX + BlokWidth) < (DispLeft+2)) ||
@@ -3285,24 +3285,24 @@ void EditPicResize(int width, int height, BOOL inter, BOOL dith)
 		DispSelect();
 	}
 
-// pøekreslení displeje
+// překreslení displeje
 	Disp();
 
-// pøíznak modifikace souboru
+// příznak modifikace souboru
 	SetModi();
 
 // aktualizace voleb pro blok
 	UpdateClipboard();
 
-// aktualizace zobrazení stromù
+// aktualizace zobrazení stromů
 	UpdateTree();
 
-// vypnutí kurzoru èekání
+// vypnutí kurzoru čekání
 	EndWaitCursor();
 }
 
 
-// provedení editace bloku (-1 = zatím neurèeno)
+// provedení editace bloku (-1 = zatím neurčeno)
 void EditBlok(int mode)
 {
 // kontrola, zda je režim editace
@@ -3310,7 +3310,7 @@ void EditBlok(int mode)
 		((EditMode != BufIcoID) && (EditMode != BufPicID)))
 		return;
 
-// pøíprava bufferù
+// příprava bufferů
 	if (BufID == BufPicID)
 	{
 		if (Index == -2)
@@ -3343,7 +3343,7 @@ void EditBlok(int mode)
 	
 	if (mode == IDCANCEL) return;
 
-// úschova velikosti pro zmìnu velikosti bloku
+// úschova velikosti pro změnu velikosti bloku
 	ResizeOldWidth = Width;
 	ResizeOldHeight = Height;
 
@@ -3360,14 +3360,14 @@ void EditBlok(int mode)
 		return;
 	}
 
-// polovièní velikost
+// poloviční velikost
 	if (mode == IDN_DIV2)
 	{
 		EditPicResize(ResizeOldWidth/2, ResizeOldHeight/2, TRUE, Dither);
 		return;
 	}
 
-// zmìna velikosti bloku
+// změna velikosti bloku
 	if (mode == IDN_MULDIV)
 	{
 		if (::DialogBoxParam(
@@ -3382,36 +3382,36 @@ void EditBlok(int mode)
 		return;
 	}
 
-// zapnutí kurzoru èekání
+// zapnutí kurzoru čekání
 	BeginWaitCursor();
 
 // úschova do UNDO
 	PushUndo();
 
-// lokální promìnné
-	int x, y;							// ukazatel souøadnic
+// lokální proměnné
+	int x, y;							// ukazatel souřadnic
 	BYTE* blok2;						// pomocný buffer bloku
-	int oldwidth;						// stará šíøka bloku
+	int oldwidth;						// stará šířka bloku
 	int oldheight;						// stará výška bloku
 	double uhel = 0;					// úhel pro rotaci
 	double uhel2;						// pomocný úhel pro rotaci
 	double delka2;						// pomocná délka pro rotaci
-	int dx, dy;							// vzdálenost od støedu
+	int dx, dy;							// vzdálenost od středu
 	BYTE col;							// meziúschova barvy
 	int xr, yr;							// pomocné registry
-	BOOL oldsel = Selecting;			// úschova pøíznaku oznaèení bloku
+	BOOL oldsel = Selecting;			// úschova příznaku označení bloku
 
-// pøíprava bloku, není-li oznaèen
+// příprava bloku, není-li označen
 	if (!Selecting)
 	{
 		SelectAll();
 	}
 
-// úschova šíøky a výšky bloku
+// úschova šířky a výšky bloku
 	oldwidth = BlokWidth;
 	oldheight = BlokHeight;
 
-// nastavení nových rozmìrù bloku
+// nastavení nových rozměrů bloku
 	switch (mode)
 	{
 	case IDN_LROT:
@@ -3467,7 +3467,7 @@ ROTUHEL:
 		break;
 	}
 
-// korekce poèátku bloku
+// korekce počátku bloku
 	BlokX += oldwidth/2 - BlokWidth/2;
 	BlokY += oldheight/2 - BlokHeight/2;
 	if (BlokX > (DispLeft + DispWidth - 5)) BlokX = DispLeft + DispWidth - 5;
@@ -3476,11 +3476,11 @@ ROTUHEL:
 	if ((BlokY + BlokHeight) < (Height - DispBottom - DispHeight + 5)) 
 		BlokY = Height - DispBottom - DispHeight + 5 - BlokHeight;
 
-// úschova bloku a vytvoøení jiného
+// úschova bloku a vytvoření jiného
 	blok2 = BlokBuf;						// aktuální blok
-	BlokBuf = (BYTE*)MemGet(BlokWidth*BlokHeight);	// vytvoøení nového bloku
+	BlokBuf = (BYTE*)MemGet(BlokWidth*BlokHeight);	// vytvoření nového bloku
 
-// cyklus pøes všechny body
+// cyklus přes všechny body
 	for (x = 0; x < BlokWidth; x++)
 	{
 		for (y = 0; y < BlokHeight; y++)
@@ -3488,27 +3488,27 @@ ROTUHEL:
 			switch (mode)
 			{
 
-// horizontální pøevrácení
+// horizontální převrácení
 			case IDN_YFLIP:
 				SetBlok(x,y,blok2[BlokWidth - 1 - x + BlokWidth*(BlokHeight-1-y)]);
 				break;
 
-// vertikální pøevrácení
+// vertikální převrácení
 			case IDN_XFLIP:
 				SetBlok(x,y,blok2[x + BlokWidth*y]);
 				break;
 
-// otoèení vpravo
+// otočení vpravo
 			case IDN_RROT:
 				SetBlok(x,y,blok2[y + BlokHeight*(BlokWidth - 1 - (BlokWidth - 1 - x))]);
 				break;
 
-// otoèení vlevo
+// otočení vlevo
 			case IDN_LROT:
 				SetBlok(x,y,blok2[BlokHeight - 1 - y + BlokHeight*(BlokWidth - 1 - x)]);
 				break;
 
-// zámìna barev
+// záměna barev
 			case IDN_XCOL:
 				col = blok2[x + BlokWidth*(BlokHeight - 1 - y)];
 				if (col == ColLeft)
@@ -3541,7 +3541,7 @@ ROTUHEL:
 				}
 				break;
 
-// otoèení
+// otočení
 			case IDN_LROT67:
 			case IDN_LROT60:
 			case IDN_LROT45:
@@ -3576,7 +3576,7 @@ ROTUHEL:
 // zrušení pomocného bloku
 	MemFree(blok2);
 
-// pøekreslení bloku (pro obrázek zmìna rozmìrù)
+// překreslení bloku (pro obrázek změna rozměrů)
 	DispSelect();
 	if (oldsel || (Index == -2))
 	{
@@ -3624,25 +3624,25 @@ ROTUHEL:
 		SetMode(OldMode);
 	}
 
-// pøekreslení displeje
+// překreslení displeje
 	Disp();
 
-// pøíznak modifikace souboru
+// příznak modifikace souboru
 	SetModi();
 
 // aktualizace voleb pro blok
 	UpdateClipboard();
 
-// aktualizace zobrazení stromù
+// aktualizace zobrazení stromů
 	UpdateTree();
 
-// vypnutí kurzoru èekání
+// vypnutí kurzoru čekání
 	EndWaitCursor();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace voleb výbìru módu
+// aktualizace voleb výběru módu
 
 void UpdateMenu()
 {
@@ -3663,19 +3663,19 @@ void UpdateMenu()
  
 void _fastcall SetPoint(int x, int y, BYTE col)
 {
-// kontrola souøadnic
+// kontrola souřadnic
 	if ((x < 0) || (y < 0) ||
 		(x >= Width) || (y >= Height))
 		return;
 
 // adresa bajtu dat
-	BYTE* data = &Data[Width*(Height-1-y) + x];	// adresa zaèátku dat obrázku
+	BYTE* data = &Data[Width*(Height-1-y) + x];	// adresa začátku dat obrázku
 	*data = col;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení bodu štìtce
+// vykreslení bodu štětce
 
 void SetPaint(int x, int y, BYTE col)
 {
@@ -4131,33 +4131,33 @@ void SetSpray(int x, int y, BYTE col)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení èáry štìtcem
+// nastavení čáry štětcem
 
 void SetLinePaint(int x1, int y1, int x2, int y2, BYTE col)
 {
-// lokální promìnné
-	int i;						// pracovní èítaè
-	int dx;						// rozdíl souøadnic X
-	int dy;						// rozdíl souøadnic Y
+// lokální proměnné
+	int i;						// pracovní čítač
+	int dx;						// rozdíl souřadnic X
+	int dy;						// rozdíl souřadnic Y
 
-// oprava souøadnic, aby èára šla vždy zleva doprava (tj. x1 vlevo, x2 vpravo)
+// oprava souřadnic, aby čára šla vždy zleva doprava (tj. x1 vlevo, x2 vpravo)
 	if (x2 < x1)
 	{
 		i = x2; x2 = x1; x1 = i;
 		i = y2; y2 = y1; y1 = i;
 	}
 
-// rozdíl souøadnic X
+// rozdíl souřadnic X
 	dx = x2 - x1;
 
-// smìr nahoru (tj. y1 dole, y2 nahoøe)
+// směr nahoru (tj. y1 dole, y2 nahoře)
 	if (y1 >= y2)
 	{
 
-// rozdíl souøadnic Y
+// rozdíl souřadnic Y
 		dy = y1 - y2;
 
-// strmì nahoru
+// strmě nahoru
 		if (dx <= dy)
 		{
 			for (i = 0; i < dy; i++)
@@ -4167,7 +4167,7 @@ void SetLinePaint(int x1, int y1, int x2, int y2, BYTE col)
 			}
 		}
 
-// mírnì nahoru
+// mírně nahoru
 		else
 		{
 			for (i = 0; i < dx; i++)
@@ -4178,14 +4178,14 @@ void SetLinePaint(int x1, int y1, int x2, int y2, BYTE col)
 		}
 	}
 
-// smìr dolù (tj. y1 nahoøe, y2 dole)
+// směr dolů (tj. y1 nahoře, y2 dole)
 	else
 	{
 
-// rozdíl souøadnic Y
+// rozdíl souřadnic Y
 		dy = y2 - y1;
 
-// stromì dolù
+// stromě dolů
 		if (dx <= dy)
 		{
 			for (i = 0; i < dy; i++)
@@ -4195,7 +4195,7 @@ void SetLinePaint(int x1, int y1, int x2, int y2, BYTE col)
 			}
 		}
 
-// mírnì dolù
+// mírně dolů
 		else
 		{
 			for (i = 0; i < dx; i++)
@@ -4206,7 +4206,7 @@ void SetLinePaint(int x1, int y1, int x2, int y2, BYTE col)
 		}
 	}
 
-// vykreslení koncového bodu (nedìlat v cyklu pro pøípad dx,dy = 0)
+// vykreslení koncového bodu (nedělat v cyklu pro případ dx,dy = 0)
 	SetPaint(x2, y2, col);
 }
 
@@ -4228,11 +4228,11 @@ void SetRect(int x1, int y1, int x2, int y2, BYTE col)
 
 void SetRectFill(int x1, int y1, int x2, int y2, BYTE col)
 {
-	int width;					// šíøka linky
-	int height;					// poèet linek
+	int width;					// šířka linky
+	int height;					// počet linek
 	BYTE* dst;					// ukládací adresa
 
-// oprava poøadí bodù X, aby byl X1 pøed X2
+// oprava pořadí bodů X, aby byl X1 před X2
 	if (x1 > x2)
 	{
 		width = x1;
@@ -4240,7 +4240,7 @@ void SetRectFill(int x1, int y1, int x2, int y2, BYTE col)
 		x2 = width;
 	}
 
-// oprava poøadí bodù Y, aby byl Y1 pøed Y2
+// oprava pořadí bodů Y, aby byl Y1 před Y2
 	if (y1 > y2)
 	{
 		height = y1;
@@ -4248,7 +4248,7 @@ void SetRectFill(int x1, int y1, int x2, int y2, BYTE col)
 		y2 = height;
 	}
 
-// omezení krajních bodù
+// omezení krajních bodů
 	if (x1 < 0) x1 = 0;
 	if (x2 >= Width) x2 = Width - 1;
 	width = x2 - x1 + 1;
@@ -4263,7 +4263,7 @@ void SetRectFill(int x1, int y1, int x2, int y2, BYTE col)
 	if (y1 < AktTop) AktTop = y1;
 	if (y2 >= AktBottom) AktBottom = y2+1;
 
-// pøíprava ukládací adresy dat
+// příprava ukládací adresy dat
 	dst = Data + (Height - 1 - y2)*Width + x1;
 		
 // vykreslení obdélníku
@@ -4280,28 +4280,28 @@ void SetRectFill(int x1, int y1, int x2, int y2, BYTE col)
 
 void SetRound(int x1, int y1, int x2, int y2, BYTE col)
 {
-// lokální promìnné
-	int sx, sy;							// støed kružnice
-	int dx,dy;							// vzdálenost bodu od støedu
-	double polomer;						// polomìr
-	double polomer2;					// kvadrát polomìru
-	double width = PenWidth - 0.5;		// šíøka pera
+// lokální proměnné
+	int sx, sy;							// střed kružnice
+	int dx,dy;							// vzdálenost bodu od středu
+	double polomer;						// poloměr
+	double polomer2;					// kvadrát poloměru
+	double width = PenWidth - 0.5;		// šířka pera
 
-// støed kružnice
-	sx = (x1 + x2)/2;					// souøadnice støedu X
-	sy = (y1 + y2)/2;					// souøadnice støedu Y
+// střed kružnice
+	sx = (x1 + x2)/2;					// souřadnice středu X
+	sy = (y1 + y2)/2;					// souřadnice středu Y
 
-// poèáteèní polomìr kružnice (nejmenší)
+// počáteční poloměr kružnice (nejmenší)
 	int pol = (int)(sqrt((double)((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1))) + 0.8);
 	polomer = (double)(pol/2) - width/2;
 	pol = pol % 2;
 
-// cyklus pøes všechny prùmìry
+// cyklus přes všechny průměry
 	for (; width > 0; width -= 0.51)
 	{
 		polomer2 = polomer*polomer;
 
-// cyklus pøes všechny body
+// cyklus přes všechny body
 		for (dx = (int)(polomer * 0.8 + 0.8); dx >= 0; dx--)
 		{
 			dy = (int)(sqrt(polomer2 - (double)dx*dx) + 0.7);
@@ -4326,13 +4326,13 @@ void SetRound(int x1, int y1, int x2, int y2, BYTE col)
 
 void SetRoundFill(int x1, int y1, int x2, int y2, BYTE col)
 {
-// lokální promìnné
+// lokální proměnné
 	int x,y;							// ukazatele bodu
-	int d;								// prùmìr kruhu
-	double sx, sy;						// støed kruhu
-	double dx,dy;						// vzdálenost bodu od støedu
+	int d;								// průměr kruhu
+	double sx, sy;						// střed kruhu
+	double dx,dy;						// vzdálenost bodu od středu
 
-// oprava poøadí souøadnic X
+// oprava pořadí souřadnic X
 	if (x1 > x2)
 	{
 		x = x1;
@@ -4340,7 +4340,7 @@ void SetRoundFill(int x1, int y1, int x2, int y2, BYTE col)
 		x2 = x;
 	}
 
-// oprava poøadí souøadnic Y
+// oprava pořadí souřadnic Y
 	if (y1 > y2)
 	{
 		y = y1;
@@ -4348,35 +4348,35 @@ void SetRoundFill(int x1, int y1, int x2, int y2, BYTE col)
 		y2 = y;
 	}
 
-// prùmìr kruhu (vèetnì koncových bodù)
+// průměr kruhu (včetně koncových bodů)
 	d = (int)(sqrt((double)((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1)))+0.4) + 1;
 
-// støed kruhu (zatím zaokrouhlené na celé body)
-	sx = (int)((x1 + x2) / 2);		// souøadnice støedu X
-	sy = (int)((y1 + y2) / 2);		// souøadnice støedu Y
+// střed kruhu (zatím zaokrouhlené na celé body)
+	sx = (int)((x1 + x2) / 2);		// souřadnice středu X
+	sy = (int)((y1 + y2) / 2);		// souřadnice středu Y
 
-// korekce støedu pro sudý prùmìr
+// korekce středu pro sudý průměr
 	if ((d & 1) == 0)
 	{
 		sx += 0.5;
 		sy += 0.5;
 	}
 
-// pøíprava minimálních a maximálních souøadnic
+// příprava minimálních a maximálních souřadnic
 	x1 = (int)sx - d/2 - 2;
 	x2 = (int)sx + d/2 + 2;
 	y1 = (int)sy - d/2 - 2;
 	y2 = (int)sy + d/2 + 2;
 
 // vykreslení kruhu
-	for (x = x1; x <= x2; x++)			// cyklus pøes všechny pozice na øádku
+	for (x = x1; x <= x2; x++)			// cyklus přes všechny pozice na řádku
 	{
-		for (y = y1; y <= y2; y++)		// cyklus pøes všechny øádky
+		for (y = y1; y <= y2; y++)		// cyklus přes všechny řádky
 		{
-			dx = fabs((double)x - sx)*2;		// vzdálenost od støedu ve smìru X
-			dy = fabs((double)y - sy)*2;		// vzdálenost od støedu ve smìru Y
+			dx = fabs((double)x - sx)*2;		// vzdálenost od středu ve směru X
+			dy = fabs((double)y - sy)*2;		// vzdálenost od středu ve směru Y
 
-			if (dx*dx + dy*dy <= (double)d*d)	// leží bod uvnitø kruhu ?
+			if (dx*dx + dy*dy <= (double)d*d)	// leží bod uvnitř kruhu ?
 			{
 				SetPoint(x,y,col);		// nastavení bodu kruhu
 			}
@@ -4390,16 +4390,16 @@ void SetRoundFill(int x1, int y1, int x2, int y2, BYTE col)
 
 void SetElip(int x1, int y1, int x2, int y2, BYTE col)
 {
-// lokální promìnné
-	int sx, sy;							// støed elipsy
-	int dx,dy;							// vzdálenost bodu od støedu
-	double rx, ry;						// polomìr ve smìru X a Y
+// lokální proměnné
+	int sx, sy;							// střed elipsy
+	int dx,dy;							// vzdálenost bodu od středu
+	double rx, ry;						// poloměr ve směru X a Y
 
-// støed elipsy
-	sx = (x1 + x2)/2;					// souøadnice støedu X
-	sy = (y1 + y2)/2;					// souøadnice støedu Y
+// střed elipsy
+	sx = (x1 + x2)/2;					// souřadnice středu X
+	sy = (y1 + y2)/2;					// souřadnice středu Y
 
-// polomìr elipsy
+// poloměr elipsy
 	rx = (double)(abs(x2 - x1) / 2);
 	ry = (double)(abs(y2 - y1) / 2);
 	if (rx < 0.01) rx = 0.01;
@@ -4408,7 +4408,7 @@ void SetElip(int x1, int y1, int x2, int y2, BYTE col)
 	int kx = abs(x2 - x1) % 2;
 	int ky = abs(y2 - y1) % 2;
 
-// cyklus pøes všechny horizontální body
+// cyklus přes všechny horizontální body
 	for (dx = (int)rx; dx >= 0; dx--)
 	{
 		dy = (int)(sqrt(1 - (double)dx*dx/rx/rx)*ry + 0.5);
@@ -4419,7 +4419,7 @@ void SetElip(int x1, int y1, int x2, int y2, BYTE col)
 		SetPaint(sx + dx + kx	, sy - dy		, col);
 	}
 
-// cyklus pøes všechny vertikální body
+// cyklus přes všechny vertikální body
 	for (dy = (int)ry; dy >= 0; dy--)
 	{
 		dx = (int)(sqrt(1 - (double)dy*dy/ry/ry)*rx + 0.5);
@@ -4437,13 +4437,13 @@ void SetElip(int x1, int y1, int x2, int y2, BYTE col)
 
 void SetElipFill(int x1, int y1, int x2, int y2, BYTE col)
 {
-// lokální promìnné
+// lokální proměnné
 	int x,y;							// ukazatele bodu
-	double sx, sy;						// støed elipsy
-	double dx,dy;						// vzdálenost bodu od støedu
-	double rx, ry;						// polomìr ve smìru X a Y
+	double sx, sy;						// střed elipsy
+	double dx,dy;						// vzdálenost bodu od středu
+	double rx, ry;						// poloměr ve směru X a Y
 
-// oprava poøadí souøadnic X
+// oprava pořadí souřadnic X
 	if (x1 > x2)
 	{
 		x = x1;
@@ -4451,7 +4451,7 @@ void SetElipFill(int x1, int y1, int x2, int y2, BYTE col)
 		x2 = x;
 	}
 
-// oprava poøadí souøadnic Y
+// oprava pořadí souřadnic Y
 	if (y1 > y2)
 	{
 		y = y1;
@@ -4459,23 +4459,23 @@ void SetElipFill(int x1, int y1, int x2, int y2, BYTE col)
 		y2 = y;
 	}
 
-// polomìr elipsy
+// poloměr elipsy
 	rx = (double)(x2 + 1 - x1) / 2;
 	ry = (double)(y2 + 1 - y1) / 2;
 	rx *= rx;
 	ry *= ry;
 
-// støed elipsy
-	sx = (double)(x1 + x2) / 2;			// souøadnice støedu X
-	sy = (double)(y1 + y2) / 2;			// souøadnice støedu Y
+// střed elipsy
+	sx = (double)(x1 + x2) / 2;			// souřadnice středu X
+	sy = (double)(y1 + y2) / 2;			// souřadnice středu Y
 
 // vykreslení elipsy
 	for (x = x1; x <= x2; x++)
 	{
 		for (y = y1; y <= y2; y++)
 		{
-			dx = fabs((double)x - sx);			// vzdálenost X od støedu
-			dy = fabs((double)y - sy);			// vzdálenost Y od støedu
+			dx = fabs((double)x - sx);			// vzdálenost X od středu
+			dy = fabs((double)y - sy);			// vzdálenost Y od středu
 
 			if ((dy*dy/ry) <= (1 - dx*dx/rx))
 			{
@@ -4491,19 +4491,19 @@ void SetElipFill(int x1, int y1, int x2, int y2, BYTE col)
 
 void SetKoule(int x1, int y1, int x2, int y2, BYTE col0)
 {
-// lokální promìnné
-	int i;								// pracovní èítaè
+// lokální proměnné
+	int i;								// pracovní čítač
 	int x,y;							// ukazatele bodu
-	int d;								// prùmìr koule
-	double sx, sy;						// støed koule
-	double dx,dy;						// vzdálenost bodu od støedu
+	int d;								// průměr koule
+	double sx, sy;						// střed koule
+	double dx,dy;						// vzdálenost bodu od středu
 	int dxcol2, dycol2;					// kvadráty vzdálenosti pro barvu
-	int sxcol, sycol;					// støed pro barvu
+	int sxcol, sycol;					// střed pro barvu
 
 	BYTE col[20];						// buffer palet
 
-// pøíprava poètu barev
-	int cols;							// poèet barev
+// příprava počtu barev
+	int cols;							// počet barev
 	if (col0 >= StdColors - 2*ColLev)
 	{
 		cols = StdColors - col0;
@@ -4513,14 +4513,14 @@ void SetKoule(int x1, int y1, int x2, int y2, BYTE col0)
 		cols = (col0 - ResCols + ColLev) / ColLev * ColLev + ResCols - col0 + 1;
 	}
 
-// pøíprava bufferu barev
+// příprava bufferu barev
 	for (i = 0; i < cols-1; i++)
 	{
 		col[i] = (BYTE)(col0+i);
 	}
 	col[cols-1] = (BYTE)(StdColors - 1);
 
-// oprava poøadí souøadnic X
+// oprava pořadí souřadnic X
 	if (x1 > x2)
 	{
 		x = x1;
@@ -4528,7 +4528,7 @@ void SetKoule(int x1, int y1, int x2, int y2, BYTE col0)
 		x2 = x;
 	}
 
-// oprava poøadí souøadnic Y
+// oprava pořadí souřadnic Y
 	if (y1 > y2)
 	{
 		y = y1;
@@ -4536,44 +4536,44 @@ void SetKoule(int x1, int y1, int x2, int y2, BYTE col0)
 		y2 = y;
 	}
 
-// prùmìr koule (vèetnì koncových bodù)
+// průměr koule (včetně koncových bodů)
 	d = (int)(sqrt((double)((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1)))+0.4) + 1;
 
-// støed koule (zatím zaokrouhlené na celé body)
-	sx = (int)((x1 + x2) / 2);		// souøadnice støedu X
-	sy = (int)((y1 + y2) / 2);		// souøadnice støedu Y
+// střed koule (zatím zaokrouhlené na celé body)
+	sx = (int)((x1 + x2) / 2);		// souřadnice středu X
+	sy = (int)((y1 + y2) / 2);		// souřadnice středu Y
 
-// støed pro barvu
+// střed pro barvu
 	sxcol = (int)(sx - d/4);
 	sycol = (int)(sy - d/4);
 
-// korekce støedu pro sudý prùmìr
+// korekce středu pro sudý průměr
 	if ((d & 1) == 0)
 	{
 		sx += 0.5;
 		sy += 0.5;
 	}
 
-// pøíprava minimálních a maximálních souøadnic
+// příprava minimálních a maximálních souřadnic
 	x1 = (int)sx - d/2 - 2;
 	x2 = (int)sx + d/2 + 2;
 	y1 = (int)sy - d/2 - 2;
 	y2 = (int)sy + d/2 + 2;
 
 // vykreslení koule
-	for (x = x1; x <= x2; x++)			// cyklus pøes všechny pozice na øádku
+	for (x = x1; x <= x2; x++)			// cyklus přes všechny pozice na řádku
 	{
-		for (y = y1; y <= y2; y++)		// cyklus pøes všechny øádky
+		for (y = y1; y <= y2; y++)		// cyklus přes všechny řádky
 		{
-			dx = fabs((double)x - sx)*2;		// vzdálenost od støedu ve smìru X
-			dy = fabs((double)y - sy)*2;		// vzdálenost od støedu ve smìru Y
+			dx = fabs((double)x - sx)*2;		// vzdálenost od středu ve směru X
+			dy = fabs((double)y - sy)*2;		// vzdálenost od středu ve směru Y
 
 			dxcol2 = abs(x - sxcol) * 2;
 			dxcol2 *= dxcol2;
 			dycol2 = abs(y - sycol) * 2;
 			dycol2 *= dycol2;
 
-			if (dx*dx + dy*dy <= (double)d*d)	// leží bod uvnitø kruhu ?
+			if (dx*dx + dy*dy <= (double)d*d)	// leží bod uvnitř kruhu ?
 			{
 				i = (int)(cols * 2.2 * sqrt((double)(dxcol2 + dycol2)) /d);
 
@@ -4605,7 +4605,7 @@ void SetKoule(int x1, int y1, int x2, int y2, BYTE col0)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// výplò (col = nová barva, fil = podklad)
+// výplň (col = nová barva, fil = podklad)
 
 void SetFill(int x, int y, BYTE col, BYTE fil)
 {
@@ -4615,21 +4615,21 @@ void SetFill(int x, int y, BYTE col, BYTE fil)
 
 	SetPoint(x, y, col);
 
-// výplò minimálním smìrem
+// výplň minimálním směrem
 	while ((min > 0) && (GetPoint(min-1,y) == fil))
 	{
 		min--;
 		SetPoint(min, y, col);
 	}
 
-// výplò maximálním smìrem
+// výplň maximálním směrem
 	while ((max < Width - 1) && (GetPoint(max+1,y) == fil))
 	{
 		max++;
 		SetPoint(max, y, col);
 	}
 
-// výplò smìrem nahoru
+// výplň směrem nahoru
 	if (y > 0)
 	{
 		y--;
@@ -4641,7 +4641,7 @@ void SetFill(int x, int y, BYTE col, BYTE fil)
 		y++;
 	}
 
-// výplò smìrem dolù
+// výplň směrem dolů
 	if (y < Height - 1)
 	{
 		y++;
@@ -4660,60 +4660,60 @@ void SetFill(int x, int y, BYTE col, BYTE fil)
 
 void ReDispText()
 {
-// vypnutí oznaèení bloku
+// vypnutí označení bloku
 	DispSelect();
 
-// pøíprava barvy
+// příprava barvy
 	BYTE col = ColLeft;							// barva písma
 	BlokBack = 0;								// barva pozadí
 
-// vytvoøení bufferu MONO bitmapy
-	int width0 = (Width + 31) & ~0x1f;			// zarovnaná šíøka (vyžaduje to GetDIBits)
+// vytvoření bufferu MONO bitmapy
+	int width0 = (Width + 31) & ~0x1f;			// zarovnaná šířka (vyžaduje to GetDIBits)
 	int widthbyte = width0/8;
 	BYTE* buf = (BYTE*)MemGet(widthbyte * Height);
 	MemFill(buf, widthbyte * Height, -1);
 
-// vytvoøení mono bitmapy
+// vytvoření mono bitmapy
 	HBITMAP bmp = ::CreateBitmap(width0, Height, 1, 1, buf);
 	ASSERT(bmp);
 
-// otevøení DC displeje
+// otevření DC displeje
 	HDC dc = ::GetDC(MainFrame);
 	ASSERT(dc);
 	if (dc && bmp)
 	{
 
-// vytvoøení kompatibilního DC
+// vytvoření kompatibilního DC
 		HDC dc2 = ::CreateCompatibleDC(dc);
 		ASSERT(dc2);
 		if (dc2)
 		{
 
-// výbìr bitmapy do DC
+// výběr bitmapy do DC
 			HBITMAP oldbmp = (HBITMAP)::SelectObject(dc2, bmp);
 
-// vytvoøení fontu
+// vytvoření fontu
 			HFONT font = ::CreateFont(FontSize, 0, 0, 0, 
 				FontWeight, FontItalic, FALSE, FALSE,
 				FontCharSet, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS,
 				DEFAULT_QUALITY, DEFAULT_PITCH | FF_DONTCARE, FontName);
 
-// výbìr fontu
+// výběr fontu
 			HFONT oldfont = (HFONT)::SelectObject(dc2, font);
 
 // výpis textu
 			::TextOut(dc2, 0, 0, FontText, FontText.Length());
 
-// navrácení pùvodního fontu
+// navrácení původního fontu
 			::SelectObject(dc2, oldfont);
 
-// zrušení vytvoøeného fontu
+// zrušení vytvořeného fontu
 			::DeleteObject(font);
 
-// navrácení pùvodní bitmapy
+// navrácení původní bitmapy
 			::SelectObject(dc2, oldbmp);
 
-// naètení dat zpìt do bufferu
+// načtení dat zpět do bufferu
 			struct {BITMAPINFOHEADER bmiHeader; RGBQUAD bmiColors[2]; } bmpinfo;
 			bmpinfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
 			bmpinfo.bmiHeader.biWidth = width0;
@@ -4728,7 +4728,7 @@ void ReDispText()
 			bmpinfo.bmiHeader.biClrImportant = 0;
 			::GetDIBits(dc2, bmp, 0, Height, buf, (BITMAPINFO*) &bmpinfo, DIB_RGB_COLORS);
 
-// zjištìní výšky textu
+// zjištění výšky textu
 			BYTE* dst;
 			int height = Height;
 			int width = (Width + 7)/8 - 1;
@@ -4746,7 +4746,7 @@ void ReDispText()
 			BlokBuf = (BYTE*)MemSize(BlokBuf, BlokWidth*BlokHeight * sizeof(BYTE));
 			MemFill(BlokBuf, BlokWidth*BlokHeight, 0);
 
-// pøenesení dat do obrázku
+// přenesení dat do obrázku
 			dst = BlokBuf;
 			char data;
 
@@ -4782,7 +4782,7 @@ void ReDispText()
 			::DeleteDC(dc2);
 		}
 
-// uvolnìní DC
+// uvolnění DC
 		::ReleaseDC(MainFrame, dc);
 	}
 
@@ -4792,20 +4792,20 @@ void ReDispText()
 // zrušení bufferu
 	buf = (BYTE*)MemSize(buf, 0);
 
-// korekce poèátku zobrazení bloku
+// korekce počátku zobrazení bloku
 	if (BlokX > (DispLeft + DispWidth - 5)) BlokX = DispLeft + DispWidth - 5;
 	if (BlokY > (Height - DispBottom - 5)) BlokY = Height - DispBottom - 5;
 	if ((BlokX + BlokWidth) < (DispLeft + 5)) BlokX = DispLeft + 5 - BlokWidth;
 	if ((BlokY + BlokHeight) < (Height - DispBottom - DispHeight + 5)) 
 		BlokY = Height - DispBottom - DispHeight + 5 - BlokHeight;
 
-// pøekreslení bloku
+// překreslení bloku
 	MoveSelect();
 
-// zapnutí oznaèení bloku
+// zapnutí označení bloku
 	DispSelect();
 
-// pøekreslení obrazovky
+// překreslení obrazovky
 	Disp();
 }
 
@@ -4814,7 +4814,7 @@ void ReDispText()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení bodu z bloku (nekontroluje souøadnice !)
+// načtení bodu z bloku (nekontroluje souřadnice !)
 
 inline BYTE _fastcall GetBlok(int x, int y)
 {
@@ -4823,7 +4823,7 @@ inline BYTE _fastcall GetBlok(int x, int y)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení bodu v bloku (nekontroluje souøadnice !)
+// nastavení bodu v bloku (nekontroluje souřadnice !)
 
 inline void _fastcall SetBlok(int x, int y, BYTE col)
 {
@@ -4832,14 +4832,14 @@ inline void _fastcall SetBlok(int x, int y, BYTE col)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutí/vypnutí výbìru bloku
+// zapnutí/vypnutí výběru bloku
 
 void DispSelect()
 {
 // kontrola, zda je blok zobrazen
 	if (!Selecting) return;
 
-// pøíprava DC displeje
+// příprava DC displeje
 	HDC dc = ::GetDC(MainFrame);
 
 // omezující oblast
@@ -4857,26 +4857,26 @@ void DispSelect()
 	clip.bottom = DTop + DHeight + 1;
 	if (clip.bottom >= EditY + EditHeight) clip.bottom = EditY + EditHeight;
 
-// výbìr štìtce
+// výběr štětce
 	HBRUSH oldBrush = (HBRUSH)::SelectObject(dc, HalfToneBrush);
 
-// šíøka èáry
+// šířka čáry
 	int s = Zoom/2;
 	if (s == 0) s++;
 
-// pøíprava souøadnic obdélníku
+// příprava souřadnic obdélníku
 	int x1 = BlokX - DispLeft;
 	int x2 = x1 + BlokWidth;
 	int y1 = BlokY - (Height - DispBottom - DispHeight);
 	int y2 = y1 + BlokHeight;
 
-// výpoèet souøadnic v bodech
+// výpočet souřadnic v bodech
 	x1 = x1*Zoom + DLeft - 1;
 	x2 = x2*Zoom + DLeft;
 	y1 = y1*Zoom + DTop;
 	y2 = y2*Zoom + DTop + 1;
 
-// omezení souøadnic
+// omezení souřadnic
 	int x12 = x1; 
 	if (x12 < clip.left) x12 = clip.left;
 
@@ -4889,7 +4889,7 @@ void DispSelect()
 	int y22 = y2;
 	if (y22 > clip.bottom) y22 = clip.bottom + s;
 
-// kontrola souøadnic
+// kontrola souřadnic
 	if ((x12 < x22) && (y12 < y22))
 	{
 
@@ -4918,20 +4918,20 @@ void DispSelect()
 		}
 	}
 
-// navrácení pùvodního štìtce
+// navrácení původního štětce
 	::SelectObject(dc, oldBrush);
 
-// uvolnìní DC displeje
+// uvolnění DC displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení bloku pøi pøesunu
+// zobrazení bloku při přesunu
 
 void MoveSelect()
 {
-// lokální promìnné
+// lokální proměnné
 	int x;
 	int y;
 	int width;
@@ -4945,7 +4945,7 @@ void MoveSelect()
 // návrat obsahu obrázku
 	Pop();
 
-// souøadnice k vymazání pozadí
+// souřadnice k vymazání pozadí
 	x = FirstBlokX;
 	y = FirstBlokY;
 	width = FirstBlokWidth;
@@ -4961,21 +4961,21 @@ void MoveSelect()
 		((y + height) > 0))
 	{
 
-// minimální poèátek X
+// minimální počátek X
 		if (x < 0)
 		{
 			width += x;
 			x = 0;
 		}
 
-// minimální poèátek Y
+// minimální počátek Y
 		if (y < 0)
 		{
 			height += y;
 			y = 0;
 		}
 
-// maximální šíøka
+// maximální šířka
 		if ((x + width) > Width)
 		{
 			width = Width - x;
@@ -4995,7 +4995,7 @@ void MoveSelect()
 		}
 	}
 
-// souøadnice k zobrazení bloku
+// souřadnice k zobrazení bloku
 	x = BlokX;
 	y = BlokY;
 	width = BlokWidth;
@@ -5012,7 +5012,7 @@ void MoveSelect()
 		((y + height) > 0))
 	{
 
-// minimální poèátek X
+// minimální počátek X
 		if (x < 0)
 		{
 			width += x;
@@ -5020,7 +5020,7 @@ void MoveSelect()
 			x = 0;
 		}
 
-// minimální poèátek Y
+// minimální počátek Y
 		if (y < 0)
 		{
 			height += y;
@@ -5028,7 +5028,7 @@ void MoveSelect()
 			y = 0;
 		}
 
-// maximální šíøka
+// maximální šířka
 		if ((x + width) > Width)
 		{
 			width = Width - x;
@@ -5059,7 +5059,7 @@ void MoveSelect()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test bodu, zda je uvnitø vybraného bloku
+// test bodu, zda je uvnitř vybraného bloku
 
 BOOL TestBlok(int x, int y)
 {
@@ -5079,16 +5079,16 @@ void Delete()
 {
 	if (Selecting)
 	{
-		DispSelect();			// vypnutí zobrazení výbìru bloku
-		BlokWidth = 0;			// neplatná šíøka bloku
+		DispSelect();			// vypnutí zobrazení výběru bloku
+		BlokWidth = 0;			// neplatná šířka bloku
 		BlokHeight = 0;			// neplatná výška bloku
-		MoveSelect();			// pøekreslení ikony
+		MoveSelect();			// překreslení ikony
 		Moving = FALSE;			// konec posunu bloku
-		Selecting = FALSE;		// zrušení pøíznaku výbìru bloku
-		Editing = FALSE;		// zrušení pøíznaku editace
-		Disp();				// pøekreslení displeje
-		SetModi();					// nastavení pøíznaku modifikace
-		UpdateTree();			// pøekreslení ikon ve stromech
+		Selecting = FALSE;		// zrušení příznaku výběru bloku
+		Editing = FALSE;		// zrušení příznaku editace
+		Disp();				// překreslení displeje
+		SetModi();					// nastavení příznaku modifikace
+		UpdateTree();			// překreslení ikon ve stromech
 	}
 
 // aktualizace voleb bloku
@@ -5110,10 +5110,10 @@ void OnOtisk()
 		Push();				// úschova do pomocného bufferu
 		CutMode = FALSE;
 
-// pøíznak modifikace souboru
-		SetModi();									// nastavení pøíznaku modifikace
+// příznak modifikace souboru
+		SetModi();									// nastavení příznaku modifikace
 
-// aktualizace zobrazení stromù
+// aktualizace zobrazení stromů
 		UpdateTree();
 	}
 }
@@ -5144,24 +5144,24 @@ BOOL Copy()
 	}
 
 
-// lokální promìnné
+// lokální proměnné
 	BYTE*		src;			// adresa zdrojových dat
-	int			width;			// šíøka bitmapy v bodech
+	int			width;			// šířka bitmapy v bodech
 	int			height;			// výška bitmapy
-	int			dstinc;			// pøírustek cílové adresy linky
-	int			i;				// pracovní èítaè
+	int			dstinc;			// přírustek cílové adresy linky
+	int			i;				// pracovní čítač
 	int			delka;			// délka dat v bufferu celkem
 	HGLOBAL		global;			// globální buffer s daty
 	BITMAPINFO* bitmap;			// ukazatel na data v globálním bufferu
 
-// otevøení schránky
+// otevření schránky
 	if (!::OpenClipboard(MainFrame))
 		return FALSE;
 
-// pøíprava ukazatelù dat
+// příprava ukazatelů dat
 	if (Selecting)
 	{
-		width = BlokWidth;		// šíøka bloku
+		width = BlokWidth;		// šířka bloku
 		height = BlokHeight;	// výška bloku
 		src = BlokBuf;			// data jsou v bufferu bloku
 	}
@@ -5172,18 +5172,18 @@ BOOL Copy()
 		src = Data;
 	}
 
-// vyprázdnìní schránky
+// vyprázdnění schránky
 	if (!::EmptyClipboard())
 	{
 		::CloseClipboard();
 		return FALSE;
 	}
 
-// pøíprava velikosti dat
-	dstinc = (width+3) & ~3; // pøírustek cílové adresy linky
+// příprava velikosti dat
+	dstinc = (width+3) & ~3; // přírustek cílové adresy linky
 	delka = dstinc * height + sizeof(BITMAPINFO) + sizeof(RGBQUAD)*255;
 
-// vytvoøení globálního bufferu pro data
+// vytvoření globálního bufferu pro data
 	global = ::GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, delka);
 	if (global == NULL)
 	{
@@ -5204,7 +5204,7 @@ BOOL Copy()
 			+ i*dstinc], &src[i*width], width);
 	}
 
-// nastavení parametrù obrázku
+// nastavení parametrů obrázku
 	bitmap->bmiHeader.biWidth = width;
 	bitmap->bmiHeader.biHeight = height;
 
@@ -5214,7 +5214,7 @@ BOOL Copy()
 // uložení dat do schránky
 	::SetClipboardData(CF_DIB, global);
 
-// uzavøení schránky
+// uzavření schránky
 	::CloseClipboard();
 
 // aktualizace voleb bloku
@@ -5224,7 +5224,7 @@ BOOL Copy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøihnutí bloku do schránky
+// vystřihnutí bloku do schránky
 
 void Cut()
 {
@@ -5242,24 +5242,24 @@ void Cut()
 
 void Paste()
 {
-// lokální promìnné
+// lokální proměnné
 	HGLOBAL		global;			// globální buffer s daty
 	BITMAPINFO* bitmap;			// ukazatel na data v globálním bufferu
-	int			width;			// šíøka bitmapy v bodech
+	int			width;			// šířka bitmapy v bodech
 	int			height;			// výška bitmapy
-	int			palet;			// poèet palet v bitmapì
-	int			srcinc;			// pøírustek zdrojové adresy linky
-	int			i, j;			// pracovní èítaèe
+	int			palet;			// počet palet v bitmapě
+	int			srcinc;			// přírustek zdrojové adresy linky
+	int			i, j;			// pracovní čítače
 	BYTE*		src;			// ukazatel zdrojové adresy
 	BYTE*		dst;			// ukazatel cílové adresy
-	WORD		srcdat;			// zdrojová data 16 bitù
+	WORD		srcdat;			// zdrojová data 16 bitů
 	BYTE		r,g,b;			// složky barev
 
-// otevøení schránky
+// otevření schránky
 	if (!::OpenClipboard(MainFrame))
 		return;
 
-// naètení dat schránky
+// načtení dat schránky
 	global = ::GetClipboardData(CF_DIB);
 	if (global == NULL)
 	{
@@ -5277,29 +5277,29 @@ void Paste()
 // zapnutí módu bloku
 		SetMode(IDN_SELECT);
 
-// vypnutí oznaèení bloku
+// vypnutí označení bloku
 		if (Selecting)
 		{
-			DispSelect();			// vypnutí zobrazení výbìru bloku
+			DispSelect();			// vypnutí zobrazení výběru bloku
 			Moving = FALSE;		// konec posunu bloku
-			Selecting = FALSE;	// zrušení pøíznaku výbìru bloku
-			Editing = FALSE;		// zrušení pøíznaku editace
+			Selecting = FALSE;	// zrušení příznaku výběru bloku
+			Editing = FALSE;		// zrušení příznaku editace
 		}
 
 // úschova ikony do bufferu
 		PushUndo();			// úschova ikony do undo bufferu
 		Push();				// úschova ikony do bufferu
 
-// pøíprava parametrù bitmapy
-		width = bitmap->bmiHeader.biWidth;	// šíøka
+// příprava parametrů bitmapy
+		width = bitmap->bmiHeader.biWidth;	// šířka
 		height = bitmap->bmiHeader.biHeight; // výška
 
-// vytvoøení bufferu k uložení dat
-		BlokBuf = (BYTE*)MemSize(BlokBuf, width*height * sizeof(BYTE));				// vytvoøení bufferu pro blok
+// vytvoření bufferu k uložení dat
+		BlokBuf = (BYTE*)MemSize(BlokBuf, width*height * sizeof(BYTE));				// vytvoření bufferu pro blok
 		dst = BlokBuf;							// ukazatel cílové adresy
-		src = (BYTE*)&bitmap->bmiColors[0];		// zaèátek zdrojových dat
+		src = (BYTE*)&bitmap->bmiColors[0];		// začátek zdrojových dat
 
-// pøíprava bufferu odchylky pro dithering
+// příprava bufferu odchylky pro dithering
 		int* odch = NULL;
 		if (Dither)
 		{
@@ -5307,24 +5307,24 @@ void Paste()
 			MemFill(odch, (3*width + 6) * sizeof(int), 0);
 		}
 
-// rozlišení podle poètu bodù
+// rozlišení podle počtu bodů
 		switch (bitmap->bmiHeader.biBitCount)
 		{
 
 // 1 bit
 		case 1:
-			srcinc = ((width+7)/8 + 3) & ~3;	// pøírustek zdrojové adresy
+			srcinc = ((width+7)/8 + 3) & ~3;	// přírustek zdrojové adresy
 
-// pøíprava konverzní tabulky palet
-			GenKonvPal(bitmap);					// pøíprava konverzní tabulky
+// příprava konverzní tabulky palet
+			GenKonvPal(bitmap);					// příprava konverzní tabulky
 
-// pøíprava poètu palet
-			palet = bitmap->bmiHeader.biClrUsed; // poèet palet v tabulce
-			if (palet == 0) palet = 2;			// používá se maximální poèet palet
+// příprava počtu palet
+			palet = bitmap->bmiHeader.biClrUsed; // počet palet v tabulce
+			if (palet == 0) palet = 2;			// používá se maximální počet palet
 			src += sizeof(RGBQUAD) * palet;		// korekce zdrojové adresy
 
 // kopie dat do bufferu bloku
-			for (i = height-1; i >= 0; i--)		// cyklus pøes všechny linky
+			for (i = height-1; i >= 0; i--)		// cyklus přes všechny linky
 			{
 				for (j = 0; j < width; j++)
 				{
@@ -5337,18 +5337,18 @@ void Paste()
 
 // 4 bity
 		case 4:
-			srcinc = ((width+1)/2 + 3) & ~3;	// pøírustek zdrojové adresy
+			srcinc = ((width+1)/2 + 3) & ~3;	// přírustek zdrojové adresy
 
-// pøíprava konverzní tabulky palet
-			GenKonvPal(bitmap);					// pøíprava konverzní tabulky
+// příprava konverzní tabulky palet
+			GenKonvPal(bitmap);					// příprava konverzní tabulky
 
-// pøíprava poètu palet
-			palet = bitmap->bmiHeader.biClrUsed; // poèet palet v tabulce
-			if (palet == 0) palet = 16;			// používá se maximální poèet palet
+// příprava počtu palet
+			palet = bitmap->bmiHeader.biClrUsed; // počet palet v tabulce
+			if (palet == 0) palet = 16;			// používá se maximální počet palet
 			src += sizeof(RGBQUAD) * palet;		// korekce zdrojové adresy
 
 // kopie dat do bufferu bloku
-			for (i = height-1; i >= 0; i--)		// cyklus pøes všechny linky
+			for (i = height-1; i >= 0; i--)		// cyklus přes všechny linky
 			{
 				for (j = 0; j < width; j++)
 				{
@@ -5366,26 +5366,26 @@ void Paste()
 			}
 			break;
 
-// 8 bitù
+// 8 bitů
 		case 8:
-			srcinc = (width + 3) & ~3;			// pøírustek zdrojové adresy
+			srcinc = (width + 3) & ~3;			// přírustek zdrojové adresy
 
-// pøíprava konverzní tabulky palet
-			GenKonvPal(bitmap);					// pøíprava konverzní tabulky
+// příprava konverzní tabulky palet
+			GenKonvPal(bitmap);					// příprava konverzní tabulky
 
-// pøíprava poètu palet
-			palet = bitmap->bmiHeader.biClrUsed; // poèet palet v tabulce
-			if (palet == 0) palet = 256;		// používá se maximální poèet palet
+// příprava počtu palet
+			palet = bitmap->bmiHeader.biClrUsed; // počet palet v tabulce
+			if (palet == 0) palet = 256;		// používá se maximální počet palet
 			src += sizeof(RGBQUAD) * palet;		// korekce zdrojové adresy
 
 // kopie dat do bufferu bloku
-			for (i = height-1; i >= 0; i--)		// cyklus pøes všechny linky
+			for (i = height-1; i >= 0; i--)		// cyklus přes všechny linky
 			{
 				if (Dither)
 				{
 					int* odch0 = odch + 3;			// ukazatel v bufferu odchylek
 
-					for (j = width; j > 0; j--)		// cyklus pøes všechny body
+					for (j = width; j > 0; j--)		// cyklus přes všechny body
 					{
 					// bod k zápisu
 						BYTE col = *src;
@@ -5425,14 +5425,14 @@ void Paste()
 					// požadovaná barva
 							b = rgb->rgbBlue;			// modrá složka
 							g = rgb->rgbGreen;			// zelená složka
-							r = rgb->rgbRed;			// èervená složka
+							r = rgb->rgbRed;			// červená složka
 
 					// zkorigovaná barva
 							int b2 = b - (odch0[-3] + odch0[0] + odch0[3])*5/8;		// modrá složka
 							int g2 = g - (odch0[-2] + odch0[1] + odch0[4])*5/8;		// zelená složka
-							int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// èervená složka
+							int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// červená složka
 
-					// omezení pøeteèení barvy
+					// omezení přetečení barvy
 							if (b2 < 0) b2 = 0;
 							if (b2 > 255) b2 = 255;
 							if (g2 < 0) g2 = 0;
@@ -5471,28 +5471,28 @@ void Paste()
 			}
 			break;
 
-// 16 bitù
+// 16 bitů
 		case 16:
 			srcinc = ((2*width + 3) & ~3) - 2*width;
 
-			for (i = height; i > 0; i--)	// cyklus pøes všechny linky
+			for (i = height; i > 0; i--)	// cyklus přes všechny linky
 			{
 				if (Dither)
 				{
 					int* odch0 = odch + 3;			// ukazatel v bufferu odchylek
 
-					for (j = width; j > 0; j--)		// cyklus pøes všechny body na lince
+					for (j = width; j > 0; j--)		// cyklus přes všechny body na lince
 					{
 
 					// požadovaná barva
 						srcdat = *(WORD*)src;		// data jednoho bodu
 						b = (BYTE)(srcdat & 0x1F);	// modrá složka
 						b = (BYTE)(b*8 + b/4);
-						srcdat >>= 5;				// zrušení bitù modré složky
+						srcdat >>= 5;				// zrušení bitů modré složky
 						g = (BYTE)(srcdat & 0x1F);	// zelená složka
 						g = (BYTE)(g*8 + g/4);
-						srcdat >>= 5;				// zrušení bitù zelené složky
-						r = (BYTE)(srcdat & 0x1F);	// èervená složka
+						srcdat >>= 5;				// zrušení bitů zelené složky
+						r = (BYTE)(srcdat & 0x1F);	// červená složka
 						r = (BYTE)(r*8 + r/4);
 						src++;						// zvýšení zdrojové adresy
 						src++;						// zvýšení zdrojové adresy
@@ -5500,9 +5500,9 @@ void Paste()
 					// zkorigovaná barva
 						int b2 = b - (odch0[-3] + odch0[0] + odch0[3])*5/8;		// modrá složka
 						int g2 = g - (odch0[-2] + odch0[1] + odch0[4])*5/8;		// zelená složka
-						int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// èervená složka
+						int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// červená složka
 
-					// omezení pøeteèení barvy
+					// omezení přetečení barvy
 						if (b2 < 0) b2 = 0;
 						if (b2 > 255) b2 = 255;
 						if (g2 < 0) g2 = 0;
@@ -5531,16 +5531,16 @@ void Paste()
 				}
 				else
 				{
-					for (j = width; j > 0; j--)		// cyklus pøes všechny body
+					for (j = width; j > 0; j--)		// cyklus přes všechny body
 					{
 						srcdat = *(WORD*)src;		// data jednoho bodu
 						b = (BYTE)(srcdat & 0x1F);	// modrá složka
 						b = (BYTE)(b*8 + b/4);
-						srcdat >>= 5;				// zrušení bitù modré složky
+						srcdat >>= 5;				// zrušení bitů modré složky
 						g = (BYTE)(srcdat & 0x1F);	// zelená složka
 						g = (BYTE)(g*8 + g/4);
-						srcdat >>= 5;				// zrušení bitù zelené složky
-						r = (BYTE)(srcdat & 0x1F);	// èervená složka
+						srcdat >>= 5;				// zrušení bitů zelené složky
+						r = (BYTE)(srcdat & 0x1F);	// červená složka
 						r = (BYTE)(r*8 + r/4);
 						*dst = PalImport(r, g, b);	// import barvy do vlastních palet
 						src++;						// zvýšení zdrojové adresy
@@ -5552,16 +5552,16 @@ void Paste()
 			}
 			break;
 
-// 24 bitù
+// 24 bitů
 		case 24:
 			srcinc = ((3*width + 3) & ~3) - 3*width;
-			for (i = height; i > 0; i--)	// cyklus pøes všechny linky
+			for (i = height; i > 0; i--)	// cyklus přes všechny linky
 			{
 				if (Dither)
 				{
 					int* odch0 = odch + 3;			// ukazatel v bufferu odchylek
 
-					for (j = width; j > 0; j--)		// cyklus pøes všechny body na lince
+					for (j = width; j > 0; j--)		// cyklus přes všechny body na lince
 					{
 
 					// pozadí
@@ -5601,15 +5601,15 @@ void Paste()
 							src++;						// zvýšení zdrojové adresy
 							g = *src;					// zelená složka
 							src++;						// zvýšení zdrojové adresy
-							r = *src;					// èervená složka
+							r = *src;					// červená složka
 							src++;						// zvýšení zdrojové adresy
 
 					// zkorigovaná barva
 							int b2 = b - (odch0[-3] + odch0[0] + odch0[3])*5/8;		// modrá složka
 							int g2 = g - (odch0[-2] + odch0[1] + odch0[4])*5/8;		// zelená složka
-							int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// èervená složka
+							int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// červená složka
 
-					// omezení pøeteèení barvy
+					// omezení přetečení barvy
 							if (b2 < 0) b2 = 0;
 							if (b2 > 255) b2 = 255;
 							if (g2 < 0) g2 = 0;
@@ -5640,7 +5640,7 @@ void Paste()
 				}
 				else
 				{
-					for (j = width; j > 0; j--)		// cyklus pøes všechny body
+					for (j = width; j > 0; j--)		// cyklus přes všechny body
 					{
 						if ((*(int*)src & 0xffffff) == (BACKCOLOR_BLUE | (BACKCOLOR_GREEN*256) | (BACKCOLOR_RED*256*256)))
 						{
@@ -5661,7 +5661,7 @@ void Paste()
 							src++;						// zvýšení zdrojové adresy
 							g = *src;					// zelená složka
 							src++;						// zvýšení zdrojové adresy
-							r = *src;					// èervená složka
+							r = *src;					// červená složka
 							src++;						// zvýšení zdrojové adresy
 							*dst = PalImport(r, g, b);	// import barvy do vlastních palet
 						  }
@@ -5673,15 +5673,15 @@ void Paste()
 			}
 			break;
 
-// 32 bitù
+// 32 bitů
 		case 32:
-			for (i = height; i > 0; i--)		// cyklus pøes všechny linky
+			for (i = height; i > 0; i--)		// cyklus přes všechny linky
 			{
 				if (Dither)
 				{
 					int* odch0 = odch + 3;			// ukazatel v bufferu odchylek
 
-					for (j = width; j > 0; j--)		// cyklus pøes všechny body na lince
+					for (j = width; j > 0; j--)		// cyklus přes všechny body na lince
 					{
 
 					// pozadí
@@ -5721,16 +5721,16 @@ void Paste()
 							src++;						// zvýšení zdrojové adresy
 							g = *src;					// zelená složka
 							src++;						// zvýšení zdrojové adresy
-							r = *src;					// èervená složka
+							r = *src;					// červená složka
 							src++;						// zvýšení zdrojové adresy
 							src++;						// zvýšení zdrojové adresy
 
 					// zkorigovaná barva
 							int b2 = b - (odch0[-3] + odch0[0] + odch0[3])*5/8;		// modrá složka
 							int g2 = g - (odch0[-2] + odch0[1] + odch0[4])*5/8;		// zelená složka
-							int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// èervená složka
+							int r2 = r - (odch0[-1] + odch0[2] + odch0[5])*5/8;		// červená složka
 
-					// omezení pøeteèení barvy
+					// omezení přetečení barvy
 							if (b2 < 0) b2 = 0;
 							if (b2 > 255) b2 = 255;
 							if (g2 < 0) g2 = 0;
@@ -5761,7 +5761,7 @@ void Paste()
 				}
 				else
 				{
-					for (j = width; j > 0; j--)		// cyklus pøes všechny body
+					for (j = width; j > 0; j--)		// cyklus přes všechny body
 					{
 						if ((*(int*)src & 0xffffff) == (BACKCOLOR_BLUE | (BACKCOLOR_GREEN*256) | (BACKCOLOR_RED*256*256)))
 						{
@@ -5782,7 +5782,7 @@ void Paste()
 							src++;						// zvýšení zdrojové adresy
 							g = *src;					// zelená složka
 							src++;						// zvýšení zdrojové adresy
-							r = *src;					// èervená složka
+							r = *src;					// červená složka
 							src++;						// zvýšení zdrojové adresy
 							src++;						// zvýšení zdrojové adresy
 							*dst = PalImport(r, g, b);	// import barvy do vlastních palet
@@ -5795,7 +5795,7 @@ void Paste()
 			break;
 		}
 
-// korekce poèátku k zobrazení bloku
+// korekce počátku k zobrazení bloku
 		if ((BlokX > (DispLeft+DispWidth-5)) ||
 			(BlokY > (Height-DispBottom-5)) ||
 			((BlokX + BlokWidth) < (DispLeft+5)) ||
@@ -5807,29 +5807,29 @@ void Paste()
 		BlokWidth = width;
 		BlokHeight = height;
 
-// zahájení oznaèování bloku
-		BlokBack = ColRight;// prùhledná barva bloku
+// zahájení označování bloku
+		BlokBack = ColRight;// průhledná barva bloku
 		CutMode = FALSE;		// není vymazání bloku
-		Selecting = TRUE;		// je mód výbìru bloku
+		Selecting = TRUE;		// je mód výběru bloku
 		Mode = IDN_SELECT; // zapnutí módu editace
-		MoveSelect();			// pøekreslení ikony
-		DispSelect();			// vypnutí zobrazení výbìru bloku
-		Disp();				// pøekreslení displeje
+		MoveSelect();			// překreslení ikony
+		DispSelect();			// vypnutí zobrazení výběru bloku
+		Disp();				// překreslení displeje
 
-// uvolnìní bufferu odchylky pro dithering
+// uvolnění bufferu odchylky pro dithering
 		MemFree(odch);
 	}
 
 // odemknutí bufferu
 	::GlobalUnlock(global);
 
-// uzavøení schránky
+// uzavření schránky
 	::CloseClipboard();
 
-// pøíznak modifikace souboru
-	SetModi();									// nastavení pøíznaku modifikace
+// příznak modifikace souboru
+	SetModi();									// nastavení příznaku modifikace
 
-// aktualizace zobrazení stromù
+// aktualizace zobrazení stromů
 	UpdateTree();
 
 // aktualizace voleb bloku
@@ -5838,30 +5838,30 @@ void Paste()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oznaèení celého bloku
+// označení celého bloku
 
 void SelectAll()
 {
 // zapnutí módu bloku
 	SetMode(IDN_SELECT);
 
-// nastavení údajù pro oznaèení všeho
+// nastavení údajů pro označení všeho
 	PushUndo();					// úschova obrázku do undo bufferu
 	Push();						// úschova do pomocného bufferu
-	Selecting = TRUE;			// pøíznak oznaèení bloku
-	BlokX = 0;					// poèátek bloku X
-	BlokY = 0;					// poèátek bloku Y
-	BlokWidth = Width;			// šíøka bloku
+	Selecting = TRUE;			// příznak označení bloku
+	BlokX = 0;					// počátek bloku X
+	BlokY = 0;					// počátek bloku Y
+	BlokWidth = Width;			// šířka bloku
 	BlokHeight = Height;		// výška bloku
 	CutMode = TRUE;				// jsou údaje k vymazání
-	FirstBlokX = 0;				// výchozí poèátek bloku X
-	FirstBlokY = 0;				// výchozí poèátek bloku Y
-	FirstBlokWidth = Width;		// výchozí šíøka bloku
+	FirstBlokX = 0;				// výchozí počátek bloku X
+	FirstBlokY = 0;				// výchozí počátek bloku Y
+	FirstBlokWidth = Width;		// výchozí šířka bloku
 	FirstBlokHeight = Height;	// výchozí výška bloku
-	BlokBack = ColRight;		// prùhledná barva bloku
+	BlokBack = ColRight;		// průhledná barva bloku
 
-// zobrazení oznaèení bloku
-	DispSelect();				// zapnutí oznaèení bloku
+// zobrazení označení bloku
+	DispSelect();				// zapnutí označení bloku
 
 // úschova dat do bufferu
 	BlokBuf = (BYTE*)MemSize(BlokBuf, Width * Height * sizeof(BYTE));	// buffer pro blok

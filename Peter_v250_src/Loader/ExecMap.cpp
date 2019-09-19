@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*						Provádìní programu - plocha							*
+*						Provádění programu - plocha							*
 *																			*
 \***************************************************************************/
 
@@ -24,10 +24,10 @@ void _fastcall FMapFunc(CMap& map)
 // úschova indexu volané funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// úschova indexu proměnné s návratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnných
+// inicializace lokálních proměnných
 	FCommand();
 
 // úschova ukazatele programu
@@ -36,7 +36,7 @@ void _fastcall FMapFunc(CMap& map)
 // nová adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoření
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
@@ -49,20 +49,20 @@ void _fastcall FMapFunc(CMap& map)
 // návrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení požadavku o pøerušení
+// zrušení požadavku o přerušení
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
 // návrat výsledku operace
 	map = Map[Map.Num() - res];
 
-// zrušení lokálních promìnných
+// zrušení lokálních proměnných
 	FCommand();
 }
 
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								proměnné									*
 *																			*
 \***************************************************************************/
 
@@ -139,14 +139,14 @@ void _fastcall FMapLocList(CMap& map)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie výøezu plochy
+// kopie výřezu plochy
 
 void _fastcall FMapCopy(CMap& map)
 {
-// naètení vstupní plochy
+// načtení vstupní plochy
 	FMap(map);
 
-// cílové souøadnice
+// cílové souřadnice
 	int destx = FIntR();
 	int desty = FIntR();
 
@@ -154,13 +154,13 @@ void _fastcall FMapCopy(CMap& map)
 	CMap srcmap;
 	FMap(srcmap);
 
-// zdrojové souøadnice a rozmìry
+// zdrojové souřadnice a rozměry
 	int srcx = FIntR();
 	int srcy = FIntR();
 	int width = FIntR();
 	int height = FIntR();
 
-// omezení cílových souøadnic
+// omezení cílových souřadnic
 	if ((destx >= map.Width()) || (desty >= map.Height())) return;
 
 	if (destx < 0) 
@@ -179,7 +179,7 @@ void _fastcall FMapCopy(CMap& map)
 	}
 	if (desty + height > map.Height()) height = map.Height() - desty;
 
-// omezení zdrojových souøadnic
+// omezení zdrojových souřadnic
 	if ((srcx >= srcmap.Width()) || (srcy >= srcmap.Height())) return;
 
 	if (srcx < 0)
@@ -201,10 +201,10 @@ void _fastcall FMapCopy(CMap& map)
 	if ((destx >= map.Width()) || (desty >= map.Height())) return;
 	if ((width <= 0) || (height <= 0)) return;
 
-// pøíprava cílové plochy pro zápis
+// příprava cílové plochy pro zápis
 	map.CopyWrite();
 
-// pøenesení dat
+// přenesení dat
 	MAPITEM* dstitem = &map.At(destx, desty);
 	MAPITEM* srcitem = &srcmap.At(srcx, srcy);
 	int dstinc = map.Width() - width;
@@ -232,7 +232,7 @@ void _fastcall FMapCopy(CMap& map)
 
 void _fastcall FMapNew(CMap& map)
 {
-// rozmìry plochy
+// rozměry plochy
 	int width = Round0(FNum());
 	int height = Round0(FNum());
 

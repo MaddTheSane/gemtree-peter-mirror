@@ -11,7 +11,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu se sprajtem (vrací true = operace OK)
+// překlad výrazu se sprajtem (vrací true = operace OK)
 
 bool _fastcall CompSpr(int index)
 {
@@ -24,7 +24,7 @@ bool _fastcall CompSpr(int index)
 // kontrola, zda je položka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// větvení podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_SPRITE:
@@ -69,7 +69,7 @@ bool _fastcall CompSpr(int index)
 		return CompFunc(index, IDF_SPRITE);	// funkce s návratem sprajtu
 
 	case IDF_FILE_SPRITE:
-		CompAddItem(FGetFileSprite);			// naètení sprajtu
+		CompAddItem(FGetFileSprite);			// načtení sprajtu
 		return true;
 
 	default:
@@ -79,7 +79,7 @@ bool _fastcall CompSpr(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem sprajtu
+// překlad příkazu s parametrem sprajtu
 
 bool CompSprPar(int index, PROCCOM func)
 {

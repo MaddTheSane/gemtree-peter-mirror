@@ -1,46 +1,46 @@
 
 /***************************************************************************\
 *																			*
-*								Editor sprajtù								*
+*								Editor sprajtů								*
 *																			*
 \***************************************************************************/
 
 namespace EditSprite
 {
-extern	BOOL	MDraging;				// pøíznak tažení ikony editoru sprajtù
+extern	BOOL	MDraging;				// příznak tažení ikony editoru sprajtů
 //extern	CIcon*	EditIcon;				// editovaná ikona
 extern	int		Index;					// editovaný sprajt
 extern	int		IndexPic;				// index editovaného obrázku
 
-// inicializace pøi startu
+// inicializace při startu
 	void StartInit();
 
 // zahájení editace
 	void BegEdit(int index);
 
-// nastavení rozmìrù plochy
+// nastavení rozměrů plochy
 	void OnDimen();
 
 // ----------- obsluha zobrazení ------------
 
-// pøepoèet rozmìrù editoru ikon a obrázkù
+// přepočet rozměrů editoru ikon a obrázků
 	void ReCalc();
 
 // zobrazení celého okna editoru
 	void Disp();
 
-// aktualizaèní pøekreslení plochy (s pøepoètem rozmìrù)
+// aktualizační překreslení plochy (s přepočtem rozměrů)
 	void ReDisp();
 
-// aktualizaèní pøekreslení plochy
+// aktualizační překreslení plochy
 	void DispAkt(HDC dc);
 
-// ---------------- obsluha posuvníkù ---------
+// ---------------- obsluha posuvníků ---------
 
-// pøesun posuvníkù pøi zmìnì rozmìrù okna
+// přesun posuvníků při změně rozměrů okna
 	HDWP MoveScroll(HDWP hdwp);
 
-// aktualizace zobrazení posuvníkù
+// aktualizace zobrazení posuvníků
 	void SetScroll();
 
 // horizontální posuvník
@@ -51,19 +51,19 @@ extern	int		IndexPic;				// index editovaného obrázku
 
 // -------------- obsluha editace -----------
 
-// ukonèení tažení
+// ukončení tažení
 	void EndDrag();
 
-// stisk tlaèítka myši (TRUE = obslouženo)
+// stisk tlačítka myši (TRUE = obslouženo)
 	BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick);
 
 // posun myši
 	void OnMouseMove(UINT flags, int x, int y);
 
-// uvolnìní tlaèítka myši
+// uvolnění tlačítka myši
 	void OnButtonUp(UINT keys, BOOL right);
 
-// položení obrázku zvnìjšku
+// položení obrázku zvnějšku
 	void DragDrop(int pic);
 
 // test

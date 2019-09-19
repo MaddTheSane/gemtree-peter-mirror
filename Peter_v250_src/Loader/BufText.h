@@ -1,41 +1,41 @@
 
 /***************************************************************************\
 *																			*
-*								Textové øetìzce								*
+*								Textové řetězce								*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura položky dat øetìzce - 8 bajtù + data
+// struktura položky dat řetězce - 8 bajtů + data
 
 typedef struct STRINGDATA_
 {
-	long	Refer;					// (4) èítaè referencí na textový øetìzec
-	long	Length;					// (4) délka øetìzce ve znacích
+	long	Refer;					// (4) čítač referencí na textový řetězec
+	long	Length;					// (4) délka řetězce ve znacích
 	long	Orig;					// (4) index originálního textu v programu (-1 není)
 	TCHAR	Data[1];				// (x*1 nebo x*2) textová data
 } STRINGDATA;
 
 #define SIZEOFSTRINGDATA	(3*sizeof(long)) // velikost záhlaví datové položky (bez dat)
 
-extern STRINGDATA EmptyStringData;	// data prázdného øetìzce
+extern STRINGDATA EmptyStringData;	// data prázdného řetězce
 
 
 /////////////////////////////////////////////////////////////////////////////
-// textový øetìzec
+// textový řetězec
 
 class CString
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné - pouze ukazatel na data
-	STRINGDATA*		pData;			// ukazatel na data øetìzce
+// proměnné - pouze ukazatel na data
+	STRINGDATA*		pData;			// ukazatel na data řetězce
 
-// pøipojení dat
+// připojení dat
 	inline void Attach(STRINGDATA* data)
 	{
 		ASSERT(data);
@@ -58,7 +58,7 @@ private:
 		}
 	}
 
-// vytvoøení nového bufferu (délka zadána ve znacích) - starý buffer musí být odpojen!
+// vytvoření nového bufferu (délka zadána ve znacích) - starý buffer musí být odpojen!
 	inline void NewBuffer(int length)
 	{
 		ASSERT(length >= 0);
@@ -66,13 +66,13 @@ private:
 		STRINGDATA* data = (STRINGDATA*)MemGet(
 				(length+1)*sizeof(TCHAR) + SIZEOFSTRINGDATA);
 		pData = data;					// adresa dat
-		data->Refer = 1;				// poèet referencí
+		data->Refer = 1;				// počet referencí
 		data->Length = length;			// délka
 		data->Orig = -1;				// index originálního textu
-		data->Data[length] = 0;			// oznaèení konce textu
+		data->Data[length] = 0;			// označení konce textu
 	}
 
-// zmìna velikosti bufferu (délka zadána ve znacích) - buffer musí být pøivlastnìn!
+// změna velikosti bufferu (délka zadána ve znacích) - buffer musí být přivlastněn!
 	inline void SizeBuffer(int length)
 	{
 		ASSERT(pData->Refer == 1);
@@ -83,10 +83,10 @@ private:
 		pData = data;					// adresa dat
 		data->Length = length;			// délka
 		data->Orig = -1;				// index originálního textu
-		data->Data[length] = 0;			// oznaèení konce textu
+		data->Data[length] = 0;			// označení konce textu
 	}
 
-// sluèovací konstruktory (urèeno pro operátor +)
+// slučovací konstruktory (určeno pro operátor +)
 	inline CString(const CString& str1, const CString& str2) 
 	{ 
 		int len1 = str1.pData->Length;
@@ -132,7 +132,7 @@ private:
 		pData->Data[len] = chr;
 	}
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -164,7 +164,7 @@ public:
 	inline STRINGDATA* Data() const { return pData; };
 	inline TCHAR* DataData() const { return pData->Data; };
 
-// poskytnutí/nastavení délky øetìzce
+// poskytnutí/nastavení délky řetězce
 	inline int Length() const { return pData->Length; }
 	void Length(int len);
 
@@ -172,7 +172,7 @@ public:
 	inline int Orig() const { return pData->Orig; }
 	inline void Orig(int orig) { pData->Orig = orig; }
 
-// kontrola, zda je øetìzec prázdný
+// kontrola, zda je řetězec prázdný
 	inline BOOL IsEmpty() const { return pData->Length == 0; };
 	inline BOOL IsNotEmpty() const { return pData->Length != 0; };
 
@@ -191,59 +191,59 @@ public:
 	int _fastcall Find(LPCTSTR txt) const;
 	int _fastcall Find(const TCHAR chr) const;
 	
-// hledání znaku od konce øetìzce zpìt (-1 = nenalezeno)
+// hledání znaku od konce řetězce zpět (-1 = nenalezeno)
 	int _fastcall RevFind(const TCHAR chr) const;
 
-// poèet øádkù textu
+// počet řádků textu
 	int LineNum() const;
 	CString _fastcall GetLine(int radek) const;
 
-// blok textu (-1=konec øádku nebo textu)
+// blok textu (-1=konec řádku nebo textu)
 	CString GetBlock(int begline, int begpos, int endline, int endpos) const;
 
 // -------- modifikace textu
 
-// vyprázdnìní øetìzce (uvolnìní dat)
+// vyprázdnění řetězce (uvolnění dat)
 	void Empty();
 
 // konverze malá/velká písmena
 	void UpperCase();
 	void LowerCase();
 
-// levá èást øetìzce
+// levá část řetězce
 	CString _fastcall Left(int count) const;
 
-// pravá èást øetìzce
+// pravá část řetězce
 	CString _fastcall Right(int count) const;
 
-// støední èást øetìzce
+// střední část řetězce
 	CString _fastcall Mid(int first, int count = 0x7fffffff) const;
 
-// zrušení textu z konce øetìzce
+// zrušení textu z konce řetězce
 	void Delete(int first, int count = 0x7fffffff);
 
-// odstranìní mezer ze zaèátku/konce øetìzce
+// odstranění mezer ze začátku/konce řetězce
 	void TrimLeft();
 	void TrimRight();
 
-// korekce výskytu nuly v textu (provádí se ve spoleèném bufferu všech promìnných)
+// korekce výskytu nuly v textu (provádí se ve společném bufferu všech proměnných)
 	void KorigNul();
 
-// nastavení èísla jména objektu (1, 2, ...)
+// nastavení čísla jména objektu (1, 2, ...)
 	void _fastcall SetNumObj(const int num);
 
-// naètení textu z resource
+// načtení textu z resource
 	void Load(const int nID);
 
-// naètení ze souboru formátu TXT (false=chyba)
+// načtení ze souboru formátu TXT (false=chyba)
 //	bool LoadFile(CString jmeno);
 
 // uložení textu do souboru formátu TXT (false=chyba)
 //	bool SaveFile(CString jmeno) const;
 
-// ------- pøístup ke znakùm v bufferu
+// ------- přístup ke znakům v bufferu
 
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastního bufferu před modifikací
 	void CopyWrite();
 
 // kontrola, zda je index znaku platný
@@ -253,7 +253,7 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)pData->Length); };
 
-// poskytnutí pøístupu ke znaku na pozici (bez kontroly a bez pøivlastnìní bufferu!)
+// poskytnutí přístupu ke znaku na pozici (bez kontroly a bez přivlastnění bufferu!)
 	inline TCHAR& operator[] (int index)
 		{ ASSERT(IsValid(index)); return pData->Data[index]; }
 
@@ -269,61 +269,61 @@ public:
 // poskytnutí znaku na pozici s kontrolou
 	TCHAR _fastcall Get(const int index) const;
 
-// nastavení znaku na pozici s kontrolou (zajistí pøivlastnìní bufferu)
+// nastavení znaku na pozici s kontrolou (zajistí přivlastnění bufferu)
 	void _fastcall Set(const int index, const TCHAR chr);
 
-// poskytnutí posledního znaku øetìzce (pro prázdný øetìzec vrací 0)
+// poskytnutí posledního znaku řetězce (pro prázdný řetězec vrací 0)
 	TCHAR _fastcall LastChar() const;
 
 // ------- text oken
 
-// naètení textu okna
+// načtení textu okna
 	void GetWindowText(const HWND wnd);
 
 // nastavení textu okna
 	void _fastcall SetWindowText(const HWND wnd) const;
 
-// naètení textu dialogového prvku
+// načtení textu dialogového prvku
 	void GetDialogText(const HWND wnd, int id);
 
 // nastavení textu dialogového prvku
 	void _fastcall SetDialogText(const HWND wnd, int id) const;
 
-// -------- adresáøe a soubory
+// -------- adresáře a soubory
 
-// naètení aktivního adresáøe
+// načtení aktivního adresáře
 	void GetAktDir();
 
-// korekce textu na jméno souboru (vypuštìní zakázaných znakù, 
+// korekce textu na jméno souboru (vypuštění zakázaných znaků, 
 //	vrací opravenou pozici kurzoru)
 	int FileName(int curs);
 
-// korekce textu na jméno cesty (vypuštìní zakázaných znakù, 
+// korekce textu na jméno cesty (vypuštění zakázaných znaků, 
 //	vrací opravenou pozici kurzoru)
 	int PathName(int curs);
 
-// jméno pøechodného souboru
+// jméno přechodného souboru
 	void TempName();
 
 
-// -------- konverze èísel
+// -------- konverze čísel
 
-// konverze èísla INT na text
+// konverze čísla INT na text
 	void Int(int num);
 
-// konverze textu na èíslo INT
+// konverze textu na číslo INT
 	friend int Int(LPCTSTR text);
 
-// pøidání 2 èíslic
+// přidání 2 číslic
 	void _fastcall Add2Dig(char num);
 
-// pøidání 4 èíslic
+// přidání 4 číslic
 	void _fastcall Add4Dig(short num);
 
-// pøidání 2 èíslic se zarovnáním mezerou
+// přidání 2 číslic se zarovnáním mezerou
 	void _fastcall Add2DigSpc(char num);
 
-// pøidání textu se známou délkou
+// přidání textu se známou délkou
 	void _fastcall Add(LPCTSTR text, int num);
 #ifdef _UNICODE
 	void _fastcall Add(char* text, int num);
@@ -331,21 +331,21 @@ public:
 	void _fastcall Add(WCHAR* text, int num);
 #endif
 
-// konverze èísla DWORD na HEX (8 èíslic)
+// konverze čísla DWORD na HEX (8 číslic)
 	void Hex(DWORD num);
 
-// konverze èísla DOUBLE na text
+// konverze čísla DOUBLE na text
 	void Double(double num);
 
-// konverze textu na èíslo DOUBLE
+// konverze textu na číslo DOUBLE
 	friend double Double(LPCTSTR txt);
 
 // -------- operátory
 
-// konverze na øetìzec LPCTSTR
+// konverze na řetězec LPCTSTR
 	inline operator LPCTSTR() const { return pData->Data; }
 
-// operátory pøiøazení
+// operátory přiřazení
 	const CString& _fastcall operator= (const CString& str);
 	const CString& _fastcall operator= (LPCTSTR txt);
 #ifdef _UNICODE
@@ -355,12 +355,12 @@ public:
 #endif //_UNICODE
 	const CString& _fastcall operator= (const TCHAR chr);
 
-// operátory pøiètení
+// operátory přičtení
 	const CString& _fastcall operator+=(const CString& str);
 	const CString& _fastcall operator+=(LPCTSTR txt);
 	const CString& _fastcall operator+=(const TCHAR chr);
 
-// operátory souètu
+// operátory součtu
 	friend CString _fastcall operator+ (const CString& str1, const CString& str2);
 	friend CString _fastcall operator+ (LPCTSTR txt, const CString& str);
 	friend CString _fastcall operator+ (const CString& str, LPCTSTR txt);
@@ -387,39 +387,39 @@ public:
 
 /***************************************************************************\
 *																			*
-*								Buffer textù								*
+*								Buffer textů								*
 *																			*
 \***************************************************************************/
 
 class CBufText
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné
+// proměnné
 	CString*	m_Data;		// ukazatel na data
-	int			m_Num;		// poèet platných položek v bufferu
+	int			m_Num;		// počet platných položek v bufferu
 	int			m_Max;		// velikost bufferu (položek)
 
-// vytvoøení nové položky
+// vytvoření nové položky
 	inline int NewItem()
 	{
-		int i = m_Num;				// poèet položek
+		int i = m_Num;				// počet položek
 		if (i >= m_Max)				// není další položka?
 		{
-			NewData();				// vytvoøení nových dat
+			NewData();				// vytvoření nových dat
 		}
 
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení nových dat (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (odděleno kvůli lepší optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -437,10 +437,10 @@ public:
 // poskytnutí bufferu dat
 	inline CString* Data() const { return m_Data; };
 
-// poskytnutí poètu platných položek v bufferu
+// poskytnutí počtu platných položek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu (vèetnì zrušených položek)
+// poskytnutí velikosti bufferu (včetně zrušených položek)
 	inline int Max() const { return m_Max; };
 
 // kontrola platnosti položky
@@ -450,7 +450,7 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k položce (bez kontroly indexu)
+// poskytnutí přístupu k položce (bez kontroly indexu)
 	inline CString& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -469,16 +469,16 @@ public:
 // nastavení položky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const CString& data);
 
-// vyprázdnìní položky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprázdnění položky (bez jejího zrušení - jen pro uvolnění dat)
 	void _fastcall Empty(const int index);
 
 // zrušení položek z konce bufferu
 	void _fastcall Del(int num);
 
-// vytvoøení prázdné položky (vrací index položky)
+// vytvoření prázdné položky (vrací index položky)
 	int New();
 
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 	int _fastcall Add(const CString& data);
 	int _fastcall Add(const WCHAR* data, const int len = -1);
 	int _fastcall Add(const char* data, const int len = -1);
@@ -487,10 +487,10 @@ public:
 	int _fastcall Dup(const int index);
 	int _fastcall Dup(const int index, int num);
 
-// naètení textu z resource (vrací index položky)
+// načtení textu z resource (vrací index položky)
 	int _fastcall Load(const int nID);
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CBufText& operator= (const CBufText& src);
 };
 

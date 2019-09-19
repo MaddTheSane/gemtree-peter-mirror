@@ -9,7 +9,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní prázdná hudba (modifikuje se poèet referencí!)
+// inicializační prázdná hudba (modifikuje se počet referencí!)
 
 BYTE	EmptyMusicData0 = 0;
 
@@ -18,26 +18,26 @@ const CMusic		EmptyMusic;				// prázdná hudba
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení dat hudby (pøi chybì pamìti vrací NULL)
+// vytvoření dat hudby (při chybě paměti vrací NULL)
 
 MUSICDATA* _fastcall NewMusicData(int size)
 {
 	ASSERT(size >= 0);
 
-// vytvoøení záhlaví hudby
+// vytvoření záhlaví hudby
 	MUSICDATA* data = (MUSICDATA*)MemGet(SIZEOFMUSICDATA);
 	if (data != NULL)
 	{
 
 // nastavení dat hudby
-		data->Refer = 1;				// poèet referencí
+		data->Refer = 1;				// počet referencí
 		data->Size = size;				// velikost dat
 
-// vytvoøení bufferu dat hudby
+// vytvoření bufferu dat hudby
 		BYTE* datadata = (BYTE*)MemGet(size);
 		data->Data = datadata;
 
-// pøi chybì pamìti zrušení záhlaví hudby
+// při chybě paměti zrušení záhlaví hudby
 		if (datadata == NULL)
 		{
 			MemFree(data);
@@ -48,7 +48,7 @@ MUSICDATA* _fastcall NewMusicData(int size)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení dat hudby (oddìleno kvùli lepší optimalizaci)
+// zrušení dat hudby (odděleno kvůli lepší optimalizaci)
 
 void _fastcall DelMusicData(MUSICDATA* data)
 {
@@ -101,7 +101,7 @@ void CMusic::Init(MUSICDATA* data)
 	attach(data); 
 };
 
-bool CMusic::Init(int size)		// pøi chybì pamìti vrací FALSE, hudba není vytvoøena
+bool CMusic::Init(int size)		// při chybě paměti vrací FALSE, hudba není vytvořena
 {
 	pData = NewMusicData(size);
 	return (pData != NULL);
@@ -114,7 +114,7 @@ void CMusic::Term()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní hudby (uvolnìní dat) - pøipojí se standardní prázdná hudba
+// vyprázdnění hudby (uvolnění dat) - připojí se standardní prázdná hudba
 
 void CMusic::Empty()
 { 
@@ -124,30 +124,30 @@ void CMusic::Empty()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastního bufferu pøed modifikací
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie do vlastního bufferu před modifikací
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CMusic::CopyWrite()
 {
-// úschova ukazatelù
+// úschova ukazatelů
 	MUSICDATA* olddata = pData;			// adresa starých dat
-	long* refer = &(olddata->Refer);	// poèet referencí
+	long* refer = &(olddata->Refer);	// počet referencí
 
-// test, zda je nutné pøivlastnìní
-	if (*refer > 1)						// je nìjaký jiný majitel?
+// test, zda je nutné přivlastnění
+	if (*refer > 1)						// je nějaký jiný majitel?
 	{
 
-// vytvoøení nového bufferu
+// vytvoření nového bufferu
 		MUSICDATA* newdata = NewMusicData(olddata->Size);
 		if (newdata == NULL) return false;
 
-// pøenesení dat
+// přenesení dat
 		MemCopy(newdata->Data, olddata->Data, olddata->Size);
 
 // odpojení starých dat
 		detach(olddata);
 
-// pøipojení nových dat
+// připojení nových dat
 		pData = newdata;
 	}
 
@@ -156,27 +156,27 @@ bool CMusic::CopyWrite()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nové hudby (pøipraveno k zápisu, data jsou náhodná)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// vytvoření nové hudby (připraveno k zápisu, data jsou náhodná)
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CMusic::New(int size)
 {
 // ukazatel na stará data
 	MUSICDATA* olddata = pData;
 
-// test, zda je nutné vytvoøení nového bufferu
+// test, zda je nutné vytvoření nového bufferu
 	if ((olddata->Refer > 1) ||		// na buffer je více referencí
 		(olddata->Size != size))	// nesouhlasí velikost
 	{
 
-// vytvoøení nového bufferu
+// vytvoření nového bufferu
 		MUSICDATA* newdata = NewMusicData(size);
 		if (newdata == NULL) return false;
 
 // odpojení starých dat
 		detach(olddata);
 
-// pøipojení nových dat
+// připojení nových dat
 		pData = newdata;
 	}
 
@@ -186,28 +186,28 @@ bool CMusic::New(int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení hudby ze souboru (TRUE=operace OK)
+// načtení hudby ze souboru (TRUE=operace OK)
 
 bool CMusic::LoadFile(CText jmeno)
 {
-// otevøení souboru mapovaného do pamìti (uzavøen pøi destrukci!)
+// otevření souboru mapovaného do paměti (uzavřen při destrukci!)
 	CFileMap file;
 	if (!file.Open(jmeno)) return false;
 
-// vytvoøení nového bufferu
+// vytvoření nového bufferu
 	MUSICDATA* newdata = NewMusicData(file.Size());
 	if (newdata == NULL) return false;
 
-// pøenesení dat do bufferu
+// přenesení dat do bufferu
 	MemCopy(newdata->Data, file.Adr(), file.Size());
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = newdata;
 
-// pøíznak operace OK
+// příznak operace OK
 	return true;
 }
 
@@ -217,7 +217,7 @@ bool CMusic::LoadFile(CText jmeno)
 
 bool CMusic::SaveFile(CText jmeno) const
 {
-// vytvoøení souboru
+// vytvoření souboru
 	CFile file;
 	file.Name(jmeno);
 	if (!file.Create()) return false;
@@ -225,35 +225,35 @@ bool CMusic::SaveFile(CText jmeno) const
 // uložení souboru
 	BOOL result = file.Write(pData->Data, pData->Size);
 
-// uzavøení souboru
+// uzavření souboru
 	file.Close();
 
-// pøi chybì zrušení souboru
+// při chybě zrušení souboru
 	if (!result)
 	{
 		file.Delete();
 		return false;
 	}
 
-// pøíznak - uloženo OK
+// příznak - uloženo OK
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CMusic& CMusic::operator= (const CMusic& src)
 {
 	detach(pData);			// zrušení starých dat
-	attach(src.pData);		// pøiøazení nových dat
+	attach(src.pData);		// přiřazení nových dat
 	return *this;
 }
 
 const CMusic& CMusic::operator= (MUSICDATA* src)
 {
 	detach(pData);			// zrušení starých dat
-	attach(src);			// pøiøazení nových dat
+	attach(src);			// přiřazení nových dat
 	return *this;
 }
 
@@ -265,7 +265,7 @@ const CMusic& CMusic::operator= (MUSICDATA* src)
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// pøidání záznamu o vložení položky do UNDO bufferu
+// přidání záznamu o vložení položky do UNDO bufferu
 
 template <> bool CBuffer<CMusic>::UndoAddIns(int index)
 {
@@ -273,13 +273,13 @@ template <> bool CBuffer<CMusic>::UndoAddIns(int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nové položky - obsah náhodný (vrací index položky, <0 = chyba)
+// vytvoření nové položky - obsah náhodný (vrací index položky, <0 = chyba)
 // provádí záznam do UNDO bufferu
 
 int CBufMusic::New(int size)
 {
-// vytvoøení nové položky
-	int result = New();				// vytvoøení nové položky
+// vytvoření nové položky
+	int result = New();				// vytvoření nové položky
 	if (result >= 0)
 	{
 
@@ -297,12 +297,12 @@ int CBufMusic::New(int size)
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky, <0 = chyba pamìti)
+// přidání položky (vrací index položky, <0 = chyba paměti)
 // provádí záznam do UNDO bufferu
 
 int _fastcall CBufMusic::Add(MUSICDATA* data)
 {
 	CMusic mus(data);
-	int result = Add(mus);		// result musí být oddìlen, pro inline by se špatnì volal destruktor
+	int result = Add(mus);		// result musí být oddělen, pro inline by se špatně volal destruktor
 	return result;
 }

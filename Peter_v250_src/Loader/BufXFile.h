@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*								Buffery	objektù X souboru					*
+*								Buffery	objektů X souboru					*
 *																			*
 \***************************************************************************/
 
@@ -9,7 +9,7 @@
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení objektu z bufferu
+// načtení objektu z bufferu
 
 void ReadMesh(BYTE* data, int size, CString path);
 

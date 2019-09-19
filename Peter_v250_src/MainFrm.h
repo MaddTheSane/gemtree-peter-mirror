@@ -7,16 +7,16 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globální promìnné
+// globální proměnné
 
 extern	HWND		MainFrame;				// hlavní okno aplikace
-extern	HMENU		Menu;					// aktivní menu v hlavním oknì
+extern	HMENU		Menu;					// aktivní menu v hlavním okně
 extern	HWND		ToolBar;				// nástrojová lišta
 
-extern	HBITMAP		ToolBarBmp;				// bitmapa panelu nástrojù
+extern	HBITMAP		ToolBarBmp;				// bitmapa panelu nástrojů
 
 extern	RECT		ClientRect;				// klientská oblast hlavního okna
-extern	int			ClientWidth;			// šíøka klientské oblasti
+extern	int			ClientWidth;			// šířka klientské oblasti
 extern	int			ClientHeight;			// výška klientské oblasti
 
 extern	CText		MainFrameName;			// titulek hlavního okna - jméno aplikace
@@ -30,41 +30,41 @@ extern	HCURSOR		CurCil;					// cíl operace
 extern	HCURSOR		CurCopy;				// kopie
 extern	HCURSOR		CurDelete;				// zrušení
 extern	HCURSOR		CurElip;				// elipsa
-extern	HCURSOR		CurFill;				// výplò
+extern	HCURSOR		CurFill;				// výplň
 extern	HCURSOR		CurFillElip;			// ovál
-extern	HCURSOR		CurFillRect;			// vyplnìný obdélník
+extern	HCURSOR		CurFillRect;			// vyplněný obdélník
 extern	HCURSOR		CurFillRound;			// kruh
 extern	HCURSOR		CurKapatko;				// kapátko
 extern	HCURSOR		CurKoule;				// koule
-extern	HCURSOR		CurLine;				// èára
-extern	HCURSOR		CurMove;				// pøesun
+extern	HCURSOR		CurLine;				// čára
+extern	HCURSOR		CurMove;				// přesun
 extern	HCURSOR		CurNoDrag;				// zákaz tažení
-extern	HCURSOR		CurPaint;				// štìtec
+extern	HCURSOR		CurPaint;				// štětec
 extern	HCURSOR		CurPen;					// pero
 extern	HCURSOR		CurRect;				// obdélník
 extern	HCURSOR		CurRound;				// kružnice
 extern	HCURSOR		CurRuka;				// ruka
-extern	HCURSOR		CurSelect;				// výbìr bloku
-extern	HCURSOR		CurSelectMove;			// pøesun výbìru
-extern	HCURSOR		CurSplitH;				// rozdìlení horizontálnì
-extern	HCURSOR		CurSplitV;				// rozdìlení vertikálnì
+extern	HCURSOR		CurSelect;				// výběr bloku
+extern	HCURSOR		CurSelectMove;			// přesun výběru
+extern	HCURSOR		CurSplitH;				// rozdělení horizontálně
+extern	HCURSOR		CurSplitV;				// rozdělení vertikálně
 extern	HCURSOR		CurSpray;				// sprej
-extern	HCURSOR		CurWait;				// èekání
+extern	HCURSOR		CurWait;				// čekání
 
 // stav myši (aktualizováno v PreTranslateMessage)
-extern	BOOL		LMouseDown;				// levé tlaèítko stisknuto
-extern	BOOL		LMouseDClick;			// dvojklik levého tlaèítka
-extern	BOOL		RMouseDown;				// pravé tlaèítko stisknuto
-extern	BOOL		RMouseDClick;			// dvojklik pravého tlaèítka
+extern	BOOL		LMouseDown;				// levé tlačítko stisknuto
+extern	BOOL		LMouseDClick;			// dvojklik levého tlačítka
+extern	BOOL		RMouseDown;				// pravé tlačítko stisknuto
+extern	BOOL		RMouseDClick;			// dvojklik pravého tlačítka
 extern	HWND		MouseWnd;				// okno pod kurzorem myši
-extern	POINT		MouseClient;			// souøadnice myši v oknì pod kurzorem
-extern	POINT		MouseScreen;			// souøadnice myši na displeji
-extern	POINT		MouseMain;				// souøadnice myši v hlavním oknì
+extern	POINT		MouseClient;			// souřadnice myši v okně pod kurzorem
+extern	POINT		MouseScreen;			// souřadnice myši na displeji
+extern	POINT		MouseMain;				// souřadnice myši v hlavním okně
 
 extern	HWND		StatusBar;				// stavová lišta
 extern	CText		StatusText;				// zobrazený text stavové lišty
 extern	CText		StatusText2;			// zobrazený text stavové lišty 2
-extern	int			StatusWidth;			// šíøka panelu 2 stavové lišty
+extern	int			StatusWidth;			// šířka panelu 2 stavové lišty
 extern	BOOL		StatusBig;				// možnost použít velké fonty stavové lišty
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,35 +74,35 @@ extern	BOOL		StatusBig;				// možnost použít velké fonty stavové lišty
 typedef struct MENUITEM_ 
 {
 	int		id0;							// identifikace jména položky (0=separátor nebo konec)
-	int		id;								// identifikace pøíkazu a nápovìdy položky (0=následuje podmenu nebo konec)
-	int		bitmap;							// èíslo ikony s obrázkem (-1 = není)
-	int		typ;							// typ položky - kombinace pøíznakù (0=nic)
+	int		id;								// identifikace příkazu a nápovědy položky (0=následuje podmenu nebo konec)
+	int		bitmap;							// číslo ikony s obrázkem (-1 = není)
+	int		typ;							// typ položky - kombinace příznaků (0=nic)
 } MENUITEM;
 
-#define MSWC	1							// je spínaè
-#define MRAD	2							// je pøepínaè
+#define MSWC	1							// je spínač
+#define MRAD	2							// je přepínač
 
-// informace o položce spuštìného menu
+// informace o položce spuštěného menu
 typedef struct MENUAKTITEM_
 {
 	int		id0;							// identifikace jména položky (0=separátor nebo konec)
-	int		id;								// identifikace pøíkazu a nápovìdy položky (0=následuje podmenu nebo konec)
-	int		bitmap;							// èíslo ikony s obrázkem (-1 = není)
-	int		typ;							// typ položky - kombinace pøíznakù (0=nic)
+	int		id;								// identifikace příkazu a nápovědy položky (0=následuje podmenu nebo konec)
+	int		bitmap;							// číslo ikony s obrázkem (-1 = není)
+	int		typ;							// typ položky - kombinace příznaků (0=nic)
 	HMENU	menu;							// menu s položkou
 	BOOL	main;							// je to položka hlavního menu
 	int		inx;							// index položky v menu
-	int		width;							// šíøka položky (s pøihlédnutím k ostatním položkám)
+	int		width;							// šířka položky (s přihlédnutím k ostatním položkám)
 	int		height;							// výška položky
 	CText	text;							// text položky v menu (bez zkratkové klávesy)
 	CText	textshort;						// text zkratkové klávesy
 	int		key;							// horká klávesa - velké písmeno (0=není)
-	CText	help;							// dlouhá nápovìda
-	CText	help2;							// krátká nápovìda (max. 79 znakù)
+	CText	help;							// dlouhá nápověda
+	CText	help2;							// krátká nápověda (max. 79 znaků)
 } MENUAKTITEM;
 
 
-extern MENUITEM** MenuAkt;					// aktuální menu (kvùli cachování, NULL = aktualizovat vždy)
+extern MENUITEM** MenuAkt;					// aktuální menu (kvůli cachování, NULL = aktualizovat vždy)
 
 extern MENUITEM MenuSoubor1[];				// soubor 1
 extern MENUITEM MenuSoubor2[];				// soubor 2
@@ -112,12 +112,12 @@ extern MENUITEM MenuProgram[];				// program
 extern MENUITEM MenuObrazek[];				// obrázek
 extern MENUITEM MenuIkona[];				// ikona
 extern MENUITEM MenuNastroje[];				// nástroje
-extern MENUITEM MenuTloustka[];				// tlouška pera
+extern MENUITEM MenuTloustka[];				// tloušťka pera
 extern MENUITEM MenuPlocha[];				// plocha
 extern MENUITEM MenuSprajt[];				// sprajt
 extern MENUITEM MenuSound[];				// zvuk
 extern MENUITEM MenuMusic[];				// hudba
-extern MENUITEM MenuHlp[];					// nápovìda
+extern MENUITEM MenuHlp[];					// nápověda
 
 /////////////////////////////////////////////////////////////////////////////
 // nastavení nového menu
@@ -126,19 +126,19 @@ void SetNewMenu(MENUITEM** item);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøíprava jména hlavního okna
+// příprava jména hlavního okna
 
 void MainFrameNameInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení hlavního okna aplikace
+// vytvoření hlavního okna aplikace
 
 BOOL MainFrameCreate();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení fontu stavového øádku
+// nastavení fontu stavového řádku
 
 void SetStatusFont();
 
@@ -150,17 +150,17 @@ void ZobrazJmeno();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// povolení volby v menu a v panelu nástrojù
+// povolení volby v menu a v panelu nástrojů
 
 void EnableCommand(int id, BOOL enable);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutí volby v menu a v panelu nástrojù
+// zapnutí volby v menu a v panelu nástrojů
 
 void CheckCommand(int id, BOOL check);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení/aktualizace šíøky pole 2 stavové lišty
+// nastavení/aktualizace šířky pole 2 stavové lišty
 
 void SetStatusWidth(int width);
 
@@ -178,74 +178,74 @@ void SetStatusText2(const CText& text);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení všech tlaèítek panelu nástrojù (až po zadané minimální množství)
+// zrušení všech tlačítek panelu nástrojů (až po zadané minimální množství)
 
 void ToolBarClear(int min);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání tlaèítek do panelu nástrojù
+// přidání tlačítek do panelu nástrojů
 
 void ToolBarAdd(TBBUTTON* button, int num);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení obrázku tlaèítka v panelu nástrojù
+// nastavení obrázku tlačítka v panelu nástrojů
 
 void ToolBarBitmap(int id, int bitmap);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace zobrazení panelu nástrojù
+// aktualizace zobrazení panelu nástrojů
 
 void ToolBarResize();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace klientských souøadnic
+// aktualizace klientských souřadnic
 
 void InitClientRect();
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha informaèního okna About
+// obsluha informačního okna About
 
 BOOL CALLBACK AboutBoxProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 void OnAboutBox();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení kombinovaného pole v panelu nástrojù
+// vytvoření kombinovaného pole v panelu nástrojů
 
 HWND CreateToolCombo(int id, int* items, int index);
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr prvku v COMBO boxu
+// výběr prvku v COMBO boxu
 
 void SelectCombo(HWND combo, int id, int* items);
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení kurzoru èekání (zahájení a ukonèení musí být do páru!)
+// zobrazení kurzoru čekání (zahájení a ukončení musí být do páru!)
 
 void BeginWaitCursor();
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutí kurzoru èekání (zahájení a ukonèení musí být do páru!)
+// vypnutí kurzoru čekání (zahájení a ukončení musí být do páru!)
 
 void EndWaitCursor();
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zprávy pøed rozesláním do oken
+// obsluha zprávy před rozesláním do oken
 
 BOOL PreTranslateMessage(MSG* msg);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// èasové pøekreslení okna (zadaného bufferu, -1=vše)
+// časové překreslení okna (zadaného bufferu, -1=vše)
 
 void TimeRepaint(int bufID);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pøedešlého okna
+// aktualizace předešlého okna
 
 void AktPrevWindow();
 
@@ -269,49 +269,49 @@ void DialogCustom(HWND hWnd, DWORD id, BOOL load, BOOL font);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vlastní vykreslení prvkù v dialogových oknech (vrací TRUE=obslouženo)
+// vlastní vykreslení prvků v dialogových oknech (vrací TRUE=obslouženo)
 
 BOOL DialogDraw(HWND hWnd, LPARAM lParam);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení vlastního pøepínaèe RADIO
+// nastavení vlastního přepínače RADIO
 
 void DialogCustomRadio(HWND hWnd, DWORD id);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení vlastního pøepínaèe CHECK
+// nastavení vlastního přepínače CHECK
 
 void DialogCustomCheck(HWND hWnd, DWORD id);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení vlastního rámeèku
+// nastavení vlastního rámečku
 
 void DialogCustomBox(HWND hWnd, DWORD id);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení hodnoty pøepínaèe
+// nastavení hodnoty přepínače
 
 void DialogSetCheck(HWND hWnd, DWORD id, BOOL check);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení smìru textu zprava doleva   JAKJAK
+// nastavení směru textu zprava doleva   JAKJAK
 
 void SetRightToLeft(BOOL righttoleft);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// indexy obrázkù tlaèítek pro ToolBar
+// indexy obrázků tlačítek pro ToolBar
 
 enum ToolButton {
 	ButtonStart,			// start
 	ButtonNew,				// nový soubor
-	ButtonOpen,				// otevøení souboru
-	ButtonClose,			// uzavøení souboru
+	ButtonOpen,				// otevření souboru
+	ButtonClose,			// uzavření souboru
 	ButtonSave,				// uložení souboru
 	ButtonSaveModi,			// uložení modifikovaného souboru
 	ButtonUndo,				// undo
@@ -327,98 +327,98 @@ enum ToolButton {
 	ButtonIn,				// zoom in
 	ButtonOut,				// zoom out
 	ButtonPen,				// pero
-	ButtonPaint,			// štìtec
-	ButtonLine,				// èára
+	ButtonPaint,			// štětec
+	ButtonLine,				// čára
 	ButtonBox,				// obdélník
-	ButtonFillBox,			// vyplnìní obdélník
+	ButtonFillBox,			// vyplnění obdélník
 	ButtonCircle,			// kružnice
 	ButtonFillCircle,		// kruh
 	ButtonEllipse,			// elipsa
 	ButtonFillEllipse,		// ovál
-	ButtonWidth1,			// šíøka 1
-	ButtonWidth2,			// šíøka 2
-	ButtonWidth3,			// šíøka 3
-	ButtonWidth4,			// šíøka 4
-	ButtonWidth5,			// šíøka 5
+	ButtonWidth1,			// šířka 1
+	ButtonWidth2,			// šířka 2
+	ButtonWidth3,			// šířka 3
+	ButtonWidth4,			// šířka 4
+	ButtonWidth5,			// šířka 5
 	ButtonPipe,				// kapátko
-	ButtonFill,				// výplò
+	ButtonFill,				// výplň
 	ButtonSpray,			// sprej
 	ButtonText,				// text
-	ButtonSelect,			// výbìr
-	ButtonYFlip,			// pøevrácení podle vertikální osy
-	ButtonXFlip,			// pøevrácení podle horizontální osy
-	ButtonRRot,				// otoèení doprava
-	ButtonLRot,				// otoèení doleva
-	ButtonXCol,				// zámìna barev
+	ButtonSelect,			// výběr
+	ButtonYFlip,			// převrácení podle vertikální osy
+	ButtonXFlip,			// převrácení podle horizontální osy
+	ButtonRRot,				// otočení doprava
+	ButtonLRot,				// otočení doleva
+	ButtonXCol,				// záměna barev
 	ButtonSCol,				// nastavení barvy
-	ButtonMul2,				// zvìtšení 2x
+	ButtonMul2,				// zvětšení 2x
 	ButtonDiv2,				// zmenšení 2x
-	ButtonLRot45,			// otoèení o 45 stupòù
-	ButtonLRot30,			// otoèení o 30 stupòù
-	ButtonLRot22,			// otoèení o 22.5 stupòù
+	ButtonLRot45,			// otočení o 45 stupňů
+	ButtonLRot30,			// otočení o 30 stupňů
+	ButtonLRot22,			// otočení o 22.5 stupňů
 	ButtonArrow,			// mód šipky
-	ButtonMap,				// mód obrázkù mapy
-	ButtonSwc1,				// pøepínaè 1
-	ButtonSwc2,				// pøepínaè 2
-	ButtonSwc3,				// pøepínaè 3
-	ButtonSwc4,				// pøepínaè 4
-	ButtonSwc5,				// pøepínaè 5
-	ButtonSwcN1,			// èíselný pøepínaè 1
-	ButtonSwcN2,			// èíselný pøepínaè 2
-	ButtonSwcN3,			// èíselný pøepínaè 3
-	ButtonPlay,				// pøehrávání
-	ButtonPause,			// pozastavení pøehrávání
-	ButtonStop,				// zastavení pøehrávání
-	ButtonRew,				// rychlé pøevíjení zpìt
-	ButtonFrw,				// rychlé pøevíjení vpøed
-	ButtonLoop,				// opakované pøehrávání
+	ButtonMap,				// mód obrázků mapy
+	ButtonSwc1,				// přepínač 1
+	ButtonSwc2,				// přepínač 2
+	ButtonSwc3,				// přepínač 3
+	ButtonSwc4,				// přepínač 4
+	ButtonSwc5,				// přepínač 5
+	ButtonSwcN1,			// číselný přepínač 1
+	ButtonSwcN2,			// číselný přepínač 2
+	ButtonSwcN3,			// číselný přepínač 3
+	ButtonPlay,				// přehrávání
+	ButtonPause,			// pozastavení přehrávání
+	ButtonStop,				// zastavení přehrávání
+	ButtonRew,				// rychlé převíjení zpět
+	ButtonFrw,				// rychlé převíjení vpřed
+	ButtonLoop,				// opakované přehrávání
 	ButtonRecord,			// nahrávání
 	ButtonTest,				// test sprajtu
-	ButtonHistPrev,			// návrat v historii zpìt
-	ButtonHistNext,			// návrat v historii vpøed
+	ButtonHistPrev,			// návrat v historii zpět
+	ButtonHistNext,			// návrat v historii vpřed
 	ButtonFind,				// hledání
-	ButtonFindPrev,			// hledání zpìt
-	ButtonFindNext,			// hledání vpøed
+	ButtonFindPrev,			// hledání zpět
+	ButtonFindNext,			// hledání vpřed
 	ButtonRefDef,			// nalezení deklarace
-	ButtonRefPrev,			// pøedchozí reference
+	ButtonRefPrev,			// předchozí reference
 	ButtonRefNext,			// následující reference
 	ButtonLock,				// zámek
 	ButtonOff,				// vypnutí funkce
 	ButtonDefName,			// implicitní jméno
 	ButtonDefIcon,			// implicitní ikona
 	ButtonSphere,			// koule
-	ButtonDimen,			// rozmìry
+	ButtonDimen,			// rozměry
 	ButtonSpritePar,		// parametry sprajtu
 	ButtonEditName,			// editace jména
 	ButtonEditIcon,			// editace ikony
-	ButtonLRot67,			// otoèení o 67.5 stupòù
-	ButtonLRot60,			// otoèení o 60 stupòù
-	ButtonRRot67,			// otoèení o 67.5 stupòù vpravo
-	ButtonRRot60,			// otoèení o 60 stupòù vpravo
-	ButtonRRot45,			// otoèení o 45 stupòù vpravo
-	ButtonRRot30,			// otoèení o 30 stupòù vpravo
-	ButtonRRot22,			// otoèení o 22.5 stupòù vpravo
+	ButtonLRot67,			// otočení o 67.5 stupňů
+	ButtonLRot60,			// otočení o 60 stupňů
+	ButtonRRot67,			// otočení o 67.5 stupňů vpravo
+	ButtonRRot60,			// otočení o 60 stupňů vpravo
+	ButtonRRot45,			// otočení o 45 stupňů vpravo
+	ButtonRRot30,			// otočení o 30 stupňů vpravo
+	ButtonRRot22,			// otočení o 22.5 stupňů vpravo
 	ButtonEditBlok,			// úpravy obrázku
 	ButtonRastr,			// rastr
 	ButtonOtisk,			// otisk bloku
-	ButtonFillMap,			// výplò plochy políèkem
-	ButtonEditMap,			// editace políèek plochy
-	ButtonDirNew,			// nová složka programù
-	ButtonMulDiv,			// volitelné zvìtšení
-	ButtonCheck,			// zapnut pøepínaè menu
-	ButtonCheckOff,			// vypnut pøepínaè menu
-	ButtonRadioOn,			// pøepínaè zapnut
-	ButtonRadioOff,			// pøepínaè vypnut
+	ButtonFillMap,			// výplň plochy políčkem
+	ButtonEditMap,			// editace políček plochy
+	ButtonDirNew,			// nová složka programů
+	ButtonMulDiv,			// volitelné zvětšení
+	ButtonCheck,			// zapnut přepínač menu
+	ButtonCheckOff,			// vypnut přepínač menu
+	ButtonRadioOn,			// přepínač zapnut
+	ButtonRadioOff,			// přepínač vypnut
 	ButtonBul,				// bulharská vlajka
-	ButtonCz,				// èeská vlajka
+	ButtonCz,				// česká vlajka
 	ButtonDan,				// dánská vlajka
-	ButtonGer,				// nìmecká vlajka
-	ButtonRec,				// øecká vlajka
+	ButtonGer,				// německá vlajka
+	ButtonRec,				// řecká vlajka
 	ButtonEng,				// anglická vlajka
-	ButtonSpa,				// španìlská vlajka
+	ButtonSpa,				// španělská vlajka
 	ButtonFin,				// finská vlajka
 	ButtonFra,				// francouzská vlajka
-	ButtonMad,				// maïarská vlajka
+	ButtonMad,				// maďarská vlajka
 	ButtonIsl,				// islandská vlajka
 	ButtonIta,				// italská vlajka
 	ButtonHol,				// holandská vlajka
@@ -436,5 +436,5 @@ enum ToolButton {
 	ButtonAra,				// arabská vlajka - asi egyptská, JAKJAK
 	ButtonHeb,				// hebrejská vlajka - asi izraelská
 
-	ToolButtonNum,			// poèet tlaèítek celkem
+	ToolButtonNum,			// počet tlačítek celkem
 };

@@ -1,68 +1,68 @@
 
 /***************************************************************************\
 *																			*
-*							Editor ikon a obrázkù							*
+*							Editor ikon a obrázků							*
 *																			*
 \***************************************************************************/
 
 namespace EditIcon
 {
-extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
+extern	BOOL	NewDimPoint;			// rozměry zadány v bodech
 
 // ----------- obsluha volby editace -------
 
-// inicializace editoru ikon pøi startu
+// inicializace editoru ikon při startu
 	void StartInit();
 
 // zahájení editace
 	void BegEdit(int bufID, int index);
 
-// nastavení rozmìrù obrázku
+// nastavení rozměrů obrázku
 	void OnDimen();
 
 
 // ----------- obsluha zobrazení ------------
 
-// pøepoèet rozmìrù editoru ikon a obrázkù
+// přepočet rozměrů editoru ikon a obrázků
 	void ReCalc();
 
 // zobrazení celého okna editoru
 	void Disp();
 
-// aktualizaèní pøekreslení obrázku (s pøepoètem rozmìrù)
+// aktualizační překreslení obrázku (s přepočtem rozměrů)
 	void ReDisp();
 
-// pøekreslení okrajù kolem obrázku
+// překreslení okrajů kolem obrázku
 	void DispRam(HDC dc);
 
-// aktualizaèní pøekreslení obrázku
+// aktualizační překreslení obrázku
 	void DispAkt(HDC dc);
 
-// vykreslení políèka výbìru barvy
+// vykreslení políčka výběru barvy
 	void DispCol(int col);
 	void DispCol(HDC dc, int col);
 
-// zvìtšení mìøítka
+// zvětšení měřítka
 	void ZoomIn();
 
-// zmenšení mìøítka
+// zmenšení měřítka
 	void ZoomOut();
 
-// aktualizace tlaèítek pro zvìtšení/zmenšení mìøítka
+// aktualizace tlačítek pro zvětšení/zmenšení měřítka
 	void UpdateZoomInOut();
 
-// pøekreslení ikon ve stromech
+// překreslení ikon ve stromech
 	void UpdateTree();
 
 // zapnutí/vypnutí rastru
 	void OnRastr();
 
-// ---------------- obsluha posuvníkù ---------
+// ---------------- obsluha posuvníků ---------
 
-// pøesun posuvníkù pøi zmìnì rozmìrù okna
+// přesun posuvníků při změně rozměrů okna
 	HDWP MoveScroll(HDWP hdwp);
 
-// aktualizace zobrazení posuvníkù
+// aktualizace zobrazení posuvníků
 	void SetScroll();
 
 // horizontální posuvník
@@ -79,7 +79,7 @@ extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
 // návrat obrázku z pomocného bufferu
 	void Pop();
 
-// naètení bodu z bufferu
+// načtení bodu z bufferu
 	inline BYTE _fastcall GetPush(int x, int y);
 
 // nastavení bodu v bufferu
@@ -88,19 +88,19 @@ extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
 // nastavení indikátoru barvy
 	void SetColInd(BYTE col);
 
-// naètení bodu obrázku
+// načtení bodu obrázku
 	inline BYTE _fastcall GetPoint(int x, int y);
 
 // obsluha zobrazení kurzoru myši (TRUE=obslouženo)
 	BOOL OnSetCursor(int x, int y);
 
-// stisk tlaèítka myši (TRUE = obslouženo)
+// stisk tlačítka myši (TRUE = obslouženo)
 	BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick);
 
 // posun myši
 	void OnMouseMove(UINT flags, int x, int y);
 
-// uvolnìní tlaèítka myši
+// uvolnění tlačítka myši
 	void OnButtonUp(UINT keys, BOOL right);
 
 // vstup znaku z klávesnice (TRUE=obslouženo)
@@ -109,13 +109,13 @@ extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
 // vstup klávesy z klávesnice (TRUE=obslouženo)
 	BOOL OnKeyDown(int key);
 
-// nastavení editaèního módu
+// nastavení editačního módu
 	void SetMode(int mode);
 
-// provedení editace bloku (-1 = zatím neurèeno)
+// provedení editace bloku (-1 = zatím neurčeno)
 	void EditBlok(int mode);
 
-// aktualizace voleb výbìru módu
+// aktualizace voleb výběru módu
 	void UpdateMenu();
 
 // -------------- obsluha kreslení ---------
@@ -123,13 +123,13 @@ extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
 // vykreslení bodu
 	void _fastcall SetPoint(int x, int y, BYTE col);
 
-// vykreslení bodu štìtce
+// vykreslení bodu štětce
 	void SetPaint(int x, int y, BYTE col);
 
 // nastavení bodu spreje
 	void SetSpray(int x, int y, BYTE col);
 
-// nastavení èáry štìtcem
+// nastavení čáry štětcem
 	void SetLinePaint(int x1, int y1, int x2, int y2, BYTE col);
 
 // vykreslení obdélníku
@@ -153,7 +153,7 @@ extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
 // kreslení koule
 	void SetKoule(int x1, int y1, int x2, int y2, BYTE col0);
 
-// výplò (col = nová barva, fil = podklad)
+// výplň (col = nová barva, fil = podklad)
 	void SetFill(int x, int y, BYTE col, BYTE fil);
 
 // zobrazení textu
@@ -161,19 +161,19 @@ extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
 
 // -------------- obsluha bloku -----------
 
-// naètení bodu z bloku
+// načtení bodu z bloku
 	inline BYTE _fastcall GetBlok(int x, int y);
 
 // nastavení bodu v bloku
 	inline void _fastcall SetBlok(int x, int y, BYTE col);
 
-// zapnutí/vypnutí výbìru bloku
+// zapnutí/vypnutí výběru bloku
 	void DispSelect();
 
-// zobrazení bloku pøi pøesunu
+// zobrazení bloku při přesunu
 	void MoveSelect();
 
-// test bodu, zda je uvnitø vybraného bloku
+// test bodu, zda je uvnitř vybraného bloku
 	BOOL TestBlok(int x, int y);
 
 // zrušení bloku
@@ -182,13 +182,13 @@ extern	BOOL	NewDimPoint;			// rozmìry zadány v bodech
 // kopie bloku (TRUE=operace OK)
 	BOOL Copy();
 
-// vystøížení bloku
+// vystřížení bloku
 	void Cut();
 
 // vložení bloku
 	void Paste();
 
-// výbìr všeho
+// výběr všeho
 	void SelectAll();
 
 // aktualizace voleb bloku

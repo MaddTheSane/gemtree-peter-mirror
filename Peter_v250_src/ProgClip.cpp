@@ -20,8 +20,8 @@ const CLIPHEAD ClipHeadP = {
 	1,												// verze
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,												// parametry
-	SIZEOFCLIPHEAD,									// offset zaèátku dat
-	1,												// poèet datových blokù
+	SIZEOFCLIPHEAD,									// offset začátku dat
+	1,												// počet datových bloků
 	0,0,'C','L','I','P','B','R','D','P',0,0,0,0,
 };
 
@@ -31,8 +31,8 @@ const CLIPHEAD ClipHeadG = {
 	1,												// verze
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,												// parametry
-	SIZEOFCLIPHEAD,									// offset zaèátku dat
-	1,												// poèet datových blokù
+	SIZEOFCLIPHEAD,									// offset začátku dat
+	1,												// počet datových bloků
 	0,0,'C','L','I','P','B','R','D','G',0,0,0,0,
 };
 
@@ -42,28 +42,28 @@ const CLIPHEAD ClipHeadL = {
 	1,												// verze
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,												// parametry
-	SIZEOFCLIPHEAD,									// offset zaèátku dat
-	1,												// poèet datových blokù
+	SIZEOFCLIPHEAD,									// offset začátku dat
+	1,												// počet datových bloků
 	0,0,'C','L','I','P','B','R','D','L',0,0,0,0,
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-BOOL		Lock = FALSE;				// pøíznak probíhající obsluhy
+BOOL		Lock = FALSE;				// příznak probíhající obsluhy
 
 // buffer pro uložení
 BYTE*		m_Buf = NULL;				// datový buffer
-int			m_Num = 0;					// poèet bajtù v bufferu, pøi ètení ètecí offset
-int			m_Max = 0;					// velikost bufferu, pøi ètení velikost dat
+int			m_Num = 0;					// počet bajtů v bufferu, při čtení čtecí offset
+int			m_Max = 0;					// velikost bufferu, při čtení velikost dat
 
-CMultiText	m_Text;						// buffer k naètení/uložení textu
-CIcon		m_Icon;						// buffer k naètení/uložení ikony
-CPicture	m_Pic;						// buffer k naètení/uložení obrázku
-CMap		m_Map;						// buffer k naètení/uložení plochy
-CSprite		m_Sprite;					// buffer k naètení/uložení sprajtu
-CSound		m_Sound;					// buffer k naètení/uložení zvuku
-CMusic		m_Music;					// buffer k naètení/uložení hudby
+CMultiText	m_Text;						// buffer k načtení/uložení textu
+CIcon		m_Icon;						// buffer k načtení/uložení ikony
+CPicture	m_Pic;						// buffer k načtení/uložení obrázku
+CMap		m_Map;						// buffer k načtení/uložení plochy
+CSprite		m_Sprite;					// buffer k načtení/uložení sprajtu
+CSound		m_Sound;					// buffer k načtení/uložení zvuku
+CMusic		m_Music;					// buffer k načtení/uložení hudby
 
 int			m_LocFirst;					// výchozí položka v lokálním bufferu
 
@@ -83,7 +83,7 @@ void StartInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání dat do výstupního bufferu (vrací FALSE=chyba pamìti)
+// přidání dat do výstupního bufferu (vrací FALSE=chyba paměti)
 
 BOOL Add(const void* src, const int size)
 {
@@ -102,17 +102,17 @@ BOOL Add(const void* src, const int size)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání vícejazyèného textu do výstupního bufferu, vrací délku v bajtech, -1=chyba pamìti
+// přidání vícejazyčného textu do výstupního bufferu, vrací délku v bajtech, -1=chyba paměti
 
 int AddText(int inx)
 {
-// text k uložení (mùže být i neplatný)
+// text k uložení (může být i neplatný)
 	m_Text = Text.Get(inx);
 	CText txt;
 
 	int len = 0;
 
-// cyklus pøes všechny jazyku
+// cyklus přes všechny jazyku
 	for (int lan = 0; lan < JAZYKNUM; lan++)
 	{
 
@@ -122,12 +122,12 @@ int AddText(int inx)
 // délka textu v bajtech
 		long len0 = txt.Length();
 
-// pøidání délky
+// přidání délky
 		BOOL ret = Add(&len0, sizeof(long));
 		if (!ret) return -1;
 		len += sizeof(long);
 
-// pøidání textu
+// přidání textu
 #ifdef _UNICODE
 		char* buf = (char*)MemGet(len0 + 10);
 		if (buf == NULL) return -1;
@@ -147,33 +147,33 @@ int AddText(int inx)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání položky programu (vrací poèet pøenesených prvkù ve vìtvi, -1=chyba pamìti)
+// přidání položky programu (vrací počet přenesených prvků ve větvi, -1=chyba paměti)
 
 int AddProg(int bufID, int index, BOOL isfirst)
 {
-// lokální promìnné
+// lokální proměnné
 	PETPROG dst;				// cílová položka k uložení
 	int dstinx;					// offset cílové položky v bufferu
 	PETPROG* pet;				// adresa cílové položky v bufferu
 	int inx;					// pomocný index zdrojové položky
 	int size;					// pomocná délka dat položky
-	int count = 0;				// èítaè vložených prvkù
+	int count = 0;				// čítač vložených prvků
 	int first = index;			// úschova indexu výchozí položky
 	PROGITEM* src;				// adresa zdrojové položky
 	CBufProg* buf = BufProg + bufID;	// adresa bufferu
 	int i;						// pomocný registr
 
-// cyklus pøes celou vìtev
+// cyklus přes celou větev
 	do 
 	{
 		ASSERT(buf->IsValid(index));
 		if (buf->IsNotValid(index)) break;
-		count++;					// zvýšení èítaèe prvkù
+		count++;					// zvýšení čítače prvků
 
 // adresa zdrojové položky
 		src = &buf->At(index);
 
-// pøíprava parametrù položky
+// příprava parametrů položky
 		dst.Param = 0;
 		if (src->Child >= 0)		dst.Param |= PETPROG_CHILDS;
 		if (src->Next >= 0)			dst.Param |= PETPROG_NEXT;
@@ -183,19 +183,19 @@ int AddProg(int bufID, int index, BOOL isfirst)
 		if (src->Param & PR_NOMOVE)	dst.Param |= PETPROG_NOMOVE;
 		if (src->Param & PR_INTERN)	dst.Param |= PETPROG_INTERN;
 
-// u první položky vìtve zrušení zámku
+// u první položky větve zrušení zámku
 		if ((index == first) && isfirst) dst.Param &= ~PETPROG_LOCK;
 
 // uložení položky programu
 		dstinx = m_Num;								// offset cílové položky
 		if (!Add(&dst, SIZEOFPETPROG)) return -1;	// uložení položky do bufferu
 
-// referenèní text
+// referenční text
 		pet = (PETPROG*)(m_Buf + dstinx);			// adresa cílové položky
-		pet->RefIndex = 0;							// délka jména referenèní položky
-		pet->RefBlok = -1;							// neplatný referenèní blok
+		pet->RefIndex = 0;							// délka jména referenční položky
+		pet->RefBlok = -1;							// neplatný referenční blok
 
-		switch (src->RefBlok)						// podle referenèního bloku
+		switch (src->RefBlok)						// podle referenčního bloku
 		{
 		case BufObjID:
 		case BufLocID:
@@ -203,7 +203,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 			if (i < 0) return -1;
 			pet = (PETPROG*)(m_Buf + dstinx);		// adresa cílové položky
 			pet->RefIndex = i;						// délka textu v bajtech
-			pet->RefBlok = src->RefBlok;			// èíslo referenèního bloku
+			pet->RefBlok = src->RefBlok;			// číslo referenčního bloku
 			break;
 		}
 
@@ -211,7 +211,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 		pet = (PETPROG*)(m_Buf + dstinx);
 		pet->DatBlok = src->DatBlok;
 		inx = src->DatIndex;						// index požadované položky
-		int ninx = m_Num;							// úschova offsetu zaèátku dat
+		int ninx = m_Num;							// úschova offsetu začátku dat
 
 		switch (src->DatBlok)
 		{
@@ -220,16 +220,16 @@ int AddProg(int bufID, int index, BOOL isfirst)
 		case BufEdiID:
 			{
 				ASSERT(BufProg[src->DatBlok].IsValid(inx));
-				long cnt;							// poèet prvkù
-				int cntn = m_Num;					// úschova offsetu èítaèe
-				if (!Add(&cnt, sizeof(long))) return -1;// uložení èítaèe
+				long cnt;							// počet prvků
+				int cntn = m_Num;					// úschova offsetu čítače
+				if (!Add(&cnt, sizeof(long))) return -1;// uložení čítače
 				cnt = AddProg(src->DatBlok, inx, FALSE); // uložení lokální definice
-				if (cnt < 0) return -1;				// chyba pamìti
-				*(long*)(m_Buf + cntn) = cnt;		// poèet prvkù				
+				if (cnt < 0) return -1;				// chyba paměti
+				*(long*)(m_Buf + cntn) = cnt;		// počet prvků				
 			}
 			break;
 
-// èíslo
+// číslo
 		case BufNumID:
 			{
 				double num = Real.Get(inx);
@@ -242,7 +242,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 			if (AddText(inx) < 0) return -1;
 			break;
 
-// logická promìnná
+// logická proměnná
 		case BufLogID:
 			{
 				long log = Bool.Get(inx);
@@ -263,15 +263,15 @@ int AddProg(int bufID, int index, BOOL isfirst)
 				if (!Add(&m_Map.Data()->Width, sizeof(long))) return -1;
 				if (!Add(&m_Map.Data()->Height, sizeof(long))) return -1;
 
-				long reficon = 0;					// èítaè referencí ikon
+				long reficon = 0;					// čítač referencí ikon
 				int nreficon = m_Num;				// offset referencí ikon
-				if (!Add(&reficon, sizeof(long))) return -1; // uložení èítaèe referencí
+				if (!Add(&reficon, sizeof(long))) return -1; // uložení čítače referencí
 
-				size = m_Map.Width() * m_Map.Height();	// poèet položek
+				size = m_Map.Width() * m_Map.Height();	// počet položek
 				CBufIndex bufinx;					// buffer mapování ikon
 				if (!bufinx.NumClear(Icon.Num())) return -1;
 
-				int icon;							// pomocné èíslo ikony
+				int icon;							// pomocné číslo ikony
 				int ref;							// index definice objektu ikony
 				CBufProg* bf;						// adresa bufferu s definicí
 				int i;								// index prvku plochy
@@ -288,7 +288,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 					if (bufinx[icon] < 0)			// je ikona zmapovaná?
 					{
 						bufinx[icon] = reficon;		// náhradní index ikony
-						reficon++;					// zvýšení èítaèe referencí
+						reficon++;					// zvýšení čítače referencí
 
 						bf = &BufObj;
 						ref = bf->SrcDat(BufIcoID, icon);
@@ -303,7 +303,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 						if (AddText(ref) < 0) return -1;	// (pro neplatný text se uloží prázdný text)
 					}
 				}
-				*(long*)(m_Buf + nreficon) = reficon; // nastavení poètu ikon
+				*(long*)(m_Buf + nreficon) = reficon; // nastavení počtu ikon
 
 				for (i = 0; i < size; i++)
 				{
@@ -397,7 +397,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 			pet->Name = i;
 		}
 
-// uložení èísla funkce
+// uložení čísla funkce
 		pet->Func = src->Func - IDF;
 
 // posun na potomka položky
@@ -406,25 +406,25 @@ int AddProg(int bufID, int index, BOOL isfirst)
 			index = src->Child;
 		}
 
-// není-li potomek, pøesun na následující položku
+// není-li potomek, přesun na následující položku
 		if (index < 0)					// je potomek?
 		{
-			index = src->Next;			// pokraèování další položkou
+			index = src->Next;			// pokračování další položkou
 
-// není-li další položka, vynoøení k rodièi
+// není-li další položka, vynoření k rodiči
 			while ((index < 0) && (src->Parent >= 0))
 			{
-				index = src->Parent;	// návrat k rodièi
-				if (index == first) break; // je již opìt výchozí položka
-				src = &buf->At(index);	// adresa rodièe
-				index = src->Next;		// další položka za rodièem
+				index = src->Parent;	// návrat k rodiči
+				if (index == first) break; // je již opět výchozí položka
+				src = &buf->At(index);	// adresa rodiče
+				index = src->Next;		// další položka za rodičem
 			}
 		}
 
 // dokud není dosaženo výchozí položky
 	} while (index != first);
 
-	return count;						// poèet uložených položek
+	return count;						// počet uložených položek
 }
 
 
@@ -436,7 +436,7 @@ BOOL Copy(int bufID)
 // kontrola, zda neprobíhá obsluha
 	if (Lock) return FALSE;
 
-// kontrola povolených bufferù
+// kontrola povolených bufferů
 	if ((bufID != BufObjID) &&
 		(bufID != BufLocID) &&
 		(bufID != BufEdiID))
@@ -444,10 +444,10 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// zapnutí pøíznaku obsluhy
+// zapnutí příznaku obsluhy
 	Lock = TRUE;
 
-// pøíprava výchozí položky k uložení
+// příprava výchozí položky k uložení
 	CBufProg* buf = BufProg + bufID;
 	int first = buf->Select();
 	if (first < 0)
@@ -464,10 +464,10 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// zapnutí èekacího kurzoru
+// zapnutí čekacího kurzoru
 	BeginWaitCursor();
 
-// otevøení schránky
+// otevření schránky
 	if (!::OpenClipboard(MainFrame))
 	{
 		EndWaitCursor();
@@ -475,7 +475,7 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// vyprázdnìní schránky
+// vyprázdnění schránky
 	if (!::EmptyClipboard())
 	{
 		EndWaitCursor();
@@ -485,13 +485,13 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// pøíprava bufferu
+// příprava bufferu
 	MemFree(m_Buf);
 	m_Buf = NULL;
 	m_Num = 0;
 	m_Max = 0;
 
-// vytvoøení záhlaví bufferu
+// vytvoření záhlaví bufferu
 	BOOL res;
 	switch (bufID)
 	{
@@ -518,7 +518,7 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// uložení vìtve programu
+// uložení větve programu
 	int count = AddProg(bufID, first, TRUE);
 	if (count < 0)
 	{
@@ -534,7 +534,7 @@ BOOL Copy(int bufID)
 	((CLIPHEAD*)m_Buf)->Clip.Pocet = count;
 	((CLIPHEAD*)m_Buf)->Clip.Delka = m_Num - SIZEOFCLIPHEAD;
 
-// vytvoøení globálního bufferu pro data
+// vytvoření globálního bufferu pro data
 	HGLOBAL global = ::GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, m_Num);
 	if (global == NULL)
 	{
@@ -585,17 +585,17 @@ BOOL Copy(int bufID)
 
 	if (handle == NULL) ::GlobalFree(global);
 
-// uzavøení schránky
+// uzavření schránky
 	::CloseClipboard();
 
 // zrušení bufferu
 	MemFree(m_Buf);
 	m_Buf = NULL;
 
-// vypnutí èekacího kurzoru
+// vypnutí čekacího kurzoru
 	EndWaitCursor();
 
-// vypnutí pøíznaku obsluhy
+// vypnutí příznaku obsluhy
 	Lock = FALSE;
 
 // aktualizace voleb bloku
@@ -606,7 +606,7 @@ BOOL Copy(int bufID)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení dat z bufferu
+// načtení dat z bufferu
 
 void Get(void* dst, int size)
 {
@@ -627,7 +627,7 @@ void Get(void* dst, int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textu z bufferu
+// načtení textu z bufferu
 
 void GetText(int size)
 {
@@ -659,7 +659,7 @@ void GetText(int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ikony z bufferu
+// načtení ikony z bufferu
 
 void GetIcon(int size)
 {
@@ -684,7 +684,7 @@ void GetIcon(int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení obrázku z bufferu
+// načtení obrázku z bufferu
 
 void GetPicture(int width, int height)
 {
@@ -710,34 +710,34 @@ void GetPicture(int width, int height)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení programu z bufferu (vrací index položky, -1=chyba pamìti)
+// načtení programu z bufferu (vrací index položky, -1=chyba paměti)
 
 int GetProg(int bufID, int prev, int num)
 {
-// lokální promìnné
+// lokální proměnné
 	CBufProg* buf = BufProg + bufID;	// adresa bufferu
-	PETPROG src;						// ètená položka
+	PETPROG src;						// čtená položka
 	PROGITEM dst;						// ukládaná položka
-	int* parent;						// buffer odkazù na rodièe
-	BOOL* next;							// buffer pøíznakù dalších prvkù
-	int parmax;							// velikost bufferu rodièù
-	int parnum;							// poèet rodièù
-	int blok;							// pomocné èíslo bloku
-	int inx;							// pomocné èíslo indexu
+	int* parent;						// buffer odkazů na rodiče
+	BOOL* next;							// buffer příznaků dalších prvků
+	int parmax;							// velikost bufferu rodičů
+	int parnum;							// počet rodičů
+	int blok;							// pomocné číslo bloku
+	int inx;							// pomocné číslo indexu
 	int result = -1;					// výsledný index
-	CBufProg* bufref;					// referenèní buffer
+	CBufProg* bufref;					// referenční buffer
 	int reffrst;						// první položka k hledání reference
-	int refnext;						// pøíští položka k hledání reference
-	int nn;								// pomocné èíslo jména
+	int refnext;						// příští položka k hledání reference
+	int nn;								// pomocné číslo jména
 	BOOL inpar;							// položka je vstupním parametrem
-	BOOL newpar;						// pøíznak, že byl vytvoøen vstupní parametr
-	BOOL isloc;							// pøíznak založení lokální definice
+	BOOL newpar;						// příznak, že byl vytvořen vstupní parametr
+	BOOL isloc;							// příznak založení lokální definice
 	int inxloc = 0;						// index lokální definice
 
-// vypnutí pøekreslování
+// vypnutí překreslování
 	buf->RedrawOff();
 
-// pøíprava bufferu rodièù
+// příprava bufferu rodičů
 	parmax = 1024;
 	parnum = 0;
 
@@ -760,10 +760,10 @@ int GetProg(int bufID, int prev, int num)
 
 	if (buf->IsValid(prev))
 	{
-		parent[0] = buf->At(prev).Parent;	// rodiè
+		parent[0] = buf->At(prev).Parent;	// rodič
 	}
 
-// naètení položek
+// načtení položek
 	for (; num > 0; num--)
 	{
 // není to vstupní parametr funkce
@@ -771,17 +771,17 @@ int GetProg(int bufID, int prev, int num)
 		newpar = FALSE;
 		isloc = FALSE;
 
-// naètení záhlaví položky
+// načtení záhlaví položky
 		Get(&src, SIZEOFPETPROG);
 
-// èíslo funkce
+// číslo funkce
 		dst.Func = IDF_COMMENT;
 		if ((DWORD)src.Func < (DWORD)FncNum)
 		{
 			dst.Func = src.Func + IDF;
 		}
 
-// v bufferu objektù se implicitní ikona mìní na bìžnou
+// v bufferu objektů se implicitní ikona mění na běžnou
 		if ((bufID != BufEdiID) && (dst.Func == IDF_NONE))
 		{
 			dst.Func = IDF_ICON;
@@ -795,16 +795,16 @@ int GetProg(int bufID, int prev, int num)
 		if (src.Param & PETPROG_NOMOVE)	dst.Param |= PR_NOMOVE;
 		if (src.Param & PETPROG_INTERN)	dst.Param |= PR_INTERN;
 
-// nastavení pøíznaku další položky
+// nastavení příznaku další položky
 		next[parnum] = (src.Param & PETPROG_NEXT);
 
-// naètení jména reference
+// načtení jména reference
 		GetText(src.RefIndex);
 
-// naètení deklarace
-		bufref = &BufObj;		// pøednastavení reference na globální buffer
-		reffrst = -1;			// pøednastavení - hledat od zaèátku
-		refnext = -1;			// pøednastavení - hledat po konec
+// načtení deklarace
+		bufref = &BufObj;		// přednastavení reference na globální buffer
+		reffrst = -1;			// přednastavení - hledat od začátku
+		refnext = -1;			// přednastavení - hledat po konec
 
 		switch (src.RefBlok)
 		{
@@ -812,18 +812,18 @@ int GetProg(int bufID, int prev, int num)
 			bufref = &BufLoc;				// reference na lokální buffer
 			reffrst = m_LocFirst;			// hledaná první lokální položka
 
-	// hledací oblast pro vstupní promìnnou funkce
-			if ((bufID == BufEdiID) &&								// pouze v oknì editoru
-				(parent[parnum] >= 0) &&							// položka má nìjakého rodièe
-				(BufEdi[parent[parnum]].Func == IDF_FNC) &&			// rodièem je funkce
+	// hledací oblast pro vstupní proměnnou funkce
+			if ((bufID == BufEdiID) &&								// pouze v okně editoru
+				(parent[parnum] >= 0) &&							// položka má nějakého rodiče
+				(BufEdi[parent[parnum]].Func == IDF_FNC) &&			// rodičem je funkce
 				(BufEdi[parent[parnum]].RefBlok == BufObjID) &&		// globální funkce - referuje na globální buffer
-				(BufEdi[parent[parnum]].Parent >= 0))				// musí mít rodièe, tj. nesmí to být ROOT položka
+				(BufEdi[parent[parnum]].Parent >= 0))				// musí mít rodiče, tj. nesmí to být ROOT položka
 			{
-				reffrst = BufEdi[parent[parnum]].RefIndex;			// reference do globálních objektù
+				reffrst = BufEdi[parent[parnum]].RefIndex;			// reference do globálních objektů
 				if (BufObj.IsValid(reffrst) && (BufObj[reffrst].DatBlok == BufLocID)) // je to funkce ukazujicí do lokálního bufferu?
 				{
 					reffrst = BufObj[reffrst].DatIndex;				// index odpovídající lokální definice
-					inpar = TRUE;									// pøíznak, že je to vstupní parametr funkce
+					inpar = TRUE;									// příznak, že je to vstupní parametr funkce
 				}
 				else
 				{
@@ -836,10 +836,10 @@ int GetProg(int bufID, int prev, int num)
 				refnext = bufref->At(reffrst).Next;					// poslední hledaná položka
 			}
 
-	// !!!!!! pokraèuje obsluha BufObjID !!!
+	// !!!!!! pokračuje obsluha BufObjID !!!
 
 		case BufObjID:
-			dst.RefBlok = bufref->BufID();							// referenèní blok
+			dst.RefBlok = bufref->BufID();							// referenční blok
 			inx = bufref->FindObj(m_Text, -1, reffrst, refnext);	// nalezení objektu daného jména
 
 	// pokus o nalezení objektu stejného typu
@@ -855,7 +855,7 @@ int GetProg(int bufID, int prev, int num)
 				inx = bufref->FindObj(m_Text, -1, reffrst, refnext);
 			}
 
-	// vstupní promìnná musí referovat také na vstupní promìnnou
+	// vstupní proměnná musí referovat také na vstupní proměnnou
 			if (inpar && 
 				bufref->IsValid(inx) && 
 				(bufref->At(inx).Parent >= 0) && 
@@ -864,12 +864,12 @@ int GetProg(int bufID, int prev, int num)
 				inx = -1;
 			}
 
-	// objekt nenalezen - bude se vytváøet
+	// objekt nenalezen - bude se vytvářet
 			if (bufref->IsNotValid(inx))	// pokud reference nebyla nalezena
 			{
 				if (dst.Func == IDF_NONE) dst.Func = IDF_ICON; // bude kopie ikony
 
-	// cíl pro vstupní promìnnou funkce
+	// cíl pro vstupní proměnnou funkce
 				if (inpar && BufLoc.IsValid(reffrst) && (BufLoc[reffrst].Child >= 0))
 				{
 					reffrst = BufLoc[reffrst].Child;
@@ -881,43 +881,43 @@ int GetProg(int bufID, int prev, int num)
 					if (BufLoc.IsValid(reffrst)) newpar = TRUE;
 				}
 
-	// vytvoøení nového objektu
+	// vytvoření nového objektu
 				inx = bufref->Copy(reffrst, -2,	// kopie objektu
 						ProgFile::ImportBlok[dst.Func - IDF],
 						ProgFile::ImportIndex[dst.Func - IDF]);
 
-				if (bufref->IsValid(inx))	// je teï již reference platná?
+				if (bufref->IsValid(inx))	// je teď již reference platná?
 				{
-	// zrušení potomkù objektu (promìnné sprajtu a seznamu)
+	// zrušení potomků objektu (proměnné sprajtu a seznamu)
 					while (bufref->At(inx).Child >= 0)
 					{
 						if (!bufref->Del(bufref->At(inx).Child)) break;
 					}
 
-	// umožnìní pozdìjší zrušení takto vytvoøeného objektu
-					bufref->At(inx).Param |= PR_NEW;					// pøíznak nové položky
+	// umožnění pozdější zrušení takto vytvořeného objektu
+					bufref->At(inx).Param |= PR_NEW;					// příznak nové položky
 					bufref->At(inx).Param &= ~(PR_NOMOVE | PR_INTERN);	// aby se dal zrušit
 
-	// zajištìní jedineènosti jména nového objektu
-					int overloc = -1;					// pøeskoèení v lokálním bufferu
-					int overobj = inx;					// pøeskoèení v globálním bufferu
+	// zajištění jedinečnosti jména nového objektu
+					int overloc = -1;					// přeskočení v lokálním bufferu
+					int overobj = inx;					// přeskočení v globálním bufferu
 
-					if (newpar)							// je to vstupní promìnná funkce?
+					if (newpar)							// je to vstupní proměnná funkce?
 					{
-						reffrst = BufLoc[reffrst].Parent; // zaèátek lokální definice s promìnnou
+						reffrst = BufLoc[reffrst].Parent; // začátek lokální definice s proměnnou
 						refnext = BufLoc[reffrst].Next;	// poslední hledaná položka
-						overloc = inx;					// pøeskoèení v lokálním bufferu
-						overobj = -1;					// pøeskoèení v globálním bufferu
+						overloc = inx;					// přeskočení v lokálním bufferu
+						overobj = -1;					// přeskočení v globálním bufferu
 					}
 					else
 					{
 						reffrst = -1;						// pro globální buffer prohledávat celý lokální buffer
-						refnext = -1;						// pøíští položka
+						refnext = -1;						// příští položka
 
 						if (src.RefBlok == BufLocID)		// položka je v lokálním bufferu
 						{
-							overloc = inx;					// pøeskoèení v lokálním bufferu
-							overobj = -1;					// pøeskoèení v globálním bufferu
+							overloc = inx;					// přeskočení v lokálním bufferu
+							overobj = -1;					// přeskočení v globálním bufferu
 
 							reffrst = m_LocFirst;			// hledaná první lokální položka
 							if (BufLoc.IsValid(reffrst))	// je lokální položka platná?
@@ -956,51 +956,51 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 
-			dst.RefIndex = inx;				// nalezená referenèní položka
+			dst.RefIndex = inx;				// nalezená referenční položka
 			break;
 
-	// reference není na žádný objekt, referuje se do bufferu tøíd nebo struktur
+	// reference není na žádný objekt, referuje se do bufferu tříd nebo struktur
 		default:
-			inx = dst.Func - IDF;						// èíslo funkce
-			dst.RefBlok = ProgFile::ImportBlok[inx];	// referenèní blok
-			dst.RefIndex = ProgFile::ImportIndex[inx];	// referenèní položka
+			inx = dst.Func - IDF;						// číslo funkce
+			dst.RefBlok = ProgFile::ImportBlok[inx];	// referenční blok
+			dst.RefIndex = ProgFile::ImportIndex[inx];	// referenční položka
 		}
 
-// zdìdìní parametrù z deklarace
-		blok = dst.RefBlok;								// referenèní blok
-		inx = dst.RefIndex;								// referenèní index
+// zdědění parametrů z deklarace
+		blok = dst.RefBlok;								// referenční blok
+		inx = dst.RefIndex;								// referenční index
 
-		if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platné èíslo bloku?
-			BufProg[blok].IsValid(inx))					// je platná referenèní položka?
+		if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platné číslo bloku?
+			BufProg[blok].IsValid(inx))					// je platná referenční položka?
 		{
-			PROGITEM* itm = &BufProg[blok][inx];		// adresa referenèní položky
-			dst.Func = itm->Func;						// èíslo funkce
+			PROGITEM* itm = &BufProg[blok][inx];		// adresa referenční položky
+			dst.Func = itm->Func;						// číslo funkce
 			dst.SrcMask = itm->SrcMask;
 			dst.DstMask = itm->DstMask;
 			dst.Param |= itm->Param & (PR_ONE | PR_INTERN | PR_NOMOVE | PR_SETPAR | PR_PARPAR);
 		}
 		else
 		{
-			dst.RefBlok = ProgFile::ImportBlok[IDF_COMMENT - IDF];	// referenèní blok
-			dst.RefIndex = ProgFile::ImportIndex[IDF_COMMENT - IDF];	// referenèní položka
+			dst.RefBlok = ProgFile::ImportBlok[IDF_COMMENT - IDF];	// referenční blok
+			dst.RefIndex = ProgFile::ImportIndex[IDF_COMMENT - IDF];	// referenční položka
 			dst.Func = IDF_COMMENT;
 			dst.SrcMask = PR_ALL;
 			dst.DstMask = PR_ALL;
 
-			blok = dst.RefBlok;								// referenèní blok
-			inx = dst.RefIndex;								// referenèní index
-			if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platné èíslo bloku?
-				BufProg[blok].IsValid(inx))					// je platná referenèní položka?
+			blok = dst.RefBlok;								// referenční blok
+			inx = dst.RefIndex;								// referenční index
+			if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platné číslo bloku?
+				BufProg[blok].IsValid(inx))					// je platná referenční položka?
 			{
-				PROGITEM* itm = &BufProg[blok][inx];		// adresa referenèní položky
-				dst.Func = itm->Func;						// èíslo funkce
+				PROGITEM* itm = &BufProg[blok][inx];		// adresa referenční položky
+				dst.Func = itm->Func;						// číslo funkce
 				dst.SrcMask = itm->SrcMask;
 				dst.DstMask = itm->DstMask;
 				dst.Param |= itm->Param & (PR_ONE | PR_INTERN | PR_NOMOVE | PR_SETPAR | PR_PARPAR);
 			}
 		}
 
-// korekce parametrù indexu seznamu
+// korekce parametrů indexu seznamu
 		if ((dst.Func == IDF_LIST_INDEX) ||
 			(dst.Func == IDF_LIST_AUTO) ||
 			(dst.Func == IDF_LIST_SIZE) ||
@@ -1016,7 +1016,7 @@ int GetProg(int bufID, int prev, int num)
 			dst.Param |= PR_INTERN;
 		}
 
-// v editoru se ruší interní pøíznak
+// v editoru se ruší interní příznak
 		if (bufID == BufEdiID)
 		{
 			dst.Param &= ~PR_INTERN;
@@ -1034,14 +1034,14 @@ int GetProg(int bufID, int prev, int num)
 			m_LocFirst = inxloc;
 		}
 
-// pøíprava k naètení dat
+// příprava k načtení dat
 		blok = src.DatBlok;					// datový blok
 		inx = src.DatIndex;					// délka dat
 		dst.DatBlok = blok;					// datový blok
 		dst.DatIndex = -1;					// nejsou data
 
-		if (inx < 0) inx = 0;				// ochrana pøi podteèení údaje délky dat
-		int newnum = m_Num + inx;			// nový ukazatel ètení dat
+		if (inx < 0) inx = 0;				// ochrana při podtečení údaje délky dat
+		int newnum = m_Num + inx;			// nový ukazatel čtení dat
 
 		switch(blok)						// podle datového bloku
 		{
@@ -1050,10 +1050,10 @@ int GetProg(int bufID, int prev, int num)
 		case BufEdiID:
 			if (inx > sizeof(long))
 			{
-				long cnt;					// poèet prvkù
-				Get(&cnt, sizeof(long));	// poèet prvkù
+				long cnt;					// počet prvků
+				Get(&cnt, sizeof(long));	// počet prvků
 				int locfirst = m_LocFirst;	// úschova výchozí položky hledání v lokálním bufferu
-				dst.DatIndex = GetProg(blok, BufProg[blok].First(), cnt); // naètení programu
+				dst.DatIndex = GetProg(blok, BufProg[blok].First(), cnt); // načtení programu
 				m_LocFirst = locfirst;		// návrat výchozí položky hledání v lokálním bufferu
 				if (dst.DatIndex < 0)
 				{
@@ -1069,7 +1069,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 			break;
 
-// èíslo
+// číslo
 		case BufNumID:
 			if (inx >= sizeof(double))
 			{
@@ -1103,7 +1103,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 			break;
 			
-// logická promìnná
+// logická proměnná
 		case BufLogID:
 			if (inx >= sizeof(long))
 			{
@@ -1166,12 +1166,12 @@ int GetProg(int bufID, int prev, int num)
 				CBufIndex bufinx;
 				bufinx.NumClear(refs);
 
-			// naètení referencí
+			// načtení referencí
 				for (i = 0; i < refs; i++)
 				{
-					GetText(m_Max - m_Num);			// naètení referenèního textu
+					GetText(m_Max - m_Num);			// načtení referenčního textu
 
-			// nalezení objektu v nìkterém z bufferù
+			// nalezení objektu v některém z bufferů
 					reffrst = -1;
 					refnext = -1;
 					CBufProg* bf = &BufObj;			// bude se hledat v globálním bufferu
@@ -1213,7 +1213,7 @@ int GetProg(int bufID, int prev, int num)
 						}
 					}
 		
-			// objekt nenalezen - bude se vytváøet (v globálním bufferu)
+			// objekt nenalezen - bude se vytvářet (v globálním bufferu)
 					if (bf->IsNotValid(inx))
 					{
 						bf = &BufObj;
@@ -1221,12 +1221,12 @@ int GetProg(int bufID, int prev, int num)
 								ProgFile::ImportBlok[IDF_ICON - IDF],
 								ProgFile::ImportIndex[IDF_ICON - IDF]);
 
-			// zajištìní jedineènosti jména nové ikony
+			// zajištění jedinečnosti jména nové ikony
 						if (bf->IsValid(inx))
 						{
-							bf->At(inx).Param |= PR_NEW;					// pøíznak nové položky
+							bf->At(inx).Param |= PR_NEW;					// příznak nové položky
 		
-							refnext = -1;						// pøíští položka
+							refnext = -1;						// příští položka
 							reffrst = m_LocFirst;			// hledaná první lokální položka
 							if (BufLoc.IsValid(reffrst))	// je lokální položka platná?
 							{
@@ -1260,7 +1260,7 @@ int GetProg(int bufID, int prev, int num)
 					if (bufinx[i] < 0) bufinx[i] = 0;
 				}
 
-			// naètení ikon
+			// načtení ikon
 				MAPDATA* map = Map[dst.DatIndex].Data();
 				int size = width*height;
 
@@ -1291,7 +1291,7 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 
-		// inrekentace èítaèù použití ikon
+		// inrekentace čítačů použití ikon
 			Map[dst.DatIndex].RefInc();
 			break;
 
@@ -1438,10 +1438,10 @@ int GetProg(int bufID, int prev, int num)
 			dst.DatBlok = -1;					// není datový blok
 		}
 
-		m_Num = newnum;						// nový ukazatel ètení dat
-		if (m_Num > m_Max) m_Num = m_Max;	// oprava pøi pøeteèení konce
+		m_Num = newnum;						// nový ukazatel čtení dat
+		if (m_Num > m_Max) m_Num = m_Max;	// oprava při přetečení konce
 
-// naètení ikony
+// načtení ikony
 		dst.Icon = -1;
 		if (src.Icon >= 0)
 		{
@@ -1459,7 +1459,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 		}
 
-// naètení jména
+// načtení jména
 		dst.Name = -1;
 		if (src.Name >= 0)
 		{
@@ -1467,8 +1467,8 @@ int GetProg(int bufID, int prev, int num)
 			dst.Name = Text.Add(m_Text);
 		}
 
-// v objektech kontrola, zda jméno již existuje (zda byl již døíve vytvoøen pomocný objekt)
-		inx = -1;									// pøednastavení - prvek neexistuje
+// v objektech kontrola, zda jméno již existuje (zda byl již dříve vytvořen pomocný objekt)
+		inx = -1;									// přednastavení - prvek neexistuje
 
 		if (((bufID == BufLocID) || (bufID == BufObjID)) && buf->TestObj(dst.Func))
 		{
@@ -1494,7 +1494,7 @@ int GetProg(int bufID, int prev, int num)
 
 			inx = buf->FindObj(m_Text, -1, reffrst, refnext);
 
-	// prvek vyhovuje, mùže se pøesunout sem (byl nalezen døíve vytvoøený pomocný prvek)
+	// prvek vyhovuje, může se přesunout sem (byl nalezen dříve vytvořený pomocný prvek)
 			if (inx >= 0)
 			{
 				if ((buf->At(inx).Func == dst.Func) &&
@@ -1576,7 +1576,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 		}
 
-// zajištìní jedineènosti jména objektu
+// zajištění jedinečnosti jména objektu
 		if (inx < 0)
 		{
 			if (((bufID == BufObjID) || (bufID == BufLocID)) && buf->TestObj(dst.Func))
@@ -1618,7 +1618,7 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 
-// vložení prvku do bufferu (pokud nebyl pøesunut)
+// vložení prvku do bufferu (pokud nebyl přesunut)
 			if (newpar && (BufEdi[parent[parnum]].Child >= 0))
 			{
 				inx = BufEdi[parent[parnum]].Child;
@@ -1637,10 +1637,10 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 		}
-		prev = -2;						// odteï již ukládat na konec
-		if (result < 0) result = inx;	// pøi prvním použití to bude výchozí prvek
+		prev = -2;						// odteď již ukládat na konec
+		if (result < 0) result = inx;	// při prvním použití to bude výchozí prvek
 
-// pokud budou potomci, zvýšení èítaèe rodièù
+// pokud budou potomci, zvýšení čítače rodičů
 		if (src.Param & PETPROG_CHILDS)
 		{
 			parnum++;
@@ -1661,7 +1661,7 @@ int GetProg(int bufID, int prev, int num)
 			next[parnum] = TRUE;
 		}
 
-// snížení èítaèe rodièù
+// snížení čítače rodičů
 		else
 		{
 			while (!next[parnum] && (parnum > 0))
@@ -1670,15 +1670,15 @@ int GetProg(int bufID, int prev, int num)
 			}
 		}
 
-// pøi nedostatku dat po prvním prùchodu konec
+// při nedostatku dat po prvním průchodu konec
 		if (m_Num >= m_Max) break;
 	}
 
-// zrušení bufferù
+// zrušení bufferů
 	MemFree(parent);
 	MemFree(next);
 
-// zapnutí pøekreslování
+// zapnutí překreslování
 	buf->RedrawOn();
 
 	return result;
@@ -1686,7 +1686,7 @@ int GetProg(int bufID, int prev, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test položení z clipbardu (buffer i poloŸka jsou platné)
+// test položení z clipbardu (buffer i poloźka jsou platné)
 
 BOOL TestPaste(int bufID, int inx)
 {
@@ -1696,29 +1696,29 @@ BOOL TestPaste(int bufID, int inx)
 	PROGITEM* item = &buf->At(inx);
 	int fnc = item->Func;
 
-// test pro neplatný rodiè - globální bufferu nebo definice funkce (nejsou povoleny èíslice)
+// test pro neplatný rodič - globální bufferu nebo definice funkce (nejsou povoleny číslice)
 	if (item->Parent < 0)
 	{
 		return ((fnc != IDF_LIST_SIZE) && ((fnc < IDF_0) || (fnc > IDF_9)));
 	}
 
-// rodiè položky
+// rodič položky
 	PROGITEM* parent = &buf->At(item->Parent);
 	int fncpar = parent->Func;
 
-// kontrola bufferu objektù
+// kontrola bufferu objektů
 	switch (bufID)
 	{
 	case BufObjID:
 	case BufLocID:
 
-// do velikosti seznamu lze pøetáhnout èíslice
+// do velikosti seznamu lze přetáhnout číslice
 		if (fncpar == IDF_LIST_SIZE)
 		{
 			return ((fnc >= IDF_0) && (fnc <= IDF_9));
 		}
 
-// položení komentáøe
+// položení komentáře
 		if (fnc == IDF_COMMENT)
 		{
 			return (((parent->Param & PR_ONE) == 0) &&
@@ -1729,10 +1729,10 @@ BOOL TestPaste(int bufID, int inx)
 					(fncpar != IDF_RETURN_CODE));
 		}
 
-// položení do komentáøe (zákaz - jen další komentáø)
+// položení do komentáře (zákaz - jen další komentář)
 		if (fncpar == IDF_COMMENT) return FALSE;
 
-// do seznamu lze položit datové promìnné
+// do seznamu lze položit datové proměnné
 		if (fncpar == IDF_LIST)
 		{
 			switch (fnc)
@@ -1752,14 +1752,14 @@ BOOL TestPaste(int bufID, int inx)
 			return FALSE;
 		}
 
-// skupinu, seznam ani funkci nelze umístit do vstupních/výstupních promìnných
+// skupinu, seznam ani funkci nelze umístit do vstupních/výstupních proměnných
 		if (((fnc == IDF_GROUP) || (fnc == IDF_LIST) || (fnc == IDF_FNC)) &&
 			((fncpar == IDF_PAR) || (fncpar == IDF_OUT))) return FALSE;
 
-// test, zda je povolen pouze jeden parametr (výstupní promìnná)
+// test, zda je povolen pouze jeden parametr (výstupní proměnná)
 		if ((parent->Param & PR_ONE) && ((item->Prev >= 0) || (item->Next >= 0))) return FALSE;
 
-// do skupiny (pøíp. parametrù) lze pøetáhnout promìnné, skupinu a seznam
+// do skupiny (příp. parametrů) lze přetáhnout proměnné, skupinu a seznam
 		if ((fncpar == IDF_GROUP) || (fncpar == IDF_PAR) || (fncpar == IDF_OUT))
 		{
 			switch (fnc)
@@ -1782,22 +1782,22 @@ BOOL TestPaste(int bufID, int inx)
 		}
 		return FALSE;
 
-// kontrola editaèního bufferu
+// kontrola editačního bufferu
 	default:
 
-// položení komentáøe
+// položení komentáře
 		if (fnc == IDF_COMMENT)
 		{
 			return ((parent->Parent < 0) || (((parent->Param & PR_ONE) == 0) && (fncpar != IDF_FNC)));
 		}
 
-// položení do komentáøe
+// položení do komentáře
 		if (fncpar == IDF_COMMENT) return TRUE;
 
 // test, zda je povolen pouze jeden parametr
 		if ((parent->Param & PR_ONE) && ((item->Prev >= 0) || (item->Next >= 0))) return FALSE;
 
-// položení vìtve CASE
+// položení větve CASE
 		if (fnc == IDF_CASE_ON) return (fncpar == IDF_CASE);
 		if (fnc == IDF_CASE_EQU) return (fncpar == IDF_CASE_ON);
 
@@ -1805,18 +1805,18 @@ BOOL TestPaste(int bufID, int inx)
 		if ((item->SrcMask & parent->DstMask) == 0) return FALSE;
 
 // zákaz položení položky s parametrem do parametru
-		if ((fnc != IDF_FNC) &&									// funkce je povolena, mùže mít vstupní parametry
-			((parent->DstMask & PR_COMMAND) == 0) &&			// cílem nejsou pøíkazy
-			((item->SrcMask & PR_COMMAND) != 0) &&				// zdroj mùže být jako pøíkaz
-			((item->Param & PR_PARPAR) == 0) &&					// kromì pøípadu, kdy má povoleny parametry vždy
-			(item->Child >= 0)) return FALSE;					// položka má nìjakého potomka
+		if ((fnc != IDF_FNC) &&									// funkce je povolena, může mít vstupní parametry
+			((parent->DstMask & PR_COMMAND) == 0) &&			// cílem nejsou příkazy
+			((item->SrcMask & PR_COMMAND) != 0) &&				// zdroj může být jako příkaz
+			((item->Param & PR_PARPAR) == 0) &&					// kromě případu, kdy má povoleny parametry vždy
+			(item->Child >= 0)) return FALSE;					// položka má nějakého potomka
 
-// zákaz položení do položky, která není pøíkazem
-		if (((parent->SrcMask & PR_COMMAND) != 0) &&			// cíl mùže být jako pøíkaz
-			((parent->Param & PR_PARPAR) == 0) &&				// kromì pøípadu, kdy má povoleny parametry vždy
-			(parent->Parent >= 0) &&							// cíl je nìèím potomkem
-			((buf->At(parent->Parent).DstMask & PR_ALLDATA) != 0) &&  // rodiè cíle pøijímá data
-			((buf->At(parent->Parent).DstMask & PR_COMMAND) == 0))	// pøitom rodiè cíle nepøijímá pøíkazy (=není jako pøíkaz)
+// zákaz položení do položky, která není příkazem
+		if (((parent->SrcMask & PR_COMMAND) != 0) &&			// cíl může být jako příkaz
+			((parent->Param & PR_PARPAR) == 0) &&				// kromě případu, kdy má povoleny parametry vždy
+			(parent->Parent >= 0) &&							// cíl je něčím potomkem
+			((buf->At(parent->Parent).DstMask & PR_ALLDATA) != 0) &&  // rodič cíle přijímá data
+			((buf->At(parent->Parent).DstMask & PR_COMMAND) == 0))	// přitom rodič cíle nepřijímá příkazy (=není jako příkaz)
 			return FALSE;
 
 		return TRUE;
@@ -1832,7 +1832,7 @@ void Paste(int bufID)
 // kontrola, zda neprobíhá obsluha
 	if (Lock) return;
 
-// kontrola povolených bufferù
+// kontrola povolených bufferů
 	if ((bufID != BufObjID) &&
 		(bufID != BufLocID) &&
 		(bufID != BufEdiID))
@@ -1840,10 +1840,10 @@ void Paste(int bufID)
 		return;
 	}
 
-// zapnutí pøíznaku obsluhy
+// zapnutí příznaku obsluhy
 	Lock = TRUE;
 
-// pøíprava výchozí položky k uložení (mùže být i neplatná!)
+// příprava výchozí položky k uložení (může být i neplatná!)
 	CBufProg* buf = BufProg + bufID;
 	int first = buf->Select();
 
@@ -1855,10 +1855,10 @@ void Paste(int bufID)
 		return;
 	}
 
-// zapnutí èekacího kurzoru
+// zapnutí čekacího kurzoru
 	BeginWaitCursor();
 
-// otevøení schránky
+// otevření schránky
 	if (!::OpenClipboard(MainFrame))
 	{
 		EndWaitCursor();
@@ -1866,7 +1866,7 @@ void Paste(int bufID)
 		return;
 	}
 
-// naètení dat schránky
+// načtení dat schránky
 	HGLOBAL		global;			// globální buffer s daty
 	switch (bufID)
 	{
@@ -1882,7 +1882,7 @@ void Paste(int bufID)
 		global = ::GetClipboardData(CF_PETPROGP);
 	}
 
-// nejsou pøipravena vhodná data
+// nejsou připravena vhodná data
 	if (global == NULL)
 	{
 		::CloseClipboard();
@@ -1911,7 +1911,7 @@ void Paste(int bufID)
 		return;
 	}
 
-// pøíprava záhlaví
+// příprava záhlaví
 	const CLIPHEAD* head;
 	switch (bufID)
 	{
@@ -1933,7 +1933,7 @@ void Paste(int bufID)
 		(((CLIPHEAD*)m_Buf)->Pocet > 0) &&
 		MemCompare(((CLIPHEAD*)m_Buf)->Clip.Jmeno, head->Clip.Jmeno, 8))
 	{
-// vynulování pøíznaku PR_NEW v objektech
+// vynulování příznaku PR_NEW v objektech
 		int i;
 
 		for (i = BufObj.Max()-1; i >= 0; i--)
@@ -1955,10 +1955,10 @@ void Paste(int bufID)
 // ínicializace tabulky importu funkcí
 		ProgFile::InitImportTab();
 
-// pøednastavení výchozí položky lokálního bufferu
+// přednastavení výchozí položky lokálního bufferu
 		m_LocFirst = BufLoc.Disp();
 
-// naètení dat
+// načtení dat
 		buf->RedrawOff();
 		m_Num = ((CLIPHEAD*)m_Buf)->Data;
 		if (m_Num > m_Max) m_Num = m_Max;
@@ -1972,10 +1972,10 @@ void Paste(int bufID)
 			if (buf->IsValid(prev) && !TestPaste(bufID, i))
 			{
 
-// pøesun jako potomka položky
+// přesun jako potomka položky
 				first = buf->Move(prev, -2, first);
 
-// pøi chybì bude náhradní položení
+// při chybě bude náhradní položení
 				if (!TestPaste(bufID, first))
 				{
 					first = buf->Move(buf->Disp(), -2, first);
@@ -1985,26 +1985,26 @@ void Paste(int bufID)
 		buf->RedrawOn();
 		buf->Select(first);
 
-// pøíznak modifikace souboru
+// příznak modifikace souboru
 		SetModi();
 	}
 
 // odemknutí bufferu
 	::GlobalUnlock(global);
 
-// uzavøení schránky
+// uzavření schránky
 	::CloseClipboard();
 
-// vypnutí èekacího kurzoru
+// vypnutí čekacího kurzoru
 	EndWaitCursor();
 
-// vypnutí pøíznaku obsluhy
+// vypnutí příznaku obsluhy
 	Lock = FALSE;
 
 // aktualizace voleb bloku
 	UpdateClipboard();
 
-// ukonèení záznamu jedné UNDO operace
+// ukončení záznamu jedné UNDO operace
 	Undo.Stop();
 }
 
@@ -2017,7 +2017,7 @@ void Delete(int bufID)
 // kontrola, zda neprobíhá obsluha
 	if (Lock) return;
 
-// kontrola povolených bufferù
+// kontrola povolených bufferů
 	if ((bufID != BufObjID) &&
 		(bufID != BufLocID) &&
 		(bufID != BufEdiID) &&
@@ -2026,10 +2026,10 @@ void Delete(int bufID)
 		return;
 	}
 
-// zapnutí pøíznaku obsluhy
+// zapnutí příznaku obsluhy
 	Lock = TRUE;
 
-// pøíprava výchozí položky ke zrušení
+// příprava výchozí položky ke zrušení
 	CBufProg* buf = BufProg + bufID;
 	int first = buf->Select();
 
@@ -2048,7 +2048,7 @@ void Delete(int bufID)
 		return;
 	}
 
-// rušení položky v bufferu tøíd
+// rušení položky v bufferu tříd
 	if (bufID == BufClsID)
 	{
 		ProgLib::Delete(first);
@@ -2065,19 +2065,19 @@ void Delete(int bufID)
 	if (EditMode == BufMapID) ProgOnPaint();
 	EndWaitCursor();
 
-// vypnutí pøíznaku obsluhy
+// vypnutí příznaku obsluhy
 	Lock = FALSE;
 
 // aktualizace informací o položce, aktualizace menu clipboardu
 	ProgAktItem();
 
-// ukonèení záznamu jedné UNDO operace
+// ukončení záznamu jedné UNDO operace
 	Undo.Stop();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøižení bloku
+// vystřižení bloku
 
 void Cut(int bufID)
 {

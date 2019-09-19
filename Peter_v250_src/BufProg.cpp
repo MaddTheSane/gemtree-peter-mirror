@@ -8,10 +8,10 @@
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// Buffer pøistupuje ke globálním datovým seznamùm (Text, Icon, ...) !
+// Buffer přistupuje ke globálním datovým seznamům (Text, Icon, ...) !
 ////////////////////////////////////////////////////////////////////
 
-// inicializaèní prázdná položka (pro vytvoøení nové položky)
+// inicializační prázdná položka (pro vytvoření nové položky)
 PROGITEM	InitProgItem = {
 	IDF_COMMENT,				// funkce
 
@@ -19,14 +19,14 @@ PROGITEM	InitProgItem = {
 	0,							// cílové vlastností
 	0,							// parametry
 
-	-1,							// referenèní blok
-	-1,							// referenèní index
+	-1,							// referenční blok
+	-1,							// referenční index
 	-1,							// datový blok
 	-1,							// datový index
 
-	-1,							// rodiè
+	-1,							// rodič
 	-1,							// následující položka
-	-1,							// pøedcházející položka
+	-1,							// předcházející položka
 	-1,							// potomek
 
 	-1,							// ikona
@@ -34,90 +34,90 @@ PROGITEM	InitProgItem = {
 
 	NULL,						// položka stromu
 
-	0							// èítaè referencí
+	0							// čítač referencí
 };
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nových dat (vrací TRUE=operace OK) (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (vrací TRUE=operace OK) (odděleno kvůli lepší optimalizaci)
 
-#define NEWDATANUM 256				// poèet novì vytvoøených položek (16 KB)
+#define NEWDATANUM 256				// počet nově vytvořených položek (16 KB)
 
 bool CBufProg::NewData()
 {
-// nový poèet položek
-	int next = m_Max;				// pøíští položka - 1
-	int max = next + NEWDATANUM;	// nový poèet položek
+// nový počet položek
+	int next = m_Max;				// příští položka - 1
+	int max = next + NEWDATANUM;	// nový počet položek
 
-// zvìtšení bufferu dat
+// zvětšení bufferu dat
 	PROGITEM* newdata = (PROGITEM*)MemSize(m_Data, max*sizeof(PROGITEM));
 	if (newdata == NULL) return false;
 	m_Data = newdata;
 
-// zvìtšení bufferu platnosti
+// zvětšení bufferu platnosti
 	bool* newvalid = (bool*)MemSize(m_Valid, max*sizeof(bool));
 	if (newvalid == NULL) return false;
 	m_Valid = newvalid;
 
-// nový maximální poèet položek v bufferu
+// nový maximální počet položek v bufferu
 	m_Max = max;
 
-// vymazání pøíznakù platnosti položek (nastavení na pøíznak neplatnosti)
+// vymazání příznaků platnosti položek (nastavení na příznak neplatnosti)
 	int i;
 	newvalid += next;
 	for (i = NEWDATANUM; i > 0; i--) { *newvalid = false; newvalid++; }
 
-// zaèlenìní do øetìzce volných položek
+// začlenění do řetězce volných položek
 	newdata += next - 1;			// ukazatel dat - 1
 	for (i = NEWDATANUM; i > 0; i--)
 	{
 		newdata++;					// zvýšení ukazatele položek
-		next++;						// zvýšení indexu pøíští položky
-		*(int*)newdata = next;		// odkaz na pøíští položku
+		next++;						// zvýšení indexu příští položky
+		*(int*)newdata = next;		// odkaz na příští položku
 	}
 	*(int*)newdata = m_Next;		// navázání na další položku
 	m_Next = m_Max-NEWDATANUM;		// odkaz na první novou položku
 
-// pøíznak operace OK
+// příznak operace OK
 	return true;
 };
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nové položky (vrací index položky, pøi chybì vrací -1)
+// vytvoření nové položky (vrací index položky, při chybě vrací -1)
 
 int CBufProg::NewItem()
 {
-// vytvoøení nových dat, není-li volná další položka
+// vytvoření nových dat, není-li volná další položka
 	if (m_Next < 0)				// není další položka?
 	{
-		if (!NewData()) return -1;	// vytvoøení nových dat
+		if (!NewData()) return -1;	// vytvoření nových dat
 	}
 
-// vyjmutí položky z øetìzce volných položek
-	int i = m_Next;				// pøíští volná položka
+// vyjmutí položky z řetězce volných položek
+	int i = m_Next;				// příští volná položka
 	m_Next = *(int*)(m_Data + i); // další položka
-	m_Valid[i] = true;			// nastavení pøíznaku platnosti položky
-	m_Num++;					// zvýšení èítaèe platných položek
+	m_Valid[i] = true;			// nastavení příznaku platnosti položky
+	m_Num++;					// zvýšení čítače platných položek
 
-// novì vytvoøená položka
+// nově vytvořená položka
 	return i;
 };
 
 
 ////////////////////////////////////////////////////////////////////
-// zrušení položky - zaøazení do volných položek (nekontroluje index a neruší objekt)
+// zrušení položky - zařazení do volných položek (nekontroluje index a neruší objekt)
 
 void _fastcall CBufProg::DelItem(const int index)
 {
-	*(int*)(m_Data + index) = m_Next;	// pøíští volná položka
-	m_Valid[index] = false;				// zrušení pøíznaku platnosti
-	m_Num--;							// snížení èítaèe platných položek
+	*(int*)(m_Data + index) = m_Next;	// příští volná položka
+	m_Valid[index] = false;				// zrušení příznaku platnosti
+	m_Num--;							// snížení čítače platných položek
 	m_Next = index;						// odkaz na tuto položku
 }
 
 ////////////////////////////////////////////////////////////////////
-// aktualizace fontu v oknì
+// aktualizace fontu v okně
 
 void CBufProg::AktFont()
 {
@@ -144,7 +144,7 @@ void CBufProg::AktFont()
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøíprava indexu stavové ikony (upravit s INDEXTOSTATEIMAGEMASK() !)
+// příprava indexu stavové ikony (upravit s INDEXTOSTATEIMAGEMASK() !)
 
 int CBufProg::GetStateImage(int index)
 {
@@ -158,27 +158,27 @@ int CBufProg::GetStateImage(int index)
 // adresa položky
 		PROGITEM* item = m_Data + index;
 
-// obsluha okna editoru (požadavek nastavení promìnné) ...
+// obsluha okna editoru (požadavek nastavení proměnné) ...
 		if ((m_BufID == BufEdiID) &&
 
-// ... indikuje se v pøípadì, že není žádný parametr ,,,
+// ... indikuje se v případě, že není žádný parametr ,,,
 			(item->Child < 0) &&
 
-// ... položka vyžaduje nìjaká data ...
+// ... položka vyžaduje nějaká data ...
 			(item->DstMask & PR_ALLDATA) && 
 
-// ... ale nesmí vyžadovat i pøíkazy ...				
+// ... ale nesmí vyžadovat i příkazy ...				
 			((item->DstMask & PR_COMMAND) == 0) &&
 
-// ... položka musí mít platného rodièe ...
+// ... položka musí mít platného rodiče ...
 			(item->Parent >= 0)
 			)
 		{
 
-// adresa rodièe
+// adresa rodiče
 			PROGITEM* parent = m_Data + item->Parent;
 
-// položka musí být použita buï jako pøíkaz ...
+// položka musí být použita buď jako příkaz ...
 			if ((parent->DstMask & PR_COMMAND) || 
 
 // ... nebo jako parametr funkce ...
@@ -187,7 +187,7 @@ int CBufProg::GetStateImage(int index)
 // ... nebo jsou parametry vyžadovány vždy
 				(item->Param & PR_PARPAR) ||
 
-// ... nebo nelze použít jako pøíkaz - je to tedy parametr nìèeho
+// ... nebo nelze použít jako příkaz - je to tedy parametr něčeho
 				((item->SrcMask & PR_COMMAND) == 0))
 			{
 				if (item->Param & PR_SETPAR)
@@ -201,7 +201,7 @@ int CBufProg::GetStateImage(int index)
 			}
 		}
 
-// pøíprava stavu pro okna objektù (definovaná položka)
+// příprava stavu pro okna objektů (definovaná položka)
 		if (index == m_Def)
 		{
 			state = STATE_DEF;
@@ -221,48 +221,48 @@ void CBufProg::DispNewItem(int index)
 // kontrola platnosti položky a stromu
 	if (IsNotValid(index) || (m_Tree == NULL)) return;
 
-// lokální promìnné
+// lokální proměnné
 	TV_INSERTSTRUCT tvins;					// struktura k vložení položky
 	PROGITEM* item = m_Data + index;		// adresa položky k zobrazení
 
 // adresa položky k zobrazení
 	item = m_Data + index;
 
-// maska parametrù položky
+// maska parametrů položky
 	tvins.item.mask = TVIF_CHILDREN | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_STATE | TVIF_TEXT;
 
-// pøíprava textu položky
+// příprava textu položky
 	tvins.item.pszText = (LPTSTR)(LPCTSTR)Text.GetTxt(GetText(index));
 
-// ikona položky - zpìtné volání
+// ikona položky - zpětné volání
 	tvins.item.iImage =  I_IMAGECALLBACK;
 	tvins.item.iSelectedImage =  I_IMAGECALLBACK;
 
-// pøednastavení stavu
+// přednastavení stavu
 	tvins.item.stateMask = TVIS_EXPANDED | TVIS_BOLD | TVIS_CUT | TVIS_STATEIMAGEMASK;
 
-// pøíprava stavové ikony
+// příprava stavové ikony
 	tvins.item.state = INDEXTOSTATEIMAGEMASK(GetStateImage(index));
 
-// pøíprava pøíznaku rozvinutí položky
+// příprava příznaku rozvinutí položky
 	if (item->Param & PR_EXP)
 	{
 		tvins.item.state |= TVIS_EXPANDED;
 	}
 
-// pøíznak uzamèení položky
+// příznak uzamčení položky
 	if (item->Param & (PR_LOCK | PR_LOCK_DEP))
 	{
 		tvins.item.state |= TVIS_BOLD;
 	}
 
-// pøíznak vypnutí položky
+// příznak vypnutí položky
 	if (item->Param & (PR_OFF | PR_OFF_DEP))
 	{
 		tvins.item.state |= TVIS_CUT;
 	}
 
-// pøíprava položky potomkù
+// příprava položky potomků
 	if ((item->Child >= 0) || ((m_BufID == BufClsID) && ((item->Func == IDF_GROUP) || ((item->Parent < 0) && (item->Func != IDF_FNC)))))
 	{
 		tvins.item.cChildren = 1;
@@ -272,7 +272,7 @@ void CBufProg::DispNewItem(int index)
 		tvins.item.cChildren = 0;
 	}
 
-// pøíprava rodièe položky
+// příprava rodiče položky
 	if (item->Parent >= 0)
 	{
 		tvins.hParent = m_Data[item->Parent].HTree;
@@ -282,7 +282,7 @@ void CBufProg::DispNewItem(int index)
 		tvins.hParent = TVI_ROOT;
 	}
 
-// pøíprava pøedcházející položky
+// příprava předcházející položky
 	if (item->Prev >= 0)
 	{
 		tvins.hInsertAfter = m_Data[item->Prev].HTree;
@@ -306,14 +306,14 @@ CBufProg::CBufProg()
 	m_Valid = NULL;			// není buffer platnosti
 	m_Num = 0;				// není žádná platná položka
 	m_Max = 0;				// není buffer položek
-	m_Next = -1;			// pøiští volná položka (-1=není)
-	m_Undo = false;			// neregistrovat zmìny pro UNDO
+	m_Next = -1;			// přiští volná položka (-1=není)
+	m_Undo = false;			// neregistrovat změny pro UNDO
 
-	m_Redraw = 0;			// pøekreslování okna zapnuto
+	m_Redraw = 0;			// překreslování okna zapnuto
 	m_First = -1;			// není první (ROOT) položka)
-	m_Tree = NULL;			// není pøipojený strom
+	m_Tree = NULL;			// není připojený strom
 	m_Disp = -2;			// není nic zobrazeno
-	m_IconWidth = 0;		// šíøka ikon (0 = není)
+	m_IconWidth = 0;		// šířka ikon (0 = není)
 	m_IconHeight = 0;		// výška ikon (0 = není)
 	m_Def = -1;				// definovaná položka (-1 = není)
 
@@ -336,21 +336,21 @@ void CBufProg::Init()
 	m_Valid = NULL;			// není buffer platnosti
 	m_Num = 0;				// není žádná platná položka
 	m_Max = 0;				// není buffer položek
-	m_Next = -1;			// pøiští volná položka (-1=není)
-	m_Undo = false;			// neregistrovat zmìny pro UNDO
+	m_Next = -1;			// přiští volná položka (-1=není)
+	m_Undo = false;			// neregistrovat změny pro UNDO
 
-	m_Redraw = 0;			// pøekreslování okna zapnuto
+	m_Redraw = 0;			// překreslování okna zapnuto
 	m_First = -1;			// není první (ROOT) položka)
-	m_Tree = NULL;			// není pøipojený strom
+	m_Tree = NULL;			// není připojený strom
 	m_Disp = -2;			// není nic zobrazeno
-	m_IconWidth = 0;		// šíøka ikon (0 = není)
+	m_IconWidth = 0;		// šířka ikon (0 = není)
 	m_IconHeight = 0;		// výška ikon (0 = není)
 	m_Def = -1;				// definovaná položka (-1 = není)
 
 	m_Nadpis.Init();		// inicializace nadpisu okna
 
 	m_FontSet.Init();		// inicializace standardního fontu
-	m_FontSet.Height = -1;	// výška fontu neurèena
+	m_FontSet.Height = -1;	// výška fontu neurčena
 	m_CharSet = DEFAULT_CHARSET; // implicitní znaková sada
 	m_Font = NULL;			// font není
 }
@@ -365,7 +365,7 @@ void CBufProg::Term()
 
 
 ////////////////////////////////////////////////////////////////////
-// zrušení všech položek v bufferu (ukládání zaène opìt po øadì, nemìní obsah okna)
+// zrušení všech položek v bufferu (ukládání začne opět po řadě, nemění obsah okna)
 
 void CBufProg::DelAll()
 {
@@ -375,7 +375,7 @@ void CBufProg::DelAll()
 	m_Valid = NULL;			// není buffer platnosti
 	m_Num = 0;				// není žádná platná položka
 	m_Max = 0;				// není žádná položka v bufferu
-	m_Next = -1;			// není pøíští položka
+	m_Next = -1;			// není příští položka
 
 	m_First = -1;			// není první (ROOT) položka)
 	m_Disp = -2;			// není nic zobrazeno
@@ -384,11 +384,11 @@ void CBufProg::DelAll()
 
 
 ////////////////////////////////////////////////////////////////////
-// vypnutí pøekreslování okna stromu
+// vypnutí překreslování okna stromu
 
 void CBufProg::RedrawOff()
 {
-// test, zda bylo pøekreslování zapnuto
+// test, zda bylo překreslování zapnuto
 	if (m_Redraw == 0)
 	{
 
@@ -399,20 +399,20 @@ void CBufProg::RedrawOff()
 		}
 	}
 
-// zvýšení èítaèe úrovnì vypnutí pøekreslování
+// zvýšení čítače úrovně vypnutí překreslování
 	m_Redraw++;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// zapnutí pøekreslování okna stromu
+// zapnutí překreslování okna stromu
 
 void CBufProg::RedrawOn()
 {
-// snížení èítaèe úrovnì vypnutí pøekreslování
+// snížení čítače úrovně vypnutí překreslování
 	m_Redraw--;
 
-// test, zda bude pøekreslování zapnuto
+// test, zda bude překreslování zapnuto
 	if (m_Redraw == 0)
 	{
 
@@ -426,21 +426,21 @@ void CBufProg::RedrawOn()
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení rodièe zobrazení položek + zobrazení položek (-1 = vše, -2 = nic)
+// nastavení rodiče zobrazení položek + zobrazení položek (-1 = vše, -2 = nic)
 
 void CBufProg::Disp(int disp)
 {
-// test, zda se rodiè zobrazení položek mìní
+// test, zda se rodič zobrazení položek mění
 	if (disp == m_Disp) return;
 
 // vypnutí aktualizace stromu
 	RedrawOff();
 
-// lokální promìnné
+// lokální proměnné
 	PROGITEM* item;
 	int index;
 
-// vymazání aktuálnì zobrazeného obsahu stromu (je-li nìco zobrazeno)
+// vymazání aktuálně zobrazeného obsahu stromu (je-li něco zobrazeno)
 	if (m_Disp != -2)
 	{
 		if (m_Tree != NULL)
@@ -454,7 +454,7 @@ void CBufProg::Disp(int disp)
 		}
 	}
 
-// kontrola platnosti nového rodièe položek k zobrazení
+// kontrola platnosti nového rodiče položek k zobrazení
 	if ((disp != -1) && IsNotValid(disp))
 	{
 		m_Disp = -2;		
@@ -462,10 +462,10 @@ void CBufProg::Disp(int disp)
 		return;
 	}
 
-// nastavení nového rodièe zobrazení položek
+// nastavení nového rodiče zobrazení položek
 	m_Disp = disp;
 
-// pøíprava první položky k zobrazení
+// příprava první položky k zobrazení
 	if (disp < 0)
 	{
 		index = m_First;
@@ -487,18 +487,18 @@ void CBufProg::Disp(int disp)
 			item = m_Data + index;
 
 // nalezení následující položky
-			index = item->Child;			// vnoøení na potomka
+			index = item->Child;			// vnoření na potomka
 
 			if (index < 0)					// je potomek?
 			{
-				index = item->Next;			// pokraèování další položkou
+				index = item->Next;			// pokračování další položkou
 
 				while ((index < 0) && (item->Parent >= 0))
 				{
-					index = item->Parent;	// návrat k rodièi
-					if (index == disp) break; // je již opìt výchozí položka
-					item = m_Data + index;	// adresa rodièe
-					index = item->Next;		// další položka za rodièem
+					index = item->Parent;	// návrat k rodiči
+					if (index == disp) break; // je již opět výchozí položka
+					item = m_Data + index;	// adresa rodiče
+					index = item->Next;		// další položka za rodičem
 				}
 			}
 
@@ -516,10 +516,10 @@ void CBufProg::Disp(int disp)
 
 void CBufProg::IconList(SMALLICON zoom)
 {
-// lokální promìnné
+// lokální proměnné
 	HIMAGELIST img;			// seznam ikon
 	HIMAGELIST imgs;		// seznam stavových ikon
-	int icon;				// rozmìr ikon
+	int icon;				// rozměr ikon
 
 // použity velké ikony
 	switch (zoom)
@@ -542,10 +542,10 @@ void CBufProg::IconList(SMALLICON zoom)
 		imgs = ProgStateListSmall;
 	}
 
-// test, zda je rozmìr ikon již nastaven
+// test, zda je rozměr ikon již nastaven
 	if ((icon == m_IconWidth) && (icon == m_IconHeight)) return;
 
-// nastavení nového rozmìru ikon
+// nastavení nového rozměru ikon
 	m_IconWidth = icon;
 	m_IconHeight = icon;
 
@@ -559,24 +559,24 @@ void CBufProg::IconList(SMALLICON zoom)
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení definované položky (-1 = odznaèení)
+// nastavení definované položky (-1 = odznačení)
 
 void CBufProg::Def(int index)
 {
 // kontrola indexu
 	if (IsNotValid(index)) index = -1;
 
-// kontrola, zda se definovaná položka mìní
+// kontrola, zda se definovaná položka mění
 	if (index == m_Def) return;
 
 // test, zda je zobrazen strom
 	if (m_Tree != NULL)
 	{
 
-// lokální promìnné
+// lokální proměnné
 		TV_ITEM tvi;
 
-// zrušení oznaèení staré položky
+// zrušení označení staré položky
 		if (IsValid(m_Def) && (m_Data[m_Def].HTree != NULL))
 		{
 			tvi.mask = TVIF_STATE;
@@ -593,41 +593,41 @@ void CBufProg::Def(int index)
 		if (IsValid(index) && (m_Data[index].HTree != NULL))
 		{
 
-// pøíprava klientských rozmìrù okna
+// příprava klientských rozměrů okna
 			RECT wrc;
 			::GetClientRect(m_Tree, &wrc);
 
-// zjištìní, zda je položka viditelná (zda je rychlejší nevypínat pøekreslování)
+// zjištění, zda je položka viditelná (zda je rychlejší nevypínat překreslování)
 			RECT rc;
 			*(HTREEITEM*)&rc = m_Data[index].HTree;
 			BOOL visible = ::SendMessage(m_Tree, TVM_GETITEMRECT, FALSE, (LPARAM) &rc);
 
-// upøesnìní viditelnosti položky
+// upřesnění viditelnosti položky
 			if (visible)
 			{
 				visible = ((rc.top >= 0) && (rc.bottom <= wrc.bottom));
 			}
 
-// vypnutí pøekreslování, není-li položka viditelná
+// vypnutí překreslování, není-li položka viditelná
 			if (!visible) RedrawOff();
 
-// nastavení oznaèení nové položky
+// nastavení označení nové položky
 			tvi.mask = TVIF_STATE;
 			tvi.stateMask = TVIS_STATEIMAGEMASK;
 			tvi.hItem = m_Data[index].HTree;
 			tvi.state = INDEXTOSTATEIMAGEMASK(STATE_DEF);
 			::SendMessage(m_Tree, TVM_SETITEM, 0, (LPARAM)&tvi);
 
-// zajištìní viditelnosti položky
+// zajištění viditelnosti položky
 			::SendMessage(m_Tree, TVM_ENSUREVISIBLE, 0, (LPARAM)m_Data[index].HTree);
 
-// zapnutí pøekreslování
+// zapnutí překreslování
 			if (!visible) RedrawOn();
 		}
 	}
 	else
 
-// jinak nastavení indexu položky bez pøekreslení okna
+// jinak nastavení indexu položky bez překreslení okna
 	{
 		m_Def = index;
 	}
@@ -639,7 +639,7 @@ void CBufProg::Def(int index)
 
 void CBufProg::Nadpis(const CText& text)
 {
-// kontrola, zda se text mìní
+// kontrola, zda se text mění
 	if (m_Nadpis == text) return;
 
 // nastavení nového nadpisu
@@ -661,7 +661,7 @@ int CBufProg::Top()
 // kontrola, zda je strom platný
 	if (m_Tree == NULL) return -1;
 
-// naètení zobrazené položky
+// načtení zobrazené položky
 	HTREEITEM htree = (HTREEITEM)::SendMessage(m_Tree, TVM_GETNEXTITEM, TVGN_FIRSTVISIBLE, 0);
 
 // nalezení indexu položky
@@ -680,7 +680,7 @@ void CBufProg::Top(int index)
 // kontrola, zda je položka platná
 	if (IsNotValid(index)) return;
 
-// úschova souèasnì zobrazené první položky
+// úschova současně zobrazené první položky
 	HTREEITEM htree = (HTREEITEM)::SendMessage(m_Tree, TVM_GETNEXTITEM, TVGN_FIRSTVISIBLE, 0);
 
 // je-li již položka nastavená, nic se neprovede
@@ -701,7 +701,7 @@ int CBufProg::Select()
 // kontrola, zda je strom platný
 	if (m_Tree == NULL) return -1;
 
-// naètení vybrané položky
+// načtení vybrané položky
 	HTREEITEM htree = (HTREEITEM)::SendMessage(m_Tree, TVM_GETNEXTITEM, TVGN_CARET, 0);
 
 // nalezení indexu položky
@@ -728,31 +728,31 @@ void CBufProg::Select(int index)
 	else
 	{
 
-// pøíprava klientských rozmìrù okna
+// příprava klientských rozměrů okna
 		RECT wrc;
 		::GetClientRect(m_Tree, &wrc);
 
-// zjištìní, zda je položka viditelná (zda je rychlejší nevypínat pøekreslování)
+// zjištění, zda je položka viditelná (zda je rychlejší nevypínat překreslování)
 		RECT rc;
 		*(HTREEITEM*)&rc = m_Data[index].HTree;
 		BOOL visible = ::SendMessage(m_Tree, TVM_GETITEMRECT, FALSE, (LPARAM) &rc);
 
-// upøesnìní viditelnosti položky
+// upřesnění viditelnosti položky
 		if (visible)
 		{
 			visible = ((rc.top >= 0) && (rc.bottom <= wrc.bottom));
 		}
 
-// vypnutí pøekreslování, není-li položka viditelná
+// vypnutí překreslování, není-li položka viditelná
 		if (!visible) RedrawOff();
 
-// zmìna vybrané položky
+// změna vybrané položky
 		::SendMessage(m_Tree, TVM_SELECTITEM, TVGN_CARET, (LPARAM)m_Data[index].HTree);
 
-// zajištìní viditelnosti položky
+// zajištění viditelnosti položky
 		::SendMessage(m_Tree, TVM_ENSUREVISIBLE, 0, (LPARAM)m_Data[index].HTree);
 
-// zapnutí pøekreslování
+// zapnutí překreslování
 		if (!visible) RedrawOn();
 	}
 }
@@ -773,7 +773,7 @@ void _fastcall CBufProg::AktStateImage(int index)
 // požadovaný nový stav položky
 		DWORD newstate = INDEXTOSTATEIMAGEMASK(GetStateImage(index));
 
-// naètení starého stavu položky
+// načtení starého stavu položky
 		TV_ITEM tvi;
 		tvi.hItem = m_Data[index].HTree;
 		tvi.mask = TVIF_STATE;
@@ -781,7 +781,7 @@ void _fastcall CBufProg::AktStateImage(int index)
 		tvi.state = newstate;
 		::SendMessage(m_Tree, TVM_GETITEM, 0, (LPARAM)&tvi);
 		
-// nastavení nového stavu položky, pokud se mìní
+// nastavení nového stavu položky, pokud se mění
 		if (newstate != (tvi.state & TVIS_STATEIMAGEMASK))
 		{
 			tvi.mask = TVIF_STATE;
@@ -804,27 +804,27 @@ int _fastcall CBufProg::NextItem(int index)
 // adresa položky
 	PROGITEM* item = m_Data + index;
 
-// pøesun na potomka
+// přesun na potomka
 	index = item->Child;				// potomek
 
-// není-li potomek, pøesun na následující prvek
-	if (index < 0)						// je nìjaký potomek?
+// není-li potomek, přesun na následující prvek
+	if (index < 0)						// je nějaký potomek?
 	{
 		index = item->Next;				// následující prvek
 
-// není-li následující prvek, pøesun na rodièe
+// není-li následující prvek, přesun na rodiče
 		while (index < 0)				// je následující prvek?
 		{
-			index = item->Parent;		// index rodièe
+			index = item->Parent;		// index rodiče
 
-			if (index < 0)				// je platný rodiè ?
+			if (index < 0)				// je platný rodič ?
 			{
 				index = m_First;		// první položka v ROOT
 				ASSERT(index >= 0);
 			}
 			else
 			{
-				item = m_Data + index;	// adresa rodièe
+				item = m_Data + index;	// adresa rodiče
 				index = item->Next;		// následující prvek
 			}
 		}
@@ -834,7 +834,7 @@ int _fastcall CBufProg::NextItem(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// index pøedcházející položky ve stromu (cyklicky, -1 = navrátí se poslední položka)
+// index předcházející položky ve stromu (cyklicky, -1 = navrátí se poslední položka)
 
 int _fastcall CBufProg::PrevItem(int index)
 {
@@ -847,16 +847,16 @@ int _fastcall CBufProg::PrevItem(int index)
 // adresa položky
 	PROGITEM* item = m_Data + index;
 
-// pøesun na pøedcházející položku
-	index = item->Prev;				// pøedcházející položka
+// přesun na předcházející položku
+	index = item->Prev;				// předcházející položka
 
-// kontrola, zda je pøedcházející položka
-	if (index >= 0)					// je pøedcházející položka?
+// kontrola, zda je předcházející položka
+	if (index >= 0)					// je předcházející položka?
 	{
-		item = m_Data + index;		// adresa pøedcházející položky
+		item = m_Data + index;		// adresa předcházející položky
 
-// má-li pøedcházející položka potomka, pøesun na potomka
-		if (item->Child >= 0)		// je nìjaký potomek?
+// má-li předcházející položka potomka, přesun na potomka
+		if (item->Child >= 0)		// je nějaký potomek?
 		{
 			index = item->Child;	// potomek
 			item = m_Data + index;	// adresa potomka
@@ -870,7 +870,7 @@ int _fastcall CBufProg::PrevItem(int index)
 					item = m_Data + index; // adresa další položky
 				}
 
-				if (item->Child >= 0)	// je nìjaký potomek?
+				if (item->Child >= 0)	// je nějaký potomek?
 				{
 					index = item->Child; // potomek
 					item = m_Data + index; // adresa potomka
@@ -879,19 +879,19 @@ int _fastcall CBufProg::PrevItem(int index)
 		}
 	}
 
-// není pøedcházející položka, pøesun na rodièe
+// není předcházející položka, přesun na rodiče
 	else
 	{
-		index = item->Parent;		// index rodièe
+		index = item->Parent;		// index rodiče
 
-// není-li další rodiè, pøesun na první položku ROOT
-		if (index < 0)				// je rodiè?
+// není-li další rodič, přesun na první položku ROOT
+		if (index < 0)				// je rodič?
 		{
 			index = m_First;		// první položka v ROOT
 			ASSERT(index >= 0);
 			item = m_Data + index;	// adresa první položky
 
-// nalezení úplnì poslední položky stromu
+// nalezení úplně poslední položky stromu
 			while ((item->Next >= 0) || (item->Child >= 0))
 			{
 				while (item->Next >= 0)
@@ -900,7 +900,7 @@ int _fastcall CBufProg::PrevItem(int index)
 					item = m_Data + index; // adresa další položky
 				}
 
-				if (item->Child >= 0)	// je nìjaký potomek?
+				if (item->Child >= 0)	// je nějaký potomek?
 				{
 					index = item->Child; // potomek
 					item = m_Data + index; // adresa potomka
@@ -918,7 +918,7 @@ int _fastcall CBufProg::PrevItem(int index)
 
 bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 {
-// vytvoøení nových dat (zajištìní existence položky)
+// vytvoření nových dat (zajištění existence položky)
 	ASSERT(index >= 0);
 	while (index >= m_Max)
 	{
@@ -926,12 +926,12 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 	}
 	ASSERT(IsNotValid(index));					// položka musí být neplatná
 
-// lokální promìnné
+// lokální proměnné
 	PROGITEM*	itemNew = m_Data + index;			// adresa nové položky
-	int			parent = item->Parent;				// rodiè položky
-	PROGITEM*	itemPar = m_Data + parent;			// adresa rodièe
-	int			prev = item->Prev;					// pøedcházející položka
-	PROGITEM*	itemAft = m_Data + prev;			// adresa pøedcházející položky
+	int			parent = item->Parent;				// rodič položky
+	PROGITEM*	itemPar = m_Data + parent;			// adresa rodiče
+	int			prev = item->Prev;					// předcházející položka
+	PROGITEM*	itemAft = m_Data + prev;			// adresa předcházející položky
 	int			next = item->Next;					// následující položka
 	PROGITEM*	itemNxt = m_Data + next;			// adresa následující položky
 
@@ -944,9 +944,9 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 	}
 
 // vyjmutí položky z volných položek
-	int i = m_Next;								// ukazatel øetìzce volných položek
+	int i = m_Next;								// ukazatel řetězce volných položek
 
-// navrácena hned první položka z øetìzce volných položek
+// navrácena hned první položka z řetězce volných položek
 	if (i == index)								// je to hned první položka?
 	{
 		m_Next = *(int*)itemNew;				// odkaz na další položku
@@ -954,12 +954,12 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 	else
 	{
 
-// nalezení položky v øetìzci volných položek
+// nalezení položky v řetězci volných položek
 		while (*(int*)(m_Data + i) != index)
 		{
 			i = *(int*)(m_Data + i);
 
-// tento pøípad nesmí nikdy nastat - položka nebyla nalezena!!!
+// tento případ nesmí nikdy nastat - položka nebyla nalezena!!!
 			ASSERT(i >= 0);
 			if (i < 0)								// to je chyba!!!!!!!
 			{
@@ -968,18 +968,18 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 			}
 		}
 
-// pøeskoèení odkazu na další položku
+// přeskočení odkazu na další položku
 		*(int*)(m_Data + i) = *(int*)itemNew;
 	}
 
-// nastavení pøíznaku platnosti položky
-	m_Num++;									// zvýšení èítaèe položek
-	m_Valid[index] = true;						// pøíznak platnosti položky
+// nastavení příznaku platnosti položky
+	m_Num++;									// zvýšení čítače položek
+	m_Valid[index] = true;						// příznak platnosti položky
 
-// pøenesení dat položky
+// přenesení dat položky
 	MemCopy(itemNew, item, SIZEOFPROGITEM);
 
-// napojení na pøedcházející položku a na rodièe
+// napojení na předcházející položku a na rodiče
 	if (IsValid(prev))
 	{
 		itemNew->Next = itemAft->Next;
@@ -993,7 +993,7 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 			itemNew->Next = itemPar->Child;
 			itemPar->Child = index;
 
-			if ((itemNew->Next < 0) && (itemPar->HTree != NULL) && (m_Tree != NULL))	// první potomek rodièe?
+			if ((itemNew->Next < 0) && (itemPar->HTree != NULL) && (m_Tree != NULL))	// první potomek rodiče?
 			{
 				TV_ITEM tvi;
 				tvi.hItem = itemPar->HTree;
@@ -1006,13 +1006,13 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 		}
 		else
 		{
-			itemNew->Parent = -1;			// není rodiè
-			itemNew->Next = m_First;		// pøedøazení pøed první ROOT položku
+			itemNew->Parent = -1;			// není rodič
+			itemNew->Next = m_First;		// předřazení před první ROOT položku
 			m_First = index;				// položka bude první ROOT položkou
 		}
 	}
 
-// napojení pøed následující položku
+// napojení před následující položku
 	if (IsValid(next))
 	{
 		itemNxt->Prev = index;
@@ -1022,12 +1022,12 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 		itemNew->Next = -1;
 	}
 
-// inicializace ostatních parametrù
+// inicializace ostatních parametrů
 	itemNew->Child = -1;					// není žádný potomek
 	itemNew->HTree = NULL;					// není zobrazení položky stromu
 	itemNew->Refer = 0;						// nejsou žádné reference na položku
 
-// zvýšení èítaèe u referenèní položky (kromì bufferu tøíd)
+// zvýšení čítače u referenční položky (kromě bufferu tříd)
 	if (((DWORD)(itemNew->RefBlok) < (DWORD)PROGBUFNUM) && (m_BufID != BufClsID))
 	{
 		if (BufProg[itemNew->RefBlok].IsValid(itemNew->RefIndex))
@@ -1036,7 +1036,7 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 		}
 	}
 
-// zobrazení položky, je-li v zobrazené vìtvi
+// zobrazení položky, je-li v zobrazené větvi
 	if ((((parent >= 0) && (itemPar->HTree != NULL)) ||
 		(m_Disp == parent)))
 	{
@@ -1049,11 +1049,11 @@ bool CBufProg::UndoIns(const PROGITEM* item, const int index)
 
 ////////////////////////////////////////////////////////////////////
 // vložení položky bez navázání dat (pro UNDO buffer)
-// vrací index položky, pøi chybì pamìti vrací -1
+// vrací index položky, při chybě paměti vrací -1
 
 int CBufProg::Insert0(const PROGITEM* item)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	if (result >= 0)
 	{
 		MemCopy(m_Data + result, item, SIZEOFPROGITEM);
@@ -1072,16 +1072,16 @@ void CBufProg::Del0(int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// vložení položky (vrací index položky, pøi chybì pamìti vrací -1) - parametry nemusí být platné
-//  parent = rodiè (-1=ROOT), after=pøedcházející položka 
-//		(-1=první, -2=poslední, -3=abecednì, -4=abecednì s pøedností skupin)
+// vložení položky (vrací index položky, při chybě paměti vrací -1) - parametry nemusí být platné
+//  parent = rodič (-1=ROOT), after=předcházející položka 
+//		(-1=první, -2=poslední, -3=abecedně, -4=abecedně s předností skupin)
 //  Položky nastavené funkcí: Parent, Next, Prev, Child, HTree, Refer,
 
 int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 {
 // založení nové položky
-	int index = NewItem();					// vytvoøení nové položky
-	if (index < 0) return -1;				// chyba pamìti
+	int index = NewItem();					// vytvoření nové položky
+	if (index < 0) return -1;				// chyba paměti
 
 // záznam operace pro UNDO
 	if (m_Undo)
@@ -1097,19 +1097,19 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 	PROGITEM* itemNew = m_Data + index;		// adresa nové položky
 	MemCopy(itemNew, item, SIZEOFPROGITEM);	// kopie položky
 
-// kontrola platnosti rodièe, pøíprava adresy rodièe
+// kontrola platnosti rodiče, příprava adresy rodiče
 	if (IsNotValid(parent)) parent = -1;	// není platný - bude to ROOT položka
-	PROGITEM* itemPar = m_Data + parent;	// adresa rodièe
+	PROGITEM* itemPar = m_Data + parent;	// adresa rodiče
 
-// nastavení odkazu na rodièe
-	itemNew->Parent = parent;				// odkaz na rodièe (pro ROOT bude = -1)
+// nastavení odkazu na rodiče
+	itemNew->Parent = parent;				// odkaz na rodiče (pro ROOT bude = -1)
 
-// nalezení pøedchozí položky abecednì
-	if (after == -3)						// je abecední tøídìní?
+// nalezení předchozí položky abecedně
+	if (after == -3)						// je abecední třídění?
 	{
-		after = -1;							// uložení na zaèátek
+		after = -1;							// uložení na začátek
 
-// pøíprava textu vkládané položky
+// příprava textu vkládané položky
 		CText txt;
 		if (item->Name >= 0)
 		{
@@ -1123,27 +1123,27 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 			}
 		}
 
-// pøíprava indexu první položky
-		int inx = m_First;					// první položka, není-li rodiè platný
-		if (IsValid(parent))				// je rodiè platný?
+// příprava indexu první položky
+		int inx = m_First;					// první položka, není-li rodič platný
+		if (IsValid(parent))				// je rodič platný?
 		{
-			inx = itemPar->Child;			// první potomek rodièe
+			inx = itemPar->Child;			// první potomek rodiče
 		}
 
 // nalezení pozice
 		while (IsValid(inx) && (txt >= Text.GetTxt(GetText(inx))))
 		{
-			after = inx;					// položka bude pøedcházející
+			after = inx;					// položka bude předcházející
 			inx = m_Data[inx].Next;			// posun na další položku
 		}
 	}
 
-// nalezení pøedchozí položky abecednì s pøedností skupin
-	if (after == -4)						// je abecední tøídìní?
+// nalezení předchozí položky abecedně s předností skupin
+	if (after == -4)						// je abecední třídění?
 	{
-		after = -1;							// uložení na zaèátek
+		after = -1;							// uložení na začátek
 
-// pøíprava textu vkládané položky
+// příprava textu vkládané položky
 		CText txt;
 		if (item->Name >= 0)
 		{
@@ -1157,63 +1157,63 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 			}
 		}
 
-// pøíprava indexu první položky
-		int inx = m_First;					// první položka, není-li rodiè platný
-		if (IsValid(parent))				// je rodiè platný?
+// příprava indexu první položky
+		int inx = m_First;					// první položka, není-li rodič platný
+		if (IsValid(parent))				// je rodič platný?
 		{
-			inx = itemPar->Child;			// první potomek rodièe
+			inx = itemPar->Child;			// první potomek rodiče
 		}
 
 // nalezení pozice
 		while (IsValid(inx) &&				// položka je platná
 				(
 					(
-						(m_Data[inx].Func == IDF_GROUP) && // ne-skupina se øadí vždy za skupinu
+						(m_Data[inx].Func == IDF_GROUP) && // ne-skupina se řadí vždy za skupinu
 						(item->Func != IDF_GROUP)
 					) ||
 					(
-						(m_Data[inx].Func == IDF_GROUP) &&	// abecední setøídìní skupin
+						(m_Data[inx].Func == IDF_GROUP) &&	// abecední setřídění skupin
 						(item->Func == IDF_GROUP) &&
 						(txt >= Text.GetTxt(GetText(inx)))
 					) ||
 					(
-						(m_Data[inx].Func != IDF_GROUP) &&	// abecední setøídìní ne-skupin
+						(m_Data[inx].Func != IDF_GROUP) &&	// abecední setřídění ne-skupin
 						(item->Func != IDF_GROUP) &&
 						(txt >= Text.GetTxt(GetText(inx)))
 					)
 				)
 			)
 		{
-			after = inx;					// položka bude pøedcházející
+			after = inx;					// položka bude předcházející
 			inx = m_Data[inx].Next;			// posun na další položku
 		}
 	}
 
-// pøíprava adresy pøedešlé položky (i když je neplatná)
-	PROGITEM* itemAft = m_Data + after;				// adresa pøedcházející položky
+// příprava adresy předešlé položky (i když je neplatná)
+	PROGITEM* itemAft = m_Data + after;				// adresa předcházející položky
 
-// nemá-li to být první položka, bude se hledat napojení na pøedcházející položku
+// nemá-li to být první položka, bude se hledat napojení na předcházející položku
 	if (after != -1)
 	{
 
-// nalezení stejného rodièe, je-li pøedešlá položka v podvìtvi
-		if (IsValid(after))					// je pøedešlá položka platná?
+// nalezení stejného rodiče, je-li předešlá položka v podvětvi
+		if (IsValid(after))					// je předešlá položka platná?
 		{
 			while ((itemAft->Parent != parent) && (itemAft->Parent >= 0))
 			{
 				after = itemAft->Parent;
-				itemAft = m_Data + after;			// adresa pøedcházející položky
+				itemAft = m_Data + after;			// adresa předcházející položky
 			}
 		}
 
-// ovìøení, zda je pøedcházející položka platná (musí mít stejného rodièe)
+// ověření, zda je předcházející položka platná (musí mít stejného rodiče)
 		if (IsNotValid(after) || (itemAft->Parent != parent))
 		{	
 
-// pøíprava výchozí položky - buï první potomek rodièe nebo první položka ROOT
-			if (parent >= 0)					// je rodiè platný?
+// příprava výchozí položky - buď první potomek rodiče nebo první položka ROOT
+			if (parent >= 0)					// je rodič platný?
 			{
-				after = itemPar->Child;			// první potomek rodièe
+				after = itemPar->Child;			// první potomek rodiče
 			}
 			else
 			{
@@ -1221,7 +1221,7 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 			}
 
 // nalezení poslední položky
-			if (after >= 0)						// je nìjaká položka?
+			if (after >= 0)						// je nějaká položka?
 			{
 				itemAft = m_Data + after;		// adresa položky
 
@@ -1234,21 +1234,21 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 		}
 	}
 
-// napojení položky na pøedcházející položku (-1 = první)
-	itemNew->Prev = after;					// odkaz na pøedcházející položku
-	if (after >= 0)							// je pøedcházející položka platná?
+// napojení položky na předcházející položku (-1 = první)
+	itemNew->Prev = after;					// odkaz na předcházející položku
+	if (after >= 0)							// je předcházející položka platná?
 	{
-		itemNew->Next = itemAft->Next;		// pøenesení následující položky
+		itemNew->Next = itemAft->Next;		// přenesení následující položky
 		itemAft->Next = index;				// navázání odkazu na tuto položku
 	}
 	else
 	{
-		if (parent >= 0)					// je rodiè platný?
+		if (parent >= 0)					// je rodič platný?
 		{
-			itemNew->Next = itemPar->Child;	// pøedøazení pøed prvního potomka
-			itemPar->Child = index;			// položka bude prvním potomkem rodièe
+			itemNew->Next = itemPar->Child;	// předřazení před prvního potomka
+			itemPar->Child = index;			// položka bude prvním potomkem rodiče
 
-			if ((itemNew->Next < 0) && (itemPar->HTree != NULL) && (m_Tree != NULL))	// první potomek rodièe?
+			if ((itemNew->Next < 0) && (itemPar->HTree != NULL) && (m_Tree != NULL))	// první potomek rodiče?
 			{
 				TV_ITEM tvi;
 				tvi.hItem = itemPar->HTree;
@@ -1261,23 +1261,23 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 		}
 		else
 		{
-			itemNew->Next = m_First;		// pøedøazení pøed první ROOT položku
+			itemNew->Next = m_First;		// předřazení před první ROOT položku
 			m_First = index;				// položka bude první ROOT položkou
 		}
 	}
 
-// napojení pøed následující položku
+// napojení před následující položku
 	if (itemNew->Next >= 0)
 	{
 		m_Data[itemNew->Next].Prev = index;
 	}
 
-// inicializace ostatních parametrù
+// inicializace ostatních parametrů
 	itemNew->Child = -1;					// není žádný potomek
 	itemNew->HTree = NULL;					// není zobrazení položky stromu
 	itemNew->Refer = 0;						// nejsou žádné reference na položku
 
-// zvýšení èítaèe u referenèní položky (ne pro buffer tøíd)
+// zvýšení čítače u referenční položky (ne pro buffer tříd)
 	if (((DWORD)(itemNew->RefBlok) < (DWORD)PROGBUFNUM) && (m_BufID != BufClsID))
 	{
 		if (BufProg[itemNew->RefBlok].IsValid(itemNew->RefIndex))
@@ -1286,7 +1286,7 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 		}
 	}
 
-// zobrazení položky, je-li v zobrazené vìtvi
+// zobrazení položky, je-li v zobrazené větvi
 	if ((((parent >= 0) && (itemPar->HTree != NULL)) ||
 		(m_Disp == parent)))
 	{
@@ -1299,45 +1299,45 @@ int CBufProg::Insert(const PROGITEM* item, int parent, int after)
 
 
 ////////////////////////////////////////////////////////////////////
-// naètení inicializaèní tabulky bufferu (starý obsah bufferu se neruší - lze pøidávat)
-// pøi chybì pamìti vrací FALSE
+// načtení inicializační tabulky bufferu (starý obsah bufferu se neruší - lze přidávat)
+// při chybě paměti vrací FALSE
 
 bool CBufProg::InitTab(const INITTREE* tab, const int num)
 {
-// vypnutí pøekreslování okna
+// vypnutí překreslování okna
 	RedrawOff();
 
-// pøíprava bufferu rodièù
-	int ParBuf[30];							// to snad bude vždy dostaèující
-	for (int i = 0; i < 30; i++) ParBuf[i] = -1; // rodiè je neplatný
+// příprava bufferu rodičů
+	int ParBuf[30];							// to snad bude vždy dostačující
+	for (int i = 0; i < 30; i++) ParBuf[i] = -1; // rodič je neplatný
 
-// inicializace nemìnných parametrù položky
-	PROGITEM item;							// vytváøená nová položka
+// inicializace neměnných parametrů položky
+	PROGITEM item;							// vytvářená nová položka
 	item.RefBlok = BufIntID;				// reference na buffer interních funkcí
 	item.DatBlok = -1;						// datový blok není
 	item.DatIndex = -1;						// datový index
 	item.Icon = -1;							// ikona implicitní
 	item.Name = -1;							// jméno implicitní
 
-// cyklus pøes položky tabulky
+// cyklus přes položky tabulky
 	for (i = 0; i < num; i++)
 	{
 
-// pøíprava odkazu na deklaraèní funkci
-		item.Func = tab[i].Func;			// identifikaèní kód funkce
+// příprava odkazu na deklarační funkci
+		item.Func = tab[i].Func;			// identifikační kód funkce
 		int fnc = tab[i].Func - IDF;		// index funkce
 		ASSERT(BufInt.IsValid(fnc));
-		PROGITEM* itemfnc = &BufInt[fnc];	// adresa deklaraèní funkce
+		PROGITEM* itemfnc = &BufInt[fnc];	// adresa deklarační funkce
 
-// pøenesení parametrù z deklaraèní funkce
+// přenesení parametrů z deklarační funkce
 		item.SrcMask = itemfnc->SrcMask;	// zdrojové vlastnosti
 		item.DstMask = itemfnc->DstMask;	// cílové vlastnosti
 		item.Param = itemfnc->Param;		// parametry
 
-// odkaz na deklaraèní funkci
-		item.RefIndex = fnc;				// referenèní index
+// odkaz na deklarační funkci
+		item.RefIndex = fnc;				// referenční index
 
-// pøidání položky do bufferu (a aktualizace bufferu rodièù)
+// přidání položky do bufferu (a aktualizace bufferu rodičů)
 		int level = tab[i].Level;
 		if (level & NOREFER) item.Param |= PR_NOREFER;
 		level = level & ~NOREFER;
@@ -1351,7 +1351,7 @@ bool CBufProg::InitTab(const INITTREE* tab, const int num)
 		}
 		ParBuf[level + 1] = ii;
 	}
-// zapnutí pøekreslování okna
+// zapnutí překreslování okna
 	RedrawOn();
 
 	return true;
@@ -1359,11 +1359,11 @@ bool CBufProg::InitTab(const INITTREE* tab, const int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení prázdné položky (vrací index položky, -1=chyba pamìti)
+// vytvoření prázdné položky (vrací index položky, -1=chyba paměti)
 
 int CBufProg::New()
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	if (result >= 0)
 	{
 		MemCopy(m_Data + result, &InitProgItem, SIZEOFPROGITEM);
@@ -1380,7 +1380,7 @@ int CBufProg::Find(HTREEITEM htree)
 // je to platný handle?
 	if (htree == NULL) return -1;
 
-// pøíprava výchozí zobrazené položky
+// příprava výchozí zobrazené položky
 	int index;
 	if (m_Disp < 0)
 	{
@@ -1394,7 +1394,7 @@ int CBufProg::Find(HTREEITEM htree)
 // kontrola, zda je platná výchozí položka
 	if (IsNotValid(index)) return -1;
 
-// pøíprava koncového indexu
+// příprava koncového indexu
 	int last = m_Data[index].Parent;		// koncový index
 
 // cyklus nalezení položky
@@ -1407,21 +1407,21 @@ int CBufProg::Find(HTREEITEM htree)
 // test, zda je to hledaná položka
 		if (item->HTree == htree) return index;
 
-// pokus o vnoøení do potomkù
-		index = item->Child;			// vnoøení na potomka
+// pokus o vnoření do potomků
+		index = item->Child;			// vnoření na potomka
 		if (index < 0)					// není žádný potomek?
 		{
 
 // nejsou-li potomci, zkusí se následující položka
-			index = item->Next;			// pokraèování další položkou
+			index = item->Next;			// pokračování další položkou
 
-// není-li ani další položka, vrátí se k rodièi
+// není-li ani další položka, vrátí se k rodiči
 			while (index < 0)
 			{
-				index = item->Parent;	// návrat k rodièi
+				index = item->Parent;	// návrat k rodiči
 				if (index == last) return -1;	// položka nenalezena
-				item = m_Data + index;	// adresa rodièe
-				index = item->Next;		// další položka za rodièem
+				item = m_Data + index;	// adresa rodiče
+				index = item->Next;		// další položka za rodičem
 			}
 		}
 	}
@@ -1433,7 +1433,7 @@ int CBufProg::Find(HTREEITEM htree)
 
 int CBufProg::SrcDat(int bufID, int index)
 {
-// kontrola platnosti údajù
+// kontrola platnosti údajů
 	if ((bufID < 0) || (index < 0)) return -1;
 
 // nalezení položky
@@ -1458,21 +1458,21 @@ int CBufProg::SrcDat(int bufID, int index)
 
 int CBufProg::SrcRef(int RefBlok, int RefIndex, BOOL next)
 {
-// pøíprava výchozí položky
+// příprava výchozí položky
 	int index = Select();						// vybraná položka
 	PROGITEM* item;								// adresa položky
 
-// test první položky, není-li žádná položka vybraná (jen pøi smìru vpøed)
-	if (IsNotValid(index))						// hledá se od zaèátku?
+// test první položky, není-li žádná položka vybraná (jen při směru vpřed)
+	if (IsNotValid(index))						// hledá se od začátku?
 	{		
 		index = m_First;						// index první položky
 		if (index < 0) return -1;				// není první položka
 
-		if (next)								// hledá se smìrem vpøed?
+		if (next)								// hledá se směrem vpřed?
 		{
 			item = m_Data + index;				// adresa položky
-			if ((item->RefBlok == RefBlok) &&	// souhlasí referenèní buffer ?
-				(item->RefIndex == RefIndex))	// souhlasí referenèní index ?
+			if ((item->RefBlok == RefBlok) &&	// souhlasí referenční buffer ?
+				(item->RefIndex == RefIndex))	// souhlasí referenční index ?
 			{
 				return index;					// index nalezené položky
 			}
@@ -1483,7 +1483,7 @@ int CBufProg::SrcRef(int RefBlok, int RefIndex, BOOL next)
 	for (int i = m_Num; i > 0; i--)
 	{
 
-// index další položky (cyklicky, až opìt po vybranou položku)
+// index další položky (cyklicky, až opět po vybranou položku)
 		if (next)
 		{
 			index = NextItem(index);
@@ -1497,8 +1497,8 @@ int CBufProg::SrcRef(int RefBlok, int RefIndex, BOOL next)
 		item = m_Data + index;
 
 // test, zda to je hledaná položka
-		if ((item->RefBlok == RefBlok) &&		// souhlasí referenèní buffer ?
-			(item->RefIndex == RefIndex))		// souhlasí referenèní index ?
+		if ((item->RefBlok == RefBlok) &&		// souhlasí referenční buffer ?
+			(item->RefIndex == RefIndex))		// souhlasí referenční index ?
 		{
 			return index;						// index nalezené položky
 		}
@@ -1544,7 +1544,7 @@ int _fastcall CBufProg::GetIcon(const int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutí poètu referencí pro uživatele
+// poskytnutí počtu referencí pro uživatele
 
 int CBufProg::GetRefer(int index)
 {
@@ -1556,16 +1556,16 @@ int CBufProg::GetRefer(int index)
 // adresa položky
 		PROGITEM* item = m_Data + index;
 
-// poèet referencí na položku
+// počet referencí na položku
 		ref = item->Refer;
 
-// z editoru pøesmìrování na deklaraèní buffer
+// z editoru přesměrování na deklarační buffer
 		if ((m_BufID == BufEdiID) && ((DWORD)item->RefBlok < (DWORD)PROGBUFNUM) && (item->RefBlok != BufEdiID))
 		{
 			ref = BufProg[item->RefBlok].GetRefer(item->RefIndex);
 		}
 
-// v lokálním bufferu korekce vstupních promìnných
+// v lokálním bufferu korekce vstupních proměnných
 		if ((m_BufID == BufLocID) && (ref > 0) && (item->DatBlok >= 0))
 		{
 			int inx2 = item->Parent;
@@ -1597,22 +1597,22 @@ int CBufProg::GetRefer(int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// test povolení zrušení vìtve z hlediska referencí na položky (TRUE=OK)
+// test povolení zrušení větve z hlediska referencí na položky (TRUE=OK)
 
 bool CBufProg::TestRefer(int index)
 {
-// kontrola, zda je položka platná a zda je to buffer objektù
+// kontrola, zda je položka platná a zda je to buffer objektů
 	if (IsNotValid(index) || ((m_BufID != BufObjID) && (m_BufID != BufLocID))) return true;
 
 // úschova výchozí položky
 	int first = index;						// úschova výchozí položky
 	PROGITEM* item;
 
-// cyklus pøes celou vìtev
+// cyklus přes celou větev
 	for (;;)
 	{
 
-// test, zda jsou na položku nìjaké reference
+// test, zda jsou na položku nějaké reference
 		if (GetRefer(index) > 0)
 		{
 
@@ -1632,18 +1632,18 @@ bool CBufProg::TestRefer(int index)
 // nalezení následující položky
 		if ((index == first) && (item->Child < 0)) return true;
 
-		index = item->Child;			// vnoøení na potomka
+		index = item->Child;			// vnoření na potomka
 		if (index < 0)					// není žádný potomek?
 		{
-			index = item->Next;			// pokraèování další položkou
+			index = item->Next;			// pokračování další položkou
 
 			while (index < 0)
 			{
-				index = item->Parent;	// návrat k rodièi
+				index = item->Parent;	// návrat k rodiči
 				if (index == first) return true;
 				ASSERT(index >= 0);
-				item = m_Data + index;	// adresa rodièe
-				index = item->Next;		// další položka za rodièem
+				item = m_Data + index;	// adresa rodiče
+				index = item->Next;		// další položka za rodičem
 			}
 		}
 	}
@@ -1651,21 +1651,21 @@ bool CBufProg::TestRefer(int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// pøekreslení ikony ve stromu
+// překreslení ikony ve stromu
 
 void CBufProg::ReDispIcon(int icon)
 {
-// kontrola platnosti ikony a je-li nìjaký strom
+// kontrola platnosti ikony a je-li nějaký strom
 	if (Icon.IsNotValid(icon) || (m_Tree == NULL)) return;
 
-// pøíprava indexu položky
+// příprava indexu položky
 	int index = m_Max-1;
 	PROGITEM* item = m_Data + index;
 	int icon2;
 	TV_ITEM tvi;
 	tvi.mask = TVIF_IMAGE;
 
-// cyklus pøes všechny položky
+// cyklus přes všechny položky
 	for (; index >= 0; index--)
 	{
 
@@ -1680,7 +1680,7 @@ void CBufProg::ReDispIcon(int icon)
 			if (icon2 == icon)
 			{
 
-// zajištìní pøekreslení položky
+// zajištění překreslení položky
 				tvi.hItem = item->HTree;
 				tvi.iImage = 0;
 				::SendMessage(m_Tree, TVM_SETITEM, 0, (LPARAM)&tvi);
@@ -1696,7 +1696,7 @@ void CBufProg::ReDispIcon(int icon)
 
 
 ////////////////////////////////////////////////////////////////////
-// test èísla funkce, zda je to objekt (s jedineèným jménem)
+// test čísla funkce, zda je to objekt (s jedinečným jménem)
 
 bool _fastcall CBufProg::TestObj(int func)
 {
@@ -1735,9 +1735,9 @@ bool _fastcall CBufProg::TestObj(int func)
 ////////////////////////////////////////////////////////////////////
 // nalezení objektu daného jména (-1 = nenalezeno) - rozlišuje velká/malá písmena a mezery
 //		name ..... hledaný text
-//		over ..... pøeskoèená položka (-1 = není)
-//		first .... první položka (-1 = od zaèátku)
-//		next ..... pøíští položka pro zastavení (-1 = po konec)
+//		over ..... přeskočená položka (-1 = není)
+//		first .... první položka (-1 = od začátku)
+//		next ..... příští položka pro zastavení (-1 = po konec)
 
 int CBufProg::FindObj(const CMultiText& name, int over, int first, int next)
 {
@@ -1751,13 +1751,13 @@ int CBufProg::FindObj(const CMultiText& name, int over, int first, int next)
 		if (IsNotValid(first)) return -1;
 	}
 
-// korekce pøíští položky
+// korekce příští položky
 	if (IsNotValid(next))
 	{
 		next = m_First;
 	}
 
-// cyklus pøes všechny položky
+// cyklus přes všechny položky
 	CMultiText txt;
 	do
 	{
@@ -1772,7 +1772,7 @@ int CBufProg::FindObj(const CMultiText& name, int over, int first, int next)
 			CBufProg* buf = this;
 			int inx = first;
 
-// pøesmìrování z editoru na objekty
+// přesměrování z editoru na objekty
 			if ((item->RefBlok == BufObjID) ||
 				(item->RefBlok == BufLocID))
 			{
@@ -1785,7 +1785,7 @@ int CBufProg::FindObj(const CMultiText& name, int over, int first, int next)
 			if ((m_BufID != BufLocID) || (item->Parent >= 0))
 			{
 
-// porovnání jména objektu (staèí shodnost jednoho v kterémkoliv z jazykù)
+// porovnání jména objektu (stačí shodnost jednoho v kterémkoliv z jazyků)
 				int itx = buf->GetText(inx);
 				if (itx >= 0)
 				{
@@ -1821,42 +1821,42 @@ int CBufProg::FindObj(const CMultiText& name, int over, int first, int next)
 
 
 ////////////////////////////////////////////////////////////////////
-// zrušení vìtve stromu (pøi chybì pamìti vrací FALSE - stav není navrácen!)
+// zrušení větve stromu (při chybě paměti vrací FALSE - stav není navrácen!)
 
 bool CBufProg::Del(int index)
 {
 // kontrola platnosti indexu
 	if (IsNotValid(index)) return true;
 
-// lokální promìnné
+// lokální proměnné
 	int first = index;					// úschova indexu výchozí položky
 	PROGITEM* item;						// adresa rušené položky
 	CBufProg* buf;						// adresa referujícího bufferu
 	PROGITEM* item2;					// adresa referující položky
-	int i;								// pomocný èítaè (index referující položky)
-	int next = index;					// index pøíští položky k rušení
-	int parent;							// index rodièe rušené položky
+	int i;								// pomocný čítač (index referující položky)
+	int next = index;					// index příští položky k rušení
+	int parent;							// index rodiče rušené položky
 
-// cyklus pøes všechny položky - zaèíná od nejhlubších položek
+// cyklus přes všechny položky - začíná od nejhlubších položek
 	do {
 
-// pøíprava adresy položky
+// příprava adresy položky
 		index = next;					// index rušené položky
 		item = m_Data + index;			// adresa rušené položky
-		parent = item->Parent;			// index rodièe rušené položky
+		parent = item->Parent;			// index rodiče rušené položky
 
-// pokud je nìjaký potomek, vnoøí se nejdøíve do potomka
+// pokud je nějaký potomek, vnoří se nejdříve do potomka
 		if (item->Child >= 0)			// má položka potomky?
 		{
-			next = item->Child;			// pøíštì se ruší potomek položky
-			index = next;				// index aktuální položky (kvùli kontrole WHILE)
+			next = item->Child;			// příště se ruší potomek položky
+			index = next;				// index aktuální položky (kvůli kontrole WHILE)
 		}
 
-// položka je bez dalších potomkù, mùže se zrušit
+// položka je bez dalších potomků, může se zrušit
 		else
 		{
 
-// kontrola, jestli jsou na položku nìjaké reference
+// kontrola, jestli jsou na položku nějaké reference
 			if (item->Refer > 0)
 			{
 
@@ -1867,7 +1867,7 @@ bool CBufProg::Del(int index)
 				i = buf->Max()-1;		// index poslední položky v bufferu
 				item2 = buf->Data() + i; // adresa poslední položky
 
-				for (; i >= 0; i--)		// cyklus pøes všechny položky bufferu
+				for (; i >= 0; i--)		// cyklus přes všechny položky bufferu
 				{
 					if (buf->m_Valid[i])	// je to platná položka?
 					{
@@ -1886,7 +1886,7 @@ bool CBufProg::Del(int index)
 					Map.DelIcon(item->DatIndex);
 				}
 
-				ASSERT(item->Refer == 0);	// teï již nesmí nic referovat!
+				ASSERT(item->Refer == 0);	// teď již nesmí nic referovat!
 			}
 
 // zrušení programových dat
@@ -1904,7 +1904,7 @@ bool CBufProg::Del(int index)
 				}
 			}
 
-// záznam UNDO operace (data se pøi UNDO musí navracet døíve)
+// záznam UNDO operace (data se při UNDO musí navracet dříve)
 			if (m_Undo)
 			{
 				if (!Undo.AddProgDel(m_BufID, index, item))
@@ -2038,46 +2038,46 @@ bool CBufProg::Del(int index)
 				::SendMessage(m_Tree, TVM_DELETEITEM, 0, (LPARAM)item->HTree);
 			}
 
-// úschova pøíští položky
+// úschova příští položky
 			next = item->Next;
 
-// napojení pøedcházející položky na následující
+// napojení předcházející položky na následující
 			if (next >= 0)
 			{
 				m_Data[next].Prev = item->Prev;
 			}
 
-// napojení následující položky na pøedcházejíci
+// napojení následující položky na předcházejíci
 			if (item->Prev >= 0)
 			{
 				m_Data[item->Prev].Next = next;
 			}
 
-// oprava odkazu z rodièe
+// oprava odkazu z rodiče
 			if ((parent >= 0) && (m_Data[parent].Child == index))
 			{
 				m_Data[parent].Child = next;
 			}
 
-// pøesmìrování ukazatele na první položku
+// přesměrování ukazatele na první položku
 			if (index == m_First)
 			{
 				m_First = next;
 			}
 
-// pøesmìrování rodièe zobrazených položek
+// přesměrování rodiče zobrazených položek
 			if (index == m_Disp)
 			{
 				m_Disp = -2;
 			}
 
-// není-li další položka, poukraèuje se rodièem
+// není-li další položka, poukračuje se rodičem
 			if ((next < 0) && (index != first))
 			{
 				next = parent;
 			}
 
-// snížení èítaèe referencí
+// snížení čítače referencí
 			if (((DWORD)item->RefBlok < (DWORD)PROGBUFNUM) && (m_BufID != BufClsID) &&
 				BufProg[item->RefBlok].IsValid(item->RefIndex))
 			{
@@ -2094,7 +2094,7 @@ bool CBufProg::Del(int index)
 // dokud nebyla zrušena výchozí položka
 	} while (index != first);
 
-// korekce zobrazení potomkù u rodièe
+// korekce zobrazení potomků u rodiče
 	if (parent >= 0)
 	{
 		item = m_Data + parent;
@@ -2127,64 +2127,64 @@ bool CBufProg::Del(int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// pøesun vìtve stromu (vrací nový index položky) 
-// (parent: -1 = ROOT, after: -1 = zaèátek, -2 = konec)
+// přesun větve stromu (vrací nový index položky) 
+// (parent: -1 = ROOT, after: -1 = začátek, -2 = konec)
 
 int CBufProg::Move(int parent, int after, int src)
 {
-// lokální promìnné
-	PROGITEM*	item;						// adresa pøenášené položky
-	PROGITEM*	itemPar;					// adresa cílového rodièe
-	PROGITEM*	itemAft;					// adresa cílové pøedcházející položky
-	CBufProg*	bufedi = &BufEdi;			// editaèní buffer
-	int			inxedi;						// index položky v editaèním bufferu
-	PROGITEM*	itemedi;					// adresa položky v editaèním bufferu
-	int oldparent;							// úschovaný rodiè zdrojové položky
+// lokální proměnné
+	PROGITEM*	item;						// adresa přenášené položky
+	PROGITEM*	itemPar;					// adresa cílového rodiče
+	PROGITEM*	itemAft;					// adresa cílové předcházející položky
+	CBufProg*	bufedi = &BufEdi;			// editační buffer
+	int			inxedi;						// index položky v editačním bufferu
+	PROGITEM*	itemedi;					// adresa položky v editačním bufferu
+	int oldparent;							// úschovaný rodič zdrojové položky
 	int first;								// uschovaná výchozí zdrojová položka
 
 // kontrola platnosti zdrojového indexu
 	ASSERT(IsValid(src));
-	if (IsNotValid(src)) return src;		// nic se nemìní
+	if (IsNotValid(src)) return src;		// nic se nemění
 	item = m_Data + src;					// adresa položky
-	oldparent = item->Parent;				// pùvodní rodiè zdrojové položky
+	oldparent = item->Parent;				// původní rodič zdrojové položky
 
 
-// -------------- korekce ukazatelù
+// -------------- korekce ukazatelů
 
-// kontrola platnosti nového rodièe
-	if (IsNotValid(parent))					// je platný rodiè?
+// kontrola platnosti nového rodiče
+	if (IsNotValid(parent))					// je platný rodič?
 	{
 		parent = -1;						// není platný - bude to ROOT položka
 	}
 
-// adresa cílového rodièe (i neplatný)
-	itemPar = m_Data + parent;				// adresa rodièe (i když je neplatný)
+// adresa cílového rodiče (i neplatný)
+	itemPar = m_Data + parent;				// adresa rodiče (i když je neplatný)
 
-// adresa cílové pøedcházející položky (i neplatné)
-	itemAft = m_Data + after;				// adresa pøedcházející položky (i když je neplatná)
+// adresa cílové předcházející položky (i neplatné)
+	itemAft = m_Data + after;				// adresa předcházející položky (i když je neplatná)
 
-// není-li požadována první položka, bude se hledat napojení na pøedcházející položku
+// není-li požadována první položka, bude se hledat napojení na předcházející položku
 	if (after != -1)
 	{
 
-// korekce pøedešlé cílové položky, je-li v podvìtvi
-		if (IsValid(after))					// je pøedešlá položka platná?
+// korekce předešlé cílové položky, je-li v podvětvi
+		if (IsValid(after))					// je předešlá položka platná?
 		{
 			while ((itemAft->Parent != parent) && (itemAft->Parent >= 0))
 			{
 				after = itemAft->Parent;
-				itemAft = m_Data + after;			// adresa pøedcházející položky
+				itemAft = m_Data + after;			// adresa předcházející položky
 			}
 		}
 
-// ovìøení, zda je pøedcházející položka platná (musí mít stejného rodièe)
+// ověření, zda je předcházející položka platná (musí mít stejného rodiče)
 		if (IsNotValid(after) || (itemAft->Parent != parent))
 		{	
 
-// pøíprava výchozí pøedešlé položky - buï první potomek rodièe nebo první položka ROOT
-			if (parent >= 0)					// je rodiè platný?
+// příprava výchozí předešlé položky - buď první potomek rodiče nebo první položka ROOT
+			if (parent >= 0)					// je rodič platný?
 			{
-				after = itemPar->Child;			// první potomek rodièe
+				after = itemPar->Child;			// první potomek rodiče
 			}
 			else
 			{
@@ -2192,7 +2192,7 @@ int CBufProg::Move(int parent, int after, int src)
 			}
 
 // nalezení poslední položky
-			if (after >= 0)						// je nìjaká položka?
+			if (after >= 0)						// je nějaká položka?
 			{
 				itemAft = m_Data + after;		// adresa položky
 
@@ -2205,14 +2205,14 @@ int CBufProg::Move(int parent, int after, int src)
 		}
 	}
 
-// kontrola, zda se vùbec nìco mìní
+// kontrola, zda se vůbec něco mění
 	if ((oldparent == parent) && 
 		((item->Prev == after) || (src == after)))
 	{
 		return src;
 	}
 
-// pøíznak modifikace souboru
+// příznak modifikace souboru
 	SetModi();
 
 // záznam pro UNDO
@@ -2224,9 +2224,9 @@ int CBufProg::Move(int parent, int after, int src)
 		}
 	}
 
-// ---------------- odpojení vìtve
+// ---------------- odpojení větve
 
-// odpojení od pøedcházející položky
+// odpojení od předcházející položky
 	if (item->Prev >= 0)
 	{
 		m_Data[item->Prev].Next = item->Next;
@@ -2234,12 +2234,12 @@ int CBufProg::Move(int parent, int after, int src)
 	else
 	{
 
-// odpojení od rodièe
+// odpojení od rodiče
 		if (oldparent >= 0)
 		{
 			m_Data[oldparent].Child = item->Next;
 
-// aktualizace rodièe, pokud to byl jeho poslední potomek
+// aktualizace rodiče, pokud to byl jeho poslední potomek
 			if ((item->Next < 0) && (m_Data[oldparent].HTree != NULL))
 			{
 				TV_ITEM tvi;
@@ -2271,14 +2271,14 @@ int CBufProg::Move(int parent, int after, int src)
 
 // ----------------- odsun vstupního parametru
 
-// kontrola, zda je odsunut vstupní parametr mezi lokální promìnné
+// kontrola, zda je odsunut vstupní parametr mezi lokální proměnné
 	if ((m_BufID == BufLocID) &&
 		(oldparent >= 0) &&
 		(m_Data[oldparent].Func == IDF_PAR) &&
 		(parent != oldparent))
 	{
 
-// nalezení parametru funkce v editaèním bufferu (odlišovat od ROOT funkce v editoru)
+// nalezení parametru funkce v editačním bufferu (odlišovat od ROOT funkce v editoru)
 		inxedi = bufedi->Max() - 1;			// index poslední položky
 		itemedi = bufedi->Data() + inxedi;	// adresa poslední položky
 		for (; inxedi >= 0; inxedi--)
@@ -2301,23 +2301,23 @@ int CBufProg::Move(int parent, int after, int src)
 		}
 	}
 
-// --------------- pøipojení vìtve
+// --------------- připojení větve
 
-// nastavení odkazu na nového rodièe
-	item->Parent = parent;				// odkaz na rodièe (pro ROOT bude = -1)
+// nastavení odkazu na nového rodiče
+	item->Parent = parent;				// odkaz na rodiče (pro ROOT bude = -1)
 
-// napojení položky na pøedcházející položku
-	item->Prev = after;					// odkaz na pøedcházející položku
-	if (after >= 0)							// je pøedcházející položka platná?
+// napojení položky na předcházející položku
+	item->Prev = after;					// odkaz na předcházející položku
+	if (after >= 0)							// je předcházející položka platná?
 	{
-		item->Next = itemAft->Next;			// pøenesení následující položky
+		item->Next = itemAft->Next;			// přenesení následující položky
 		itemAft->Next = src;				// navázání odkazu na tuto položku
 	}
 	else
 	{
-		if (parent >= 0)					// je rodiè platný?
+		if (parent >= 0)					// je rodič platný?
 		{
-			if ((itemPar->Child < 0) && itemPar->HTree)	// je to první potomek rodièe
+			if ((itemPar->Child < 0) && itemPar->HTree)	// je to první potomek rodiče
 			{
 				TV_ITEM tvi;
 				tvi.hItem = itemPar->HTree;
@@ -2326,12 +2326,12 @@ int CBufProg::Move(int parent, int after, int src)
 				::SendMessage(m_Tree, TVM_SETITEM, 0, (LPARAM)&tvi);
 			}
 
-			item->Next = itemPar->Child;	// pøedøazení pøed prvního potomka
-			itemPar->Child = src;			// položka bude prvním potomkem rodièe
+			item->Next = itemPar->Child;	// předřazení před prvního potomka
+			itemPar->Child = src;			// položka bude prvním potomkem rodiče
 		}
 		else
 		{
-			item->Next = m_First;			// pøedøazení pøed první ROOT položku
+			item->Next = m_First;			// předřazení před první ROOT položku
 			m_First = src;					// položka bude první ROOT položkou
 		}
 	}
@@ -2342,21 +2342,21 @@ int CBufProg::Move(int parent, int after, int src)
 		m_Data[item->Next].Prev = src;
 	}
 
-// --------------- pøísun vstupního parametru
+// --------------- přísun vstupního parametru
 
-// kontrola, zda je pøisunut vstupní parametr z lokálních promìnných
+// kontrola, zda je přisunut vstupní parametr z lokálních proměnných
 	if ((m_BufID == BufLocID) &&
 		(parent >= 0) &&
 		(itemPar->Func == IDF_PAR) &&
 		(parent != oldparent))
 	{
 
-// pøíprava indexu globální funkce
+// příprava indexu globální funkce
 		int reffnc = BufObj.SrcDat(BufLocID, itemPar->Parent);
 		if (reffnc >= 0)
 		{
 
-// nalezení funkce v editaèním bufferu
+// nalezení funkce v editačním bufferu
 			inxedi = bufedi->Max() - 1;			// index poslední položky
 			itemedi = bufedi->Data() + inxedi;	// adresa poslední položky
 			for (; inxedi >= 0; inxedi--)
@@ -2374,7 +2374,7 @@ int CBufProg::Move(int parent, int after, int src)
 					int ii = bufedi->Copy(inxedi, -2, BufLocID, src);
 					ASSERT(ii >= 0);
 
-// zákaz pøesunu parametru
+// zákaz přesunu parametru
 					if (ii >= 0)
 					{
 						bufedi->At(ii).Param |= PR_NOMOVE;
@@ -2385,9 +2385,9 @@ int CBufProg::Move(int parent, int after, int src)
 		}
 	}
 
-// --------------- zobrazení vìtve na nové pozici
+// --------------- zobrazení větve na nové pozici
 
-// zobrazení pøenesených položek, jsou-li v zobrazené vìtvi
+// zobrazení přenesených položek, jsou-li v zobrazené větvi
 	if ((((parent >= 0) && (m_Data[parent].HTree != NULL)) || (m_Disp == parent)))
 	{
 		first = src;							// výchozí položka
@@ -2402,20 +2402,20 @@ int CBufProg::Move(int parent, int after, int src)
 // nalezení následující položky
 			if ((src != first) || (item->Child >= 0))
 			{
-				src = item->Child;			// vnoøení na potomka
+				src = item->Child;			// vnoření na potomka
 			}
 
 			if (src < 0)
 			{
-				src = item->Next;			// pokraèování další položkou
+				src = item->Next;			// pokračování další položkou
 
 				while (src < 0)
 				{
-					src = item->Parent;	// návrat k rodièi
+					src = item->Parent;	// návrat k rodiči
 					ASSERT(src >= 0);
 					if (src == first) break;
-					item = m_Data + src;	// adresa rodièe
-					src = item->Next;		// další položka za rodièem
+					item = m_Data + src;	// adresa rodiče
+					src = item->Next;		// další položka za rodičem
 				}
 			}
 
@@ -2423,7 +2423,7 @@ int CBufProg::Move(int parent, int after, int src)
 		} while (src != first);
 	}
 
-// aktualizace stavových ikon rodièù
+// aktualizace stavových ikon rodičů
 	AktStateImage(parent);
 	if (parent != oldparent)
 	{
@@ -2435,69 +2435,69 @@ int CBufProg::Move(int parent, int after, int src)
 
 
 ////////////////////////////////////////////////////////////////////
-// kopie vìtve stromu - vrací cílový index položky
-// (parent: -1 = ROOT, pos: -1 = zaèátek, -2 = konec)
+// kopie větve stromu - vrací cílový index položky
+// (parent: -1 = ROOT, pos: -1 = začátek, -2 = konec)
 
 int CBufProg::Copy(int parent, int pos, int bufID, int src)
 {
-// lokální promìnné
+// lokální proměnné
 	ASSERT((DWORD)bufID < (DWORD)PROGBUFNUM);
 	CBufProg* buf = BufProg + bufID;			// zdrojový buffer
 	PROGITEM item;								// pracovní buffer položky
 	PROGITEM* itemsrc;							// adresa zdrojové položky
 	PROGITEM* itemdst;							// adresa cílové položky
-	PROGITEM*	itemPar;						// adresa cílového rodièe
-	PROGITEM*	itemAft;						// adresa cílové pøedcházející položky
+	PROGITEM*	itemPar;						// adresa cílového rodiče
+	PROGITEM*	itemAft;						// adresa cílové předcházející položky
 	int dst;									// index cílové položky
 	int first = src;							// úschova výchozí zdrojové položky
 	int result;									// výsledek
-	int newparent;								// úschova cílového rodièe
+	int newparent;								// úschova cílového rodiče
 
 // kontrola zdrojové položky
 	ASSERT(buf->IsValid(src));
 	if(buf->IsNotValid(src)) return -1;
 
-// zapnutí èekacího kurzoru
+// zapnutí čekacího kurzoru
 	BeginWaitCursor();
 
-// -------------- korekce ukazatelù
+// -------------- korekce ukazatelů
 
-// kontrola platnosti nového rodièe
-	if (IsNotValid(parent))						// je platný rodiè?
+// kontrola platnosti nového rodiče
+	if (IsNotValid(parent))						// je platný rodič?
 	{
 		parent = -1;							// není platný - bude to ROOT položka
 	}
 	result = parent;							// výsledek
-	newparent = parent;							// úschova cílového rodièe
+	newparent = parent;							// úschova cílového rodiče
 
-// adresa cílového rodièe (i neplatný)
-	itemPar = m_Data + parent;				// adresa rodièe (i když je neplatný)
+// adresa cílového rodiče (i neplatný)
+	itemPar = m_Data + parent;				// adresa rodiče (i když je neplatný)
 
-// adresa cílové pøedcházející položky (i neplatné)
-	itemAft = m_Data + pos;					// adresa pøedcházející položky (i když je neplatná)
+// adresa cílové předcházející položky (i neplatné)
+	itemAft = m_Data + pos;					// adresa předcházející položky (i když je neplatná)
 
-// není-li požadována první položka, bude se hledat napojení na pøedcházející položku
+// není-li požadována první položka, bude se hledat napojení na předcházející položku
 	if (pos != -1)
 	{
 
-// korekce pøedešlé cílové položky, je-li v podvìtvi
-		if (IsValid(pos))					// je pøedešlá položka platná?
+// korekce předešlé cílové položky, je-li v podvětvi
+		if (IsValid(pos))					// je předešlá položka platná?
 		{
 			while ((itemAft->Parent != parent) && (itemAft->Parent >= 0))
 			{
 				pos = itemAft->Parent;
-				itemAft = m_Data + pos;			// adresa pøedcházející položky
+				itemAft = m_Data + pos;			// adresa předcházející položky
 			}
 		}
 
-// ovìøení, zda je pøedcházející položka platná (musí mít stejného rodièe)
+// ověření, zda je předcházející položka platná (musí mít stejného rodiče)
 		if (IsNotValid(pos) || (itemAft->Parent != parent))
 		{	
 
-// pøíprava výchozí pøedešlé položky - buï první potomek rodièe nebo první položka ROOT
-			if (parent >= 0)					// je rodiè platný?
+// příprava výchozí předešlé položky - buď první potomek rodiče nebo první položka ROOT
+			if (parent >= 0)					// je rodič platný?
 			{
-				pos = itemPar->Child;			// první potomek rodièe
+				pos = itemPar->Child;			// první potomek rodiče
 			}
 			else
 			{
@@ -2505,7 +2505,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			}
 
 // nalezení poslední položky
-			if (pos >= 0)						// je nìjaká položka?
+			if (pos >= 0)						// je nějaká položka?
 			{
 				itemAft = m_Data + pos;		// adresa položky
 
@@ -2518,12 +2518,12 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 		}
 	}
 
-// ------------ pøíprava parametrù kopírované položky
+// ------------ příprava parametrů kopírované položky
 
-// cyklus pøes všechny položky zdrojové vìtve
+// cyklus přes všechny položky zdrojové větve
 	do {
 
-// pøi kopii skupiny z okna tøíd zajištìní naètení obsahu skupiny
+// při kopii skupiny z okna tříd zajištění načtení obsahu skupiny
 		if ((bufID == BufClsID) && 
 			(buf->At(src).Func == IDF_GROUP) &&
 			(buf->At(src).Child < 0))
@@ -2536,19 +2536,19 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 
 // test, zda se mají kopírovat potomci
 		if (	(	(bufID == BufStrID) &&				// kopie z bufferu interních struktur
-					(	(item.Func == IDF_NUM)// ||		// èíslo se kopíruje bez obsahu
-//						(item.Func == IDF_WHILE_BODY)	// cyklus se kopíruje bez pøerušení
+					(	(item.Func == IDF_NUM)// ||		// číslo se kopíruje bez obsahu
+//						(item.Func == IDF_WHILE_BODY)	// cyklus se kopíruje bez přerušení
 					)
 				) ||
-				((bufID == BufClsID) && (item.Func != IDF_GROUP)) || // tøídy se kopírují bez potomkù
-				((bufID == BufLocID) && ((m_BufID == BufEdiID) || (m_BufID == BufClsID))) ||	// z lokálních objektù vše bez potomkù
-				((bufID == BufObjID) && ((m_BufID == BufEdiID) || (m_BufID == BufClsID)))	// z globálních objektù vše bez potomkù
+				((bufID == BufClsID) && (item.Func != IDF_GROUP)) || // třídy se kopírují bez potomků
+				((bufID == BufLocID) && ((m_BufID == BufEdiID) || (m_BufID == BufClsID))) ||	// z lokálních objektů vše bez potomků
+				((bufID == BufObjID) && ((m_BufID == BufEdiID) || (m_BufID == BufClsID)))	// z globálních objektů vše bez potomků
 			)
 		{
-			item.Child = -1;							// zrušení potomkù
+			item.Child = -1;							// zrušení potomků
 		}
 	
-// zmìna reference na zdrojové okno, je-li kopie mezi okny
+// změna reference na zdrojové okno, je-li kopie mezi okny
 		if (bufID != m_BufID)
 		{
 			item.RefBlok = bufID;						// blok s deklarací
@@ -2556,7 +2556,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			item.DatBlok = -1;							// nejsou data
 			item.DatIndex = -1;							// nejsou data
 
-// oprava reference pøi pøetažení z okna tøíd
+// oprava reference při přetažení z okna tříd
 			if (bufID == BufClsID)
 			{
 				if (item.Func == IDF_GROUP)
@@ -2574,7 +2574,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			}
 			else
 
-// implicitní jméno a ikona (ne pøi kopii z okna tøíd)
+// implicitní jméno a ikona (ne při kopii z okna tříd)
 			{
 				if ((m_BufID == BufClsID) && (item.Func != IDF_GROUP))
 				{
@@ -2603,13 +2603,13 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			}
 		}
 
-// pøi kopii z okna struktur rozvinutí položky
+// při kopii z okna struktur rozvinutí položky
 		if ((bufID == BufStrID) && (item.Child >= 0))
 		{
 			item.Param |= PR_EXP;
 		}
 
-// pøi kopii z okna tøíd zrušení zámku a vypnutí
+// při kopii z okna tříd zrušení zámku a vypnutí
 		if (bufID == BufClsID)
 		{
 			item.Param &= ~(PR_LOCK | PR_OFF);
@@ -2626,10 +2626,10 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			item.Param &= ~PR_LOCK;
 		}
 
-// zrušení interního pøíznaku a pøíznaku nové položky a pøíznaku alternativní knihovny
+// zrušení interního příznaku a příznaku nové položky a příznaku alternativní knihovny
 		item.Param &= ~(PR_INTERN | PR_NEW | PR_CD | PR_CD2);
 
-// korekce parametrù indexu seznamu a sprajtu
+// korekce parametrů indexu seznamu a sprajtu
 		if ((item.Func == IDF_LIST_INDEX) ||
 			(item.Func == IDF_LIST_AUTO) ||
 			(item.Func == IDF_LIST_SIZE) ||
@@ -2649,7 +2649,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			}
 		}
 
-// základní ikona se mìní na bìžnou ikonu
+// základní ikona se mění na běžnou ikonu
 		if (item.Func == IDF_NONE)
 		{
 			item.Func = IDF_ICON;
@@ -2657,7 +2657,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 
 // ----------- duplikace dat položky
 
-// zrušení textu textové a èíselné konstanty a komentáøe pøi kopii z okna struktur
+// zrušení textu textové a číselné konstanty a komentáře při kopii z okna struktur
 		if (((item.Func == IDF_TEXT_CONST) || 
 			(item.Func == IDF_NUM) || 
 			(item.Func == IDF_COMMENT)) && 
@@ -2675,7 +2675,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			}
 		}
 
-// duplikace dat obrázku pøi kopii uvnitø/do okna objektù
+// duplikace dat obrázku při kopii uvnitř/do okna objektů
 		if ((item.Func == IDF_ICON) && ((m_BufID == BufObjID) || (m_BufID == BufLocID)))
 		{
 			if ((bufID == BufClsID) && (item.Icon >= 0))
@@ -2683,14 +2683,14 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 				item.DatIndex = item.Icon;
 			}
 
-			item.DatBlok = BufIcoID;			// data v bufferu obrázkù
-			if (item.DatIndex < 0)				// je nìjaký obrázek pøidìlen?
+			item.DatBlok = BufIcoID;			// data v bufferu obrázků
+			if (item.DatIndex < 0)				// je nějaký obrázek přidělen?
 			{
 				item.DatIndex = 0;				// implicitní ikona 0 (podklad)
-				item.Param |= PR_NEW;			// pøíznak nové položky
+				item.Param |= PR_NEW;			// příznak nové položky
 			}
 			item.DatIndex = Icon.Dup(item.DatIndex); // duplikace obrázku
-			item.Icon = item.DatIndex;			// bude to souèasnì ikona
+			item.Icon = item.DatIndex;			// bude to současně ikona
 		}
 
 // duplikace ikony barevné konstanty
@@ -2700,7 +2700,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 		}
 		else
 
-// duplikace ikony pøi kopii uvnitø okna (ne pro barevnou konstantu ani pro pøedmìt)
+// duplikace ikony při kopii uvnitř okna (ne pro barevnou konstantu ani pro předmět)
 		{
 			if ((item.Icon >= 0) && ((item.Func != IDF_ICON) || (m_BufID == BufClsID)))
 			{
@@ -2708,7 +2708,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			}
 		}
 
-// zajištìní dat pøi kopii z knihovny tøíd (ne pro ikonu - je již naètena)
+// zajištění dat při kopii z knihovny tříd (ne pro ikonu - je již načtena)
 		if ((bufID == BufClsID) && 
 			(item.Func != IDF_GROUP) &&
 			(item.Func != IDF_ICON) &&
@@ -2820,21 +2820,21 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 		}
 		else
 
-// duplikace dat (pokud jsou) - vèetnì obsahu funkce
+// duplikace dat (pokud jsou) - včetně obsahu funkce
 		{
 			CopyDupData(&item);
 		}
 
-// jméno souboru pøi pøetažení z okna tøíd se mùže zrušit
+// jméno souboru při přetažení z okna tříd se může zrušit
 		if ((item.Name >= 0) && (m_BufID != BufClsID))
 		{
 			Text[item.Name].MultiText(JAZYK000, EmptyText);
 		}
 
-// zajištìní nových dat pro položku - vèetnì obsahu funkce
+// zajištění nových dat pro položku - včetně obsahu funkce
 		CopyNewData(&item);
 
-// -------------- zajištìní jedineènosti jména
+// -------------- zajištění jedinečnosti jména
 
 		if (((m_BufID == BufObjID) || (m_BufID == BufLocID)) &&
 			TestObj(item.Func))
@@ -2854,7 +2854,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 					txt0 = Text.GetTxt(texti);
 					txt.MultiText(txt0);
 
-					// implicitní jméno parametrù sprajtu (pøi kopii z okna tøíd)
+					// implicitní jméno parametrů sprajtu (při kopii z okna tříd)
 					switch (item.Func)
 					{
 					case IDF_SPRITE_X:
@@ -2925,14 +2925,14 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 
 // -------------- uložení položky
 
-// kopie položky do cílového bufferu (pozor - Insert mùže pohnout zdrojovou i cílovou adresou)
+// kopie položky do cílového bufferu (pozor - Insert může pohnout zdrojovou i cílovou adresou)
 		dst = Insert(&item, parent, pos);
 		if (src == first) result = dst;			// výsledný index
-		pos = -2;								// pøíštì již budou položky na konec
+		pos = -2;								// příště již budou položky na konec
 
-// -------------- vytvoøení parametrù sprajtu
+// -------------- vytvoření parametrů sprajtu
 
-// pøi kopii sprajtu z okna tøíd pøidání parametrù
+// při kopii sprajtu z okna tříd přidání parametrů
 		if ((item.Func == IDF_SPRITE) && (item.Child == -1) && 
 			((m_BufID == BufObjID) || (m_BufID == BufLocID)))
 		{
@@ -2945,9 +2945,9 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			Copy(dst, -2, BufIntID, IDF_SPRITE_STATUS - IDF);
 		}
 
-// -------------- pøi kopii globální funkce kopie též vstupních parametrù
+// -------------- při kopii globální funkce kopie též vstupních parametrů
 
-// kontrola, zda se kopíruje globální funkce z objektù do editoru
+// kontrola, zda se kopíruje globální funkce z objektů do editoru
 		if ((item.Func == IDF_FNC) &&
 			(m_BufID == BufEdiID) && 
 			(bufID == BufObjID) &&
@@ -2955,7 +2955,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			(BufObj[src].DatIndex >= 0))
 		{
 
-// nalezení definice vstupních promìnných
+// nalezení definice vstupních proměnných
 			int inx = BufObj[src].DatIndex;
 			PROGITEM* itm;
 			do 
@@ -2965,7 +2965,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			} while ((itm->Func != IDF_PAR) && (itm->Parent >= 0));
 			inx = itm->Child;
 
-// kopie vstupních promìnných
+// kopie vstupních proměnných
 			if (itm->Func == IDF_PAR)
 			{
 				while (inx >= 0)
@@ -2978,20 +2978,20 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			}
 		}
 
-// --------------- vytvoøení vstupního parametru (pozor na kopii celé lokální definice)
+// --------------- vytvoření vstupního parametru (pozor na kopii celé lokální definice)
 
-// kontrola, zda je vytvoøen vstupní parametr 
+// kontrola, zda je vytvořen vstupní parametr 
 		if ((m_BufID == BufLocID) &&
 			(parent >= 0) &&
 			(m_Data[parent].Func == IDF_PAR))
 		{
 
-// pøíprava indexu globální funkce
+// příprava indexu globální funkce
 			int reffnc = BufObj.SrcDat(BufLocID, m_Data[parent].Parent);
 			if (reffnc >= 0)
 			{
 
-// nalezení funkce v editaèním bufferu
+// nalezení funkce v editačním bufferu
 				CBufProg* bufedi = &BufEdi;
 				int inxedi = bufedi->Max() - 1;					// index poslední položky
 				PROGITEM* itemedi = bufedi->Data() + inxedi;	// adresa poslední položky
@@ -3010,7 +3010,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 						int ii = bufedi->Copy(inxedi, -2, BufLocID, dst);
 						ASSERT(ii >= 0);
 
-// zákaz pøesunu parametru
+// zákaz přesunu parametru
 						if (ii >= 0)
 						{
 							bufedi->At(ii).Param |= PR_NOMOVE;
@@ -3023,7 +3023,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 
 // ---------- kopie definice programu
 
-// pøi kopii funkce kopie definice programu
+// při kopii funkce kopie definice programu
 		if (((item.DatBlok == BufLocID) || (item.DatBlok == BufEdiID)) &&
 			(m_BufID == bufID) && (item.DatIndex == m_Data[dst].DatIndex))
 		{
@@ -3033,23 +3033,23 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 			m_Data[dst].DatIndex = dstroot;
 			ASSERT(dstroot >= 0);
 
-// pøi kopii globální funkce korekce referencí na lokální promìnné
+// při kopii globální funkce korekce referencí na lokální proměnné
 			if ((item.DatBlok == BufLocID) && (m_BufID == BufObjID))
 			{
 
-// pøíprava ukazatelù pro vyhledávání definic funkcí
-				CBufProg* bufloc = &BufLoc;		// adresa bufferu lokálních objektù
-				int locinx = dstroot;			// index v lokální definici pøi vyhledávání funkcí
-				PROGITEM* locitem;				// položka v lokální definici pøi vyhledávání
+// příprava ukazatelů pro vyhledávání definic funkcí
+				CBufProg* bufloc = &BufLoc;		// adresa bufferu lokálních objektů
+				int locinx = dstroot;			// index v lokální definici při vyhledávání funkcí
+				PROGITEM* locitem;				// položka v lokální definici při vyhledávání
 				locitem = &bufloc->At(locinx);	// adresa položky
 
-// pøíprava ukazatelù pro vyhledávání lokálních promìnných v editoru
+// příprava ukazatelů pro vyhledávání lokálních proměnných v editoru
 				CBufProg* bufedi = &BufEdi;		// adresa bufferu editoru
 				int ediinx;						// index v bufferu editoru
 				PROGITEM* ediitem;				// adresa v bufferu editoru
 
-// pøíprava ukazatelù pro reindexaci odkazu na lokální promìnnou
-				int refinx;						// referenèní index hledané položky
+// příprava ukazatelů pro reindexaci odkazu na lokální proměnnou
+				int refinx;						// referenční index hledané položky
 				int num;						// relativní pozice položky v lokální definici
 				int inx;						// ukazatel indexu v lokální definici
 				PROGITEM* itm;					// položka v lokální definici
@@ -3065,7 +3065,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 					{
 						ediitem = &bufedi->At(ediinx);		// adresa položky
 
-// cyklus vyhledávání lokálních promìnných v editoru
+// cyklus vyhledávání lokálních proměnných v editoru
 						do 
 						{
 
@@ -3077,7 +3077,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 								(((bufedi->At(ediitem->Parent).DstMask & PR_ALL) != 0) || (bufedi->At(ediitem->Parent).Func != IDF_FNC)))
 							{
 
-// zjištìní relativní pozice položky ve zdrojové lokální definici
+// zjištění relativní pozice položky ve zdrojové lokální definici
 								num = 0;
 								inx = srcroot;
 								itm = &bufloc->At(inx);
@@ -3101,7 +3101,7 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 										inx = bufloc->NextItem(inx);
 									}
 
-// pøesmìrování ukazatele
+// přesměrování ukazatele
 									itm->Refer--;
 									ediitem->RefIndex = inx;
 									bufloc->At(inx).Refer++;
@@ -3125,33 +3125,33 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 
 // ---------- další položka
 
-// pøíprava indexu další položky
+// příprava indexu další položky
 		itemdst = &At(dst);
 		itemsrc = &buf->At(src);
 		if ((src != first) || (item.Child >= 0))
 		{
-			src = item.Child;				// vnoøení na potomka
+			src = item.Child;				// vnoření na potomka
 			if (src < 0)					// není žádný potomek?
 			{
-				src = itemsrc->Next;		// pokraèování další položkou
+				src = itemsrc->Next;		// pokračování další položkou
 
 				while ((src < 0) && (itemsrc->Parent >= 0))
 				{
-					src = itemsrc->Parent;	// návrat zdroje k rodièi
-					dst = parent;			// návrat cíle k rodièi
+					src = itemsrc->Parent;	// návrat zdroje k rodiči
+					dst = parent;			// návrat cíle k rodiči
 					itemdst = &At(dst);		// adresa cílové položky
-					parent = itemdst->Parent; // nový rodiè
-					if (src == first) break; // je celá vìtev
-					itemsrc = &buf->At(src); // adresa rodièe
-					src = itemsrc->Next;	// další položka za rodièem
+					parent = itemdst->Parent; // nový rodič
+					if (src == first) break; // je celá větev
+					itemsrc = &buf->At(src); // adresa rodiče
+					src = itemsrc->Next;	// další položka za rodičem
 				}
 			}
 			else
 			{
-				parent = dst;				// jinak tato položka bude rodièem
+				parent = dst;				// jinak tato položka bude rodičem
 			}
 
-// pøi kopii z okna tøíd pøeskoèení skupin
+// při kopii z okna tříd přeskočení skupin
 			if (bufID == BufClsID)
 			{
 				while ((src >= 0) && (src != first) && (buf->At(src).Func == IDF_GROUP))
@@ -3166,10 +3166,10 @@ int CBufProg::Copy(int parent, int pos, int bufID, int src)
 // až po výchozí položku
 	} while (src != first);
 
-// aktualizace stavové ikony rodièe
+// aktualizace stavové ikony rodiče
 	AktStateImage(newparent);
 
-// vypnutí èekacího kurzoru
+// vypnutí čekacího kurzoru
 	EndWaitCursor();
 
 	return result;
@@ -3213,20 +3213,20 @@ void CBufProg::CopyDupData(PROGITEM* item)
 
 
 ////////////////////////////////////////////////////////////////////
-// zajištìní nových dat u kopírované položky (je voláno i z Clipboard::Paste)
+// zajištění nových dat u kopírované položky (je voláno i z Clipboard::Paste)
 
 void CBufProg::CopyNewData(PROGITEM* item)
 {
-// test, zda data nejsou vytvoøena a zda je to buffer objektù
+// test, zda data nejsou vytvořena a zda je to buffer objektů
 	if (((item->DatBlok >= 0) && (item->DatIndex >= 0)) ||
 		((m_BufID != BufObjID) && (m_BufID != BufLocID)))
 		return;
 
-// vytvoøení nových dat pro promìnné
+// vytvoření nových dat pro proměnné
 	switch (item->Func)
 	{
 
-// èíselná promìnná
+// číselná proměnná
 	case IDF_LIST_AUTO:
 	case IDF_LIST_INDEX:
 	case IDF_SPRITE_X:
@@ -3239,13 +3239,13 @@ void CBufProg::CopyNewData(PROGITEM* item)
 						item->Param |= PR_NEW;
 						break;
 
-// textová promìnná
+// textová proměnná
 	case IDF_TEXT:		item->DatBlok = BufTxtID;
 						item->DatIndex = Text.New();
 						item->Param |= PR_NEW;
 						break;
 
-// logická promìnná
+// logická proměnná
 	case IDF_SPRITE_VISIBLE:
 	case IDF_SPRITE_MOVE:
 	case IDF_BOOL:		item->DatBlok = BufLogID;
@@ -3253,7 +3253,7 @@ void CBufProg::CopyNewData(PROGITEM* item)
 						item->Param |= PR_NEW;
 						break;
 
-// promìnná plochy
+// proměnná plochy
 	case IDF_MAP:		item->DatBlok = BufMapID;
 						ASSERT(Map.IsValid(0));
 						item->DatIndex = Map.New(Map[0].Width(), Map[0].Height());
@@ -3261,26 +3261,26 @@ void CBufProg::CopyNewData(PROGITEM* item)
 						item->Param |= PR_NEW;
 						break;
 
-// promìnná obrázku
+// proměnná obrázku
 	case IDF_PIC:		item->DatBlok = BufPicID;
 						ASSERT(Map.IsValid(0));
 						item->DatIndex = Picture.New(Map[0].Width()*ICONWIDTH, Map[0].Height()*ICONHEIGHT);
 						item->Param |= PR_NEW;
 						break;
 
-// promìnná sprajtu
+// proměnná sprajtu
 	case IDF_SPRITE:	item->DatBlok = BufSprID;
 						item->DatIndex = Sprite.New();
 						item->Param |= PR_NEW;
 						break;
 
-// promìnná zvuku
+// proměnná zvuku
 	case IDF_SND:		item->DatBlok = BufSndID;
 						item->DatIndex = Sound.New();
 						item->Param |= PR_NEW;
 						break;
 
-// promìnná hudby
+// proměnná hudby
 	case IDF_MUS:		item->DatBlok = BufMusID;
 						item->DatIndex = Music.New();
 						item->Param |= PR_NEW;
@@ -3291,7 +3291,7 @@ void CBufProg::CopyNewData(PROGITEM* item)
 		{
 			item->Param |= PR_NEW;
 
-// vytvoøení definice v editaèním bufferu
+// vytvoření definice v editačním bufferu
 			PROGITEM item2;								// pracovní položka
 			MemFill(&item2, SIZEOFPROGITEM, -1);		// implicitní hodnoty položek
 			item2.Func = IDF_FNC;						// identifikace funkce
@@ -3299,7 +3299,7 @@ void CBufProg::CopyNewData(PROGITEM* item)
 			item2.DstMask = PR_COMMAND;					// maska cílových vlastností
 			item2.Param = PR_EXP | PR_NOMOVE;			// parametry
 			item2.RefBlok = BufIntID;					// reference na interní buffer
-			item2.RefIndex = IDF_FNC - IDF;				// referenèní index
+			item2.RefIndex = IDF_FNC - IDF;				// referenční index
 			item2.DatIndex = BufEdi.Insert(&item2, -1, -2);	// vložení položky do bufferu
 
 // inicializace odkazu na definici z lokálního bufferu
@@ -3310,16 +3310,16 @@ void CBufProg::CopyNewData(PROGITEM* item)
 			}
 			else
 
-// vytvoøení deklarace v lokálním bufferu (je-li kopie do globálního bufferu)
+// vytvoření deklarace v lokálním bufferu (je-li kopie do globálního bufferu)
 			{
 				item2.DstMask = PR_ALLDATA;				// maska cílových vlastností
-				item2.DatBlok = BufEdiID;				// odkaz na editaèní buffer
+				item2.DatBlok = BufEdiID;				// odkaz na editační buffer
 				item->DatIndex = BufLoc.Insert(&item2, -1, -2); // vložení položky do bufferu
 				item->DatBlok = BufLocID;				// lokální buffer
 
 // vložení záhlaví pro vstupní parametry
 				item2.Func = IDF_PAR;					// vstupní parametry
-				item2.DstMask = PR_ALLDATA;				// maska cílových parametrù
+				item2.DstMask = PR_ALLDATA;				// maska cílových parametrů
 				item2.Param = PR_NOMOVE;				// parametry
 				item2.DatBlok = -1;						// není blok s daty
 				item2.DatIndex = -1;					// nejsou data

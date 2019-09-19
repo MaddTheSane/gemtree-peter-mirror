@@ -9,18 +9,18 @@
 
 namespace EditLog
 {
-// inicializace pøi startu
+// inicializace při startu
 	void StartInit();
 
 // zahájení editace
 	void BegEdit(int index);
 
-// pøesun editaèního pole
+// přesun editačního pole
 	HDWP MoveEdit(HDWP hdwp);
 
 // zobrazení
 	void Disp();
 
-// pøepnutí pøepínaèe
+// přepnutí přepínače
 	void Switch();
 }

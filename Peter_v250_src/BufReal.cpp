@@ -3,13 +3,13 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer reálných èísel							*
+*							Buffer reálných čísel							*
 *																			*
 \***************************************************************************/
 
 
 ////////////////////////////////////////////////////////////////////
-// pøidání záznamu o vložení položky do UNDO bufferu
+// přidání záznamu o vložení položky do UNDO bufferu
 
 template <> bool CBuffer<CReal>::UndoAddIns(int index)
 {
@@ -17,28 +17,28 @@ template <> bool CBuffer<CReal>::UndoAddIns(int index)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru (naèítá do promìnné, TRUE=operace OK)
+// načtení čísla ze souboru (načítá do proměnné, TRUE=operace OK)
 
 bool CBufReal::LoadFile(double& data, CText jmeno)
 {
-// naètení textového souboru
+// načtení textového souboru
 	CText txt;
 	if (!txt.LoadFile(jmeno)) return false;
 
-// odstranìní mezer a jiných oddìlovaèù
+// odstranění mezer a jiných oddělovačů
 	if (!txt.TrimLeft() || !txt.TrimRight()) return false;
 
-// naètení èísla
+// načtení čísla
 	data = Double(txt);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uložení èísla do souboru formátu NUM (FALSE=chyba)
+// uložení čísla do souboru formátu NUM (FALSE=chyba)
 
 bool CBufReal::SaveFile(double data, CText jmeno) const
 {
-// pøíprava èísla
+// příprava čísla
 	CText txt;
 	if (!txt.Double(data)) return false;
 

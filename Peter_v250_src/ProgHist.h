@@ -14,8 +14,8 @@ namespace HistEdit
 // zrušení jedné položky z bufferu
 	void Del(int index);
 
-// zrušení položek v bufferu (vèetnì editované) podle dat (pro sprajt pic=-1 všechny obrázky)
-// pøi chybì pamìti vrací FALSE
+// zrušení položek v bufferu (včetně editované) podle dat (pro sprajt pic=-1 všechny obrázky)
+// při chybě paměti vrací FALSE
 	bool Del(int bufID, int index, int sprite, int pic);
 
 // aktualizace voleb pro obsluhu historie
@@ -27,7 +27,7 @@ namespace HistEdit
 // návrat editovaného prvku z bufferu historie (z aktivního ukazatele)
 	void Pop();
 
-// pøedešlá historie
+// předešlá historie
 	void OnPrev();
 
 // následující historie

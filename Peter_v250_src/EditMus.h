@@ -9,16 +9,16 @@ namespace EditMusic
 {
 	extern HWND DispWnd;				// okno displeje
 
-// inicializace pøi startu
+// inicializace při startu
 	void StartInit();
 
 // zahájení editace
 	void BegEdit(int index);
 
-// pøesun okna displeje
+// přesun okna displeje
 	HDWP MoveDisp(HDWP hdwp);
 
-// nastavení èasového údaje (v sekundách)
+// nastavení časového údaje (v sekundách)
 	void DispSet(int time);
 
 // zobrazení délky hudby
@@ -27,28 +27,28 @@ namespace EditMusic
 // zobrazení
 	void Disp();
 
-// obsluha èasovaèe (TRUE=obslouženo)
+// obsluha časovače (TRUE=obslouženo)
 	BOOL OnTimer(UINT timerID);
 
-// ukonèení pøehrávání
+// ukončení přehrávání
 	void OnMMNotify(DWORD flags, int devID);
 
-// start pøehrávání (init = jen zjištìní délky a pøerušení)
+// start přehrávání (init = jen zjištění délky a přerušení)
 	void OnPlay(BOOL init = FALSE);
 
-// pozastavení nahrávání, pøehrávání
+// pozastavení nahrávání, přehrávání
 	void OnPause();
 
-// zastavení nahrávání i pøehrávání
+// zastavení nahrávání i přehrávání
 	void OnStop();
 
-// pøepnutí pøíznaku opakování
+// přepnutí příznaku opakování
 	void OnLoop();
 
-// pøevinutí zpìt
+// převinutí zpět
 	void OnRew();
 
-// pøevinutí vpøed
+// převinutí vpřed
 	void OnFrw();
 
 // aktualizace voleb

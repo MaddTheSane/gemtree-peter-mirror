@@ -9,37 +9,37 @@
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní DirectDraw 7 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní DirectDraw 7 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3DX7InitDD();
 void D3DX7TermDD();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení primárniho povrchu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření primárniho povrchu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX7InitPrim();
 void D3DX7TermPrim();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení clipperu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření clipperu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX7InitClip();
 void D3DX7TermClip();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní Direct3D 7 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhraní Direct3D 7 (vrací TRUE=rozhraní je vytvořeno)
 
 bool D3DX7InitD3();
 void D3DX7TermD3();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení renderovacího povrchu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření renderovacího povrchu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX7InitRend(bool hw);
 void D3DX7TermRend();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení Z-bufferu, není-li vytvoøen (vrací TRUE=OK)
+// vytvoření Z-bufferu, není-li vytvořen (vrací TRUE=OK)
 
 bool D3DX7InitZBuf(bool hw, DDPIXELFORMAT* pf);
 void D3DX7TermZBuf();
@@ -52,15 +52,15 @@ void D3DX7SizeView();
 void D3DX7MoveView();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení renderovacího zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// vytvoření renderovacího zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX7InitDev(int type);
 void D3DX7TermDev();
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahájení funkce zařízení (vrací TRUE=inicializace OK)
+// typ zařízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX7Start(int type);
 void D3DX7Stop();
@@ -76,7 +76,7 @@ void D3DX7Clear();
 void D3DX7Disp();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèní matice
+// aktualizace projekční matice
 
 void D3DX7AktProj();
 
@@ -91,7 +91,7 @@ void D3DX7AktView();
 void D3DX7Begin();
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení renderování scény
+// ukončení renderování scény
 
 void D3DX7End();
 
@@ -101,47 +101,47 @@ void D3DX7End();
 void D3DX7Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování objektu pøed ukonèením ovladaèe
+// resetování objektu před ukončením ovladače
 
 void D3DX7Reset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování sínu objektu pøed ukonèením ovladaèe
+// resetování sínu objektu před ukončením ovladače
 
 void D3DX7SReset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè vyplòování ploch
+// aktualizovat přepínač vyplňování ploch
 
 void D3DX7AktWireframe();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè osvìtlení
+// aktualizovat přepínač osvětlení
 
 void D3DX7AktLightOn();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè plynulého stinování
+// aktualizovat přepínač plynulého stinování
 
 void D3DX7AktShades();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè odstraòování ploch
+// aktualizovat přepínač odstraňování ploch
 
 void D3DX7AktCulling();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zvìtšených textur
+// aktualizovat přepínač filtrace zvětšených textur
 
 void D3DX7AktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zmenšených a vzdálených textur
+// aktualizovat přepínač filtrace zmenšených a vzdálených textur
 
 void D3DX7AktMinMipFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace položky svìtla
+// aktualizace položky světla
 
 void D3DX7AktLight(int inx, D3DLITEM* item);
 
@@ -151,7 +151,7 @@ void D3DX7AktLight(int inx, D3DLITEM* item);
 void D3DX7SetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetování položky textury před ukončením ovladače
 
 void D3DX7TextureRes(D3DTITEM* item);
 
@@ -161,7 +161,7 @@ void D3DX7TextureRes(D3DTITEM* item);
 void D3DX7TextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutí pùvodní textury
+// zapnutí původní textury
 
 inline void D3DX7TextureOn(D3DTITEM* item, int stage) { D3DX7TextureSet(item, stage); }
 
@@ -171,17 +171,17 @@ inline void D3DX7TextureOn(D3DTITEM* item, int stage) { D3DX7TextureSet(item, st
 void D3DX7TextureOff(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky svìtla
+// resetování položky světla
 
 void D3DX7LightReset(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvìtlení
+// aktualizace ambient osvětlení
 
 void D3DX7AktAmbient();
 
 /////////////////////////////////////////////////////////////////////////////
-// volná videopamì
+// volná videopaměť
 
 int D3DX7Free();
 
@@ -206,7 +206,7 @@ void D3DX7AktState();
 void D3DX7AktBlend(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenèní úrovnì alfa
+// aktualizace referenční úrovně alfa
 
 void D3DX7AktAlfa(D3DFITEM* item);
 
@@ -231,7 +231,7 @@ void D3DX7SetAddress(int adru, int adrv, int stage);
 //void D3DX7SetBorder(D3DFITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení zjemnìní vzdálených textur
+// nastavení zjemnění vzdálených textur
 
 void D3DX7SetBias(float bias, int stage);
 
@@ -276,7 +276,7 @@ void D3DX7SetSMask(DWORD mask);
 void D3DX7Shadow(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení stínù
+// vykreslení stínů
 
 void D3DX7Shadows();
 

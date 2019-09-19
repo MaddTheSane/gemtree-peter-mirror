@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// přidání jednoho prvku do bufferu programu (vrací index prvku)
 
 inline int CompAddItem(PROCSPR func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCSPR func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu se sprajtem (vrací true = operace OK)
+// překlad výrazu se sprajtem (vrací true = operace OK)
 
 bool _fastcall CompSpr(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem sprajtu
+// překlad příkazu s parametrem sprajtu
 
 bool CompSprPar(int index, PROCCOM func, int data);
 
@@ -119,7 +119,7 @@ inline bool CompSprPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou sprajtù (data = poèet výrazù - 1)
+// překlad příkazu se skupinou sprajtů (data = počet výrazů - 1)
 
 inline bool CompSprGrp(int index, PROCLOG func, PROCLOG func1)
 	{ return CompGroup(CompSpr, index, (PROCCOM)func, (PROCCOM)func1); };

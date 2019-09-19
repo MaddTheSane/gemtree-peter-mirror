@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// přidání jednoho prvku do bufferu programu (vrací index prvku)
 
 inline int CompAddItem(PROCMUS func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCMUS func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu s hudbou (vrací true = operace OK)
+// překlad výrazu s hudbou (vrací true = operace OK)
 
 bool _fastcall CompMus(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem hudby
+// překlad příkazu s parametrem hudby
 
 bool CompMusPar(int index, PROCCOM func, int data);
 
@@ -118,7 +118,7 @@ inline bool CompMusPar(int index, PROCMUS func)
 	{ return CompMusPar(index, (PROCCOM)func); }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou hudby (data = poèet výrazù - 1)
+// překlad příkazu se skupinou hudby (data = počet výrazů - 1)
 
 inline bool CompMusGrp(int index, PROCLOG func, PROCLOG func1)
 	{ return CompGroup(CompMus, index, (PROCCOM)func, (PROCCOM)func1); };

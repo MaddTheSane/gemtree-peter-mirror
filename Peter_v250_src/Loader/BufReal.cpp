@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer reálných èísel							*
+*							Buffer reálných čísel							*
 *																			*
 \***************************************************************************/
 
@@ -41,7 +41,7 @@ void CBufReal::Term()
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nových dat (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (odděleno kvůli lepší optimalizaci)
 
 void CBufReal::NewData()
 {
@@ -53,7 +53,7 @@ void CBufReal::NewData()
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení poètu položek v bufferu (nové položky neinicializované)
+// nastavení počtu položek v bufferu (nové položky neinicializované)
 
 void _fastcall CBufReal::Num(int num)
 {
@@ -121,10 +121,10 @@ void _fastcall CBufReal::Insert(int index, const double data)
 		}
 	}
 
-// poèet položek k odsunu
+// počet položek k odsunu
 	int num = m_Num - index;
 
-// zvýšení poètu položek v bufferu
+// zvýšení počtu položek v bufferu
 	Num(m_Num + 1);
 
 // odsun položek
@@ -153,7 +153,7 @@ void _fastcall CBufReal::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// zrušení položky z bufferu (ostatní položky se pøisunou)
+// zrušení položky z bufferu (ostatní položky se přisunou)
 
 void _fastcall CBufReal::DelItem(const int index)
 {
@@ -168,22 +168,22 @@ void _fastcall CBufReal::DelItem(const int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení položky (vrací index položky)
+// vytvoření položky (vrací index položky)
 
 int CBufReal::New()
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result] = 0;			// inicializace položky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 
 int _fastcall CBufReal::Add(const double data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result] = data;		// inicializace položky
 	return result;
 }
@@ -194,7 +194,7 @@ int _fastcall CBufReal::Add(const double data)
 
 int _fastcall CBufReal::Dup(const int index)
 {
-	int result = NewItem();				// vytvoøení nové položky
+	int result = NewItem();				// vytvoření nové položky
 
 	if (IsValid(index))					// je index platný?
 	{
@@ -209,7 +209,7 @@ int _fastcall CBufReal::Dup(const int index)
 
 int _fastcall CBufReal::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))					// je index platný?
 	{
@@ -236,30 +236,30 @@ int _fastcall CBufReal::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru (naèítá do promìnné, true=operace OK)
+// načtení čísla ze souboru (načítá do proměnné, true=operace OK)
 /*
 bool CBufReal::LoadFile(double& data, CString jmeno)
 {
-// naètení textového souboru
+// načtení textového souboru
 	CString txt;
 	if (!txt.LoadFile(jmeno)) return false;
 
-// odstranìní mezer a jiných oddìlovaèù
+// odstranění mezer a jiných oddělovačů
 	txt.TrimLeft();
 	txt.TrimRight();
 
-// naètení èísla
+// načtení čísla
 	data = Double(txt);
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uložení èísla do souboru formátu NUM (false=chyba)
+// uložení čísla do souboru formátu NUM (false=chyba)
 
 bool CBufReal::SaveFile(double data, CString jmeno) const
 {
-// pøíprava èísla
+// příprava čísla
 	CString txt;
 	txt.Double(data);
 
@@ -269,18 +269,18 @@ bool CBufReal::SaveFile(double data, CString jmeno) const
 */
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CBufReal& CBufReal::operator= (const CBufReal& src)
 {
 	m_Num = 0;					// zrušení starých dat
-	int index = 0;				// index naèítané položky
+	int index = 0;				// index načítané položky
 	int i = src.m_Num;			// velikost zdrojového bufferu
 
 	for (; i > 0; i--)			// pro všechny položky v bufferu
 	{
 		Add(src[index]);	// kopie položky
-		index++;				// inkrementace ètecího indexu
+		index++;				// inkrementace čtecího indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

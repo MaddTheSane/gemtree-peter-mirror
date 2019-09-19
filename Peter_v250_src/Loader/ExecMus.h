@@ -1,36 +1,36 @@
 
 /***************************************************************************\
 *																			*
-*							Provádìní programu - hudba						*
+*							Provádění programu - hudba						*
 *																			*
 \***************************************************************************/
 
-#define MUSICERRORWAIT	(5*18)		// èekání na nový pokus o otevøení zvuku
-#define MUSICSTOPWAIT	(4*18)		// èítaè pro zastavení hudby
+#define MUSICERRORWAIT	(5*18)		// čekání na nový pokus o otevření zvuku
+#define MUSICSTOPWAIT	(4*18)		// čítač pro zastavení hudby
 #define MUSICMAXDELKA	(24*60*60*1000) // max. délka hudby
 
 // obsluha hudby
-extern	UINT	MusicDevice;		// ID zaøízení MCI pro pøehrávání hudby (0=není otevøeno)
+extern	UINT	MusicDevice;		// ID zařízení MCI pro přehrávání hudby (0=není otevřeno)
 extern	int		MusicDelka;			// délka hudby v ms
-extern	bool	MusicPlaing;		// pøíznak pøehrávání hudby
-extern	bool	MusicPausing;		// pøíznak pauzy hudby
-extern	bool	MusicEnd;			// pøíznak ukonèení pøehrávání
-extern	int		MusicError;			// povolení opakovaného otevøení hudby (pøi < 0)
+extern	bool	MusicPlaing;		// příznak přehrávání hudby
+extern	bool	MusicPausing;		// příznak pauzy hudby
+extern	bool	MusicEnd;			// příznak ukončení přehrávání
+extern	int		MusicError;			// povolení opakovaného otevření hudby (při < 0)
 extern	int		MusicAktPos;		// aktuální pozice hudby
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha hudby
 
-void MusicPlay(CMusic mus, bool loop);	// zahájení pøehrávání hudby
+void MusicPlay(CMusic mus, bool loop);	// zahájení přehrávání hudby
 void SetMusicPos(int pos);			// nastavení pozice hudby v ms
-void MusicPause();					// pauza pøehrávání
-void MusicStop();					// ukonèení pøehrávání hudby
-void OnMusicEnd();					// ukonèení pøehrávání (obsluha hlášení)
+void MusicPause();					// pauza přehrávání
+void MusicStop();					// ukončení přehrávání hudby
+void OnMusicEnd();					// ukončení přehrávání (obsluha hlášení)
 void PlayMusicBack();				// obsluha hudby na pozadí
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inline volání pøíkazu - hudba
+// inline volání příkazu - hudba
 
 inline void FMusic(CMusic& music)
 {
@@ -42,11 +42,11 @@ inline void FMusic(CMusic& music)
 // funkce
 void _fastcall FMusicFunc(CMusic& music);		// funkce s návratem hudby
 
-// promìnné
+// proměnné
 void _fastcall FMusicEmpty(CMusic& music);		// prázdná hudba
 void _fastcall FMusicObj(CMusic& music);		// globální hudba (Data = index)
 void _fastcall FMusicObjList(CMusic& music);	// globalní hudba v seznamu (Data = index, List = seznam)
 void _fastcall FMusicLoc(CMusic& music);		// lokální hudba (Data = index)
 void _fastcall FMusicLocList(CMusic& music);	// lokální hudba v seznamu (Data = index, List = seznam)
 
-void _fastcall FGetFileMusic(CMusic& music);	// naètení hudby ze souboru
+void _fastcall FGetFileMusic(CMusic& music);	// načtení hudby ze souboru

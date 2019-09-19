@@ -9,7 +9,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní prázdná plocha (modifikuje se poèet referencí!)
+// inicializační prázdná plocha (modifikuje se počet referencí!)
 
 MAPDATA*	EmptyMapData =	NULL;
 
@@ -23,8 +23,8 @@ void InitMap()
 	ASSERT(SIZEOFMAPITEM == 8);
 #pragma warning ( default: 4127)				// hlášení - konstantní podmínka
 	EmptyMapData = (MAPDATA*)MemGet(SIZEOFMAPDATA + SIZEOFMAPITEM);
-	EmptyMapData->Refer = 1;			// poèet referencí
-	EmptyMapData->Width = 1;			// šíøka
+	EmptyMapData->Refer = 1;			// počet referencí
+	EmptyMapData->Width = 1;			// šířka
 	EmptyMapData->Height = 1;			// výška
 	EmptyMapData->Data[0].Icon.Init();	// inicializace ikony
 	EmptyMapData->Data[0].Param = 0;	// parametry
@@ -96,16 +96,16 @@ void CMap::Clear()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastního bufferu před modifikací
 
 void CMap::CopyWrite()
 {
 	MAPDATA* data = pData;			// adresa starých dat
-	long* refer = &(data->Refer);	// poèet referencí
+	long* refer = &(data->Refer);	// počet referencí
 
-	if (*refer > 1)					// je nìjaký jiný majitel?
+	if (*refer > 1)					// je nějaký jiný majitel?
 	{
-		NewBuffer(data->Width, data->Height);	// vytvoøení nového bufferu
+		NewBuffer(data->Width, data->Height);	// vytvoření nového bufferu
 
 		MAPITEM* src = data->Data;
 		MAPITEM* dst = pData->Data;
@@ -117,7 +117,7 @@ void CMap::CopyWrite()
 			src++;
 		}
 
-// odpojení starých dat - v multithread mùže nastat i zrušení
+// odpojení starých dat - v multithread může nastat i zrušení
 		if (LongDecrement(refer))
 		{
 #ifdef _MT
@@ -128,7 +128,7 @@ void CMap::CopyWrite()
 				item++;
 			}
 
-			MemFree(data);			// pøípadné zrušení dat
+			MemFree(data);			// případné zrušení dat
 #endif	// _MT
 		}
 	}
@@ -136,7 +136,7 @@ void CMap::CopyWrite()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní plochy (uvolnìní dat)
+// vyprázdnění plochy (uvolnění dat)
 
 void CMap::Empty()
 { 
@@ -146,12 +146,12 @@ void CMap::Empty()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nové plochy (pøipraveno k zápisu, data jsou náhodná)
+// vytvoření nové plochy (připraveno k zápisu, data jsou náhodná)
 
 void CMap::New(int width, int height)
 {
 	Detach();						// odpojení staré plochy
-	NewBuffer(width, height);		// vytvoøení nového bufferu
+	NewBuffer(width, height);		// vytvoření nového bufferu
 }
 
 
@@ -202,12 +202,12 @@ void _fastcall CMap::Set(const int x, const int y, const MAPITEM& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CMap& CMap::operator= (const CMap& src)
 {
 	Detach();				// zrušení starých dat
-	Attach(src.pData);		// pøiøazení nových dat
+	Attach(src.pData);		// přiřazení nových dat
 	return *this;
 }
 
@@ -251,13 +251,13 @@ void CBufMap::Term()
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nových dat
+// vytvoření nových dat
 
 void CBufMap::NewData()
 {
 	m_Max *= 2;
 	if (m_Max == 0) m_Max = 0x400;
-//	m_Max += 0x400;			// zvýšení poètu položek (o 4 KB)
+//	m_Max += 0x400;			// zvýšení počtu položek (o 4 KB)
 	MemBuf(m_Data, m_Max);	// zvýšení velikosti bufferu
 };
 
@@ -297,7 +297,7 @@ void _fastcall CBufMap::Set(const int index, const CMap& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní položky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprázdnění položky (bez jejího zrušení - jen pro uvolnění dat)
 
 void _fastcall CBufMap::Empty(const int index)
 {
@@ -327,36 +327,36 @@ void _fastcall CBufMap::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení položky (vrací index položky)
+// vytvoření položky (vrací index položky)
 
 int CBufMap::New()
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init();		// inicializace položky
 	return result;
 }
 
 int CBufMap::New(int width, int height)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(width, height);	// inicializace položky
 	m_Data[result].Clear();		// vymazání plochy
 	return result;
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 
 int _fastcall CBufMap::Add(const CMap& data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data.Data());	// inicializace položky
 	return result;
 }
 
 int _fastcall CBufMap::Add(MAPDATA* data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data);	// inicializace položky
 	return result;
 }
@@ -367,7 +367,7 @@ int _fastcall CBufMap::Add(MAPDATA* data)
 
 int _fastcall CBufMap::Dup(const int index)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))			// je index platný?
 	{
@@ -382,7 +382,7 @@ int _fastcall CBufMap::Dup(const int index)
 
 int _fastcall CBufMap::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))					// je index platný?
 	{
@@ -409,19 +409,19 @@ int _fastcall CBufMap::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CBufMap& CBufMap::operator= (const CBufMap& src)
 {
 	Del(m_Num);					// zrušení starých dat
 
-	int index = 0;				// index naèítané položky
+	int index = 0;				// index načítané položky
 	int i = src.m_Num;			// velikost zdrojového bufferu
 
 	for (; i > 0; i--)			// pro všechny položky v bufferu
 	{
 		Add(src[index]);	// kopie položky
-		index++;				// inkrementace ètecího indexu
+		index++;				// inkrementace čtecího indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

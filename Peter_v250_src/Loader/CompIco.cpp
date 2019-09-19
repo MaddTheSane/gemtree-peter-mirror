@@ -11,7 +11,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu s ikonou (vrací true = operace OK)
+// překlad výrazu s ikonou (vrací true = operace OK)
 
 bool _fastcall CompIco(int index)
 {
@@ -24,23 +24,23 @@ bool _fastcall CompIco(int index)
 // kontrola, zda je položka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// větvení podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_PREDMET:
-		CompAddItem(FPredmet);				// pøedmìt pøed Petøíkem
+		CompAddItem(FPredmet);				// předmět před Petříkem
 		return true;
 
 	case IDF_PREDMET_POZ:
-		CompAddItem(FPredmetPoz);			// pøedmìt pod Petøíkem
+		CompAddItem(FPredmetPoz);			// předmět pod Petříkem
 		return true;
 
 	case IDF_PETRA_PREDMET:
-		CompAddItem(FPredmet2);				// pøedmìt pøed Petrou
+		CompAddItem(FPredmet2);				// předmět před Petrou
 		return true;
 
 	case IDF_PETRA_PREDMET_POZ:
-		CompAddItem(FPredmet2Poz);			// pøedmìt pod Petrou
+		CompAddItem(FPredmet2Poz);			// předmět pod Petrou
 		return true;
 
 	case IDF_OKRAJ:
@@ -58,7 +58,7 @@ bool _fastcall CompIco(int index)
 		return true;
 
 	case IDF_NONE:
-	case IDF_ICON:							// promìnná ikony
+	case IDF_ICON:							// proměnná ikony
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -101,11 +101,11 @@ bool _fastcall CompIco(int index)
 		return true;
 
 	case IDF_FILE_ICON:
-		CompAddItem(FGetFileIcon);			// naètení ikony
+		CompAddItem(FGetFileIcon);			// načtení ikony
 		return true;
 
 	case IDF_ICON_GET:
-		CompAddItem(FIconGet);					// naètení ikony
+		CompAddItem(FIconGet);					// načtení ikony
 		CompNumSubPar(index, IDF_PIC_BLOCK_X, 0);
 		CompNumSubPar(index, IDF_PIC_BLOCK_Y, 0);
 		return true;
@@ -117,7 +117,7 @@ bool _fastcall CompIco(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem ikony
+// překlad příkazu s parametrem ikony
 
 bool CompIcoPar(int index, PROCCOM func)
 {
@@ -143,7 +143,7 @@ bool CompIcoPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem ikony (hledaným podle identifikace)
+// překlad příkazu s podparametrem ikony (hledaným podle identifikace)
 
 void CompIcoSubPar(int index, int idf)
 {
@@ -154,12 +154,12 @@ void CompIcoSubPar(int index, int idf)
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda má položka nìjaké potomky
+// kontrola, zda má položka nějaké potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus pøes všechny potomky
+// cyklus přes všechny potomky
 		do {
 
 // adresa dalšího potomka
@@ -167,7 +167,7 @@ void CompIcoSubPar(int index, int idf)
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledaný prvek - naètení prvku
+// test, zda to je hledaný prvek - načtení prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompIco(index + 1))
@@ -175,7 +175,7 @@ void CompIcoSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro pøíští prvek
+// posun pro příští prvek
 			posun = item2->Items;
 
 // dokud je další potomek

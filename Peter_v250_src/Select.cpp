@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*							Výbìr souboru k editaci							*
+*							Výběr souboru k editaci							*
 *																			*
 \***************************************************************************/
 
@@ -15,81 +15,81 @@ typedef struct SELECTITEM_
 {
 	CIcon		Icon;								// ikona
 	CMultiText	Name;								// jméno položky
-	CText		NameLoad;							// plná specifikace položky pro ètení
+	CText		NameLoad;							// plná specifikace položky pro čtení
 	CText		NameSave;							// plná specifikace položky pro zápis
 	int			Typ;								// typ položky
-	BOOL		Altern;								// je alternativní (vzorový) adresáø
-													//	- u programù má pøednost lokální program (kvùli spouštìní modifikací)
-													//	- u adresáøù má pøednost vzorový adresáø (zákaz pøejmenování)
+	BOOL		Altern;								// je alternativní (vzorový) adresář
+													//	- u programů má přednost lokální program (kvůli spouštění modifikací)
+													//	- u adresářů má přednost vzorový adresář (zákaz přejmenování)
 	int			Index;								// index položky v seznamu (-1 = neplatný)
 } SELECTITEM;
 
 SELECTITEM*		SelectItem = NULL;					// buffer položek seznamu
 int				SelectItemMax = 0;					// velikost bufferu položek seznamu
-int				SelectItemNum = 0;					// poèet položek v seznamu
+int				SelectItemNum = 0;					// počet položek v seznamu
 
-// typy položek (urèuje tøídìní položek !!!!)
+// typy položek (určuje třídění položek !!!!)
 #define TYP0 0										// není platná položka
-#define	TYPUPDIR 1									// položka je nadadresáø ".."
-#define TYPSUBDIR 2									// položa je podadresáø
+#define	TYPUPDIR 1									// položka je nadadresář ".."
+#define TYPSUBDIR 2									// položa je podadresář
 #define TYPFILE 3									// položka je soubor
 
 int				SelectInx = -1;						// index aktivní vybrané položky (-1 = není)
 int				SelectIndex = -1;					// index aktivní položky seznamu (-1 = neplatná)
 int				SelectTyp = TYP0;					// typ vybrané položky (TYP0 = není žádná)
-BOOL			SelectAltern = FALSE;				// aktivní položka je v alternativním (vzorovém) adresáøi
+BOOL			SelectAltern = FALSE;				// aktivní položka je v alternativním (vzorovém) adresáři
 
-BOOL			SelectFill = FALSE;					// pøíznak naèítání obsahu okna
+BOOL			SelectFill = FALSE;					// příznak načítání obsahu okna
 
-CBufIcon	SelectIcon0;							// vzor ikon adresáøù
+CBufIcon	SelectIcon0;							// vzor ikon adresářů
 
 CText		SelectAliases;							// jméno souboru ALIASES.INI
-CText		SelectAliases2;							// jméno souboru ALIASES.INI ve vzorovém adresáøi
+CText		SelectAliases2;							// jméno souboru ALIASES.INI ve vzorovém adresáři
 
 /////////////////////////////////////////////////////////////////////////////
-// globální a lokální promìnné
+// globální a lokální proměnné
 
-BOOL		SelectMode = FALSE;						// pøíznak módu výbìru souborù
-HWND		SelectView = NULL;						// seznam souborù
-HIMAGELIST	SelectImageList = NULL;					// seznam obrázkù
+BOOL		SelectMode = FALSE;						// příznak módu výběru souborů
+HWND		SelectView = NULL;						// seznam souborů
+HIMAGELIST	SelectImageList = NULL;					// seznam obrázků
 
-HFONT		SelFont = NULL;							// nastavený font v oknì
+HFONT		SelFont = NULL;							// nastavený font v okně
 
-int			SelectStatusWidth = 400;				// šíøka druhého pole stavového øádku
+int			SelectStatusWidth = 400;				// šířka druhého pole stavového řádku
 
 CText		SelectNewText;							// zadané jméno nového programu
-CMultiText	SelectNewMultiText;						// zadané jméno vícejazyènì
+CMultiText	SelectNewMultiText;						// zadané jméno vícejazyčně
 
 BOOL		SelectNewFill = FALSE;					// plní se editor jména nového programu
 HWND		SelectNewEdit = NULL;					// handle editoru jména nového programu
 
-BOOL		SelEditName = FALSE;					// pøíznak probíhající editace
-HWND		SelEditNameWnd = NULL;					// editaèní okno
+BOOL		SelEditName = FALSE;					// příznak probíhající editace
+HWND		SelEditNameWnd = NULL;					// editační okno
 
-BOOL		IsWaitCursor = FALSE;					// zapnut èekací kurzor
+BOOL		IsWaitCursor = FALSE;					// zapnut čekací kurzor
 
-#define		ICONSUBDIR	0							// index ikony podadresáøe
-#define		ICONUPDIR	1							// index ikony nadadresáøe
-
-/////////////////////////////////////////////////////////////////////////////
-// hlášení o zmìnì adresáøe
-
-HANDLE		SelectDirChange = INVALID_HANDLE_VALUE;	// hlášení o zmìnì adresáøe
-HANDLE		SelectDirChange2 = INVALID_HANDLE_VALUE;// hlášení o zmìnì adresáøe 2
-#define		SelectDirChangeTimerID 19112			// ID èasovaèe hlášení zmìny adresáøe
-UINT		SelectDirChangeTimer = 0;				// èasovaè pro hlášení zmìn adresáøe
-
+#define		ICONSUBDIR	0							// index ikony podadresáře
+#define		ICONUPDIR	1							// index ikony nadadresáře
 
 /////////////////////////////////////////////////////////////////////////////
-// opoždìné zapnutí editace
+// hlášení o změně adresáře
 
-#define		SelectTimerID 19125						// ID èasovaèe pro zapnutí editace
-UINT		SelectTimer = 0;						// èasovaè pro zapnutí editace
-int			SelectTimerN = 0;						// èítaè pro zapnutí editace
+HANDLE		SelectDirChange = INVALID_HANDLE_VALUE;	// hlášení o změně adresáře
+HANDLE		SelectDirChange2 = INVALID_HANDLE_VALUE;// hlášení o změně adresáře 2
+#define		SelectDirChangeTimerID 19112			// ID časovače hlášení změny adresáře
+UINT		SelectDirChangeTimer = 0;				// časovač pro hlášení změn adresáře
 
 
 /////////////////////////////////////////////////////////////////////////////
-// definice tlaèítek pro toolbar Select
+// opožděné zapnutí editace
+
+#define		SelectTimerID 19125						// ID časovače pro zapnutí editace
+UINT		SelectTimer = 0;						// časovač pro zapnutí editace
+int			SelectTimerN = 0;						// čítač pro zapnutí editace
+
+
+/////////////////////////////////////////////////////////////////////////////
+// definice tlačítek pro toolbar Select
 
 TBBUTTON ToolBarSelect[] = {
 	{ ButtonStart,	IDN_START,		TBSTATE_ENABLED, TBSTYLE_BUTTON,	0, 0},
@@ -104,7 +104,7 @@ TBBUTTON ToolBarSelect[] = {
 
 #define ToolBarSelectNum (sizeof(ToolBarSelect)/sizeof(TBBUTTON))
 
-void SelectLoad();				// naètení seznamu souborù
+void SelectLoad();				// načtení seznamu souborů
 
 /////////////////////////////////////////////////////////////////////////////
 // definice menu
@@ -124,16 +124,16 @@ const struct {
 	BYTE verze;				// (1) verze = 1
 	WORD Editor;			// (2) verze editoru v tisícinách
 	WORD Param;				// (2) parametry = 0
-	long data;				// (4) offset zaèátku dat od zaèátku záhlaví (= délka záhlaví)
-	long pocet;				// (4) poèet datových blokù
+	long data;				// (4) offset začátku dat od začátku záhlaví (= délka záhlaví)
+	long pocet;				// (4) počet datových bloků
 } NewHead =
 {
 	'P', 'E', 'T',			// (3) identifikace = "PET"
 	1,						// (1) verze = 1
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,						// (4) parametry = 0
-	3 + 1 + 4 + 4 + 4,		// (4) offset zaèátku dat od zaèátku záhlaví (= délka záhlaví)
-	0,						// (4) poèet datových blokù
+	3 + 1 + 4 + 4 + 4,		// (4) offset začátku dat od začátku záhlaví (= délka záhlaví)
+	0,						// (4) počet datových bloků
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -158,7 +158,7 @@ void SelectItemDelAll()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// úschova parametrù vybrané položky (-1 = žádná)
+// úschova parametrů vybrané položky (-1 = žádná)
 
 void SelectSelect(int inx)
 {
@@ -186,7 +186,7 @@ void SelectSelect(int inx)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání položky do bufferu položek (vrací index položky, pøi chybì pamìti vrací -1)
+// přidání položky do bufferu položek (vrací index položky, při chybě paměti vrací -1)
 
 int SelectItemAdd(CIcon& icon, CMultiText& name, int typ, BOOL altern)
 {
@@ -225,7 +225,7 @@ int SelectItemAdd(CIcon& icon, CMultiText& name, int typ, BOOL altern)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení menu a fontù programu
+// nastavení menu a fontů programu
 
 void SelectSetMenu()
 {
@@ -238,14 +238,14 @@ void SelectSetMenu()
 	::SendMessage(SelectView, WM_SETFONT, (WPARAM)SelFont, TRUE);
 	DelFont(oldfont);
 
-// aktualizace stavového øádku
+// aktualizace stavového řádku
 	SetStatusFont();
 	UpdateStartOpen();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// první inicializace pøi startu programu (hlavní okno je již vytvoøeno)
+// první inicializace při startu programu (hlavní okno je již vytvořeno)
 
 void SelectStartInit()
 {
@@ -253,22 +253,22 @@ void SelectStartInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení režimu výbìru souboru k editaci
+// zahájení režimu výběru souboru k editaci
 
 void SelectInit()
 {
-// kontrola, zda není režim výbìru souboru
-	if (SelectMode) return;			// je již režim výbìru souborù
+// kontrola, zda není režim výběru souboru
+	if (SelectMode) return;			// je již režim výběru souborů
 	SelectMode = TRUE;
 	SelEditName = FALSE;			// není editace jména souboru
 
-// nastavení tlaèítek pro režim výbìru
-	ToolBarAdd(ToolBarSelect, ToolBarSelectNum); // pøidání tlaèítek
+// nastavení tlačítek pro režim výběru
+	ToolBarAdd(ToolBarSelect, ToolBarSelectNum); // přidání tlačítek
 
-// posun panelu nástrojù
+// posun panelu nástrojů
 	ToolBarResize();
 
-// vytvoøení seznamu souborù
+// vytvoření seznamu souborů
 	SelectView = ::CreateWindowEx(
 		WS_EX_CLIENTEDGE,
 		WC_LISTVIEW,
@@ -286,23 +286,23 @@ void SelectInit()
 		NULL);
 	ASSERT(SelectView);
 
-// nastavení nového menu a fontù
+// nastavení nového menu a fontů
 	SelectSetMenu();
 
-// vytvoøení seznamu obrázkù a pøipojení k seznamu
+// vytvoření seznamu obrázků a připojení k seznamu
 	SelectImageList = ::ImageList_Create(32, 32, ILC_COLORDDB | ILC_MASK, 1, 1);
 	ASSERT(SelectImageList);
 	::SendMessage(SelectView, LVM_SETIMAGELIST, LVSIL_NORMAL, (LPARAM)SelectImageList);
 
-// aktualizace rozmìrù okna
+// aktualizace rozměrů okna
 	SelectOnSize();
 
-// pøíprava vzorových ikon
+// příprava vzorových ikon
 	SelectIcon0.DelAll();
 	SelectIcon0.Load(IDN_SELECT, 2);
 	ASSERT(SelectIcon0.Num() == 2);
 
-// naètení seznamu souborù
+// načtení seznamu souborů
 	SelectLoad();
 
 // nastavení fokusu na aktivni okno
@@ -311,7 +311,7 @@ void SelectInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// opoždìné zahájení editace
+// opožděné zahájení editace
 
 void SelectEdit()
 {
@@ -330,11 +330,11 @@ void SelectEdit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení režimu výbìru souboru
+// ukončení režimu výběru souboru
 
 void SelectTerm()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 	SelectMode = FALSE;
 
@@ -346,14 +346,14 @@ void SelectTerm()
 		SelectTimer = 0;
 	}
 
-// zrušení okna pro výbìr souborù
+// zrušení okna pro výběr souborů
 	::DestroyWindow(SelectView);
 
-// zrušení seznamu obrázkù
+// zrušení seznamu obrázků
 	::ImageList_Destroy(SelectImageList);
 	SelectImageList = NULL;
 
-// zrušení hlášení o zmìnì adresáøe
+// zrušení hlášení o změně adresáře
 	if (SelectDirChangeTimer)
 	{
 		::KillTimer(MainFrame, SelectDirChangeTimer);
@@ -372,7 +372,7 @@ void SelectTerm()
 		SelectDirChange2 = INVALID_HANDLE_VALUE;
 	}
 
-// zrušení všech tlaèítek v panelu nástrojù
+// zrušení všech tlačítek v panelu nástrojů
 	ToolBarClear(0);
 
 	SetStatusText2(EmptyText);
@@ -380,17 +380,17 @@ void SelectTerm()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní informace o ikonì k zobrazení
+// zjištění informace o ikoně k zobrazení
 
 void SelectOnGetDispInfo(LV_DISPINFO* lvd)
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// kontrola, zda je vytvoøen platný seznam obrázkù
+// kontrola, zda je vytvořen platný seznam obrázků
 	if (SelectImageList == NULL) return;
 
-// naètení ikony
+// načtení ikony
 	Icon1.DelAll();
 
 	int inx = lvd->item.lParam;
@@ -412,11 +412,11 @@ void SelectOnGetDispInfo(LV_DISPINFO* lvd)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení fokusu na okno výbìru
+// nastavení fokusu na okno výběru
 
 void SelectSetFocus()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
 // nastavení fokusu na okno
@@ -425,20 +425,20 @@ void SelectSetFocus()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti okna (WM_SIZE)
+// změna velikosti okna (WM_SIZE)
 
 void SelectOnSize()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// posun panelu nástrojù
+// posun panelu nástrojů
 	ToolBarResize();
 
-// zahájení pøesouvání oken
+// zahájení přesouvání oken
 	HDWP hdwp = ::BeginDeferWindowPos(10);
 
-// naètení výšky stavové lišty (i když to zøejmì není potøeba)
+// načtení výšky stavové lišty (i když to zřejmě není potřeba)
 	RECT rcStat;
 	::GetWindowRect(StatusBar, &rcStat);
 
@@ -449,29 +449,29 @@ void SelectOnSize()
 // inicializace klientské oblasti
 	InitClientRect();
 
-// aktualizace pøedìlù stavového okna
+// aktualizace předělů stavového okna
 	SetStatusWidth(SelectStatusWidth);
 
-// zmìna velikosti okna výbìru
+// změna velikosti okna výběru
 	hdwp = ::DeferWindowPos(hdwp, SelectView, NULL, ClientRect.left, ClientRect.top, ClientWidth, ClientHeight,
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
-// konec pøesouvání oken
+// konec přesouvání oken
 	::EndDeferWindowPos(hdwp);
 
-// pøearanžování ikon v seznamu
+// přearanžování ikon v seznamu
 	::SendMessage(SelectView, LVM_ARRANGE, LVA_ALIGNTOP, 0);
 
-// aktualizace stavového øádku
+// aktualizace stavového řádku
 	UpdateStartOpen();
 
-// pøekreslení okna
+// překreslení okna
 	::UpdateWindow(MainFrame);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ALIAS jména souboru
+// načtení ALIAS jména souboru
 
 CText ReadAliasName(int lang, LPCTSTR key, LPCTSTR aliases)
 {
@@ -503,11 +503,11 @@ int CALLBACK CompareFunc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSort)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení seznamu souborù
+// načtení seznamu souborů
 
 void SelectLoad()
 {
-// pøíznak plnìní okna
+// příznak plnění okna
 	SelectFill = TRUE;
 
 // inicializace seznamu
@@ -519,7 +519,7 @@ void SelectLoad()
 	SelectTyp = TYP0;
 	SelectAltern = FALSE;
 
-// normalizace cesty - oøezání mezer a "\" ze zaèátku a konce
+// normalizace cesty - ořezání mezer a "\" ze začátku a konce
 	Cesta.TrimLeft();
 	Cesta.TrimRight();
 	while (Cesta.Get(0) == _T('\\'))
@@ -533,11 +533,11 @@ void SelectLoad()
 		Cesta.TrimRight();
 	}
 
-// vytvoøení adresáøe pro programy
+// vytvoření adresáře pro programy
 	CreatePath(ProgramPath);
 	CreatePath(ProgramPath + Cesta);
 
-// zjištìní platnosti cesty
+// zjištění platnosti cesty
 	BOOL ok = FALSE;
 	int attrib;
 	while (!ok && Cesta.IsNotEmpty())
@@ -554,40 +554,40 @@ void SelectLoad()
 		}
 	}
 
-// zajištìní znaku "\" na konci cesty
+// zajištění znaku "\" na konci cesty
 	if (Cesta.IsNotEmpty()) Cesta.Add(_T('\\'));
 
-// cesta do adresáøe, pøíznak alternativního adresáøe
+// cesta do adresáře, příznak alternativního adresáře
 	CText path = ProgramPath + Cesta;
 	BOOL altern = FALSE;
 
-// pøíprava souborù ALIASES
+// příprava souborů ALIASES
 	SelectAliases = path + _T("ALIASES.INI");
 	SelectAliases2 = ProgramPath2 + Cesta + _T("ALIASES.INI");
 
-// vypnutí pøekreslování okna
+// vypnutí překreslování okna
 	::SendMessage(SelectView, WM_SETREDRAW, FALSE, 0);
 
 // zrušení všech položek v seznamu
 	::SendMessage(SelectView, LVM_DELETEALLITEMS, 0, 0);
 
-// promìnné pro naètení seznamu
-	WIN32_FIND_DATA wfd;			// struktura pro hledání souborù
-	HANDLE handle;					// handle hledání souborù
+// proměnné pro načtení seznamu
+	WIN32_FIND_DATA wfd;			// struktura pro hledání souborů
+	HANDLE handle;					// handle hledání souborů
 	CText jmeno;					// jméno nalezeného souboru
 	LV_ITEM lvi;					// vkládaná položka do seznamu
 	CIcon icon;						// ikona
-	CFileMap file;					// pamìové mapovaný soubor
+	CFileMap file;					// paměťové mapovaný soubor
 	CMultiText name;				// jméno položky
 	CText aliases(SelectAliases);	// jméno souboru aliases
-	BOOL aliases2 = (ProgramPath2.IsNotEmpty() && ((int)::GetFileAttributes(SelectAliases2) != -1)); // povoleno naètení aliases 2
+	BOOL aliases2 = (ProgramPath2.IsNotEmpty() && ((int)::GetFileAttributes(SelectAliases2) != -1)); // povoleno načtení aliases 2
 
-// pøíprava položky seznamu
+// příprava položky seznamu
 	lvi.mask = LVIF_TEXT | LVIF_IMAGE | LVIF_PARAM;
 	lvi.iSubItem = 0;
 	lvi.iImage = I_IMAGECALLBACK;
 
-// doplnìní položky "..", je-li podadresáø
+// doplnění položky "..", je-li podadresář
 	if (Cesta.IsNotEmpty())
 	{
 		name.MultiText(JAZYK000, CText(_T("..")));
@@ -597,10 +597,10 @@ void SelectLoad()
 		::SendMessage(SelectView, LVM_INSERTITEM, 0, (LPARAM)&lvi);
 	}
 
-// zde bude druhý pokus - pro vzorový adresáø
+// zde bude druhý pokus - pro vzorový adresář
 DRUHYPOKUS:
 
-// naètení všech podadresáøù
+// načtení všech podadresářů
 	handle = ::FindFirstFile(path + _T("*.*"), &wfd);
 	if (handle != INVALID_HANDLE_VALUE)
 	{
@@ -616,7 +616,7 @@ DRUHYPOKUS:
 					name.Empty();
 					name.MultiText(JAZYK000, jmeno);
 
-// naètení aliases jména adresáøe
+// načtení aliases jména adresáře
 					BOOL nameok = FALSE;
 
 					for (int lang = 0; lang < JAZYKNUM; lang++)
@@ -639,7 +639,7 @@ DRUHYPOKUS:
 						}
 					}
 
-// test duplikace položky ze vzorového adresáøe
+// test duplikace položky ze vzorového adresáře
 					BOOL duplik = FALSE;
 					SELECTITEM* item = SelectItem;
 					int i = 0;
@@ -659,7 +659,7 @@ DRUHYPOKUS:
 						}		   
 					}
 
-// pøidání položky do seznamu
+// přidání položky do seznamu
 					if (!duplik)
 					{
 						i = SelectItemAdd(SelectIcon0[ICONSUBDIR], name, TYPSUBDIR, altern);
@@ -685,35 +685,35 @@ DRUHYPOKUS:
 		::FindClose(handle);
 	}
 
-// vyhledání souborù
+// vyhledání souborů
 	handle = ::FindFirstFile(path + _T("*.exe"), &wfd);
 	if (handle != INVALID_HANDLE_VALUE)
 	{
 		do
 		{
 
-// otevøení souboru
+// otevření souboru
 			jmeno = wfd.cFileName;
 
 			if (file.Open(path + jmeno))
 			{
 
-// pøíprava NT záhlaví souboru EXE
+// příprava NT záhlaví souboru EXE
 				IMAGE_NT_HEADERS* hdr = file.NTHeader();
 				if (hdr != NULL)
 				{
 
-// nalezení NT sekce Petøíka
+// nalezení NT sekce Petříka
 					IMAGE_SECTION_HEADER* sec = file.NTSection(hdr, ".petprg");
 					if (sec != NULL)
 					{
 
-// adresa záhlaví Petøíka
+// adresa záhlaví Petříka
 						PETHEAD* buf = (PETHEAD*)(file.Adr() + sec->PointerToRawData);
 						if (file.IsValid(buf, sizeof(NewHead)))
 						{
 
-// kontrola záhlaví Petøíka
+// kontrola záhlaví Petříka
 							if ((buf->Ident[0] == 'P') &&
 								(buf->Ident[1] == 'E') &&
 								(buf->Ident[2] == 'T') &&
@@ -721,10 +721,10 @@ DRUHYPOKUS:
 								(buf->Pocet < 20))
 							{
 
-// uzavøení souboru (aby se uvolnil pro naètení ikony)
+// uzavření souboru (aby se uvolnil pro načtení ikony)
 								file.Close();
 
-// naètení ikony ze souboru
+// načtení ikony ze souboru
 								if (icon.Extract(path + jmeno))
 								{
 
@@ -733,7 +733,7 @@ DRUHYPOKUS:
 									name.MultiText(JAZYK000, jmeno);
 
 									BOOL nameok = FALSE;
-// naètení aliases
+// načtení aliases
 									for (int lang = 0; lang < JAZYKNUM; lang++)
 									{
 										if (lang != JAZYK000)
@@ -755,7 +755,7 @@ DRUHYPOKUS:
 										}
 									}
 
-// zrušení pøípony jména souboru
+// zrušení přípony jména souboru
 									if ((jmeno.Length() > 4) && (jmeno[jmeno.Length() - 4] == _T('.')))
 									{
 										jmeno.Delete(jmeno.Length()-4);
@@ -763,7 +763,7 @@ DRUHYPOKUS:
 
 									if (!nameok) name.MultiText(jmeno);
 
-// test duplikace položky (vzorový adresáø)
+// test duplikace položky (vzorový adresář)
 									BOOL duplik = FALSE;
 
 									if (altern)
@@ -782,7 +782,7 @@ DRUHYPOKUS:
 										}		   
 									}
 
-// pøidání položky do seznamu
+// přidání položky do seznamu
 									if (!duplik)
 									{
 										int i = SelectItemAdd(icon, name, TYPFILE, altern);
@@ -798,7 +798,7 @@ DRUHYPOKUS:
 					}
 				}
 
-// uzavøení souboru
+// uzavření souboru
 				file.Close();
 			}
 
@@ -807,7 +807,7 @@ DRUHYPOKUS:
 		::FindClose(handle);
 	}
 
-// prohledání vzorového adresáøe
+// prohledání vzorového adresáře
 	if (!altern && ProgramPath2.IsNotEmpty())
 	{
 		path = ProgramPath2 + Cesta;
@@ -817,7 +817,7 @@ DRUHYPOKUS:
 		goto DRUHYPOKUS;
 	}
 
-// pøednastavení na první jméno, není-li žádné jméno pøednastaveno
+// přednastavení na první jméno, není-li žádné jméno přednastaveno
 	if (Jmeno.MultiText((int)JAZYK000).IsEmpty())
 	{
 		SelectSelect(0);
@@ -832,7 +832,7 @@ DRUHYPOKUS:
 			if (Jmeno.MultiText((int)JAZYK000) == SelectItem[i].Name.MultiText((int)JAZYK000)) break;
 		}
 
-// pøi neúspìchu se použije první jméno v seznamu
+// při neúspěchu se použije první jméno v seznamu
 		if (i >= SelectItemNum) i = 0;
 
 // nastavení indexu a jména položky
@@ -850,10 +850,10 @@ DRUHYPOKUS:
 		::SendMessage(SelectView, LVM_SETITEMSTATE, SelectInx, (LPARAM) &lvi);
 	}
 
-// setøídìní položek
+// setřídění položek
 	::SendMessage(SelectView, LVM_SORTITEMS, 0, (LPARAM)(PFNLVCOMPARE)CompareFunc);
 
-// zjištìní nových indexù položek
+// zjištění nových indexů položek
 	for (int i = 0; i < SelectItemNum; i++)
 	{
 		SelectItem[i].Index = -1;
@@ -874,40 +874,40 @@ DRUHYPOKUS:
 		}
 	}
 
-// zapnutí pøekreslování okna
+// zapnutí překreslování okna
 	::SendMessage(SelectView, WM_SETREDRAW, TRUE, 0);
 
 // aktualizace zobrazení jména v titulku okna
 	ZobrazJmeno();
 
-// aktualizace tlaèítek a položek menu
+// aktualizace tlačítek a položek menu
 	UpdateStartOpen();
 
-// zrušení hlášení o zmìnì adresáøe
+// zrušení hlášení o změně adresáře
 	if (SelectDirChange != INVALID_HANDLE_VALUE)
 	{
 		::FindCloseChangeNotification(SelectDirChange);
 		SelectDirChange = INVALID_HANDLE_VALUE;
 	}
 
-// zrušení hlášení o zmìnì adresáøe
+// zrušení hlášení o změně adresáře
 	if (SelectDirChange2 != INVALID_HANDLE_VALUE)
 	{
 		::FindCloseChangeNotification(SelectDirChange2);
 		SelectDirChange2 = INVALID_HANDLE_VALUE;
 	}
 
-// zahájení hlášení zmìn adresáøe
+// zahájení hlášení změn adresáře
 	SelectDirChange = ::FindFirstChangeNotification(
-		ProgramPath + Cesta,			// cesta k adresáøi
-		FALSE,							// nehlásit podadredáøe
+		ProgramPath + Cesta,			// cesta k adresáři
+		FALSE,							// nehlásit podadredáře
 		FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME);
 
 	if (ProgramPath2.IsNotEmpty())
 	{
 		SelectDirChange2 = ::FindFirstChangeNotification(
-			ProgramPath2 + Cesta,			// cesta k adresáøi
-			FALSE,							// nehlásit podadredáøe
+			ProgramPath2 + Cesta,			// cesta k adresáři
+			FALSE,							// nehlásit podadredáře
 			FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME);
 	}
 
@@ -916,10 +916,10 @@ DRUHYPOKUS:
 		SelectDirChangeTimer = ::SetTimer(MainFrame, SelectDirChangeTimerID, 2000, NULL);
 	}
 
-// zajištìní pøekreslení okna
+// zajištění překreslení okna
 	TimeRepaint(-1);
 
-// ukonèení plnìní okna
+// ukončení plnění okna
 	SelectFill = FALSE;
 }
 
@@ -932,24 +932,24 @@ void UpdateStartOpen()
 	CText txt;
 	CText txt2;
 
-// start, otevøení, rušení, kopie - musí být platné jméno pod kurzorem
+// start, otevření, rušení, kopie - musí být platné jméno pod kurzorem
 	BOOL enable = (SelectTyp != TYP0);
 	EnableCommand(IDN_START, enable);
 	EnableCommand(IDN_OPEN, enable);
 
-// položku ".." ani vzorový program nelze rušit, pøejmenovat ani kopírovat
+// položku ".." ani vzorový program nelze rušit, přejmenovat ani kopírovat
 	if (SelectTyp == TYPUPDIR) enable = FALSE;
 	EnableCommand(IDN_RENAME, enable && !SelectAltern);
 	EnableCommand(IDN_DELETE, enable && !SelectAltern);
 
-// adresáø nelze kopírovat
+// adresář nelze kopírovat
 	if (SelectTyp != TYPFILE) enable = FALSE;
 	EnableCommand(IDN_NEWCOPY, enable);
 
-// zkrácení stavového øádku
+// zkrácení stavového řádku
 	int stat2 = SelectStatusWidth - StatusWidth;
 
-// pøíprava data a èasu souboru/adresáøe
+// příprava data a času souboru/adresáře
 	if ((SelectTyp == TYPSUBDIR) || (SelectTyp == TYPFILE))
 	{
 		WIN32_FIND_DATA wfd;
@@ -959,13 +959,13 @@ void UpdateStartOpen()
 		if (fnd != INVALID_HANDLE_VALUE)
 		{
 
-// není-li adresáø, je vìtší rezerva ve stavovém øádku (není velikost)
+// není-li adresář, je větší rezerva ve stavovém řádku (není velikost)
 			if ((wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) != 0)
 			{
 				stat2 -= 80;
 			}			
 
-// pøíprava lokálního data a èasu
+// příprava lokálního data a času
 			FILETIME loc;
 			::FileTimeToLocalFileTime(&wfd.ftLastWriteTime, &loc);
 
@@ -1005,7 +1005,7 @@ void UpdateStartOpen()
 				txt.Add(txt2);
 				break;
 
-// francouzsky, španìlsky, italsky
+// francouzsky, španělsky, italsky
 			case JAZYKFRA:
 			case JAZYKSPA:
 			case JAZYKITA:
@@ -1019,7 +1019,7 @@ void UpdateStartOpen()
 				txt.Add(txt2);
 				break;
 
-// èesky, slovensky, nìmecky
+// česky, slovensky, německy
 			default:
 				txt2.Int(sys.wDay);
 				txt.Add(txt2);
@@ -1031,7 +1031,7 @@ void UpdateStartOpen()
 				txt.Add(txt2);
 			}
 
-// èas souboru
+// čas souboru
 			txt.Add(_T(", "));
 			if (stat2 < 5)
 			{
@@ -1093,21 +1093,21 @@ void UpdateStartOpen()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna aktuální položky (LVN_ITEMCHANGED)
+// změna aktuální položky (LVN_ITEMCHANGED)
 
 void SelectOnChange(HWND hWnd, NM_LISTVIEW* nmlv)
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// kontrola, zda je zpráva od okna výbìru
+// kontrola, zda je zpráva od okna výběru
 	if (hWnd != SelectView) return;
 
 // kontrola platnosti položky
 	if ((DWORD)nmlv->lParam < (DWORD)SelectItemNum)
 	{
 
-// kontrola, zda je zmìna zamìøení ze staré položky na novou
+// kontrola, zda je změna zaměření ze staré položky na novou
 		if (((nmlv->uNewState & LVIS_FOCUSED) != 0) &&
 			((nmlv->uOldState & LVIS_FOCUSED) == 0))
 		{
@@ -1118,13 +1118,13 @@ void SelectOnChange(HWND hWnd, NM_LISTVIEW* nmlv)
 		}
 	}
 
-// aktualizace tlaèítek a položek menu
+// aktualizace tlačítek a položek menu
 	UpdateStartOpen();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test, zda je spustitelný zavadìè programu (TRUE=je)
+// test, zda je spustitelný zavaděč programu (TRUE=je)
 
 BOOL SelectTestExe()
 {
@@ -1132,11 +1132,11 @@ BOOL SelectTestExe()
 
 	CFileMap file;
 
-// otevøení souboru
+// otevření souboru
 	if (file.Open(JmenoLoad))
 	{
 
-// pøíprava NT záhlaví souboru EXE
+// příprava NT záhlaví souboru EXE
 		IMAGE_NT_HEADERS* hdr = file.NTHeader();
 		if (hdr != NULL)
 		{
@@ -1150,24 +1150,24 @@ BOOL SelectTestExe()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// otevøení souboru k editaci
+// otevření souboru k editaci
 
 void SelectOnOpen()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// pro adresáø se provede zmìna adresáøe
+// pro adresář se provede změna adresáře
 	if (SelectTyp != TYPFILE)
 	{
 		SelectOnStart();
 	}
 
-// pro soubor otevøení k editaci
+// pro soubor otevření k editaci
 	else
 	{
 
-// zahájení režimu editace souborù
+// zahájení režimu editace souborů
 		SelectEdit();
 	}
 }
@@ -1178,10 +1178,10 @@ void SelectOnOpen()
 
 void SelectOnDblClk(HWND hWnd)
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// kontrola, zda je zpráva od okna výbìru
+// kontrola, zda je zpráva od okna výběru
 	if (hWnd != SelectView) return;
 
 // start aktivního programu
@@ -1190,39 +1190,39 @@ void SelectOnDblClk(HWND hWnd)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// start programu nebo zmìna adresáøe
+// start programu nebo změna adresáře
 
 void SelectOnStart()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// pouze je-li nìjaká platná položka
+// pouze je-li nějaká platná položka
 	if (SelectTyp != TYP0)
 	{
 
-// kontrola, zda to je adresáø
+// kontrola, zda to je adresář
 		if (SelectTyp != TYPFILE)
 		{
 
-// vynoøení z adresáøe
+// vynoření z adresáře
 			if (SelectTyp == TYPUPDIR)
 			{
-				Cesta.Delete(Cesta.Length()-1);		// odstranìní koncového "\"
-				int index = Cesta.RevFind(_T('\\'))+1;	// nalezení pøedešlého "\" nebo 0
+				Cesta.Delete(Cesta.Length()-1);		// odstranění koncového "\"
+				int index = Cesta.RevFind(_T('\\'))+1;	// nalezení předešlého "\" nebo 0
 				Jmeno.Empty();
-				Jmeno.MultiText(JAZYK000, Cesta.Right(Cesta.Length()-index)); // poslední adresáø
-				Cesta.Delete(index);				// odstranìní posledního adresáøe
+				Jmeno.MultiText(JAZYK000, Cesta.Right(Cesta.Length()-index)); // poslední adresář
+				Cesta.Delete(index);				// odstranění posledního adresáře
 			}
 
-// vnoøení do adresáøe
+// vnoření do adresáře
 			else
 			{
 				Cesta.Add(Jmeno.MultiText((int)JAZYK000) + _T('\\')); // nová cesta
 				Jmeno.Empty();
 				Jmeno.MultiText(JAZYK000, CText(_T("..")));
 			}
-			SelectLoad();							// znovunaètení adresáøe
+			SelectLoad();							// znovunačtení adresáře
 		}
 
 // je to soubor - start programu
@@ -1234,10 +1234,10 @@ void SelectOnStart()
 
 				Exec(CText(_T('"')) + JmenoLoad + _T('"'), 
 					ProgramPath + Cesta,
-					FALSE);	// spuštìní programu
+					FALSE);	// spuštění programu
 			}
 
-// bez zavadìèe se program otevøe k editaci
+// bez zavaděče se program otevře k editaci
 			else
 			{
 				SelectEdit();
@@ -1247,7 +1247,7 @@ void SelectOnStart()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení jedineèného nového jména k zadání (over = pøeskakovaná položka, -1=není)
+// nalezení jedinečného nového jména k zadání (over = přeskakovaná položka, -1=není)
 
 void SelectNewNameUnique(int over)
 {
@@ -1267,11 +1267,11 @@ void SelectNewNameUnique(int over)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení jedineèného zadaného jména souboru/adresáøe (over = pøeskakovaná položka, -1=není)
+// nalezení jedinečného zadaného jména souboru/adresáře (over = přeskakovaná položka, -1=není)
 
 CText SelectNewFileUnique(int over)
 {
-// pøíprava jedineèného jména (pro nezkrácená jména se nastavuje v cyklu)
+// příprava jedinečného jména (pro nezkrácená jména se nastavuje v cyklu)
 	int nn = 0;
 	if (ShortName)
 	{
@@ -1279,11 +1279,11 @@ CText SelectNewFileUnique(int over)
 		SelectNewNameUnique(over);
 	}
 
-// pøíprava krátkého jména souboru
+// příprava krátkého jména souboru
 	CText shortname = SelectNewText;
 	shortname.KorigShort();
 
-// nalezení neexistujícího jména souboru/adresáøe
+// nalezení neexistujícího jména souboru/adresáře
 	CText txtint;
 	CText txt = shortname;
 
@@ -1457,7 +1457,7 @@ BOOL CALLBACK SelectDialogProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lPara
 			}
 			break;
 
-//		case EN_CHANGE:						// není potøeba již obsluhovat (používají se aliases)
+//		case EN_CHANGE:						// není potřeba již obsluhovat (používají se aliases)
 //			if (!SelectNewFill)
 //			{
 //				SelectNewFill = TRUE;
@@ -1487,23 +1487,23 @@ BOOL CALLBACK SelectDialogProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lPara
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nového souboru
+// vytvoření nového souboru
 
-// velikost stránky zarovnávání pamìti
+// velikost stránky zarovnávání paměti
 #ifndef _M_ALPHA
-#define	PAGESIZE		0x1000			// velikost alokaèní stránky pro ostatní procesory (4096)
+#define	PAGESIZE		0x1000			// velikost alokační stránky pro ostatní procesory (4096)
 #define PAGEFILE		0x1000			// velikost stránky v souboru
 #else
-#define	PAGESIZE		0x2000			// velikost alokaèní stránky pro procesor Alpha (8192)
+#define	PAGESIZE		0x2000			// velikost alokační stránky pro procesor Alpha (8192)
 #define PAGEFILE		0x2000			// velikost stránky v souboru
 #endif
 
 void SelectOnNew()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// pøíprava zadaného jména souboru
+// příprava zadaného jména souboru
 	if (SelectTyp == TYPFILE)
 	{
 		SelectNewText = Jmeno.MultiText();
@@ -1533,7 +1533,7 @@ void SelectOnNew()
 					(DLGPROC)SelectDialogProc,
 					(LPARAM)dialogID) != IDOK) return;
 
-// pøednastavení pøíštího dialogu
+// přednastavení příštího dialogu
 		dialogID = IDN_SELECT_CREATE;
 
 // korekce zadaného textu
@@ -1541,7 +1541,7 @@ void SelectOnNew()
 		SelectNewText.TrimRight();
 		if (SelectNewText.IsEmpty()) return;
 
-// pøíprava jména souboru
+// příprava jména souboru
 		CText txt = SelectNewFileUnique(-1);
 
 // jméno souboru
@@ -1555,11 +1555,11 @@ void SelectOnNew()
 		}
 		CText filename = ProgramPath + Cesta + txt;
 
-// vytvoøení souboru
+// vytvoření souboru
 		HANDLE file = ::CreateFile(filename, GENERIC_WRITE,
 			0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// chyba vytvoøení - test, zda soubor již existuje (jinak hlášena neznámá chyba)
+// chyba vytvoření - test, zda soubor již existuje (jinak hlášena neznámá chyba)
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to již nemusí být !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		if (file == INVALID_HANDLE_VALUE)
 		{
@@ -1569,7 +1569,7 @@ void SelectOnNew()
 			}
 		}
 
-// pøíprava malého zavadìèe programu
+// příprava malého zavaděče programu
 		else
 		{
 			CResource loader;
@@ -1581,7 +1581,7 @@ void SelectOnNew()
 				if (hdr != NULL)
 				{
 
-// offset zaèátku dat v souboru (= zarovnaná velikost zavadìèe)
+// offset začátku dat v souboru (= zarovnaná velikost zavaděče)
 					int SaveDataOff = (loader.Size() + (PAGEFILE-1)) & ~(PAGEFILE-1);
 
 // virtuální adresa dat
@@ -1595,13 +1595,13 @@ void SelectOnNew()
 							+ hdr->FileHeader.SizeOfOptionalHeader + hdr->FileHeader.NumberOfSections 
 							* sizeof(IMAGE_SECTION_HEADER));
 
-// zvýšení èítaèe sekcí
+// zvýšení čítače sekcí
 					hdr->FileHeader.NumberOfSections++;
 
 // nastavení sekce
 					MemCopy(sec, &PetProgHeader, sizeof(IMAGE_SECTION_HEADER));
 
-// nastavení offsetu zaèátku dat v souboru
+// nastavení offsetu začátku dat v souboru
 					sec->PointerToRawData = SaveDataOff;
 					sec->VirtualAddress = SaveDataVirt;
 
@@ -1615,8 +1615,8 @@ void SelectOnNew()
 // virtuální velikost dat programu
 					sec->Misc.VirtualSize = sizeof(NewHead);
 
-// zápis zavadìèe
-					DWORD writen;				// poèet zapsaných dat
+// zápis zavaděče
+					DWORD writen;				// počet zapsaných dat
 					if ((!::WriteFile(file, loader.Adr(), loader.Size(), &writen, NULL)) ||
 						(loader.Size() != (int)writen))
 					{
@@ -1625,7 +1625,7 @@ void SelectOnNew()
 					else
 					{
 
-// zarovnání délky zavadìèe na souborovou stránku
+// zarovnání délky zavaděče na souborovou stránku
 						int i = SaveDataOff - loader.Size();
 						if (i > 0)
 						{
@@ -1637,7 +1637,7 @@ void SelectOnNew()
 							}
 						}
 
-// zrušení bufferu zavadìèe
+// zrušení bufferu zavaděče
 						loader.CloseCopy();
 
 // zápis programu
@@ -1655,7 +1655,7 @@ void SelectOnNew()
 							}
 						}
 
-// uzavøení souboru
+// uzavření souboru
 						::CloseHandle(file);
 
 // nastavení nového jména souboru
@@ -1674,7 +1674,7 @@ void SelectOnNew()
 				}
 			}
 
-// uzavøení a zrušení souboru (a pokraèování chybovým hlášením)
+// uzavření a zrušení souboru (a pokračování chybovým hlášením)
 			::CloseHandle(file);
 			::DeleteFile(filename);
 		}
@@ -1683,11 +1683,11 @@ void SelectOnNew()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operace PASTE pøi editaci jména souboru
+// operace PASTE při editaci jména souboru
 
 void SelectOnPaste()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
 // editace jména souboru
@@ -1700,11 +1700,11 @@ void SelectOnPaste()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operace CUT pøi editaci jména souboru
+// operace CUT při editaci jména souboru
 
 void SelectOnCut()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
 // editace jména souboru
@@ -1716,11 +1716,11 @@ void SelectOnCut()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operace UNDO pøi editaci jména souboru
+// operace UNDO při editaci jména souboru
 
 void SelectOnUndo()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
 // editace jména souboru
@@ -1732,11 +1732,11 @@ void SelectOnUndo()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nového souboru kopií
+// vytvoření nového souboru kopií
 
 void SelectOnNewCopy()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
 // editace jména souboru
@@ -1749,7 +1749,7 @@ void SelectOnNewCopy()
 // kontrola, zda je platné jméno souboru pod kurzorem
 	if (SelectTyp != TYPFILE) return;
 
-// pøíprava zadaného jména souboru
+// příprava zadaného jména souboru
 	SelectNewText = Jmeno.MultiText();
 	SelectNewMultiText = Jmeno;
 
@@ -1770,7 +1770,7 @@ void SelectOnNewCopy()
 					(DLGPROC)SelectDialogProc,
 					(LPARAM)dialogID) != IDOK) return;
 
-// pøednastavení pøíštího dialogu
+// přednastavení příštího dialogu
 		dialogID = IDN_SELECT_CREATE;
 
 // korekce zadaného textu
@@ -1778,7 +1778,7 @@ void SelectOnNewCopy()
 		SelectNewText.TrimRight();
 		if (SelectNewText.IsEmpty()) return;
 
-// pøíprava jména souboru
+// příprava jména souboru
 		CText txt = SelectNewFileUnique(-1);
 
 // jméno souboru
@@ -1824,7 +1824,7 @@ void SelectOnNewCopy()
 			return;
 		}
 
-// chyba vytvoøení - test, zda soubor již existuje (jinak hlášena neznámá chyba)
+// chyba vytvoření - test, zda soubor již existuje (jinak hlášena neznámá chyba)
 		if ((int)::GetFileAttributes(newname) != -1)
 		{
 			dialogID = IDN_SELECT_EXIST;
@@ -1834,14 +1834,14 @@ void SelectOnNewCopy()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení adresáøe
+// vytvoření adresáře
 
 void SelectOnPath()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
-// pøíprava zadaného jména adresáøe
+// příprava zadaného jména adresáře
 	if (SelectTyp == TYPUPDIR)
 	{
 		SelectNewText = Jmeno.MultiText();
@@ -1854,7 +1854,7 @@ void SelectOnPath()
 // implicitní jméno, není-li žádný vzor
 	if (SelectNewText.IsEmpty()) SelectNewText.Load(IDN_NEWDIR_NAME);
 
-// nalezení neexistujícího adresáøe
+// nalezení neexistujícího adresáře
 	SelectNewNameUnique(-1);
 
 // cyklus opakování zadání
@@ -1863,7 +1863,7 @@ void SelectOnPath()
 	for (;;)
 	{
 
-// zadání jména adresáøe
+// zadání jména adresáře
 		if (::DialogBoxParam(
 					hInstance,
 					MAKEINTRESOURCE(dialogID),
@@ -1871,7 +1871,7 @@ void SelectOnPath()
 					(DLGPROC)SelectDialogProc,
 					(LPARAM)dialogID) != IDOK) return;
 
-// pøednastavení pøíštího dialogu - adresáø existuje
+// přednastavení příštího dialogu - adresář existuje
 		dialogID = IDN_SELECT_DIREXIST;
 
 // korekce zadaného textu
@@ -1879,11 +1879,11 @@ void SelectOnPath()
 		SelectNewText.TrimRight();
 		if (SelectNewText.IsEmpty()) return;
 
-// pøíprava jména adresáøe
+// příprava jména adresáře
 		CText txt = SelectNewFileUnique(-1);
 		CText dirname = ProgramPath + Cesta + txt;
 
-// vytvoøení adresáøe
+// vytvoření adresáře
 		if (CreateDir(dirname))
 		{
 
@@ -1896,12 +1896,12 @@ void SelectOnPath()
 			::WritePrivateProfileString(JazykInfo[Jazyk].LangIDini, txt, SelectNewText, SelectAliases);
 			ZobrazJmeno();
 
-// znovunaètení obsahu adresáøe
+// znovunačtení obsahu adresáře
 			SelectLoad();
 			return;
 		}
 
-// pøi chybì test, zda adresáø již existuje (pokud ne, je nìjaká jiná chyba)
+// při chybě test, zda adresář již existuje (pokud ne, je nějaká jiná chyba)
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! to již nemusí být !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		if ((int)::GetFileAttributes(dirname) == -1)
 		{
@@ -1912,11 +1912,11 @@ void SelectOnPath()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení souboru nebo adresáøe
+// zrušení souboru nebo adresáře
 
 void SelectOnDelete()
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return;
 
 // editace jména prvku
@@ -1943,11 +1943,11 @@ void SelectOnDelete()
 // krátké jméno položky
 	CText txt0 = Jmeno.MultiText((int)JAZYK000);
 
-// rozlišení, zda to je adresáø nebo soubor
+// rozlišení, zda to je adresář nebo soubor
 	if (SelectTyp == TYPSUBDIR)
 	{
 
-// zobrazení dialogu k potvrzení rušení adresáøe
+// zobrazení dialogu k potvrzení rušení adresáře
 		if (::DialogBoxParam(
 					hInstance,
 					MAKEINTRESOURCE(IDN_SELECT_DELDIR),
@@ -1967,11 +1967,11 @@ void SelectOnDelete()
 			::DeleteFile(ProgramPath + Cesta + txt0 + _T("\\ALIASES.INI"));
 		}
 
-// zrušení adresáøe
+// zrušení adresáře
 		if (!::RemoveDirectory(JmenoSave))
 		{
 
-// adresáø nelze zrušit
+// adresář nelze zrušit
 			::DialogBoxParam(
 					hInstance,
 					MAKEINTRESOURCE(IDN_SELECT_DELDIRERROR),
@@ -1992,7 +1992,7 @@ void SelectOnDelete()
 					(DLGPROC)SelectDialogProc,
 					(LPARAM)IDN_SELECT_DEL) != IDOK) return;
 
-// kontrola, zda rušený soubor není chránìn proti zápisu
+// kontrola, zda rušený soubor není chráněn proti zápisu
 		int attrib = (int)::GetFileAttributes(JmenoSave);
 		if ((attrib != -1) && ((attrib & FILE_ATTRIBUTE_READONLY) != 0))
 		{
@@ -2042,7 +2042,7 @@ void SelectOnDelete()
 		}
 	}
 
-// test, zda je vzorová položka (zda zùstane jméno nezmìnìno)
+// test, zda je vzorová položka (zda zůstane jméno nezměněno)
 	if (ProgramPath2.IsEmpty() || 
 		((int)::GetFileAttributes(ProgramPath2 + Cesta + txt0) == -1))
 	{
@@ -2060,7 +2060,7 @@ void SelectOnDelete()
 		ZobrazJmeno();
 	}
 
-// znovunaètení souborù
+// znovunačtení souborů
 	SelectLoad();
 }
 
@@ -2070,14 +2070,14 @@ void SelectOnDelete()
 
 BOOL SelectOnKeyDown(HWND hWnd, int key, int data)
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode || (hWnd != SelectView)) return FALSE;
 
 // rozlišení podle klávesy
 	switch (key)
 	{
 
-// Alt-Enter = pøejmenování
+// Alt-Enter = přejmenování
 	case VK_RETURN:
 		if ((!SelEditName) && (::GetKeyState(VK_MENU) < 0) && 
 			(SelectTyp != TYP0) && (SelectTyp != TYPUPDIR) && !SelectAltern)
@@ -2094,11 +2094,11 @@ BOOL SelectOnKeyDown(HWND hWnd, int key, int data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace jména souboru/adresáøe
+// zahájení editace jména souboru/adresáře
 
 void SelectOnRename()
 {
-// kontrola, zda je režim výbìru a zda není editace
+// kontrola, zda je režim výběru a zda není editace
 	if (!SelectMode || SelEditName) return;
 
 // zahájení editace jména prvku
@@ -2110,11 +2110,11 @@ void SelectOnRename()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace jména prvku (vrací TRUE=pøerušit editaci)
+// zahájení editace jména prvku (vrací TRUE=přerušit editaci)
 
 BOOL SelectOnBeginLabelEdit(HWND hWnd, int iItem)
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode || SelEditName || 
 		(hWnd != SelectView) || 
 		(SelectTyp == TYP0) || 
@@ -2124,37 +2124,37 @@ BOOL SelectOnBeginLabelEdit(HWND hWnd, int iItem)
 		return TRUE;
 	}
 
-// naètení handle editaèního okna
+// načtení handle editačního okna
 	SelEditNameWnd = (HWND)::SendMessage(SelectView, LVM_GETEDITCONTROL, 0, 0);
 	if (SelEditNameWnd == NULL) return TRUE;
 
-// pøíznak zahájení editace
+// příznak zahájení editace
 	SelEditName = TRUE;
 
-// pøíznak povolení editace
+// příznak povolení editace
 	return FALSE;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení editace jména prvku
+// ukončení editace jména prvku
 
 void SelectOnEndLabelEdit(HWND hWnd, LV_ITEM* lvi)
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode || !SelEditName || (hWnd != SelectView)) return;
 
 // test, zda je text platný
 	if ((lvi->pszText != NULL) && (SelectTyp != TYP0) && (SelectTyp != TYPUPDIR) && !SelectAltern)
 	{
 
-// naètení zadaného textu
+// načtení zadaného textu
 		SelectNewText = lvi->pszText;
 		SelectNewText.TrimLeft();
 		SelectNewText.TrimRight();
 		SelectNewMultiText = Jmeno;
 
-// aktuální jméno bez pøípony
+// aktuální jméno bez přípony
 		CText oldtxt = Jmeno.MultiText((int)JAZYK000);
 		if (SelectTyp == TYPFILE) oldtxt.Delete(oldtxt.Length() - 4);
 
@@ -2173,13 +2173,13 @@ void SelectOnEndLabelEdit(HWND hWnd, LV_ITEM* lvi)
 
 		SelectNewMultiText.MultiText(SelectNewText);
 
-// pøíprava nového jména souboru
+// příprava nového jména souboru
 //		CText txt = SelectNewMultiText.MultiText();
 //		txt.KorigShort();
 //		if (txt != oldtxt) txt = SelectNewFileUnique();
 		CText txt = SelectNewFileUnique(SelectInx);
 
-// pøidání pøípony
+// přidání přípony
 		if (SelectTyp == TYPFILE)
 		{
 			if (ShortName)
@@ -2195,7 +2195,7 @@ void SelectOnEndLabelEdit(HWND hWnd, LV_ITEM* lvi)
 		oldtxt = Jmeno.MultiText((int)JAZYK000);
 		CText newname = ProgramPath + Cesta + txt;
 
-// pøejmenování souboru nebo adresáøe (adresáø se po chvíli automaticky naète!!!!!)
+// přejmenování souboru nebo adresáře (adresář se po chvíli automaticky načte!!!!!)
 		if ((oldtxt == txt) || ::MoveFile(JmenoSave, newname))
 		{
 			if (oldtxt == txt)
@@ -2235,18 +2235,18 @@ void SelectOnEndLabelEdit(HWND hWnd, LV_ITEM* lvi)
 		ZobrazJmeno();
 	}
 
-// pøíznak ukonèení editace
+// příznak ukončení editace
 	SelEditName = FALSE;
 	SelEditNameWnd = NULL;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha èasovaèe (TRUE=obslouženo)
+// obsluha časovače (TRUE=obslouženo)
 
 BOOL SelectOnTimer(UINT timerID)
 {
-// kontrola, zda je režim výbìru
+// kontrola, zda je režim výběru
 	if (!SelectMode) return FALSE;
 
 // nastavení automatického fokusu
@@ -2258,10 +2258,10 @@ BOOL SelectOnTimer(UINT timerID)
 			if (SelectTimerN == 0)
 			{
 
-// ukonèení režimu výbìru souborù
+// ukončení režimu výběru souborů
 				SelectTerm();
 
-// zahájení režimu editace souborù
+// zahájení režimu editace souborů
 				ProgInit();
 
 				if (IsWaitCursor)
@@ -2274,7 +2274,7 @@ BOOL SelectOnTimer(UINT timerID)
 		}
 	}
 
-// hlášení o zmìnì adresáøe
+// hlášení o změně adresáře
 	if (timerID == SelectDirChangeTimerID)
 	{
 		BOOL load = FALSE;

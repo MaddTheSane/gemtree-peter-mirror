@@ -9,19 +9,19 @@ namespace EditText
 {
 	extern	int		Index;						// editovaná položka
 
-// opakovaná inicializace po zmìnì jazyku
+// opakovaná inicializace po změně jazyku
 	void StartReInit();
 
-// inicializace pøi startu
+// inicializace při startu
 	void StartInit();
 
 // zahájení editace
 	void BegEdit(int index);
 
-// pøesun editaèního pole
+// přesun editačního pole
 	HDWP MoveEdit(HDWP hdwp);
 
-// výbìr všeho
+// výběr všeho
 	void SelectAll();
 
 // zrušení bloku
@@ -30,7 +30,7 @@ namespace EditText
 // kopie bloku
 	void Copy();
 
-// vystøížení bloku
+// vystřížení bloku
 	void Cut();
 
 // navrácení bloku
@@ -39,6 +39,6 @@ namespace EditText
 // aktualizace voleb bloku
 	void UpdateClipboard();
 
-// zmìna textu
+// změna textu
 	void OnChange();
 }

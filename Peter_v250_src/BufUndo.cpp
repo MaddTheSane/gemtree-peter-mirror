@@ -126,7 +126,7 @@ void CBufUndo::DelAll()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní bufferu REDO (není-li pøehrávání)
+// vyprázdnění bufferu REDO (není-li přehrávání)
 
 void CBufUndo::NulRedo()
 {
@@ -142,7 +142,7 @@ void CBufUndo::NulRedo()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nové položky (vrací NULL=chyba pamìti)
+// vytvoření nové položky (vrací NULL=chyba paměti)
 
 UNDOITEM* CBufUndo::New()
 {
@@ -152,13 +152,13 @@ UNDOITEM* CBufUndo::New()
 	if (m_Undo)
 	{
 
-// vyprázdnìní REDO bufferu
+// vyprázdnění REDO bufferu
 		NulRedo();
 
 // index nové položky
 		int index = m_UndoNum;
 
-// zvìtšení bufferu (o 4 KB)
+// zvětšení bufferu (o 4 KB)
 		if (index >= m_UndoMax)
 		{
 			int undomax = m_UndoMax + 128;
@@ -180,7 +180,7 @@ UNDOITEM* CBufUndo::New()
 // index nové položky
 		int index = m_RedoNum;
 
-// zvìtšení bufferu (o 4 KB)
+// zvětšení bufferu (o 4 KB)
 		if (index >= m_RedoMax)
 		{
 			int redomax = m_RedoMax + 128;
@@ -204,7 +204,7 @@ UNDOITEM* CBufUndo::New()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøibližné velikosti datové položky (jen kvùli kontrole pøeteèení)
+// zjištění přibližné velikosti datové položky (jen kvůli kontrole přetečení)
 
 int _fastcall CBufUndo::GetSize(int bufID, int index)
 {
@@ -253,7 +253,7 @@ int _fastcall CBufUndo::GetSize(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøiètení velikosti položky (jen pokud je záznam do UNDO)
+// přičtení velikosti položky (jen pokud je záznam do UNDO)
 
 void _fastcall CBufUndo::AddSize(UNDOITEM* item)
 {
@@ -265,7 +265,7 @@ void _fastcall CBufUndo::AddSize(UNDOITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení datové položky z bufferù
+// zrušení datové položky z bufferů
 
 void _fastcall CBufUndo::DelData(int bufID, int index)
 {
@@ -382,7 +382,7 @@ void CBufUndo::Reduct()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení záznamu operací (nastaví pøíznak konce posloupnosti)
+// ukončení záznamu operací (nastaví příznak konce posloupnosti)
 
 void CBufUndo::Stop()
 {
@@ -430,7 +430,7 @@ void CBufUndo::UpdateUndoRedo()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutí pøíznakù pøekreslení okna
+// vypnutí příznaků překreslení okna
 
 void CBufUndo::NulRedraw()
 {
@@ -442,7 +442,7 @@ void CBufUndo::NulRedraw()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutí/zapnutí pøekreslování okna
+// vypnutí/zapnutí překreslování okna
 
 void CBufUndo::SetRedraw(int bufID, BOOL redraw)
 {
@@ -455,7 +455,7 @@ void CBufUndo::SetRedraw(int bufID, BOOL redraw)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oznaèení editované položky
+// označení editované položky
 
 void CBufUndo::SelectEdit(int bufID, int index)
 {
@@ -491,19 +491,19 @@ void CBufUndo::Undo()
 // kontrola povolení požadavku
 	if ((m_UndoRecs <= 0) || !ProgMode || m_Play) return;
 
-// zapnutí pøíznaku pøehrávání UNDO, nahrávání REDO
+// zapnutí příznaku přehrávání UNDO, nahrávání REDO
 	m_Undo = FALSE;
 	m_Play = TRUE;
 
-// pøednastavení - není nastavení editaèního módu
+// přednastavení - není nastavení editačního módu
 	m_EditMode = -1;
 	m_SelectMode = -1;
 	m_MapMode = -1;
 
-// vypnutí pøíznakù pøekreslování oken
+// vypnutí příznaků překreslování oken
 	NulRedraw();
 
-// pøehrátí záznamu UNDO
+// přehrátí záznamu UNDO
 	if (m_UndoNum > 0)
 	{
 		do {
@@ -512,16 +512,16 @@ void CBufUndo::Undo()
 		} while ((m_UndoNum > 0) && (!m_UndoData[m_UndoNum-1].Stop));
 	}
 
-// ukonèení záznamu pro REDO
+// ukončení záznamu pro REDO
 	Stop();
 
-// zapnutí pøekreslování oken
+// zapnutí překreslování oken
 	for (int i = 0; i < PROGBUFNUM; i++)
 	{
 		SetRedraw(i, TRUE);
 	}
 
-// nastavení editaèního módu
+// nastavení editačního módu
 	if (m_EditMode >= 0)
 	{
 		if (!SetEditMode(m_EditMode, m_EditIndex))
@@ -540,11 +540,11 @@ void CBufUndo::Undo()
 		EditMap::SetMode(m_MapMode);
 	}
 
-// vypnutí pøíznaku pøehrávání UNDO
+// vypnutí příznaku přehrávání UNDO
 	m_Play = FALSE;
 	m_Undo = TRUE;
 
-// pøíznak modifikace souboru
+// příznak modifikace souboru
 	SetModi();
 
 // aktualizace voleb undo/redo
@@ -563,18 +563,18 @@ void CBufUndo::Redo()
 // kontrola povolení požadavku
 	if ((m_RedoRecs <= 0) || !ProgMode || m_Play) return;
 
-// zapnutí pøíznaku pøehrávání REDO, nahrávání UNDO (=implicitnì)
+// zapnutí příznaku přehrávání REDO, nahrávání UNDO (=implicitně)
 	m_Play = TRUE;
 
-// pøednastavení - není nastavení editaèního módu
+// přednastavení - není nastavení editačního módu
 	m_EditMode = -1;
 	m_SelectMode = -1;
 	m_MapMode = -1;
 
-// vypnutí pøíznakù pøekreslování oken
+// vypnutí příznaků překreslování oken
 	NulRedraw();
 
-// pøehrátí záznamu REDO
+// přehrátí záznamu REDO
 	if (m_RedoNum > 0)
 	{
 		do {
@@ -583,16 +583,16 @@ void CBufUndo::Redo()
 		} while ((m_RedoNum > 0) && (!m_RedoData[m_RedoNum-1].Stop));
 	}
 
-// ukonèení záznamu pro UNDO
+// ukončení záznamu pro UNDO
 	Stop();
 
-// zapnutí pøekreslování oken
+// zapnutí překreslování oken
 	for (int i = 0; i < PROGBUFNUM; i++)
 	{
 		SetRedraw(i, TRUE);
 	}
 
-// nastavení editaèního módu
+// nastavení editačního módu
 	if (m_EditMode >= 0)
 	{
 		SetEditMode(m_EditMode, m_EditIndex);
@@ -608,10 +608,10 @@ void CBufUndo::Redo()
 		EditMap::SetMode(m_MapMode);
 	}
 
-// vypnutí pøíznaku pøehrávání REDO
+// vypnutí příznaku přehrávání REDO
 	m_Play = FALSE;
 
-// pøíznak modifikace souboru
+// příznak modifikace souboru
 	SetModi();
 
 // aktualizace voleb undo/redo
@@ -623,15 +623,15 @@ void CBufUndo::Redo()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do programového bufferu (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do programového bufferu (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgIns(int bufID, int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = bufID;
 	item->Index = index;
@@ -643,15 +643,15 @@ bool CBufUndo::AddProgIns(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z programového bufferu (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z programového bufferu (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgDel(int bufID, int index, PROGITEM* data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = bufID;
 	item->Index = index;
@@ -660,7 +660,7 @@ bool CBufUndo::AddProgDel(int bufID, int index, PROGITEM* data)
 	item->DatBufID = BufEdiID;
 	item->DatIndex = m_Prog.Insert0(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -670,15 +670,15 @@ bool CBufUndo::AddProgDel(int bufID, int index, PROGITEM* data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøesunu položky v programovém bufferu (vrací FALSE=chyba pamìti)
+// záznam o přesunu položky v programovém bufferu (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgMove(int bufID, int index, int oldparent, int oldprev)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_MOVE;
 	item->BufID = bufID;
 	item->Index = index;
@@ -692,15 +692,15 @@ bool CBufUndo::AddProgMove(int bufID, int index, int oldparent, int oldprev)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì pøíznaku LOCK prvku (vrací FALSE=chyba pamìti)
+// záznam o změně příznaku LOCK prvku (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgLock(int bufID, int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_LOCK;
 	item->BufID = bufID;
 	item->Index = index;
@@ -712,15 +712,15 @@ bool CBufUndo::AddProgLock(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì pøíznaku OFF prvku (vrací FALSE=chyba pamìti)
+// záznam o změně příznaku OFF prvku (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgOff(int bufID, int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_OFF;
 	item->BufID = bufID;
 	item->Index = index;
@@ -732,15 +732,15 @@ bool CBufUndo::AddProgOff(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì jména prvku (vrací FALSE=chyba pamìti)
+// záznam o změně jména prvku (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgName(int bufID, int index, int name)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_NAME;
 	item->BufID = bufID;
 	item->Index = index;
@@ -753,15 +753,15 @@ bool CBufUndo::AddProgName(int bufID, int index, int name)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o nastavení jména prvku (vrací FALSE=chyba pamìti)
+// záznam o nastavení jména prvku (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgNameSet(int bufID, int index, const CMultiText& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_NAMESET;
 	item->BufID = bufID;
 	item->Index = index;
@@ -770,7 +770,7 @@ bool CBufUndo::AddProgNameSet(int bufID, int index, const CMultiText& data)
 	item->DatBufID = BufTxtID;
 	item->DatIndex = m_Text.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -787,15 +787,15 @@ bool CBufUndo::AddProgNameSet(int bufID, int index, const CText& data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì ikony prvku (vrací FALSE=chyba pamìti)
+// záznam o změně ikony prvku (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddProgIcon(int bufID, int index, int icon)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_ICON;
 	item->BufID = bufID;
 	item->Index = index;
@@ -808,15 +808,15 @@ bool CBufUndo::AddProgIcon(int bufID, int index, int icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu èísel (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu čísel (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddRealIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufNumID;
 	item->Index = index;
@@ -828,15 +828,15 @@ bool CBufUndo::AddRealIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu èísel (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu čísel (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddRealDel(int index, double data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufNumID;
 	item->Index = index;
@@ -845,7 +845,7 @@ bool CBufUndo::AddRealDel(int index, double data)
 	item->DatBufID = BufNumID;
 	item->DatIndex = m_Real.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -855,18 +855,18 @@ bool CBufUndo::AddRealDel(int index, double data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu èísel (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu čísel (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddRealSet(int index, double data)
 {
-// èíslo se ukládá jen jednou
+// číslo se ukládá jen jednou
 	if (TestSet(BufNumID, index)) return true;
 
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufNumID;
 	item->Index = index;
@@ -875,7 +875,7 @@ bool CBufUndo::AddRealSet(int index, double data)
 	item->DatBufID = BufNumID;
 	item->DatIndex = m_Real.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -885,15 +885,15 @@ bool CBufUndo::AddRealSet(int index, double data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu textù (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu textů (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddTextIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufTxtID;
 	item->Index = index;
@@ -905,15 +905,15 @@ bool CBufUndo::AddTextIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu textù (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu textů (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddTextDel(int index, const CMultiText& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufTxtID;
 	item->Index = index;
@@ -922,7 +922,7 @@ bool CBufUndo::AddTextDel(int index, const CMultiText& data)
 	item->DatBufID = BufTxtID;
 	item->DatIndex = m_Text.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -939,18 +939,18 @@ bool CBufUndo::AddTextDel(int index, const CText& data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu textù (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu textů (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddTextSet(int index, const CMultiText& data)
 {
 // text se ukládá jen jednou
 	if (TestSet(BufTxtID, index)) return true;
 
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufTxtID;
 	item->Index = index;
@@ -959,7 +959,7 @@ bool CBufUndo::AddTextSet(int index, const CMultiText& data)
 	item->DatBufID = BufTxtID;
 	item->DatIndex = m_Text.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -976,15 +976,15 @@ bool CBufUndo::AddTextSet(int index, const CText& data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu logických hodnot (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu logických hodnot (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddBoolIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufLogID;
 	item->Index = index;
@@ -996,15 +996,15 @@ bool CBufUndo::AddBoolIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu logických hodnot (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu logických hodnot (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddBoolDel(int index, BOOL data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufLogID;
 	item->Index = index;
@@ -1013,7 +1013,7 @@ bool CBufUndo::AddBoolDel(int index, BOOL data)
 	item->DatBufID = BufLogID;
 	item->DatIndex = m_Bool.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1023,18 +1023,18 @@ bool CBufUndo::AddBoolDel(int index, BOOL data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu logických hodnot (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu logických hodnot (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddBoolSet(int index, BOOL data)
 {
 // logická hodnota se ukládá jen jednou
 	if (TestSet(BufLogID, index)) return true;
 
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufLogID;
 	item->Index = index;
@@ -1043,7 +1043,7 @@ bool CBufUndo::AddBoolSet(int index, BOOL data)
 	item->DatBufID = BufLogID;
 	item->DatIndex = m_Bool.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1053,15 +1053,15 @@ bool CBufUndo::AddBoolSet(int index, BOOL data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu ikon (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu ikon (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddIconIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufIcoID;
 	item->Index = index;
@@ -1073,15 +1073,15 @@ bool CBufUndo::AddIconIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu ikon (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu ikon (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddIconDel(int index, const CIcon& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufIcoID;
 	item->Index = index;
@@ -1090,7 +1090,7 @@ bool CBufUndo::AddIconDel(int index, const CIcon& data)
 	item->DatBufID = BufIcoID;
 	item->DatIndex = m_Icon.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1100,15 +1100,15 @@ bool CBufUndo::AddIconDel(int index, const CIcon& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu ikon (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu ikon (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddIconSet(int index, const CIcon& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufIcoID;
 	item->Index = index;
@@ -1117,7 +1117,7 @@ bool CBufUndo::AddIconSet(int index, const CIcon& data)
 	item->DatBufID = BufIcoID;
 	item->DatIndex = m_Icon.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1127,15 +1127,15 @@ bool CBufUndo::AddIconSet(int index, const CIcon& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu ploch (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu ploch (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddMapIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufMapID;
 	item->Index = index;
@@ -1147,15 +1147,15 @@ bool CBufUndo::AddMapIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu ploch (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu ploch (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddMapDel(int index, const CMap& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufMapID;
 	item->Index = index;
@@ -1164,7 +1164,7 @@ bool CBufUndo::AddMapDel(int index, const CMap& data)
 	item->DatBufID = BufMapID;
 	item->DatIndex = m_Map.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1174,15 +1174,15 @@ bool CBufUndo::AddMapDel(int index, const CMap& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu ploch (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu ploch (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddMapSet(int index, const CMap& data, int mode)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufMapID;
 	item->Index = index;
@@ -1192,7 +1192,7 @@ bool CBufUndo::AddMapSet(int index, const CMap& data, int mode)
 	item->DatIndex = m_Map.Add(data);
 	item->Param1 = mode;
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1202,15 +1202,15 @@ bool CBufUndo::AddMapSet(int index, const CMap& data, int mode)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì dat - ikona plochy (vrací FALSE=chyba pamìti)
+// záznam o změně dat - ikona plochy (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddMapIcoSet(int index, int offs, int icon)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SETICON;
 	item->BufID = BufMapID;
 	item->Index = index;
@@ -1224,15 +1224,15 @@ bool CBufUndo::AddMapIcoSet(int index, int offs, int icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu obrázkù (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu obrázků (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddPicIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufPicID;
 	item->Index = index;
@@ -1244,15 +1244,15 @@ bool CBufUndo::AddPicIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu obrázkù (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu obrázků (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddPicDel(int index, const CPicture& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufPicID;
 	item->Index = index;
@@ -1261,7 +1261,7 @@ bool CBufUndo::AddPicDel(int index, const CPicture& data)
 	item->DatBufID = BufPicID;
 	item->DatIndex = m_Picture.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1271,15 +1271,15 @@ bool CBufUndo::AddPicDel(int index, const CPicture& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu obrázkù (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu obrázků (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddPicSet(int index, const CPicture& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufPicID;
 	item->Index = index;
@@ -1288,7 +1288,7 @@ bool CBufUndo::AddPicSet(int index, const CPicture& data)
 	item->DatBufID = BufPicID;
 	item->DatIndex = m_Picture.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1298,15 +1298,15 @@ bool CBufUndo::AddPicSet(int index, const CPicture& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu sprajtù (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu sprajtů (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddSprIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufSprID;
 	item->Index = index;
@@ -1318,15 +1318,15 @@ bool CBufUndo::AddSprIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu sprajtù (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu sprajtů (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddSprDel(int index, const CSprite& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufSprID;
 	item->Index = index;
@@ -1335,7 +1335,7 @@ bool CBufUndo::AddSprDel(int index, const CSprite& data)
 	item->DatBufID = BufSprID;
 	item->DatIndex = m_Sprite.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1345,15 +1345,15 @@ bool CBufUndo::AddSprDel(int index, const CSprite& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu sprajtù (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu sprajtů (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddSprSet(int index, const CSprite& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufSprID;
 	item->Index = index;
@@ -1362,7 +1362,7 @@ bool CBufUndo::AddSprSet(int index, const CSprite& data)
 	item->DatBufID = BufSprID;
 	item->DatIndex = m_Sprite.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1372,15 +1372,15 @@ bool CBufUndo::AddSprSet(int index, const CSprite& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì dat - obrázek sprajtu (vrací FALSE=chyba pamìti)
+// záznam o změně dat - obrázek sprajtu (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddSprPicSet(int index, int pic, CPicture& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SETPIC;
 	item->BufID = BufSprID;
 	item->Index = index;
@@ -1390,7 +1390,7 @@ bool CBufUndo::AddSprPicSet(int index, int pic, CPicture& data)
 	item->DatIndex = m_Picture.Add(data);
 	item->Param1 = pic;
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1400,15 +1400,15 @@ bool CBufUndo::AddSprPicSet(int index, int pic, CPicture& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu zvukù (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu zvuků (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddSndIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufSndID;
 	item->Index = index;
@@ -1420,15 +1420,15 @@ bool CBufUndo::AddSndIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu zvukù (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu zvuků (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddSndDel(int index, const CSound& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufSndID;
 	item->Index = index;
@@ -1437,7 +1437,7 @@ bool CBufUndo::AddSndDel(int index, const CSound& data)
 	item->DatBufID = BufSndID;
 	item->DatIndex = m_Sound.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1447,15 +1447,15 @@ bool CBufUndo::AddSndDel(int index, const CSound& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu zvukù (vrací FALSE=chyba pamìti)
+// záznam o změně položky v bufferu zvuků (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddSndSet(int index, const CSound& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufSndID;
 	item->Index = index;
@@ -1464,7 +1464,7 @@ bool CBufUndo::AddSndSet(int index, const CSound& data)
 	item->DatBufID = BufSndID;
 	item->DatIndex = m_Sound.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1474,15 +1474,15 @@ bool CBufUndo::AddSndSet(int index, const CSound& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o pøidání položky do bufferu hudby (vrací FALSE=chyba pamìti)
+// záznam o přidání položky do bufferu hudby (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddMusIns(int index)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufMusID;
 	item->Index = index;
@@ -1494,15 +1494,15 @@ bool CBufUndo::AddMusIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zrušení položky z bufferu hudby (vrací FALSE=chyba pamìti)
+// záznam o zrušení položky z bufferu hudby (vrací FALSE=chyba paměti)
 
 bool CBufUndo::AddMusDel(int index, const CMusic& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufMusID;
 	item->Index = index;
@@ -1511,7 +1511,7 @@ bool CBufUndo::AddMusDel(int index, const CMusic& data)
 	item->DatBufID = BufMusID;
 	item->DatIndex = m_Music.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1521,15 +1521,15 @@ bool CBufUndo::AddMusDel(int index, const CMusic& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záznam o zmìnì položky v bufferu hudby
+// záznam o změně položky v bufferu hudby
 
 bool CBufUndo::AddMusSet(int index, const CMusic& data)
 {
-// vytvoøení položky
+// vytvoření položky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnìní záznamu
+// naplnění záznamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufMusID;
 	item->Index = index;
@@ -1538,7 +1538,7 @@ bool CBufUndo::AddMusSet(int index, const CMusic& data)
 	item->DatBufID = BufMusID;
 	item->DatIndex = m_Music.Add(data);
 
-// zmìna èítaèe velikosti
+// změna čítače velikosti
 	AddSize(item);
 
 // provedení redukce
@@ -1548,7 +1548,7 @@ bool CBufUndo::AddMusSet(int index, const CMusic& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test, zda je položka pro zmìnu dat již v bufferu
+// test, zda je položka pro změnu dat již v bufferu
 
 bool CBufUndo::TestSet(int bufID, int index)
 {
@@ -1568,7 +1568,7 @@ bool CBufUndo::TestSet(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zafixování posledního záznamu o zmìnì
+// zafixování posledního záznamu o změně
 
 void CBufUndo::Fixup()
 {
@@ -1584,7 +1584,7 @@ void CBufUndo::Fixup()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøehrátí jedné položky
+// přehrátí jedné položky
 
 void CBufUndo::Play(UNDOITEM* item)
 {

@@ -3,33 +3,33 @@
 
 /***************************************************************************\
 *																			*
-*								Textové øetìzce								*
+*								Textové řetězce								*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní prázdný øetìzec (modifikuje se poèet referencí!)
+// inicializační prázdný řetězec (modifikuje se počet referencí!)
 
 TEXTDATA	EmptyTextData		= { 1, 0, 0 };
-const CText			EmptyText;			// prázdný øetìzec
+const CText			EmptyText;			// prázdný řetězec
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení dat textu - délka zadána ve znacích (pøi chybì pamìti vrací NULL)
+// vytvoření dat textu - délka zadána ve znacích (při chybě paměti vrací NULL)
 
 TEXTDATA* _fastcall NewTextData(int length)
 {
 	ASSERT(length >= 0);
 
-// vytvoøení bufferu
+// vytvoření bufferu
 	TEXTDATA* data = (TEXTDATA*)MemGet((length+1)*sizeof(TCHAR) + SIZEOFTEXTDATA);
 	if (data != NULL)
 	{
 
-// nastavení parametrù
-		data->Refer = 1;				// poèet referencí
+// nastavení parametrů
+		data->Refer = 1;				// počet referencí
 		data->Length = length;			// délka
-		data->Data[length] = 0;			// oznaèení konce textu
+		data->Data[length] = 0;			// označení konce textu
 	}
 
 // adresa dat
@@ -38,7 +38,7 @@ TEXTDATA* _fastcall NewTextData(int length)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení dat textu (oddìleno kvùli lepší optimalizaci)
+// zrušení dat textu (odděleno kvůli lepší optimalizaci)
 
 void _fastcall DelTextData(TEXTDATA* data)
 {
@@ -48,27 +48,27 @@ void _fastcall DelTextData(TEXTDATA* data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti bufferu (délka zadána ve znacích) - zajistí pøivlastnìní bufferu
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// změna velikosti bufferu (délka zadána ve znacích) - zajistí přivlastnění bufferu
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CText::SizeBuffer(int length)
 {
 	ASSERT(length >= 0);
 
-// test, zda se velikost bufferu mìní
+// test, zda se velikost bufferu mění
 	if (length == pData->Length) return true;
 
-// pøivlastnìní bufferu
+// přivlastnění bufferu
 	if (!CopyWrite()) return false;
 
 // nová velikost bufferu
 	TEXTDATA* data = (TEXTDATA*)MemSize(pData, (length+1)*sizeof(TCHAR) + SIZEOFTEXTDATA);
 	if (data == NULL) return false;
 
-// nastavení parametrù
+// nastavení parametrů
 	pData = data;					// adresa dat
 	data->Length = length;			// délka
-	data->Data[length] = 0;			// oznaèení konce textu
+	data->Data[length] = 0;			// označení konce textu
 	return true;
 }
 
@@ -91,7 +91,7 @@ CText::CText(TEXTDATA* data)
 	attach(data); 
 };
 
-CText::CText(const TCHAR chr) // pøi chybì pamìti bude øetìzec prázdný
+CText::CText(const TCHAR chr) // při chybě paměti bude řetězec prázdný
 {
 	pData = NewTextData(1);
 
@@ -105,7 +105,7 @@ CText::CText(const TCHAR chr) // pøi chybì pamìti bude øetìzec prázdný
 	}
 }
 
-CText::CText(LPCTSTR text) // pøi chybì pamìti bude øetìzec prázdný
+CText::CText(LPCTSTR text) // při chybě paměti bude řetězec prázdný
 {
 	int len = 0;
 	if (text != NULL) len = ::lstrlen(text);
@@ -121,7 +121,7 @@ CText::CText(LPCTSTR text) // pøi chybì pamìti bude øetìzec prázdný
 	}
 }
 
-CText::CText(LPCTSTR text, const int length) // pøi chybì pamìti bude øetìzec prázdný
+CText::CText(LPCTSTR text, const int length) // při chybě paměti bude řetězec prázdný
 {
 	int len = 0;
 	if (text != NULL)
@@ -143,7 +143,7 @@ CText::CText(LPCTSTR text, const int length) // pøi chybì pamìti bude øetìz
 
 #ifdef _UNICODE
 
-CText::CText(LPCSTR text) // pøi chybì pamìti bude øetìzec prázdný
+CText::CText(LPCSTR text) // při chybě paměti bude řetězec prázdný
 {
 	int len = 0;
 	if (text != NULL) len = ::lstrlenA(text);
@@ -159,7 +159,7 @@ CText::CText(LPCSTR text) // pøi chybì pamìti bude øetìzec prázdný
 	}
 }
 
-CText::CText(LPCSTR text, const int length) // pøi chybì pamìti bude øetìzec prázdný
+CText::CText(LPCSTR text, const int length) // při chybě paměti bude řetězec prázdný
 {
 	int len = 0;
 	if (text != NULL)
@@ -181,7 +181,7 @@ CText::CText(LPCSTR text, const int length) // pøi chybì pamìti bude øetìze
 
 #else //_UNICODE
 
-CText::CText(LPCWSTR text) // pøi chybì pamìti bude øetìzec prázdný
+CText::CText(LPCWSTR text) // při chybě paměti bude řetězec prázdný
 {
 	int len = 0;
 	if (text != NULL) len = ::lstrlenW(text);
@@ -197,7 +197,7 @@ CText::CText(LPCWSTR text) // pøi chybì pamìti bude øetìzec prázdný
 	}
 }
 
-CText::CText(LPCWSTR text, const int length) // pøi chybì pamìti bude øetìzec prázdný
+CText::CText(LPCWSTR text, const int length) // při chybě paměti bude řetězec prázdný
 {
 	int len = 0;
 	if (text != NULL)
@@ -226,7 +226,7 @@ CText::~CText()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// sluèovací konstruktory (urèeno pro operátor +) - pøi chybì pamìti bude øetìzec prázdný
+// slučovací konstruktory (určeno pro operátor +) - při chybě paměti bude řetězec prázdný
 
 CText::CText(const CText& str1, const CText& str2)
 { 
@@ -327,7 +327,7 @@ void _fastcall CText::Init(TEXTDATA* data)
 	attach(data); 
 };
 
-bool _fastcall CText::Init(const TCHAR chr) // pøi chybì pamìti vrátí FALSE, text není platný
+bool _fastcall CText::Init(const TCHAR chr) // při chybě paměti vrátí FALSE, text není platný
 {
 	pData = NewTextData(1);
 	if (pData != NULL)
@@ -338,7 +338,7 @@ bool _fastcall CText::Init(const TCHAR chr) // pøi chybì pamìti vrátí FALSE
 	return false;
 }
 
-bool _fastcall CText::Init(LPCTSTR text) // pøi chybì pamìti vrátí FALSE, text není platný
+bool _fastcall CText::Init(LPCTSTR text) // při chybě paměti vrátí FALSE, text není platný
 {
 	int len = 0;
 	if (text != NULL) len = ::lstrlen(text);
@@ -352,7 +352,7 @@ bool _fastcall CText::Init(LPCTSTR text) // pøi chybì pamìti vrátí FALSE, t
 	return false;
 }
 
-bool _fastcall CText::Init(LPCTSTR text, const int length) // pøi chybì pamìti vrátí FALSE, text není platný
+bool _fastcall CText::Init(LPCTSTR text, const int length) // při chybě paměti vrátí FALSE, text není platný
 {
 	int len = 0;
 	if (text != NULL)
@@ -372,7 +372,7 @@ bool _fastcall CText::Init(LPCTSTR text, const int length) // pøi chybì pamìt
 
 #ifdef _UNICODE
 
-bool _fastcall CText::Init(LPCSTR text) // pøi chybì pamìti vrátí FALSE, text není platný
+bool _fastcall CText::Init(LPCSTR text) // při chybě paměti vrátí FALSE, text není platný
 {
 	int len = 0;
 	if (text != NULL) len = ::lstrlenA(text);
@@ -386,7 +386,7 @@ bool _fastcall CText::Init(LPCSTR text) // pøi chybì pamìti vrátí FALSE, te
 	return false;
 }
 
-bool _fastcall CText::Init(LPCSTR text, const int length) // pøi chybì pamìti vrátí FALSE, text není platný
+bool _fastcall CText::Init(LPCSTR text, const int length) // při chybě paměti vrátí FALSE, text není platný
 {
 	int len = 0;
 	if (text != NULL)
@@ -406,7 +406,7 @@ bool _fastcall CText::Init(LPCSTR text, const int length) // pøi chybì pamìti
 
 #else //_UNICODE
 
-bool _fastcall CText::Init(LPCWSTR text) // pøi chybì pamìti vrátí FALSE, text není platný
+bool _fastcall CText::Init(LPCWSTR text) // při chybě paměti vrátí FALSE, text není platný
 {
 	int len = 0;
 	if (text != NULL) len = ::lstrlenW(text);
@@ -420,7 +420,7 @@ bool _fastcall CText::Init(LPCWSTR text) // pøi chybì pamìti vrátí FALSE, t
 	return false;
 }
 
-bool _fastcall CText::Init(LPCWSTR text, const int length) // pøi chybì pamìti vrátí FALSE, text není platný
+bool _fastcall CText::Init(LPCWSTR text, const int length) // při chybě paměti vrátí FALSE, text není platný
 {
 	int len = 0;
 	if (text != NULL)
@@ -499,33 +499,33 @@ void CText::WriteNull(LPWSTR buf) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání textu v øetìzci (<0 = nenalezeno, pos=výchozí pozice)
+// hledání textu v řetězci (<0 = nenalezeno, pos=výchozí pozice)
 
 int _fastcall CText::Find(const CText& str) const
 {
-// hledaný øetìzec prázdný - bude pozice 0
+// hledaný řetězec prázdný - bude pozice 0
 	int lenstr = str.pData->Length;
 	if (lenstr == 0) return 0;
 
-// hledaný øetìzec má délku 1 - pøevod na hledání znaku
+// hledaný řetězec má délku 1 - převod na hledání znaku
 	TCHAR* datastr = str.pData->Data;
 	TCHAR chr = datastr[0];
 	if (lenstr == 1) return Find(chr);
 
-// pøíprava ukazatelù
-	int i = pData->Length - lenstr;		// poèet testovaných pozic - 1
-	datastr++;							// druhý znak hledaného øetìzce
-	lenstr--;							// délka hledaného øetìzce - 1
-	TCHAR* data = pData->Data;			// zaèátek prohledávaného øetìzce
+// příprava ukazatelů
+	int i = pData->Length - lenstr;		// počet testovaných pozic - 1
+	datastr++;							// druhý znak hledaného řetězce
+	lenstr--;							// délka hledaného řetězce - 1
+	TCHAR* data = pData->Data;			// začátek prohledávaného řetězce
 
 // cyklus hledání
 	for (; i >= 0; i--)
 	{
 		if (*(data++) == chr)			// shoduje se první znak?
 		{
-			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek øetìzce?
+			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek řetězce?
 			{
-				return (data - pData->Data - 1);	// návrat pozice zaèátku øetìzce
+				return (data - pData->Data - 1);	// návrat pozice začátku řetězce
 			}
 		}
 	}
@@ -539,29 +539,29 @@ int _fastcall CText::Find(const CText& str, int pos) const
 	if (pos < 0) pos = 0;
 	if (pos >= pData->Length) return -1;
 
-// hledaný øetìzec prázdný - bude výchozí pozice
+// hledaný řetězec prázdný - bude výchozí pozice
 	int lenstr = str.pData->Length;
 	if (lenstr == 0) return pos;
 
-// hledaný øetìzec má délku 1 - pøevod na hledání znaku
+// hledaný řetězec má délku 1 - převod na hledání znaku
 	TCHAR* datastr = str.pData->Data;
 	TCHAR chr = datastr[0];
 	if (lenstr == 1) return Find(chr, pos);
 
-// pøíprava ukazatelù
-	int i = pData->Length - lenstr - pos;	// poèet testovaných pozic - 1
-	datastr++;							// druhý znak hledaného øetìzce
-	lenstr--;							// délka hledaného øetìzce - 1
-	TCHAR* data = pData->Data + pos;	// zaèátek prohledávaného øetìzce
+// příprava ukazatelů
+	int i = pData->Length - lenstr - pos;	// počet testovaných pozic - 1
+	datastr++;							// druhý znak hledaného řetězce
+	lenstr--;							// délka hledaného řetězce - 1
+	TCHAR* data = pData->Data + pos;	// začátek prohledávaného řetězce
 
 // cyklus hledání
 	for (; i >= 0; i--)
 	{
 		if (*(data++) == chr)			// shoduje se první znak?
 		{
-			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek øetìzce?
+			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek řetězce?
 			{
-				return (data - pData->Data - 1);	// návrat pozice zaèátku øetìzce
+				return (data - pData->Data - 1);	// návrat pozice začátku řetězce
 			}
 		}
 	}
@@ -571,36 +571,36 @@ int _fastcall CText::Find(const CText& str, int pos) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání textu v øetìzci (<0 = nenalezeno, pos=výchozí pozice)
+// hledání textu v řetězci (<0 = nenalezeno, pos=výchozí pozice)
 
 int _fastcall CText::Find(LPCTSTR txt) const
 {
-// pøíprava délky hledaného øetìzce
+// příprava délky hledaného řetězce
 	int lenstr = 0;
 	if (txt != NULL) lenstr = ::lstrlen(txt);
 
-// hledaný øetìzec prázdný - bude pozice 0
+// hledaný řetězec prázdný - bude pozice 0
 	if (lenstr == 0) return 0;
 
-// hledaný øetìzec má délku 1 - pøevod na hledání znaku
+// hledaný řetězec má délku 1 - převod na hledání znaku
 	const TCHAR* datastr = txt;
 	TCHAR chr = datastr[0];
 	if (lenstr == 1) return Find(chr);
 
-// pøíprava ukazatelù
-	int i = pData->Length - lenstr;		// poèet testovaných pozic - 1
-	datastr++;							// druhý znak hledaného øetìzce
-	lenstr--;							// délka hledaného øetìzce - 1
-	TCHAR* data = pData->Data;			// zaèátek prohledávaného øetìzce
+// příprava ukazatelů
+	int i = pData->Length - lenstr;		// počet testovaných pozic - 1
+	datastr++;							// druhý znak hledaného řetězce
+	lenstr--;							// délka hledaného řetězce - 1
+	TCHAR* data = pData->Data;			// začátek prohledávaného řetězce
 
 // cyklus hledání
 	for (; i >= 0; i--)
 	{
 		if (*(data++) == chr)			// shoduje se první znak?
 		{
-			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek øetìzce?
+			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek řetězce?
 			{
-				return (data - pData->Data - 1);	// návrat pozice zaèátku øetìzce
+				return (data - pData->Data - 1);	// návrat pozice začátku řetězce
 			}
 		}
 	}
@@ -614,32 +614,32 @@ int _fastcall CText::Find(LPCTSTR txt, int pos) const
 	if (pos < 0) pos = 0;
 	if (pos >= pData->Length) return -1;
 
-// pøíprava délky hledaného øetìzce
+// příprava délky hledaného řetězce
 	int lenstr = 0;
 	if (txt != NULL) lenstr = ::lstrlen(txt);
 
-// hledaný øetìzec prázdný - bude výchozí pozice
+// hledaný řetězec prázdný - bude výchozí pozice
 	if (lenstr == 0) return pos;
 
-// hledaný øetìzec má délku 1 - pøevod na hledání znaku
+// hledaný řetězec má délku 1 - převod na hledání znaku
 	const TCHAR* datastr = txt;
 	TCHAR chr = datastr[0];
 	if (lenstr == 1) return Find(chr, pos);
 
-// pøíprava ukazatelù
-	int i = pData->Length - lenstr - pos;	// poèet testovaných pozic - 1
-	datastr++;							// druhý znak hledaného øetìzce
-	lenstr--;							// délka hledaného øetìzce - 1
-	TCHAR* data = pData->Data + pos;	// zaèátek prohledávaného øetìzce
+// příprava ukazatelů
+	int i = pData->Length - lenstr - pos;	// počet testovaných pozic - 1
+	datastr++;							// druhý znak hledaného řetězce
+	lenstr--;							// délka hledaného řetězce - 1
+	TCHAR* data = pData->Data + pos;	// začátek prohledávaného řetězce
 
 // cyklus hledání
 	for (; i >= 0; i--)
 	{
 		if (*(data++) == chr)			// shoduje se první znak?
 		{
-			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek øetìzce?
+			if (MemCompare(data, datastr, lenstr*sizeof(TCHAR)))	// shoduje se zbytek řetězce?
 			{
-				return (data - pData->Data - 1);	// návrat pozice zaèátku øetìzce
+				return (data - pData->Data - 1);	// návrat pozice začátku řetězce
 			}
 		}
 	}
@@ -649,7 +649,7 @@ int _fastcall CText::Find(LPCTSTR txt, int pos) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání znaku v øetìzci (<0 = nenalezeno, pos=výchozí pozice)
+// hledání znaku v řetězci (<0 = nenalezeno, pos=výchozí pozice)
 
 int _fastcall CText::Find(const TCHAR chr) const
 {
@@ -688,7 +688,7 @@ int _fastcall CText::Find(const TCHAR chr, int pos) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// hledání znaku od konce øetìzce zpìt (<0 = nenalezeno, pos=výchozí pozice)
+// hledání znaku od konce řetězce zpět (<0 = nenalezeno, pos=výchozí pozice)
 
 int _fastcall CText::RevFind(const TCHAR chr) const
 {
@@ -722,7 +722,7 @@ int _fastcall CText::RevFind(const TCHAR chr, int pos) const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vyprázdnìní øetìzce (s pøípadným zrušením bufferu)
+// vyprázdnění řetězce (s případným zrušením bufferu)
 
 void CText::Empty()
 { 
@@ -733,7 +733,7 @@ void CText::Empty()
 
 /////////////////////////////////////////////////////////////////////////////
 // konverze na velká písmena
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CText::UpperCase()
 {
@@ -745,7 +745,7 @@ bool CText::UpperCase()
 
 /////////////////////////////////////////////////////////////////////////////
 // konverze na malá písmena
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CText::LowerCase()
 {
@@ -757,7 +757,7 @@ bool CText::LowerCase()
 /////////////////////////////////////////////////////////////////////////////
 // normalizace na ASCII znaky - pro jméno souboru
 
-// støedoevropská sada (1250)
+// středoevropská sada (1250)
 const char* NormTabCE=
 	"................................"
 	"_...............0123456789......"
@@ -824,7 +824,7 @@ void CText::NormAscii()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// levá èást øetìzce (pøi chybì pamìti vrátí prázdný øetìzec)
+// levá část řetězce (při chybě paměti vrátí prázdný řetězec)
 
 CText _fastcall CText::Left(int count) const
 {
@@ -846,7 +846,7 @@ CText _fastcall CText::Left(int count) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pravá èást øetìzce (pøi chybì pamìti vrátí prázdný øetìzec)
+// pravá část řetězce (při chybě paměti vrátí prázdný řetězec)
 
 CText _fastcall CText::Right(int count) const
 {
@@ -868,7 +868,7 @@ CText _fastcall CText::Right(int count) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// støední èást øetìzce (pøi chybì pamìti vrátí prázdný øetìzec)
+// střední část řetězce (při chybě paměti vrátí prázdný řetězec)
 
 CText _fastcall CText::Mid(int first, int count) const
 {
@@ -894,8 +894,8 @@ CText _fastcall CText::Mid(int first, int count) const
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení textu z konce øetìzce
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// zrušení textu z konce řetězce
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CText::Delete(int first, int count)
 {
@@ -928,8 +928,8 @@ bool CText::Delete(int first, int count)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení posledního znaku z konce øetìzce
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// zrušení posledního znaku z konce řetězce
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CText::DeleteLast()
 {
@@ -944,8 +944,8 @@ bool CText::DeleteLast()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// odstranìní mezer ze zaèátku/konce øetìzce
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// odstranění mezer ze začátku/konce řetězce
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CText::TrimLeft()
 {
@@ -953,12 +953,12 @@ bool CText::TrimLeft()
 	TCHAR* data = pData->Data;		// ukazatel textu
 	while ((*data > 0) && (*data <= _T(' '))) data++;
 
-// test, zda bude nìco vypouštìno
+// test, zda bude něco vypouštěno
 	int dif = data - pData->Data;
 	if (dif > 0)
 	{
 
-// pøivlastnìní bufferu
+// přivlastnění bufferu
 		if (!CopyWrite()) return false;
 
 // zrušení dat
@@ -984,42 +984,42 @@ bool CText::TrimRight()
 #endif
 	}
 
-// test, zda se délka textu mìní
+// test, zda se délka textu mění
 	if (i != pData->Length)
 	{
 
-// pøivlastnìní bufferu
+// přivlastnění bufferu
 		if (!CopyWrite()) return false;
 
 // nová délka dat
 		pData->Length = i;				// nová délka textu
-		pData->Data[i] = 0;				// oznaèení konce textu
+		pData->Data[i] = 0;				// označení konce textu
 	}
 	return true;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení èísla jména objektu (1, 2, ...)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// nastavení čísla jména objektu (1, 2, ...)
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 const CText DefObjName(_T('#'));	// implicitní jméno
 
 bool _fastcall CText::SetNumObj(const int num)
 {
-// pracovní kopie textu (aby nebyl obsah zmìnìn pøi chybì)
+// pracovní kopie textu (aby nebyl obsah změněn při chybě)
 	CText text(*this);
 
-// vypuštìní èíslic a mezer z konce jména
+// vypuštění číslic a mezer z konce jména
 	for (;;)
 	{
-		TCHAR znak = text.LastChar();	// naètení posledního znaku
+		TCHAR znak = text.LastChar();	// načtení posledního znaku
 		if ((znak == ' ') ||			// je mezera
 			(znak == 9) ||				// tabulátor
-			((znak >= '0') &&			// nebo èíslice
+			((znak >= '0') &&			// nebo číslice
 			(znak <= '9')))
 		{
-			if (!text.DeleteLast()) return false;	// vypuštìní posledního znaku
+			if (!text.DeleteLast()) return false;	// vypuštění posledního znaku
 		}
 		else
 		{
@@ -1033,7 +1033,7 @@ bool _fastcall CText::SetNumObj(const int num)
 		text = DefObjName;
 	}
 
-// èíslo se nastavuje jen pro 2 a více
+// číslo se nastavuje jen pro 2 a více
 	if (num > 1)
 	{
 		if (!text.Add(_T(' ')) ||
@@ -1047,8 +1047,8 @@ bool _fastcall CText::SetNumObj(const int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání textu
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// přidání textu
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool _fastcall CText::Add(const CText& str)
 {
@@ -1078,8 +1078,8 @@ bool _fastcall CText::Add(const TCHAR chr)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání textu èísla
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// přidání textu čísla
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool _fastcall CText::AddInt(const int num)
 {
@@ -1097,27 +1097,27 @@ bool _fastcall CText::AddDouble(const double num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souèet textù
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// součet textů
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool _fastcall CText::Add(const CText& str1, const CText& str2)
 { 
-// délka textù
+// délka textů
 	int len1 = str1.pData->Length;
 	int len2 = str2.pData->Length;
 
-// vytvoøení bufferu
+// vytvoření bufferu
 	TEXTDATA* data = NewTextData(len1+len2);
 	if (data == NULL) return false;
 
-// naètení textù
+// načtení textů
 	MemCopy(data->Data, str1.pData->Data, len1*sizeof(TCHAR));
 	MemCopy(data->Data + len1, str2.pData->Data, len2*sizeof(TCHAR));
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1125,23 +1125,23 @@ bool _fastcall CText::Add(const CText& str1, const CText& str2)
 
 bool _fastcall CText::Add(LPCTSTR txt, const CText& str) 
 { 
-// délka textù
+// délka textů
 	int len1 = 0;
 	if (txt != NULL) len1 = ::lstrlen(txt);
 	int len2 = str.pData->Length;
 
-// vytvoøení bufferu
+// vytvoření bufferu
 	TEXTDATA* data = NewTextData(len1+len2);
 	if (data == NULL) return false;
 
-// naètení textù
+// načtení textů
 	MemCopy(data->Data, txt, len1*sizeof(TCHAR));
 	MemCopy(data->Data + len1, str.pData->Data, len2*sizeof(TCHAR));
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1149,23 +1149,23 @@ bool _fastcall CText::Add(LPCTSTR txt, const CText& str)
 
 bool _fastcall CText::Add(const CText& str, LPCTSTR txt) 
 { 
-// délka textù
+// délka textů
 	int len1 = str.pData->Length;
 	int len2 = 0;
 	if (txt != NULL) len2 = ::lstrlen(txt);
 
-// vytvoøení bufferu
+// vytvoření bufferu
 	TEXTDATA* data = NewTextData(len1+len2);
 	if (data == NULL) return false;
 
-// naètení textù
+// načtení textů
 	MemCopy(data->Data, str.pData->Data, len1*sizeof(TCHAR));
 	MemCopy(data->Data + len1, txt, len2*sizeof(TCHAR));
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1176,18 +1176,18 @@ bool _fastcall CText::Add(const TCHAR chr, const CText& str)
 // délka textu
 	int len = str.pData->Length;
 
-// vytvoøení bufferu
+// vytvoření bufferu
 	TEXTDATA* data = NewTextData(1+len);
 	if (data == NULL) return false;
 
-// naètení textù
+// načtení textů
 	data->Data[0] = chr;
 	MemCopy(data->Data + 1, str.pData->Data, len*sizeof(TCHAR));
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1198,18 +1198,18 @@ bool _fastcall CText::Add(const CText& str, const TCHAR chr)
 // délka textu
 	int len = str.pData->Length;
 
-// vytvoøení bufferu
+// vytvoření bufferu
 	TEXTDATA* data = NewTextData(len+1);
 	if (data == NULL) return false;
 
-// naètení textù
+// načtení textů
 	MemCopy(data->Data, str.pData->Data, len*sizeof(TCHAR));
 	data->Data[len] = chr;
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1218,27 +1218,27 @@ bool _fastcall CText::Add(const CText& str, const TCHAR chr)
 
 /////////////////////////////////////////////////////////////////////////////
 // nastavení textu
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 void _fastcall CText::Set(const CText& str)
 {
 	detach(pData);			// zrušení starých dat
-	attach(str.pData);		// pøipojení nových dat
+	attach(str.pData);		// připojení nových dat
 }
 
 bool _fastcall CText::Set(const TCHAR chr)
 {
-// vytvoøení bufferu dat
+// vytvoření bufferu dat
 	TEXTDATA* data = NewTextData(1);
 	if (data == NULL) return false;
 
-// naplnìní bufferu
+// naplnění bufferu
 	data->Data[0] = chr;
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1250,7 +1250,7 @@ bool _fastcall CText::Set(LPCTSTR txt)
 	int len = 0;
 	if (txt != NULL) len = ::lstrlen(txt);
 
-// vytvoøení bufferu pro data
+// vytvoření bufferu pro data
 	TEXTDATA* data = NewTextData(len);	
 	if (data == NULL) return false;
 
@@ -1260,7 +1260,7 @@ bool _fastcall CText::Set(LPCTSTR txt)
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1276,7 +1276,7 @@ bool _fastcall CText::Set(LPCTSTR txt, const int length)
 		if (len < 0) len = ::lstrlen(txt);
 	}
 
-// vytvoøení bufferu pro data
+// vytvoření bufferu pro data
 	TEXTDATA* data = NewTextData(len);	
 	if (data == NULL) return false;
 
@@ -1286,7 +1286,7 @@ bool _fastcall CText::Set(LPCTSTR txt, const int length)
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1300,7 +1300,7 @@ bool _fastcall CText::Set(LPCSTR txt)
 	int len = 0;
 	if (txt != NULL) len = ::lstrlenA(txt);
 
-// vytvoøení bufferu pro data
+// vytvoření bufferu pro data
 	TEXTDATA* data = NewTextData(len);	
 	if (data == NULL) return false;
 
@@ -1310,7 +1310,7 @@ bool _fastcall CText::Set(LPCSTR txt)
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1326,7 +1326,7 @@ bool _fastcall CText::Set(LPCSTR txt, const int length)
 		if (len < 0) len = ::lstrlenA(txt);
 	}
 
-// vytvoøení bufferu pro data
+// vytvoření bufferu pro data
 	TEXTDATA* data = NewTextData(len);	
 	if (data == NULL) return false;
 
@@ -1336,7 +1336,7 @@ bool _fastcall CText::Set(LPCSTR txt, const int length)
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1350,7 +1350,7 @@ bool _fastcall CText::Set(LPCWSTR txt)
 	int len = 0;
 	if (txt != NULL) len = ::lstrlenW(txt);
 
-// vytvoøení bufferu pro data
+// vytvoření bufferu pro data
 	TEXTDATA* data = NewTextData(len);	
 	if (data == NULL) return false;
 
@@ -1360,7 +1360,7 @@ bool _fastcall CText::Set(LPCWSTR txt)
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1376,7 +1376,7 @@ bool _fastcall CText::Set(LPCWSTR txt, const int length)
 		if (len < 0) len = ::lstrlenW(txt);
 	}
 
-// vytvoøení bufferu pro data
+// vytvoření bufferu pro data
 	TEXTDATA* data = NewTextData(len);	
 	if (data == NULL) return false;
 
@@ -1386,7 +1386,7 @@ bool _fastcall CText::Set(LPCWSTR txt, const int length)
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
@@ -1395,7 +1395,7 @@ bool _fastcall CText::Set(LPCWSTR txt, const int length)
 #endif //_UNICODE
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textu z resource do dialogového prvku
+// načtení textu z resource do dialogového prvku
 
 void CText::LoadDialogText(const HWND wnd, int id)
 {
@@ -1404,7 +1404,7 @@ void CText::LoadDialogText(const HWND wnd, int id)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textu z resource do dialogového prvku s nastavením bìžného fontu
+// načtení textu z resource do dialogového prvku s nastavením běžného fontu
 
 void CText::LoadDialogTextFont(const HWND wnd, int id)
 {
@@ -1414,7 +1414,7 @@ void CText::LoadDialogTextFont(const HWND wnd, int id)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textu z resource (pøi chybì vrací FALSE, obsah prázdný text)
+// načtení textu z resource (při chybě vrací FALSE, obsah prázdný text)
 
 bool CText::Load(const int nID)
 {
@@ -1432,7 +1432,7 @@ bool CText::Load(const int nID)
 	return false;
 
 /*
-// naètení textu do bufferu
+// načtení textu do bufferu
 	TCHAR buf[0x201];
 	int len = ::LoadString(hInstance, nID, buf, 0x200);
 	if (len <= 0) return false;
@@ -1444,7 +1444,7 @@ bool CText::Load(const int nID)
 // korekce výskytu nuly v textu
 	KorigNul();
 
-// pøíznak - naèteno OK
+// příznak - načteno OK
 	return true;
 
 */
@@ -1477,7 +1477,7 @@ void CText::KorigShort()
 		{
 			Delete(pos, 1);
 		}
-		Delete(8);						// omezení na délku 8 znakù
+		Delete(8);						// omezení na délku 8 znaků
 	}
 	else
 	{
@@ -1498,21 +1498,21 @@ void CText::KorigShort()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ze souboru formátu TXT (FALSE=chyba, obsah nezmìnìn)
+// načtení ze souboru formátu TXT (FALSE=chyba, obsah nezměněn)
 	
 bool CText::LoadFile(CText jmeno)
 {
-// otevøení souboru mapovaného do pamìti (uzavøen pøi destrukci!)
+// otevření souboru mapovaného do paměti (uzavřen při destrukci!)
 	CFileMap file;
 	if (!file.Open(jmeno)) return false;
 
-// naètení textu
+// načtení textu
 	if (!Set((char*)file.Adr(), file.Size())) return false;
 
 // korekce výskytu nuly v textu
 	KorigNul();
 
-// pøíznak - naèteno OK
+// příznak - načteno OK
 	return true;
 }
 
@@ -1522,7 +1522,7 @@ bool CText::LoadFile(CText jmeno)
 
 bool CText::SaveFile(CText jmeno) const
 {	
-// vytvoøení souboru
+// vytvoření souboru
 	CFile file;
 	file.Name(jmeno);
 	if (!file.Create()) return false;
@@ -1552,46 +1552,46 @@ bool CText::SaveFile(CText jmeno) const
 
 #endif
 
-// uzavøení souboru
+// uzavření souboru
 	file.Close();
 
-// pøi chybì zrušení souboru
+// při chybě zrušení souboru
 	if (!result)
 	{
 		file.Delete();
 		return false;
 	}
 
-// pøíznak - uloženo OK
+// příznak - uloženo OK
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastního bufferu pøed modifikací
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie do vlastního bufferu před modifikací
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 
 bool CText::CopyWrite()
 {
-// úschova ukazatelù
+// úschova ukazatelů
 	TEXTDATA* olddata = pData;	// adresa starých dat
-	long* refer = &(olddata->Refer);// poèet referencí
+	long* refer = &(olddata->Refer);// počet referencí
 
-// test, zda je nutné pøivlastnìní
-	if (*refer > 1)					// je nìjaký jiný majitel?
+// test, zda je nutné přivlastnění
+	if (*refer > 1)					// je nějaký jiný majitel?
 	{
 
-// vytvoøení nového bufferu
+// vytvoření nového bufferu
 		TEXTDATA* newdata = NewTextData(olddata->Length);
 		if (newdata == NULL) return false;
 
-// pøenesení dat
+// přenesení dat
 		MemCopy(newdata->Data, olddata->Data, olddata->Length*sizeof(TCHAR));
 
 // odpojení starých dat
 		detach(olddata);
 
-// pøipojení nových dat
+// připojení nových dat
 		pData = newdata;
 	}
 
@@ -1614,7 +1614,7 @@ TCHAR _fastcall CText::Get(const int index) const
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí posledního znaku øetìzce (pro prázdný øetìzec vrací 0)
+// poskytnutí posledního znaku řetězce (pro prázdný řetězec vrací 0)
 
 TCHAR _fastcall CText::LastChar() const
 {
@@ -1631,7 +1631,7 @@ TCHAR _fastcall CText::LastChar() const
 
 
 //////////////////////////////////////////////////////////////////////////////
-// nastavení znaku na pozici s kontrolou (zajistí pøivlastnìní bufferu, pøi chybì pamìti vrací FALSE)
+// nastavení znaku na pozici s kontrolou (zajistí přivlastnění bufferu, při chybě paměti vrací FALSE)
 
 bool _fastcall CText::Set(const int index, const TCHAR chr)
 {
@@ -1645,22 +1645,22 @@ bool _fastcall CText::Set(const int index, const TCHAR chr)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení textu okna (pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn)
+// načtení textu okna (při chybě paměti vrátí FALSE, obsah bude nezměněn)
 
 bool CText::GetWindowText(const HWND wnd)
 {
-// vytvoøení nového bufferu
+// vytvoření nového bufferu
 	TEXTDATA* data = NewTextData(::GetWindowTextLength(wnd));
 	if (data == NULL) return false;
 
-// naètení dat
+// načtení dat
 	::GetWindowText(wnd, data->Data, data->Length+1);
 	data->Data[data->Length] = 0;
 
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 // ochrana proti nule v textu
@@ -1693,7 +1693,7 @@ void _fastcall CText::SetWindowTextFont(const HWND wnd) const
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení textu dialogového prvku (pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn)
+// načtení textu dialogového prvku (při chybě paměti vrátí FALSE, obsah bude nezměněn)
 
 bool CText::GetDialogText(const HWND wnd, int id)
 {
@@ -1724,11 +1724,11 @@ void _fastcall CText::SetDialogTextFont(const HWND wnd, int id) const
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení aktivního adresáøe (pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn)
+// načtení aktivního adresáře (při chybě paměti vrátí FALSE, obsah bude nezměněn)
 
 bool CText::GetAktDir()
 {
-// naètení textu do bufferu
+// načtení textu do bufferu
 	TCHAR buf[512];
 	int len = (int)::GetCurrentDirectory(511, buf);
 
@@ -1740,14 +1740,14 @@ bool CText::GetAktDir()
 // korekce výskytu nuly v textu
 	KorigNul();
 
-// pøíznak - naèteno OK
+// příznak - načteno OK
 	return true;
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// korekce textu na jméno souboru (vypuštìní zakázaných znakù, vrací opravenou pozici kurzoru)
-// ignoruje chybu pamìti pøi pøivlastnìní bufferu
+// korekce textu na jméno souboru (vypuštění zakázaných znaků, vrací opravenou pozici kurzoru)
+// ignoruje chybu paměti při přivlastnění bufferu
 
 int CText::FileName(int curs)
 {
@@ -1777,8 +1777,8 @@ int CText::FileName(int curs)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// korekce textu na jméno cesty (vypuštìní zakázaných znakù, vrací opravenou pozici kurzoru)
-// ignoruje chybu pamìti pøi pøivlastnìní bufferu
+// korekce textu na jméno cesty (vypuštění zakázaných znaků, vrací opravenou pozici kurzoru)
+// ignoruje chybu paměti při přivlastnění bufferu
 
 int CText::PathName(int curs)
 {
@@ -1806,16 +1806,16 @@ int CText::PathName(int curs)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze èísla INT na text (pøi chybì pamìti vrací FALSE)
+// konverze čísla INT na text (při chybě paměti vrací FALSE)
 
 bool CText::Int(int num)
 {
-// pøíprava bufferu
+// příprava bufferu
 	TCHAR buf[16];
 	TCHAR* dst = buf+16;
 	int len = 0;
 
-// pøíprava znaménka
+// příprava znaménka
 	bool sign = false;
 	if (num < 0)
 	{
@@ -1823,7 +1823,7 @@ bool CText::Int(int num)
 		num = -num;
 	}
 
-// konverze èíslic
+// konverze číslic
 	do {
 		dst--;
 		*dst = (TCHAR)(((DWORD)num % 10) + '0');
@@ -1845,16 +1845,16 @@ bool CText::Int(int num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze textu na èíslo INT
+// konverze textu na číslo INT
 
 int Int(LPCTSTR txt)
 {
-// pøíprava promìnných
+// příprava proměnných
 	DWORD result = 0;
 	bool sign = false;
 	TCHAR chr;
 
-// naètení znaménka
+// načtení znaménka
 	while ((chr = *txt) != 0)
 	{
 		if (chr == '-')
@@ -1871,7 +1871,7 @@ int Int(LPCTSTR txt)
 		txt++;
 	}			
 	
-// naètení èíslic
+// načtení číslic
 	while ((chr = *txt) != 0)
 	{
 		if ((chr >= '0') && (chr <= '9'))
@@ -1914,16 +1914,16 @@ int Int(LPCTSTR txt)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze èísla DWORD na HEX (8 èíslic) (pøi chybì pamìti vrací FALSE)
+// konverze čísla DWORD na HEX (8 číslic) (při chybě paměti vrací FALSE)
 
 bool CText::Hex(DWORD num)
 {
-// pøíprava bufferu
+// příprava bufferu
 	TEXTDATA* data = NewTextData(8);
 	if (data == NULL) return false;
 	TCHAR* dst = data->Data + 8;
 
-// dekódování èíslic
+// dekódování číslic
 	TCHAR chr;
 	for (int i = 8; i > 0; i--)
 	{
@@ -1944,21 +1944,21 @@ bool CText::Hex(DWORD num)
 // odpojení starých dat
 	detach(pData);
 
-// pøipojení nových dat
+// připojení nových dat
 	pData = data;
 
 	return true;
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze èísla DOUBLE na text (pøi chybì pamìti vrací FALSE)
+// konverze čísla DOUBLE na text (při chybě paměti vrací FALSE)
 
 const CText InfDoubleText(_T("1#INF"), 5);
 const CText NulDoubleText(_T('0'));
 
 bool CText::Double(double num)
 {
-// pøeteèení "1#INF"
+// přetečení "1#INF"
 	if (*(ULONGLONG*)(&num) == DOUBLE_INFINITY_VALUE)
 	{
 		Set(InfDoubleText);
@@ -1972,7 +1972,7 @@ bool CText::Double(double num)
 		return true;
 	}
 
-// pøíprava znaménka
+// příprava znaménka
 	bool sign = false;
 	if (num < 0)
 	{
@@ -1980,7 +1980,7 @@ bool CText::Double(double num)
 		num = -num;
 	}
 
-// rozdìlení èísla na exponent a mantisu
+// rozdělení čísla na exponent a mantisu
 	int expI = 0;
 	double mantD = num;
 
@@ -2039,7 +2039,7 @@ bool CText::Double(double num)
 		mantH /= 10;
 	}
 	
-// zjištìní poètu platných èíslic
+// zjištění počtu platných číslic
 	TCHAR* dst = mantT+15;
 	int digits = 15;
 	for (; digits > 1; digits--)
@@ -2048,7 +2048,7 @@ bool CText::Double(double num)
 		if (*dst != '0') break;
 	}
 
-// pøíprava znaménka do výchozího bufferu
+// příprava znaménka do výchozího bufferu
 	TCHAR buf[30];
 	dst = buf;
 	if (sign)
@@ -2057,7 +2057,7 @@ bool CText::Double(double num)
 		dst++;
 	}
 
-// dekódování èísla bez exponentu, èíslo >= 1
+// dekódování čísla bez exponentu, číslo >= 1
 	if ((expI < 15) && (expI >= 0))
 	{
 		for (;;)
@@ -2077,7 +2077,7 @@ bool CText::Double(double num)
 	}
 	else
 
-// dekódování èísla bez exponentu, èíslo < 1
+// dekódování čísla bez exponentu, číslo < 1
 	if ((expI < 0) && (expI >= -3))
 	{
 		*dst = '0';
@@ -2101,7 +2101,7 @@ bool CText::Double(double num)
 	}
 	else
 
-// dekódování èísla s exponentem
+// dekódování čísla s exponentem
 	{
 		*dst = *mantP;
 		dst++;
@@ -2153,25 +2153,25 @@ bool CText::Double(double num)
 		dst++;
 	}
 
-// uložení èísla do bufferu
+// uložení čísla do bufferu
 	return Set(buf, dst-buf);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// konverze textu na èíslo DOUBLE
+// konverze textu na číslo DOUBLE
 
 double Double(LPCTSTR txt)
 {
-// pøíprava promìnných
+// příprava proměnných
 	double result = 0;			// výsledek
 	int expN = 0;				// exponent
-	double zlomek = 1;			// zlomek desetinné èásti
-	bool sign = false;			// pøíznak záporného znaménka
+	double zlomek = 1;			// zlomek desetinné části
+	bool sign = false;			// příznak záporného znaménka
 	bool signE = false;			// znaménko exponentu
-	TCHAR chr = *txt;			// naètený znak
+	TCHAR chr = *txt;			// načtený znak
 
-// naètení znaménka
+// načtení znaménka
 	while (chr != 0)
 	{
 		if (chr == '-')
@@ -2189,7 +2189,7 @@ double Double(LPCTSTR txt)
 		chr = *txt;
 	}			
 	
-// naètení èíslic celé èásti
+// načtení číslic celé části
 	while (chr != 0)
 	{
 		if ((chr >= '0') && (chr <= '9'))
@@ -2205,7 +2205,7 @@ double Double(LPCTSTR txt)
 		chr = *txt;
 	}
 
-// naètení èíslic desetinné èásti
+// načtení číslic desetinné části
 	if ((chr == '.') || (chr == ','))
 	{
 		txt++;
@@ -2227,7 +2227,7 @@ double Double(LPCTSTR txt)
 		}
 	}
 
-// vypuštìní mezer
+// vypuštění mezer
 	while ((chr == ' ') || (chr == 9))
 	{
 		txt++;
@@ -2240,7 +2240,7 @@ double Double(LPCTSTR txt)
 		txt++;
 		chr = *txt;
 
-// vypuštìní mezer a urèení znaménka
+// vypuštění mezer a určení znaménka
 		while ((chr == ' ') || (chr == 9) || (chr == '+') || (chr == '-'))
 		{
 			if (chr == '-')
@@ -2251,7 +2251,7 @@ double Double(LPCTSTR txt)
 			chr = *txt;
 		}
 
-// naètení èíslic exponentu
+// načtení číslic exponentu
 		while (chr != 0)
 		{
 			if ((chr >= '0') && (chr <= '9'))
@@ -2267,7 +2267,7 @@ double Double(LPCTSTR txt)
 			chr = *txt;
 		}
 
-// vynásobení èísla exponentem
+// vynásobení čísla exponentem
 		if (expN != 0)
 		{
 			if (signE)
@@ -2297,7 +2297,7 @@ double Double(LPCTSTR txt)
 		}
 	}
 
-// pøíznak pøeteèení
+// příznak přetečení
 	if (chr == '#')
 	{
 		if ((txt[1] == 'I') &&
@@ -2435,12 +2435,12 @@ bool _fastcall operator>=(const CText& str1, const CText& str2)
 
 /***************************************************************************\
 *																			*
-*								Buffer textù								*
+*								Buffer textů								*
 *																			*
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// pøidání záznamu o vložení položky do UNDO bufferu
+// přidání záznamu o vložení položky do UNDO bufferu
 
 template <> bool CBuffer<CText>::UndoAddIns(int index)
 {
@@ -2448,7 +2448,7 @@ template <> bool CBuffer<CText>::UndoAddIns(int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky, <0 = chyba pamìti)
+// přidání položky (vrací index položky, <0 = chyba paměti)
 // provádí záznam do UNDO bufferu
 
 int _fastcall CBufText::Add(TEXTDATA* data)
@@ -2487,16 +2487,16 @@ int _fastcall CBufText::Add(const char* data, int len)
 }
 
 ////////////////////////////////////////////////////////////////////
-// naètení textu z resource (vrací index položky, <0 = chyba)
+// načtení textu z resource (vrací index položky, <0 = chyba)
 
 int _fastcall CBufText::Load(const int nID)
 {
-// vytvoøení nové položky
-	int result = New();		// vytvoøení nové položky
+// vytvoření nové položky
+	int result = New();		// vytvoření nové položky
 	if (result >= 0)
 	{
 
-// naètení položky
+// načtení položky
 		if (!m_Data[result].Load(nID))
 		{
 			Del(result);
@@ -2512,19 +2512,19 @@ int _fastcall CBufText::Load(const int nID)
 
 /***************************************************************************\
 *																			*
-*						Buffer vícejazyèných textù							*
+*						Buffer vícejazyčných textů							*
 *																			*
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// pøidání záznamu o vložení položky do UNDO bufferu
+// přidání záznamu o vložení položky do UNDO bufferu
 
 template <> bool CBuffer<CMultiText>::UndoAddIns(int index)
 {
 	return Undo.AddTextIns(index);
 }
 
-// zjištìní bìžného textu
+// zjištění běžného textu
 const CText& _fastcall CMultiText::MultiText() const
 {
 	if (m_Data[Jazyk].IsNotEmpty())
@@ -2553,7 +2553,7 @@ const CText& _fastcall CMultiText::MultiText() const
 	return m_Data[JAZYK000];
 }
 
-// naètení textu z resource
+// načtení textu z resource
 void _fastcall CMultiText::Load(const int nID)
 {
 	int oldjazyk = Jazyk;  
@@ -2566,8 +2566,8 @@ void _fastcall CMultiText::Load(const int nID)
 	Jazyk = oldjazyk;
 }
 
-// nastavení èísla jména objektu (1, 2, ...)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// nastavení čísla jména objektu (1, 2, ...)
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 bool _fastcall CMultiText::SetNumObj(const int num)
 {
 	BOOL ok = false;
@@ -2590,12 +2590,12 @@ bool _fastcall CMultiText::SetNumObj(const int num)
 
 int _fastcall CBufMultiText::Load(const int nID)
 {
-// vytvoøení nové položky
-	int result = New();		// vytvoøení nové položky
+// vytvoření nové položky
+	int result = New();		// vytvoření nové položky
 	if (result >= 0)
 	{
 
-// naètení položky
+// načtení položky
 		m_Data[result].Load(nID);
 	}
 

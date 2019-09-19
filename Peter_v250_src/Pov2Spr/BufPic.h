@@ -7,12 +7,12 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura položky dat obrázku - 16 bajtù + data
+// struktura položky dat obrázku - 16 bajtů + data
 
 typedef struct PICTUREDATA_
 {
-	long	Refer;					// (4) èítaè referencí na obrázek
-	long	Width;					// (4) šíøka obrázku v bodech
+	long	Refer;					// (4) čítač referencí na obrázek
+	long	Width;					// (4) šířka obrázku v bodech
 	long	Height;					// (4) výška obrázku v linkách
 	BYTE*	Data;					// (4) ukazatel na data (velikost Width*Height)
 } PICTUREDATA;
@@ -28,14 +28,14 @@ extern PICTUREDATA EmptyPictureData;	// data prázdného obrázku (velikost ICON
 class CPicture
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné - pouze ukazatel na data
+// proměnné - pouze ukazatel na data
 	PICTUREDATA*		pData;			// ukazatel na záhlaví obrázku
 
-// pøipojení dat
+// připojení dat
 	inline void Attach(PICTUREDATA* data)
 	{
 		ASSERT(data);
@@ -60,65 +60,65 @@ private:
 		}
 	}
 
-// vytvoøení nového bufferu - starý buffer musí být odpojen!
+// vytvoření nového bufferu - starý buffer musí být odpojen!
 	inline void NewBuffer(int width, int height)
 	{
 		ASSERT((width > 0) && (height > 0));
 		if (width <= 0) width = 1;
 		if (height <= 0) height = 1;
 		PICTUREDATA* data = (PICTUREDATA*)MemGet(SIZEOFPICTUREDATA);
-		data->Refer = 1;				// poèet referencí
-		data->Width = width;			// šíøka
+		data->Refer = 1;				// počet referencí
+		data->Width = width;			// šířka
 		data->Height = height;			// výška
 		data->Data = (BYTE*)MemGet(width*height);
 		pData = data;					// adresa dat
 	}
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
 // konstruktor a destruktor
 	CPicture();							// standardní konstruktor
 	CPicture(const CPicture& src);		// kopírovací konstruktor
-	CPicture(int width, int height);	// konstruktor s vytvoøením obrázku
+	CPicture(int width, int height);	// konstruktor s vytvořením obrázku
 	~CPicture();						// standardní destruktor
 
 // statický konstruktor a destruktor
 	void Init();						// statický konstruktor
 	void Init(PICTUREDATA* data);		// statický konstruktor se zadáním dat
-	void Init(int width, int height);	// statický konstruktor s vytvoøením obrázku
+	void Init(int width, int height);	// statický konstruktor s vytvořením obrázku
 	void Term();						// statický destruktor
 
 // poskytnutí ukazatele na data
 	inline PICTUREDATA* Data() const { return pData; }; // poskytnutí adresy dat
 	inline BYTE* DataData() const { return pData->Data; }; // poskytnutí adresy dat
 
-// poskytnutí šíøky obrázky
+// poskytnutí šířky obrázky
 	inline int Width() const { return pData->Width; };
 
-// poskytnutí výšky obøázku
+// poskytnutí výšky obřázku
 	inline int Height() const { return pData->Height; };
 
 // poskytnutí velikost dat obrázku (bez záhlaví)
 	inline int Size() const { return (Width()*Height()); };
 
-// vymazání obsahu obrázku (naplnìní prùhlednou barvou)
+// vymazání obsahu obrázku (naplnění průhlednou barvou)
 	inline void Clear() { MemFill(pData->Data, Size(), BackCol); };
 
-// kopie nových dat obrázku (rozmìry zùstanou nezmìnìny) - zajistí odpojení dat
+// kopie nových dat obrázku (rozměry zůstanou nezměněny) - zajistí odpojení dat
 	void CopyData(BYTE* src);
 
-// kopie nových dat obrázku s konverzí (rozmìry zùstanou nezmìnìny) - zajistí odpojení dat
+// kopie nových dat obrázku s konverzí (rozměry zůstanou nezměněny) - zajistí odpojení dat
 	void CopyKonvData(BYTE* src);
 
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastního bufferu před modifikací
 	void CopyWrite();
 
-// vytvoøení nového obrázku (pøipraveno k zápisu, data jsou náhodná)
+// vytvoření nového obrázku (připraveno k zápisu, data jsou náhodná)
 	void New(int width, int height);
 
-// nastavení nových rozmìrù obrázku (nová data jsou vymazána)
+// nastavení nových rozměrů obrázku (nová data jsou vymazána)
 	void Resize(int width, int height);
 	void HalfSize();
 
@@ -136,7 +136,7 @@ public:
 	inline BOOL IsNotValid(const int x, const int y) const
 		{ return (((DWORD)x >= (DWORD)pData->Width) || ((DWORD)y >= (DWORD)pData->Height)); };
 
-// poskytnutí pøístupu k bodu (bez kontroly offsetu/indexu)
+// poskytnutí přístupu k bodu (bez kontroly offsetu/indexu)
 	inline BYTE& operator[] (const int off) 
 		{ ASSERT(IsValid(off)); return pData->Data[off]; }
 
@@ -163,58 +163,58 @@ public:
 	void _fastcall Set(const int off, const BYTE data);
 	void _fastcall Set(const int x, const int y, const BYTE data);
 
-// naètení obrázku ze souboru (TRUE=operace OK)
+// načtení obrázku ze souboru (TRUE=operace OK)
 //	BOOL LoadFile(CString jmeno);
 
-// naètení obrázku ze souboru s polovièní velikostí (TRUE=operace OK)
+// načtení obrázku ze souboru s poloviční velikostí (TRUE=operace OK)
 	BOOL LoadFile2(CString jmeno);
 
 // uložení obrázku do souboru formátu BMP (FALSE=chyba)
 	BOOL SaveFile(CString jmeno) const;
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CPicture& operator= (const CPicture& src);
 };
 
 /***************************************************************************\
 *																			*
-*								Buffer obrázkù								*
+*								Buffer obrázků								*
 *																			*
 \***************************************************************************/
 
 class CBufPic
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné
+// proměnné
 	CPicture*	m_Data;		// ukazatel na data
-	BYTE*		m_Valid;	// pøíznaky platnosti položek
-	int			m_Num;		// poèet platných položek v bufferu
+	BYTE*		m_Valid;	// příznaky platnosti položek
+	int			m_Num;		// počet platných položek v bufferu
 	int			m_Max;		// velikost bufferu (položek)
-	int			m_Next;		// pøíští volná položka (-1=není)
+	int			m_Next;		// příští volná položka (-1=není)
 
-// vytvoøení nové položky
+// vytvoření nové položky
 	inline int NewItem()
 	{
 		if (m_Next < 0)				// není další položka?
 		{
-			NewData();				// vytvoøení nových dat
+			NewData();				// vytvoření nových dat
 		}
 
-		int i = m_Next;				// pøíští volna položka
+		int i = m_Next;				// příští volna položka
 		m_Next = *(int*)(m_Data + i); // další položka
-		m_Valid[i] = TRUE;			// nastavení pøíznaku platnosti položky
-		m_Num++;					// zvýšení èítaèe platných položek
+		m_Valid[i] = TRUE;			// nastavení příznaku platnosti položky
+		m_Num++;					// zvýšení čítače platných položek
 		return i;
 	};
 
-// vytvoøení nových dat (oddìleno kvùli lepší optimalizaci)
+// vytvoření nových dat (odděleno kvůli lepší optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -226,7 +226,7 @@ public:
 	void Init();
 	void Term();
 
-// zrušení všech položek v bufferu (ukládání zaène opìt po øadì od zaèátku)
+// zrušení všech položek v bufferu (ukládání začne opět po řadě od začátku)
 	void DelAll();
 
 // poskytnutí bufferu dat
@@ -235,10 +235,10 @@ public:
 // poskytnutí pole platností
 	inline BYTE* Valid() const { return m_Valid; };
 
-// poskytnutí poètu platných položek v bufferu
+// poskytnutí počtu platných položek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu (vèetnì zrušených položek)
+// poskytnutí velikosti bufferu (včetně zrušených položek)
 	inline int Max() const { return m_Max; };
 
 // kontrola platnosti položky
@@ -248,7 +248,7 @@ public:
 	inline BOOL IsNotValid(const int index) const
 		{ return (((DWORD)index >= (DWORD)m_Max) || !m_Valid[index]); };
 
-// poskytnutí pøístupu k položce (bez kontroly indexu)
+// poskytnutí přístupu k položce (bez kontroly indexu)
 	inline CPicture& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -270,18 +270,18 @@ public:
 // zrušení položky (s kontrolou platnosti indexu)
 	void _fastcall Del(const int index);
 
-// vytvoøení prázdné položky (vrací index položky)
+// vytvoření prázdné položky (vrací index položky)
 	int New();
-	int New(int width, int height);			// obrázek vymaže prùhlednou barvou
+	int New(int width, int height);			// obrázek vymaže průhlednou barvou
 
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 	int _fastcall Add(const CPicture& data);
 	int _fastcall Add(PICTUREDATA* data);
 
 // duplikace položky (s kontrolou platnosti indexu, vrací index položky)
 	int _fastcall Dup(const int index);
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CBufPic& operator= (const CBufPic& src);
 };
 

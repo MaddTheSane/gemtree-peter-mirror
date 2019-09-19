@@ -11,7 +11,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu s hudbou (vrací true = operace OK)
+// překlad výrazu s hudbou (vrací true = operace OK)
 
 bool _fastcall CompMus(int index)
 {
@@ -24,7 +24,7 @@ bool _fastcall CompMus(int index)
 // kontrola, zda je položka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// větvení podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_FNC:
@@ -69,7 +69,7 @@ bool _fastcall CompMus(int index)
 		return false;
 
 	case IDF_FILE_MUSIC:
-		CompAddItem(FGetFileMusic);			// naètení hudby
+		CompAddItem(FGetFileMusic);			// načtení hudby
 		return true;
 
 	default:
@@ -79,7 +79,7 @@ bool _fastcall CompMus(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem hudby
+// překlad příkazu s parametrem hudby
 
 bool CompMusPar(int index, PROCCOM func)
 {

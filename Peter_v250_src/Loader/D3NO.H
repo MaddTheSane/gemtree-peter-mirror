@@ -11,7 +11,7 @@
 void D3No();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace obsluhy videomódù (vrací TRUE=OK)
+// inicializace obsluhy videomódů (vrací TRUE=OK)
 
 bool D3NoInitVideoModes();
 
@@ -21,7 +21,7 @@ bool D3NoInitVideoModes();
 bool D3NoStartVMode(VIDEOMODEITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení videomódu
+// ukončení videomódu
 
 inline void D3NoStopVMode() { D3No(); }
 
@@ -36,22 +36,22 @@ inline void D3NoClear() { D3No(); }
 inline void D3NoDisp() { D3No(); }
 	
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po zmìnì velikosti
+// aktualizace viewportu po změně velikosti
 
 inline void D3NoSizeView() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po pøesunu
+// aktualizace viewportu po přesunu
 
 inline void D3NoMoveView() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení funkce zaøízení
+// ukončení funkce zařízení
 
 inline void D3NoStop() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèní matice
+// aktualizace projekční matice
 
 inline void D3NoAktProj() { D3No(); }
 
@@ -66,7 +66,7 @@ inline void D3NoAktView() { D3No(); }
 inline void D3NoBegin() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení renderování scény
+// ukončení renderování scény
 
 inline void D3NoEnd() { D3No(); }
 
@@ -76,47 +76,47 @@ inline void D3NoEnd() { D3No(); }
 void D3NoRender(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování objektu pøed ukonèením ovladaèe
+// resetování objektu před ukončením ovladače
 
 inline void D3NoReset(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování stínu objektu pøed ukonèením ovladaèe
+// resetování stínu objektu před ukončením ovladače
 
 inline void D3NoSReset(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè vyplòování ploch
+// aktualizovat přepínač vyplňování ploch
 
 inline void D3NoAktWireframe() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè osvìtlení
+// aktualizovat přepínač osvětlení
 
 inline void D3NoAktLightOn() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè plynulého stinování
+// aktualizovat přepínač plynulého stinování
 
 inline void D3NoAktShades() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè odstraòování ploch
+// aktualizovat přepínač odstraňování ploch
 
 inline void D3NoAktCulling() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zvìtšených textur
+// aktualizovat přepínač filtrace zvětšených textur
 
 void D3NoAktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zmenšených a vzdálených textur
+// aktualizovat přepínač filtrace zmenšených a vzdálených textur
 
 inline void D3NoAktMinMipFilter(int stage) { D3NoAktMagFilter(stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace položky svìtla
+// aktualizace položky světla
 
 void D3NoAktLight(int inx, D3DLITEM* item);
 
@@ -126,7 +126,7 @@ void D3NoAktLight(int inx, D3DLITEM* item);
 void D3NoSetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetování položky textury před ukončením ovladače
 
 void D3NoTextureRes(D3DTITEM* item);
 
@@ -136,7 +136,7 @@ void D3NoTextureRes(D3DTITEM* item);
 void D3NoTextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutí pùvodní textury
+// zapnutí původní textury
 
 inline void D3NoTextureOn(D3DTITEM* item, int stage) { D3NoTextureSet(item, stage); }
 
@@ -151,17 +151,17 @@ inline void D3NoTextureOff(int stage) { D3NoAktMagFilter(stage); }
 inline void D3NoMatReset(D3DMITEM* item) { D3NoSetMaterial(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky svìtla
+// resetování položky světla
 
 inline void D3NoLightReset(int inx, D3DLITEM* item) { D3NoAktLight(inx, item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvìtlení
+// aktualizace ambient osvětlení
 
 inline void D3NoAktAmbient() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// volná videopamì
+// volná videopaměť
 
 int D3NoFree();
 
@@ -186,7 +186,7 @@ inline void D3NoAktState() { D3No(); }
 inline void D3NoAktBlend(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenèní úrovnì alfa
+// aktualizace referenční úrovně alfa
 
 inline void D3NoAktAlfa(D3DFITEM* item) { D3NoRender(item); }
 
@@ -211,7 +211,7 @@ void D3NoSetAddress(int adru, int adrv, int stage);
 //void D3NoSetBorder(D3DFITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení zjemnìní vzdálených textur
+// nastavení zjemnění vzdálených textur
 
 void D3NoSetBias(float bias, int stage);
 
@@ -256,7 +256,7 @@ inline void D3NoSetSMask(DWORD mask) { D3NoAktMagFilter(mask); }
 inline void D3NoShadow(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení stínù
+// vykreslení stínů
 
 inline void D3NoShadows() { D3No(); }
 

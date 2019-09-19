@@ -9,7 +9,7 @@
 
 #pragma optimize("s", on)			// optimalizace na minimální velikost
 
-// korekce lokálních promìnných (pøi volání ve vstupních parametrech)
+// korekce lokálních proměnných (při volání ve vstupních parametrech)
 
 int KorigNum = 0;
 int KorigLog = 0;
@@ -24,7 +24,7 @@ int KorigLst = 0;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou (data = poèet parametrù - 1)
+// překlad příkazu se skupinou (data = počet parametrů - 1)
 
 bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1)
 {
@@ -35,18 +35,18 @@ bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1)
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// buffer indexù skupin
+// buffer indexů skupin
 	CBufInt group;
 
-// buffer indexù k nastavení skokù
+// buffer indexů k nastavení skoků
 	CBufInt jumps;
 
-// kontrola, zda má položka nìjaké potomky
+// kontrola, zda má položka nějaké potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 		
-// cyklus pøes všechny potomky
+// cyklus přes všechny potomky
 		do {
 
 // adresa dalšího potomka
@@ -54,7 +54,7 @@ bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1)
 			item += posun;
 			item2 += posun;
 
-// vnoøení do skupin
+// vnoření do skupin
 			while ((item->Func == IDF_GROUP - IDF) && (item->Param & PETPROG_CHILDS))
 			{
 				group.Add(index);
@@ -63,14 +63,14 @@ bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1)
 				item2++;
 			}
 
-// naètení prvku
+// načtení prvku
 			int zahl2 = ProgNum;
 
 			if (comp(index))
 			{
 				ProgBuf[zahlavi].Data++;
 
-// nastavení skokù v pøedešlých prvcích (vèetnì posledního)
+// nastavení skoků v předešlých prvcích (včetně posledního)
 				int n = jumps.Num();
 				jumps.Add(zahl2);
 				for (; n >= 0; n--)
@@ -80,7 +80,7 @@ bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1)
 				}
 			}
 
-// vynoøení ze skupin
+// vynoření ze skupin
 			while ((group.Num() > 0) && ((item->Param & PETPROG_NEXT) == 0))
 			{
 				index = group[group.Num()-1];
@@ -89,14 +89,14 @@ bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1)
 				item2 = BufEdi2 + index;
 			}
 
-// posun pro pøíští prvek
+// posun pro příští prvek
 			posun = item2->Items;
 
 // dokud je další potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// kontrola, zda byl alespoò nìjaký prvek
+// kontrola, zda byl alespoň nějaký prvek
 	if (ProgBuf[zahlavi].Data < 0)
 	{
 		if (func1 == FCommandExec1)
@@ -121,14 +121,14 @@ bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad volání funkce (index=-1 hlavní funkce, typ = ID promìnné výsledku, IDF_FNC = není)
+// překlad volání funkce (index=-1 hlavní funkce, typ = ID proměnné výsledku, IDF_FNC = není)
 
 bool CompFunc(int index, int typ)
 {
 // index deklarace funkce
 	int locinx = 0;								// index funkce v lokálním bufferu
-	int ediinx;									// index funkce v editaèním bufferu
-	int i;										// pomocný èítaè
+	int ediinx;									// index funkce v editačním bufferu
+	int i;										// pomocný čítač
 	int inx;									// pomocný index
 
 	if (index >= 0)
@@ -139,9 +139,9 @@ bool CompFunc(int index, int typ)
 		if (BufEdi[index].RefBlok == BufLocID)		// je reference na lokální buffer
 		{
 			if (((DWORD)locinx >= (DWORD)BufLocN) ||				// platná lokální funkce
-				(BufLoc[locinx].DatBlok != BufEdiID)) return false;	// data v editaèním bufferu
-			ediinx = BufLoc2[locinx].Data;							// index funkce v editaèním bufferu
-			if (((DWORD)ediinx >= (DWORD)BufEdiN) ||				// platná funkce v editaèním bufferu
+				(BufLoc[locinx].DatBlok != BufEdiID)) return false;	// data v editačním bufferu
+			ediinx = BufLoc2[locinx].Data;							// index funkce v editačním bufferu
+			if (((DWORD)ediinx >= (DWORD)BufEdiN) ||				// platná funkce v editačním bufferu
 				(typ != IDF_FNC)) return false;						// nesmí být požadována návratová hodnota
 			CompAddItem(FFunc0, ediinx);							// lokální funkce
 			return true;
@@ -157,13 +157,13 @@ bool CompFunc(int index, int typ)
 	}
 
 	if (((DWORD)locinx >= (DWORD)BufLocN) ||					// platná lokální definice
-		(BufLoc[locinx].DatBlok != BufEdiID)) return false;		// odkaz na editaèní buffer
+		(BufLoc[locinx].DatBlok != BufEdiID)) return false;		// odkaz na editační buffer
 
-// definice v editaèním bufferu
-	ediinx = BufLoc2[locinx].Data;								// funkce v editaèním bufferu
+// definice v editačním bufferu
+	ediinx = BufLoc2[locinx].Data;								// funkce v editačním bufferu
 	if ((DWORD)ediinx >= (DWORD)BufEdiN) return false;			// platná funkce
 
-// nalezení výstupní promìnné
+// nalezení výstupní proměnné
 	int resinx = -1;
 	if (typ != IDF_FNC)
 	{
@@ -240,7 +240,7 @@ bool CompFunc(int index, int typ)
 		return false;
 	}
 
-// èítaèe promìnných
+// čítače proměnných
 	int locreal = 0;
 	int loctext = 0;
 	int locbool = 0;
@@ -252,7 +252,7 @@ bool CompFunc(int index, int typ)
 	int locmusic = 0;
 	int loclist = 0;
 
-// pøeklad lokálních promìnných
+// překlad lokálních proměnných
 	int zahlavi = CompAddItem(FCommandExec, -1);
 	i = BufLoc2[locinx].Items;
 	inx = locinx;
@@ -263,7 +263,7 @@ bool CompFunc(int index, int typ)
 		int list = BufLoc2[inx].List;
 		if (list >= 0) size = List[list].Size;
 
-// nalezení vstupní promìnné
+// nalezení vstupní proměnné
 		int parinx = -1;
 		if ((index >= 0) && (size == 1) && ((BufEdi[index].Param & PETPROG_CHILDS) != 0))
 		{
@@ -283,7 +283,7 @@ bool CompFunc(int index, int typ)
 			}
 		}
 
-// vytvoøení vstupní promìnné
+// vytvoření vstupní proměnné
 		switch (BufLoc[inx].Func)
 		{
 		case IDF_REAL - IDF:
@@ -449,7 +449,7 @@ bool CompFunc(int index, int typ)
 		inx++;
 	}
 
-// uvolnìní lokálních promìnných
+// uvolnění lokálních proměnných
 	zahlavi = CompAddItem(FCommandExec, -1);
 	if (locreal > 0)
 	{
@@ -530,7 +530,7 @@ bool CompFunc(int index, int typ)
 
 void Comp()
 {
-// pøeklad všech funkcí
+// překlad všech funkcí
 	int index = 0;
 	while (index < BufEdiN)
 	{
@@ -543,7 +543,7 @@ void Comp()
 	ProgStart = ProgNum;
 	if (!CompFunc(-1, IDF_FNC)) ProgStart = 0;
 
-// pøemapování indexù funkcí
+// přemapování indexů funkcí
 	EXECITEM* item = ProgBuf;
 	for (int i = ProgNum; i > 0; i--)
 	{

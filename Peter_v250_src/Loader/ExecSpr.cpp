@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*						Provádìní programu - sprajt							*
+*						Provádění programu - sprajt							*
 *																			*
 \***************************************************************************/
 
@@ -24,10 +24,10 @@ void _fastcall FSpriteFunc(CSprite& sprite)
 // úschova indexu volané funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// úschova indexu proměnné s návratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnných
+// inicializace lokálních proměnných
 	FCommand();
 
 // úschova ukazatele programu
@@ -36,7 +36,7 @@ void _fastcall FSpriteFunc(CSprite& sprite)
 // nová adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoření
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
@@ -49,20 +49,20 @@ void _fastcall FSpriteFunc(CSprite& sprite)
 // návrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení požadavku o pøerušení
+// zrušení požadavku o přerušení
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
 // návrat výsledku operace
 	sprite = Sprite[Sprite.Num() - res];
 
-// zrušení lokálních promìnných
+// zrušení lokálních proměnných
 	FCommand();
 }
 
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								proměnné									*
 *																			*
 \***************************************************************************/
 
@@ -132,7 +132,7 @@ void _fastcall FSpriteLocList(CSprite& sprite)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení sprajtu ze souboru
+// načtení sprajtu ze souboru
 
 void _fastcall FGetFileSprite(CSprite& sprite)
 {

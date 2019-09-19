@@ -7,86 +7,86 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura jednoho prvku dat plochy - 8 bajtù
+// struktura jednoho prvku dat plochy - 8 bajtů
 
 typedef struct MAPITEM_
 {
 	long	Icon;					// (4) index ikony v bufferu ikon
-	DWORD	Param;					// (4) parametry políèka
-									//		bit 0 až bit 9 ........ (10 bitù) hodnota 1 (0 až 1023)
-									//		bit 10 až bit 19 ...... (10 bitù) hodnota 2 (0 až 1023)
-									//		bit 20 až bit 26 ...... (7 bitù) hodnota 3 (0 až 127)
-									//		bit 27 až bit 31 ...... (5 bitù) pøíznaky 1 až 5
+	DWORD	Param;					// (4) parametry políčka
+									//		bit 0 až bit 9 ........ (10 bitů) hodnota 1 (0 až 1023)
+									//		bit 10 až bit 19 ...... (10 bitů) hodnota 2 (0 až 1023)
+									//		bit 20 až bit 26 ...... (7 bitů) hodnota 3 (0 až 127)
+									//		bit 27 až bit 31 ...... (5 bitů) příznaky 1 až 5
 } MAPITEM;
 
 #define SIZEOFMAPITEM	(sizeof(long) + sizeof(DWORD))	// velikost jednoho prvku plochy
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura položky dat plochy - 12 bajtù + data
+// struktura položky dat plochy - 12 bajtů + data
 
 typedef struct MAPDATA_
 {
-	long		Refer;					// (4) èítaè referencí na plochu
-	long		Width;					// (4) šíøka plochy v políèkách
-	long		Height;					// (4) výška plochy v políèkách
+	long		Refer;					// (4) čítač referencí na plochu
+	long		Width;					// (4) šířka plochy v políčkách
+	long		Height;					// (4) výška plochy v políčkách
 	MAPITEM		Data[1];				// data plochy
 } MAPDATA;
 
 // parametry:
-#define	MAP_VALUE1_MASK		0x000003FF		// maska hodnoty 1 políèka
-#define MAP_VALUE1_ROT		0				// poèet rotací pro hodnotu 1 políèka
-#define MAP_VALUE1_MAX		1023			// maximální hodnota pro hodnotu 1 políèka
-#define MAP_VALUE2_MASK		0x000FFC00		// maska hodnoty 2 políèka
-#define MAP_VALUE2_ROT		10				// poèet rotací pro hodnotu 2 políèka
-#define MAP_VALUE2_MAX		1023			// maximální hodnota pro hodnotu 2 políèka
-#define MAP_VALUE3_MASK		0x07F00000		// maska hodnoty 3 políèka
-#define MAP_VALUE3_ROT		20				// poèet rotací pro hodnotu 3 políèka
-#define MAP_VALUE3_MAX		127				// maximální hodnota pro hodnotu 3 políèka
+#define	MAP_VALUE1_MASK		0x000003FF		// maska hodnoty 1 políčka
+#define MAP_VALUE1_ROT		0				// počet rotací pro hodnotu 1 políčka
+#define MAP_VALUE1_MAX		1023			// maximální hodnota pro hodnotu 1 políčka
+#define MAP_VALUE2_MASK		0x000FFC00		// maska hodnoty 2 políčka
+#define MAP_VALUE2_ROT		10				// počet rotací pro hodnotu 2 políčka
+#define MAP_VALUE2_MAX		1023			// maximální hodnota pro hodnotu 2 políčka
+#define MAP_VALUE3_MASK		0x07F00000		// maska hodnoty 3 políčka
+#define MAP_VALUE3_ROT		20				// počet rotací pro hodnotu 3 políčka
+#define MAP_VALUE3_MAX		127				// maximální hodnota pro hodnotu 3 políčka
 
-// zachovat poøadí hodnot pøepínaèù - používá se pøi zobrazení
-#define MAP_FLAG1			0x08000000		// pøíznak 1
-#define MAP_FLAG2			0x10000000		// pøíznak 2
-#define MAP_FLAG3			0x20000000		// pøíznak 3
-#define MAP_FLAG4			0x40000000		// pøíznak 4
-#define MAP_FLAG5			0x80000000		// pøíznak 5
+// zachovat pořadí hodnot přepínačů - používá se při zobrazení
+#define MAP_FLAG1			0x08000000		// příznak 1
+#define MAP_FLAG2			0x10000000		// příznak 2
+#define MAP_FLAG3			0x20000000		// příznak 3
+#define MAP_FLAG4			0x40000000		// příznak 4
+#define MAP_FLAG5			0x80000000		// příznak 5
 
 #define SIZEOFMAPDATA	(3*sizeof(long))	// velikost položky dat plochy (bez dat)
 
-#define MAPMAXWIDTH 0x1000					// maximální šíøka plochy
+#define MAPMAXWIDTH 0x1000					// maximální šířka plochy
 #define MAPMAXHEIGHT 0x1000					// maximální výška plochy
 
 
 /////////////////////////////////////////////////////////////////////////////
-// popisovaè plochy v souboru (20 B)
+// popisovač plochy v souboru (20 B)
 
 typedef struct MAPFILE_
 {
 	char	Ident[4];				// (4) identifikátor (= "PMAP")
 	char	Verze;					// (1) verze
 									//		0=jednojazyková verze UNICODE
-									//		1=vícejazyèná verze
-	char	Jazyku;					// (1) poèet jazykù (pro jednojazykovou verzi = 0)
-	short	Param;					// (1) doplòující parametr (nastaveno na 0)
-	long	Width;					// (4) šíøka plochy
+									//		1=vícejazyčná verze
+	char	Jazyku;					// (1) počet jazyků (pro jednojazykovou verzi = 0)
+	short	Param;					// (1) doplňující parametr (nastaveno na 0)
+	long	Width;					// (4) šířka plochy
 	long	Height;					// (4) výška plochy
-	long	Colors;					// (4) poèet palet v tabulce
+	long	Colors;					// (4) počet palet v tabulce
 	RGBQUAD	ColorTab[1];			// (4) tabulka palet
 } MAPFILE;
 
-// Za popisovaèem následuje:
+// Za popisovačem následuje:
 //
-// JEDNOJAZYÈNÁ VERZE:
+// JEDNOJAZYČNÁ VERZE:
 //		- tabulka palet (formát RGBQUAD)
-//		- (4) poèet definovaných ikon
+//		- (4) počet definovaných ikon
 //		- definice ikon ve formátu:
 //				- (4) délka textu ve znacích
 //				- text jména ikony v kódu UNICODE
 //				- (ICONSIZE) ikona
 //		- definice plochy ve formátu MAPITEM
 //
-// VÍCEJAZYÈNÁ VERZE:
+// VÍCEJAZYČNÁ VERZE:
 //		- tabulka palet (formát RGBQUAD)
-//		- (4) poèet definovaných ikon
+//		- (4) počet definovaných ikon
 //		- definice ikon ve formátu:
 //				- texty pro všechny jazyky:
 //					- (4) identifikátor jazyku (0=implicitní)
@@ -101,7 +101,7 @@ typedef struct MAPFILE_
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní prázdná plocha (modifikuje se poèet referencí!)
+// inicializační prázdná plocha (modifikuje se počet referencí!)
 // Prázdná plocha ukazuje na prázdnou ikonu 0!
 
 extern MAPDATA EmptyMapData;				// data prázdné plochy
@@ -110,16 +110,16 @@ extern	const CMap	EmptyMap;			// prázdná plocha
 /////////////////////////////////////////////////////////////////////////////
 // statické funkce
 
-// vytvoøení dat plochy (pøi chybì pamìti vrací NULL)
+// vytvoření dat plochy (při chybě paměti vrací NULL)
 MAPDATA* _fastcall NewMapData(int width, int height);
 
-// zrušení dat plochy (oddìleno kvùli lepší optimalizaci)
+// zrušení dat plochy (odděleno kvůli lepší optimalizaci)
 void _fastcall DelMapData(MAPDATA* data);
 
-// zvýšení reference na ikonu (v bufferu globálních a lokálních objektù)
+// zvýšení reference na ikonu (v bufferu globálních a lokálních objektů)
 void _fastcall RefIconInc(const int icon);
 
-// snížení reference na ikonu (v bufferu globálních a lokálních objektù)
+// snížení reference na ikonu (v bufferu globálních a lokálních objektů)
 void _fastcall RefIconDec(const int icon);
 
 
@@ -129,14 +129,14 @@ void _fastcall RefIconDec(const int icon);
 class CMap
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- interní proměnné a funkce ----------------------
 
 private:
 
-// promìnné
+// proměnné
 	MAPDATA*		pData;			// ukazatel na záhlaví plochy
 
-// pøipojení dat plochy
+// připojení dat plochy
 	inline void attach(MAPDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -158,7 +158,7 @@ private:
 	}
 
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
 
@@ -172,14 +172,14 @@ public:
 	void Init();				// prázdná plocha o velikosti 1x1 (ikona 0)
 	void _fastcall Init(const CMap& src);
 	void _fastcall Init(MAPDATA* data);
-	bool _fastcall Init(int width, int height);	// pøi chybì pamìti vrátí FALSE, plocha není vytvoøena
+	bool _fastcall Init(int width, int height);	// při chybě paměti vrátí FALSE, plocha není vytvořena
 	void Term();
 
 // poskytnutí ukazatele na data
 	inline MAPDATA* Data() const { return pData; };
 	inline MAPITEM* DataData() const { return pData->Data; };
 
-// poskytnutí šíøky plochy
+// poskytnutí šířky plochy
 	inline int Width() const { return pData->Width; };
 
 // poskytnutí výšky plochy
@@ -188,35 +188,35 @@ public:
 // poskytnutí velikosti dat plochy (bez záhlaví)
 	inline int Size() const { return (pData->Height * pData->Width * SIZEOFMAPITEM); };
 
-// vyprázdnìní (uvolnìní dat) - pøipojí se standardní prázdná plocha (velikost 1x1, ikona 0)
+// vyprázdnění (uvolnění dat) - připojí se standardní prázdná plocha (velikost 1x1, ikona 0)
 	void Empty();
 
 // test, zda je plocha prázdná (zda ukazuje na standardní prázdnou plochu 1x1)
 	inline BOOL IsEmpty() { return ((DWORD)pData == (DWORD)&EmptyMapData); };
 	inline BOOL IsNotEmpty() { return ((DWORD)pData != (DWORD)&EmptyMapData); };
 
-// vymazání obsahu plochy (naplnìní ikonami 0, vynulované parametry), zajistí pøivlastnìní bufferu,
-// pøi chybì pamìti vrací FALSE, pùvodní obsah nezmìnìn
+// vymazání obsahu plochy (naplnění ikonami 0, vynulované parametry), zajistí přivlastnění bufferu,
+// při chybě paměti vrací FALSE, původní obsah nezměněn
 	bool Clear();
 
-// vymazání obsahu plochy s nastavením velikosti (naplnìní ikonami 0, vynulované parametry),
-// zajistí pøivlastnìní bufferu, pøi chybì pamìti vrací FALSE, pùvodní obsah nezmìnìn
+// vymazání obsahu plochy s nastavením velikosti (naplnění ikonami 0, vynulované parametry),
+// zajistí přivlastnění bufferu, při chybě paměti vrací FALSE, původní obsah nezměněn
 	bool _fastcall Clear(int width, int height);
 
-// kopie do vlastního bufferu pøed modifikací
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie do vlastního bufferu před modifikací
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 	bool CopyWrite();
 
-// vytvoøení nové plochy se stejnou velikostí (pøipraveno k zápisu, data jsou náhodná)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// vytvoření nové plochy se stejnou velikostí (připraveno k zápisu, data jsou náhodná)
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 	bool New();
 
-// vytvoøení nové plochy (pøipraveno k zápisu, data jsou náhodná)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// vytvoření nové plochy (připraveno k zápisu, data jsou náhodná)
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 	bool _fastcall New(int width, int height);
 
-// zmìna velikosti plochy
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// změna velikosti plochy
+// při chybě paměti vrátí FALSE, obsah bude nezměněn
 	bool Resize(int width, int height);
 
 // kontrola platnosti offsetu prvku
@@ -233,8 +233,8 @@ public:
 	inline BOOL IsNotValid(const int x, const int y) const
 		{ return (((DWORD)x >= (DWORD)pData->Width) || ((DWORD)y >= (DWORD)pData->Height)); };
 
-// poskytnutí pøístupu k prvku (bez kontroly offsetu/indexu)
-// v pøípadì zápisu musí být zajištìno pøivlastnìní bufferu!
+// poskytnutí přístupu k prvku (bez kontroly offsetu/indexu)
+// v případě zápisu musí být zajištěno přivlastnění bufferu!
 	inline MAPITEM& operator[] (const int off) 
 		{ ASSERT(IsValid(off)); return pData->Data[off]; }
 
@@ -254,12 +254,12 @@ public:
 		{ ASSERT(IsValid(x, y)); return pData->Data[x + y*pData->Width]; }
 
 // poskytnutí prvku (s kontrolou platnosti offsetu/indexu)
-// pro neplatný prvek vrací pøístup na prvek prázdné plochy
+// pro neplatný prvek vrací přístup na prvek prázdné plochy
 	const MAPITEM& _fastcall Get(const int off) const;
 	const MAPITEM& _fastcall Get(const int x, const int y) const;
 
 // nastavení prvku (s kontrolou platnosti offsetu/indexu)
-// pøed zápisem je nutno zajistit pøivlastnìní bufferu!
+// před zápisem je nutno zajistit přivlastnění bufferu!
 	void _fastcall Set(const int off, const MAPITEM& data);
 	void _fastcall Set(const int x, const int y, const MAPITEM& data);
 
@@ -270,16 +270,16 @@ public:
 	void RefDec();
 
 // zrušení použití ikony v ploše (index = index plochy v seznamu) - nahradí ikonou 0
-// ignoruje pøípadnou chybu pamìti!
+// ignoruje případnou chybu paměti!
 	void _fastcall DelIcon(int icon, int index, bool undo);
 
-// naètení plochy ze souboru (TRUE=operace OK, pøi chybì obsah nezmìnìn)
+// načtení plochy ze souboru (TRUE=operace OK, při chybě obsah nezměněn)
 	bool LoadFile(CText jmeno);
 
 // uložení do souboru (TRUE=operace OK)
 	bool SaveFile(CText jmeno) const;
 
-// operátor pøiøazení
+// operátor přiřazení
 	const CMap& operator= (const CMap& src);
 	const CMap& operator= (MAPDATA* src);
 };
@@ -293,21 +293,21 @@ public:
 class CBufMap : public CBuffer<CMap>
 {
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veřejné funkce ------------------------------
 
 public:
-// vytvoøení nové plochy (vrací index položky, <0 = chyba)
+// vytvoření nové plochy (vrací index položky, <0 = chyba)
 // provádí záznam do UNDO bufferu
 	inline int New() { return CBuffer<CMap>::New(); } // prázdná plocha 1x1 (ikona 0)
 	int _fastcall New(int width, int height); // plochu vymaže ikonami 0
 
-// pøidání položky (vrací index položky, <0 = chyba)
+// přidání položky (vrací index položky, <0 = chyba)
 // provádí záznam do UNDO bufferu
 	inline int _fastcall Add(const CMap& data) { return CBuffer<CMap>::Add(data); }
 	int _fastcall Add(MAPDATA* data);
 
 // zrušení použití ikony ze všech ploch - nahradí ikonou 0
-// ignoruje pøípadnou chybu pamìti!!!
+// ignoruje případnou chybu paměti!!!
 	void _fastcall DelIcon(int icon);
 };
 

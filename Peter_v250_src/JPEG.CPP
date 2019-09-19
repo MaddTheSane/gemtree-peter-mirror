@@ -20,7 +20,7 @@ BYTE* m_InBuf = NULL;
 BYTE* m_InEnd = NULL;
 BYTE* m_Src = NULL;
 
-// pøíznak chyby operace
+// příznak chyby operace
 BOOL m_Error = FALSE;
 
 #define JPEG_INTERNALS
@@ -41,7 +41,7 @@ typedef short INT16;
 #define JDCT_FASTEST  JDCT_FLOAT
 #define DEFAULT_MAX_MEM		1000000000L
 
-// naètení bloku dat
+// načtení bloku dat
 inline DWORD JFREAD(FILE* file,void* buf,int sizeofbuf)
 {
 	int n = m_InEnd - m_Src;
@@ -147,12 +147,12 @@ static const char * const cdjpeg_message_table[] = {
 
 BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 {
-// pøíprava vstupního bufferu
+// příprava vstupního bufferu
 	m_InBuf = inbuf->Adr();
 	m_InEnd = inbuf->End();
 	m_Src = m_InBuf;
 
-// kontrola velikosti a zaèátku souboru (musí být znaèka M_SOI)
+// kontrola velikosti a začátku souboru (musí být značka M_SOI)
 	if ((inbuf->Size() < 50) ||
 		(m_InBuf[0] != 0xff) ||
 		(m_InBuf[1] != M_SOI) ||
@@ -163,13 +163,13 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 
 	m_Error = FALSE;
 
-// lokální promìnné
+// lokální proměnné
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
 	djpeg_dest_ptr dest_mgr = NULL;
 	JDIMENSION num_scanlines;
 
-// pøíprava výstupního bufferu pro záhlaví obrázku
+// příprava výstupního bufferu pro záhlaví obrázku
 #define INIT_BUF_SIZE 1024
 
 	MemFree(m_OutBuf);
@@ -178,7 +178,7 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 	m_OutEnd = m_OutBuf + INIT_BUF_SIZE;
 	m_Dst = m_OutBuf;
 
-// vytvoøení objektu dekomprese
+// vytvoření objektu dekomprese
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_decompress(&cinfo);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
@@ -187,7 +187,7 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 	jerr.first_addon_message = 0;
 	jerr.last_addon_message = 0;
 
-// nastavení parametrù dekomprese
+// nastavení parametrů dekomprese
 	cinfo.err->trace_level = 0;
 	cinfo.dct_method = JDCT_FLOAT;
 	cinfo.dither_mode = JDITHER_NONE;
@@ -196,7 +196,7 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 	jpeg_stdio_src(&cinfo, NULL);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// naètení záhlaví obrázku
+// načtení záhlaví obrázku
 	jpeg_read_header(&cinfo, TRUE);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
@@ -231,11 +231,11 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 		if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 	}
 
-// ukonèení výstupu
+// ukončení výstupu
 	(*dest_mgr->finish_output) (&cinfo, dest_mgr);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// ukonèení dekomprese
+// ukončení dekomprese
 	(void) jpeg_finish_decompress(&cinfo);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 

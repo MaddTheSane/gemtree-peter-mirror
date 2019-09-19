@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Obsluha pamìti								*
+*								Obsluha paměti								*
 *																			*
 \***************************************************************************/
 
@@ -17,36 +17,36 @@
 #endif
 
 #ifdef _MT
-static	CRITICAL_SECTION	MemoryCriticalSection;	// kritická sekce pro správce pamìti
+static	CRITICAL_SECTION	MemoryCriticalSection;	// kritická sekce pro správce paměti
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
 // konstanty - velikosti musí být mocnina 2 !
 
 #ifndef _M_ALPHA
-#define	PAGESIZE		0x1000			// velikost alokaèní stránky pro ostatní procesory (4096)
+#define	PAGESIZE		0x1000			// velikost alokační stránky pro ostatní procesory (4096)
 #else
-#define	PAGESIZE		0x2000			// velikost alokaèní stránky pro procesor Alpha (8192)
+#define	PAGESIZE		0x2000			// velikost alokační stránky pro procesor Alpha (8192)
 #endif
 
-#define PAGEITEMS		(PAGESIZE/sizeof(ITEM))	// poèet prvkù na stránku (512 popø. 1024)
-#define	REGPAGES		(PAGESIZE/sizeof(PAGE)) // poèet stránek na region (256 popø. 512)
-#define DATAPAGES		(REGPAGES-1)			// poèet datových stránek na region (255 popø. 511)
-#define REGSIZE			(PAGESIZE*REGPAGES)		// velikost regionu (1 MB popø. 4 MB)
-#define NUMREGS			(0x78000000/REGSIZE-1)	// poèet regionù v pamìti (2039 popø. 509)
-#define REGSYSTEM		(0x800000/REGSIZE)		// poèet systémových regionù na zaèátku (8 popø. 2)
-#define MAXREGS			((0x40000000/REGSIZE)*4)// poèet regionù celkem (4096 popø. 1024)
+#define PAGEITEMS		(PAGESIZE/sizeof(ITEM))	// počet prvků na stránku (512 popř. 1024)
+#define	REGPAGES		(PAGESIZE/sizeof(PAGE)) // počet stránek na region (256 popř. 512)
+#define DATAPAGES		(REGPAGES-1)			// počet datových stránek na region (255 popř. 511)
+#define REGSIZE			(PAGESIZE*REGPAGES)		// velikost regionu (1 MB popř. 4 MB)
+#define NUMREGS			(0x78000000/REGSIZE-1)	// počet regionů v paměti (2039 popř. 509)
+#define REGSYSTEM		(0x800000/REGSIZE)		// počet systémových regionů na začátku (8 popř. 2)
+#define MAXREGS			((0x40000000/REGSIZE)*4)// počet regionů celkem (4096 popř. 1024)
 
 /////////////////////////////////////////////////////////////////////////////
 // struktury
 
 struct MODUL_;
 
-// struktura datového prvku - 8 bajtù
+// struktura datového prvku - 8 bajtů
 typedef struct ITEM_
 {
 	ITEM_*		NextItem;				// adresa dalšího volného prvku (NULL=konec)
-	ITEM_*		PrevItem;				// adresa pøedešlého volného prvku (NULL=zaèátek)
+	ITEM_*		PrevItem;				// adresa předešlého volného prvku (NULL=začátek)
 } ITEM;
 
 // struktura dat stránky - velikost PAGESIZE
@@ -55,16 +55,16 @@ typedef struct DATA_
 	ITEM		Items[PAGEITEMS];		// data jedné stránky
 } DATA;
 
-// struktura popisovaèe stránky - velikost 16 bajtù
+// struktura popisovače stránky - velikost 16 bajtů
 typedef struct PAGE_
 {
 	PAGE_*		NextPage;				// adresa další stránky (NULL=konec)
-	PAGE_*		PrevPage;				// adresa pøedešlé stránky (NULL=zaèátek)
-	MODUL_*		Modul;					// adresa popisovaèe modulu
-	long		Used;					// èítaè použitých položek
+	PAGE_*		PrevPage;				// adresa předešlé stránky (NULL=začátek)
+	MODUL_*		Modul;					// adresa popisovače modulu
+	long		Used;					// čítač použitých položek
 } PAGE;
 
-// struktura popisovaèe modulu
+// struktura popisovače modulu
 typedef struct MODUL_
 {
 	ITEM*		FreeItem;				// adresa volného prvku
@@ -75,27 +75,27 @@ typedef struct MODUL_
 // struktura regionu - velikost REGSIZE
 typedef struct REGION_
 {
-	long		Used;					// èítaè použitých stránek
+	long		Used;					// čítač použitých stránek
 	long		res[3];					// rezerva pro zarovnání
-	PAGE		Pages[DATAPAGES];		// popisovaèe stránek
+	PAGE		Pages[DATAPAGES];		// popisovače stránek
 	DATA		Data[DATAPAGES];		// data
 } REGION;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// promìnné
+// proměnné
 
 static	HANDLE	hHeap = NULL;			// handle haldy
 
-// obsluha regionù
-static	char*	UsedRegion;				// buffer pøíznakù použití regionù
-static	int		NextRegion = REGSYSTEM;	// index pøíštì pøidìlovaného regionu
+// obsluha regionů
+static	char*	UsedRegion;				// buffer příznaků použití regionů
+static	int		NextRegion = REGSYSTEM;	// index příště přidělovaného regionu
 static	REGION*	ResRegion = NULL;		// rezervní region (NULL=není)
 
-// obsluha nepøipojených stránek (následuje øetìzec pomocí NextPage)
-static	PAGE*	FreePage = NULL;		// první nepøipojená stránka (NULL=není)
+// obsluha nepřipojených stránek (následuje řetězec pomocí NextPage)
+static	PAGE*	FreePage = NULL;		// první nepřipojená stránka (NULL=není)
 
-// popisovaèe datových modulù
+// popisovače datových modulů
 static	MODUL	Modul[12] = {
 					NULL,	NULL,	0x0008,
 					NULL,	NULL,	0x0010,
@@ -114,16 +114,16 @@ static	MODUL	Modul[12] = {
 /////////////////////////////////////////////////////////////////////////////
 // prototypy lokálních funkcí
 
-static ITEM* NewItem(MODUL* modul);				// vytvoøení nového datového prvku
+static ITEM* NewItem(MODUL* modul);				// vytvoření nového datového prvku
 static void DelItem(MODUL* modul, ITEM* item);	// zrušení datového prvku
-static BOOL NewPage(MODUL* modul);				// vytvoøení nové stránky
+static BOOL NewPage(MODUL* modul);				// vytvoření nové stránky
 static void DelPage(MODUL* modul);				// zrušení rezervní stránky
-static BOOL NewRegion();						// vytvoøení nového regionu
+static BOOL NewRegion();						// vytvoření nového regionu
 static void DelRegion();						// zrušení rezervního regionu
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace správce pamìti (TRUE=inicializace OK)
+// inicializace správce paměti (TRUE=inicializace OK)
 
 BOOL MemInit()
 {
@@ -137,42 +137,42 @@ BOOL MemInit()
 	ASSERT(FALSE == 0);
 #pragma warning ( default: 4127)				// hlášení - konstantní podmínka
 
-// funkce mùže být volána jen jednou
+// funkce může být volána jen jednou
 	ASSERT(hHeap == NULL);
 	if (hHeap != NULL) return TRUE;
 
-// vytvoøení haldy
+// vytvoření haldy
 	hHeap = ::HeapCreate(HEAPSERIALIZE, PAGESIZE, 0);
 	if (hHeap == NULL) return FALSE;
 
-// vytvoøení bufferu pøíznakù použití regionù
+// vytvoření bufferu příznaků použití regionů
 	UsedRegion = (char*) ::HeapAlloc(hHeap, HEAP_ZERO_MEMORY | HEAPSERIALIZE, MAXREGS);
 	if (UsedRegion == NULL) return FALSE;
 
-// inicializace uzamykání pøístupu k pamìti
+// inicializace uzamykání přístupu k paměti
 #ifdef _MT
 	::InitializeCriticalSection(&MemoryCriticalSection);
 #endif
 
-// vytvoøení prvního regionu (pro zkoušku pamìti)
+// vytvoření prvního regionu (pro zkoušku paměti)
 	return NewRegion();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení správce pamìti
+// ukončení správce paměti
 
 void MemTerm()
 {
-// kontrola, zda je správce pamìti již ukonèen
+// kontrola, zda je správce paměti již ukončen
 	ASSERT(hHeap != NULL);
 	if (hHeap == NULL) return;
 
-// uvolnìní haldy
+// uvolnění haldy
 	::HeapDestroy(hHeap);
 	hHeap = NULL;
 
-// uvolnìní uzamykání pøístupu k pamìti
+// uvolnění uzamykání přístupu k paměti
 #ifdef _MT
 	::DeleteCriticalSection(&MemoryCriticalSection);
 #endif
@@ -180,21 +180,21 @@ void MemTerm()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// chyba pamìti
+// chyba paměti
 
 void MemErr()
 {
 	::MessageBox(NULL, _T("Sorry, this program will be terminated due to the insufficient memory!"),
 		_T("Insufficient Memory"), MB_OK | MB_ICONSTOP);
 
-//	::MessageBox(NULL, _T("Lituji, program bude ukonèen z dùvodu nedostatku pamìti!"),
-//		_T("Nedostatek pamìti"), MB_OK | MB_ICONSTOP);
+//	::MessageBox(NULL, _T("Lituji, program bude ukončen z důvodu nedostatku paměti!"),
+//		_T("Nedostatek paměti"), MB_OK | MB_ICONSTOP);
 	Exit(EXITCODE_MEMERR);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidìlení bloku pamìti (povolena 0) NULL=chyba
+// přidělení bloku paměti (povolena 0) NULL=chyba
 
 void* _fastcall MemGet(int size)
 {
@@ -204,65 +204,65 @@ void* _fastcall MemGet(int size)
 	ASSERT((size >= 0) && (size < 0x7ffffff0));
 	if (size <= 0) size = 1;
 
-// bude pøidìlení malého bloku
+// bude přidělení malého bloku
 	if (size <= PAGESIZE)
 	{
 
-// uzamknutí pøístupu k pamìti
+// uzamknutí přístupu k paměti
 #ifdef _MT
 		::EnterCriticalSection(&MemoryCriticalSection);
 #endif
 
-// urèení modulu velikosti prvku
-		MODUL* modul = Modul;		// zaèátek popisovaèù modulù
+// určení modulu velikosti prvku
+		MODUL* modul = Modul;		// začátek popisovačů modulů
 		while (size > modul->Size)
 		{
-			modul++;				// zvýšení ukazatele modulù
+			modul++;				// zvýšení ukazatele modulů
 		}
 
-// vytvoøení datového prvku
+// vytvoření datového prvku
 		result = (void*)NewItem(modul);
 		ASSERT(result != NULL);
 
-// odemknutí pøístupu k pamìti
+// odemknutí přístupu k paměti
 #ifdef _MT
 		::LeaveCriticalSection(&MemoryCriticalSection);
 #endif
 	}
 
-// pøidìlení bloku z haldy, pokud nebyl blok pøidìlen
+// přidělení bloku z haldy, pokud nebyl blok přidělen
 	if (result == NULL)
 	{
 		result = ::HeapAlloc(hHeap, HEAPSERIALIZE, (size + 0xff) & ~0xff);
 	}
 
-	if (result == NULL) MemErr();	// chyba pamìti
+	if (result == NULL) MemErr();	// chyba paměti
 
 	return result;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní bloku pamìti (povoleno NULL)
+// uvolnění bloku paměti (povoleno NULL)
 
 void _fastcall MemFree(void* adr)
 {
 // adresa NULL se ignoruje
 	if (adr == NULL) return;
 
-// neleží-li ve vlastním regionu, uvolnìní pomocí haldy (ještì není nutné uzamknutí!)
+// neleží-li ve vlastním regionu, uvolnění pomocí haldy (ještě není nutné uzamknutí!)
 	if (!UsedRegion[(DWORD)adr/REGSIZE])
 	{
 		::HeapFree(hHeap, HEAPSERIALIZE, adr);
 		return;
 	}
 
-// uzamknutí pøístupu k pamìti
+// uzamknutí přístupu k paměti
 #ifdef _MT
 	::EnterCriticalSection(&MemoryCriticalSection);
 #endif
 
-// pøíprava ukazatelù
+// příprava ukazatelů
 	REGION* region = (REGION*)((DWORD)adr & ~(REGSIZE-1)); // adresa regionu
 	DATA* data = (DATA*)((DWORD)adr & ~(PAGESIZE-1)); // data
 	PAGE* page = (PAGE*)((DWORD)region +
@@ -277,12 +277,12 @@ void _fastcall MemFree(void* adr)
 		if (((DWORD)adr & (modul->Size-1)) == 0)
 		{
 
-// uvolnìní položky
+// uvolnění položky
 			DelItem(modul, (ITEM*)adr);
 		}
 	}
 
-// odemknutí pøístupu k pamìti
+// odemknutí přístupu k paměti
 #ifdef _MT
 	::LeaveCriticalSection(&MemoryCriticalSection);
 #endif
@@ -290,22 +290,22 @@ void _fastcall MemFree(void* adr)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti bloku pamìti (povolena adresa NULL i velikost 0, pøi chybì nezmìnìno)
-// Pozn.: zde není nutné uzamykat pamì (znaènì to zpomaluje) !!!
+// změna velikosti bloku paměti (povolena adresa NULL i velikost 0, při chybě nezměněno)
+// Pozn.: zde není nutné uzamykat paměť (značně to zpomaluje) !!!
 
 void* _fastcall MemSize(void* adr, int size)
 {
 	int oldsize;
 	void* newadr;
 
-// pøi adrese NULL alokace pamìti
+// při adrese NULL alokace paměti
 	if (adr == NULL)
 	{
 		if (size <= 0) return NULL;
 		return MemGet(size);
 	}
 
-// pøi velikosti 0 uvolnìní bloku
+// při velikosti 0 uvolnění bloku
 	if (size <= 0)
 	{
 		MemFree(adr);
@@ -316,7 +316,7 @@ void* _fastcall MemSize(void* adr, int size)
 	if (UsedRegion[(DWORD)adr/REGSIZE])
 	{
 
-// pøíprava ukazatelù
+// příprava ukazatelů
 		REGION* region = (REGION*)((DWORD)adr & ~(REGSIZE-1)); // adresa regionu
 		DATA* data = (DATA*)((DWORD)adr & ~(PAGESIZE-1)); // data
 		PAGE* page = (PAGE*)((DWORD)region +
@@ -333,14 +333,14 @@ void* _fastcall MemSize(void* adr, int size)
 			if (((DWORD)adr & (oldsize-1)) == 0)
 			{
 
-// test, zda je potøeba velikost mìnit
+// test, zda je potřeba velikost měnit
 				if (((size <= 8) && (oldsize <= 8)) ||
 					((size <= oldsize) && (size > oldsize/4)))
 				{
-					return adr;					// adresa nezmìnìna
+					return adr;					// adresa nezměněna
 				}
 
-// vytvoøení nového bloku
+// vytvoření nového bloku
 				newadr = MemGet(size);
 
 // kopie starých dat bloku
@@ -373,7 +373,7 @@ void* _fastcall MemSize(void* adr, int size)
 		}
 	}
 
-// pøenesení bloku z haldy do malých blokù
+// přenesení bloku z haldy do malých bloků
 	if (size <= PAGESIZE/2)
 	{
 		oldsize = (int)::HeapSize(hHeap, HEAPSERIALIZE, adr);
@@ -400,19 +400,19 @@ void* _fastcall MemSize(void* adr, int size)
 		return newadr;
 	}
 
-// realokace bloku v haldì
+// realokace bloku v haldě
 	newadr = ::HeapReAlloc(hHeap, HEAPSERIALIZE, adr, (size + 0xff) & ~0xff);
-	if (newadr == NULL) MemErr();	// chyba pamìti
+	if (newadr == NULL) MemErr();	// chyba paměti
 	return newadr;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nového datového prvku
+// vytvoření nového datového prvku
 
 static ITEM* NewItem(MODUL* modul)
 {
-// zajištìní platného prvku
+// zajištění platného prvku
 	if (modul->FreeItem == NULL)
 	{
 		if (!NewPage(modul))
@@ -421,21 +421,21 @@ static ITEM* NewItem(MODUL* modul)
 		}
 	}
 
-// urèení adresy popisovaèe stránky
+// určení adresy popisovače stránky
 	ITEM* item = modul->FreeItem;		// adresa prvku
 	REGION* region = (REGION*)((DWORD)item & ~(REGSIZE-1)); // adresa regionu
 	DATA* data = (DATA*)((DWORD)item & ~(PAGESIZE-1)); // data
 	PAGE* page = (PAGE*)((DWORD)region +
 		((DWORD)data & (REGSIZE-1)) / (sizeof(DATA)/sizeof(PAGE))); // stránka
 
-// inkrementace použitých promìnných stránky, zrušení rezervace stránky
+// inkrementace použitých proměnných stránky, zrušení rezervace stránky
 	page->Used++;						// inkrementace použitých položek
 	if (page == modul->ResPage)			// je to rezervní stránka?
 	{
 		modul->ResPage = NULL;			// zrušení rezervní stránky
 	}
 
-// vyøazení prvku z øetìzce volných prvkù
+// vyřazení prvku z řetězce volných prvků
 	ITEM* nextitem = item->NextItem;	// adresa dalšího prvku
 	modul->FreeItem = nextitem;
 	if (nextitem != NULL)
@@ -451,13 +451,13 @@ static ITEM* NewItem(MODUL* modul)
 
 static void DelItem(MODUL* modul, ITEM* item)
 {
-// pøíprava adres popisovaèù
+// příprava adres popisovačů
 	REGION* region = (REGION*)((DWORD)item & ~(REGSIZE-1)); // adresa regionu
 	DATA* data = (DATA*)((DWORD)item & ~(PAGESIZE-1)); // data
 	PAGE* page = (PAGE*)((DWORD)region +
 		((DWORD)data & (REGSIZE-1)) / (sizeof(DATA)/sizeof(PAGE))); // stránka
 
-// zaøazení do øetìzce volných prvkù
+// zařazení do řetězce volných prvků
 	item->PrevItem = NULL;
 	item->NextItem = modul->FreeItem;
 	if (item->NextItem != NULL)
@@ -466,7 +466,7 @@ static void DelItem(MODUL* modul, ITEM* item)
 	}
 	modul->FreeItem = item;
 
-// dekrementace použitých prvkù stránky, pøíp. uvolnìní stránky
+// dekrementace použitých prvků stránky, příp. uvolnění stránky
 	page->Used--;
 	if (page->Used == 0)
 	{
@@ -480,11 +480,11 @@ static void DelItem(MODUL* modul, ITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení rezervní stránky
+// vytvoření rezervní stránky
 
 static BOOL NewPage(MODUL* modul)
 {
-// zajištìní pøipojitelné stránky
+// zajištění připojitelné stránky
 	if (FreePage == NULL)
 	{
 		if (!NewRegion())
@@ -493,13 +493,13 @@ static BOOL NewPage(MODUL* modul)
 		}
 	}
 
-// urèení adresy dat pøipojované stránky
-	PAGE* page = FreePage;				// pøipojovaná stránka
+// určení adresy dat připojované stránky
+	PAGE* page = FreePage;				// připojovaná stránka
 	REGION* region = (REGION*)((DWORD)page & ~(REGSIZE-1)); // adresa regionu
 	DATA* data = (DATA*)((DWORD)region + 
 		((DWORD)page & (REGSIZE-1)) * (sizeof(DATA)/sizeof(PAGE))); // data
 
-// pøipojení dat stránky
+// připojení dat stránky
 	if (::VirtualAlloc(data, PAGESIZE,
 			MEM_COMMIT, PAGE_READWRITE) == NULL)
 	{
@@ -513,7 +513,7 @@ static BOOL NewPage(MODUL* modul)
 		ResRegion = NULL;				// zrušení rezervního regionu
 	}
 
-// vyøazení stránky z øetìzce nepøipojených stránek
+// vyřazení stránky z řetězce nepřipojených stránek
 	PAGE* nextpage = page->NextPage;
 	FreePage = nextpage;
 	if (nextpage != NULL)
@@ -521,11 +521,11 @@ static BOOL NewPage(MODUL* modul)
 		nextpage->PrevPage = NULL;
 	}
 
-// napojení do øetìzce volných položek modulu
+// napojení do řetězce volných položek modulu
 	int size = modul->Size;				// velikost datové položky
 	ITEM* previtem;
 	ITEM* nextitem = data->Items;		// ukazatel adresy prvku
-	ITEM* item = NULL;					// není pøedešlý prvek
+	ITEM* item = NULL;					// není předešlý prvek
 	for (int i = PAGESIZE/size; i > 0; i--)
 	{
 		previtem = item;
@@ -537,12 +537,12 @@ static BOOL NewPage(MODUL* modul)
 	item->NextItem = modul->FreeItem;
 	modul->FreeItem = data->Items;
 
-// inicializace položek popisovaèe stránky
+// inicializace položek popisovače stránky
 	page->Modul = modul;				// adresa modulu
-	page->Used = 0;						// poèet použitých položek
+	page->Used = 0;						// počet použitých položek
 
 // nastavení stránky jako rezervní
-	modul->ResPage = page;				// bude teï jako rezervní stránka
+	modul->ResPage = page;				// bude teď jako rezervní stránka
 	return TRUE;
 }
 
@@ -557,12 +557,12 @@ static void DelPage(MODUL* modul)
 	if (page == NULL) return;
 	modul->ResPage = NULL;
 
-// pøíprava adresy regionu a dat
+// příprava adresy regionu a dat
 	REGION* region = (REGION*)((DWORD)page & ~(REGSIZE-1)); // adresa regionu
 	DATA* data = (DATA*)((DWORD)region + 
 		((DWORD)page & (REGSIZE-1)) * (sizeof(DATA)/sizeof(PAGE))); // data
 
-// odpojení z øetìzce volných položek
+// odpojení z řetězce volných položek
 	int size = modul->Size;
 	ITEM* item = data->Items;
 	ITEM* nextitem;
@@ -591,7 +591,7 @@ static void DelPage(MODUL* modul)
 // odpojení stránky
 	VERIFY (::VirtualFree(data, PAGESIZE, MEM_DECOMMIT));
 
-// napojení stránky do øetìzce nepøipojených stránek
+// napojení stránky do řetězce nepřipojených stránek
 	page->PrevPage = NULL;
 	page->NextPage = FreePage;
 	if (FreePage != NULL)
@@ -600,13 +600,13 @@ static void DelPage(MODUL* modul)
 	}
 	FreePage = page;
 	
-// snížení èítaèe použitých stránek regionu, pøíp. uvolnìní regionu
+// snížení čítače použitých stránek regionu, příp. uvolnění regionu
 	region->Used--;
 	if (region->Used == 0)
 	{
 		if (ResRegion != NULL)
 		{
-			DelRegion();		// uvolnìní rezervního regionu
+			DelRegion();		// uvolnění rezervního regionu
 		}
 		ResRegion = region;		// je to nyní rezervní region
 	}
@@ -614,17 +614,17 @@ static void DelPage(MODUL* modul)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení rezervního regionu
+// vytvoření rezervního regionu
 
 static BOOL NewRegion()
 {
-// lokální promìnné
+// lokální proměnné
 	REGION* region;						// ukazatel adresy regionu
 	PAGE*	page;						// ukazatel adresy stránky
-	PAGE*	nextpage;					// pomocný ukazatel - pøíští stránka
-	PAGE*	prevpage;					// pomocný ukazatel - pøedchozí stránka
-	char*	used;						// ukazatel použitých regionù
-	int i;								// pomocný èítaè
+	PAGE*	nextpage;					// pomocný ukazatel - příští stránka
+	PAGE*	prevpage;					// pomocný ukazatel - předchozí stránka
+	char*	used;						// ukazatel použitých regionů
+	int i;								// pomocný čítač
 
 // nalezení nepoužitého regionu
 	for (i = NUMREGS;  i > 0; i--)
@@ -632,9 +632,9 @@ static BOOL NewRegion()
 
 // adresa zkoušeného regionu
 		region = (REGION*)(void*)(NextRegion*REGSIZE); // adresa regionu
-		used = &(UsedRegion[NextRegion]);	// pøíznak použití regionu
+		used = &(UsedRegion[NextRegion]);	// příznak použití regionu
 
-// posun indexu pøíštího regionu
+// posun indexu příštího regionu
 		NextRegion++;				// zvýšení indexu regionu
 		if (NextRegion >= REGSYSTEM+NUMREGS)
 		{
@@ -649,24 +649,24 @@ static BOOL NewRegion()
 			region = (REGION*)::VirtualAlloc(region,
 					REGSIZE, MEM_RESERVE, PAGE_READWRITE);
 
-// vytvoøení první stránky pro popisovaè regionu
+// vytvoření první stránky pro popisovač regionu
 			if (region != NULL)
 			{
 				if (::VirtualAlloc(region, PAGESIZE,
 						MEM_COMMIT, PAGE_READWRITE) == NULL)
 				{
 
-// pøi chybì uvolnìní regionu a hlášení chyby
+// při chybě uvolnění regionu a hlášení chyby
 					::VirtualFree(region, 0, MEM_RELEASE);
 					return FALSE;
 				}
 
-// pøíznak použití regionu
-				*used = TRUE;		// pøíznak použití regionu
-				ResRegion = region;	// bude teï jako rezervní region
-				region->Used = 0;		// èítaè použitých stránek
+// příznak použití regionu
+				*used = TRUE;		// příznak použití regionu
+				ResRegion = region;	// bude teď jako rezervní region
+				region->Used = 0;		// čítač použitých stránek
 
-// napojení stránek do øetìzce nepøipojených stránek
+// napojení stránek do řetězce nepřipojených stránek
 				page = NULL;
 				nextpage = region->Pages;
 				for (i = DATAPAGES; i > 0; i--)
@@ -697,7 +697,7 @@ static void DelRegion()
 	if (region == NULL) return;
 	ResRegion = NULL;
 
-// odpojení stránek z øetìzce nepøipojených stránek
+// odpojení stránek z řetězce nepřipojených stránek
 	PAGE* page = region->Pages;
 	PAGE* nextpage;
 	PAGE* prevpage;
@@ -722,19 +722,19 @@ static void DelRegion()
 		page++;
 	}
 
-// zrušení pøíznaku použití regionu
+// zrušení příznaku použití regionu
 	UsedRegion[(DWORD)region/REGSIZE] = FALSE;
 
-// odpojení stránky popisovaèe regionu
+// odpojení stránky popisovače regionu
 	VERIFY (::VirtualFree(region, PAGESIZE, MEM_DECOMMIT));
 
-// uvolnìní regionu
+// uvolnění regionu
 	VERIFY (::VirtualFree(region, 0, MEM_RELEASE));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vícetoková inkrementace èísla LONG INT
+// vícetoková inkrementace čísla LONG INT
 
 #ifdef _MT
 #ifdef _M_IX86
@@ -752,7 +752,7 @@ void _fastcall LongIncrement(long* num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vícetoková dekrementace èísla LONG INT (vrací TRUE = výsledek je 0)
+// vícetoková dekrementace čísla LONG INT (vrací TRUE = výsledek je 0)
 
 #ifdef _MT
 #ifdef _M_IX86

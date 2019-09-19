@@ -9,23 +9,23 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní prázdný sprajt (modifikuje se poèet referencí!)
+// inicializační prázdný sprajt (modifikuje se počet referencí!)
 
 SPRITEDATA*	EmptySpriteData = NULL;
 
 /////////////////////////////////////////////////////////////////////////////
-// statická inicializace sprajtù
+// statická inicializace sprajtů
 
 void InitSprite()
 {
 	EmptySpriteData = (SPRITEDATA*)MemGet(sizeof(CPicture) + SIZEOFSPRITEDATA);
-	EmptySpriteData->Refer = 1;		// poèet referencí
-	EmptySpriteData->Faze = 1;		// poèet fází
-	EmptySpriteData->Smer = 1;		// poèet smìrù
-	EmptySpriteData->Klid = 1;		// poèet klidových fází
+	EmptySpriteData->Refer = 1;		// počet referencí
+	EmptySpriteData->Faze = 1;		// počet fází
+	EmptySpriteData->Smer = 1;		// počet směrů
+	EmptySpriteData->Klid = 1;		// počet klidových fází
 	EmptySpriteData->Delay = SPRITEDEFDELAY; // prodleva mezi fázemi
-	EmptySpriteData->Level = SPRITEDEFLEVEL; // hladina k pøekreslování
-	EmptySpriteData->Kroku = SPRITEDEFKROKU; // poèet fází na jednotku
+	EmptySpriteData->Level = SPRITEDEFLEVEL; // hladina k překreslování
+	EmptySpriteData->Kroku = SPRITEDEFKROKU; // počet fází na jednotku
 	EmptySpriteData->Data[0].Init(); // inicializace obrázku (velikost ICONSIZE)
 }
 
@@ -79,32 +79,32 @@ void CSprite::Term()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastního bufferu před modifikací
 
 void CSprite::CopyWrite()
 {
 	SPRITEDATA* data = pData;			// adresa starých dat
-	long* refer = &(data->Refer);	// poèet referencí
+	long* refer = &(data->Refer);	// počet referencí
 
-	if (*refer > 1)					// je nìjaký jiný majitel?
+	if (*refer > 1)					// je nějaký jiný majitel?
 	{
-		NewBuffer(data->Faze, data->Smer);	// vytvoøení nového bufferu
+		NewBuffer(data->Faze, data->Smer);	// vytvoření nového bufferu
 
 		for (int i = data->Faze * data->Smer - 1; i >= 0; i--)
 		{
 			pData->Data[i] = data->Data[i];
 		}
 
-		pData->Klid = data->Klid;	// pøenesení poètu klidových fází
-		pData->Delay = data->Delay;	// pøenesení prodlevy mezi fázemi
-		pData->Level = data->Level;	// pøenesení hladiny k pøekreslování
-		pData->Kroku = data->Kroku;	// pøenesení poètu fází na jednotku
+		pData->Klid = data->Klid;	// přenesení počtu klidových fází
+		pData->Delay = data->Delay;	// přenesení prodlevy mezi fázemi
+		pData->Level = data->Level;	// přenesení hladiny k překreslování
+		pData->Kroku = data->Kroku;	// přenesení počtu fází na jednotku
 
-// odpojení starých dat - v multithread mùže nastat i zrušení
+// odpojení starých dat - v multithread může nastat i zrušení
 		if (LongDecrement(refer))
 		{
 #ifdef _MT
-			MemFree(data);			// pøípadné zrušení dat
+			MemFree(data);			// případné zrušení dat
 #endif	// _MT
 		}
 	}
@@ -112,21 +112,21 @@ void CSprite::CopyWrite()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení nového sprajtu (pøipraveno k zápisu)
+// vytvoření nového sprajtu (připraveno k zápisu)
 
 void CSprite::New(int faze, int smer)
 {
 	Detach();						// odpojení starého sprajtu
-	NewBuffer(faze, smer);			// vytvoøení nového bufferu
+	NewBuffer(faze, smer);			// vytvoření nového bufferu
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení nových rozmìrù sprajtu (poèet fází pro klid a pohyb, poèet smìrù)
+// nastavení nových rozměrů sprajtu (počet fází pro klid a pohyb, počet směrů)
 
 void CSprite::ReSize(int klid, int pohyb, int smer)
 {
-// kontrola, zda se parametry mìní
+// kontrola, zda se parametry mění
 	if ((klid == pData->Klid) &&
 		(pohyb == pData->Faze - pData->Klid) &&
 		(smer == pData->Smer))
@@ -142,7 +142,7 @@ void CSprite::ReSize(int klid, int pohyb, int smer)
 	if (smer < 1) smer = 1;
 	if (smer > SPRITEMAXSMER) smer = SPRITEMAXSMER;
 
-// vytvoøení nového bufferu
+// vytvoření nového bufferu
 	SPRITEDATA* olddata = pData;
 	NewBuffer(klid + pohyb, smer);
 	SPRITEDATA* newdata = pData;
@@ -152,7 +152,7 @@ void CSprite::ReSize(int klid, int pohyb, int smer)
 	CPicture* src = olddata->Data;
 	CPicture* dst = newdata->Data;
 
-// pøíprava parametrù
+// příprava parametrů
 	int oldklid = olddata->Klid;
 	int newklid = newdata->Klid;
 	int oldfaze = olddata->Faze;
@@ -162,7 +162,7 @@ void CSprite::ReSize(int klid, int pohyb, int smer)
 	int oldsmer = olddata->Smer;
 	int newsmer = newdata->Smer;
 
-// pøenesení dat
+// přenesení dat
 	int snew, sold, newoff, oldoff, f;
 
 	for (snew = 0; snew < newsmer; snew++)
@@ -239,11 +239,11 @@ void _fastcall CSprite::Set(const int faze, const int smer, const CPicture& data
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení sprajtu ze souboru (TRUE=operace OK)
+// načtení sprajtu ze souboru (TRUE=operace OK)
 
 BOOL CSprite::LoadFile(CString jmeno)
 {
-// otevøení souboru
+// otevření souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_READ, 
 		FILE_SHARE_READ, NULL, OPEN_EXISTING, 
 		FILE_ATTRIBUTE_NORMAL, NULL);
@@ -254,38 +254,38 @@ BOOL CSprite::LoadFile(CString jmeno)
 		return FALSE;
 	}
 
-// zjištìní velikosti souboru
+// zjištění velikosti souboru
 	int size = (int)::SetFilePointer(hFile, 0, NULL, FILE_END);
 	::SetFilePointer(hFile, 0, NULL, FILE_BEGIN);
 
 // kontrola velikosti souboru
 	if ((size < 100) || (size > 200000000))
 	{
-		::CloseHandle(hFile);		// uzavøení souboru
+		::CloseHandle(hFile);		// uzavření souboru
 		return FALSE;
 	}
 
-// pøíprava bufferu k naètení souboru
+// příprava bufferu k načtení souboru
 	BYTE* buf = (BYTE*)MemGet(size + 1000);
 
-// naètení souboru
+// načtení souboru
 	DWORD read;
 	::ReadFile(hFile, buf, size, &read, NULL);
 
-// uzavøení souboru
-	::CloseHandle(hFile);		// uzavøení souboru
+// uzavření souboru
+	::CloseHandle(hFile);		// uzavření souboru
 
-// naètení základních parametrù
+// načtení základních parametrů
 	SPRITEFILE* spr = (SPRITEFILE*)buf;
-	int faze = spr->Faze;			// poèet fází celkem
-	int smer = spr->Smer;			// poèet smìrù celkem
-	int klid = spr->Klid;			// poèet klidových fází
-	int width = spr->Width;			// šíøka obrázku
+	int faze = spr->Faze;			// počet fází celkem
+	int smer = spr->Smer;			// počet směrů celkem
+	int klid = spr->Klid;			// počet klidových fází
+	int width = spr->Width;			// šířka obrázku
 	int height = spr->Height;		// výška obrázku
 	int delay = spr->Delay;			// prodleva mezi fázemi
-	int level = spr->Level;			// hladina k pøekreslování
-	double kroku = spr->Kroku;		// poèet fází na krok
-	int pals = spr->Colors;			// poèet palet
+	int level = spr->Level;			// hladina k překreslování
+	double kroku = spr->Kroku;		// počet fází na krok
+	int pals = spr->Colors;			// počet palet
 	int format = spr->Format;		// formát dat
 
 // kontrola platnosti souboru
@@ -316,7 +316,7 @@ BOOL CSprite::LoadFile(CString jmeno)
 		return FALSE;
 	}
 
-// pøíprava konverzní tabulky palet
+// příprava konverzní tabulky palet
 	BITMAPINFO* bmp = (BITMAPINFO*)MemGet(sizeof(BITMAPINFO) + pals*4 + 200);
 	bmp->bmiHeader.biClrUsed = pals;
 	bmp->bmiHeader.biBitCount = 8;
@@ -325,12 +325,12 @@ BOOL CSprite::LoadFile(CString jmeno)
 	GenKonvPal(bmp);
 	MemFree(bmp);
 
-// vytvoøení sprajtu a nastavení parametrù
+// vytvoření sprajtu a nastavení parametrů
 	New(faze, smer);
-	pData->Klid = klid;			// poèet klidových fází
+	pData->Klid = klid;			// počet klidových fází
 	pData->Delay = delay;		// prodleva mezi fázemi
-	pData->Level = level;		// hladina k pøekreslování
-	pData->Kroku = kroku;		// poèet fází na jednotkovou vzdálenost
+	pData->Level = level;		// hladina k překreslování
+	pData->Kroku = kroku;		// počet fází na jednotkovou vzdálenost
 
 // dekomprimace dat
 	if (format == 1)
@@ -346,7 +346,7 @@ BOOL CSprite::LoadFile(CString jmeno)
 		MemFree(buf0);
 	}
 
-// naètení obrázkù
+// načtení obrázků
 	else
 	{
 		for (int i = 0; i < faze*smer; i++)
@@ -359,7 +359,7 @@ BOOL CSprite::LoadFile(CString jmeno)
 // zrušení bufferu
 	MemFree(buf);
 
-// pøíznak - naèteno OK
+// příznak - načteno OK
 	return TRUE;
 }
 
@@ -370,17 +370,17 @@ BOOL CSprite::LoadFile(CString jmeno)
 BOOL CSprite::SaveFile(CString jmeno) const
 {
 
-// otevøení souboru
+// otevření souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// test, zda byl soubor vytvoøen
+// test, zda byl soubor vytvořen
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		return FALSE;
 	}
 
-// pøíprava velikosti souboru
+// příprava velikosti souboru
 	int width = pData->Data[0].Width();
 	int height = pData->Data[0].Height();
 	int icons = pData->Faze * pData->Smer;
@@ -388,27 +388,27 @@ BOOL CSprite::SaveFile(CString jmeno) const
 // buffer k uložení souboru
 	BYTE* buf = (BYTE*)MemGet(SIZEOFSPRITEFILE + StdColors*4 + 4 + icons*width*height*3/2);
 
-// naplnìní záhlaví souboru
+// naplnění záhlaví souboru
 	SPRITEFILE* head = (SPRITEFILE*)buf;
 	head->Ident[0] = 'P';					// identifikace
 	head->Ident[1] = 'S';
 	head->Ident[2] = 'P';
 	head->Ident[3] = 'R';
-	head->Faze = pData->Faze;				// poèet fází celkem
-	head->Smer = pData->Smer;				// poèet smìrù
-	head->Klid = pData->Klid;				// z toho poèet klidových fází
-	head->Width = (WORD)width;				// šíøka obrázku
+	head->Faze = pData->Faze;				// počet fází celkem
+	head->Smer = pData->Smer;				// počet směrů
+	head->Klid = pData->Klid;				// z toho počet klidových fází
+	head->Width = (WORD)width;				// šířka obrázku
 	head->Height = (WORD)height;			// výška obrázku
 	head->Delay = pData->Delay;				// prodleva mezi fázemi v milisekundách
-	head->Level = pData->Level;				// hladina k pøekreslování
-	head->Kroku = pData->Kroku;				// poèet fází na jednotkovou vzdálenost
-	head->Colors = (short)StdColors;		// poèet palet
+	head->Level = pData->Level;				// hladina k překreslování
+	head->Kroku = pData->Kroku;				// počet fází na jednotkovou vzdálenost
+	head->Colors = (short)StdColors;		// počet palet
 	head->Format = 1;						// formát - je komprese dat
 
-// pøenesení palet
+// přenesení palet
 	MemCopy(head->ColorTab, StdBitmapInfo->bmiColors, StdColors*4);
 
-// pøíprava a komprimace dat obrázku
+// příprava a komprimace dat obrázku
 	BYTE* buf0 = (BYTE*)MemGet(width*height*icons);
 	BYTE* dst = buf0;
 	for (int i = 0; i < icons; i++)
@@ -425,27 +425,27 @@ BOOL CSprite::SaveFile(CString jmeno) const
 	int size = SIZEOFSPRITEFILE + StdColors*4 + 4 + n;
 	BOOL result = ::WriteFile(hFile, buf, size, &write, NULL);
 
-// uzavøení souboru
+// uzavření souboru
 	::CloseHandle(hFile);
 
 // zrušení datového bufferu
 	MemFree(buf);
 
-// pøi chybì zrušení souboru
+// při chybě zrušení souboru
 	if (!result || (write != (DWORD)size))
 	{
 		::DeleteFile(jmeno);
 		return FALSE;
 	}
 
-// pøíznak - uloženo OK
+// příznak - uloženo OK
 	return TRUE;
 }
 
 /*
 BOOL CSprite::LoadFile(CString jmeno)
 {
-// otevøení souboru
+// otevření souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_READ, 
 		FILE_SHARE_READ, NULL, OPEN_EXISTING, 
 		FILE_ATTRIBUTE_NORMAL, NULL);
@@ -456,38 +456,38 @@ BOOL CSprite::LoadFile(CString jmeno)
 		return FALSE;
 	}
 
-// zjištìní velikosti souboru
+// zjištění velikosti souboru
 	int size = (int)::SetFilePointer(hFile, 0, NULL, FILE_END);
 	::SetFilePointer(hFile, 0, NULL, FILE_BEGIN);
 
 // kontrola velikosti souboru
 	if ((size < 100) || (size > 200000000))
 	{
-		::CloseHandle(hFile);		// uzavøení souboru
+		::CloseHandle(hFile);		// uzavření souboru
 		return FALSE;
 	}
 
-// pøíprava bufferu k naètení souboru
+// příprava bufferu k načtení souboru
 	BYTE* buf = (BYTE*)MemGet(size + 100);
 
-// naètení souboru
+// načtení souboru
 	DWORD read;
 	::ReadFile(hFile, buf, size, &read, NULL);
 
-// uzavøení souboru
-	::CloseHandle(hFile);		// uzavøení souboru
+// uzavření souboru
+	::CloseHandle(hFile);		// uzavření souboru
 
-// naètení základních parametrù
+// načtení základních parametrů
 	SPRITEFILE* spr = (SPRITEFILE*)buf;
-	int faze = spr->Faze;			// poèet fází celkem
-	int smer = spr->Smer;			// poèet smìrù celkem
-	int klid = spr->Klid;			// poèet klidových fází
-	int width = spr->Width;			// šíøka obrázku
+	int faze = spr->Faze;			// počet fází celkem
+	int smer = spr->Smer;			// počet směrů celkem
+	int klid = spr->Klid;			// počet klidových fází
+	int width = spr->Width;			// šířka obrázku
 	int height = spr->Height;		// výška obrázku
 	int delay = spr->Delay;			// prodleva mezi fázemi
-	int level = spr->Level;			// hladina k pøekreslování
-	double kroku = spr->Kroku;		// poèet fází na krok
-	int pals = spr->Colors;			// poèet palet
+	int level = spr->Level;			// hladina k překreslování
+	double kroku = spr->Kroku;		// počet fází na krok
+	int pals = spr->Colors;			// počet palet
 
 // kontrola platnosti souboru
 	if ((read != (DWORD)size) ||
@@ -517,7 +517,7 @@ BOOL CSprite::LoadFile(CString jmeno)
 		return FALSE;
 	}
 
-// pøíprava konverzní tabulky palet
+// příprava konverzní tabulky palet
 	BITMAPINFO* bmp = (BITMAPINFO*)MemGet(sizeof(BITMAPINFO) + pals*4 + 200);
 	bmp->bmiHeader.biClrUsed = pals;
 	bmp->bmiHeader.biBitCount = 8;
@@ -526,14 +526,14 @@ BOOL CSprite::LoadFile(CString jmeno)
 	GenKonvPal(bmp);
 	MemFree(bmp);
 
-// vytvoøení sprajtu a nastavení parametrù
+// vytvoření sprajtu a nastavení parametrů
 	New(faze, smer);
-	pData->Klid = klid;			// poèet klidových fází
+	pData->Klid = klid;			// počet klidových fází
 	pData->Delay = delay;		// prodleva mezi fázemi
-	pData->Level = level;		// hladina k pøekreslování
-	pData->Kroku = kroku;		// poèet fází na jednotkovou vzdálenost
+	pData->Level = level;		// hladina k překreslování
+	pData->Kroku = kroku;		// počet fází na jednotkovou vzdálenost
 
-// naètení obrázkù
+// načtení obrázků
 	for (int i = 0; i < faze*smer; i++)
 	{
 		pData->Data[i].New(width, height);
@@ -543,7 +543,7 @@ BOOL CSprite::LoadFile(CString jmeno)
 // zrušení bufferu
 	MemFree(buf);
 
-// pøíznak - naèteno OK
+// příznak - načteno OK
 	return TRUE;
 }
 
@@ -554,17 +554,17 @@ BOOL CSprite::LoadFile(CString jmeno)
 BOOL CSprite::SaveFile(CString jmeno) const
 {
 
-// otevøení souboru
+// otevření souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// test, zda byl soubor vytvoøen
+// test, zda byl soubor vytvořen
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		return FALSE;
 	}
 
-// pøíprava velikosti souboru
+// příprava velikosti souboru
 	int width = pData->Data[0].Width();
 	int height = pData->Data[0].Height();
 	int icons = pData->Faze * pData->Smer;
@@ -573,26 +573,26 @@ BOOL CSprite::SaveFile(CString jmeno) const
 // buffer k uložení souboru
 	BYTE* buf = (BYTE*)MemGet(size);
 
-// naplnìní záhlaví souboru
+// naplnění záhlaví souboru
 	SPRITEFILE* head = (SPRITEFILE*)buf;
 	head->Ident[0] = 'P';					// identifikace
 	head->Ident[1] = 'S';
 	head->Ident[2] = 'P';
 	head->Ident[3] = 'R';
-	head->Faze = pData->Faze;				// poèet fází celkem
-	head->Smer = pData->Smer;				// poèet smìrù
-	head->Klid = pData->Klid;				// z toho poèet klidových fází
-	head->Width = (WORD)width;				// šíøka obrázku
+	head->Faze = pData->Faze;				// počet fází celkem
+	head->Smer = pData->Smer;				// počet směrů
+	head->Klid = pData->Klid;				// z toho počet klidových fází
+	head->Width = (WORD)width;				// šířka obrázku
 	head->Height = (WORD)height;			// výška obrázku
 	head->Delay = pData->Delay;				// prodleva mezi fázemi v milisekundách
-	head->Level = pData->Level;				// hladina k pøekreslování
-	head->Kroku = pData->Kroku;				// poèet fází na jednotkovou vzdálenost
-	head->Colors = StdColors;				// poèet palet
+	head->Level = pData->Level;				// hladina k překreslování
+	head->Kroku = pData->Kroku;				// počet fází na jednotkovou vzdálenost
+	head->Colors = StdColors;				// počet palet
 
-// pøenesení palet
+// přenesení palet
 	MemCopy(head->ColorTab, StdBitmapInfo->bmiColors, StdColors*4);
 
-// pøenesení dat obrázku
+// přenesení dat obrázku
 	BYTE* dst = buf + SIZEOFSPRITEFILE + StdColors*4;
 	for (int i = 0; i < icons; i++)
 	{
@@ -605,64 +605,64 @@ BOOL CSprite::SaveFile(CString jmeno) const
 	DWORD write;
 	BOOL result = ::WriteFile(hFile, buf, size, &write, NULL);
 
-// uzavøení souboru
+// uzavření souboru
 	::CloseHandle(hFile);
 
 // zrušení datového bufferu
 	MemFree(buf);
 
-// pøi chybì zrušení souboru
+// při chybě zrušení souboru
 	if (!result || (write != (DWORD)size))
 	{
 		::DeleteFile(jmeno);
 		return FALSE;
 	}
 
-// pøíznak - uloženo OK
+// příznak - uloženo OK
 	return TRUE;
 }
 */
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CSprite& CSprite::operator= (const CSprite& src)
 {
 	Detach();				// zrušení starých dat
-	Attach(src.pData);		// pøiøazení nových dat
+	Attach(src.pData);		// přiřazení nových dat
 	return *this;
 }
 
 
 /***************************************************************************\
 *																			*
-*								Buffer sprajtù								*
+*								Buffer sprajtů								*
 *																			*
 \***************************************************************************/
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nových dat
+// vytvoření nových dat
 
-#define NEWDATANUM 256				// poèet novì vytvoøených položek (1 KB)
+#define NEWDATANUM 256				// počet nově vytvořených položek (1 KB)
 
 void CBufSprite::NewData()
 {
-	int i = NEWDATANUM;			// poèet nových položek
-	int next = m_Max;			// pøíští položka - 1
-	m_Max = next + i;			// zvýšení poètu položek (o 1 KB)
+	int i = NEWDATANUM;			// počet nových položek
+	int next = m_Max;			// příští položka - 1
+	m_Max = next + i;			// zvýšení počtu položek (o 1 KB)
 
 	MemBuf(m_Data, m_Max);		// zvýšení velikosti bufferu
 
 	MemBuf(m_Valid, m_Max);		// zvýšení velikosti bufferu platnosti
-	MemFill(m_Valid + next, NEWDATANUM, FALSE); // nastavení pøíznakù na neplatné položky
+	MemFill(m_Valid + next, NEWDATANUM, FALSE); // nastavení příznaků na neplatné položky
 
 	CSprite* data = m_Data + next - 1; // ukazatel dat - 1
 	for (; i > 0; i--)
 	{
 		data++;					// zvýšení ukazatele položek
-		next++;					// zvýšení indexu pøíští položky
-		*(int*)data = next;		// odkaz na pøíští položku
+		next++;					// zvýšení indexu příští položky
+		*(int*)data = next;		// odkaz na příští položku
 	}
 	*(int*)data = m_Next;		// navázání na další položku
 	m_Next = m_Max-NEWDATANUM;	// odkaz na první novou položku
@@ -678,7 +678,7 @@ CBufSprite::CBufSprite()
 	m_Valid = NULL;			// není buffer platnosti
 	m_Num = 0;				// není žádná platná položka
 	m_Max = 0;				// není buffer položek
-	m_Next = -1;			// pøiští volná položka (-1=není)
+	m_Next = -1;			// přiští volná položka (-1=není)
 }
 
 CBufSprite::~CBufSprite()
@@ -696,7 +696,7 @@ void CBufSprite::Init()
 	m_Valid = NULL;			// není buffer platnosti
 	m_Num = 0;				// není žádná platná položka
 	m_Max = 0;				// není buffer položek
-	m_Next = -1;			// pøiští volná položka (-1=není)
+	m_Next = -1;			// přiští volná položka (-1=není)
 }
 
 void CBufSprite::Term()
@@ -705,7 +705,7 @@ void CBufSprite::Term()
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení všech položek v bufferu (ukládání zaène opìt po øadì)
+// zrušení všech položek v bufferu (ukládání začne opět po řadě)
 
 void CBufSprite::DelAll()
 {
@@ -720,7 +720,7 @@ void CBufSprite::DelAll()
 	MemBuf(m_Valid, 0);			// zrušení bufferu platnosti
 	m_Num = 0;					// není žádná platná položka
 	m_Max = 0;					// není žádná položka v bufferu
-	m_Next = -1;				// není pøíští položka
+	m_Next = -1;				// není příští položka
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -753,38 +753,38 @@ void _fastcall CBufSprite::Del(const int index)
 {
 	if (IsValid(index))						// je index platný?
 	{
-		m_Data[index].Term();				// ukonèení objektu
-		*(int*)(m_Data + index) = m_Next;	// pøíští volná položka
-		m_Valid[index] = FALSE;				// zrušení pøíznaku platnosti
-		m_Num--;							// snížení èítaèe platných položek
+		m_Data[index].Term();				// ukončení objektu
+		*(int*)(m_Data + index) = m_Next;	// příští volná položka
+		m_Valid[index] = FALSE;				// zrušení příznaku platnosti
+		m_Num--;							// snížení čítače platných položek
 		m_Next = index;						// odkaz na tuto položku
 	}
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení položky (vrací index položky)
+// vytvoření položky (vrací index položky)
 
 int CBufSprite::New()
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init();		// inicializace položky
 	return result;
 }
 
 int CBufSprite::New(int faze, int smer)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(faze, smer);	// inicializace položky
 	return result;
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøidání položky (vrací index položky)
+// přidání položky (vrací index položky)
 
 int _fastcall CBufSprite::Add(const CSprite& data)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 	m_Data[result].Init(data.Data());	// inicializace položky
 	return result;
 }
@@ -795,7 +795,7 @@ int _fastcall CBufSprite::Add(const CSprite& data)
 
 int _fastcall CBufSprite::Dup(const int index)
 {
-	int result = NewItem();		// vytvoøení nové položky
+	int result = NewItem();		// vytvoření nové položky
 
 	if (IsValid(index))			// je index platný?
 	{
@@ -810,12 +810,12 @@ int _fastcall CBufSprite::Dup(const int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CBufSprite& CBufSprite::operator= (const CBufSprite& src)
 {
 	DelAll();					// zrušení starých dat
-	int index = 0;				// index naèítané položky
+	int index = 0;				// index načítané položky
 	int i = src.Max();			// velikost zdrojového bufferu
 
 	for (; i > 0; i--)			// pro všechny položky v bufferu
@@ -824,7 +824,7 @@ const CBufSprite& CBufSprite::operator= (const CBufSprite& src)
 		{
 			Add(src[index]);	// kopie položky
 		}
-		index++;				// inkrementace ètecího indexu
+		index++;				// inkrementace čtecího indexu
 	}
 	ASSERT(m_Num == src.Num());
 	return *this;

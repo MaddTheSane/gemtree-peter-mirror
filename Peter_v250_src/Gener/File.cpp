@@ -5,7 +5,7 @@
 
 /***************************************************************************\
 *																			*
-*								Obsluha souborù								*
+*								Obsluha souborů								*
 *																			*
 \***************************************************************************/
 
@@ -34,11 +34,11 @@ void CFile::Term()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení souboru pro ètení i zápis
+// otevření souboru pro čtení i zápis
 
 BOOL CFile::Open()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::CreateFile(m_Name, GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	return (m_File != INVALID_HANDLE_VALUE);
@@ -46,11 +46,11 @@ BOOL CFile::Open()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení souboru pro ètení
+// otevření souboru pro čtení
 
 BOOL CFile::OpenRead()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::CreateFile(m_Name, GENERIC_READ, FILE_SHARE_READ |
 		FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	return (m_File != INVALID_HANDLE_VALUE);
@@ -58,11 +58,11 @@ BOOL CFile::OpenRead()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení souboru pro zápis
+// otevření souboru pro zápis
 
 BOOL CFile::OpenWrite()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::CreateFile(m_Name, GENERIC_WRITE, FILE_SHARE_READ,
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	return (m_File != INVALID_HANDLE_VALUE);
@@ -70,11 +70,11 @@ BOOL CFile::OpenWrite()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení souboru bez pøístupu (nastavení vlastností)
+// otevření souboru bez přístupu (nastavení vlastností)
 
 BOOL CFile::OpenNone()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::CreateFile(m_Name, 0, FILE_SHARE_READ | FILE_SHARE_WRITE,
 		NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	return (m_File != INVALID_HANDLE_VALUE);
@@ -82,11 +82,11 @@ BOOL CFile::OpenNone()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení adresáøe (pro nastavení vlastností)
+// otevření adresáře (pro nastavení vlastností)
 
 BOOL CFile::OpenDirectory()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::CreateFile(m_Name, 0, FILE_SHARE_READ | FILE_SHARE_WRITE,
 		NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
 	return (m_File != INVALID_HANDLE_VALUE);
@@ -94,11 +94,11 @@ BOOL CFile::OpenDirectory()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// vytvoøení souboru
+// vytvoření souboru
 
 BOOL CFile::Create()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::CreateFile(m_Name, GENERIC_READ | GENERIC_WRITE,
 		FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	return (m_File != INVALID_HANDLE_VALUE);
@@ -106,40 +106,40 @@ BOOL CFile::Create()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení pro standardní vstup (neuzavírat!)
+// otevření pro standardní vstup (neuzavírat!)
 
 BOOL CFile::OpenInput()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::GetStdHandle(STD_INPUT_HANDLE);
 	return (m_File != INVALID_HANDLE_VALUE);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení pro standardní výstup (neuzavírat!)
+// otevření pro standardní výstup (neuzavírat!)
 
 BOOL CFile::OpenOutput()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::GetStdHandle(STD_OUTPUT_HANDLE);
 	return (m_File != INVALID_HANDLE_VALUE);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení pro chybový výstup (neuzavírat!)
+// otevření pro chybový výstup (neuzavírat!)
 
 BOOL CFile::OpenError()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je již otevřen");
 	m_File = ::GetStdHandle(STD_ERROR_HANDLE);
 	return (m_File != INVALID_HANDLE_VALUE);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzavøení souboru
+// uzavření souboru
 
 BOOL CFile::Close()
 {
@@ -156,11 +156,11 @@ BOOL CFile::Close()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// ètení ze souboru
+// čtení ze souboru
 
 BOOL CFile::Read(void* buf, int num)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	DWORD read;
 	return (::ReadFile(m_File, buf, num, &read, NULL)
 		&& (read == (DWORD)num));
@@ -172,7 +172,7 @@ BOOL CFile::Read(void* buf, int num)
 
 BOOL CFile::Write(void* buf, int num)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	DWORD write;
 	return (::WriteFile(m_File, buf, num, &write, NULL)
 		&& (write == (DWORD)num));
@@ -180,89 +180,89 @@ BOOL CFile::Write(void* buf, int num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// zrušení souboru (musí být uzavøen)
+// zrušení souboru (musí být uzavřen)
 
 BOOL CFile::Delete()
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je otevřen");
 	return ::DeleteFile(m_Name);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí velikosti souboru (musí být otevøen, -1 = chyba)
+// poskytnutí velikosti souboru (musí být otevřen, -1 = chyba)
 
 int CFile::Size()
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::GetFileSize(m_File, NULL);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí typu souboru (musí být otevøen)
+// poskytnutí typu souboru (musí být otevřen)
 //		FILE_TYPE_UNKNOWN ... neznámý
 //		FILE_TYPE_DISK ...... diskový soubor
-//		FILE_TYPE_CHAR ...... znakové zaøízení
+//		FILE_TYPE_CHAR ...... znakové zařízení
 //		FILE_TYPE_PIPE ...... kanál
 
 int CFile::Type()
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::GetFileType(m_File);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí/nastavení èasu vytvoøení (musí být otevøen)
+// poskytnutí/nastavení času vytvoření (musí být otevřen)
 
 BOOL CFile::GetCreationTime(FILETIME* time)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::GetFileTime(m_File, time, NULL, NULL);
 }
 
 BOOL CFile::SetCreationTime(FILETIME* time)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::SetFileTime(m_File, time, NULL, NULL);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí/nastavení èasu posledního ètení (musí být otevøen)
+// poskytnutí/nastavení času posledního čtení (musí být otevřen)
 
 BOOL CFile::GetLastRead(FILETIME* time)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::GetFileTime(m_File, NULL, time, NULL);
 }
 
 BOOL CFile::SetLastRead(FILETIME* time)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::SetFileTime(m_File, NULL, time, NULL);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí/nastavení èasu posledního zápisu (musí být otevøen)
+// poskytnutí/nastavení času posledního zápisu (musí být otevřen)
 
 BOOL CFile::GetLastWrite(FILETIME* time)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::GetFileTime(m_File, NULL, NULL, time);
 }
 
 BOOL CFile::SetLastWrite(FILETIME* time)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::SetFileTime(m_File, NULL, NULL, time);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutí atributù souboru (nemusí být otevøen, -1=chyba)
+// poskytnutí atributů souboru (nemusí být otevřen, -1=chyba)
 
 int CFile::Attribute()
 {
@@ -271,7 +271,7 @@ int CFile::Attribute()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// nastavení atributù souboru (nemusí být otevøen)
+// nastavení atributů souboru (nemusí být otevřen)
 
 BOOL CFile::Attribute(int atr)
 {
@@ -288,7 +288,7 @@ BOOL CFile::Attribute(int atr)
 
 BOOL CFile::Reset()
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::SetFilePointer(m_File, 0, NULL, FILE_BEGIN);
 }
 
@@ -298,7 +298,7 @@ BOOL CFile::Reset()
 
 int CFile::Seek()
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ::SetFilePointer(m_File, 0, NULL, FILE_CURRENT);
 }
 
@@ -308,7 +308,7 @@ int CFile::Seek()
 
 BOOL CFile::Seek(int pos)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ((int)::SetFilePointer(m_File, pos, NULL, FILE_BEGIN) != -1);
 }
 
@@ -318,7 +318,7 @@ BOOL CFile::Seek(int pos)
 
 BOOL CFile::SeekRel(int pos)
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ((int)::SetFilePointer(m_File, pos, NULL, FILE_CURRENT) != -1);
 }
 
@@ -328,17 +328,17 @@ BOOL CFile::SeekRel(int pos)
 
 BOOL CFile::End()
 {
-	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevøen");
+	ASSERT(m_File != INVALID_HANDLE_VALUE, "Soubor není otevřen");
 	return ((int)::SetFilePointer(m_File, 0, NULL, FILE_END) != -1);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení
+// operátor přiřazení
 
 const CFile& _fastcall CFile::operator= (const CFile& file)
 {
-	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je otevøen");
+	ASSERT(m_File == INVALID_HANDLE_VALUE, "Soubor je otevřen");
 	m_File = file.m_File;
 	m_Name = file.m_Name;
 	return *this;
@@ -356,7 +356,7 @@ const CFile& _fastcall CFile::operator= (const CFile& file)
 
 CBuf::CBuf()
 {
-	m_Adr = NULL;				// adresa bufferu v pamìti
+	m_Adr = NULL;				// adresa bufferu v paměti
 	m_End = NULL;				// adresa za koncem bufferu
 	m_Size = 0;					// velikost bufferu
 }
@@ -367,7 +367,7 @@ CBuf::CBuf()
 
 void CBuf::Init()
 {
-	m_Adr = NULL;				// adresa bufferu v pamìti
+	m_Adr = NULL;				// adresa bufferu v paměti
 	m_End = NULL;				// adresa za koncem bufferu
 	m_Size = 0;					// velikost bufferu
 }
@@ -412,11 +412,11 @@ IMAGE_NT_HEADERS* CBuf::NTHeader()
 		(hdr->Signature != IMAGE_NT_SIGNATURE))		// identifikátor
 		return NULL;
 
-// kontrola velikosti záhlaví vèetnì sekcí
+// kontrola velikosti záhlaví včetně sekcí
 	off = hdr->FileHeader.SizeOfOptionalHeader;		// velikost volitelné sekce
-	int sekce = hdr->FileHeader.NumberOfSections;	// poèet sekcí
-	if ((sekce < 1) ||								// minimálnì sekcí
-		(sekce > 1000) ||							// maximálnì sekcí
+	int sekce = hdr->FileHeader.NumberOfSections;	// počet sekcí
+	if ((sekce < 1) ||								// minimálně sekcí
+		(sekce > 1000) ||							// maximálně sekcí
 		(off < 50) ||								// minimální velikost záhlaví
 		(off > 10000) ||							// maximální velikost záhlaví
 		(IsNotValid(hdr, sizeof(DWORD) + 
@@ -434,14 +434,14 @@ IMAGE_NT_HEADERS* CBuf::NTHeader()
 
 IMAGE_SECTION_HEADER* CBuf::NTSection(IMAGE_NT_HEADERS* hdr, char* name)
 {
-// poèet sekcí
+// počet sekcí
 	int num = hdr->FileHeader.NumberOfSections;
 
 // adresa první sekce
 	IMAGE_SECTION_HEADER* sec = (IMAGE_SECTION_HEADER*)
 		((BYTE*)(&hdr->OptionalHeader) + hdr->FileHeader.SizeOfOptionalHeader);
 
-// cyklus pøes všechny sekce
+// cyklus přes všechny sekce
 	for (; num > 0; num--)
 	{
 // adresa jmen
@@ -480,11 +480,11 @@ IMAGE_SECTION_HEADER* CBuf::NTSection(IMAGE_NT_HEADERS* hdr, char* name)
 
 BYTE* CBuf::NTResource()
 {
-// pøíprava NT záhlaví
+// příprava NT záhlaví
 	IMAGE_NT_HEADERS* hdr = NTHeader();
 	if (hdr == NULL) return NULL;
 
-// pøíprava sekce resource
+// příprava sekce resource
 	IMAGE_SECTION_HEADER* sec = NTSection(hdr, ".rsrc");
 	if (sec == NULL) return NULL;
 
@@ -508,21 +508,21 @@ BYTE* CBuf::NTResource()
 
 BITMAPINFO* CBuf::NTIcon()
 {
-// lokální promìnné
+// lokální proměnné
 	IMAGE_NT_HEADERS* hdr;				// NT záhlaví
 	IMAGE_SECTION_HEADER* sec;			// sekce resource
 	BYTE* res;							// adresa dat resource
-	DIR* dir;							// adresa adresáøe resource
-	int num;							// poèet položek v typovém adresáøi
-	ENTRY* entry;						// položka adresáøe
+	DIR* dir;							// adresa adresáře resource
+	int num;							// počet položek v typovém adresáři
+	ENTRY* entry;						// položka adresáře
 	BITMAPINFO* bmp;					// adresa ikony
 	IMAGE_RESOURCE_DATA_ENTRY* data;	// data ikony
 
-// pøíprava NT záhlaví
+// příprava NT záhlaví
 	hdr = NTHeader();
 	if (hdr == NULL) goto CHYBA;
 
-// pøíprava sekce resource
+// příprava sekce resource
 	sec = NTSection(hdr, ".rsrc");
 	if (sec == NULL) goto CHYBA;
 
@@ -530,45 +530,45 @@ BITMAPINFO* CBuf::NTIcon()
 	res = Adr() + sec->PointerToRawData;
 	if (IsNotValid(res, sec->SizeOfRawData)) goto CHYBA;
 
-// adresa typového adresáøe resource
+// adresa typového adresáře resource
 	dir = (DIR*)res;
 	if (IsNotValid(dir, DIRSIZE)) goto CHYBA;
 
-// poèet položek v typovém adresáøi resource
+// počet položek v typovém adresáři resource
 	num = dir->NumberOfNamedEntries + dir->NumberOfIdEntries;
 
-// adresa první položky typového adresáøe
+// adresa první položky typového adresáře
 	entry = (ENTRY*)(dir + 1);
 
-// cyklus pøes položky typového adresáøe
+// cyklus přes položky typového adresáře
 	for (; num > 0; num--)
 	{
 // kontrola platnosti adresy položky
 		if (IsNotValid(entry, ENTRYSIZE)) goto CHYBA;
 
-// kontrola, zda je položka adresáø typu ikon
+// kontrola, zda je položka adresář typu ikon
 		if (((entry->Name & IMAGE_RESOURCE_NAME_IS_STRING) == 0) &&
 			(entry->Id == (WORD)RT_ICON) &&
 			(entry->OffsetToData & IMAGE_RESOURCE_DATA_IS_DIRECTORY))
 		{
 
-// pøíprava jmenného adresáøe ikon
+// příprava jmenného adresáře ikon
 			dir = (DIR*)(res + entry->OffsetToDirectory);
 			if (IsNotValid(dir, DIRSIZE)) goto CHYBA;
 			entry = (ENTRY*)(dir + 1);
 			if (IsNotValid(entry, ENTRYSIZE)) goto CHYBA;
 
-// pøíprava jazykového adresáøe ikony
+// příprava jazykového adresáře ikony
 			dir = (DIR*)(res + entry->OffsetToDirectory);
 			if (IsNotValid(dir, DIRSIZE)) goto CHYBA;
 			entry = (ENTRY*)(dir + 1);
 			if (IsNotValid(entry, ENTRYSIZE)) goto CHYBA;
 
-// pøíprava datové položky první ikony
+// příprava datové položky první ikony
 			data = (IMAGE_RESOURCE_DATA_ENTRY*)(res + entry->OffsetToData);
 			if (IsNotValid(data, sizeof(IMAGE_RESOURCE_DATA_ENTRY))) goto CHYBA;
 
-// pøíprava ukazatele dat na data ikony
+// příprava ukazatele dat na data ikony
 			bmp = (BITMAPINFO*)(res + data->OffsetToData - sec->VirtualAddress);
 			if (IsNotValid(bmp, sizeof(BITMAPINFOHEADER) + 
 				256*sizeof(RGBQUAD) + ICONSIZE + ICONSIZE/8)) goto CHYBA;
@@ -585,7 +585,7 @@ BITMAPINFO* CBuf::NTIcon()
 			return bmp;
 		}
 
-// adresa další položky adresáøe
+// adresa další položky adresáře
 		entry++;
 	}
 
@@ -597,7 +597,7 @@ CHYBA:
 
 /***************************************************************************\
 *																			*
-*					Pamìovì mapovaný soubor (jen pro ètení)				*
+*					Paměťově mapovaný soubor (jen pro čtení)				*
 *																			*
 \***************************************************************************/
 
@@ -633,30 +633,30 @@ void CFileMap::Term()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení
+// otevření
 
 BOOL CFileMap::Open(const CText& name)
 {
 	Close();
 
-// otevøení mapovaného souboru
+// otevření mapovaného souboru
 	CFile::Name(name);
 	if (CFile::OpenRead())
 	{
 
-// zjištìní velikosti souboru
+// zjištění velikosti souboru
 		ASSERT(Size() == 0, "Interní chyba");
 		Size(CFile::Size());
 		if (Size() != -1)
 		{
 
-// vytvoøení mapování
+// vytvoření mapování
 			ASSERT(m_Map == NULL, "Interní chyba");
 			m_Map = ::CreateFileMapping(CFile::File(), NULL, PAGE_READONLY, 0, Size(), NULL);
 			if (m_Map != NULL)
 			{
 
-// namapování do okna v pamìti
+// namapování do okna v paměti
 				ASSERT(Adr() == NULL, "Interní chyba");
 				Adr((BYTE*)::MapViewOfFile(m_Map, FILE_MAP_READ, 0, 0, Size()));
 				if (Adr() != NULL)
@@ -666,13 +666,13 @@ BOOL CFileMap::Open(const CText& name)
 					return TRUE;
 				}
 
-// uzavøení mapování pøi chybì
+// uzavření mapování při chybě
 				::CloseHandle(m_Map);
 				m_Map = NULL;
 			}
 		}
 
-// uzavøení souboru pøi chybì
+// uzavření souboru při chybě
 		Size(0);
 		CFile::Close();
 	}
@@ -683,25 +683,25 @@ BOOL CFileMap::Open(const CText& name)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzavøení
+// uzavření
 
 void CFileMap::Close()
 {
-// uvolnìní okna v pamìti
+// uvolnění okna v paměti
 	if (Adr() != NULL)
 	{
 		::UnmapViewOfFile(Adr());
 		Adr(NULL);
 	}
 
-// uzavøení mapování
+// uzavření mapování
 	if (m_Map != NULL)
 	{
 		::CloseHandle(m_Map);
 		m_Map = NULL;
 	}
 
-// uzavøení souboru
+// uzavření souboru
 	Size(0);
 	CFile::Close();
 }
@@ -723,8 +723,8 @@ CResource::CResource()
 
 CResource::~CResource()
 {
-	CloseFile();				// uzavøení souboru
-	Close();					// uzavøení resource
+	CloseFile();				// uzavření souboru
+	Close();					// uzavření resource
 }
 
 
@@ -739,13 +739,13 @@ void CResource::Init()
 
 void CResource::Term()
 {
-	CloseFile();				// uzavøení souboru
-	Close();					// uzavøení resource
+	CloseFile();				// uzavření souboru
+	Close();					// uzavření resource
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení souboru s resource
+// načtení souboru s resource
 
 BOOL CResource::OpenFile(LPCTSTR name)
 {
@@ -756,7 +756,7 @@ BOOL CResource::OpenFile(LPCTSTR name)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzavøení souboru s resource
+// uzavření souboru s resource
 
 void CResource::CloseFile()
 {
@@ -769,7 +769,7 @@ void CResource::CloseFile()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení resource
+// otevření resource
 
 BOOL CResource::Open(int id, LPCTSTR typ)
 {
@@ -778,13 +778,13 @@ BOOL CResource::Open(int id, LPCTSTR typ)
 	if (res)
 	{
 
-// zjištìní velikosti dat
+// zjištění velikosti dat
 		ASSERT(Size() == 0, "Interní chyba");
 		Size(::SizeofResource(m_Instance, res));
 		if (Size() > 0)
 		{
 
-// naètení dat do pamìti
+// načtení dat do paměti
 			HGLOBAL glob = ::LoadResource(m_Instance, res);
 			if (glob)
 			{
@@ -809,7 +809,7 @@ BOOL CResource::Open(int id, LPCTSTR typ)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otevøení kopie dat (pro možnost zápisu, buffer je nutno po použití zrušit)
+// otevření kopie dat (pro možnost zápisu, buffer je nutno po použití zrušit)
 
 BOOL CResource::OpenCopy(int id, LPCTSTR typ)
 {
@@ -834,7 +834,7 @@ void CResource::CloseCopy()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzavøení (rezervováno - zatím není nutné provádìt)
+// uzavření (rezervováno - zatím není nutné provádět)
 
 void CResource::Close()
 {

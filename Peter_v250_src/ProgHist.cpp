@@ -18,22 +18,22 @@ typedef struct HISTITEM_ {
 	int		BufID;						// editovaný buffer
 	int		Index;						// editovaná položka (-2 = obrázek sprajtu)
 	int		Select;						// aktivní položka editoru programu
-	int		First;						// horní øádek v programu
-	int		Left;						// levý poèátek obrázku
-	int		Bottom;						// spodní poèátek obrázku
+	int		First;						// horní řádek v programu
+	int		Left;						// levý počátek obrázku
+	int		Bottom;						// spodní počátek obrázku
 	int		Sprite;						// index sprajtu editovaného obrázku
-	int		Picture;					// editovaný obrázek sprajtu (relativnì)
+	int		Picture;					// editovaný obrázek sprajtu (relativně)
 } HISTITEM;
 
 #define SIZEOFHISTITEM (8*sizeof(int))	// velikost položky
 
-#define MAXHISTITEM 128					// maximální poèet položek v bufferu
+#define MAXHISTITEM 128					// maximální počet položek v bufferu
 
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
 HISTITEM*	m_Buf = NULL;				// buffer položek historie
-int			m_Num = 0;					// poèet položek v bufferu historie
+int			m_Num = 0;					// počet položek v bufferu historie
 int			m_Max = 0;					// velikost bufferu historie
 int			m_Akt = 0;					// aktivní položka v bufferu
 int			m_Fill = FALSE;				// probíhá navracení historie
@@ -74,20 +74,20 @@ void Del(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení položek v bufferu (vèetnì editované) podle dat (pro sprajt pic=-1 všechny obrázky)
-// pøi chybì pamìti vrací FALSE
+// zrušení položek v bufferu (včetně editované) podle dat (pro sprajt pic=-1 všechny obrázky)
+// při chybě paměti vrací FALSE
 
 bool Del(int bufID, int index, int sprite, int pic)
 {
 // kontrola, zda je režim editace a zda je to platný buffer
 	if (!ProgMode || (bufID < 0)) return true;
 
-// pøíprava ukazatele položek
+// příprava ukazatele položek
 	BOOL update = FALSE;
 	int i = m_Num - 1;
 	HISTITEM* item = m_Buf + i;
 
-// cyklus pøes všechny položky dolù
+// cyklus přes všechny položky dolů
 	for (; i >= 0; i--)
 	{
 
@@ -108,7 +108,7 @@ bool Del(int bufID, int index, int sprite, int pic)
 				)
 			)
 
-// vypuštìní položky z bufferu
+// vypuštění položky z bufferu
 		{
 			Del(i);
 			item = m_Buf + i;
@@ -212,10 +212,10 @@ void Push()
 // kontrola, zda je režim editace
 	if (!ProgMode) return;
 
-// kontrola, zda není ukládání pøíp. zda to není první editace
+// kontrola, zda není ukládání příp. zda to není první editace
 	if (m_Fill || (EditBuf < 0)) return;
 
-// omezení poètu položek v bufferu
+// omezení počtu položek v bufferu
 	if (m_Num >= MAXHISTITEM)
 	{
 		Del(0);
@@ -249,7 +249,7 @@ void Push()
 // zrušení položek za aktivním ukazatelem
 	m_Num = m_Akt + 1;
 
-// zvìtšení bufferu
+// zvětšení bufferu
 	if (m_Num > m_Max)
 	{
 		m_Max += 128;
@@ -296,7 +296,7 @@ void Pop()
 // kontrola povolení operace
 	if (m_Fill || (m_Akt >= m_Num)) return;
 
-// pøíznak probíhající zmìny
+// příznak probíhající změny
 	m_Fill = TRUE;
 
 // nastavení editované položky
@@ -317,7 +317,7 @@ void Pop()
 // aktualizace fokusu
 	ProgSetFocus();
 
-// pøíznak ukonèení zmìny
+// příznak ukončení změny
 	m_Fill = FALSE;
 
 // aktualizace voleb
@@ -326,7 +326,7 @@ void Pop()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøedešlá historie
+// předešlá historie
 
 void OnPrev() 
 {

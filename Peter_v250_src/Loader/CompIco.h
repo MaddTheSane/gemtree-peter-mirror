@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// přidání jednoho prvku do bufferu programu (vrací index prvku)
 
 inline int CompAddItem(PROCICO func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCICO func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu s ikonou (vrací true = operace OK)
+// překlad výrazu s ikonou (vrací true = operace OK)
 
 bool _fastcall CompIco(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem ikony
+// překlad příkazu s parametrem ikony
 
 bool CompIcoPar(int index, PROCCOM func, int data);
 
@@ -119,13 +119,13 @@ inline bool CompIcoPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou ikon (data = poèet výrazù - 1)
+// překlad příkazu se skupinou ikon (data = počet výrazů - 1)
 
 inline bool CompIcoGrp(int index, PROCLOG func, PROCLOG func1)
 	{ return CompGroup(CompIco, index, (PROCCOM)func, (PROCCOM)func1); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem ikony (hledaným podle identifikace)
+// překlad příkazu s podparametrem ikony (hledaným podle identifikace)
 
 void CompIcoSubPar(int index, int idf);

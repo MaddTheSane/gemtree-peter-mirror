@@ -3,25 +3,25 @@
 
 /***************************************************************************\
 *																			*
-*						Provádìní programu - hudba							*
+*						Provádění programu - hudba							*
 *																			*
 \***************************************************************************/
 
 #pragma optimize("t", on)			// optimalizace na maximální rychlost
 
 // obsluha hudby
-CString	MusicName;				// jméno pøechodného souboru s hudbou
-UINT	MusicDevice = 0;		// ID zaøízení MCI pro pøehrávání hudby (0=není otevøeno)
+CString	MusicName;				// jméno přechodného souboru s hudbou
+UINT	MusicDevice = 0;		// ID zařízení MCI pro přehrávání hudby (0=není otevřeno)
 int		MusicDelka = MUSICMAXDELKA;	// délka hudby v ms
-bool	MusicPlaing = false;	// pøíznak pøehrávání hudby (mùže být v pauze]
-bool	MusicPausing = false;	// pøíznak pauzy hudby
-bool	MusicLoop = false;		// pøíznak opakování skladby
-bool	MusicEnd = false;		// pøíznak ukonèení pøehrávání
+bool	MusicPlaing = false;	// příznak přehrávání hudby (může být v pauze]
+bool	MusicPausing = false;	// příznak pauzy hudby
+bool	MusicLoop = false;		// příznak opakování skladby
+bool	MusicEnd = false;		// příznak ukončení přehrávání
 
 int		MusicAktPos = 0;		// aktuální pozice hudby
-int		MusicStopPos = MUSICSTOPWAIT;	// èítaè pro zastavení hudby
+int		MusicStopPos = MUSICSTOPWAIT;	// čítač pro zastavení hudby
 
-int		MusicError = -1;		// povolení opakovaného otevøení hudby (pøi < 0)
+int		MusicError = -1;		// povolení opakovaného otevření hudby (při < 0)
 
 /***************************************************************************\
 *																			*
@@ -30,55 +30,55 @@ int		MusicError = -1;		// povolení opakovaného otevøení hudby (pøi < 0)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení pøehrávání hudby
+// zahájení přehrávání hudby
 
 void MusicPlay(CMusic mus, bool loop)
 {
-// povolení otevøení hudbz
+// povolení otevření hudbz
 	if (MusicError >= 0) return;
 
-// zastavení pøehrávané hudby
+// zastavení přehrávané hudby
 	MusicStop();
 
-// pøíprava jména pøechodného souboru
+// příprava jména přechodného souboru
 	MusicName.TempName();
 
-// vytvoøení pøechodného souboru
+// vytvoření přechodného souboru
 	HANDLE file = ::CreateFile(MusicName, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_TEMPORARY, NULL);
 
 	if (file != INVALID_HANDLE_VALUE)
 	{
 
-// zápis dat do pøechodného souboru
+// zápis dat do přechodného souboru
 		DWORD writen;
 		BOOL result = ::WriteFile(file, mus.DataData(), mus.Size(), &writen, NULL);
 
-// uzavøení souboru
+// uzavření souboru
 		::CloseHandle(file);
 
 // kontrola operace zápisu
 		if (result && ((int)writen == mus.Size()))
 		{
 
-// otevøení výstupního zaøízení
+// otevření výstupního zařízení
 			MCI_OPEN_PARMS mcio;
 			mcio.lpstrDeviceType = _T("sequencer");
 			mcio.lpstrElementName = MusicName;
 			result = ::mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_TYPE |
 				MCI_OPEN_ELEMENT, (DWORD)&mcio);
 
-// ID zaøízení
+// ID zařízení
 			if (result == 0)
 			{
 				MusicDevice = mcio.wDeviceID;
 
-// nastavení èasového formátu na milisekundy
+// nastavení časového formátu na milisekundy
 				MCI_SET_PARMS mcis;
 				mcis.dwTimeFormat = MCI_FORMAT_MILLISECONDS;
 				::mciSendCommand(MusicDevice, MCI_SET, MCI_SET_TIME_FORMAT, (DWORD)&mcis);
 
-// naètení délky skladby
+// načtení délky skladby
 				MCI_STATUS_PARMS mcit;
 				mcit.dwItem = MCI_STATUS_LENGTH;
 				mcit.dwReturn = 0;
@@ -87,7 +87,7 @@ void MusicPlay(CMusic mus, bool loop)
 				if (MusicDelka < 1) MusicDelka = 1;
 				if (MusicDelka > MUSICMAXDELKA) MusicDelka = MUSICMAXDELKA;
 
-// pøehrátí souboru
+// přehrátí souboru
 				MusicLoop = loop;
 				MusicPlaing = true;
 				MusicStopPos = MUSICSTOPWAIT;
@@ -101,20 +101,20 @@ void MusicPlay(CMusic mus, bool loop)
 			}
 		}
 
-// pøi chybì zrušení pøechodného souboru
+// při chybě zrušení přechodného souboru
 		::DeleteFile(MusicName);
 	}
 	
-// pøi chybì zrušení jména pøechodného souboru
+// při chybě zrušení jména přechodného souboru
 	MusicName.Empty();
 
-// nastavení èítaèe pro další pokus o otevøení
+// nastavení čítače pro další pokus o otevření
 	MusicError = MUSICERRORWAIT;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení pøehrávání (obsluha hlášení)
+// ukončení přehrávání (obsluha hlášení)
 
 void OnMusicEnd()
 {
@@ -167,7 +167,7 @@ void SetMusicPos(int pos)
  
 
 /////////////////////////////////////////////////////////////////////////////
-// pauza pøehrávání
+// pauza přehrávání
 
 void MusicPause()
 {
@@ -197,15 +197,15 @@ void MusicPause()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení pøehrávání hudby (pøi volání z programu je vypnut ještì pøíznak pauzy)
+// ukončení přehrávání hudby (při volání z programu je vypnut ještě příznak pauzy)
 
 void MusicStop()
 {
-// vypnutí pøíznaku pøehrávání
+// vypnutí příznaku přehrávání
 	MusicPlaing = false;
 	MusicError = -1;
 
-// uzavøení pøehrávacího zaøízení
+// uzavření přehrávacího zařízení
 	if (MusicDevice)
 	{
 		::mciSendCommand(MusicDevice, MCI_STOP, MCI_WAIT, NULL);
@@ -215,7 +215,7 @@ void MusicStop()
 		MusicAktPos = 0;
 	}
 
-// zrušení pøechodného souboru
+// zrušení přechodného souboru
 	if (MusicName.IsNotEmpty())
 	{
 		::DeleteFile(MusicName);
@@ -229,17 +229,17 @@ void MusicStop()
 
 void PlayMusicBack()
 {
-// èítaè povolení otevøení hudby
+// čítač povolení otevření hudby
 	MusicError--;
 
-// ukonèení pøehrávání hudby
+// ukončení přehrávání hudby
 	if (MusicEnd)
 	{
 		MusicEnd = false;
 		OnMusicEnd();
 	}
 
-// naètení aktuální pozice hudby
+// načtení aktuální pozice hudby
 	if (MusicPlaing)
 	{
 		MCI_STATUS_PARMS mcit;
@@ -287,10 +287,10 @@ void _fastcall FMusicFunc(CMusic& music)
 // úschova indexu volané funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// úschova indexu proměnné s návratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnných
+// inicializace lokálních proměnných
 	FCommand();
 
 // úschova ukazatele programu
@@ -299,7 +299,7 @@ void _fastcall FMusicFunc(CMusic& music)
 // nová adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoření
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
@@ -312,20 +312,20 @@ void _fastcall FMusicFunc(CMusic& music)
 // návrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení požadavku o pøerušení
+// zrušení požadavku o přerušení
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
 // návrat výsledku operace
 	music = Music[Music.Num() - res];
 
-// zrušení lokálních promìnných
+// zrušení lokálních proměnných
 	FCommand();
 }
 
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								proměnné									*
 *																			*
 \***************************************************************************/
 
@@ -395,7 +395,7 @@ void _fastcall FMusicLocList(CMusic& music)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení hudby ze souboru
+// načtení hudby ze souboru
 
 void _fastcall FGetFileMusic(CMusic& music)
 {

@@ -54,7 +54,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 	{
 		if ((dstN <= 0) || (srcN <= 0)) break;
 
-// naètení prvního a druhého bajtu
+// načtení prvního a druhého bajtu
 		int num = *src;
 		src++;
 		srcN--;
@@ -75,7 +75,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 		else
 		{
 
-// pøenos bajtù beze zmìny
+// přenos bajtů beze změny
 			if (data > 2)
 			{
 				lineoff += data;
@@ -116,7 +116,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 
 
 ////////////////////////////////////////////////////////////////////
-// pøenesení bodu
+// přenesení bodu
 
 inline void RLE4Store(BOOL& firstdst, BOOL& firstsrc, BYTE*& dst, const BYTE& data)
 {
@@ -160,17 +160,17 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 {
 	BYTE data;						// data
 	BYTE olddata;
-	BYTE num;						// poèet dat
+	BYTE num;						// počet dat
 	int lineoff = 0;				// bodový offset na lince
 
 	BOOL firstdst = TRUE;			// ukládá se první tetráda bajtu
-	BOOL firstsrc;					// naèítá se první tetráda bajtu
+	BOOL firstsrc;					// načítá se první tetráda bajtu
 
-// dokud jsou platná data (to je jen pøibližná kontrola, musí být rezerva)
+// dokud jsou platná data (to je jen přibližná kontrola, musí být rezerva)
 	while ((dstN > 0) && (srcN > 0))
 	{
 
-// naètení prvního a druhého bajtu
+// načtení prvního a druhého bajtu
 		num = *src;
 		src++;
 		srcN--;
@@ -179,7 +179,7 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 		src++;
 		srcN--;
 
-		firstsrc = TRUE;			// naèítá se první tetráda bajtu
+		firstsrc = TRUE;			// načítá se první tetráda bajtu
 
 // opakování bajtu
 		if (num != 0)
@@ -196,7 +196,7 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 		else
 		{
 
-// pøenos bajtù beze zmìny
+// přenos bajtů beze změny
 			if (data > 2)
 			{
 				lineoff += data;
@@ -257,23 +257,23 @@ class CRle8
 public:
 
 	BYTE*	m_Dst;				// ukládací adresa do výstupního bufferu
-	BYTE*	m_Src;				// ètecí adresa neuložených dat
+	BYTE*	m_Src;				// čtecí adresa neuložených dat
 	BYTE	m_Neshoda;			// délka neshody
 	BYTE	m_Shoda;			// délka shody
 
 // uložení bajtu do výstupního bufferu
 	inline void Store(BYTE data);
 
-// pøenesení bajtu neuložených dat
+// přenesení bajtu neuložených dat
 	inline void Move();
 
-// vyprázdnìní bufferu neshody
+// vyprázdnění bufferu neshody
 	void FlushNeshoda();
 
-// zaøazení bajtu do bufferu neshody
+// zařazení bajtu do bufferu neshody
 	inline void StoreNeshoda();
 
-// vyprázdnìní bufferu shody
+// vyprázdnění bufferu shody
 	void FlushShoda();
 };
 
@@ -289,7 +289,7 @@ inline void CRle8::Store(BYTE data)
 
 
 ////////////////////////////////////////////////////////////////////
-// pøenesení bajtu neuložených dat
+// přenesení bajtu neuložených dat
 
 inline void CRle8::Move()
 {
@@ -300,7 +300,7 @@ inline void CRle8::Move()
 
 
 ////////////////////////////////////////////////////////////////////
-// vyprázdnìní bufferu neshody
+// vyprázdnění bufferu neshody
 
 void CRle8::FlushNeshoda()
 {
@@ -388,7 +388,7 @@ void CRle8::FlushNeshoda()
 
 
 ////////////////////////////////////////////////////////////////////
-// zaøazení bajtu do bufferu neshody
+// zařazení bajtu do bufferu neshody
 
 inline void CRle8::StoreNeshoda()
 {
@@ -401,7 +401,7 @@ inline void CRle8::StoreNeshoda()
 
 
 ////////////////////////////////////////////////////////////////////
-// vyprázdnìní bufferu shody
+// vyprázdnění bufferu shody
 
 void CRle8::FlushShoda()
 {
@@ -478,18 +478,18 @@ int KompRLE8(BYTE* dstbuf, BYTE* srcbuf, int width, int height)
 // buffer komprese
 	CRle8 rle;
 	rle.m_Dst = dstbuf;						// ukládací adresa
-	rle.m_Src = srcbuf;						// ètecí adersa
+	rle.m_Src = srcbuf;						// čtecí adersa
 	rle.m_Neshoda = 0;						// délka neshody
 	rle.m_Shoda = 0;						// délka shody
 
-// lokální promìnné
-	BYTE* src = srcbuf;							// ètecí adresa
+// lokální proměnné
+	BYTE* src = srcbuf;							// čtecí adresa
 
-// cyklus pøes všechny linky
+// cyklus přes všechny linky
 	for (int i = height; i > 0; i--)
 	{
 
-// cyklus pøes všechny pozice na lince
+// cyklus přes všechny pozice na lince
 		for (int j = width; j > 0; j--)
 		{
 
@@ -519,7 +519,7 @@ int KompRLE8(BYTE* dstbuf, BYTE* srcbuf, int width, int height)
 			src++;
 		}
 
-// konec linky - vyprázdnìní bufferù
+// konec linky - vyprázdnění bufferů
 		rle.FlushShoda();
 		rle.FlushNeshoda();
 
