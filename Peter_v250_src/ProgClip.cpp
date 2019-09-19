@@ -7,65 +7,65 @@
 *																			*
 \***************************************************************************/
 
-DWORD	CF_PETPROGP = (DWORD)-1;				// ID form·tu "Program"
-DWORD	CF_PETPROGG = (DWORD)-1;				// ID form·tu "Glob·lnÌ"
-DWORD	CF_PETPROGL = (DWORD)-1;				// ID form·tu "Lok·lnÌ"
+DWORD	CF_PETPROGP = (DWORD)-1;				// ID form√°tu "Program"
+DWORD	CF_PETPROGG = (DWORD)-1;				// ID form√°tu "Glob√°ln√≠"
+DWORD	CF_PETPROGL = (DWORD)-1;				// ID form√°tu "Lok√°ln√≠"
 
 namespace ProgClip
 {
 
-// z·hlavÌ clipboardu - program
+// z√°hlav√≠ clipboardu - program
 const CLIPHEAD ClipHeadP = {
 	'P','E','T',									// identifikace
 	1,												// verze
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,												// parametry
-	SIZEOFCLIPHEAD,									// offset zaË·tku dat
-	1,												// poËet datov˝ch blok˘
+	SIZEOFCLIPHEAD,									// offset za√®√°tku dat
+	1,												// po√®et datov√Ωch blok√π
 	0,0,'C','L','I','P','B','R','D','P',0,0,0,0,
 };
 
-// z·hlavÌ clipboardu - glob·lnÌ
+// z√°hlav√≠ clipboardu - glob√°ln√≠
 const CLIPHEAD ClipHeadG = {
 	'P','E','T',									// identifikace
 	1,												// verze
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,												// parametry
-	SIZEOFCLIPHEAD,									// offset zaË·tku dat
-	1,												// poËet datov˝ch blok˘
+	SIZEOFCLIPHEAD,									// offset za√®√°tku dat
+	1,												// po√®et datov√Ωch blok√π
 	0,0,'C','L','I','P','B','R','D','G',0,0,0,0,
 };
 
-// z·hlavÌ clipboardu - lok·lnÌ
+// z√°hlav√≠ clipboardu - lok√°ln√≠
 const CLIPHEAD ClipHeadL = {
 	'P','E','T',									// identifikace
 	1,												// verze
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,												// parametry
-	SIZEOFCLIPHEAD,									// offset zaË·tku dat
-	1,												// poËet datov˝ch blok˘
+	SIZEOFCLIPHEAD,									// offset za√®√°tku dat
+	1,												// po√®et datov√Ωch blok√π
 	0,0,'C','L','I','P','B','R','D','L',0,0,0,0,
 };
 
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-BOOL		Lock = FALSE;				// p¯Ìznak probÌhajÌcÌ obsluhy
+BOOL		Lock = FALSE;				// p√∏√≠znak prob√≠haj√≠c√≠ obsluhy
 
-// buffer pro uloûenÌ
-BYTE*		m_Buf = NULL;				// datov˝ buffer
-int			m_Num = 0;					// poËet bajt˘ v bufferu, p¯i ËtenÌ ËtecÌ offset
-int			m_Max = 0;					// velikost bufferu, p¯i ËtenÌ velikost dat
+// buffer pro ulo≈æen√≠
+BYTE*		m_Buf = NULL;				// datov√Ω buffer
+int			m_Num = 0;					// po√®et bajt√π v bufferu, p√∏i √®ten√≠ √®tec√≠ offset
+int			m_Max = 0;					// velikost bufferu, p√∏i √®ten√≠ velikost dat
 
-CMultiText	m_Text;						// buffer k naËtenÌ/uloûenÌ textu
-CIcon		m_Icon;						// buffer k naËtenÌ/uloûenÌ ikony
-CPicture	m_Pic;						// buffer k naËtenÌ/uloûenÌ obr·zku
-CMap		m_Map;						// buffer k naËtenÌ/uloûenÌ plochy
-CSprite		m_Sprite;					// buffer k naËtenÌ/uloûenÌ sprajtu
-CSound		m_Sound;					// buffer k naËtenÌ/uloûenÌ zvuku
-CMusic		m_Music;					// buffer k naËtenÌ/uloûenÌ hudby
+CMultiText	m_Text;						// buffer k na√®ten√≠/ulo≈æen√≠ textu
+CIcon		m_Icon;						// buffer k na√®ten√≠/ulo≈æen√≠ ikony
+CPicture	m_Pic;						// buffer k na√®ten√≠/ulo≈æen√≠ obr√°zku
+CMap		m_Map;						// buffer k na√®ten√≠/ulo≈æen√≠ plochy
+CSprite		m_Sprite;					// buffer k na√®ten√≠/ulo≈æen√≠ sprajtu
+CSound		m_Sound;					// buffer k na√®ten√≠/ulo≈æen√≠ zvuku
+CMusic		m_Music;					// buffer k na√®ten√≠/ulo≈æen√≠ hudby
 
-int			m_LocFirst;					// v˝chozÌ poloûka v lok·lnÌm bufferu
+int			m_LocFirst;					// v√Ωchoz√≠ polo≈æka v lok√°ln√≠m bufferu
 
 /////////////////////////////////////////////////////////////////////////////
 // inicializace obsluhy clipboardu
@@ -83,7 +83,7 @@ void StartInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯id·nÌ dat do v˝stupnÌho bufferu (vracÌ FALSE=chyba pamÏti)
+// p√∏id√°n√≠ dat do v√Ωstupn√≠ho bufferu (vrac√≠ FALSE=chyba pam√¨ti)
 
 BOOL Add(const void* src, const int size)
 {
@@ -102,32 +102,32 @@ BOOL Add(const void* src, const int size)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯id·nÌ vÌcejazyËnÈho textu do v˝stupnÌho bufferu, vracÌ dÈlku v bajtech, -1=chyba pamÏti
+// p√∏id√°n√≠ v√≠cejazy√®n√©ho textu do v√Ωstupn√≠ho bufferu, vrac√≠ d√©lku v bajtech, -1=chyba pam√¨ti
 
 int AddText(int inx)
 {
-// text k uloûenÌ (m˘ûe b˝t i neplatn˝)
+// text k ulo≈æen√≠ (m√π≈æe b√Ωt i neplatn√Ω)
 	m_Text = Text.Get(inx);
 	CText txt;
 
 	int len = 0;
 
-// cyklus p¯es vöechny jazyku
+// cyklus p√∏es v≈°echny jazyku
 	for (int lan = 0; lan < JAZYKNUM; lan++)
 	{
 
-// text k uloûenÌ
+// text k ulo≈æen√≠
 		txt = m_Text.MultiText(lan);
 
-// dÈlka textu v bajtech
+// d√©lka textu v bajtech
 		long len0 = txt.Length();
 
-// p¯id·nÌ dÈlky
+// p√∏id√°n√≠ d√©lky
 		BOOL ret = Add(&len0, sizeof(long));
 		if (!ret) return -1;
 		len += sizeof(long);
 
-// p¯id·nÌ textu
+// p√∏id√°n√≠ textu
 #ifdef _UNICODE
 		char* buf = (char*)MemGet(len0 + 10);
 		if (buf == NULL) return -1;
@@ -141,39 +141,39 @@ int AddText(int inx)
 		len += len0;
 	}
 
-// dÈlka celÈho textu
+// d√©lka cel√©ho textu
 	return len;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯id·nÌ poloûky programu (vracÌ poËet p¯enesen˝ch prvk˘ ve vÏtvi, -1=chyba pamÏti)
+// p√∏id√°n√≠ polo≈æky programu (vrac√≠ po√®et p√∏enesen√Ωch prvk√π ve v√¨tvi, -1=chyba pam√¨ti)
 
 int AddProg(int bufID, int index, BOOL isfirst)
 {
-// lok·lnÌ promÏnnÈ
-	PETPROG dst;				// cÌlov· poloûka k uloûenÌ
-	int dstinx;					// offset cÌlovÈ poloûky v bufferu
-	PETPROG* pet;				// adresa cÌlovÈ poloûky v bufferu
-	int inx;					// pomocn˝ index zdrojovÈ poloûky
-	int size;					// pomocn· dÈlka dat poloûky
-	int count = 0;				// ËÌtaË vloûen˝ch prvk˘
-	int first = index;			// ˙schova indexu v˝chozÌ poloûky
-	PROGITEM* src;				// adresa zdrojovÈ poloûky
+// lok√°ln√≠ prom√¨nn√©
+	PETPROG dst;				// c√≠lov√° polo≈æka k ulo≈æen√≠
+	int dstinx;					// offset c√≠lov√© polo≈æky v bufferu
+	PETPROG* pet;				// adresa c√≠lov√© polo≈æky v bufferu
+	int inx;					// pomocn√Ω index zdrojov√© polo≈æky
+	int size;					// pomocn√° d√©lka dat polo≈æky
+	int count = 0;				// √®√≠ta√® vlo≈æen√Ωch prvk√π
+	int first = index;			// √∫schova indexu v√Ωchoz√≠ polo≈æky
+	PROGITEM* src;				// adresa zdrojov√© polo≈æky
 	CBufProg* buf = BufProg + bufID;	// adresa bufferu
-	int i;						// pomocn˝ registr
+	int i;						// pomocn√Ω registr
 
-// cyklus p¯es celou vÏtev
+// cyklus p√∏es celou v√¨tev
 	do 
 	{
 		ASSERT(buf->IsValid(index));
 		if (buf->IsNotValid(index)) break;
-		count++;					// zv˝öenÌ ËÌtaËe prvk˘
+		count++;					// zv√Ω≈°en√≠ √®√≠ta√®e prvk√π
 
-// adresa zdrojovÈ poloûky
+// adresa zdrojov√© polo≈æky
 		src = &buf->At(index);
 
-// p¯Ìprava parametr˘ poloûky
+// p√∏√≠prava parametr√π polo≈æky
 		dst.Param = 0;
 		if (src->Child >= 0)		dst.Param |= PETPROG_CHILDS;
 		if (src->Next >= 0)			dst.Param |= PETPROG_NEXT;
@@ -183,53 +183,53 @@ int AddProg(int bufID, int index, BOOL isfirst)
 		if (src->Param & PR_NOMOVE)	dst.Param |= PETPROG_NOMOVE;
 		if (src->Param & PR_INTERN)	dst.Param |= PETPROG_INTERN;
 
-// u prvnÌ poloûky vÏtve zruöenÌ z·mku
+// u prvn√≠ polo≈æky v√¨tve zru≈°en√≠ z√°mku
 		if ((index == first) && isfirst) dst.Param &= ~PETPROG_LOCK;
 
-// uloûenÌ poloûky programu
-		dstinx = m_Num;								// offset cÌlovÈ poloûky
-		if (!Add(&dst, SIZEOFPETPROG)) return -1;	// uloûenÌ poloûky do bufferu
+// ulo≈æen√≠ polo≈æky programu
+		dstinx = m_Num;								// offset c√≠lov√© polo≈æky
+		if (!Add(&dst, SIZEOFPETPROG)) return -1;	// ulo≈æen√≠ polo≈æky do bufferu
 
-// referenËnÌ text
-		pet = (PETPROG*)(m_Buf + dstinx);			// adresa cÌlovÈ poloûky
-		pet->RefIndex = 0;							// dÈlka jmÈna referenËnÌ poloûky
-		pet->RefBlok = -1;							// neplatn˝ referenËnÌ blok
+// referen√®n√≠ text
+		pet = (PETPROG*)(m_Buf + dstinx);			// adresa c√≠lov√© polo≈æky
+		pet->RefIndex = 0;							// d√©lka jm√©na referen√®n√≠ polo≈æky
+		pet->RefBlok = -1;							// neplatn√Ω referen√®n√≠ blok
 
-		switch (src->RefBlok)						// podle referenËnÌho bloku
+		switch (src->RefBlok)						// podle referen√®n√≠ho bloku
 		{
 		case BufObjID:
 		case BufLocID:
 			i = AddText(BufProg[src->RefBlok].GetText(src->RefIndex));
 			if (i < 0) return -1;
-			pet = (PETPROG*)(m_Buf + dstinx);		// adresa cÌlovÈ poloûky
-			pet->RefIndex = i;						// dÈlka textu v bajtech
-			pet->RefBlok = src->RefBlok;			// ËÌslo referenËnÌho bloku
+			pet = (PETPROG*)(m_Buf + dstinx);		// adresa c√≠lov√© polo≈æky
+			pet->RefIndex = i;						// d√©lka textu v bajtech
+			pet->RefBlok = src->RefBlok;			// √®√≠slo referen√®n√≠ho bloku
 			break;
 		}
 
-// uloûenÌ datovÈ poloûky (a dÈlky dat)
+// ulo≈æen√≠ datov√© polo≈æky (a d√©lky dat)
 		pet = (PETPROG*)(m_Buf + dstinx);
 		pet->DatBlok = src->DatBlok;
-		inx = src->DatIndex;						// index poûadovanÈ poloûky
-		int ninx = m_Num;							// ˙schova offsetu zaË·tku dat
+		inx = src->DatIndex;						// index po≈æadovan√© polo≈æky
+		int ninx = m_Num;							// √∫schova offsetu za√®√°tku dat
 
 		switch (src->DatBlok)
 		{
-// lok·lnÌ funkce, funkce
+// lok√°ln√≠ funkce, funkce
 		case BufLocID:
 		case BufEdiID:
 			{
 				ASSERT(BufProg[src->DatBlok].IsValid(inx));
-				long cnt;							// poËet prvk˘
-				int cntn = m_Num;					// ˙schova offsetu ËÌtaËe
-				if (!Add(&cnt, sizeof(long))) return -1;// uloûenÌ ËÌtaËe
-				cnt = AddProg(src->DatBlok, inx, FALSE); // uloûenÌ lok·lnÌ definice
-				if (cnt < 0) return -1;				// chyba pamÏti
-				*(long*)(m_Buf + cntn) = cnt;		// poËet prvk˘				
+				long cnt;							// po√®et prvk√π
+				int cntn = m_Num;					// √∫schova offsetu √®√≠ta√®e
+				if (!Add(&cnt, sizeof(long))) return -1;// ulo≈æen√≠ √®√≠ta√®e
+				cnt = AddProg(src->DatBlok, inx, FALSE); // ulo≈æen√≠ lok√°ln√≠ definice
+				if (cnt < 0) return -1;				// chyba pam√¨ti
+				*(long*)(m_Buf + cntn) = cnt;		// po√®et prvk√π				
 			}
 			break;
 
-// ËÌslo
+// √®√≠slo
 		case BufNumID:
 			{
 				double num = Real.Get(inx);
@@ -242,7 +242,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 			if (AddText(inx) < 0) return -1;
 			break;
 
-// logick· promÏnn·
+// logick√° prom√¨nn√°
 		case BufLogID:
 			{
 				long log = Bool.Get(inx);
@@ -263,32 +263,32 @@ int AddProg(int bufID, int index, BOOL isfirst)
 				if (!Add(&m_Map.Data()->Width, sizeof(long))) return -1;
 				if (!Add(&m_Map.Data()->Height, sizeof(long))) return -1;
 
-				long reficon = 0;					// ËÌtaË referencÌ ikon
-				int nreficon = m_Num;				// offset referencÌ ikon
-				if (!Add(&reficon, sizeof(long))) return -1; // uloûenÌ ËÌtaËe referencÌ
+				long reficon = 0;					// √®√≠ta√® referenc√≠ ikon
+				int nreficon = m_Num;				// offset referenc√≠ ikon
+				if (!Add(&reficon, sizeof(long))) return -1; // ulo≈æen√≠ √®√≠ta√®e referenc√≠
 
-				size = m_Map.Width() * m_Map.Height();	// poËet poloûek
-				CBufIndex bufinx;					// buffer mapov·nÌ ikon
+				size = m_Map.Width() * m_Map.Height();	// po√®et polo≈æek
+				CBufIndex bufinx;					// buffer mapov√°n√≠ ikon
 				if (!bufinx.NumClear(Icon.Num())) return -1;
 
-				int icon;							// pomocnÈ ËÌslo ikony
+				int icon;							// pomocn√© √®√≠slo ikony
 				int ref;							// index definice objektu ikony
-				CBufProg* bf;						// adresa bufferu s definicÌ
+				CBufProg* bf;						// adresa bufferu s definic√≠
 				int i;								// index prvku plochy
 				ASSERT(Icon.IsValid(0));
 
 				for (i = 0; i < size; i++)
 				{
 					icon = m_Map[i].Icon;			// ikona
-					if (Icon.IsNotValid(icon))		// je ikona platn·?
+					if (Icon.IsNotValid(icon))		// je ikona platn√°?
 					{
-						icon = 0;					// n·hradnÌ ikona
+						icon = 0;					// n√°hradn√≠ ikona
 					}
 
-					if (bufinx[icon] < 0)			// je ikona zmapovan·?
+					if (bufinx[icon] < 0)			// je ikona zmapovan√°?
 					{
-						bufinx[icon] = reficon;		// n·hradnÌ index ikony
-						reficon++;					// zv˝öenÌ ËÌtaËe referencÌ
+						bufinx[icon] = reficon;		// n√°hradn√≠ index ikony
+						reficon++;					// zv√Ω≈°en√≠ √®√≠ta√®e referenc√≠
 
 						bf = &BufObj;
 						ref = bf->SrcDat(BufIcoID, icon);
@@ -300,17 +300,17 @@ int AddProg(int bufID, int index, BOOL isfirst)
 						}
 
 						ref = bf->GetText(ref);
-						if (AddText(ref) < 0) return -1;	// (pro neplatn˝ text se uloûÌ pr·zdn˝ text)
+						if (AddText(ref) < 0) return -1;	// (pro neplatn√Ω text se ulo≈æ√≠ pr√°zdn√Ω text)
 					}
 				}
-				*(long*)(m_Buf + nreficon) = reficon; // nastavenÌ poËtu ikon
+				*(long*)(m_Buf + nreficon) = reficon; // nastaven√≠ po√®tu ikon
 
 				for (i = 0; i < size; i++)
 				{
 					icon = m_Map[i].Icon;
-					if (Icon.IsNotValid(icon))		// je ikona platn·?
+					if (Icon.IsNotValid(icon))		// je ikona platn√°?
 					{
-						icon = 0;					// n·hradnÌ ikona
+						icon = 0;					// n√°hradn√≠ ikona
 					}
 
 					if (!Add(&bufinx[icon], sizeof(long)) ||
@@ -319,7 +319,7 @@ int AddProg(int bufID, int index, BOOL isfirst)
 			}
 			break;
 
-// obr·zek
+// obr√°zek
 		case BufPicID:
 			m_Pic = Picture.Get(inx);
 			if (!Add(&m_Pic.Data()->Width,	sizeof(long))	||
@@ -371,60 +371,60 @@ int AddProg(int bufID, int index, BOOL isfirst)
 			break;
 		}
 
-// nastavenÌ dÈlky dat
-		pet = (PETPROG*)(m_Buf + dstinx);				// adresa z·hlavÌ
-		pet->DatIndex = m_Num - ninx;					// dÈlka dat
+// nastaven√≠ d√©lky dat
+		pet = (PETPROG*)(m_Buf + dstinx);				// adresa z√°hlav√≠
+		pet->DatIndex = m_Num - ninx;					// d√©lka dat
 
-// uloûenÌ ikony
-		pet->Icon = -1;									// implicitnÌ ikona
+// ulo≈æen√≠ ikony
+		pet->Icon = -1;									// implicitn√≠ ikona
 		inx = src->Icon;								// index ikony
-		if (Icon.IsValid(inx))							// je platn· ikona?
+		if (Icon.IsValid(inx))							// je platn√° ikona?
 		{
 			pet->Icon = ICONSIZE;						// velikost ikony
 			m_Icon = Icon.Get(inx);
 			if (!m_Icon.DeComp() || !Add(m_Icon.DataData(), ICONSIZE)) return -1;
 		}
 
-// uloûenÌ textu jmÈna poloûky
+// ulo≈æen√≠ textu jm√©na polo≈æky
 		pet = (PETPROG*)(m_Buf + dstinx);
-		pet->Name = -1;									// implicitnÌ jmÈno
-		inx = src->Name;								// index jmÈna
-		if (Text.IsValid(inx))							// je platnÈ jmÈno?
+		pet->Name = -1;									// implicitn√≠ jm√©no
+		inx = src->Name;								// index jm√©na
+		if (Text.IsValid(inx))							// je platn√© jm√©no?
 		{
-			int i = AddText(inx);						// uloûenÌ textu
+			int i = AddText(inx);						// ulo≈æen√≠ textu
 			if (i < 0) return -1;
 			pet = (PETPROG*)(m_Buf + dstinx);
 			pet->Name = i;
 		}
 
-// uloûenÌ ËÌsla funkce
+// ulo≈æen√≠ √®√≠sla funkce
 		pet->Func = src->Func - IDF;
 
-// posun na potomka poloûky
+// posun na potomka polo≈æky
 		if ((index != first) || (src->Child >= 0))
 		{
 			index = src->Child;
 		}
 
-// nenÌ-li potomek, p¯esun na n·sledujÌcÌ poloûku
+// nen√≠-li potomek, p√∏esun na n√°sleduj√≠c√≠ polo≈æku
 		if (index < 0)					// je potomek?
 		{
-			index = src->Next;			// pokraËov·nÌ dalöÌ poloûkou
+			index = src->Next;			// pokra√®ov√°n√≠ dal≈°√≠ polo≈ækou
 
-// nenÌ-li dalöÌ poloûka, vyno¯enÌ k rodiËi
+// nen√≠-li dal≈°√≠ polo≈æka, vyno√∏en√≠ k rodi√®i
 			while ((index < 0) && (src->Parent >= 0))
 			{
-				index = src->Parent;	// n·vrat k rodiËi
-				if (index == first) break; // je jiû opÏt v˝chozÌ poloûka
-				src = &buf->At(index);	// adresa rodiËe
-				index = src->Next;		// dalöÌ poloûka za rodiËem
+				index = src->Parent;	// n√°vrat k rodi√®i
+				if (index == first) break; // je ji≈æ op√¨t v√Ωchoz√≠ polo≈æka
+				src = &buf->At(index);	// adresa rodi√®e
+				index = src->Next;		// dal≈°√≠ polo≈æka za rodi√®em
 			}
 		}
 
-// dokud nenÌ dosaûeno v˝chozÌ poloûky
+// dokud nen√≠ dosa≈æeno v√Ωchoz√≠ polo≈æky
 	} while (index != first);
 
-	return count;						// poËet uloûen˝ch poloûek
+	return count;						// po√®et ulo≈æen√Ωch polo≈æek
 }
 
 
@@ -433,10 +433,10 @@ int AddProg(int bufID, int index, BOOL isfirst)
 
 BOOL Copy(int bufID)
 {
-// kontrola, zda neprobÌh· obsluha
+// kontrola, zda neprob√≠h√° obsluha
 	if (Lock) return FALSE;
 
-// kontrola povolen˝ch buffer˘
+// kontrola povolen√Ωch buffer√π
 	if ((bufID != BufObjID) &&
 		(bufID != BufLocID) &&
 		(bufID != BufEdiID))
@@ -444,10 +444,10 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// zapnutÌ p¯Ìznaku obsluhy
+// zapnut√≠ p√∏√≠znaku obsluhy
 	Lock = TRUE;
 
-// p¯Ìprava v˝chozÌ poloûky k uloûenÌ
+// p√∏√≠prava v√Ωchoz√≠ polo≈æky k ulo≈æen√≠
 	CBufProg* buf = BufProg + bufID;
 	int first = buf->Select();
 	if (first < 0)
@@ -456,18 +456,18 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// kontrola platnosti poloûky 
-// (nelze kopÌrovat ani internÌ glob·lnÌ objekty - musely by se zajistit parametry sprajtu)
+// kontrola platnosti polo≈æky 
+// (nelze kop√≠rovat ani intern√≠ glob√°ln√≠ objekty - musely by se zajistit parametry sprajtu)
 	if (buf->At(first).Param & (PR_NOMOVE | PR_INTERN))
 	{
 		Lock = FALSE;
 		return FALSE;
 	}
 
-// zapnutÌ ËekacÌho kurzoru
+// zapnut√≠ √®ekac√≠ho kurzoru
 	BeginWaitCursor();
 
-// otev¯enÌ schr·nky
+// otev√∏en√≠ schr√°nky
 	if (!::OpenClipboard(MainFrame))
 	{
 		EndWaitCursor();
@@ -475,7 +475,7 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// vypr·zdnÏnÌ schr·nky
+// vypr√°zdn√¨n√≠ schr√°nky
 	if (!::EmptyClipboard())
 	{
 		EndWaitCursor();
@@ -485,13 +485,13 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// p¯Ìprava bufferu
+// p√∏√≠prava bufferu
 	MemFree(m_Buf);
 	m_Buf = NULL;
 	m_Num = 0;
 	m_Max = 0;
 
-// vytvo¯enÌ z·hlavÌ bufferu
+// vytvo√∏en√≠ z√°hlav√≠ bufferu
 	BOOL res;
 	switch (bufID)
 	{
@@ -518,7 +518,7 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// uloûenÌ vÏtve programu
+// ulo≈æen√≠ v√¨tve programu
 	int count = AddProg(bufID, first, TRUE);
 	if (count < 0)
 	{
@@ -534,7 +534,7 @@ BOOL Copy(int bufID)
 	((CLIPHEAD*)m_Buf)->Clip.Pocet = count;
 	((CLIPHEAD*)m_Buf)->Clip.Delka = m_Num - SIZEOFCLIPHEAD;
 
-// vytvo¯enÌ glob·lnÌho bufferu pro data
+// vytvo√∏en√≠ glob√°ln√≠ho bufferu pro data
 	HGLOBAL global = ::GlobalAlloc(GMEM_MOVEABLE | GMEM_DDESHARE, m_Num);
 	if (global == NULL)
 	{
@@ -547,7 +547,7 @@ BOOL Copy(int bufID)
 		return FALSE;
 	}
 
-// uzamknutÌ bufferu
+// uzamknut√≠ bufferu
 	BYTE* data = (BYTE*) ::GlobalLock(global);
 	if (data == NULL)
 	{
@@ -564,10 +564,10 @@ BOOL Copy(int bufID)
 // kopie dat do bufferu
 	MemCopy(data, m_Buf, m_Num);
 
-// odemknutÌ bufferu
+// odemknut√≠ bufferu
 	::GlobalUnlock(global);
 
-// uloûenÌ dat do schr·nky
+// ulo≈æen√≠ dat do schr√°nky
 	HANDLE handle;
 	switch (bufID)
 	{
@@ -585,17 +585,17 @@ BOOL Copy(int bufID)
 
 	if (handle == NULL) ::GlobalFree(global);
 
-// uzav¯enÌ schr·nky
+// uzav√∏en√≠ schr√°nky
 	::CloseClipboard();
 
-// zruöenÌ bufferu
+// zru≈°en√≠ bufferu
 	MemFree(m_Buf);
 	m_Buf = NULL;
 
-// vypnutÌ ËekacÌho kurzoru
+// vypnut√≠ √®ekac√≠ho kurzoru
 	EndWaitCursor();
 
-// vypnutÌ p¯Ìznaku obsluhy
+// vypnut√≠ p√∏√≠znaku obsluhy
 	Lock = FALSE;
 
 // aktualizace voleb bloku
@@ -606,7 +606,7 @@ BOOL Copy(int bufID)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ dat z bufferu
+// na√®ten√≠ dat z bufferu
 
 void Get(void* dst, int size)
 {
@@ -627,7 +627,7 @@ void Get(void* dst, int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ textu z bufferu
+// na√®ten√≠ textu z bufferu
 
 void GetText(int size)
 {
@@ -659,7 +659,7 @@ void GetText(int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ ikony z bufferu
+// na√®ten√≠ ikony z bufferu
 
 void GetIcon(int size)
 {
@@ -684,7 +684,7 @@ void GetIcon(int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ obr·zku z bufferu
+// na√®ten√≠ obr√°zku z bufferu
 
 void GetPicture(int width, int height)
 {
@@ -710,34 +710,34 @@ void GetPicture(int width, int height)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ programu z bufferu (vracÌ index poloûky, -1=chyba pamÏti)
+// na√®ten√≠ programu z bufferu (vrac√≠ index polo≈æky, -1=chyba pam√¨ti)
 
 int GetProg(int bufID, int prev, int num)
 {
-// lok·lnÌ promÏnnÈ
+// lok√°ln√≠ prom√¨nn√©
 	CBufProg* buf = BufProg + bufID;	// adresa bufferu
-	PETPROG src;						// Ëten· poloûka
-	PROGITEM dst;						// ukl·dan· poloûka
-	int* parent;						// buffer odkaz˘ na rodiËe
-	BOOL* next;							// buffer p¯Ìznak˘ dalöÌch prvk˘
-	int parmax;							// velikost bufferu rodiË˘
-	int parnum;							// poËet rodiË˘
-	int blok;							// pomocnÈ ËÌslo bloku
-	int inx;							// pomocnÈ ËÌslo indexu
-	int result = -1;					// v˝sledn˝ index
-	CBufProg* bufref;					// referenËnÌ buffer
-	int reffrst;						// prvnÌ poloûka k hled·nÌ reference
-	int refnext;						// p¯ÌötÌ poloûka k hled·nÌ reference
-	int nn;								// pomocnÈ ËÌslo jmÈna
-	BOOL inpar;							// poloûka je vstupnÌm parametrem
-	BOOL newpar;						// p¯Ìznak, ûe byl vytvo¯en vstupnÌ parametr
-	BOOL isloc;							// p¯Ìznak zaloûenÌ lok·lnÌ definice
-	int inxloc = 0;						// index lok·lnÌ definice
+	PETPROG src;						// √®ten√° polo≈æka
+	PROGITEM dst;						// ukl√°dan√° polo≈æka
+	int* parent;						// buffer odkaz√π na rodi√®e
+	BOOL* next;							// buffer p√∏√≠znak√π dal≈°√≠ch prvk√π
+	int parmax;							// velikost bufferu rodi√®√π
+	int parnum;							// po√®et rodi√®√π
+	int blok;							// pomocn√© √®√≠slo bloku
+	int inx;							// pomocn√© √®√≠slo indexu
+	int result = -1;					// v√Ωsledn√Ω index
+	CBufProg* bufref;					// referen√®n√≠ buffer
+	int reffrst;						// prvn√≠ polo≈æka k hled√°n√≠ reference
+	int refnext;						// p√∏√≠≈°t√≠ polo≈æka k hled√°n√≠ reference
+	int nn;								// pomocn√© √®√≠slo jm√©na
+	BOOL inpar;							// polo≈æka je vstupn√≠m parametrem
+	BOOL newpar;						// p√∏√≠znak, ≈æe byl vytvo√∏en vstupn√≠ parametr
+	BOOL isloc;							// p√∏√≠znak zalo≈æen√≠ lok√°ln√≠ definice
+	int inxloc = 0;						// index lok√°ln√≠ definice
 
-// vypnutÌ p¯ekreslov·nÌ
+// vypnut√≠ p√∏ekreslov√°n√≠
 	buf->RedrawOff();
 
-// p¯Ìprava bufferu rodiË˘
+// p√∏√≠prava bufferu rodi√®√π
 	parmax = 1024;
 	parnum = 0;
 
@@ -760,28 +760,28 @@ int GetProg(int bufID, int prev, int num)
 
 	if (buf->IsValid(prev))
 	{
-		parent[0] = buf->At(prev).Parent;	// rodiË
+		parent[0] = buf->At(prev).Parent;	// rodi√®
 	}
 
-// naËtenÌ poloûek
+// na√®ten√≠ polo≈æek
 	for (; num > 0; num--)
 	{
-// nenÌ to vstupnÌ parametr funkce
+// nen√≠ to vstupn√≠ parametr funkce
 		inpar = FALSE;
 		newpar = FALSE;
 		isloc = FALSE;
 
-// naËtenÌ z·hlavÌ poloûky
+// na√®ten√≠ z√°hlav√≠ polo≈æky
 		Get(&src, SIZEOFPETPROG);
 
-// ËÌslo funkce
+// √®√≠slo funkce
 		dst.Func = IDF_COMMENT;
 		if ((DWORD)src.Func < (DWORD)FncNum)
 		{
 			dst.Func = src.Func + IDF;
 		}
 
-// v bufferu objekt˘ se implicitnÌ ikona mÏnÌ na bÏûnou
+// v bufferu objekt√π se implicitn√≠ ikona m√¨n√≠ na b√¨≈ænou
 		if ((bufID != BufEdiID) && (dst.Func == IDF_NONE))
 		{
 			dst.Func = IDF_ICON;
@@ -795,54 +795,54 @@ int GetProg(int bufID, int prev, int num)
 		if (src.Param & PETPROG_NOMOVE)	dst.Param |= PR_NOMOVE;
 		if (src.Param & PETPROG_INTERN)	dst.Param |= PR_INTERN;
 
-// nastavenÌ p¯Ìznaku dalöÌ poloûky
+// nastaven√≠ p√∏√≠znaku dal≈°√≠ polo≈æky
 		next[parnum] = (src.Param & PETPROG_NEXT);
 
-// naËtenÌ jmÈna reference
+// na√®ten√≠ jm√©na reference
 		GetText(src.RefIndex);
 
-// naËtenÌ deklarace
-		bufref = &BufObj;		// p¯ednastavenÌ reference na glob·lnÌ buffer
-		reffrst = -1;			// p¯ednastavenÌ - hledat od zaË·tku
-		refnext = -1;			// p¯ednastavenÌ - hledat po konec
+// na√®ten√≠ deklarace
+		bufref = &BufObj;		// p√∏ednastaven√≠ reference na glob√°ln√≠ buffer
+		reffrst = -1;			// p√∏ednastaven√≠ - hledat od za√®√°tku
+		refnext = -1;			// p√∏ednastaven√≠ - hledat po konec
 
 		switch (src.RefBlok)
 		{
 		case BufLocID:
-			bufref = &BufLoc;				// reference na lok·lnÌ buffer
-			reffrst = m_LocFirst;			// hledan· prvnÌ lok·lnÌ poloûka
+			bufref = &BufLoc;				// reference na lok√°ln√≠ buffer
+			reffrst = m_LocFirst;			// hledan√° prvn√≠ lok√°ln√≠ polo≈æka
 
-	// hledacÌ oblast pro vstupnÌ promÏnnou funkce
-			if ((bufID == BufEdiID) &&								// pouze v oknÏ editoru
-				(parent[parnum] >= 0) &&							// poloûka m· nÏjakÈho rodiËe
-				(BufEdi[parent[parnum]].Func == IDF_FNC) &&			// rodiËem je funkce
-				(BufEdi[parent[parnum]].RefBlok == BufObjID) &&		// glob·lnÌ funkce - referuje na glob·lnÌ buffer
-				(BufEdi[parent[parnum]].Parent >= 0))				// musÌ mÌt rodiËe, tj. nesmÌ to b˝t ROOT poloûka
+	// hledac√≠ oblast pro vstupn√≠ prom√¨nnou funkce
+			if ((bufID == BufEdiID) &&								// pouze v okn√¨ editoru
+				(parent[parnum] >= 0) &&							// polo≈æka m√° n√¨jak√©ho rodi√®e
+				(BufEdi[parent[parnum]].Func == IDF_FNC) &&			// rodi√®em je funkce
+				(BufEdi[parent[parnum]].RefBlok == BufObjID) &&		// glob√°ln√≠ funkce - referuje na glob√°ln√≠ buffer
+				(BufEdi[parent[parnum]].Parent >= 0))				// mus√≠ m√≠t rodi√®e, tj. nesm√≠ to b√Ωt ROOT polo≈æka
 			{
-				reffrst = BufEdi[parent[parnum]].RefIndex;			// reference do glob·lnÌch objekt˘
-				if (BufObj.IsValid(reffrst) && (BufObj[reffrst].DatBlok == BufLocID)) // je to funkce ukazujicÌ do lok·lnÌho bufferu?
+				reffrst = BufEdi[parent[parnum]].RefIndex;			// reference do glob√°ln√≠ch objekt√π
+				if (BufObj.IsValid(reffrst) && (BufObj[reffrst].DatBlok == BufLocID)) // je to funkce ukazujic√≠ do lok√°ln√≠ho bufferu?
 				{
-					reffrst = BufObj[reffrst].DatIndex;				// index odpovÌdajÌcÌ lok·lnÌ definice
-					inpar = TRUE;									// p¯Ìznak, ûe je to vstupnÌ parametr funkce
+					reffrst = BufObj[reffrst].DatIndex;				// index odpov√≠daj√≠c√≠ lok√°ln√≠ definice
+					inpar = TRUE;									// p√∏√≠znak, ≈æe je to vstupn√≠ parametr funkce
 				}
 				else
 				{
-					reffrst = -1;									// to je chyba - lok·lnÌ definice nenalezena
+					reffrst = -1;									// to je chyba - lok√°ln√≠ definice nenalezena
 				}
 			}
 
-			if (bufref->IsValid(reffrst))							// je lok·lnÌ poloûka platn·?
+			if (bufref->IsValid(reffrst))							// je lok√°ln√≠ polo≈æka platn√°?
 			{
-				refnext = bufref->At(reffrst).Next;					// poslednÌ hledan· poloûka
+				refnext = bufref->At(reffrst).Next;					// posledn√≠ hledan√° polo≈æka
 			}
 
-	// !!!!!! pokraËuje obsluha BufObjID !!!
+	// !!!!!! pokra√®uje obsluha BufObjID !!!
 
 		case BufObjID:
-			dst.RefBlok = bufref->BufID();							// referenËnÌ blok
-			inx = bufref->FindObj(m_Text, -1, reffrst, refnext);	// nalezenÌ objektu danÈho jmÈna
+			dst.RefBlok = bufref->BufID();							// referen√®n√≠ blok
+			inx = bufref->FindObj(m_Text, -1, reffrst, refnext);	// nalezen√≠ objektu dan√©ho jm√©na
 
-	// pokus o nalezenÌ objektu stejnÈho typu
+	// pokus o nalezen√≠ objektu stejn√©ho typu
 			nn = 1;
 			while (bufref->IsValid(inx) && (bufref->At(inx).Func != dst.Func) &&
 						(
@@ -855,7 +855,7 @@ int GetProg(int bufID, int prev, int num)
 				inx = bufref->FindObj(m_Text, -1, reffrst, refnext);
 			}
 
-	// vstupnÌ promÏnn· musÌ referovat takÈ na vstupnÌ promÏnnou
+	// vstupn√≠ prom√¨nn√° mus√≠ referovat tak√© na vstupn√≠ prom√¨nnou
 			if (inpar && 
 				bufref->IsValid(inx) && 
 				(bufref->At(inx).Parent >= 0) && 
@@ -864,12 +864,12 @@ int GetProg(int bufID, int prev, int num)
 				inx = -1;
 			}
 
-	// objekt nenalezen - bude se vytv·¯et
+	// objekt nenalezen - bude se vytv√°√∏et
 			if (bufref->IsNotValid(inx))	// pokud reference nebyla nalezena
 			{
 				if (dst.Func == IDF_NONE) dst.Func = IDF_ICON; // bude kopie ikony
 
-	// cÌl pro vstupnÌ promÏnnou funkce
+	// c√≠l pro vstupn√≠ prom√¨nnou funkce
 				if (inpar && BufLoc.IsValid(reffrst) && (BufLoc[reffrst].Child >= 0))
 				{
 					reffrst = BufLoc[reffrst].Child;
@@ -881,70 +881,70 @@ int GetProg(int bufID, int prev, int num)
 					if (BufLoc.IsValid(reffrst)) newpar = TRUE;
 				}
 
-	// vytvo¯enÌ novÈho objektu
+	// vytvo√∏en√≠ nov√©ho objektu
 				inx = bufref->Copy(reffrst, -2,	// kopie objektu
 						ProgFile::ImportBlok[dst.Func - IDF],
 						ProgFile::ImportIndex[dst.Func - IDF]);
 
-				if (bufref->IsValid(inx))	// je teÔ jiû reference platn·?
+				if (bufref->IsValid(inx))	// je te√Ø ji≈æ reference platn√°?
 				{
-	// zruöenÌ potomk˘ objektu (promÏnnÈ sprajtu a seznamu)
+	// zru≈°en√≠ potomk√π objektu (prom√¨nn√© sprajtu a seznamu)
 					while (bufref->At(inx).Child >= 0)
 					{
 						if (!bufref->Del(bufref->At(inx).Child)) break;
 					}
 
-	// umoûnÏnÌ pozdÏjöÌ zruöenÌ takto vytvo¯enÈho objektu
-					bufref->At(inx).Param |= PR_NEW;					// p¯Ìznak novÈ poloûky
-					bufref->At(inx).Param &= ~(PR_NOMOVE | PR_INTERN);	// aby se dal zruöit
+	// umo≈æn√¨n√≠ pozd√¨j≈°√≠ zru≈°en√≠ takto vytvo√∏en√©ho objektu
+					bufref->At(inx).Param |= PR_NEW;					// p√∏√≠znak nov√© polo≈æky
+					bufref->At(inx).Param &= ~(PR_NOMOVE | PR_INTERN);	// aby se dal zru≈°it
 
-	// zajiötÏnÌ jedineËnosti jmÈna novÈho objektu
-					int overloc = -1;					// p¯eskoËenÌ v lok·lnÌm bufferu
-					int overobj = inx;					// p¯eskoËenÌ v glob·lnÌm bufferu
+	// zaji≈°t√¨n√≠ jedine√®nosti jm√©na nov√©ho objektu
+					int overloc = -1;					// p√∏esko√®en√≠ v lok√°ln√≠m bufferu
+					int overobj = inx;					// p√∏esko√®en√≠ v glob√°ln√≠m bufferu
 
-					if (newpar)							// je to vstupnÌ promÏnn· funkce?
+					if (newpar)							// je to vstupn√≠ prom√¨nn√° funkce?
 					{
-						reffrst = BufLoc[reffrst].Parent; // zaË·tek lok·lnÌ definice s promÏnnou
-						refnext = BufLoc[reffrst].Next;	// poslednÌ hledan· poloûka
-						overloc = inx;					// p¯eskoËenÌ v lok·lnÌm bufferu
-						overobj = -1;					// p¯eskoËenÌ v glob·lnÌm bufferu
+						reffrst = BufLoc[reffrst].Parent; // za√®√°tek lok√°ln√≠ definice s prom√¨nnou
+						refnext = BufLoc[reffrst].Next;	// posledn√≠ hledan√° polo≈æka
+						overloc = inx;					// p√∏esko√®en√≠ v lok√°ln√≠m bufferu
+						overobj = -1;					// p√∏esko√®en√≠ v glob√°ln√≠m bufferu
 					}
 					else
 					{
-						reffrst = -1;						// pro glob·lnÌ buffer prohled·vat cel˝ lok·lnÌ buffer
-						refnext = -1;						// p¯ÌötÌ poloûka
+						reffrst = -1;						// pro glob√°ln√≠ buffer prohled√°vat cel√Ω lok√°ln√≠ buffer
+						refnext = -1;						// p√∏√≠≈°t√≠ polo≈æka
 
-						if (src.RefBlok == BufLocID)		// poloûka je v lok·lnÌm bufferu
+						if (src.RefBlok == BufLocID)		// polo≈æka je v lok√°ln√≠m bufferu
 						{
-							overloc = inx;					// p¯eskoËenÌ v lok·lnÌm bufferu
-							overobj = -1;					// p¯eskoËenÌ v glob·lnÌm bufferu
+							overloc = inx;					// p√∏esko√®en√≠ v lok√°ln√≠m bufferu
+							overobj = -1;					// p√∏esko√®en√≠ v glob√°ln√≠m bufferu
 
-							reffrst = m_LocFirst;			// hledan· prvnÌ lok·lnÌ poloûka
-							if (BufLoc.IsValid(reffrst))	// je lok·lnÌ poloûka platn·?
+							reffrst = m_LocFirst;			// hledan√° prvn√≠ lok√°ln√≠ polo≈æka
+							if (BufLoc.IsValid(reffrst))	// je lok√°ln√≠ polo≈æka platn√°?
 							{
-								refnext = BufLoc[reffrst].Next;	// poslednÌ hledan· poloûka
+								refnext = BufLoc[reffrst].Next;	// posledn√≠ hledan√° polo≈æka
 							}
 						}
 					}
 
-					while ((BufLoc.FindObj(m_Text, overloc, reffrst, refnext) >= 0) ||	// je jmÈno v lok·lnÌm bufferu?
-							(BufObj.FindObj(m_Text, overobj, -1, -1) >= 0))				// je jmÈno v glob·lnÌm bufferu?
+					while ((BufLoc.FindObj(m_Text, overloc, reffrst, refnext) >= 0) ||	// je jm√©no v lok√°ln√≠m bufferu?
+							(BufObj.FindObj(m_Text, overobj, -1, -1) >= 0))				// je jm√©no v glob√°ln√≠m bufferu?
 					{
 						nn++;
 						m_Text.SetNumObj(nn);
 					}
 
-	// nastavenÌ jmÈna novÈho objektu
+	// nastaven√≠ jm√©na nov√©ho objektu
 					int oldname = bufref->At(inx).Name;
-					bufref->At(inx).Name = Text.Add(m_Text); // nastavenÌ jmÈna poloûky
+					bufref->At(inx).Name = Text.Add(m_Text); // nastaven√≠ jm√©na polo≈æky
 					Undo.AddProgName(bufref->BufID(), inx, oldname);
 
-					if (bufref->At(inx).HTree)			// je poloûka zobrazena?
+					if (bufref->At(inx).HTree)			// je polo≈æka zobrazena?
 					{
 						TV_ITEM tvi;
 						tvi.mask = TVIF_TEXT;
 						tvi.hItem = bufref->At(inx).HTree;
-						tvi.pszText = (LPTSTR)(LPCTSTR)m_Text.MultiText();	// oprava textu zobrazenÈ poloûky
+						tvi.pszText = (LPTSTR)(LPCTSTR)m_Text.MultiText();	// oprava textu zobrazen√© polo≈æky
 						::SendMessage(bufref->Tree(), TVM_SETITEM, 0, (LPARAM)&tvi);
 					}
 
@@ -956,51 +956,51 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 
-			dst.RefIndex = inx;				// nalezen· referenËnÌ poloûka
+			dst.RefIndex = inx;				// nalezen√° referen√®n√≠ polo≈æka
 			break;
 
-	// reference nenÌ na û·dn˝ objekt, referuje se do bufferu t¯Ìd nebo struktur
+	// reference nen√≠ na ≈æ√°dn√Ω objekt, referuje se do bufferu t√∏√≠d nebo struktur
 		default:
-			inx = dst.Func - IDF;						// ËÌslo funkce
-			dst.RefBlok = ProgFile::ImportBlok[inx];	// referenËnÌ blok
-			dst.RefIndex = ProgFile::ImportIndex[inx];	// referenËnÌ poloûka
+			inx = dst.Func - IDF;						// √®√≠slo funkce
+			dst.RefBlok = ProgFile::ImportBlok[inx];	// referen√®n√≠ blok
+			dst.RefIndex = ProgFile::ImportIndex[inx];	// referen√®n√≠ polo≈æka
 		}
 
-// zdÏdÏnÌ parametr˘ z deklarace
-		blok = dst.RefBlok;								// referenËnÌ blok
-		inx = dst.RefIndex;								// referenËnÌ index
+// zd√¨d√¨n√≠ parametr√π z deklarace
+		blok = dst.RefBlok;								// referen√®n√≠ blok
+		inx = dst.RefIndex;								// referen√®n√≠ index
 
-		if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platnÈ ËÌslo bloku?
-			BufProg[blok].IsValid(inx))					// je platn· referenËnÌ poloûka?
+		if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platn√© √®√≠slo bloku?
+			BufProg[blok].IsValid(inx))					// je platn√° referen√®n√≠ polo≈æka?
 		{
-			PROGITEM* itm = &BufProg[blok][inx];		// adresa referenËnÌ poloûky
-			dst.Func = itm->Func;						// ËÌslo funkce
+			PROGITEM* itm = &BufProg[blok][inx];		// adresa referen√®n√≠ polo≈æky
+			dst.Func = itm->Func;						// √®√≠slo funkce
 			dst.SrcMask = itm->SrcMask;
 			dst.DstMask = itm->DstMask;
 			dst.Param |= itm->Param & (PR_ONE | PR_INTERN | PR_NOMOVE | PR_SETPAR | PR_PARPAR);
 		}
 		else
 		{
-			dst.RefBlok = ProgFile::ImportBlok[IDF_COMMENT - IDF];	// referenËnÌ blok
-			dst.RefIndex = ProgFile::ImportIndex[IDF_COMMENT - IDF];	// referenËnÌ poloûka
+			dst.RefBlok = ProgFile::ImportBlok[IDF_COMMENT - IDF];	// referen√®n√≠ blok
+			dst.RefIndex = ProgFile::ImportIndex[IDF_COMMENT - IDF];	// referen√®n√≠ polo≈æka
 			dst.Func = IDF_COMMENT;
 			dst.SrcMask = PR_ALL;
 			dst.DstMask = PR_ALL;
 
-			blok = dst.RefBlok;								// referenËnÌ blok
-			inx = dst.RefIndex;								// referenËnÌ index
-			if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platnÈ ËÌslo bloku?
-				BufProg[blok].IsValid(inx))					// je platn· referenËnÌ poloûka?
+			blok = dst.RefBlok;								// referen√®n√≠ blok
+			inx = dst.RefIndex;								// referen√®n√≠ index
+			if (((DWORD)blok < (DWORD)PROGBUFNUM) &&		// je platn√© √®√≠slo bloku?
+				BufProg[blok].IsValid(inx))					// je platn√° referen√®n√≠ polo≈æka?
 			{
-				PROGITEM* itm = &BufProg[blok][inx];		// adresa referenËnÌ poloûky
-				dst.Func = itm->Func;						// ËÌslo funkce
+				PROGITEM* itm = &BufProg[blok][inx];		// adresa referen√®n√≠ polo≈æky
+				dst.Func = itm->Func;						// √®√≠slo funkce
 				dst.SrcMask = itm->SrcMask;
 				dst.DstMask = itm->DstMask;
 				dst.Param |= itm->Param & (PR_ONE | PR_INTERN | PR_NOMOVE | PR_SETPAR | PR_PARPAR);
 			}
 		}
 
-// korekce parametr˘ indexu seznamu
+// korekce parametr√π indexu seznamu
 		if ((dst.Func == IDF_LIST_INDEX) ||
 			(dst.Func == IDF_LIST_AUTO) ||
 			(dst.Func == IDF_LIST_SIZE) ||
@@ -1016,13 +1016,13 @@ int GetProg(int bufID, int prev, int num)
 			dst.Param |= PR_INTERN;
 		}
 
-// v editoru se ruöÌ internÌ p¯Ìznak
+// v editoru se ru≈°√≠ intern√≠ p√∏√≠znak
 		if (bufID == BufEdiID)
 		{
 			dst.Param &= ~PR_INTERN;
 		}
 
-// zaloûenÌ lok·lnÌ definice
+// zalo≈æen√≠ lok√°ln√≠ definice
 		if ((bufID == BufLocID) && (parent[parnum] < 0))
 		{
 			dst.DatBlok = BufEdiID;
@@ -1034,27 +1034,27 @@ int GetProg(int bufID, int prev, int num)
 			m_LocFirst = inxloc;
 		}
 
-// p¯Ìprava k naËtenÌ dat
-		blok = src.DatBlok;					// datov˝ blok
-		inx = src.DatIndex;					// dÈlka dat
-		dst.DatBlok = blok;					// datov˝ blok
+// p√∏√≠prava k na√®ten√≠ dat
+		blok = src.DatBlok;					// datov√Ω blok
+		inx = src.DatIndex;					// d√©lka dat
+		dst.DatBlok = blok;					// datov√Ω blok
 		dst.DatIndex = -1;					// nejsou data
 
-		if (inx < 0) inx = 0;				// ochrana p¯i podteËenÌ ˙daje dÈlky dat
-		int newnum = m_Num + inx;			// nov˝ ukazatel ËtenÌ dat
+		if (inx < 0) inx = 0;				// ochrana p√∏i podte√®en√≠ √∫daje d√©lky dat
+		int newnum = m_Num + inx;			// nov√Ω ukazatel √®ten√≠ dat
 
-		switch(blok)						// podle datovÈho bloku
+		switch(blok)						// podle datov√©ho bloku
 		{
-// lok·lnÌ funkce, funkce
+// lok√°ln√≠ funkce, funkce
 		case BufLocID:
 		case BufEdiID:
 			if (inx > sizeof(long))
 			{
-				long cnt;					// poËet prvk˘
-				Get(&cnt, sizeof(long));	// poËet prvk˘
-				int locfirst = m_LocFirst;	// ˙schova v˝chozÌ poloûky hled·nÌ v lok·lnÌm bufferu
-				dst.DatIndex = GetProg(blok, BufProg[blok].First(), cnt); // naËtenÌ programu
-				m_LocFirst = locfirst;		// n·vrat v˝chozÌ poloûky hled·nÌ v lok·lnÌm bufferu
+				long cnt;					// po√®et prvk√π
+				Get(&cnt, sizeof(long));	// po√®et prvk√π
+				int locfirst = m_LocFirst;	// √∫schova v√Ωchoz√≠ polo≈æky hled√°n√≠ v lok√°ln√≠m bufferu
+				dst.DatIndex = GetProg(blok, BufProg[blok].First(), cnt); // na√®ten√≠ programu
+				m_LocFirst = locfirst;		// n√°vrat v√Ωchoz√≠ polo≈æky hled√°n√≠ v lok√°ln√≠m bufferu
 				if (dst.DatIndex < 0)
 				{
 					MemFree(parent);
@@ -1069,7 +1069,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 			break;
 
-// ËÌslo
+// √®√≠slo
 		case BufNumID:
 			if (inx >= sizeof(double))
 			{
@@ -1103,7 +1103,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 			break;
 			
-// logick· promÏnn·
+// logick√° prom√¨nn√°
 		case BufLogID:
 			if (inx >= sizeof(long))
 			{
@@ -1166,29 +1166,29 @@ int GetProg(int bufID, int prev, int num)
 				CBufIndex bufinx;
 				bufinx.NumClear(refs);
 
-			// naËtenÌ referencÌ
+			// na√®ten√≠ referenc√≠
 				for (i = 0; i < refs; i++)
 				{
-					GetText(m_Max - m_Num);			// naËtenÌ referenËnÌho textu
+					GetText(m_Max - m_Num);			// na√®ten√≠ referen√®n√≠ho textu
 
-			// nalezenÌ objektu v nÏkterÈm z buffer˘
+			// nalezen√≠ objektu v n√¨kter√©m z buffer√π
 					reffrst = -1;
 					refnext = -1;
-					CBufProg* bf = &BufObj;			// bude se hledat v glob·lnÌm bufferu
-					inx = bf->FindObj(m_Text, -1, -1, -1); // nalezenÌ reference
+					CBufProg* bf = &BufObj;			// bude se hledat v glob√°ln√≠m bufferu
+					inx = bf->FindObj(m_Text, -1, -1, -1); // nalezen√≠ reference
 
-					if ((inx < 0) && (bufID == BufLocID))	// nebyla poloûka nalezena?
+					if ((inx < 0) && (bufID == BufLocID))	// nebyla polo≈æka nalezena?
 					{
-						bf = &BufLoc;				// bude se hledat v lok·lnÌm bufferu
-						reffrst = m_LocFirst;		// hledan· prvnÌ lok·lnÌ poloûka
-						if (bf->IsValid(reffrst))	// je lok·lnÌ poloûka platn·?
+						bf = &BufLoc;				// bude se hledat v lok√°ln√≠m bufferu
+						reffrst = m_LocFirst;		// hledan√° prvn√≠ lok√°ln√≠ polo≈æka
+						if (bf->IsValid(reffrst))	// je lok√°ln√≠ polo≈æka platn√°?
 						{
-							refnext = bf->At(reffrst).Next;	// poslednÌ hledan· poloûka
+							refnext = bf->At(reffrst).Next;	// posledn√≠ hledan√° polo≈æka
 						}
 						inx = bf->FindObj(m_Text, -1, reffrst, refnext);
 					}
 
-			// pokus o nalezenÌ objektu spr·vnÈho typu
+			// pokus o nalezen√≠ objektu spr√°vn√©ho typu
 					nn = 1;
 					while (bf->IsValid(inx) && (bf->At(inx).Func != IDF_ICON)
 							&& (bf->At(inx).Func != IDF_NONE))
@@ -1198,49 +1198,49 @@ int GetProg(int bufID, int prev, int num)
 
 						reffrst = -1;
 						refnext = -1;
-						CBufProg* bf = &BufObj;			// bude se hledat v glob·lnÌm bufferu
-						inx = bf->FindObj(m_Text, -1, -1, -1); // nalezenÌ reference
+						CBufProg* bf = &BufObj;			// bude se hledat v glob√°ln√≠m bufferu
+						inx = bf->FindObj(m_Text, -1, -1, -1); // nalezen√≠ reference
 
-						if ((inx < 0) && (bufID == BufLocID))	// nebyla poloûka nalezena?
+						if ((inx < 0) && (bufID == BufLocID))	// nebyla polo≈æka nalezena?
 						{
-							bf = &BufLoc;				// bude se hledat v lok·lnÌm bufferu
-							reffrst = m_LocFirst;		// hledan· prvnÌ lok·lnÌ poloûka
-							if (bf->IsValid(reffrst))	// je lok·lnÌ poloûka platn·?
+							bf = &BufLoc;				// bude se hledat v lok√°ln√≠m bufferu
+							reffrst = m_LocFirst;		// hledan√° prvn√≠ lok√°ln√≠ polo≈æka
+							if (bf->IsValid(reffrst))	// je lok√°ln√≠ polo≈æka platn√°?
 							{
-								refnext = bf->At(reffrst).Next;	// poslednÌ hledan· poloûka
+								refnext = bf->At(reffrst).Next;	// posledn√≠ hledan√° polo≈æka
 							}
 							inx = bf->FindObj(m_Text, -1, reffrst, refnext);
 						}
 					}
 		
-			// objekt nenalezen - bude se vytv·¯et (v glob·lnÌm bufferu)
+			// objekt nenalezen - bude se vytv√°√∏et (v glob√°ln√≠m bufferu)
 					if (bf->IsNotValid(inx))
 					{
 						bf = &BufObj;
-						inx = bf->Copy(-1, -2,		// kopie novÈ ikony
+						inx = bf->Copy(-1, -2,		// kopie nov√© ikony
 								ProgFile::ImportBlok[IDF_ICON - IDF],
 								ProgFile::ImportIndex[IDF_ICON - IDF]);
 
-			// zajiötÏnÌ jedineËnosti jmÈna novÈ ikony
+			// zaji≈°t√¨n√≠ jedine√®nosti jm√©na nov√© ikony
 						if (bf->IsValid(inx))
 						{
-							bf->At(inx).Param |= PR_NEW;					// p¯Ìznak novÈ poloûky
+							bf->At(inx).Param |= PR_NEW;					// p√∏√≠znak nov√© polo≈æky
 		
-							refnext = -1;						// p¯ÌötÌ poloûka
-							reffrst = m_LocFirst;			// hledan· prvnÌ lok·lnÌ poloûka
-							if (BufLoc.IsValid(reffrst))	// je lok·lnÌ poloûka platn·?
+							refnext = -1;						// p√∏√≠≈°t√≠ polo≈æka
+							reffrst = m_LocFirst;			// hledan√° prvn√≠ lok√°ln√≠ polo≈æka
+							if (BufLoc.IsValid(reffrst))	// je lok√°ln√≠ polo≈æka platn√°?
 							{
-								refnext = BufLoc[reffrst].Next;	// poslednÌ hledan· poloûka
+								refnext = BufLoc[reffrst].Next;	// posledn√≠ hledan√° polo≈æka
 							}
 
-							while ((BufLoc.FindObj(m_Text, -1, reffrst, refnext) >= 0) ||	// je jmÈno v lok·lnÌm bufferu?
-									(BufObj.FindObj(m_Text, inx, -1, -1) >= 0))				// je jmÈno v glob·lnÌm bufferu?
+							while ((BufLoc.FindObj(m_Text, -1, reffrst, refnext) >= 0) ||	// je jm√©no v lok√°ln√≠m bufferu?
+									(BufObj.FindObj(m_Text, inx, -1, -1) >= 0))				// je jm√©no v glob√°ln√≠m bufferu?
 							{
 								nn++;
 								m_Text.SetNumObj(nn);
 							}
 
-			// nastavenÌ jmÈna novÈho objektu
+			// nastaven√≠ jm√©na nov√©ho objektu
 							int oldname = bf->At(inx).Name;
 							bf->At(inx).Name = Text.Add(m_Text);
 							Undo.AddProgName(bf->BufID(), inx, oldname);
@@ -1255,12 +1255,12 @@ int GetProg(int bufID, int prev, int num)
 						}
 					}
 
-			// ˙schova indexu ikony
+			// √∫schova indexu ikony
 					bufinx[i] = bf->GetIcon(inx);
 					if (bufinx[i] < 0) bufinx[i] = 0;
 				}
 
-			// naËtenÌ ikon
+			// na√®ten√≠ ikon
 				MAPDATA* map = Map[dst.DatIndex].Data();
 				int size = width*height;
 
@@ -1291,11 +1291,11 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 
-		// inrekentace ËÌtaË˘ pouûitÌ ikon
+		// inrekentace √®√≠ta√®√π pou≈æit√≠ ikon
 			Map[dst.DatIndex].RefInc();
 			break;
 
-// obr·zek
+// obr√°zek
 		case BufPicID:
 			inx -= 2*sizeof(long);
 			if (inx >= 0)
@@ -1435,13 +1435,13 @@ int GetProg(int bufID, int prev, int num)
 			break;
 
 		default:
-			dst.DatBlok = -1;					// nenÌ datov˝ blok
+			dst.DatBlok = -1;					// nen√≠ datov√Ω blok
 		}
 
-		m_Num = newnum;						// nov˝ ukazatel ËtenÌ dat
-		if (m_Num > m_Max) m_Num = m_Max;	// oprava p¯i p¯eteËenÌ konce
+		m_Num = newnum;						// nov√Ω ukazatel √®ten√≠ dat
+		if (m_Num > m_Max) m_Num = m_Max;	// oprava p√∏i p√∏ete√®en√≠ konce
 
-// naËtenÌ ikony
+// na√®ten√≠ ikony
 		dst.Icon = -1;
 		if (src.Icon >= 0)
 		{
@@ -1459,7 +1459,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 		}
 
-// naËtenÌ jmÈna
+// na√®ten√≠ jm√©na
 		dst.Name = -1;
 		if (src.Name >= 0)
 		{
@@ -1467,8 +1467,8 @@ int GetProg(int bufID, int prev, int num)
 			dst.Name = Text.Add(m_Text);
 		}
 
-// v objektech kontrola, zda jmÈno jiû existuje (zda byl jiû d¯Ìve vytvo¯en pomocn˝ objekt)
-		inx = -1;									// p¯ednastavenÌ - prvek neexistuje
+// v objektech kontrola, zda jm√©no ji≈æ existuje (zda byl ji≈æ d√∏√≠ve vytvo√∏en pomocn√Ω objekt)
+		inx = -1;									// p√∏ednastaven√≠ - prvek neexistuje
 
 		if (((bufID == BufLocID) || (bufID == BufObjID)) && buf->TestObj(dst.Func))
 		{
@@ -1485,16 +1485,16 @@ int GetProg(int bufID, int prev, int num)
 			refnext = -1;
 			if (bufID == BufLocID)
 			{
-				reffrst = m_LocFirst;		// hledan· prvnÌ lok·lnÌ poloûka
-				if (buf->IsValid(reffrst))	// je lok·lnÌ poloûka platn·?
+				reffrst = m_LocFirst;		// hledan√° prvn√≠ lok√°ln√≠ polo≈æka
+				if (buf->IsValid(reffrst))	// je lok√°ln√≠ polo≈æka platn√°?
 				{
-					refnext = buf->At(reffrst).Next; // poslednÌ hledan· poloûka
+					refnext = buf->At(reffrst).Next; // posledn√≠ hledan√° polo≈æka
 				}
 			}
 
 			inx = buf->FindObj(m_Text, -1, reffrst, refnext);
 
-	// prvek vyhovuje, m˘ûe se p¯esunout sem (byl nalezen d¯Ìve vytvo¯en˝ pomocn˝ prvek)
+	// prvek vyhovuje, m√π≈æe se p√∏esunout sem (byl nalezen d√∏√≠ve vytvo√∏en√Ω pomocn√Ω prvek)
 			if (inx >= 0)
 			{
 				if ((buf->At(inx).Func == dst.Func) &&
@@ -1576,7 +1576,7 @@ int GetProg(int bufID, int prev, int num)
 			}
 		}
 
-// zajiötÏnÌ jedineËnosti jmÈna objektu
+// zaji≈°t√¨n√≠ jedine√®nosti jm√©na objektu
 		if (inx < 0)
 		{
 			if (((bufID == BufObjID) || (bufID == BufLocID)) && buf->TestObj(dst.Func))
@@ -1591,10 +1591,10 @@ int GetProg(int bufID, int prev, int num)
 				}
 
 				refnext = -1;
-				reffrst = m_LocFirst;		// hledan· prvnÌ lok·lnÌ poloûka
-				if (buf->IsValid(reffrst))	// je lok·lnÌ poloûka platn·?
+				reffrst = m_LocFirst;		// hledan√° prvn√≠ lok√°ln√≠ polo≈æka
+				if (buf->IsValid(reffrst))	// je lok√°ln√≠ polo≈æka platn√°?
 				{
-					refnext = buf->At(reffrst).Next; // poslednÌ hledan· poloûka
+					refnext = buf->At(reffrst).Next; // posledn√≠ hledan√° polo≈æka
 				}
 
 				nn = 1;
@@ -1618,7 +1618,7 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 
-// vloûenÌ prvku do bufferu (pokud nebyl p¯esunut)
+// vlo≈æen√≠ prvku do bufferu (pokud nebyl p√∏esunut)
 			if (newpar && (BufEdi[parent[parnum]].Child >= 0))
 			{
 				inx = BufEdi[parent[parnum]].Child;
@@ -1637,10 +1637,10 @@ int GetProg(int bufID, int prev, int num)
 				}
 			}
 		}
-		prev = -2;						// odteÔ jiû ukl·dat na konec
-		if (result < 0) result = inx;	// p¯i prvnÌm pouûitÌ to bude v˝chozÌ prvek
+		prev = -2;						// odte√Ø ji≈æ ukl√°dat na konec
+		if (result < 0) result = inx;	// p√∏i prvn√≠m pou≈æit√≠ to bude v√Ωchoz√≠ prvek
 
-// pokud budou potomci, zv˝öenÌ ËÌtaËe rodiË˘
+// pokud budou potomci, zv√Ω≈°en√≠ √®√≠ta√®e rodi√®√π
 		if (src.Param & PETPROG_CHILDS)
 		{
 			parnum++;
@@ -1661,7 +1661,7 @@ int GetProg(int bufID, int prev, int num)
 			next[parnum] = TRUE;
 		}
 
-// snÌûenÌ ËÌtaËe rodiË˘
+// sn√≠≈æen√≠ √®√≠ta√®e rodi√®√π
 		else
 		{
 			while (!next[parnum] && (parnum > 0))
@@ -1670,15 +1670,15 @@ int GetProg(int bufID, int prev, int num)
 			}
 		}
 
-// p¯i nedostatku dat po prvnÌm pr˘chodu konec
+// p√∏i nedostatku dat po prvn√≠m pr√πchodu konec
 		if (m_Num >= m_Max) break;
 	}
 
-// zruöenÌ buffer˘
+// zru≈°en√≠ buffer√π
 	MemFree(parent);
 	MemFree(next);
 
-// zapnutÌ p¯ekreslov·nÌ
+// zapnut√≠ p√∏ekreslov√°n√≠
 	buf->RedrawOn();
 
 	return result;
@@ -1686,39 +1686,39 @@ int GetProg(int bufID, int prev, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test poloûenÌ z clipbardu (buffer i poloüka jsou platnÈ)
+// test polo≈æen√≠ z clipbardu (buffer i polo≈∏ka jsou platn√©)
 
 BOOL TestPaste(int bufID, int inx)
 {
-// adresa bufferu a poloûky
+// adresa bufferu a polo≈æky
 	CBufProg* buf = BufProg + bufID;
 	if (buf->IsNotValid(inx)) return FALSE;
 	PROGITEM* item = &buf->At(inx);
 	int fnc = item->Func;
 
-// test pro neplatn˝ rodiË - glob·lnÌ bufferu nebo definice funkce (nejsou povoleny ËÌslice)
+// test pro neplatn√Ω rodi√® - glob√°ln√≠ bufferu nebo definice funkce (nejsou povoleny √®√≠slice)
 	if (item->Parent < 0)
 	{
 		return ((fnc != IDF_LIST_SIZE) && ((fnc < IDF_0) || (fnc > IDF_9)));
 	}
 
-// rodiË poloûky
+// rodi√® polo≈æky
 	PROGITEM* parent = &buf->At(item->Parent);
 	int fncpar = parent->Func;
 
-// kontrola bufferu objekt˘
+// kontrola bufferu objekt√π
 	switch (bufID)
 	{
 	case BufObjID:
 	case BufLocID:
 
-// do velikosti seznamu lze p¯et·hnout ËÌslice
+// do velikosti seznamu lze p√∏et√°hnout √®√≠slice
 		if (fncpar == IDF_LIST_SIZE)
 		{
 			return ((fnc >= IDF_0) && (fnc <= IDF_9));
 		}
 
-// poloûenÌ koment·¯e
+// polo≈æen√≠ koment√°√∏e
 		if (fnc == IDF_COMMENT)
 		{
 			return (((parent->Param & PR_ONE) == 0) &&
@@ -1729,10 +1729,10 @@ BOOL TestPaste(int bufID, int inx)
 					(fncpar != IDF_RETURN_CODE));
 		}
 
-// poloûenÌ do koment·¯e (z·kaz - jen dalöÌ koment·¯)
+// polo≈æen√≠ do koment√°√∏e (z√°kaz - jen dal≈°√≠ koment√°√∏)
 		if (fncpar == IDF_COMMENT) return FALSE;
 
-// do seznamu lze poloûit datovÈ promÏnnÈ
+// do seznamu lze polo≈æit datov√© prom√¨nn√©
 		if (fncpar == IDF_LIST)
 		{
 			switch (fnc)
@@ -1752,14 +1752,14 @@ BOOL TestPaste(int bufID, int inx)
 			return FALSE;
 		}
 
-// skupinu, seznam ani funkci nelze umÌstit do vstupnÌch/v˝stupnÌch promÏnn˝ch
+// skupinu, seznam ani funkci nelze um√≠stit do vstupn√≠ch/v√Ωstupn√≠ch prom√¨nn√Ωch
 		if (((fnc == IDF_GROUP) || (fnc == IDF_LIST) || (fnc == IDF_FNC)) &&
 			((fncpar == IDF_PAR) || (fncpar == IDF_OUT))) return FALSE;
 
-// test, zda je povolen pouze jeden parametr (v˝stupnÌ promÏnn·)
+// test, zda je povolen pouze jeden parametr (v√Ωstupn√≠ prom√¨nn√°)
 		if ((parent->Param & PR_ONE) && ((item->Prev >= 0) || (item->Next >= 0))) return FALSE;
 
-// do skupiny (p¯Ìp. parametr˘) lze p¯et·hnout promÏnnÈ, skupinu a seznam
+// do skupiny (p√∏√≠p. parametr√π) lze p√∏et√°hnout prom√¨nn√©, skupinu a seznam
 		if ((fncpar == IDF_GROUP) || (fncpar == IDF_PAR) || (fncpar == IDF_OUT))
 		{
 			switch (fnc)
@@ -1782,41 +1782,41 @@ BOOL TestPaste(int bufID, int inx)
 		}
 		return FALSE;
 
-// kontrola editaËnÌho bufferu
+// kontrola edita√®n√≠ho bufferu
 	default:
 
-// poloûenÌ koment·¯e
+// polo≈æen√≠ koment√°√∏e
 		if (fnc == IDF_COMMENT)
 		{
 			return ((parent->Parent < 0) || (((parent->Param & PR_ONE) == 0) && (fncpar != IDF_FNC)));
 		}
 
-// poloûenÌ do koment·¯e
+// polo≈æen√≠ do koment√°√∏e
 		if (fncpar == IDF_COMMENT) return TRUE;
 
 // test, zda je povolen pouze jeden parametr
 		if ((parent->Param & PR_ONE) && ((item->Prev >= 0) || (item->Next >= 0))) return FALSE;
 
-// poloûenÌ vÏtve CASE
+// polo≈æen√≠ v√¨tve CASE
 		if (fnc == IDF_CASE_ON) return (fncpar == IDF_CASE);
 		if (fnc == IDF_CASE_EQU) return (fncpar == IDF_CASE_ON);
 
-// porovn·nÌ masky zdroje a cÌle taûenÌ
+// porovn√°n√≠ masky zdroje a c√≠le ta≈æen√≠
 		if ((item->SrcMask & parent->DstMask) == 0) return FALSE;
 
-// z·kaz poloûenÌ poloûky s parametrem do parametru
-		if ((fnc != IDF_FNC) &&									// funkce je povolena, m˘ûe mÌt vstupnÌ parametry
-			((parent->DstMask & PR_COMMAND) == 0) &&			// cÌlem nejsou p¯Ìkazy
-			((item->SrcMask & PR_COMMAND) != 0) &&				// zdroj m˘ûe b˝t jako p¯Ìkaz
-			((item->Param & PR_PARPAR) == 0) &&					// kromÏ p¯Ìpadu, kdy m· povoleny parametry vûdy
-			(item->Child >= 0)) return FALSE;					// poloûka m· nÏjakÈho potomka
+// z√°kaz polo≈æen√≠ polo≈æky s parametrem do parametru
+		if ((fnc != IDF_FNC) &&									// funkce je povolena, m√π≈æe m√≠t vstupn√≠ parametry
+			((parent->DstMask & PR_COMMAND) == 0) &&			// c√≠lem nejsou p√∏√≠kazy
+			((item->SrcMask & PR_COMMAND) != 0) &&				// zdroj m√π≈æe b√Ωt jako p√∏√≠kaz
+			((item->Param & PR_PARPAR) == 0) &&					// krom√¨ p√∏√≠padu, kdy m√° povoleny parametry v≈ædy
+			(item->Child >= 0)) return FALSE;					// polo≈æka m√° n√¨jak√©ho potomka
 
-// z·kaz poloûenÌ do poloûky, kter· nenÌ p¯Ìkazem
-		if (((parent->SrcMask & PR_COMMAND) != 0) &&			// cÌl m˘ûe b˝t jako p¯Ìkaz
-			((parent->Param & PR_PARPAR) == 0) &&				// kromÏ p¯Ìpadu, kdy m· povoleny parametry vûdy
-			(parent->Parent >= 0) &&							// cÌl je nÏËÌm potomkem
-			((buf->At(parent->Parent).DstMask & PR_ALLDATA) != 0) &&  // rodiË cÌle p¯ijÌm· data
-			((buf->At(parent->Parent).DstMask & PR_COMMAND) == 0))	// p¯itom rodiË cÌle nep¯ijÌm· p¯Ìkazy (=nenÌ jako p¯Ìkaz)
+// z√°kaz polo≈æen√≠ do polo≈æky, kter√° nen√≠ p√∏√≠kazem
+		if (((parent->SrcMask & PR_COMMAND) != 0) &&			// c√≠l m√π≈æe b√Ωt jako p√∏√≠kaz
+			((parent->Param & PR_PARPAR) == 0) &&				// krom√¨ p√∏√≠padu, kdy m√° povoleny parametry v≈ædy
+			(parent->Parent >= 0) &&							// c√≠l je n√¨√®√≠m potomkem
+			((buf->At(parent->Parent).DstMask & PR_ALLDATA) != 0) &&  // rodi√® c√≠le p√∏ij√≠m√° data
+			((buf->At(parent->Parent).DstMask & PR_COMMAND) == 0))	// p√∏itom rodi√® c√≠le nep√∏ij√≠m√° p√∏√≠kazy (=nen√≠ jako p√∏√≠kaz)
 			return FALSE;
 
 		return TRUE;
@@ -1825,14 +1825,14 @@ BOOL TestPaste(int bufID, int inx)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// navr·cenÌ z bufferu
+// navr√°cen√≠ z bufferu
 
 void Paste(int bufID)
 {
-// kontrola, zda neprobÌh· obsluha
+// kontrola, zda neprob√≠h√° obsluha
 	if (Lock) return;
 
-// kontrola povolen˝ch buffer˘
+// kontrola povolen√Ωch buffer√π
 	if ((bufID != BufObjID) &&
 		(bufID != BufLocID) &&
 		(bufID != BufEdiID))
@@ -1840,14 +1840,14 @@ void Paste(int bufID)
 		return;
 	}
 
-// zapnutÌ p¯Ìznaku obsluhy
+// zapnut√≠ p√∏√≠znaku obsluhy
 	Lock = TRUE;
 
-// p¯Ìprava v˝chozÌ poloûky k uloûenÌ (m˘ûe b˝t i neplatn·!)
+// p√∏√≠prava v√Ωchoz√≠ polo≈æky k ulo≈æen√≠ (m√π≈æe b√Ωt i neplatn√°!)
 	CBufProg* buf = BufProg + bufID;
 	int first = buf->Select();
 
-// kontrola poloûky
+// kontrola polo≈æky
 	if (buf->IsValid(first) &&
 		((buf->At(first).Param & (PR_LOCK | PR_LOCK_DEP)) != 0))
 	{
@@ -1855,10 +1855,10 @@ void Paste(int bufID)
 		return;
 	}
 
-// zapnutÌ ËekacÌho kurzoru
+// zapnut√≠ √®ekac√≠ho kurzoru
 	BeginWaitCursor();
 
-// otev¯enÌ schr·nky
+// otev√∏en√≠ schr√°nky
 	if (!::OpenClipboard(MainFrame))
 	{
 		EndWaitCursor();
@@ -1866,8 +1866,8 @@ void Paste(int bufID)
 		return;
 	}
 
-// naËtenÌ dat schr·nky
-	HGLOBAL		global;			// glob·lnÌ buffer s daty
+// na√®ten√≠ dat schr√°nky
+	HGLOBAL		global;			// glob√°ln√≠ buffer s daty
 	switch (bufID)
 	{
 	case BufObjID:
@@ -1882,7 +1882,7 @@ void Paste(int bufID)
 		global = ::GetClipboardData(CF_PETPROGP);
 	}
 
-// nejsou p¯ipravena vhodn· data
+// nejsou p√∏ipravena vhodn√° data
 	if (global == NULL)
 	{
 		::CloseClipboard();
@@ -1901,7 +1901,7 @@ void Paste(int bufID)
 		return;
 	}
 	
-// uzamknutÌ bufferu
+// uzamknut√≠ bufferu
 	m_Buf = (BYTE*) ::GlobalLock(global);
 	if (m_Buf == NULL)
 	{
@@ -1911,7 +1911,7 @@ void Paste(int bufID)
 		return;
 	}
 
-// p¯Ìprava z·hlavÌ
+// p√∏√≠prava z√°hlav√≠
 	const CLIPHEAD* head;
 	switch (bufID)
 	{
@@ -1927,13 +1927,13 @@ void Paste(int bufID)
 		head = &ClipHeadP;
 	}
 
-// kontrola z·hlavÌ
+// kontrola z√°hlav√≠
 	if (MemCompare(((CLIPHEAD*)m_Buf)->Ident, head->Ident, 4) &&
 		(((CLIPHEAD*)m_Buf)->Data >= SIZEOFCLIPHEAD) &&
 		(((CLIPHEAD*)m_Buf)->Pocet > 0) &&
 		MemCompare(((CLIPHEAD*)m_Buf)->Clip.Jmeno, head->Clip.Jmeno, 8))
 	{
-// vynulov·nÌ p¯Ìznaku PR_NEW v objektech
+// vynulov√°n√≠ p√∏√≠znaku PR_NEW v objektech
 		int i;
 
 		for (i = BufObj.Max()-1; i >= 0; i--)
@@ -1952,13 +1952,13 @@ void Paste(int bufID)
 			}
 		}
 
-// Ìnicializace tabulky importu funkcÌ
+// √≠nicializace tabulky importu funkc√≠
 		ProgFile::InitImportTab();
 
-// p¯ednastavenÌ v˝chozÌ poloûky lok·lnÌho bufferu
+// p√∏ednastaven√≠ v√Ωchoz√≠ polo≈æky lok√°ln√≠ho bufferu
 		m_LocFirst = BufLoc.Disp();
 
-// naËtenÌ dat
+// na√®ten√≠ dat
 		buf->RedrawOff();
 		m_Num = ((CLIPHEAD*)m_Buf)->Data;
 		if (m_Num > m_Max) m_Num = m_Max;
@@ -1968,14 +1968,14 @@ void Paste(int bufID)
 		{
 			first = i;
 
-// kontrola povolenÌ operace
+// kontrola povolen√≠ operace
 			if (buf->IsValid(prev) && !TestPaste(bufID, i))
 			{
 
-// p¯esun jako potomka poloûky
+// p√∏esun jako potomka polo≈æky
 				first = buf->Move(prev, -2, first);
 
-// p¯i chybÏ bude n·hradnÌ poloûenÌ
+// p√∏i chyb√¨ bude n√°hradn√≠ polo≈æen√≠
 				if (!TestPaste(bufID, first))
 				{
 					first = buf->Move(buf->Disp(), -2, first);
@@ -1985,39 +1985,39 @@ void Paste(int bufID)
 		buf->RedrawOn();
 		buf->Select(first);
 
-// p¯Ìznak modifikace souboru
+// p√∏√≠znak modifikace souboru
 		SetModi();
 	}
 
-// odemknutÌ bufferu
+// odemknut√≠ bufferu
 	::GlobalUnlock(global);
 
-// uzav¯enÌ schr·nky
+// uzav√∏en√≠ schr√°nky
 	::CloseClipboard();
 
-// vypnutÌ ËekacÌho kurzoru
+// vypnut√≠ √®ekac√≠ho kurzoru
 	EndWaitCursor();
 
-// vypnutÌ p¯Ìznaku obsluhy
+// vypnut√≠ p√∏√≠znaku obsluhy
 	Lock = FALSE;
 
 // aktualizace voleb bloku
 	UpdateClipboard();
 
-// ukonËenÌ z·znamu jednÈ UNDO operace
+// ukon√®en√≠ z√°znamu jedn√© UNDO operace
 	Undo.Stop();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ bloku
+// zru≈°en√≠ bloku
 
 void Delete(int bufID)
 {
-// kontrola, zda neprobÌh· obsluha
+// kontrola, zda neprob√≠h√° obsluha
 	if (Lock) return;
 
-// kontrola povolen˝ch buffer˘
+// kontrola povolen√Ωch buffer√π
 	if ((bufID != BufObjID) &&
 		(bufID != BufLocID) &&
 		(bufID != BufEdiID) &&
@@ -2026,14 +2026,14 @@ void Delete(int bufID)
 		return;
 	}
 
-// zapnutÌ p¯Ìznaku obsluhy
+// zapnut√≠ p√∏√≠znaku obsluhy
 	Lock = TRUE;
 
-// p¯Ìprava v˝chozÌ poloûky ke zruöenÌ
+// p√∏√≠prava v√Ωchoz√≠ polo≈æky ke zru≈°en√≠
 	CBufProg* buf = BufProg + bufID;
 	int first = buf->Select();
 
-// kontrola poloûky
+// kontrola polo≈æky
 	if (buf->IsNotValid(first) ||
 		((buf->At(first).Param & (PR_NOMOVE | PR_INTERN | PR_LOCK | PR_LOCK_DEP)) != 0))
 	{
@@ -2041,14 +2041,14 @@ void Delete(int bufID)
 		return;
 	}
 
-// test zruöenÌ poloûky s referencemi
+// test zru≈°en√≠ polo≈æky s referencemi
 	if (!buf->TestRefer(first)) 
 	{
 		Lock = FALSE;
 		return;
 	}
 
-// ruöenÌ poloûky v bufferu t¯Ìd
+// ru≈°en√≠ polo≈æky v bufferu t√∏√≠d
 	if (bufID == BufClsID)
 	{
 		ProgLib::Delete(first);
@@ -2056,7 +2056,7 @@ void Delete(int bufID)
 		return;
 	}
 
-// zruöenÌ poloûky
+// zru≈°en√≠ polo≈æky
 	BeginWaitCursor();
 	buf->RedrawOff();
 	buf->Del(first);
@@ -2065,19 +2065,19 @@ void Delete(int bufID)
 	if (EditMode == BufMapID) ProgOnPaint();
 	EndWaitCursor();
 
-// vypnutÌ p¯Ìznaku obsluhy
+// vypnut√≠ p√∏√≠znaku obsluhy
 	Lock = FALSE;
 
-// aktualizace informacÌ o poloûce, aktualizace menu clipboardu
+// aktualizace informac√≠ o polo≈æce, aktualizace menu clipboardu
 	ProgAktItem();
 
-// ukonËenÌ z·znamu jednÈ UNDO operace
+// ukon√®en√≠ z√°znamu jedn√© UNDO operace
 	Undo.Stop();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyst¯iûenÌ bloku
+// vyst√∏i≈æen√≠ bloku
 
 void Cut(int bufID)
 {

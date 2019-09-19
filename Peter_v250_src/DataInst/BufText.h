@@ -1,50 +1,50 @@
 
 /***************************************************************************\
 *																			*
-*								TextovÈ ¯etÏzce								*
+*								Textov√© √∏et√¨zce								*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloûky dat ¯etÏzce (8 bajt˘ + data + koncov· 0)
+// struktura polo≈æky dat √∏et√¨zce (8 bajt√π + data + koncov√° 0)
 
 typedef struct TEXTDATA_
 {
-	long	Refer;					// (4) ËÌtaË referencÌ na textov˝ ¯etÏzec
-	long	Length;					// (4) dÈlka ¯etÏzce ve znacÌch (bez koncovÈ 0)
-	TCHAR	Data[1];				// (x*1 nebo x*2) textov· data + koncov· 0
+	long	Refer;					// (4) √®√≠ta√® referenc√≠ na textov√Ω √∏et√¨zec
+	long	Length;					// (4) d√©lka √∏et√¨zce ve znac√≠ch (bez koncov√© 0)
+	TCHAR	Data[1];				// (x*1 nebo x*2) textov√° data + koncov√° 0
 } TEXTDATA;
 
-#define SIZEOFTEXTDATA	(2*sizeof(long)) // velikost z·hlavÌ datovÈ poloûky (bez dat)
+#define SIZEOFTEXTDATA	(2*sizeof(long)) // velikost z√°hlav√≠ datov√© polo≈æky (bez dat)
 
-extern TEXTDATA EmptyTextData;	// data pr·zdnÈho ¯etÏzce
-extern	const CText	EmptyText;	// pr·zdn˝ ¯etÏzec
+extern TEXTDATA EmptyTextData;	// data pr√°zdn√©ho √∏et√¨zce
+extern	const CText	EmptyText;	// pr√°zdn√Ω √∏et√¨zec
 
 /////////////////////////////////////////////////////////////////////////////
-// statickÈ funkce
+// statick√© funkce
 
-// vytvo¯enÌ dat textu - dÈlka zad·na ve znacÌch (p¯i chybÏ pamÏti vracÌ NULL)
+// vytvo√∏en√≠ dat textu - d√©lka zad√°na ve znac√≠ch (p√∏i chyb√¨ pam√¨ti vrac√≠ NULL)
 TEXTDATA* _fastcall NewTextData(int length);
 
-// zruöenÌ dat textu (oddÏleno kv˘li lepöÌ optimalizaci)
+// zru≈°en√≠ dat textu (odd√¨leno kv√πli lep≈°√≠ optimalizaci)
 void _fastcall DelTextData(TEXTDATA* data);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// textov˝ ¯etÏzec
+// textov√Ω √∏et√¨zec
 
 class CText
 {
 
-// ------------------------- internÌ promÏnnÈ a funkce ----------------------
+// ------------------------- intern√≠ prom√¨nn√© a funkce ----------------------
 
 private:
 
-// promÏnnÈ
+// prom√¨nn√©
 	TEXTDATA*		pData;			// ukazatel na data textu
 
-// p¯ipojenÌ dat textu
+// p√∏ipojen√≠ dat textu
 	inline void attach(TEXTDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -53,7 +53,7 @@ private:
 		LongIncrement(&(data->Refer));
 	}
 
-// odpojenÌ (a zruöenÌ) dat textu
+// odpojen√≠ (a zru≈°en√≠) dat textu
 	inline void detach(TEXTDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -65,11 +65,11 @@ private:
 		}
 	}
 
-// zmÏna velikosti bufferu (dÈlka zad·na ve znacÌch) - zajistÌ p¯ivlastnÏnÌ bufferu
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// zm√¨na velikosti bufferu (d√©lka zad√°na ve znac√≠ch) - zajist√≠ p√∏ivlastn√¨n√≠ bufferu
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool SizeBuffer(int length);
 
-// ---------------------------- ve¯ejnÈ funkce ------------------------------
+// ---------------------------- ve√∏ejn√© funkce ------------------------------
 
 public:
 
@@ -77,56 +77,56 @@ public:
 	CText();
 	CText(const CText& src);
 	CText(TEXTDATA* data);
-	CText(const TCHAR chr);					// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(LPCTSTR text);						// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(LPCTSTR text, const int length);	// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
+	CText(const TCHAR chr);					// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(LPCTSTR text);						// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(LPCTSTR text, const int length);	// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
 #ifdef _UNICODE
-	CText(LPCSTR text);						// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(LPCSTR text, const int length);		// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
+	CText(LPCSTR text);						// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(LPCSTR text, const int length);		// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
 #else //_UNICODE
-	CText(LPCWSTR text);						// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(LPCWSTR text, const int length);	// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
+	CText(LPCWSTR text);						// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(LPCWSTR text, const int length);	// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
 #endif //_UNICODE
 	~CText();
 
-// sluËovacÌ konstruktury
-	CText(const CText& str1, const CText& str2);	// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(LPCTSTR txt, const CText& str);			// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(const CText& str, LPCTSTR txt);			// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(const TCHAR chr, const CText& str);		// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
-	CText(const CText& str, const TCHAR chr);		// p¯i chybÏ pamÏti bude ¯etÏzec pr·zdn˝
+// slu√®ovac√≠ konstruktury
+	CText(const CText& str1, const CText& str2);	// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(LPCTSTR txt, const CText& str);			// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(const CText& str, LPCTSTR txt);			// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(const TCHAR chr, const CText& str);		// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
+	CText(const CText& str, const TCHAR chr);		// p√∏i chyb√¨ pam√¨ti bude √∏et√¨zec pr√°zdn√Ω
 
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 	void Init();
 	void _fastcall Init(const CText& src);
 	void _fastcall Init(TEXTDATA* data);
-	bool _fastcall Init(const TCHAR chr);		// p¯i chybÏ pamÏti vr·tÌ FALSE, text nenÌ platn˝
-	bool _fastcall Init(LPCTSTR text);			// p¯i chybÏ pamÏti vr·tÌ FALSE, text nenÌ platn˝
-	bool _fastcall Init(LPCTSTR text, const int length); // p¯i chybÏ pamÏti vr·tÌ FALSE, text nenÌ platn˝
+	bool _fastcall Init(const TCHAR chr);		// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, text nen√≠ platn√Ω
+	bool _fastcall Init(LPCTSTR text);			// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, text nen√≠ platn√Ω
+	bool _fastcall Init(LPCTSTR text, const int length); // p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, text nen√≠ platn√Ω
 #ifdef _UNICODE
-	bool _fastcall Init(LPCSTR text);			// p¯i chybÏ pamÏti vr·tÌ FALSE, text nenÌ platn˝
-	bool _fastcall Init(LPCSTR text, const int length); // p¯i chybÏ pamÏti vr·tÌ FALSE, text nenÌ platn˝
+	bool _fastcall Init(LPCSTR text);			// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, text nen√≠ platn√Ω
+	bool _fastcall Init(LPCSTR text, const int length); // p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, text nen√≠ platn√Ω
 #else //_UNICODE
-	bool _fastcall Init(LPCWSTR text);			// p¯i chybÏ pamÏti vr·tÌ FALSE, text nenÌ platn˝
-	bool _fastcall Init(LPCWSTR text, const int length); // p¯i chybÏ pamÏti vr·tÌ FALSE, text nenÌ platn˝
+	bool _fastcall Init(LPCWSTR text);			// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, text nen√≠ platn√Ω
+	bool _fastcall Init(LPCWSTR text, const int length); // p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, text nen√≠ platn√Ω
 #endif //_UNICODE
 	void Term();
 
-// nalezenÌ ¯·dku
+// nalezen√≠ √∏√°dku
 	CText GetLine(int radek) const;
 
-// poskytnutÌ adresy dat
+// poskytnut√≠ adresy dat
 	inline TEXTDATA* Data() const { return pData; };
 	inline TCHAR* DataData() const { return pData->Data; };
 
-// poskytnutÌ dÈlky ¯etÏzce
+// poskytnut√≠ d√©lky √∏et√¨zce
 	inline int Length() const { return pData->Length; }
 
-// kontrola, zda je ¯etÏzec pr·zdn˝
+// kontrola, zda je √∏et√¨zec pr√°zdn√Ω
 	inline BOOL IsEmpty() const { return pData->Length == 0; };
 	inline BOOL IsNotEmpty() const { return pData->Length != 0; };
 
-// z·pis do bufferu (bez koncovÈ nuly)
+// z√°pis do bufferu (bez koncov√© nuly)
 	void Write(TCHAR* buf) const;
 #ifdef _UNICODE
 	void Write(LPSTR buf) const;
@@ -134,7 +134,7 @@ public:
 	void Write(LPWSTR buf) const;
 #endif
 
-// z·pis do bufferu (s koncovou nulou)
+// z√°pis do bufferu (s koncovou nulou)
 	void WriteNull(TCHAR* buf) const;
 #ifdef _UNICODE
 	void WriteNull(LPSTR buf) const;
@@ -143,9 +143,9 @@ public:
 #endif
 
 
-// ------- hled·nÌ
+// ------- hled√°n√≠
 
-// hled·nÌ (<0 = nenalezeno, pos=v˝chozÌ pozice)
+// hled√°n√≠ (<0 = nenalezeno, pos=v√Ωchoz√≠ pozice)
 	int _fastcall Find(const CText& str) const;
 	int _fastcall Find(const CText& str, int pos) const;
 	int _fastcall Find(LPCTSTR txt) const;
@@ -153,70 +153,70 @@ public:
 	int _fastcall Find(const TCHAR chr) const;
 	int _fastcall Find(const TCHAR chr, int pos) const;
 	
-// hled·nÌ znaku od konce ¯etÏzce zpÏt (<0 = nenalezeno, pos=v˝chozÌ pozice)
+// hled√°n√≠ znaku od konce √∏et√¨zce zp√¨t (<0 = nenalezeno, pos=v√Ωchoz√≠ pozice)
 	int _fastcall RevFind(const TCHAR chr) const;
 	int _fastcall RevFind(const TCHAR chr, int pos) const;
 
 // -------- modifikace textu
 
-// vypr·zdnÏnÌ ¯etÏzce (p¯ipojÌ pr·zdn˝ ¯etÏzec)
+// vypr√°zdn√¨n√≠ √∏et√¨zce (p√∏ipoj√≠ pr√°zdn√Ω √∏et√¨zec)
 	void Empty();
 
-// konverze mal·/velk· pÌsmena
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// konverze mal√°/velk√° p√≠smena
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool UpperCase();
 	bool LowerCase();
 
-// lev· Ë·st ¯etÏzce (p¯i chybÏ pamÏti vr·tÌ pr·zdn˝ ¯etÏzec)
+// lev√° √®√°st √∏et√¨zce (p√∏i chyb√¨ pam√¨ti vr√°t√≠ pr√°zdn√Ω √∏et√¨zec)
 	CText _fastcall Left(int count) const;
 
-// prav· Ë·st ¯etÏzce (p¯i chybÏ pamÏti vr·tÌ pr·zdn˝ ¯etÏzec)
+// prav√° √®√°st √∏et√¨zce (p√∏i chyb√¨ pam√¨ti vr√°t√≠ pr√°zdn√Ω √∏et√¨zec)
 	CText _fastcall Right(int count) const;
 
-// st¯ednÌ Ë·st ¯etÏzce (p¯i chybÏ pamÏti vr·tÌ pr·zdn˝ ¯etÏzec)
+// st√∏edn√≠ √®√°st √∏et√¨zce (p√∏i chyb√¨ pam√¨ti vr√°t√≠ pr√°zdn√Ω √∏et√¨zec)
 	CText _fastcall Mid(int first, int count = 0x7fffffff) const;
 
-// zruöenÌ textu z konce ¯etÏzce
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// zru≈°en√≠ textu z konce √∏et√¨zce
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool Delete(int first, int count = 0x7fffffff);
 
-// zruöenÌ poslednÌho znaku z konce ¯etÏzce
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// zru≈°en√≠ posledn√≠ho znaku z konce √∏et√¨zce
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool DeleteLast();
 
-// odstranÏnÌ mezer ze zaË·tku/konce ¯etÏzce
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// odstran√¨n√≠ mezer ze za√®√°tku/konce √∏et√¨zce
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool TrimLeft();
 	bool TrimRight();
 
-// korekce v˝skytu nuly v textu (prov·dÌ se ve spoleËnÈm bufferu vöech promÏnn˝ch)
+// korekce v√Ωskytu nuly v textu (prov√°d√≠ se ve spole√®n√©m bufferu v≈°ech prom√¨nn√Ωch)
 	void KorigNul();
 
-// nastavenÌ ËÌsla jmÈna objektu (1, 2, ...)
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// nastaven√≠ √®√≠sla jm√©na objektu (1, 2, ...)
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool _fastcall SetNumObj(const int num);
 
-// p¯id·nÌ textu
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// p√∏id√°n√≠ textu
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool _fastcall Add(const CText& str);
 	bool _fastcall Add(LPCTSTR txt);
 	bool _fastcall Add(const TCHAR chr);
 
-// p¯id·nÌ textu ËÌsla
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// p√∏id√°n√≠ textu √®√≠sla
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool _fastcall AddInt(const int num);
 	bool _fastcall AddDouble(const double num);
 
-// souËet text˘
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// sou√®et text√π
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool _fastcall Add(const CText& str1, const CText& str2);
 	bool _fastcall Add(LPCTSTR txt, const CText& str);
 	bool _fastcall Add(const CText& str, LPCTSTR txt);
 	bool _fastcall Add(const TCHAR chr, const CText& str);
 	bool _fastcall Add(const CText& str, const TCHAR chr);
 
-// nastavenÌ textu
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// nastaven√≠ textu
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	void _fastcall Set(const CText& str);
 	bool _fastcall Set(LPCTSTR txt);
 	bool _fastcall Set(LPCTSTR txt, const int length);
@@ -229,29 +229,29 @@ public:
 #endif //_UNICODE
 	bool _fastcall Set(const TCHAR chr);
 
-// naËtenÌ textu z resource (p¯i chybÏ vracÌ FALSE, p˘vodnÌ obsah nezmÏnÏn)
+// na√®ten√≠ textu z resource (p√∏i chyb√¨ vrac√≠ FALSE, p√πvodn√≠ obsah nezm√¨n√¨n)
 	bool Load(const int nID);
 
-// naËtenÌ ze souboru form·tu TXT (FALSE=chyba, obsah nezmÏnÏn)
+// na√®ten√≠ ze souboru form√°tu TXT (FALSE=chyba, obsah nezm√¨n√¨n)
 //	bool LoadFile(CText jmeno);
 
-// uloûenÌ textu do souboru form·tu TXT (FALSE=chyba)
+// ulo≈æen√≠ textu do souboru form√°tu TXT (FALSE=chyba)
 //	bool SaveFile(CText jmeno) const;
 
-// ------- p¯Ìstup ke znak˘m v bufferu
+// ------- p√∏√≠stup ke znak√πm v bufferu
 
-// kopie do vlastnÌho bufferu p¯ed modifikacÌ
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// kopie do vlastn√≠ho bufferu p√∏ed modifikac√≠
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool CopyWrite();
 
-// kontrola, zda je index znaku platn˝
+// kontrola, zda je index znaku platn√Ω
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)pData->Length); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)pData->Length); };
 
-// poskytnutÌ p¯Ìstupu ke znaku na pozici (bez kontroly a bez p¯ivlastnÏnÌ bufferu!)
+// poskytnut√≠ p√∏√≠stupu ke znaku na pozici (bez kontroly a bez p√∏ivlastn√¨n√≠ bufferu!)
 	inline TCHAR& operator[] (int index)
 		{ ASSERT(IsValid(index)); return pData->Data[index]; }
 
@@ -264,68 +264,68 @@ public:
 	inline const TCHAR& At(int index) const
 		{ ASSERT(IsValid(index)); return pData->Data[index]; }
 
-// poskytnutÌ znaku na pozici s kontrolou (pro neplatn˝ znak vr·tÌ 0)
+// poskytnut√≠ znaku na pozici s kontrolou (pro neplatn√Ω znak vr√°t√≠ 0)
 	TCHAR _fastcall Get(const int index) const;
 
-// nastavenÌ znaku na pozici s kontrolou (zajistÌ p¯ivlastnÏnÌ bufferu)
-// p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn
+// nastaven√≠ znaku na pozici s kontrolou (zajist√≠ p√∏ivlastn√¨n√≠ bufferu)
+// p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n
 	bool _fastcall Set(const int index, const TCHAR chr);
 
-// poskytnutÌ poslednÌho znaku ¯etÏzce (pro pr·zdn˝ ¯etÏzec vracÌ 0)
+// poskytnut√≠ posledn√≠ho znaku √∏et√¨zce (pro pr√°zdn√Ω √∏et√¨zec vrac√≠ 0)
 	TCHAR _fastcall LastChar() const;
 
 // ------- text oken
 
-// naËtenÌ textu okna (p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn)
+// na√®ten√≠ textu okna (p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n)
 	bool GetWindowText(const HWND wnd);
 
-// nastavenÌ textu okna
+// nastaven√≠ textu okna
 	void _fastcall SetWindowText(const HWND wnd) const;
 
-// naËtenÌ textu dialogovÈho prvku (p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn)
+// na√®ten√≠ textu dialogov√©ho prvku (p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n)
 	bool GetDialogText(const HWND wnd, int id);
 
-// nastavenÌ textu dialogovÈho prvku
+// nastaven√≠ textu dialogov√©ho prvku
 	void _fastcall SetDialogText(const HWND wnd, int id) const;
 
-// -------- adres·¯e a soubory
+// -------- adres√°√∏e a soubory
 
-// naËtenÌ aktivnÌho adres·¯e (p¯i chybÏ pamÏti vr·tÌ FALSE, obsah bude nezmÏnÏn)
+// na√®ten√≠ aktivn√≠ho adres√°√∏e (p√∏i chyb√¨ pam√¨ti vr√°t√≠ FALSE, obsah bude nezm√¨n√¨n)
 	bool GetAktDir();
 
-// korekce textu na jmÈno souboru (vypuötÏnÌ zak·zan˝ch znak˘, 
-//	vracÌ opravenou pozici kurzoru)
-//  ignoruje chybu pamÏti p¯i p¯ivlastnÏnÌ bufferu (p¯ivlastnit p¯edem)
+// korekce textu na jm√©no souboru (vypu≈°t√¨n√≠ zak√°zan√Ωch znak√π, 
+//	vrac√≠ opravenou pozici kurzoru)
+//  ignoruje chybu pam√¨ti p√∏i p√∏ivlastn√¨n√≠ bufferu (p√∏ivlastnit p√∏edem)
 	int FileName(int curs);
 
-// korekce textu na jmÈno cesty (vypuötÏnÌ zak·zan˝ch znak˘, 
-//	vracÌ opravenou pozici kurzoru)
-//  ignoruje chybu pamÏti p¯i p¯ivlastnÏnÌ bufferu (p¯ivlastnit p¯edem)
+// korekce textu na jm√©no cesty (vypu≈°t√¨n√≠ zak√°zan√Ωch znak√π, 
+//	vrac√≠ opravenou pozici kurzoru)
+//  ignoruje chybu pam√¨ti p√∏i p√∏ivlastn√¨n√≠ bufferu (p√∏ivlastnit p√∏edem)
 	int PathName(int curs);
 
-// -------- konverze ËÌsel
+// -------- konverze √®√≠sel
 
-// konverze ËÌsla INT na text (p¯i chybÏ pamÏti vracÌ FALSE)
+// konverze √®√≠sla INT na text (p√∏i chyb√¨ pam√¨ti vrac√≠ FALSE)
 	bool Int(int num);
 
-// konverze textu na ËÌslo INT
+// konverze textu na √®√≠slo INT
 	friend int Int(LPCTSTR text);
 
-// konverze ËÌsla DWORD na HEX (8 ËÌslic) (p¯i chybÏ pamÏti vracÌ FALSE)
+// konverze √®√≠sla DWORD na HEX (8 √®√≠slic) (p√∏i chyb√¨ pam√¨ti vrac√≠ FALSE)
 	bool Hex(DWORD num);
 
-// konverze ËÌsla DOUBLE na text (p¯i chybÏ pamÏti vracÌ false)
+// konverze √®√≠sla DOUBLE na text (p√∏i chyb√¨ pam√¨ti vrac√≠ false)
 	bool Double(double num);
 
-// konverze textu na ËÌslo DOUBLE
+// konverze textu na √®√≠slo DOUBLE
 	friend double Double(LPCTSTR txt);
 
-// -------- oper·tory
+// -------- oper√°tory
 
-// konverze na ¯etÏzec LPCTSTR
+// konverze na √∏et√¨zec LPCTSTR
 	inline operator LPCTSTR() const { return pData->Data; }
 
-// oper·tory p¯i¯azenÌ (nepouûÌvat - nehl·sÌ chybu operace)
+// oper√°tory p√∏i√∏azen√≠ (nepou≈æ√≠vat - nehl√°s√≠ chybu operace)
 	inline const CText& _fastcall operator= (const CText& str) { Set(str); return *this; }
 	inline const CText& _fastcall operator= (LPCTSTR txt) { Set(txt); return *this; }
 #ifdef _UNICODE
@@ -335,19 +335,19 @@ public:
 #endif //_UNICODE
 	inline const CText& _fastcall operator= (const TCHAR chr) { Set(chr); return *this; };
 
-// oper·tory p¯iËtenÌ (nepouûÌvat - nehl·sÌ chybu operace)
+// oper√°tory p√∏i√®ten√≠ (nepou≈æ√≠vat - nehl√°s√≠ chybu operace)
 	inline const CText& _fastcall operator+=(const CText& str) { Add(str); return *this; }
 	inline const CText& _fastcall operator+=(LPCTSTR txt) { Add(txt); return *this; }
 	inline const CText& _fastcall operator+=(const TCHAR chr) { Add(chr); return *this; }
 
-// oper·tory souËtu (nepouûÌvat - nehl·sÌ chybu operace)
+// oper√°tory sou√®tu (nepou≈æ√≠vat - nehl√°s√≠ chybu operace)
 	inline friend CText _fastcall operator+ (const CText& str1, const CText& str2) { return CText(str1, str2); }
 	inline friend CText _fastcall operator+ (LPCTSTR txt, const CText& str) { return CText(txt, str); }
 	inline friend CText _fastcall operator+ (const CText& str, LPCTSTR txt) { return CText(str, txt); }
 	inline friend CText _fastcall operator+ (const TCHAR chr, const CText& str) { return CText(chr, str); }
 	inline friend CText _fastcall operator+ (const CText& str, const TCHAR chr) { return CText(str, chr); }
 
-// oper·tory porovn·nÌ
+// oper√°tory porovn√°n√≠
 	friend BOOL _fastcall operator==(const CText& str1, const CText& str2);
 	friend BOOL _fastcall operator==(LPCTSTR txt, const CText& str);
 	friend BOOL _fastcall operator==(const CText& str, LPCTSTR txt);

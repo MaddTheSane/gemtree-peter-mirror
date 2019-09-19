@@ -3,15 +3,15 @@
 
 /***************************************************************************\
 *																			*
-*						Kompilace programu - pøíkaz							*
+*						Kompilace programu - pÃ¸Ã­kaz							*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minimální velikost
+#pragma optimize("s", on)			// optimalizace na minimÃ¡lnÃ­ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// pÃ¸idÃ¡nÃ­ jednoho prvku do bufferu programu (vracÃ­ index prvku)
 
 int CompAddItem(PROCCOM func) { return CompAddItem(func, 0, -1); };
 
@@ -19,29 +19,29 @@ int CompAddItem(PROCCOM func, int data) { return CompAddItem(func, data, -1); };
 
 int CompAddItem(PROCCOM func, int data, int list)
 {
-// zajištìní velikosti bufferu
-	if (ProgNum >= ProgMax)				// bude pøeteèení bufferu ?
+// zajiÅ¡tÃ¬nÃ­ velikosti bufferu
+	if (ProgNum >= ProgMax)				// bude pÃ¸eteÃ¨enÃ­ bufferu ?
 	{
-		ProgMax += 256;					// zvıšení èítaèe velikosti bufferu
-		MemBuf(ProgBuf, ProgMax);		// zvıšení velikosti bufferu
+		ProgMax += 256;					// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e velikosti bufferu
+		MemBuf(ProgBuf, ProgMax);		// zvÃ½Å¡enÃ­ velikosti bufferu
 	}
 
-// adresa vkládané  poloky programu
-	EXECITEM* item = ProgBuf + ProgNum;	// adresa poloky programu
-	ProgNum++;							// zvıšení èítaèe poloek
+// adresa vklÃ¡danÃ©  poloÅ¾ky programu
+	EXECITEM* item = ProgBuf + ProgNum;	// adresa poloÅ¾ky programu
+	ProgNum++;							// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e poloÅ¾ek
 
 // inicializace prvku programu
-	item->ExecCom = func;				// volaná funkce poloky
-	item->Data = data;					// data poloky
+	item->ExecCom = func;				// volanÃ¡ funkce poloÅ¾ky
+	item->Data = data;					// data poloÅ¾ky
 	item->List = list;					// seznam
-	item->Jump = 0;						// poèet prvkù k pøeskoèení
+	item->Jump = 0;						// poÃ¨et prvkÃ¹ k pÃ¸eskoÃ¨enÃ­
 
-	return ProgNum-1;					// vrací index prvku
+	return ProgNum-1;					// vracÃ­ index prvku
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu CASE
+// pÃ¸eklad pÃ¸Ã­kazu CASE
 
 bool CompCase(int index)
 {
@@ -49,41 +49,41 @@ bool CompCase(int index)
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda má poloka nìjaké potomky
+// kontrola, zda mÃ¡ poloÅ¾ka nÃ¬jakÃ© potomky
 	if ((item->Param & PETPROG_CHILDS) == 0) return false;
 
-// uloení záhlaví pøíkazu (zatím verze s èíslem)
+// uloÅ¾enÃ­ zÃ¡hlavÃ­ pÃ¸Ã­kazu (zatÃ­m verze s Ã¨Ã­slem)
 	int zahlavi = CompAddItem(FCaseReal, 0);
 
 // typ dat (-1 = nic)
 	int bufID = -1;					// ID typu dat
 
-// --------------- naètení vırazù k vìtvení ----------------------
+// --------------- naÃ¨tenÃ­ vÃ½razÃ¹ k vÃ¬tvenÃ­ ----------------------
 
-// nalezení vìtve s testovanım vırazem
+// nalezenÃ­ vÃ¬tve s testovanÃ½m vÃ½razem
 	int posun = 1;
 	int inx = index;
 	do {
 
-// adresa dalšího potomka
+// adresa dalÅ¡Ã­ho potomka
 		inx += posun;
 		item += posun;
 		item2 += posun;
 
-// test, zda to je hledanı prvek
+// test, zda to je hledanÃ½ prvek
 		if ((item->Func == IDF_CASE_SUM - IDF) &&
 			(item->Param & PETPROG_CHILDS))
 		{
 
-// interpretace jako èíselnı vıraz
+// interpretace jako Ã¨Ã­selnÃ½ vÃ½raz
 			if (CompNum(inx+1))
 			{
-				bufID = BufNumID;		// typ dat èíslo
+				bufID = BufNumID;		// typ dat Ã¨Ã­slo
 //				ProgBuf[zahlavi].ExecCom = FCaseReal;
 				break;
 			}
 
-// interpretace jako logickı vıraz
+// interpretace jako logickÃ½ vÃ½raz
 			if (CompLog(inx+1))
 			{
 				bufID = BufLogID;		// typ dat BOOL
@@ -123,10 +123,10 @@ bool CompCase(int index)
 				break;
 			}
 
-// interpretace jako obrázek
+// interpretace jako obrÃ¡zek
 			if (CompPic(inx+1))
 			{
-				bufID = BufPicID;		// typ dat obrázek
+				bufID = BufPicID;		// typ dat obrÃ¡zek
 				ProgBuf[zahlavi].ExecCom = FCasePicture;
 				break;
 			}
@@ -148,10 +148,10 @@ bool CompCase(int index)
 			}
 		}
 
-// posun pro pøíští prvek
+// posun pro pÃ¸Ã­Å¡tÃ­ prvek
 		posun = item2->Items;
 
-// dokud je další potomek
+// dokud je dalÅ¡Ã­ potomek
 	} while (item->Param & PETPROG_NEXT);
 
 // nenalezeno
@@ -161,12 +161,12 @@ bool CompCase(int index)
 		return false;
 	}
 
-// ------------------- naètení testù vìtví ------------------
+// ------------------- naÃ¨tenÃ­ testÃ¹ vÃ¬tvÃ­ ------------------
 
-// buffer indexù vìtví
+// buffer indexÃ¹ vÃ¬tvÃ­
 	CBufInt bufon;
 
-// nalezení vìtve case
+// nalezenÃ­ vÃ¬tve case
 	posun = 1;
 	inx = index;
 	item = BufEdi + inx;
@@ -174,20 +174,20 @@ bool CompCase(int index)
 	int caseinx = 0;
 	do {
 
-// adresa dalšího potomka
+// adresa dalÅ¡Ã­ho potomka
 		inx += posun;
 		item += posun;
 		item2 += posun;
 
-// test, zda to je hledanı prvek
+// test, zda to je hledanÃ½ prvek
 		if ((item->Func == IDF_CASE_ON - IDF) &&
 			(item->Param & PETPROG_CHILDS))
 		{
 
-// èítaè obsluhy vìtví
+// Ã¨Ã­taÃ¨ obsluhy vÃ¬tvÃ­
 			caseinx--;
 
-// vyhledání testù vìtve
+// vyhledÃ¡nÃ­ testÃ¹ vÃ¬tve
 			int ii = inx+1;
 			PETPROG* prg = item+1;
 			PETPROG2* prg2 = item2+1;
@@ -253,24 +253,24 @@ CASEEQU:				{
 			}
 		}
 
-// posun pro pøíští prvek
+// posun pro pÃ¸Ã­Å¡tÃ­ prvek
 		posun = item2->Items;
 
-// dokud je další potomek
+// dokud je dalÅ¡Ã­ potomek
 	} while (item->Param & PETPROG_NEXT);
 
 
-// -------------- naètení pøíkazu DEFAULT ----------------
+// -------------- naÃ¨tenÃ­ pÃ¸Ã­kazu DEFAULT ----------------
 
-// buffer indexù skokù
+// buffer indexÃ¹ skokÃ¹
 	CBufInt bufjump;
 	bufjump.Add(ProgNum);
 	CompComSubPar(index, IDF_CASE_DEF);
 
 
-// --------------------- naètení obsluh vìtví ----------------
+// --------------------- naÃ¨tenÃ­ obsluh vÃ¬tvÃ­ ----------------
 
-// nalezení vìtve case
+// nalezenÃ­ vÃ¬tve case
 	posun = 1;
 	inx = index;
 	item = BufEdi + inx;
@@ -278,30 +278,30 @@ CASEEQU:				{
 	caseinx = 0;
 	do {
 
-// adresa dalšího potomka
+// adresa dalÅ¡Ã­ho potomka
 		inx += posun;
 		item += posun;
 		item2 += posun;
 
-// test, zda to je hledanı prvek
+// test, zda to je hledanÃ½ prvek
 		if ((item->Func == IDF_CASE_ON - IDF) &&
 			(item->Param & PETPROG_CHILDS))
 		{
 
-// èítaè obsluhy vìtví
+// Ã¨Ã­taÃ¨ obsluhy vÃ¬tvÃ­
 			caseinx--;
 			int hl = ProgNum;
 
-// naètení pøíkazù
+// naÃ¨tenÃ­ pÃ¸Ã­kazÃ¹
 			if (!CompComGrp(inx, FCommandExec, FCommandExec1))
 			{
 				CompAddItem(FCommandExec0);
 			}
 
-// úschova indexu skoku
+// Ãºschova indexu skoku
 			bufjump.Add(hl);
 
-// pøemapování podmínek CASE
+// pÃ¸emapovÃ¡nÃ­ podmÃ­nek CASE
 			for (int j = bufon.Num()-1; j >= 0; j--)
 			{
 				if (ProgBuf[bufon[j]].Jump == caseinx)
@@ -311,14 +311,14 @@ CASEEQU:				{
 			}	 
 		}
 
-// posun pro pøíští prvek
+// posun pro pÃ¸Ã­Å¡tÃ­ prvek
 		posun = item2->Items;
 
-// dokud je další potomek
+// dokud je dalÅ¡Ã­ potomek
 	} while (item->Param & PETPROG_NEXT);
 
 
-// ----------------- pøemapování skokù obsluh -----------
+// ----------------- pÃ¸emapovÃ¡nÃ­ skokÃ¹ obsluh -----------
 
 	for (int j = bufjump.Num()-1; j >= 0; j--)
 	{
@@ -330,25 +330,25 @@ CASEEQU:				{
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu (vrací true = operace OK)
+// pÃ¸eklad pÃ¸Ã­kazu (vracÃ­ true = operace OK)
 
 bool _fastcall CompCom(int index)
 {
-// adresa zdrojového prvku
+// adresa zdrojovÃ©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 //	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 	PETPROG2*	prg2;
 
-// kontrola, zda je poloka vypnuta
+// kontrola, zda je poloÅ¾ka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// vÃ¬tvenÃ­ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_IF:
-		CompAddItem(FIf);				// podmínka IF
+		CompAddItem(FIf);				// podmÃ­nka IF
 		CompLogSubPar(index, IDF_IF_COND, true);
 		CompComSubPar(index, IDF_IF_YES);
 		CompComSubPar(index, IDF_IF_NO);
@@ -361,13 +361,13 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_WHILE_BREAK:
-		CompAddItem(FBreak);			// pøerušení cyklu Break
+		CompAddItem(FBreak);			// pÃ¸eruÅ¡enÃ­ cyklu Break
 		return true;
 	
 	case IDF_CASE:
-		return CompCase(index);			// pøeklad pøíkazu CASE
+		return CompCase(index);			// pÃ¸eklad pÃ¸Ã­kazu CASE
 
-	case IDF_REAL:						// èíselná promìnná
+	case IDF_REAL:						// Ã¨Ã­selnÃ¡ promÃ¬nnÃ¡
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -401,7 +401,7 @@ bool _fastcall CompCom(int index)
 		}
 		return false;
 
-	case IDF_ICON:							// promìnná ikony
+	case IDF_ICON:							// promÃ¬nnÃ¡ ikony
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -435,7 +435,7 @@ bool _fastcall CompCom(int index)
 		}
 		return false;
 
-	case IDF_SND:							// promìnná zvuku
+	case IDF_SND:							// promÃ¬nnÃ¡ zvuku
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -469,7 +469,7 @@ bool _fastcall CompCom(int index)
 		}
 		return false;
 
-	case IDF_MUS:							// promìnná hudby
+	case IDF_MUS:							// promÃ¬nnÃ¡ hudby
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -504,9 +504,9 @@ bool _fastcall CompCom(int index)
 		return false;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_FNC);	// funkce bez návratu
+		return CompFunc(index, IDF_FNC);	// funkce bez nÃ¡vratu
 
-	case IDF_MAP:							// promìnná plochy
+	case IDF_MAP:							// promÃ¬nnÃ¡ plochy
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -540,7 +540,7 @@ bool _fastcall CompCom(int index)
 		}
 		return false;
 
-	case IDF_SPRITE:							// promìnná sprajtu
+	case IDF_SPRITE:							// promÃ¬nnÃ¡ sprajtu
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -574,7 +574,7 @@ bool _fastcall CompCom(int index)
 		}
 		return false;
 
-	case IDF_TEXT:							// promìnná textu
+	case IDF_TEXT:							// promÃ¬nnÃ¡ textu
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -609,22 +609,22 @@ bool _fastcall CompCom(int index)
 		return false;
 
 	case IDF_KROK:
-		CompAddItem(FKrok);				// Petøík - krok vpøed
+		CompAddItem(FKrok);				// PetÃ¸Ã­k - krok vpÃ¸ed
 		return true;
 
 	case IDF_VLEVO:
-		CompAddItem(FVlevo);			// Petøík - vlevo
+		CompAddItem(FVlevo);			// PetÃ¸Ã­k - vlevo
 		return true;
 
 	case IDF_VPRAVO:
-		CompAddItem(FVpravo);			// Petøík - vpravo
+		CompAddItem(FVpravo);			// PetÃ¸Ã­k - vpravo
 		return true;
 
 	case IDF_VZAD:
-		CompAddItem(FVzad);				// Petøík - vzad
+		CompAddItem(FVzad);				// PetÃ¸Ã­k - vzad
 		return true;
 
-	case IDF_BOOL:						// logická promìnná
+	case IDF_BOOL:						// logickÃ¡ promÃ¬nnÃ¡
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -659,7 +659,7 @@ bool _fastcall CompCom(int index)
 		return false;
 
 	case IDF_PETRA_KROK:
-		CompAddItem(FKrok2);			// Petra - krok vpøed
+		CompAddItem(FKrok2);			// Petra - krok vpÃ¸ed
 		return true;
 
 	case IDF_PETRA_VLEVO:
@@ -678,44 +678,44 @@ bool _fastcall CompCom(int index)
 		return CompLogPar(index, FVisible);	// Petr - viditelnost
 
 	case IDF_EXIT:
-		CompAddItem(FReturn);			// návrat z funkce
+		CompAddItem(FReturn);			// nÃ¡vrat z funkce
 		return true;
 
 	case IDF_PETRA_RYCHLE:
 		return CompLogPar(index, FVisible2); // Petra - viditelnost
 
 	case IDF_PREDMET:
-		return CompIcoPar(index, FSetPredmet); // nastavení pøedmìtu pøed Petrem
+		return CompIcoPar(index, FSetPredmet); // nastavenÃ­ pÃ¸edmÃ¬tu pÃ¸ed Petrem
 
 	case IDF_SMER:
-		return CompNumPar(index, FSetSmer);	// Petr - nastavení smìru
+		return CompNumPar(index, FSetSmer);	// Petr - nastavenÃ­ smÃ¬ru
 
 	case IDF_POZICEX:
-		return CompNumPar(index, FSetPozX);	// Petr - nastavení pozice X
+		return CompNumPar(index, FSetPozX);	// Petr - nastavenÃ­ pozice X
 
 	case IDF_POZICEY:
-		return CompNumPar(index, FSetPozY);	// Petr - nastavení pozice Y
+		return CompNumPar(index, FSetPozY);	// Petr - nastavenÃ­ pozice Y
 
 	case IDF_PETRA_PREDMET:
-		return CompIcoPar(index, FSetPredmet2); // nastavení pøedmìtu pøed Petrou
+		return CompIcoPar(index, FSetPredmet2); // nastavenÃ­ pÃ¸edmÃ¬tu pÃ¸ed Petrou
 
 	case IDF_PETRA_SMER:
-		return CompNumPar(index, FSetSmer2); // Petra - nastavení smìru
+		return CompNumPar(index, FSetSmer2); // Petra - nastavenÃ­ smÃ¬ru
 
 	case IDF_PETRA_POZICEX:
-		return CompNumPar(index, FSetPozX2); // Petra - nastavení pozice X
+		return CompNumPar(index, FSetPozX2); // Petra - nastavenÃ­ pozice X
 
 	case IDF_PETRA_POZICEY:
-		return CompNumPar(index, FSetPozY2); // Petra - nastavení pozice Y
+		return CompNumPar(index, FSetPozY2); // Petra - nastavenÃ­ pozice Y
 
 	case IDF_WAIT:
-		if (!CompNumPar(index, FWait))		// èekání
+		if (!CompNumPar(index, FWait))		// Ã¨ekÃ¡nÃ­
 		{
 			CompAddItem(FWait1);
 		}
 		return true;
 
-	case IDF_PIC:							// promìnná obrázku
+	case IDF_PIC:							// promÃ¬nnÃ¡ obrÃ¡zku
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -756,10 +756,10 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_MOUSE_X:
-		return CompNumPar(index, FSetMouseX);	// nastavení myši X
+		return CompNumPar(index, FSetMouseX);	// nastavenÃ­ myÅ¡i X
 
 	case IDF_MOUSE_Y:
-		return CompNumPar(index, FSetMouseY);	// nastavení myši Y
+		return CompNumPar(index, FSetMouseY);	// nastavenÃ­ myÅ¡i Y
 
 	case IDF_SPRITE_X:
 		if (item->RefBlok == BufObjID)
@@ -1002,61 +1002,61 @@ bool _fastcall CompCom(int index)
 		return false;
 
 	case IDF_PETER_SWCN1:
-		return CompNumPar(index, FSetSwcN1);	// Petr - nastavení èísla 1
+		return CompNumPar(index, FSetSwcN1);	// Petr - nastavenÃ­ Ã¨Ã­sla 1
 
 	case IDF_PETRA_SWCN1:
-		return CompNumPar(index, FSetSwcN12);	// Petra - nastavení èísla 1
+		return CompNumPar(index, FSetSwcN12);	// Petra - nastavenÃ­ Ã¨Ã­sla 1
 
 	case IDF_PETER_SWCN2:
-		return CompNumPar(index, FSetSwcN2);	// Petr - nastavení èísla 2
+		return CompNumPar(index, FSetSwcN2);	// Petr - nastavenÃ­ Ã¨Ã­sla 2
 
 	case IDF_PETRA_SWCN2:
-		return CompNumPar(index, FSetSwcN22);	// Petra - nastavení èísla 2
+		return CompNumPar(index, FSetSwcN22);	// Petra - nastavenÃ­ Ã¨Ã­sla 2
 
 	case IDF_PETER_SWCN3:
-		return CompNumPar(index, FSetSwcN3);	// Petr - nastavení èísla 3
+		return CompNumPar(index, FSetSwcN3);	// Petr - nastavenÃ­ Ã¨Ã­sla 3
 
 	case IDF_PETRA_SWCN3:
-		return CompNumPar(index, FSetSwcN32);	// Petra - nastavení èísla 3
+		return CompNumPar(index, FSetSwcN32);	// Petra - nastavenÃ­ Ã¨Ã­sla 3
 
 	case IDF_PETER_SWC1:
-		return CompLogPar(index, FSetSwc1);		// Petr - nastavení pøepínaèe 1
+		return CompLogPar(index, FSetSwc1);		// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 1
 
 	case IDF_PETRA_SWC1:
-		return CompLogPar(index, FSetSwc12);	// Petra - nastavení pøepínaèe 1
+		return CompLogPar(index, FSetSwc12);	// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 1
 
 	case IDF_PETER_SWC2:
-		return CompLogPar(index, FSetSwc2);		// Petr - nastavení pøepínaèe 2
+		return CompLogPar(index, FSetSwc2);		// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 2
 
 	case IDF_PETRA_SWC2:
-		return CompLogPar(index, FSetSwc22);	// Petra - nastavení pøepínaèe 2
+		return CompLogPar(index, FSetSwc22);	// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 2
 
 	case IDF_PETER_SWC3:
-		return CompLogPar(index, FSetSwc3);		// Petr - nastavení pøepínaèe 3
+		return CompLogPar(index, FSetSwc3);		// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 3
 
 	case IDF_PETRA_SWC3:
-		return CompLogPar(index, FSetSwc32);	// Petra - nastavení pøepínaèe 3
+		return CompLogPar(index, FSetSwc32);	// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 3
 
 	case IDF_PETER_SWC4:
-		return CompLogPar(index, FSetSwc4);		// Petr - nastavení pøepínaèe 4
+		return CompLogPar(index, FSetSwc4);		// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 4
 
 	case IDF_PETRA_SWC4:
-		return CompLogPar(index, FSetSwc42);	// Petra - nastavení pøepínaèe 4
+		return CompLogPar(index, FSetSwc42);	// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 4
 
 	case IDF_PETER_SWC5:
-		return CompLogPar(index, FSetSwc5);		// Petr - nastavení pøepínaèe 5
+		return CompLogPar(index, FSetSwc5);		// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 5
 
 	case IDF_PETRA_SWC5:
-		return CompLogPar(index, FSetSwc52);	// Petra - nastavení pøepínaèe 5
+		return CompLogPar(index, FSetSwc52);	// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 5
 
 	case IDF_STATUS_LINE:
-		return CompTxtPar(index, FSetStatus);	// nastavení stavového øádku
+		return CompTxtPar(index, FSetStatus);	// nastavenÃ­ stavovÃ©ho Ã¸Ã¡dku
 
 	case IDF_CAPTION:
-		return CompTxtPar(index, FSetCaption);	// nastavení nadpisu
+		return CompTxtPar(index, FSetCaption);	// nastavenÃ­ nadpisu
 
 	case IDF_SOUND_PLAY:
-		CompAddItem(FSoundPlay);				// pøehrátí zvuku
+		CompAddItem(FSoundPlay);				// pÃ¸ehrÃ¡tÃ­ zvuku
 		CompSndSubPar(index, IDF_SOUND_PLAY_SOUND);
 		CompNumSubPar(index, IDF_SOUND_PLAY_VOL, 1);
 		CompNumSubPar(index, IDF_SOUND_PLAY_BAL, 0);
@@ -1066,17 +1066,17 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_SOUND_STOP:
-		if (!CompSndPar(index, FSoundStop1))	// zastavení zvuku
+		if (!CompSndPar(index, FSoundStop1))	// zastavenÃ­ zvuku
 		{
-			CompAddItem(FSoundStop);			// zastavení zvuku
+			CompAddItem(FSoundStop);			// zastavenÃ­ zvuku
 		}
 		return true;
 
 	case IDF_SOUND_DISTINGUISH:
-		return CompNumPar(index, FSetSoundDistinguish);// nastavení rozlišovacího kódu zvuku
+		return CompNumPar(index, FSetSoundDistinguish);// nastavenÃ­ rozliÅ¡ovacÃ­ho kÃ³du zvuku
 
 	case IDF_POINT:
-		CompAddItem(FPoint);					// zobrazení bodu
+		CompAddItem(FPoint);					// zobrazenÃ­ bodu
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_GRAPH_WIDTH, 1);
 		CompNumSubPar(index, IDF_POINT_X, 0);
@@ -1084,7 +1084,7 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_LINE:
-		CompAddItem(FLine);						// zobrazení èáry
+		CompAddItem(FLine);						// zobrazenÃ­ Ã¨Ã¡ry
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_GRAPH_WIDTH, 1);
 		CompNumSubPar(index, IDF_LINE_X1, 0);
@@ -1094,7 +1094,7 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_BOX:
-		CompAddItem(FBox);						// zobrazení obdélníku
+		CompAddItem(FBox);						// zobrazenÃ­ obdÃ©lnÃ­ku
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_GRAPH_WIDTH, 1);
 		CompNumSubPar(index, IDF_BOX_X1, 0);
@@ -1104,7 +1104,7 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_BOX_FILL:
-		CompAddItem(FBoxFill);					// zobrazení vyplnìného obdélníku
+		CompAddItem(FBoxFill);					// zobrazenÃ­ vyplnÃ¬nÃ©ho obdÃ©lnÃ­ku
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_BOX_FILL_X1, 0);
 		CompNumSubPar(index, IDF_BOX_FILL_Y1, 0);
@@ -1113,14 +1113,14 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_FILL:
-		CompAddItem(FFill);					// vıplò
+		CompAddItem(FFill);					// vÃ½plÃ²
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_FILL_X, 0);
 		CompNumSubPar(index, IDF_FILL_Y, 0);
 		return true;
 
 	case IDF_CIRCLE:
-		CompAddItem(FCircle);				// krunice
+		CompAddItem(FCircle);				// kruÅ¾nice
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_GRAPH_WIDTH, 1);
 		CompNumSubPar(index, IDF_CIRCLE_X, 1);
@@ -1137,7 +1137,7 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_TRIANGLE:
-		CompAddItem(FTriangle);			// trojúhelník
+		CompAddItem(FTriangle);			// trojÃºhelnÃ­k
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_TRIANGLE_X1, 0);
 		CompNumSubPar(index, IDF_TRIANGLE_Y1, 0);
@@ -1156,27 +1156,27 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_KLAV_VKEY_WAIT:
-		CompAddItem(FComVKeyWait);		// vtup klávesy s èekáním
+		CompAddItem(FComVKeyWait);		// vtup klÃ¡vesy s Ã¨ekÃ¡nÃ­m
 		return true;
 
 	case IDF_KLAV_CHAR_WAIT:
-		CompAddItem(FComCharWait);		// vstup znaku s èekáním
+		CompAddItem(FComCharWait);		// vstup znaku s Ã¨ekÃ¡nÃ­m
 		return true;
 
 	case IDF_STATUS_NUMLOCK:
-		return CompLogPar(index, FSetNumLock);	// nastavení pøepínaèen Num Lock
+		return CompLogPar(index, FSetNumLock);	// nastavenÃ­ pÃ¸epÃ­naÃ¨en Num Lock
 
 	case IDF_STATUS_CAPSLOCK:
-		return CompLogPar(index, FSetCapsLock);	// nastavení pøepínaèen Caps Lock
+		return CompLogPar(index, FSetCapsLock);	// nastavenÃ­ pÃ¸epÃ­naÃ¨en Caps Lock
 
 	case IDF_STATUS_SCROLLLOCK:
-		return CompLogPar(index, FSetScrollLock);	// nastavení pøepínaèen Scroll Lock
+		return CompLogPar(index, FSetScrollLock);	// nastavenÃ­ pÃ¸epÃ­naÃ¨en Scroll Lock
 
 	case IDF_STATUS_INSERT:
-		return CompLogPar(index, FSetInsertLock);	// nastavení pøepínaèen Insert
+		return CompLogPar(index, FSetInsertLock);	// nastavenÃ­ pÃ¸epÃ­naÃ¨en Insert
 
 	case IDF_GRAPH_TEXT:
-		CompAddItem(FGraphText);					// zobrazení textu
+		CompAddItem(FGraphText);					// zobrazenÃ­ textu
 		CompTxtSubPar(index, IDF_GRAPH_TEXT_TEXT);
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_GRAPH_TEXT_X, 0);
@@ -1193,13 +1193,13 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_PREDMET_POZ:
-		return CompIcoPar(index, FSetPredmetPoz); // nastavení pøedmìtu pod Petrem
+		return CompIcoPar(index, FSetPredmetPoz); // nastavenÃ­ pÃ¸edmÃ¬tu pod Petrem
 
 	case IDF_PETRA_PREDMET_POZ:
-		return CompIcoPar(index, FSetPredmet2Poz); // nastavení pøedmìtu pod Petrou
+		return CompIcoPar(index, FSetPredmet2Poz); // nastavenÃ­ pÃ¸edmÃ¬tu pod Petrou
 
 	case IDF_PIC_DISP:
-		CompAddItem(FPicDisp);					// zobrazení obrázku
+		CompAddItem(FPicDisp);					// zobrazenÃ­ obrÃ¡zku
 		CompPicSubPar(index, IDF_PIC_BACK);
 		CompNumSubPar(index, IDF_PIC_X, 0);
 		CompNumSubPar(index, IDF_PIC_Y, 0);
@@ -1210,11 +1210,11 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_TRANSPARENT:
-		CompAddItem(FTransparent);					// zprùhlednìní okna
+		CompAddItem(FTransparent);					// zprÃ¹hlednÃ¬nÃ­ okna
 		return true;
 
 	case IDF_MOUSE_CURSOR:
-		CompAddItem(FMouseCursor);				// kurzor myši
+		CompAddItem(FMouseCursor);				// kurzor myÅ¡i
 		CompIcoSubPar(index, IDF_MOUSE_CURSOR_PIC);
 		CompNumSubPar(index, IDF_MOUSE_CURSOR_X, 0);
 		CompNumSubPar(index, IDF_MOUSE_CURSOR_Y, 0);
@@ -1223,172 +1223,172 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_MUSIC_PLAY:
-		return CompMusPar(index, FMusicPlay);	// pøehrátí hudby
+		return CompMusPar(index, FMusicPlay);	// pÃ¸ehrÃ¡tÃ­ hudby
 
 	case IDF_MUSIC_LOOP:
-		return CompMusPar(index, FMusicLoop);	// opakované pøehrávání hudby
+		return CompMusPar(index, FMusicLoop);	// opakovanÃ© pÃ¸ehrÃ¡vÃ¡nÃ­ hudby
 
 	case IDF_MUSIC_STOP:
-		CompAddItem(FMusicStop);				// zastavení hudby
+		CompAddItem(FMusicStop);				// zastavenÃ­ hudby
 		return true;
 
 	case IDF_MUSIC_PAUSE:
 		if (!CompLogPar(index, FMusicPauseSet))
 		{
-			CompAddItem(FMusicPause);				// pozastavení hudby
+			CompAddItem(FMusicPause);				// pozastavenÃ­ hudby
 		}
 		return true;
 
 	case IDF_MUSIC_POS:
-		return CompNumPar(index, FSetMusicPos);	// nastavení pozice hudby
+		return CompNumPar(index, FSetMusicPos);	// nastavenÃ­ pozice hudby
 
 	case IDF_CD_PLAY:
 		if (!CompNumPar(index, FCDPlay))
 		{
-			CompAddItem(FCDPlay);				// pøehrávání CD
-			CompAddItemNum((BYTE)1);			// implicitní stopa 1	
+			CompAddItem(FCDPlay);				// pÃ¸ehrÃ¡vÃ¡nÃ­ CD
+			CompAddItemNum((BYTE)1);			// implicitnÃ­ stopa 1	
 		}
 		return true;
 
 	case IDF_CD_STOP:
-		CompAddItem(FCDStop);					// zastavení CD
+		CompAddItem(FCDStop);					// zastavenÃ­ CD
 		return true;
 
 	case IDF_CD_PAUSE:
 		if (!CompLogPar(index, FCDPauseSet))
 		{
-			CompAddItem(FCDPause);				// pozastavení CD
+			CompAddItem(FCDPause);				// pozastavenÃ­ CD
 		}
 		return true;
 
 	case IDF_CD_EJECT:
 		if (!CompLogPar(index, FCDEjectSet))
 		{
-			CompAddItem(FCDEject);				// zasunutí CD
+			CompAddItem(FCDEject);				// zasunutÃ­ CD
 		}
 		return true;
 
 	case IDF_CD_POS:
-		return CompNumPar(index, FCDSetPos);	// nastavení pozice CD
+		return CompNumPar(index, FCDSetPos);	// nastavenÃ­ pozice CD
 
 	case IDF_CD_TRACK:
-		return CompNumPar(index, FCDSetTrack);	// nastavení stopy CD
+		return CompNumPar(index, FCDSetTrack);	// nastavenÃ­ stopy CD
 
 	case IDF_CD_TRACK_POS:
-		return CompNumPar(index, FCDSetTrackPos);// nastavení pozice stopy CD
+		return CompNumPar(index, FCDSetTrackPos);// nastavenÃ­ pozice stopy CD
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-	case IDF_DLL_FREE:						// uvolnìní DLL knihovny
+	case IDF_DLL_FREE:						// uvolnÃ¬nÃ­ DLL knihovny
 		return CompNumPar(index, FDLLFree);
 
-	case IDF_DLL_EXEC:						// provedení funkce DLL
+	case IDF_DLL_EXEC:						// provedenÃ­ funkce DLL
 		return CompNumPar(index, FDLLExecCom);
 
-	case IDF_MEMORY_FREE:					// zrušení pamìového bloku
+	case IDF_MEMORY_FREE:					// zruÅ¡enÃ­ pamÃ¬ÂovÃ©ho bloku
 		return CompNumPar(index, FMemoryFree);
 
-	case IDF_MEMORY_READ:					// ukazatel ètení z pamìti
+	case IDF_MEMORY_READ:					// ukazatel Ã¨tenÃ­ z pamÃ¬ti
 		return CompNumPar(index, FSetMemoryRead);
 
-	case IDF_MEMORY_WRITE:					// ukazatel zápisu do pamìti
+	case IDF_MEMORY_WRITE:					// ukazatel zÃ¡pisu do pamÃ¬ti
 		return CompNumPar(index, FSetMemoryWrite);
 
 	case IDF_MEMORY_COPY:					// kopie dat
 		return CompNumPar(index, FMemoryCopy);
 
-	case IDF_MEMORY_BYTES:					// bajt se znaménkem
+	case IDF_MEMORY_BYTES:					// bajt se znamÃ©nkem
 		return CompNumPar(index, FSetMemoryByteS);
 
-	case IDF_MEMORY_BYTEU:					// bajt bez znaménka
+	case IDF_MEMORY_BYTEU:					// bajt bez znamÃ©nka
 		return CompNumPar(index, FSetMemoryByteU);
 
-	case IDF_MEMORY_WORDS:					// slovo se znaménkem
+	case IDF_MEMORY_WORDS:					// slovo se znamÃ©nkem
 		return CompNumPar(index, FSetMemoryWordS);
 
-	case IDF_MEMORY_WORDU:					// slovo bez znaménka
+	case IDF_MEMORY_WORDU:					// slovo bez znamÃ©nka
 		return CompNumPar(index, FSetMemoryWordU);
 
-	case IDF_MEMORY_3BYTES:					// 3-bajt se znaménkem
+	case IDF_MEMORY_3BYTES:					// 3-bajt se znamÃ©nkem
 		return CompNumPar(index, FSetMemory3ByteS);
 
-	case IDF_MEMORY_3BYTEU:					// 3-bajt bez znaménka
+	case IDF_MEMORY_3BYTEU:					// 3-bajt bez znamÃ©nka
 		return CompNumPar(index, FSetMemory3ByteU);
 
-	case IDF_MEMORY_DWORDS:					// dvouslovo se znaménkem
+	case IDF_MEMORY_DWORDS:					// dvouslovo se znamÃ©nkem
 		return CompNumPar(index, FSetMemoryDWordS);
 
-	case IDF_MEMORY_DWORDU:					// dvouslovo bez znaménka
+	case IDF_MEMORY_DWORDU:					// dvouslovo bez znamÃ©nka
 		return CompNumPar(index, FSetMemoryDWordU);
 
-	case IDF_MEMORY_FLOAT:					// reálné èíslo 4 bajty
+	case IDF_MEMORY_FLOAT:					// reÃ¡lnÃ© Ã¨Ã­slo 4 bajty
 		return CompNumPar(index, FSetMemoryFloat);
 
-	case IDF_MEMORY_DOUBLE:					// reálné èíslo 8 bajtù
+	case IDF_MEMORY_DOUBLE:					// reÃ¡lnÃ© Ã¨Ã­slo 8 bajtÃ¹
 		return CompNumPar(index, FSetMemoryDouble);
 
-	case IDF_MEMORY_BOOL:					// logická hodnota
+	case IDF_MEMORY_BOOL:					// logickÃ¡ hodnota
 		return CompLogPar(index, FSetMemoryBool);
 
-	case IDF_MEMORY_TEXT0:					// text zakonèenı nulou
+	case IDF_MEMORY_TEXT0:					// text zakonÃ¨enÃ½ nulou
 		return CompTxtPar(index, FSetMemoryText0);
 
-	case IDF_MEMORY_TEXT0P:					// ukazatel na text zakonèenı nulou
+	case IDF_MEMORY_TEXT0P:					// ukazatel na text zakonÃ¨enÃ½ nulou
 		return CompTxtPar(index, FSetMemoryText0P);
 
-	case IDF_MEMORY_TEXTN:					// text s pevnou délkou
+	case IDF_MEMORY_TEXTN:					// text s pevnou dÃ©lkou
 		return CompTxtPar(index, FSetMemoryTextN);
 
-	case IDF_MEMORY_TEXTN_LEN:				// délka textu s pevnou délkou
+	case IDF_MEMORY_TEXTN_LEN:				// dÃ©lka textu s pevnou dÃ©lkou
 		return CompNumPar(index, FSetMemoryTextNLen);
 
-	case IDF_MEMORY_LOAD:					// naètení bloku dat
+	case IDF_MEMORY_LOAD:					// naÃ¨tenÃ­ bloku dat
 		return CompNumPar(index, FMemoryLoad);
 
-	case IDF_MEMORY_SAVE:					// zápis bloku dat
+	case IDF_MEMORY_SAVE:					// zÃ¡pis bloku dat
 		return CompNumPar(index, FMemorySave);
 
-	case IDF_INI_FILE:						// jméno konfiguraèního souboru
+	case IDF_INI_FILE:						// jmÃ©no konfiguraÃ¨nÃ­ho souboru
 		return CompTxtPar(index, FSetIniFile);
 
-	case IDF_INI_SECTION:					// jméno konfiguraèní sekce
+	case IDF_INI_SECTION:					// jmÃ©no konfiguraÃ¨nÃ­ sekce
 		return CompTxtPar(index, FSetIniSection);
 
-	case IDF_INI_VALUE:						// jméno konfiguraèního parametru
+	case IDF_INI_VALUE:						// jmÃ©no konfiguraÃ¨nÃ­ho parametru
 		return CompTxtPar(index, FSetIniValue);
 
-	case IDF_INI_STRING:					// zápis konfiguraèního textu
+	case IDF_INI_STRING:					// zÃ¡pis konfiguraÃ¨nÃ­ho textu
 		if (!CompTxtPar(index, FSetIniString))
 		{
 			CompAddItem(FSetIniDel);
 		}
 		return true;
 
-	case IDF_INI_NUM:						// zápis konfiguraèního èísla
+	case IDF_INI_NUM:						// zÃ¡pis konfiguraÃ¨nÃ­ho Ã¨Ã­sla
 		if (!CompNumPar(index, FSetIniNum))
 		{
 			CompAddItem(FSetIniDel);
 		}
 		return true;
 
-	case IDF_REG_KEY:						// skupina klíèù registrù
+	case IDF_REG_KEY:						// skupina klÃ­Ã¨Ã¹ registrÃ¹
 		return CompNumPar(index, FSetRegKey);
 
-	case IDF_REG_SUBKEY:					// klíè registrù
+	case IDF_REG_SUBKEY:					// klÃ­Ã¨ registrÃ¹
 		return CompTxtPar(index, FSetRegSubkey);
 
-	case IDF_REG_VALUE:						// jméno poloky registru
+	case IDF_REG_VALUE:						// jmÃ©no poloÅ¾ky registru
 		return CompTxtPar(index, FSetRegValue);
 
-	case IDF_REG_STRING:					// zápis textu do registru
+	case IDF_REG_STRING:					// zÃ¡pis textu do registru
 		if (!CompTxtPar(index, FSetRegString))
 		{
 			CompAddItem(FSetRegDel);
 		}
 		return true;
 
-	case IDF_REG_NUM:						// zápis èísla do registru
+	case IDF_REG_NUM:						// zÃ¡pis Ã¨Ã­sla do registru
 		if (!CompNumPar(index, FSetRegNum))
 		{
 			CompAddItem(FSetRegDel);
@@ -1396,135 +1396,135 @@ bool _fastcall CompCom(int index)
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 	case IDF_FILE_FILENEW:
-		return CompTxtPar(index, FFileNew);		// novı soubor
+		return CompTxtPar(index, FFileNew);		// novÃ½ soubor
 
 	case IDF_FILE_DIRNEW:
-		return CompTxtPar(index, FDirNew);		// novı adresáø
+		return CompTxtPar(index, FDirNew);		// novÃ½ adresÃ¡Ã¸
 
 	case IDF_FILE_DELETE:
-		return CompTxtPar(index, FFileDelete);	// zrušení souboru/adresáøe
+		return CompTxtPar(index, FFileDelete);	// zruÅ¡enÃ­ souboru/adresÃ¡Ã¸e
 
 	case IDF_FILE_ACT:
-		return CompTxtPar(index, FFileAct);		// nastavení aktivního adresáøe
+		return CompTxtPar(index, FFileAct);		// nastavenÃ­ aktivnÃ­ho adresÃ¡Ã¸e
 
 	case IDF_FILE_DISKLABEL:
-		return CompTxtPar(index, FDiskLabel);	// nastavení jmenovky disku
+		return CompTxtPar(index, FDiskLabel);	// nastavenÃ­ jmenovky disku
 
 	case IDF_FILE_READ:
-		return CompTxtPar(index, FFileRead);	// jméno souboru pro ètení
+		return CompTxtPar(index, FFileRead);	// jmÃ©no souboru pro Ã¨tenÃ­
 
 	case IDF_FILE_WRITE:
-		return CompTxtPar(index, FFileWrite);	// jméno souboru pro zápis
+		return CompTxtPar(index, FFileWrite);	// jmÃ©no souboru pro zÃ¡pis
 
 	case IDF_FILE_COPY:
 		CompAddItem(FFileCopy);					// kopie souboru
 		return true;
 
 	case IDF_FILE_MOVE:
-		CompAddItem(FFileMove);					// pøesun souboru
+		CompAddItem(FFileMove);					// pÃ¸esun souboru
 		return true;
 
 	case IDF_FILE_RO:
-		return CompLogPar(index, FFileRO);		// nastavení atributu RO
+		return CompLogPar(index, FFileRO);		// nastavenÃ­ atributu RO
 
 	case IDF_FILE_HID:
-		return CompLogPar(index, FFileHID);		// nastavení atributu HID
+		return CompLogPar(index, FFileHID);		// nastavenÃ­ atributu HID
 
 	case IDF_FILE_SYS:
-		return CompLogPar(index, FFileSYS);		// nastavení atributu SYS
+		return CompLogPar(index, FFileSYS);		// nastavenÃ­ atributu SYS
 
 	case IDF_FILE_ARC:
-		return CompLogPar(index, FFileARC);		// nastavení atributu ARC
+		return CompLogPar(index, FFileARC);		// nastavenÃ­ atributu ARC
 
 	case IDF_FILE_CREATE:
-		return CompNumPar(index, FFileCreate);	// nastavení èasu vytvoøení souboru
+		return CompNumPar(index, FFileCreate);	// nastavenÃ­ Ã¨asu vytvoÃ¸enÃ­ souboru
 
 	case IDF_FILE_OPEN:
-		return CompNumPar(index, FFileOpen);	// nastavení èasu posledního ètení ze souboru
+		return CompNumPar(index, FFileOpen);	// nastavenÃ­ Ã¨asu poslednÃ­ho Ã¨tenÃ­ ze souboru
 
 	case IDF_FILE_MODI:
-		return CompNumPar(index, FFileModi);	// nastavení èasu posledního zápisu do souboru
+		return CompNumPar(index, FFileModi);	// nastavenÃ­ Ã¨asu poslednÃ­ho zÃ¡pisu do souboru
 
 	case IDF_FILE_BYTES:
-		return CompNumPar(index, FFileByteS);	// zápis bajtu se znaménkem
+		return CompNumPar(index, FFileByteS);	// zÃ¡pis bajtu se znamÃ©nkem
 
 	case IDF_FILE_BYTEU:
-		return CompNumPar(index, FFileByteU);	// zápis bajtu bez znaménka
+		return CompNumPar(index, FFileByteU);	// zÃ¡pis bajtu bez znamÃ©nka
 
 	case IDF_FILE_WORDS:
-		return CompNumPar(index, FFileWordS);	// zápis slova se znaménkem
+		return CompNumPar(index, FFileWordS);	// zÃ¡pis slova se znamÃ©nkem
 
 	case IDF_FILE_WORDU:
-		return CompNumPar(index, FFileWordU);	// zápis slova bez znaménka
+		return CompNumPar(index, FFileWordU);	// zÃ¡pis slova bez znamÃ©nka
 
 	case IDF_FILE_DWORDS:
-		return CompNumPar(index, FFileDWordS);	// zápis dvojslova se znaménkem
+		return CompNumPar(index, FFileDWordS);	// zÃ¡pis dvojslova se znamÃ©nkem
 
 	case IDF_FILE_DWORDU:
-		return CompNumPar(index, FFileDWordU);	// zápis dvojslova bez znaménka
+		return CompNumPar(index, FFileDWordU);	// zÃ¡pis dvojslova bez znamÃ©nka
 
 	case IDF_FILE_FLOAT:
-		return CompNumPar(index, FFileFloat);	// zápis èísla FLOAT
+		return CompNumPar(index, FFileFloat);	// zÃ¡pis Ã¨Ã­sla FLOAT
 
 	case IDF_FILE_DOUBLE:
-		return CompNumPar(index, FFileDouble);	// zápis èísla DOUBLE
+		return CompNumPar(index, FFileDouble);	// zÃ¡pis Ã¨Ã­sla DOUBLE
 
 	case IDF_FILE_LOGIC:
-		return CompLogPar(index, FFileLogic);	// zápis logické hodnoty
+		return CompLogPar(index, FFileLogic);	// zÃ¡pis logickÃ© hodnoty
 
 	case IDF_FILE_TEXT0:
-		return CompTxtPar(index, FFileText0);	// zápis textu zakonèeného nulou
+		return CompTxtPar(index, FFileText0);	// zÃ¡pis textu zakonÃ¨enÃ©ho nulou
 
 	case IDF_FILE_TEXTCR:
-		return CompTxtPar(index, FFileTextCR);	// zápis textu zakonèeného CR
+		return CompTxtPar(index, FFileTextCR);	// zÃ¡pis textu zakonÃ¨enÃ©ho CR
 
 	case IDF_FILE_TEXTN:
-		return CompTxtPar(index, FFileTextN);	// zápis textu s pevnou délkou
+		return CompTxtPar(index, FFileTextN);	// zÃ¡pis textu s pevnou dÃ©lkou
 
-	case IDF_FILE_TEXT_UNICODE:					// text v kódu UNICODE
+	case IDF_FILE_TEXT_UNICODE:					// text v kÃ³du UNICODE
 		return CompLogPar(index, FFileTextUnicode);
 
 	case IDF_FILE_READOFF:
-		return CompNumPar(index, FFileReadOff);	// offset pro ètení
+		return CompNumPar(index, FFileReadOff);	// offset pro Ã¨tenÃ­
 
 	case IDF_FILE_WRITEOFF:
-		return CompNumPar(index, FFileWriteOff);// offset pro zápis
+		return CompNumPar(index, FFileWriteOff);// offset pro zÃ¡pis
 
 	case IDF_DATETIME_CURRENT:
-		return CompNumPar(index, FTimeCurrent);	// nastavení aktuálního data a èasu
+		return CompNumPar(index, FTimeCurrent);	// nastavenÃ­ aktuÃ¡lnÃ­ho data a Ã¨asu
 
 	case IDF_FILE_SIZE:
-		return CompNumPar(index, FFileSize);	// nastavení velikosti souboru
+		return CompNumPar(index, FFileSize);	// nastavenÃ­ velikosti souboru
 
 	case IDF_FILE_ERROR:
-		return CompLogPar(index, FFileError);	// pøíznak chyby souborù
+		return CompLogPar(index, FFileError);	// pÃ¸Ã­znak chyby souborÃ¹
 
 	case IDF_FILE_TEXTN_LEN:
-		return CompNumPar(index, FFileTextNLen);// délka textu s pevnou délkou
+		return CompNumPar(index, FFileTextNLen);// dÃ©lka textu s pevnou dÃ©lkou
 
 	case IDF_FILE_3BYTES:
-		return CompNumPar(index, FFile3ByteS);	// zápis 3 bajtù se znaménkem
+		return CompNumPar(index, FFile3ByteS);	// zÃ¡pis 3 bajtÃ¹ se znamÃ©nkem
 
 	case IDF_FILE_3BYTEU:
-		return CompNumPar(index, FFile3ByteU);	// zápis 3 bajtù bez znaménka
+		return CompNumPar(index, FFile3ByteU);	// zÃ¡pis 3 bajtÃ¹ bez znamÃ©nka
 
 	case IDF_FILE_ICON:
-		return CompIcoPar(index, FFileIcon);	// zápis ikony
+		return CompIcoPar(index, FFileIcon);	// zÃ¡pis ikony
 
 	case IDF_FILE_PICTURE:
-		return CompPicPar(index, FFilePicture);	// zápis obrázku
+		return CompPicPar(index, FFilePicture);	// zÃ¡pis obrÃ¡zku
 
 	case IDF_FILE_SOUND:
-		return CompSndPar(index, FFileSound);	// zápis zvuku
+		return CompSndPar(index, FFileSound);	// zÃ¡pis zvuku
 
 	case IDF_FILE_MUSIC:
-		return CompMusPar(index, FFileMusic);	// zápis hudby
+		return CompMusPar(index, FFileMusic);	// zÃ¡pis hudby
 
 	case IDF_FILE_SPRITE:
-		return CompSprPar(index, FFileSprite);	// zápis sprajtu
+		return CompSprPar(index, FFileSprite);	// zÃ¡pis sprajtu
 
 	case IDF_DIALOG_BOX:
 		CompAddItem(FDialogBox);				// dialog box
@@ -1536,78 +1536,78 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_SPRITE_SHIFT_X:
-		return CompNumPar(index, FSpriteShiftX); // posun sprajtù ve smìru X
+		return CompNumPar(index, FSpriteShiftX); // posun sprajtÃ¹ ve smÃ¬ru X
 
 	case IDF_SPRITE_SHIFT_Y:
-		return CompNumPar(index, FSpriteShiftY); // posun sprajtù ve smìru Y
+		return CompNumPar(index, FSpriteShiftY); // posun sprajtÃ¹ ve smÃ¬ru Y
 
 	case IDF_SPRITE_WIN_X1:
-		return CompNumPar(index, FSpriteWinX1);	// levı okraj okna sprajtù
+		return CompNumPar(index, FSpriteWinX1);	// levÃ½ okraj okna sprajtÃ¹
 
 	case IDF_SPRITE_WIN_Y1:
-		return CompNumPar(index, FSpriteWinY1);	// dolní okraj okna sprajtù
+		return CompNumPar(index, FSpriteWinY1);	// dolnÃ­ okraj okna sprajtÃ¹
 
 	case IDF_SPRITE_WIN_X2:
-		return CompNumPar(index, FSpriteWinX2);	// pravı okraj okna sprajtù
+		return CompNumPar(index, FSpriteWinX2);	// pravÃ½ okraj okna sprajtÃ¹
 
 	case IDF_SPRITE_WIN_Y2:
-		return CompNumPar(index, FSpriteWinY2);	// horní okraj okna sprajtù
+		return CompNumPar(index, FSpriteWinY2);	// hornÃ­ okraj okna sprajtÃ¹
 
 	case IDF_CONSOLE_ON:
-//		if (!CompLogPar(index, FConsoleOnSet))	// reim konzoly
+//		if (!CompLogPar(index, FConsoleOnSet))	// reÅ¾im konzoly
 //		{
 			CompAddItem(FConsoleOn);
 //		}
 		return true;
 
 	case IDF_CONSOLE_OUT:
-		return CompTxtPar(index, FConsoleOut);	// vıstup textu na konzolu
+		return CompTxtPar(index, FConsoleOut);	// vÃ½stup textu na konzolu
 
 	case IDF_CONSOLE_ERR:
-		return CompTxtPar(index, FConsoleErr);	// vıstup chybového textu na konzolu
+		return CompTxtPar(index, FConsoleErr);	// vÃ½stup chybovÃ©ho textu na konzolu
 
 	case IDF_RETURN_CODE:
-		return CompNumPar(index, FSetReturnCode); // návratovı kód
+		return CompNumPar(index, FSetReturnCode); // nÃ¡vratovÃ½ kÃ³d
 		 
 	case IDF_EXEC:
-		return CompTxtPar(index, FExec);		// spuštìní programu
+		return CompTxtPar(index, FExec);		// spuÅ¡tÃ¬nÃ­ programu
 
 	case IDF_EXEC_WAIT:
-		return CompTxtPar(index, FExecWait);	// spuštìní programu s èekáním
+		return CompTxtPar(index, FExecWait);	// spuÅ¡tÃ¬nÃ­ programu s Ã¨ekÃ¡nÃ­m
 
 //	case IDF_DIALOG_ON:
-//		if (!CompLogPar(index, FDialogOnSet))	// reim dialogu
+//		if (!CompLogPar(index, FDialogOnSet))	// reÅ¾im dialogu
 //		{
 //			CompAddItem(FDialogOn);
 //		}
 //		return true;
 
 	case IDF_WINDOW_ID:
-		return CompNumPar(index, FWindowID);	// aktivní prvek
+		return CompNumPar(index, FWindowID);	// aktivnÃ­ prvek
 
 	case IDF_WINDOW_DEL:
-		return CompNumPar(index, FWindowDel);	// zrušení okna
+		return CompNumPar(index, FWindowDel);	// zruÅ¡enÃ­ okna
 
 	case IDF_WINDOW_TEXT:
 		return CompTxtPar(index, FWindowText);	// text okna
 
 	case IDF_WINDOW_X:
-		return CompNumPar(index, FWindowX);		// poèátek okna X
+		return CompNumPar(index, FWindowX);		// poÃ¨Ã¡tek okna X
 
 	case IDF_WINDOW_Y:
-		return CompNumPar(index, FWindowY);		// poèátek okna Y
+		return CompNumPar(index, FWindowY);		// poÃ¨Ã¡tek okna Y
 
 	case IDF_WINDOW_W:
-		return CompNumPar(index, FWindowW);		// šíøka okna
+		return CompNumPar(index, FWindowW);		// Å¡Ã­Ã¸ka okna
 
 	case IDF_WINDOW_H:
-		return CompNumPar(index, FWindowH);		// vıška okna
+		return CompNumPar(index, FWindowH);		// vÃ½Å¡ka okna
 
 	case IDF_WINDOW_W_INT:
-		return CompNumPar(index, FWindowWInt);	// vnitøní šíøka okna
+		return CompNumPar(index, FWindowWInt);	// vnitÃ¸nÃ­ Å¡Ã­Ã¸ka okna
 
 	case IDF_WINDOW_H_INT:
-		return CompNumPar(index, FWindowHInt);	// vnitøní vıška okna
+		return CompNumPar(index, FWindowHInt);	// vnitÃ¸nÃ­ vÃ½Å¡ka okna
 
 	case IDF_WINDOW_VISIBLE:
 		if (!CompLogPar(index, FWindowVisibleSet)) // viditelnost okna
@@ -1617,14 +1617,14 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_WINDOW_DISABLE:
-		if (!CompLogPar(index, FWindowDisableSet)) // zákaz okna
+		if (!CompLogPar(index, FWindowDisableSet)) // zÃ¡kaz okna
 		{
 			CompAddItem(FWindowDisable);
 		}
 		return true;
 
 	case IDF_CHECKBOX_ON:
-		if (!CompLogPar(index, FCheckBoxOnSet))	// pøepínaè
+		if (!CompLogPar(index, FCheckBoxOnSet))	// pÃ¸epÃ­naÃ¨
 		{
 			CompAddItem(FCheckBoxOn);
 		}
@@ -1634,71 +1634,71 @@ bool _fastcall CompCom(int index)
 		return CompNumPar(index, FFocus);	// okno s fokusem
 
 	case IDF_FONTBOLD:
-		if (!CompLogPar(index, FFontBoldSet)) // zvıraznìnı text
+		if (!CompLogPar(index, FFontBoldSet)) // zvÃ½raznÃ¬nÃ½ text
 		{
 			CompAddItem(FFontBold);
 		}
 		return true;
 
 	case IDF_FONTFIXED:
-		if (!CompLogPar(index, FFontFixedSet)) // text s pevnou rozteèí
+		if (!CompLogPar(index, FFontFixedSet)) // text s pevnou rozteÃ¨Ã­
 		{
 			CompAddItem(FFontFixed);
 		}
 		return true;
 
 	case IDF_FONTHEIGHT:
-		return CompNumPar(index, FFontHeightSet); // nastavení vıšky znakù
+		return CompNumPar(index, FFontHeightSet); // nastavenÃ­ vÃ½Å¡ky znakÃ¹
 
 	case IDF_FONTITALIC:
-		if (!CompLogPar(index, FFontItalicSet)) // šikmı text
+		if (!CompLogPar(index, FFontItalicSet)) // Å¡ikmÃ½ text
 		{
 			CompAddItem(FFontItalic);
 		}
 		return true;
 
 	case IDF_FONTUNDER:
-		if (!CompLogPar(index, FFontUnderSet)) // potrenı text
+		if (!CompLogPar(index, FFontUnderSet)) // potrÅ¾enÃ½ text
 		{
 			CompAddItem(FFontUnder);
 		}
 		return true;
 
 	case IDF_FONTSTRIKE:
-		if (!CompLogPar(index, FFontStrikeSet)) // pøeškrnutı text
+		if (!CompLogPar(index, FFontStrikeSet)) // pÃ¸eÅ¡krnutÃ½ text
 		{
 			CompAddItem(FFontStrike);
 		}
 		return true;
 
 	case IDF_FONTSERIF:
-		if (!CompLogPar(index, FFontSerifSet)) // text s patièkami
+		if (!CompLogPar(index, FFontSerifSet)) // text s patiÃ¨kami
 		{
 			CompAddItem(FFontSerif);
 		}
 		return true;
 
 	case IDF_FONTWIDTH:
-		return CompNumPar(index, FFontWidthSet); // nastavení šíøky znakù
+		return CompNumPar(index, FFontWidthSet); // nastavenÃ­ Å¡Ã­Ã¸ky znakÃ¹
 
 	case IDF_FONTANGLE:
-		return CompNumPar(index, FFontAngleSet); // nastavení šíøky znakù
+		return CompNumPar(index, FFontAngleSet); // nastavenÃ­ Å¡Ã­Ã¸ky znakÃ¹
 
 	case IDF_FONTCOL:
-		return CompNumPar(index, FFontColSet); // nastavení barvy textu
+		return CompNumPar(index, FFontColSet); // nastavenÃ­ barvy textu
 
 	case IDF_FONTBACK:
-		return CompNumPar(index, FFontBackSet); // nastavení barvy pozadí
+		return CompNumPar(index, FFontBackSet); // nastavenÃ­ barvy pozadÃ­
 
 	case IDF_LISTBOX_ADD:
-		return CompTxtPar(index, FListBoxAdd);	// pøidání poloky do seznamu
+		return CompTxtPar(index, FListBoxAdd);	// pÃ¸idÃ¡nÃ­ poloÅ¾ky do seznamu
 
 	case IDF_LISTBOX_CLEAR:
-		CompAddItem(FListBoxClear);			// vyprázdnìní seznamu
+		CompAddItem(FListBoxClear);			// vyprÃ¡zdnÃ¬nÃ­ seznamu
 		return true;
 
 	case IDF_BUTTON3_ON:
-		if (!CompLogPar(index, FButton3OnSet))	// pøepínaè
+		if (!CompLogPar(index, FButton3OnSet))	// pÃ¸epÃ­naÃ¨
 		{
 			CompAddItem(FButton3On);
 		}
@@ -1711,23 +1711,23 @@ bool _fastcall CompCom(int index)
 		return CompPicPar(index, FWindowPic);
 
 	case IDF_FULLSCREEN:
-		if (!CompLogPar(index, FFullScreenSet))	// pøepínaè
+		if (!CompLogPar(index, FFullScreenSet))	// pÃ¸epÃ­naÃ¨
 		{
 			CompAddItem(FFullScreen);
 		}
 		return true;
 
 	case IDF_KLAV_FLUSH:
-		CompAddItem(FKlavFlush);			// vyprázdnìní bufferu kláves
+		CompAddItem(FKlavFlush);			// vyprÃ¡zdnÃ¬nÃ­ bufferu klÃ¡ves
 		return true;
 
 	case IDF_SOUND_POS:
-		return CompNumPar(index, FSetSoundPos);	// nastavení pozice zvuku
+		return CompNumPar(index, FSetSoundPos);	// nastavenÃ­ pozice zvuku
 
 	case IDF_SOUND_PAUSE:
 		if (!CompLogPar(index, FSoundPauseSet))
 		{
-			CompAddItem(FSoundPause);			// pozastavení zvuku
+			CompAddItem(FSoundPause);			// pozastavenÃ­ zvuku
 		}
 		return true;
 
@@ -1735,238 +1735,238 @@ bool _fastcall CompCom(int index)
 #ifndef _MINI
 
 	case IDF_CONNECT_ACT:
-		return CompTxtPar(index, FSetConnectAct);	// nastavení aktivního spojení
+		return CompTxtPar(index, FSetConnectAct);	// nastavenÃ­ aktivnÃ­ho spojenÃ­
 
 	case IDF_GAME_ACT:
-		return CompTxtPar(index, FSetGameAct);		// nastavení aktivní hry
+		return CompTxtPar(index, FSetGameAct);		// nastavenÃ­ aktivnÃ­ hry
 
 	case IDF_PLAYER_ACT:
-		return CompTxtPar(index, FSetPlayerAct);	// nastavení aktivního hráèe
+		return CompTxtPar(index, FSetPlayerAct);	// nastavenÃ­ aktivnÃ­ho hrÃ¡Ã¨e
 
 	case IDF_GAME_N1:
-		return CompNumPar(index, FSetGameN1);		// nastavení herního èísla 1
+		return CompNumPar(index, FSetGameN1);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 1
 
 	case IDF_GAME_N2:
-		return CompNumPar(index, FSetGameN2);		// nastavení herního èísla 2
+		return CompNumPar(index, FSetGameN2);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 2
 
 	case IDF_GAME_N3:
-		return CompNumPar(index, FSetGameN3);		// nastavení herního èísla 3
+		return CompNumPar(index, FSetGameN3);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 3
 
 	case IDF_GAME_N4:
-		return CompNumPar(index, FSetGameN4);		// nastavení herního èísla 4
+		return CompNumPar(index, FSetGameN4);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 4
 
 	case IDF_GAME_N5:
-		return CompNumPar(index, FSetGameN5);		// nastavení herního èísla 5
+		return CompNumPar(index, FSetGameN5);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 5
 
 	case IDF_GAME_N6:
-		return CompNumPar(index, FSetGameN6);		// nastavení herního èísla 6
+		return CompNumPar(index, FSetGameN6);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 6
 
 	case IDF_GAME_N7:
-		return CompNumPar(index, FSetGameN7);		// nastavení herního èísla 7
+		return CompNumPar(index, FSetGameN7);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 7
 
 	case IDF_GAME_N8:
-		return CompNumPar(index, FSetGameN8);		// nastavení herního èísla 8
+		return CompNumPar(index, FSetGameN8);		// nastavenÃ­ hernÃ­ho Ã¨Ã­sla 8
 
 	case IDF_GAME_L1:
-		return CompLogPar(index, FSetGameL1);		// nastavení herního pøepínaèe 1
+		return CompLogPar(index, FSetGameL1);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 1
 
 	case IDF_GAME_L2:
-		return CompLogPar(index, FSetGameL2);		// nastavení herního pøepínaèe 2
+		return CompLogPar(index, FSetGameL2);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 2
 
 	case IDF_GAME_L3:
-		return CompLogPar(index, FSetGameL3);		// nastavení herního pøepínaèe 3
+		return CompLogPar(index, FSetGameL3);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 3
 
 	case IDF_GAME_L4:
-		return CompLogPar(index, FSetGameL4);		// nastavení herního pøepínaèe 4
+		return CompLogPar(index, FSetGameL4);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 4
 
 	case IDF_GAME_L5:
-		return CompLogPar(index, FSetGameL5);		// nastavení herního pøepínaèe 5
+		return CompLogPar(index, FSetGameL5);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 5
 
 	case IDF_GAME_L6:
-		return CompLogPar(index, FSetGameL6);		// nastavení herního pøepínaèe 6
+		return CompLogPar(index, FSetGameL6);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 6
 
 	case IDF_GAME_L7:
-		return CompLogPar(index, FSetGameL7);		// nastavení herního pøepínaèe 7
+		return CompLogPar(index, FSetGameL7);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 7
 
 	case IDF_GAME_L8:
-		return CompLogPar(index, FSetGameL8);		// nastavení herního pøepínaèe 8
+		return CompLogPar(index, FSetGameL8);		// nastavenÃ­ hernÃ­ho pÃ¸epÃ­naÃ¨e 8
 
 	case IDF_PLAYER_MAX:
-		return CompNumPar(index, FSetPlayerMax);	// max. hráèù
+		return CompNumPar(index, FSetPlayerMax);	// max. hrÃ¡Ã¨Ã¹
 
 	case IDF_GAME_PACKET:
-		if (!CompNumPar(index, FSetGamePacket))		// vyslání paketu
+		if (!CompNumPar(index, FSetGamePacket))		// vyslÃ¡nÃ­ paketu
 		{
 			CompAddItem(FSetGamePacket0);
 		}
 		return true;
 
 	case IDF_GAME_DATAN:
-		return CompNumPar(index, FSetGameDataN);	// vyslání èísla paketem
+		return CompNumPar(index, FSetGameDataN);	// vyslÃ¡nÃ­ Ã¨Ã­sla paketem
 
 	case IDF_GAME_DATAT:
-		return CompTxtPar(index, FSetGameDataT);	// vyslání textu paketem
+		return CompTxtPar(index, FSetGameDataT);	// vyslÃ¡nÃ­ textu paketem
 
 	case IDF_GAME_DATAL:
-		return CompLogPar(index, FSetGameDataL);	// vyslání pøepínaèe paketem
+		return CompLogPar(index, FSetGameDataL);	// vyslÃ¡nÃ­ pÃ¸epÃ­naÃ¨e paketem
 
 	case IDF_GAME_DATAB:
-		return CompNumPar(index, FSetGameDataB);	// vyslání bajtu paketem
+		return CompNumPar(index, FSetGameDataB);	// vyslÃ¡nÃ­ bajtu paketem
 
 	case IDF_UDP_SEND_IP:
-		return CompTxtPar(index, FSetUDPSendIP);	// nastavení vysílací IP adresy UDP
+		return CompTxtPar(index, FSetUDPSendIP);	// nastavenÃ­ vysÃ­lacÃ­ IP adresy UDP
 
 	case IDF_UDP_SEND_PORT:
-		return CompNumPar(index, FSetUDPSendPort);	// nastavení vysílacího portu UDP
+		return CompNumPar(index, FSetUDPSendPort);	// nastavenÃ­ vysÃ­lacÃ­ho portu UDP
 
 	case IDF_UDP_REC_SIZE:
-		return CompNumPar(index, FSetUDPRecSize);	// nastavení velikosti pøijímacího bufferu UDP
+		return CompNumPar(index, FSetUDPRecSize);	// nastavenÃ­ velikosti pÃ¸ijÃ­macÃ­ho bufferu UDP
 
 	case IDF_UDP_REC_IP:
-		return CompTxtPar(index, FSetUDPRecIP);		// nastavení pøijímací IP adresy UDP
+		return CompTxtPar(index, FSetUDPRecIP);		// nastavenÃ­ pÃ¸ijÃ­macÃ­ IP adresy UDP
 
 	case IDF_UDP_REC_PORT:
-		return CompNumPar(index, FSetUDPRecPort);	// nastavení pøijímacího portu UDP
+		return CompNumPar(index, FSetUDPRecPort);	// nastavenÃ­ pÃ¸ijÃ­macÃ­ho portu UDP
 
 	case IDF_UDP_MEM:
-		return CompNumPar(index, FSetUDPMem);		// odeslání binárního paketu UDP
+		return CompNumPar(index, FSetUDPMem);		// odeslÃ¡nÃ­ binÃ¡rnÃ­ho paketu UDP
 
 	case IDF_UDP_TEXT:
-		return CompTxtPar(index, FSetUDPText);		// odeslání textového paketu UDP
+		return CompTxtPar(index, FSetUDPText);		// odeslÃ¡nÃ­ textovÃ©ho paketu UDP
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 
 	case IDF_BUTTON_ESC:
-		return CompNumPar(index, FSetButtonEsc);	// tlaèítko pro Esc
+		return CompNumPar(index, FSetButtonEsc);	// tlaÃ¨Ã­tko pro Esc
 
 	case IDF_CODEPAGE:
-		return CompNumPar(index, FSetCodePage);		// nastavení znakové sady
+		return CompNumPar(index, FSetCodePage);		// nastavenÃ­ znakovÃ© sady
 
 	case IDF_USERFONT:
-		return CompTxtPar(index, FSetUserFont);		// nastavení uivatelského fontu
+		return CompTxtPar(index, FSetUserFont);		// nastavenÃ­ uÅ¾ivatelskÃ©ho fontu
 
 	case IDF_LANGUAGE:
-		return CompNumPar(index, FSetLanguage);		// nastavení jazyku
+		return CompNumPar(index, FSetLanguage);		// nastavenÃ­ jazyku
 
 	case IDF_WINDOW_FRAME:
-		return CompLogPar(index, FSetWindowFrame);	// nastavení rámeèku okna
+		return CompLogPar(index, FSetWindowFrame);	// nastavenÃ­ rÃ¡meÃ¨ku okna
 
 	case IDF_WINDOW_CAPTION:
-		return CompLogPar(index, FSetWindowCaption); // nastavení nadpisu okna
+		return CompLogPar(index, FSetWindowCaption); // nastavenÃ­ nadpisu okna
 
 	case IDF_WINDOW_TOP:
-		return CompLogPar(index, FSetWindowTop);	// nastavení okna vdy nahoøe
+		return CompLogPar(index, FSetWindowTop);	// nastavenÃ­ okna vÅ¾dy nahoÃ¸e
 
 	case IDF_WINDOW_RESIZABLE:
-		return CompLogPar(index, FSetWindowSize);	// nastavení okna s mìnitelnou velikostí
+		return CompLogPar(index, FSetWindowSize);	// nastavenÃ­ okna s mÃ¬nitelnou velikostÃ­
 
 	case IDF_WINDOW_MAY_CLOSE:
-		return CompLogPar(index, FSetWindowMayClose);	// nastavení povolení uzavøení okna
+		return CompLogPar(index, FSetWindowMayClose);	// nastavenÃ­ povolenÃ­ uzavÃ¸enÃ­ okna
 
 	case IDF_WINDOW_MAXIM:
-		return CompLogPar(index, FSetWindowMaxim);		// nastavení maximalizace okna
+		return CompLogPar(index, FSetWindowMaxim);		// nastavenÃ­ maximalizace okna
 
 	case IDF_WINDOW_MINIM:
-		return CompLogPar(index, FSetWindowMinim);		// nastavení minimalizace okna
+		return CompLogPar(index, FSetWindowMinim);		// nastavenÃ­ minimalizace okna
 
 	case IDF_WINDOW_POS:
-		return CompNumPar(index, FSetWindowPos);	// nastavení ukazatele v prvku
+		return CompNumPar(index, FSetWindowPos);	// nastavenÃ­ ukazatele v prvku
 
 	case IDF_WINDOW_POS2:
-		return CompNumPar(index, FSetWindowPos2);	// nastavení ukazatele 2 v prvku
+		return CompNumPar(index, FSetWindowPos2);	// nastavenÃ­ ukazatele 2 v prvku
 
 	case IDF_ALIAS:
-		return CompTxtPar(index, FSetAlias);		// nastavení ALIAS souboru
+		return CompTxtPar(index, FSetAlias);		// nastavenÃ­ ALIAS souboru
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
 	case IDF_COM_ID:
-		return CompNumPar(index, FSetComID);		// aktivní port
+		return CompNumPar(index, FSetComID);		// aktivnÃ­ port
 
 	case IDF_COM_CLOSE:
-		return CompNumPar(index, FComClose);		// uzavøení portu
+		return CompNumPar(index, FComClose);		// uzavÃ¸enÃ­ portu
 
 	case IDF_COM_BAUD:
-		return CompNumPar(index, FSetComBaud);		// nastavení pøenosové rychlosti portu
+		return CompNumPar(index, FSetComBaud);		// nastavenÃ­ pÃ¸enosovÃ© rychlosti portu
 
 	case IDF_COM_STOP:
-		return CompLogPar(index, FSetComStop);		// nastavení stopbitù portu
+		return CompLogPar(index, FSetComStop);		// nastavenÃ­ stopbitÃ¹ portu
 
 	case IDF_COM_BITS:
-		return CompNumPar(index, FSetComBits);		// nastavení poètu bitù portu
+		return CompNumPar(index, FSetComBits);		// nastavenÃ­ poÃ¨tu bitÃ¹ portu
 
 	case IDF_COM_PARIT:
-		return CompNumPar(index, FSetComParit);		// nastavení parity
+		return CompNumPar(index, FSetComParit);		// nastavenÃ­ parity
 
 	case IDF_COM_TEXT:
-		return CompTxtPar(index, FSetComText);		// vyslání textu na port
+		return CompTxtPar(index, FSetComText);		// vyslÃ¡nÃ­ textu na port
 
 	case IDF_COM_NUM:
-		return CompNumPar(index, FSetComNum);		// vyslání èísla na port
+		return CompNumPar(index, FSetComNum);		// vyslÃ¡nÃ­ Ã¨Ã­sla na port
 
 	case IDF_COM_SEND:
-		return CompLogPar(index, FSetComSend);		// povolení vysílání
+		return CompLogPar(index, FSetComSend);		// povolenÃ­ vysÃ­lÃ¡nÃ­
 
 	case IDF_COM_RECEIVE:
-		return CompLogPar(index, FSetComReceive);	// povolení pøíjmu
+		return CompLogPar(index, FSetComReceive);	// povolenÃ­ pÃ¸Ã­jmu
 
 	case IDF_DDE_APP:
-		return CompTxtPar(index, FSetDDEApp);		// nastavení jména plikace DDE
+		return CompTxtPar(index, FSetDDEApp);		// nastavenÃ­ jmÃ©na plikace DDE
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 	case IDF_GRAPH_AREA_WIDTH:
-		return CompNumPar(index, FSetGraphAreaWidth);	// šíøka k zobrazení centrovaného textu
+		return CompNumPar(index, FSetGraphAreaWidth);	// Å¡Ã­Ã¸ka k zobrazenÃ­ centrovanÃ©ho textu
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
 	case IDF_MIX_DEVICE:
-		return CompTxtPar(index, FSetMixDevice);	// nastavení mixáního zaøízení
+		return CompTxtPar(index, FSetMixDevice);	// nastavenÃ­ mixÃ¡Å¾nÃ­ho zaÃ¸Ã­zenÃ­
 
 	case IDF_MIX_LINE_DST:
-		return CompTxtPar(index, FSetMixLineDst);	// nastavení cílového signálu
+		return CompTxtPar(index, FSetMixLineDst);	// nastavenÃ­ cÃ­lovÃ©ho signÃ¡lu
 
 	case IDF_MIX_LINE_SRC:
-		return CompTxtPar(index, FSetMixLineSrc);	// nastavení zdrojového signálu
+		return CompTxtPar(index, FSetMixLineSrc);	// nastavenÃ­ zdrojovÃ©ho signÃ¡lu
 
-	case IDF_MIX_LINE_TYPE:							// nastavení typu signálu
+	case IDF_MIX_LINE_TYPE:							// nastavenÃ­ typu signÃ¡lu
 		return CompNumPar(index, FSetLineType);
 
 	case IDF_MIX_CONTROL:
-		return CompTxtPar(index, FSetMixControl);	// nastavení ovládacího prvku
+		return CompTxtPar(index, FSetMixControl);	// nastavenÃ­ ovlÃ¡dacÃ­ho prvku
 
-	case IDF_MIX_CONTROL_TYPE:						// nastavení typu ovládacího prvku
+	case IDF_MIX_CONTROL_TYPE:						// nastavenÃ­ typu ovlÃ¡dacÃ­ho prvku
 		return CompNumPar(index, FSetCtrlType);
 
-	case IDF_MIX_CONTROL_VAL:						// nastavení hodnoty ovládacího prvku
+	case IDF_MIX_CONTROL_VAL:						// nastavenÃ­ hodnoty ovlÃ¡dacÃ­ho prvku
 		return CompNumPar(index, FSetCtrlVal);
 
-	case IDF_MIX_CHANNEL:							// nastavení kanálu ovládacího prvku
+	case IDF_MIX_CHANNEL:							// nastavenÃ­ kanÃ¡lu ovlÃ¡dacÃ­ho prvku
 		return CompNumPar(index, FSetMixChannel);
 
-	case IDF_MIX_CONTROL_LIST:						// vıbìr hodnoty ovládacího prvku
+	case IDF_MIX_CONTROL_LIST:						// vÃ½bÃ¬r hodnoty ovlÃ¡dacÃ­ho prvku
 		return CompTxtPar(index, FSetMixCtrlList);
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 
 	case IDF_DIALOG_GRAPHIC:
-		return CompLogPar(index, FSetDialogGraph);	// nadstavení grafického pozadí
+		return CompLogPar(index, FSetDialogGraph);	// nadstavenÃ­ grafickÃ©ho pozadÃ­
 
 	case IDF_DIRECT3D_MODE_LIST:
-		return CompTxtPar(index, FSet3DMode);		// nastavení videomódu
+		return CompTxtPar(index, FSet3DMode);		// nastavenÃ­ videomÃ³du
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
 	case IDF_DIRECT3D_VIEW:
-		CompAddItem(FDirect3DView);					// nastavení okna Direct3D
+		CompAddItem(FDirect3DView);					// nastavenÃ­ okna Direct3D
 		CompNumSubPar(index, IDF_DIRECT3D_VIEW_X, -100);
 		CompNumSubPar(index, IDF_DIRECT3D_VIEW_Y, -100);
 		CompNumSubPar(index, IDF_DIRECT3D_VIEW_W, 2000000);
@@ -1974,113 +1974,113 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_DIRECT3D_WIREFRAME:
-		return CompLogPar(index, FSetD3DWireframe);	// zapnutí vıplnì 3D
+		return CompLogPar(index, FSetD3DWireframe);	// zapnutÃ­ vÃ½plnÃ¬ 3D
 
 	case IDF_DIRECT3D_LIGHTON:
-		return CompLogPar(index, FSetD3DLighton);	// zapnuto osvìtlení
+		return CompLogPar(index, FSetD3DLighton);	// zapnuto osvÃ¬tlenÃ­
 
 	case IDF_DIRECT3D_SHADES:
-		return CompLogPar(index, FSetD3DShades);	// nastavení módu stínování 3D
+		return CompLogPar(index, FSetD3DShades);	// nastavenÃ­ mÃ³du stÃ­novÃ¡nÃ­ 3D
 
 	case IDF_DIRECT3D_INVERT:
 		CompAddItem(FD3DInvert);					// inverze objektu
 		return true;
 
 	case IDF_DIRECT3D_OCULLING:
-		return CompNumPar(index, FSetD3DOCulling);	// nastavení odstraòování ploch objektu Direct 3D
+		return CompNumPar(index, FSetD3DOCulling);	// nastavenÃ­ odstraÃ²ovÃ¡nÃ­ ploch objektu Direct 3D
 
 	case IDF_DIRECT3D_MINFILTER:
-		return CompLogPar(index, FSetD3DMinFilter);		// zapnutí filtrace pøi zmenšení
+		return CompLogPar(index, FSetD3DMinFilter);		// zapnutÃ­ filtrace pÃ¸i zmenÅ¡enÃ­
 
 	case IDF_DIRECT3D_MAGFILTER:
-		return CompLogPar(index, FSetD3DMagFilter);		// zapnutí filtrace pøi zvìtšení
+		return CompLogPar(index, FSetD3DMagFilter);		// zapnutÃ­ filtrace pÃ¸i zvÃ¬tÅ¡enÃ­
 
 	case IDF_DIRECT3D_MIPFILTER:
-		return CompLogPar(index, FSetD3DMipFilter);		// zapnutí filtrace pøi vzdálení
+		return CompLogPar(index, FSetD3DMipFilter);		// zapnutÃ­ filtrace pÃ¸i vzdÃ¡lenÃ­
 
 	case IDF_DIRECT3D_OWIREFRAME:
-		return CompLogPar(index, FSetD3DOWireframe);	// zapnutí vıplnì objektu 3D
+		return CompLogPar(index, FSetD3DOWireframe);	// zapnutÃ­ vÃ½plnÃ¬ objektu 3D
 
 	case IDF_DIRECT3D_OLIGHTON:
-		return CompLogPar(index, FSetD3DOLighton);	// zapnuto osvìtlení objektu
+		return CompLogPar(index, FSetD3DOLighton);	// zapnuto osvÃ¬tlenÃ­ objektu
 
 	case IDF_DIRECT3D_OSHADES:
-		return CompLogPar(index, FSetD3DOShades);	// nastavení módu stínování objektu 3D
+		return CompLogPar(index, FSetD3DOShades);	// nastavenÃ­ mÃ³du stÃ­novÃ¡nÃ­ objektu 3D
 
 	case IDF_DIRECT3D_OMINFILTER:
-		return CompLogPar(index, FSetD3DOMinFilter);		// zapnutí filtrace pøi zmenšení textury objektu
+		return CompLogPar(index, FSetD3DOMinFilter);		// zapnutÃ­ filtrace pÃ¸i zmenÅ¡enÃ­ textury objektu
 
 	case IDF_DIRECT3D_OMAGFILTER:
-		return CompLogPar(index, FSetD3DOMagFilter);		// zapnutí filtrace pøi zvìtšení textury objektu
+		return CompLogPar(index, FSetD3DOMagFilter);		// zapnutÃ­ filtrace pÃ¸i zvÃ¬tÅ¡enÃ­ textury objektu
 
 	case IDF_DIRECT3D_OMIPFILTER:
-		return CompLogPar(index, FSetD3DOMipFilter);		// zapnutí filtrace pøi vzdálení textury objektu
+		return CompLogPar(index, FSetD3DOMipFilter);		// zapnutÃ­ filtrace pÃ¸i vzdÃ¡lenÃ­ textury objektu
 
-	case IDF_DIRECT3D_VISIBLE:						// nastavení viditelnosti objektu Direct 3D
+	case IDF_DIRECT3D_VISIBLE:						// nastavenÃ­ viditelnosti objektu Direct 3D
 		return CompLogPar(index, FSetD3DVisible);
 
-	case IDF_DIRECT3D_LINK:							// pøipojení jiného objektu/objektù
+	case IDF_DIRECT3D_LINK:							// pÃ¸ipojenÃ­ jinÃ©ho objektu/objektÃ¹
 		return CompNumGrp(index, FD3DLink, FD3DLink);
 
-//	case IDF_DIRECT3D_SAVE:							// uloení objektu do souboru
+//	case IDF_DIRECT3D_SAVE:							// uloÅ¾enÃ­ objektu do souboru
 //		return CompTxtPar(index, FD3DSave);
 
 	case IDF_DIRECT3D_OBJECT_ID:
-		return CompNumPar(index, FSetD3DObjectID);	// nastavení aktivního objektu Direct3D
+		return CompNumPar(index, FSetD3DObjectID);	// nastavenÃ­ aktivnÃ­ho objektu Direct3D
 
 	case IDF_DIRECT3D_OBJECT_DELETE:
-		return CompNumGrp(index, FD3DObjectDelete, FD3DObjectDelete); // zrušení objektu/objektù Direct3D
+		return CompNumGrp(index, FD3DObjectDelete, FD3DObjectDelete); // zruÅ¡enÃ­ objektu/objektÃ¹ Direct3D
 
 	case IDF_DIRECT3D_SCALEX:
-		return CompNumPar(index, FSetD3DScaleX);	// nastavení mìøítka ve smìru X
+		return CompNumPar(index, FSetD3DScaleX);	// nastavenÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru X
 
 	case IDF_DIRECT3D_SCALEY:
-		return CompNumPar(index, FSetD3DScaleY);	// nastavení mìøítka ve smìru Y
+		return CompNumPar(index, FSetD3DScaleY);	// nastavenÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru Y
 
 	case IDF_DIRECT3D_SCALEZ:
-		return CompNumPar(index, FSetD3DScaleZ);	// nastavení mìøítka ve smìru Z
+		return CompNumPar(index, FSetD3DScaleZ);	// nastavenÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru Z
 
 	case IDF_DIRECT3D_ROTATEX:
-		return CompNumPar(index, FSetD3DRotateX);	// nastavení rotace podle osy X
+		return CompNumPar(index, FSetD3DRotateX);	// nastavenÃ­ rotace podle osy X
 
 	case IDF_DIRECT3D_ROTATEY:
-		return CompNumPar(index, FSetD3DRotateY);	// nastavení rotace podle osy Y
+		return CompNumPar(index, FSetD3DRotateY);	// nastavenÃ­ rotace podle osy Y
 
 	case IDF_DIRECT3D_ROTATEZ:
-		return CompNumPar(index, FSetD3DRotateZ);	// nastavení rotace podle osy Z
+		return CompNumPar(index, FSetD3DRotateZ);	// nastavenÃ­ rotace podle osy Z
 
 	case IDF_DIRECT3D_TRANSX:
-		return CompNumPar(index, FSetD3DTransX);	// nastavení posunu ve smìru X
+		return CompNumPar(index, FSetD3DTransX);	// nastavenÃ­ posunu ve smÃ¬ru X
 
 	case IDF_DIRECT3D_TRANSY:
-		return CompNumPar(index, FSetD3DTransY);	// nastavení posunu ve smìru Y
+		return CompNumPar(index, FSetD3DTransY);	// nastavenÃ­ posunu ve smÃ¬ru Y
 
 	case IDF_DIRECT3D_TRANSZ:
-		return CompNumPar(index, FSetD3DTransZ);	// nastavení posunu ve smìru Z
+		return CompNumPar(index, FSetD3DTransZ);	// nastavenÃ­ posunu ve smÃ¬ru Z
 
 	case IDF_DIRECT3D_COLOR:
-		return CompNumPar(index, FSetD3DColor);		// nastavení barvy objektu
+		return CompNumPar(index, FSetD3DColor);		// nastavenÃ­ barvy objektu
 
 	case IDF_DIRECT3D_EMISSIVE:
-		return CompNumPar(index, FSetD3DEmissive);	// nastavení barvy svítivosti
+		return CompNumPar(index, FSetD3DEmissive);	// nastavenÃ­ barvy svÃ­tivosti
 
 	case IDF_DIRECT3D_POWER:
-		return CompNumPar(index, FSetD3DPower);		// nastavení matnosti
+		return CompNumPar(index, FSetD3DPower);		// nastavenÃ­ matnosti
 
 	case IDF_DIRECT3D_SPECULAR:
-		return CompNumPar(index, FSetD3DSpecular);	// nastavení barvy odlesku
+		return CompNumPar(index, FSetD3DSpecular);	// nastavenÃ­ barvy odlesku
 
-	case IDF_DIRECT3D_TEXTURE:						// nastavení textury objektu Direct3D
+	case IDF_DIRECT3D_TEXTURE:						// nastavenÃ­ textury objektu Direct3D
 		return CompPicPar(index, FSetD3DTexture);
 
-	case IDF_DIRECT3D_TEXTURE_FILE:					// naètení textury objektu Direct3D ze souboru
+	case IDF_DIRECT3D_TEXTURE_FILE:					// naÃ¨tenÃ­ textury objektu Direct3D ze souboru
 		CompAddItem(FD3DTextureFile);
 		return true;
 
-	case IDF_DIRECT3D_SMOOTH:						// nastavení vyhlazení textur
+	case IDF_DIRECT3D_SMOOTH:						// nastavenÃ­ vyhlazenÃ­ textur
 		return CompNumPar(index, FSetD3DSmooth);
 
-	case IDF_DIRECT3D_TEXTMAP:						// mapování textury
+	case IDF_DIRECT3D_TEXTMAP:						// mapovÃ¡nÃ­ textury
 		CompAddItem(FD3DTextMap);
 		CompNumSubPar(index, IDF_DIRECT3D_TEXTMAP_METHOD, 0);
 		CompNumSubPar(index, IDF_DIRECT3D_TEXTMAP_TYPE, 0);
@@ -2097,84 +2097,84 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_DIRECT3D_TRANSPARENT:
-		return CompNumPar(index, FSetD3DTransparent);	// nastavení prùhlednosti
+		return CompNumPar(index, FSetD3DTransparent);	// nastavenÃ­ prÃ¹hlednosti
 
 	case IDF_DIRECT3D_ALPHAREF:
-		return CompNumPar(index, FSetD3DAlphaRef);		// nastavení referenèní úrovnì alfa kanálu
+		return CompNumPar(index, FSetD3DAlphaRef);		// nastavenÃ­ referenÃ¨nÃ­ ÃºrovnÃ¬ alfa kanÃ¡lu
 
 	case IDF_DIRECT3D_LIGHT_COLOR:
-		return CompNumPar(index, FSetD3DLightColor);	// nastavení barvy svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightColor);	// nastavenÃ­ barvy svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_LIGHT_TYPE:
-		return CompNumPar(index, FSetD3DLightType);		// nastavení typu svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightType);		// nastavenÃ­ typu svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_LIGHT_UMBRA:
-		return CompNumPar(index, FSetD3DLightUmbra);	// nastavení úhlu stínu svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightUmbra);	// nastavenÃ­ Ãºhlu stÃ­nu svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_LIGHT_PENUMBRA:
-		return CompNumPar(index, FSetD3DLightPenumbra);	// nastavení úhlu polostínu svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightPenumbra);	// nastavenÃ­ Ãºhlu polostÃ­nu svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_LIGHT_RANGE:
-		return CompNumPar(index, FSetD3DLightRange);	// nastavení dosahu svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightRange);	// nastavenÃ­ dosahu svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_LIGHT_CATTEN:
-		return CompNumPar(index, FSetD3DLightCatten);	// nastavení konstantního útlumu svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightCatten);	// nastavenÃ­ konstantnÃ­ho Ãºtlumu svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_LIGHT_LATTEN:
-		return CompNumPar(index, FSetD3DLightLatten);	// nastavení lineárního útlumu svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightLatten);	// nastavenÃ­ lineÃ¡rnÃ­ho Ãºtlumu svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_LIGHT_QATTEN:
-		return CompNumPar(index, FSetD3DLightQatten);	// nastavení kvadratického útlumu svìtla Direct3D
+		return CompNumPar(index, FSetD3DLightQatten);	// nastavenÃ­ kvadratickÃ©ho Ãºtlumu svÃ¬tla Direct3D
 
 	case IDF_DIRECT3D_PROJECTION:						// typ projekce
 		return CompNumPar(index, FSetD3DProjection);
 
 	case IDF_DIRECT3D_SCENE_COLOR:
-		return CompNumPar(index, FSetD3DSceneColor);	// nastavení barvy pozadí scény
+		return CompNumPar(index, FSetD3DSceneColor);	// nastavenÃ­ barvy pozadÃ­ scÃ©ny
 
 	case IDF_DIRECT3D_SCENE_TEXTURE:
-		return CompPicPar(index, FSetD3DSceneTexture);	// nastavení textury pozadí scény
+		return CompPicPar(index, FSetD3DSceneTexture);	// nastavenÃ­ textury pozadÃ­ scÃ©ny
 
 	case IDF_DIRECT3D_FOG_COLOR:
-		return CompNumPar(index, FSetD3DFogColor);		// nastavení barvy mlhy
+		return CompNumPar(index, FSetD3DFogColor);		// nastavenÃ­ barvy mlhy
 
 	case IDF_DIRECT3D_FOG_MODE:
-		return CompNumPar(index, FSetD3DFogMode);		// nastavení módu mlhy
+		return CompNumPar(index, FSetD3DFogMode);		// nastavenÃ­ mÃ³du mlhy
 
 	case IDF_DIRECT3D_FOG_START:
-		return CompNumPar(index, FSetD3DFogStart);		// nastavení zaèátku mlhy
+		return CompNumPar(index, FSetD3DFogStart);		// nastavenÃ­ zaÃ¨Ã¡tku mlhy
 
 	case IDF_DIRECT3D_FOG_END:
-		return CompNumPar(index, FSetD3DFogEnd);		// nastavení konce mlhy
+		return CompNumPar(index, FSetD3DFogEnd);		// nastavenÃ­ konce mlhy
 
 	case IDF_DIRECT3D_FOG_DENSITY:
-		return CompNumPar(index, FSetD3DFogDensity);	// nastavení hustoty mlhy
+		return CompNumPar(index, FSetD3DFogDensity);	// nastavenÃ­ hustoty mlhy
 
 	case IDF_DIRECT3D_VIEW_FRONT:
-		return CompNumPar(index, FSetD3DViewFront);		// nastavení promítací roviny
+		return CompNumPar(index, FSetD3DViewFront);		// nastavenÃ­ promÃ­tacÃ­ roviny
 
 	case IDF_DIRECT3D_VIEW_BACK:
-		return CompNumPar(index, FSetD3DViewBack);		// nastavení vzdálenosti dohledu
+		return CompNumPar(index, FSetD3DViewBack);		// nastavenÃ­ vzdÃ¡lenosti dohledu
 
 	case IDF_DIRECT3D_UPPER:
-		return CompLogPar(index, FSetD3DUpper);			// vytváøet horní podstavu
+		return CompLogPar(index, FSetD3DUpper);			// vytvÃ¡Ã¸et hornÃ­ podstavu
 
 	case IDF_DIRECT3D_LOWER:
-		return CompLogPar(index, FSetD3DLower);			// vytváøet dolní podstavu
+		return CompLogPar(index, FSetD3DLower);			// vytvÃ¡Ã¸et dolnÃ­ podstavu
 
 	case IDF_DIRECT3D_SPLITS:
-		return CompNumPar(index, FSetD3DSplits);		// nastavení sloitosti objektu
+		return CompNumPar(index, FSetD3DSplits);		// nastavenÃ­ sloÅ¾itosti objektu
 
 	case IDF_DIRECT3D_ORDER:
-		return CompNumPar(index, FSetD3DOrder);			// nastavení poøadí rotací
+		return CompNumPar(index, FSetD3DOrder);			// nastavenÃ­ poÃ¸adÃ­ rotacÃ­
 
 	case IDF_DIRECT3D_DRIVER:
-		return CompNumPar(index, FSetD3DDriver);		// nastavení ovladaèe
+		return CompNumPar(index, FSetD3DDriver);		// nastavenÃ­ ovladaÃ¨e
 
 	case IDF_DIRECT3D_INTERFACE:
-		return CompNumPar(index, FSetD3DInterface);		// nastavení rozhraní
+		return CompNumPar(index, FSetD3DInterface);		// nastavenÃ­ rozhranÃ­
 
-	case IDF_DIRECT3D_AMBIENT:							// nastavení ambient svìtla
+	case IDF_DIRECT3D_AMBIENT:							// nastavenÃ­ ambient svÃ¬tla
 		return CompNumPar(index, FSetD3DAmbient);
 
 	case IDF_DIRECT3D_NORM:
@@ -2182,9 +2182,9 @@ bool _fastcall CompCom(int index)
 		return true;
 
 	case IDF_DIRECT3D_AMBIREF:
-		return CompNumPar(index, FSetD3DAmbiRef);		// nastavení odrazivosti rozptıleného svìtla
+		return CompNumPar(index, FSetD3DAmbiRef);		// nastavenÃ­ odrazivosti rozptÃ½lenÃ©ho svÃ¬tla
 
-	case IDF_DIRECT3D_STAGE:							// stupeò textur
+	case IDF_DIRECT3D_STAGE:							// stupeÃ² textur
 		return CompNumPar(index, FSetD3DStage);
 
 	case IDF_DIRECT3D_COLOROP:							// operace barev
@@ -2205,77 +2205,77 @@ bool _fastcall CompCom(int index)
 	case IDF_DIRECT3D_ALPHAARG2:						// argument 2 alfa
 		return CompNumPar(index, FSetD3DAlphaArg2);
 
-	case IDF_DIRECT3D_ADDRESSU:							// horizontální adresování
+	case IDF_DIRECT3D_ADDRESSU:							// horizontÃ¡lnÃ­ adresovÃ¡nÃ­
 		return CompNumPar(index, FSetD3DAddressU);
 
-	case IDF_DIRECT3D_ADDRESSV:							// vertikální adresování
+	case IDF_DIRECT3D_ADDRESSV:							// vertikÃ¡lnÃ­ adresovÃ¡nÃ­
 		return CompNumPar(index, FSetD3DAddressV);
 
-//	case IDF_DIRECT3D_BORDER:							// barva okolí textur
+//	case IDF_DIRECT3D_BORDER:							// barva okolÃ­ textur
 //		return CompNumPar(index, FSetD3DBorder);
 
-	case IDF_DIRECT3D_BIAS:								// zjemnìní vzdálenıch textur
+	case IDF_DIRECT3D_BIAS:								// zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
 		return CompNumPar(index, FSetD3DBias);
 
 	case IDF_DIRECT3D_TFACTOR:							// faktor textur
 		return CompNumPar(index, FSetD3DTFactor);
 
-	case IDF_DIRECT3D_MIPMAPS:							// poèet mipmaps
+	case IDF_DIRECT3D_MIPMAPS:							// poÃ¨et mipmaps
 		return CompNumPar(index, FSetD3DMipMaps);
 
-	case IDF_DIRECT3D_ZGROUP:							// renderovací skupina
+	case IDF_DIRECT3D_ZGROUP:							// renderovacÃ­ skupina
 		return CompNumPar(index, FSetD3DZGroup);
 
-	case IDF_DIRECT3D_ZSORT:							// tøídìní skupiny
+	case IDF_DIRECT3D_ZSORT:							// tÃ¸Ã­dÃ¬nÃ­ skupiny
 		return CompLogPar(index, FSetD3DZSort);
 
-	case IDF_DIRECT3D_ZWRITE:							// zápis hloubkové informace
+	case IDF_DIRECT3D_ZWRITE:							// zÃ¡pis hloubkovÃ© informace
 		return CompLogPar(index, FSetD3DZWrite);
 
-	case IDF_DIRECT3D_ZTEST:							// hloubkovı test
+	case IDF_DIRECT3D_ZTEST:							// hloubkovÃ½ test
 		return CompNumPar(index, FSetD3DZTest);
 
-	case IDF_DIRECT3D_NORMALS:							// generování normál
+	case IDF_DIRECT3D_NORMALS:							// generovÃ¡nÃ­ normÃ¡l
 		if (!CompNumPar(index, FD3DNormals))
 		{
 			CompAddItem(FD3DNormals0);
 		}
 		return true;
 
-	case IDF_DIRECT3D_RENDER:							// renderování bez zobrazení
+	case IDF_DIRECT3D_RENDER:							// renderovÃ¡nÃ­ bez zobrazenÃ­
 		CompAddItem(FD3DRender);
 		return true;
 
-	case IDF_SHADOW_RANGE:								// dosah stínu
+	case IDF_SHADOW_RANGE:								// dosah stÃ­nu
 		return CompNumPar(index, FSetD3DShadowRange);
 
 	case IDF_DIRECT3D_LOD_OBJECT:						// objekt pro LOD
 		return CompNumPar(index, FSetD3DLODObject);
 
-	case IDF_DIRECT3D_LOD_DISTANCE:						// vzdálenost pro LOD
+	case IDF_DIRECT3D_LOD_DISTANCE:						// vzdÃ¡lenost pro LOD
 		return CompNumPar(index, FSetD3DLODDistance);
 
-	case IDF_DIRECT3D_MORPH_MODEL:						// pøidání vzoru morfování
+	case IDF_DIRECT3D_MORPH_MODEL:						// pÃ¸idÃ¡nÃ­ vzoru morfovÃ¡nÃ­
 		return CompNumPar(index, FSetD3DMorphModel);
 
-	case IDF_DIRECT3D_MORPH_LEVEL:						// nastavení stupnì morfování
+	case IDF_DIRECT3D_MORPH_LEVEL:						// nastavenÃ­ stupnÃ¬ morfovÃ¡nÃ­
 		return CompNumPar(index, FSetD3DMorphLevel);
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 	 
 
-	case IDF_ACTIVE:									// nastavení aktivní aplikace
+	case IDF_ACTIVE:									// nastavenÃ­ aktivnÃ­ aplikace
 		return CompLogPar(index, FSetActive);
 
-	case IDF_TABLE_WIDTH:								// nastavení šíøky sloupce tabulky
+	case IDF_TABLE_WIDTH:								// nastavenÃ­ Å¡Ã­Ã¸ky sloupce tabulky
 		return CompNumPar(index, FSetTableWidth);
 
-	case IDF_TABLE_ALIGN:								// nastavení zarovnání sloupce tabulky
+	case IDF_TABLE_ALIGN:								// nastavenÃ­ zarovnÃ¡nÃ­ sloupce tabulky
 		return CompNumPar(index, FSetTableAlign);
 
 	case IDF_PRINT_PICTURE:
-		return CompPicPar(index, FPicPrint2);			// tisk obrázku
+		return CompPicPar(index, FPicPrint2);			// tisk obrÃ¡zku
 
 	default:
 		return false;
@@ -2284,32 +2284,32 @@ bool _fastcall CompCom(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem pøíkazù (hledanım podle identifikace), Jump = pøeskoèení skupiny
+// pÃ¸eklad pÃ¸Ã­kazu s podparametrem pÃ¸Ã­kazÃ¹ (hledanÃ½m podle identifikace), Jump = pÃ¸eskoÃ¨enÃ­ skupiny
 
 void CompComSubPar(int index, int idf)
 {
 // korekce identifikace funkce
 	idf -= IDF;
 
-// ukazatel vıchozího prvku
+// ukazatel vÃ½chozÃ­ho prvku
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int zahlavi = ProgNum;
 
-// kontrola, zda má poloka nìjaké potomky
+// kontrola, zda mÃ¡ poloÅ¾ka nÃ¬jakÃ© potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus pøes všechny potomky
+// cyklus pÃ¸es vÅ¡echny potomky
 		do {
 
-// adresa dalšího potomka
+// adresa dalÅ¡Ã­ho potomka
 			index += posun;
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledanı prvek - naètení prvku
+// test, zda to je hledanÃ½ prvek - naÃ¨tenÃ­ prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompComGrp(index, FCommandExec, FCommandExec1))
@@ -2318,14 +2318,14 @@ void CompComSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro pøíští prvek
+// posun pro pÃ¸Ã­Å¡tÃ­ prvek
 			posun = item2->Items;
 
-// dokud je další potomek
+// dokud je dalÅ¡Ã­ potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// pouije se implicitní hodnota - prázdnı pøíkaz
+// pouÅ¾ije se implicitnÃ­ hodnota - prÃ¡zdnÃ½ pÃ¸Ã­kaz
 	CompAddItem(FCommandExec0);
 	ProgBuf[zahlavi].Jump = ProgNum - zahlavi;
 }

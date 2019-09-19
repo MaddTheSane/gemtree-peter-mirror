@@ -1,71 +1,71 @@
 
 /***************************************************************************\
 *																			*
-*									Obrázky									*
+*									ObrÃ¡zky									*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky dat obrázku - 32 bajtù
-// Pøi komprimaci udává první dvojslovo dat délku komprimovanıch dat
-// Dekomprimace i komprimace se provádí s daty spoleènımi pro všechny obrázky
-// je proto nutno v pøípadì potøeby zajistit vlastnictví obrázku!
+// struktura poloÅ¾ky dat obrÃ¡zku - 32 bajtÃ¹
+// PÃ¸i komprimaci udÃ¡vÃ¡ prvnÃ­ dvojslovo dat dÃ©lku komprimovanÃ½ch dat
+// Dekomprimace i komprimace se provÃ¡dÃ­ s daty spoleÃ¨nÃ½mi pro vÅ¡echny obrÃ¡zky
+// je proto nutno v pÃ¸Ã­padÃ¬ potÃ¸eby zajistit vlastnictvÃ­ obrÃ¡zku!
 
 typedef struct PICTUREDATA_
 {
-	long	Refer;					// (4) èítaè referencí na obrázek
-	long	Width;					// (4) šíøka obrázku v bodech
-	long	Height;					// (4) vıška obrázku v linkách
-	long	Param;					// (4) parametry (prùhlednost, komprese)
-	long	Res1;					// (4) ... pro zarovnání
-	long	Res2;					// (4) ... pro zarovnání
-	long	Res3;					// (4) ... pro zarovnání
+	long	Refer;					// (4) Ã¨Ã­taÃ¨ referencÃ­ na obrÃ¡zek
+	long	Width;					// (4) Å¡Ã­Ã¸ka obrÃ¡zku v bodech
+	long	Height;					// (4) vÃ½Å¡ka obrÃ¡zku v linkÃ¡ch
+	long	Param;					// (4) parametry (prÃ¹hlednost, komprese)
+	long	Res1;					// (4) ... pro zarovnÃ¡nÃ­
+	long	Res2;					// (4) ... pro zarovnÃ¡nÃ­
+	long	Res3;					// (4) ... pro zarovnÃ¡nÃ­
 	BYTE*	Data;					// (4) ukazatel na data (velikost Width*Height)
 } PICTUREDATA;
 
 //////////////////////////////////////////////////////////////////////////////
-// pøíznaky typu ikony a obrázku
+// pÃ¸Ã­znaky typu ikony a obrÃ¡zku
 //enum PICPARAM {
-//	PicParamPic,			// pouze obrázek bez pozadí
-//	PicParamMix,			// obrázek mixovanı s pozadím
-//	PicParamBack,			// pouze pozadí (prázdnı obrázek)
-//	PicParamNone,			// neznámı obsah
-//	PicParamComp,			// komprimovaná data
+//	PicParamPic,			// pouze obrÃ¡zek bez pozadÃ­
+//	PicParamMix,			// obrÃ¡zek mixovanÃ½ s pozadÃ­m
+//	PicParamBack,			// pouze pozadÃ­ (prÃ¡zdnÃ½ obrÃ¡zek)
+//	PicParamNone,			// neznÃ¡mÃ½ obsah
+//	PicParamComp,			// komprimovanÃ¡ data
 //};
 
 #define SIZEOFPICTUREDATA	(7*sizeof(long) + sizeof(BYTE*))
 
-extern PICTUREDATA EmptyPictureData;	// data prázdného obrázku (velikost ICONSIZE)
-extern	const CPicture	EmptyPicture;	// prázdnı obrázek
+extern PICTUREDATA EmptyPictureData;	// data prÃ¡zdnÃ©ho obrÃ¡zku (velikost ICONSIZE)
+extern	const CPicture	EmptyPicture;	// prÃ¡zdnÃ½ obrÃ¡zek
 
 /////////////////////////////////////////////////////////////////////////////
-// statické funkce
+// statickÃ© funkce
 
-// statická inicializace obrázkù (pøi chybì pamìti vrací FALSE)
+// statickÃ¡ inicializace obrÃ¡zkÃ¹ (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE)
 bool InitPicture();
 
-// vytvoøení dat obrázku (pøi chybì pamìti vrací NULL)
+// vytvoÃ¸enÃ­ dat obrÃ¡zku (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ NULL)
 PICTUREDATA* _fastcall NewPictureData(int width, int height);
 
-// zrušení dat obrázku (oddìleno kvùli lepší optimalizaci)
+// zruÅ¡enÃ­ dat obrÃ¡zku (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 void _fastcall DelPictureData(PICTUREDATA* data);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obrázek
+// obrÃ¡zek
 
 class CPicture
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné - pouze ukazatel na data
-	PICTUREDATA*		pData;			// ukazatel na záhlaví obrázku
+// promÃ¬nnÃ© - pouze ukazatel na data
+	PICTUREDATA*		pData;			// ukazatel na zÃ¡hlavÃ­ obrÃ¡zku
 
-// pøipojení dat obrázku
+// pÃ¸ipojenÃ­ dat obrÃ¡zku
 	inline void attach(PICTUREDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -74,7 +74,7 @@ private:
 		LongIncrement(&(data->Refer));
 	}
 
-// odpojení (a zrušení) dat obrázku
+// odpojenÃ­ (a zruÅ¡enÃ­) dat obrÃ¡zku
 	inline void detach(PICTUREDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -86,65 +86,65 @@ private:
 		}
 	}
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
 // konstruktor a destruktor
-	CPicture();						// prázdnı obrázek o velikosti ICONSIZE
+	CPicture();						// prÃ¡zdnÃ½ obrÃ¡zek o velikosti ICONSIZE
 	CPicture(const CPicture& src);
 	CPicture(PICTUREDATA* data);
 	~CPicture();
 
-// statickı konstruktor a destruktor
-	void Init();					// prázdnı obrázek o velikosti ICONSIZE
+// statickÃ½ konstruktor a destruktor
+	void Init();					// prÃ¡zdnÃ½ obrÃ¡zek o velikosti ICONSIZE
 	void _fastcall Init(const CPicture& src);
 	void _fastcall Init(PICTUREDATA* data);
-	bool _fastcall Init(int width, int height); // pøi chybì pamìti vrací FALSE, obrázek není vytvoøen
+	bool _fastcall Init(int width, int height); // pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE, obrÃ¡zek nenÃ­ vytvoÃ¸en
 	void Term();
 
-// poskytnutí ukazatele na data
-	inline PICTUREDATA* Data() const { return pData; }; // poskytnutí adresy dat
-	inline BYTE* DataData() const { return pData->Data; }; // poskytnutí adresy dat
+// poskytnutÃ­ ukazatele na data
+	inline PICTUREDATA* Data() const { return pData; }; // poskytnutÃ­ adresy dat
+	inline BYTE* DataData() const { return pData->Data; }; // poskytnutÃ­ adresy dat
 
-// poskytnutí šíøky obrázky
+// poskytnutÃ­ Å¡Ã­Ã¸ky obrÃ¡zky
 	inline int Width() const { return pData->Width; };
 
-// poskytnutí vıšky obøázku
+// poskytnutÃ­ vÃ½Å¡ky obÃ¸Ã¡zku
 	inline int Height() const { return pData->Height; };
 
-// poskytnutí velikosti nezkomprimovanıch dat obrázku (bez záhlaví)
+// poskytnutÃ­ velikosti nezkomprimovanÃ½ch dat obrÃ¡zku (bez zÃ¡hlavÃ­)
 	inline int Size() const { return pData->Width * pData->Height; };
 
-// vyprázdnìní (uvolnìní dat)
+// vyprÃ¡zdnÃ¬nÃ­ (uvolnÃ¬nÃ­ dat)
 	void Empty();
 
-// test, zda je obrázek prázdnı (zda ukazuje na standardní prázdnı obrázek ICONSIZE)
+// test, zda je obrÃ¡zek prÃ¡zdnÃ½ (zda ukazuje na standardnÃ­ prÃ¡zdnÃ½ obrÃ¡zek ICONSIZE)
 	inline BOOL IsEmpty() { return ((DWORD)pData == (DWORD)&EmptyPictureData); };
 	inline BOOL IsNotEmpty() { return ((DWORD)pData != (DWORD)&EmptyPictureData); };
 
-// vymazání obsahu obrázku (naplnìní prùhlednou barvou), zajistí pøivlastnìní (a dekomprimaci) bufferu,
-// pøi chybì pamìti vrací FALSE, pùvodní obsah nezmìnìn
+// vymazÃ¡nÃ­ obsahu obrÃ¡zku (naplnÃ¬nÃ­ prÃ¹hlednou barvou), zajistÃ­ pÃ¸ivlastnÃ¬nÃ­ (a dekomprimaci) bufferu,
+// pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE, pÃ¹vodnÃ­ obsah nezmÃ¬nÃ¬n
 	bool Clear();
 
-// vymazání obsahu obrázku s nastavením velikosti (naplnìní prùhlednou barvou), zajistí pøivlastnìní (a dekomprimaci) bufferu,
-// pøi chybì pamìti vrací FALSE, pùvodní obsah nezmìnìn
+// vymazÃ¡nÃ­ obsahu obrÃ¡zku s nastavenÃ­m velikosti (naplnÃ¬nÃ­ prÃ¹hlednou barvou), zajistÃ­ pÃ¸ivlastnÃ¬nÃ­ (a dekomprimaci) bufferu,
+// pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE, pÃ¹vodnÃ­ obsah nezmÃ¬nÃ¬n
 	bool _fastcall Clear(int width, int height);
 
-// kopie obrázku do vlastního bufferu pøed modifikací (komprimovaná data zùstanou komprimovaná)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie obrÃ¡zku do vlastnÃ­ho bufferu pÃ¸ed modifikacÃ­ (komprimovanÃ¡ data zÃ¹stanou komprimovanÃ¡)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool CopyWrite();
 
-// vytvoøení nového obrázku se stejnou velikostí (pøipraveno k zápisu, data jsou náhodná)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// vytvoÃ¸enÃ­ novÃ©ho obrÃ¡zku se stejnou velikostÃ­ (pÃ¸ipraveno k zÃ¡pisu, data jsou nÃ¡hodnÃ¡)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool New();
 
-// vytvoøení nového obrázku (pøipraveno k zápisu, data jsou náhodná)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// vytvoÃ¸enÃ­ novÃ©ho obrÃ¡zku (pÃ¸ipraveno k zÃ¡pisu, data jsou nÃ¡hodnÃ¡)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool _fastcall New(int width, int height);
 
-// nastavení novıch rozmìrù obrázku (nová data jsou vymazána)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// nastavenÃ­ novÃ½ch rozmÃ¬rÃ¹ obrÃ¡zku (novÃ¡ data jsou vymazÃ¡na)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool Resize(int width, int height);
 
 // kontrola platnosti offsetu bodu
@@ -161,8 +161,8 @@ public:
 	inline BOOL IsNotValid(const int x, const int y) const
 		{ return (((DWORD)x >= (DWORD)pData->Width) || ((DWORD)y >= (DWORD)pData->Height)); };
 
-// poskytnutí pøístupu k bodu (bez kontroly offsetu/indexu) - obrázek nesmí bıt komprimovanı!
-// v pøípadì zápisu musí bıt zajištìno pøivlastnìní bufferu!
+// poskytnutÃ­ pÃ¸Ã­stupu k bodu (bez kontroly offsetu/indexu) - obrÃ¡zek nesmÃ­ bÃ½t komprimovanÃ½!
+// v pÃ¸Ã­padÃ¬ zÃ¡pisu musÃ­ bÃ½t zajiÅ¡tÃ¬no pÃ¸ivlastnÃ¬nÃ­ bufferu!
 	inline BYTE& operator[] (const int off) 
 		{ ASSERT(IsValid(off)); return pData->Data[off]; }
 
@@ -181,60 +181,60 @@ public:
 	inline const BYTE& At(const int x, const int y) const
 		{ ASSERT(IsValid(x, y)); return pData->Data[x + y*pData->Width]; }
 
-// poskytnutí bodu (s kontrolou platnosti offsetu/indexu), obrázek nesmí bıt komprimovanı!
-// pro neplatnı bod vrátí barvu pozadí)
+// poskytnutÃ­ bodu (s kontrolou platnosti offsetu/indexu), obrÃ¡zek nesmÃ­ bÃ½t komprimovanÃ½!
+// pro neplatnÃ½ bod vrÃ¡tÃ­ barvu pozadÃ­)
 	BYTE _fastcall Get(const int off) const;
 	BYTE _fastcall Get(const int x, const int y) const;
 
-// nastavení bodu (s kontrolou platnosti offsetu/indexu), obrázek nesmí bıt komprimovanı!
-// pøed zápisem je nutno zajistit pøivlastnìní bufferu!
+// nastavenÃ­ bodu (s kontrolou platnosti offsetu/indexu), obrÃ¡zek nesmÃ­ bÃ½t komprimovanÃ½!
+// pÃ¸ed zÃ¡pisem je nutno zajistit pÃ¸ivlastnÃ¬nÃ­ bufferu!
 	void _fastcall Set(const int off, const BYTE data);
 	void _fastcall Set(const int x, const int y, const BYTE data);
 
-// komprese dat obrázku, vrací velikost dat (pøi chybì pamìti vrací <0, data jsou nezmìnìna)
-// komprese se provádí ve spoleèném bufferu pro všechny promìnné!
-// (v pøípadì potøeby je nutno zajistit pøivlastnìní bufferu)
-// pùvodní buffer s daty je zrušen
-// (velikost komprimovanıch dat je udávána bez dvojslova s velikostí, buffer s daty
-// je tedy o 4 vìtší, data zaèínají na offsetu 4 v bufferu)
+// komprese dat obrÃ¡zku, vracÃ­ velikost dat (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ <0, data jsou nezmÃ¬nÃ¬na)
+// komprese se provÃ¡dÃ­ ve spoleÃ¨nÃ©m bufferu pro vÅ¡echny promÃ¬nnÃ©!
+// (v pÃ¸Ã­padÃ¬ potÃ¸eby je nutno zajistit pÃ¸ivlastnÃ¬nÃ­ bufferu)
+// pÃ¹vodnÃ­ buffer s daty je zruÅ¡en
+// (velikost komprimovanÃ½ch dat je udÃ¡vÃ¡na bez dvojslova s velikostÃ­, buffer s daty
+// je tedy o 4 vÃ¬tÅ¡Ã­, data zaÃ¨Ã­najÃ­ na offsetu 4 v bufferu)
 	int Comp() const;
 
-// dekomprimace dat obrázku (jsou-li komprimována), pøi chybì vrací FALSE
-// dekomprese se provádí ve spoleèném bufferu pro všechny promìnné
-// (v pøípadì potøeby je nutno zajistit pøivlastnìní bufferu)
-// pùvodní buffer s komprimovanımi daty je zrušen
+// dekomprimace dat obrÃ¡zku (jsou-li komprimovÃ¡na), pÃ¸i chybÃ¬ vracÃ­ FALSE
+// dekomprese se provÃ¡dÃ­ ve spoleÃ¨nÃ©m bufferu pro vÅ¡echny promÃ¬nnÃ©
+// (v pÃ¸Ã­padÃ¬ potÃ¸eby je nutno zajistit pÃ¸ivlastnÃ¬nÃ­ bufferu)
+// pÃ¹vodnÃ­ buffer s komprimovanÃ½mi daty je zruÅ¡en
 	bool DeComp() const;
 
-// kopie novıch dat obrázku (rozmìry zùstanou nezmìnìny) - zajistí odpojení dat
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie novÃ½ch dat obrÃ¡zku (rozmÃ¬ry zÃ¹stanou nezmÃ¬nÃ¬ny) - zajistÃ­ odpojenÃ­ dat
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool CopyData(BYTE* src);
 
-// kopie komprimovanıch novıch dat obrázku (rozmìry zùstanou nezmìnìny) - zajistí odpojení dat
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie komprimovanÃ½ch novÃ½ch dat obrÃ¡zku (rozmÃ¬ry zÃ¹stanou nezmÃ¬nÃ¬ny) - zajistÃ­ odpojenÃ­ dat
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool CompCopy(BYTE* src);
 
-// kopie vıøezu do obrázku (se zprùhlednìním)
+// kopie vÃ½Ã¸ezu do obrÃ¡zku (se zprÃ¹hlednÃ¬nÃ­m)
 	void AddCopy(const CPicture& src, int x, int y, int w, int h, int xs, int ys);
 	void AddCopy(const CPicture& src, int x, int y);
 	void AddCopy(int id, int x, int y);
 
-// kopie novıch dat obrázku s konverzí (rozmìry zùstanou nezmìnìny) - zajistí odpojení dat
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie novÃ½ch dat obrÃ¡zku s konverzÃ­ (rozmÃ¬ry zÃ¹stanou nezmÃ¬nÃ¬ny) - zajistÃ­ odpojenÃ­ dat
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool CopyKonvData(BYTE* src);
 
-// naètení obrázku ze souboru (FALSE=chyba, obsah nezmìnìn)
+// naÃ¨tenÃ­ obrÃ¡zku ze souboru (FALSE=chyba, obsah nezmÃ¬nÃ¬n)
 //	bool LoadFile(CText jmeno);
 
-// uloení obrázku do souboru formátu BMP (komprimovanı obrázek dekomprimuje)(FALSE=chyba)
+// uloÅ¾enÃ­ obrÃ¡zku do souboru formÃ¡tu BMP (komprimovanÃ½ obrÃ¡zek dekomprimuje)(FALSE=chyba)
 //	bool SaveFile(CText jmeno) const;
 
-// vygenerování obrázku pro taení (pøi chybì vrací NULL)
+// vygenerovÃ¡nÃ­ obrÃ¡zku pro taÅ¾enÃ­ (pÃ¸i chybÃ¬ vracÃ­ NULL)
 //	HIMAGELIST GenerDrag(const CText& text);
 
-// naètení obrázku z resource
+// naÃ¨tenÃ­ obrÃ¡zku z resource
 	bool CPicture::Load(const int nID);
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CPicture& operator= (const CPicture& src);
 	const CPicture& operator= (PICTUREDATA* src);
 };

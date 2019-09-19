@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhranÌ - DirectX 8							*
+*							3D rozhran√≠ - DirectX 8							*
 *																			*
 \***************************************************************************/
 
@@ -9,149 +9,149 @@
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ Direct3D 8 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ Direct3D 8 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3DX8InitD3();
 void D3DX8TermD3();
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ viewportu (vracÌ TRUE=operace OK)
+// nastaven√≠ viewportu (vrac√≠ TRUE=operace OK)
 
 bool D3DX8SetView();
 void D3DX8SizeView();
 void D3DX8MoveView();
 	   
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ renderovacÌho za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// vytvo√∏en√≠ renderovac√≠ho za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 //bool D3DX8InitDev(int type, int vertproc);
 void D3DX8TermDev();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ funkce za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zah√°jen√≠ funkce za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX8Start(int type);
 void D3DX8Stop();
 
 /////////////////////////////////////////////////////////////////////////////
-// vymaz·nÌ renderovacÌ plochy
+// vymaz√°n√≠ renderovac√≠ plochy
 
 void D3DX8Clear();
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ renderovacÌho bufferu
+// zobrazen√≠ renderovac√≠ho bufferu
 
 void D3DX8Disp();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekËnÌ matice
+// aktualizace projek√®n√≠ matice
 
 void D3DX8AktProj();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pohledovÈ matice
+// aktualizace pohledov√© matice
 
 void D3DX8AktView();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ renderov·nÌ scÈny
+// zah√°jen√≠ renderov√°n√≠ sc√©ny
 
 void D3DX8Begin();
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ renderov·nÌ scÈny
+// ukon√®en√≠ renderov√°n√≠ sc√©ny
 
 void D3DX8End();
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ jednoho objektu
+// vyrenderov√°n√≠ jednoho objektu
 
 void D3DX8Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX8Reset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ stÌnu objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ st√≠nu objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX8SReset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË vyplÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® vypl√≤ov√°n√≠ ploch
 
 void D3DX8AktWireframe();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË osvÏtlenÌ
+// aktualizovat p√∏ep√≠na√® osv√¨tlen√≠
 
 void D3DX8AktLightOn();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË plynulÈho stinov·nÌ
+// aktualizovat p√∏ep√≠na√® plynul√©ho stinov√°n√≠
 
 void D3DX8AktShades();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË odstraÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® odstra√≤ov√°n√≠ ploch
 
 void D3DX8AktCulling();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zvÏtöen˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zv√¨t≈°en√Ωch textur
 
 void D3DX8AktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zmenöen˝ch a vzd·len˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zmen≈°en√Ωch a vzd√°len√Ωch textur
 
 void D3DX8AktMinMipFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace poloûky svÏtla
+// aktualizace polo≈æky sv√¨tla
 
 void D3DX8AktLight(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ materi·lu
+// nastaven√≠ materi√°lu
 
 void D3DX8SetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky textury p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ polo≈æky textury p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX8TextureRes(D3DTITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ a zapnutÌ textury
+// nastaven√≠ a zapnut√≠ textury
 
 void D3DX8TextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ p˘vodnÌ textury
+// zapnut√≠ p√πvodn√≠ textury
 
 inline void D3DX8TextureOn(D3DTITEM* item, int stage) { D3DX8TextureSet(item, stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ textury
+// vypnut√≠ textury
 
 void D3DX8TextureOff(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky svÏtla
+// resetov√°n√≠ polo≈æky sv√¨tla
 
 void D3DX8LightReset(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvÏtlenÌ
+// aktualizace ambient osv√¨tlen√≠
 
 void D3DX8AktAmbient();
 
 /////////////////////////////////////////////////////////////////////////////
-// voln· videopamÏù
+// voln√° videopam√¨¬ù
 
 int D3DX8Free();
 
@@ -161,7 +161,7 @@ int D3DX8Free();
 void D3DX8AktFog();
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ mlhy
+// zapnut√≠ mlhy
 
 void D3DX8FogOn(BOOL on);
 
@@ -171,85 +171,85 @@ void D3DX8FogOn(BOOL on);
 void D3DX8AktState();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace blending operacÌ objektu
+// aktualizace blending operac√≠ objektu
 
 void D3DX8AktBlend(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenËnÌ ˙rovnÏ alfa
+// aktualizace referen√®n√≠ √∫rovn√¨ alfa
 
 void D3DX8AktAlfa(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace barev
+// nastaven√≠ operace barev
 
 void D3DX8SetColorOp(int op, int arg1, int arg2, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace alfa
+// nastaven√≠ operace alfa
 
 void D3DX8SetAlphaOp(int op, int arg1, int arg2, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ adresov·nÌ textur
+// nastaven√≠ adresov√°n√≠ textur
 
 void D3DX8SetAddress(int adru, int adrv, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy okolÌ textur
+// nastaven√≠ barvy okol√≠ textur
 
 //void D3DX8SetBorder(D3DFITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ zjemnÏnÌ vzd·len˝ch textur
+// nastaven√≠ zjemn√¨n√≠ vzd√°len√Ωch textur
 
 void D3DX8SetBias(float bias, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy faktoru textur
+// nastaven√≠ barvy faktoru textur
 
 void D3DX8SetTFactor(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z funkce (1 aû 8, v kÛdu DirectX, 0=vypnuto)
+// nastaven√≠ Z funkce (1 a≈æ 8, v k√≥du DirectX, 0=vypnuto)
 
 void D3DX8SetZFunc(int func);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z z·pisu
+// nastaven√≠ Z z√°pisu
 
 void D3DX8SetZWrite(BOOL write);
 
 /////////////////////////////////////////////////////////////////////////////
-// povolenÌ stencil operacÌ
+// povolen√≠ stencil operac√≠
 
 void D3DX8SEnable(BOOL enable);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil operacÌ
+// nastaven√≠ stencil operac√≠
 
 void D3DX8SetSOp(int fail, int zfail, int zpass);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil testu
+// nastaven√≠ stencil testu
 
 void D3DX8SetSFunc(int func, int ref, DWORD mask);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ z·pisovÈ masky do stencil bufferu
+// nastaven√≠ z√°pisov√© masky do stencil bufferu
 
 void D3DX8SetSMask(DWORD mask);
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ stÌnu jednoho objektu
+// vyrenderov√°n√≠ st√≠nu jednoho objektu
 
 void D3DX8Shadow(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ stÌn˘
+// vykreslen√≠ st√≠n√π
 
 void D3DX8Shadows();
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------

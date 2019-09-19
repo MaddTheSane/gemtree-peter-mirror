@@ -6,7 +6,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhraní - nulové							*
+*							3D rozhranÃ­ - nulovÃ©							*
 *																			*
 \***************************************************************************/
 
@@ -36,7 +36,7 @@ int D3NoFree() { return 0; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// start videomódu (vrací TRUE=OK)
+// start videomÃ³du (vracÃ­ TRUE=OK)
 
 bool D3NoStartVMode(VIDEOMODEITEM* item)
 {
@@ -44,7 +44,7 @@ bool D3NoStartVMode(VIDEOMODEITEM* item)
 }
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 /////////////////////////////////////////////////////////////////////////////
 // aktualizace palet

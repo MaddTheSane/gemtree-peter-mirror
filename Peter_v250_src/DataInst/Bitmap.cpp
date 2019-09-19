@@ -9,7 +9,7 @@
 
 
 ////////////////////////////////////////////////////////////////////
-// test platnosti z·hlavÌ BMP (TRUE=je OK)
+// test platnosti z√°hlav√≠ BMP (TRUE=je OK)
 
 BOOL TestBMP(const BITMAPINFO* bitmap)
 {
@@ -48,13 +48,13 @@ BOOL TestBMP(const BITMAPINFO* bitmap)
 
 void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 {
-	int lineoff = 0;				// bodov˝ offset na lince
+	int lineoff = 0;				// bodov√Ω offset na lince
 
 	for (;;)
 	{
 		if ((dstN <= 0) || (srcN <= 0)) break;
 
-// naËtenÌ prvnÌho a druhÈho bajtu
+// na√®ten√≠ prvn√≠ho a druh√©ho bajtu
 		int num = *src;
 		src++;
 		srcN--;
@@ -63,7 +63,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 		src++;
 		srcN--;
 
-// opakov·nÌ bajtu
+// opakov√°n√≠ bajtu
 		if (num != 0)
 		{
 			lineoff += num;
@@ -75,7 +75,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 		else
 		{
 
-// p¯enos bajt˘ beze zmÏny
+// p√∏enos bajt√π beze zm√¨ny
 			if (data > 2)
 			{
 				lineoff += data;
@@ -90,7 +90,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 			else
 			{
 
-// escape kÛd - konec linky
+// escape k√≥d - konec linky
 				if (data == 0)
 				{
 					num = (BYTE)(3 - ((lineoff+3) & 3));
@@ -103,7 +103,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 				else
 				{
 
-// escape kÛd - konec bitmapu
+// escape k√≥d - konec bitmapu
 					if (data == 1)
 					{
 						break;
@@ -116,7 +116,7 @@ void DekompRLE8(BYTE* dst, int dstN, BYTE* src, int srcN)
 
 
 ////////////////////////////////////////////////////////////////////
-// p¯enesenÌ bodu
+// p√∏enesen√≠ bodu
 
 inline void RLE4Store(BOOL& firstdst, BOOL& firstsrc, BYTE*& dst, const BYTE& data)
 {
@@ -160,17 +160,17 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 {
 	BYTE data;						// data
 	BYTE olddata;
-	BYTE num;						// poËet dat
-	int lineoff = 0;				// bodov˝ offset na lince
+	BYTE num;						// po√®et dat
+	int lineoff = 0;				// bodov√Ω offset na lince
 
-	BOOL firstdst = TRUE;			// ukl·d· se prvnÌ tetr·da bajtu
-	BOOL firstsrc;					// naËÌt· se prvnÌ tetr·da bajtu
+	BOOL firstdst = TRUE;			// ukl√°d√° se prvn√≠ tetr√°da bajtu
+	BOOL firstsrc;					// na√®√≠t√° se prvn√≠ tetr√°da bajtu
 
-// dokud jsou platn· data (to je jen p¯ibliûn· kontrola, musÌ b˝t rezerva)
+// dokud jsou platn√° data (to je jen p√∏ibli≈æn√° kontrola, mus√≠ b√Ωt rezerva)
 	while ((dstN > 0) && (srcN > 0))
 	{
 
-// naËtenÌ prvnÌho a druhÈho bajtu
+// na√®ten√≠ prvn√≠ho a druh√©ho bajtu
 		num = *src;
 		src++;
 		srcN--;
@@ -179,9 +179,9 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 		src++;
 		srcN--;
 
-		firstsrc = TRUE;			// naËÌt· se prvnÌ tetr·da bajtu
+		firstsrc = TRUE;			// na√®√≠t√° se prvn√≠ tetr√°da bajtu
 
-// opakov·nÌ bajtu
+// opakov√°n√≠ bajtu
 		if (num != 0)
 		{
 			lineoff += num;
@@ -196,7 +196,7 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 		else
 		{
 
-// p¯enos bajt˘ beze zmÏny
+// p√∏enos bajt√π beze zm√¨ny
 			if (data > 2)
 			{
 				lineoff += data;
@@ -226,7 +226,7 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 			else
 			{
 
-// escape kÛd - konec linky
+// escape k√≥d - konec linky
 				if (data == 0)
 				{
 					for (lineoff = 7 - ((lineoff+7) & 7); lineoff > 0; lineoff--)
@@ -237,7 +237,7 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN)
 				else
 				{
 
-// escape kÛd - konec bitmapu
+// escape k√≥d - konec bitmapu
 					if (data == 1)
 					{
 						break;
@@ -256,30 +256,30 @@ class CRle8
 {
 public:
 
-	BYTE*	m_Dst;				// ukl·dacÌ adresa do v˝stupnÌho bufferu
-	BYTE*	m_Src;				// ËtecÌ adresa neuloûen˝ch dat
-	BYTE	m_Neshoda;			// dÈlka neshody
-	BYTE	m_Shoda;			// dÈlka shody
+	BYTE*	m_Dst;				// ukl√°dac√≠ adresa do v√Ωstupn√≠ho bufferu
+	BYTE*	m_Src;				// √®tec√≠ adresa neulo≈æen√Ωch dat
+	BYTE	m_Neshoda;			// d√©lka neshody
+	BYTE	m_Shoda;			// d√©lka shody
 
-// uloûenÌ bajtu do v˝stupnÌho bufferu
+// ulo≈æen√≠ bajtu do v√Ωstupn√≠ho bufferu
 	inline void Store(BYTE data);
 
-// p¯enesenÌ bajtu neuloûen˝ch dat
+// p√∏enesen√≠ bajtu neulo≈æen√Ωch dat
 	inline void Move();
 
-// vypr·zdnÏnÌ bufferu neshody
+// vypr√°zdn√¨n√≠ bufferu neshody
 	void FlushNeshoda();
 
-// za¯azenÌ bajtu do bufferu neshody
+// za√∏azen√≠ bajtu do bufferu neshody
 	inline void StoreNeshoda();
 
-// vypr·zdnÏnÌ bufferu shody
+// vypr√°zdn√¨n√≠ bufferu shody
 	void FlushShoda();
 };
 
 
 ////////////////////////////////////////////////////////////////////
-// uloûenÌ bajtu do v˝stupnÌho bufferu
+// ulo≈æen√≠ bajtu do v√Ωstupn√≠ho bufferu
 
 inline void CRle8::Store(BYTE data)
 {
@@ -289,7 +289,7 @@ inline void CRle8::Store(BYTE data)
 
 
 ////////////////////////////////////////////////////////////////////
-// p¯enesenÌ bajtu neuloûen˝ch dat
+// p√∏enesen√≠ bajtu neulo≈æen√Ωch dat
 
 inline void CRle8::Move()
 {
@@ -300,7 +300,7 @@ inline void CRle8::Move()
 
 
 ////////////////////////////////////////////////////////////////////
-// vypr·zdnÏnÌ bufferu neshody
+// vypr√°zdn√¨n√≠ bufferu neshody
 
 void CRle8::FlushNeshoda()
 {
@@ -388,7 +388,7 @@ void CRle8::FlushNeshoda()
 
 
 ////////////////////////////////////////////////////////////////////
-// za¯azenÌ bajtu do bufferu neshody
+// za√∏azen√≠ bajtu do bufferu neshody
 
 inline void CRle8::StoreNeshoda()
 {
@@ -401,7 +401,7 @@ inline void CRle8::StoreNeshoda()
 
 
 ////////////////////////////////////////////////////////////////////
-// vypr·zdnÏnÌ bufferu shody
+// vypr√°zdn√¨n√≠ bufferu shody
 
 void CRle8::FlushShoda()
 {
@@ -471,36 +471,36 @@ void CRle8::FlushShoda()
 }
 
 ////////////////////////////////////////////////////////////////////
-// komprese dat bitmapy BI_RLE8, vracÌ velikost dat
+// komprese dat bitmapy BI_RLE8, vrac√≠ velikost dat
 
 int KompRLE8(BYTE* dstbuf, BYTE* srcbuf, int width, int height)
 {
 // buffer komprese
 	CRle8 rle;
-	rle.m_Dst = dstbuf;						// ukl·dacÌ adresa
-	rle.m_Src = srcbuf;						// ËtecÌ adersa
-	rle.m_Neshoda = 0;						// dÈlka neshody
-	rle.m_Shoda = 0;						// dÈlka shody
+	rle.m_Dst = dstbuf;						// ukl√°dac√≠ adresa
+	rle.m_Src = srcbuf;						// √®tec√≠ adersa
+	rle.m_Neshoda = 0;						// d√©lka neshody
+	rle.m_Shoda = 0;						// d√©lka shody
 
-// lok·lnÌ promÏnnÈ
-	BYTE* src = srcbuf;							// ËtecÌ adresa
+// lok√°ln√≠ prom√¨nn√©
+	BYTE* src = srcbuf;							// √®tec√≠ adresa
 
-// cyklus p¯es vöechny linky
+// cyklus p√∏es v≈°echny linky
 	for (int i = height; i > 0; i--)
 	{
 
-// cyklus p¯es vöechny pozice na lince
+// cyklus p√∏es v≈°echny pozice na lince
 		for (int j = width; j > 0; j--)
 		{
 
-// buffer shody je pr·zdn˝
+// buffer shody je pr√°zdn√Ω
 			if (rle.m_Shoda == 0)
 			{
 				rle.m_Shoda = 1;
 			}
 			else
 
-// test, zda je shodn˝ bajt
+// test, zda je shodn√Ω bajt
 			{
 				if (*src == src[-1])
 				{
@@ -519,19 +519,19 @@ int KompRLE8(BYTE* dstbuf, BYTE* srcbuf, int width, int height)
 			src++;
 		}
 
-// konec linky - vypr·zdnÏnÌ buffer˘
+// konec linky - vypr√°zdn√¨n√≠ buffer√π
 		rle.FlushShoda();
 		rle.FlushNeshoda();
 
-// uloûenÌ kÛdu pro konec linky
+// ulo≈æen√≠ k√≥du pro konec linky
 		rle.Store(0);
 		rle.Store(0);
 	}
 
-// uloûenÌ kÛdu pro konec bitmapy
+// ulo≈æen√≠ k√≥du pro konec bitmapy
 	rle.Store(0);
 	rle.Store(1);
 
-// n·vrat dÈlky uloûen˝ch dat
+// n√°vrat d√©lky ulo≈æen√Ωch dat
 	return (rle.m_Dst - dstbuf);
 }

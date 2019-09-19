@@ -5,104 +5,104 @@
 #include "BufText.h"
 #include "File.h"
 
-#define COMPACT			// kompaktní instalaèní balík
+#define COMPACT			// kompaktnÃ­ instalaÃ¨nÃ­ balÃ­k
 
 /*
-struktura adresáøù (skupiny):
-	0 ...... hlavní program aplikace Petr (soubory PETER.EXE a PETER.HLP)
-	1 ...... pøíklady vytvoøených programù (adresáø PROGRAM)
-	2 ...... knihovna pøedmìtù (adresáø ICON)
-	3 ...... knihovna obrázkù (adresáø PICTURE)
-	4 ...... knihovna sprajtù (adresáø SPRITE)
-	5 ...... knihovna zvukù (adresáø SOUND)
-	6 ...... knihovna hudeb (adresáø MUSIC)
-	7 ...... ostatní knihovny (adresáøe BOOL, MAP, NUMBER a TEXT)
-	8 ...... zdroje pro generování 3D sprajtù (adresáø SOURCE)
+struktura adresÃ¡Ã¸Ã¹ (skupiny):
+	0 ...... hlavnÃ­ program aplikace Petr (soubory PETER.EXE a PETER.HLP)
+	1 ...... pÃ¸Ã­klady vytvoÃ¸enÃ½ch programÃ¹ (adresÃ¡Ã¸ PROGRAM)
+	2 ...... knihovna pÃ¸edmÃ¬tÃ¹ (adresÃ¡Ã¸ ICON)
+	3 ...... knihovna obrÃ¡zkÃ¹ (adresÃ¡Ã¸ PICTURE)
+	4 ...... knihovna sprajtÃ¹ (adresÃ¡Ã¸ SPRITE)
+	5 ...... knihovna zvukÃ¹ (adresÃ¡Ã¸ SOUND)
+	6 ...... knihovna hudeb (adresÃ¡Ã¸ MUSIC)
+	7 ...... ostatnÃ­ knihovny (adresÃ¡Ã¸e BOOL, MAP, NUMBER a TEXT)
+	8 ...... zdroje pro generovÃ¡nÃ­ 3D sprajtÃ¹ (adresÃ¡Ã¸ SOURCE)
 
-  Peter.exe urèuje datum a èas souborù
+  Peter.exe urÃ¨uje datum a Ã¨as souborÃ¹
 
-struktura adresáøù pro MINI (skupiny):
-	0 ...... hlavní program aplikace Petr (soubory PETER.EXE a PETER.HLP)
+struktura adresÃ¡Ã¸Ã¹ pro MINI (skupiny):
+	0 ...... hlavnÃ­ program aplikace Petr (soubory PETER.EXE a PETER.HLP)
 
-  Peter.exe urèuje datum a èas souborù
+  Peter.exe urÃ¨uje datum a Ã¨as souborÃ¹
 
-struktura adresáøù pro DATAINST (skupiny):
-    0 ...... instalaèní podadresáø (PATH.TXT), název dat (TITLE.TXT, øádky: èesky, anglicky) - v kódu Windows
-    1 ...... instalovaná data
+struktura adresÃ¡Ã¸Ã¹ pro DATAINST (skupiny):
+    0 ...... instalaÃ¨nÃ­ podadresÃ¡Ã¸ (PATH.TXT), nÃ¡zev dat (TITLE.TXT, Ã¸Ã¡dky: Ã¨esky, anglicky) - v kÃ³du Windows
+    1 ...... instalovanÃ¡ data
 
-	SETUP .. výchozí program SETUP - DATAINST
+	SETUP .. vÃ½chozÃ­ program SETUP - DATAINST
 
-  PATH.TXT urèuje datum a èas souborù
+  PATH.TXT urÃ¨uje datum a Ã¨as souborÃ¹
 
 */
 
 //////////////////////////////////////////////////////////////////////////////
-// struktura instalaèních dat
+// struktura instalaÃ¨nÃ­ch dat
 
-// Poøadí dat:
-// - záhlaví instalaèních dat, informace o skupinách
-// - seznam souborù
-// - data souborù (komprimováno po skupinách) - jen verze MINI a DATAINST
+// PoÃ¸adÃ­ dat:
+// - zÃ¡hlavÃ­ instalaÃ¨nÃ­ch dat, informace o skupinÃ¡ch
+// - seznam souborÃ¹
+// - data souborÃ¹ (komprimovÃ¡no po skupinÃ¡ch) - jen verze MINI a DATAINST
 
 
 #ifdef _INSTALL
-#define GROUPSNUM 2							// poèet skupin DATAINST
+#define GROUPSNUM 2							// poÃ¨et skupin DATAINST
 #else
 #ifdef MINI
-#define GROUPSNUM 3							// poèet skupin
+#define GROUPSNUM 3							// poÃ¨et skupin
 #else
-#define GROUPSNUM 9							// poèet skupin
+#define GROUPSNUM 9							// poÃ¨et skupin
 #endif
 #endif  // _INSTALL
 
 // definice jednoho souboru v seznamu (9 B + text)
 typedef struct INSTFILE_ {
 	long			Size;					// (4) velikost souboru v bajtech (po dekompresi)
-	long			Check;					// (4) kontrolní souèet dat souboru (výchozí 0, pøièten bajt, rotace vlevo s pøenosem)
-	BYTE			NameN;					// (1) délka jména souboru vèetnì podcesty - ve znacích
-	char			Name[1];				// (n) jméno souboru (vèetnì podcesty) - velká písmena
+	long			Check;					// (4) kontrolnÃ­ souÃ¨et dat souboru (vÃ½chozÃ­ 0, pÃ¸iÃ¨ten bajt, rotace vlevo s pÃ¸enosem)
+	BYTE			NameN;					// (1) dÃ©lka jmÃ©na souboru vÃ¨etnÃ¬ podcesty - ve znacÃ­ch
+	char			Name[1];				// (n) jmÃ©no souboru (vÃ¨etnÃ¬ podcesty) - velkÃ¡ pÃ­smena
 } INSTFILE;
 
-// definice jedné skupiny (16 B)
+// definice jednÃ© skupiny (16 B)
 typedef struct INSTGROUP_ {
-	long			Files;					// (4) poèet souborù ve skupinì
-	long			Size;					// (4) velikost skupiny v KB (po nainstalování) - soubory zaokrouhleny na alokaèní bloky 8 KB
-	long			SizeFiles;				// (4) velikost seznamu souborù (bajtù)
-	long			SizeGroup;				// (4) velikost komprimovaných dat (bajtù) - u plné verze 0
+	long			Files;					// (4) poÃ¨et souborÃ¹ ve skupinÃ¬
+	long			Size;					// (4) velikost skupiny v KB (po nainstalovÃ¡nÃ­) - soubory zaokrouhleny na alokaÃ¨nÃ­ bloky 8 KB
+	long			SizeFiles;				// (4) velikost seznamu souborÃ¹ (bajtÃ¹)
+	long			SizeGroup;				// (4) velikost komprimovanÃ½ch dat (bajtÃ¹) - u plnÃ© verze 0
 } INSTGROUP;
 
-// záhlaví instalaèních dat (16 B + skupiny)
+// zÃ¡hlavÃ­ instalaÃ¨nÃ­ch dat (16 B + skupiny)
 typedef struct INSTHEAD_ {
-	char			Ident[4];				// (4) identifikace (text "SET" + bínárnì poèet sekcí)
-	long			Check;					// (4) kontrolní souèet zbytku záhlaví vèetnì seznamu souborù
-	FILETIME		DateTime;				// (8) lokální (!) datum a èas souborù
+	char			Ident[4];				// (4) identifikace (text "SET" + bÃ­nÃ¡rnÃ¬ poÃ¨et sekcÃ­)
+	long			Check;					// (4) kontrolnÃ­ souÃ¨et zbytku zÃ¡hlavÃ­ vÃ¨etnÃ¬ seznamu souborÃ¹
+	FILETIME		DateTime;				// (8) lokÃ¡lnÃ­ (!) datum a Ã¨as souborÃ¹
 	INSTGROUP		Groups[GROUPSNUM];		// definice skupin
 } INSTHEAD;
 
 
-INSTHEAD		Head;						// záhlaví instalaèních dat
-int				FilesS = 0;					// velikost seznamu (bajtù)
-BYTE*			Files = NULL;				// seznam souborù
+INSTHEAD		Head;						// zÃ¡hlavÃ­ instalaÃ¨nÃ­ch dat
+int				FilesS = 0;					// velikost seznamu (bajtÃ¹)
+BYTE*			Files = NULL;				// seznam souborÃ¹
 
 //////////////////////////////////////////////////////////////////////////////
-// adresáø souborù (1 položka 16 B)
+// adresÃ¡Ã¸ souborÃ¹ (1 poloÅ¾ka 16 B)
 
 typedef struct ADRFILE_ {
-	CText			Name;					// jméno souboru s cestou (velká písmena)
-	CText			Ext;					// pøípona jména souboru (kvùli tøídìní)
-	long			Size;					// velikost souboru (bajtù)
-	long			Check;					// kontrolní souèet dat souboru (výchozí 0, pøièten bajt, rotace vlevo s pøenosem)
+	CText			Name;					// jmÃ©no souboru s cestou (velkÃ¡ pÃ­smena)
+	CText			Ext;					// pÃ¸Ã­pona jmÃ©na souboru (kvÃ¹li tÃ¸Ã­dÃ¬nÃ­)
+	long			Size;					// velikost souboru (bajtÃ¹)
+	long			Check;					// kontrolnÃ­ souÃ¨et dat souboru (vÃ½chozÃ­ 0, pÃ¸iÃ¨ten bajt, rotace vlevo s pÃ¸enosem)
 } ADRFILE;
 
-int				BufFileN = 0;				// poèet položek v bufferu
-ADRFILE*		BufFile = NULL;				// buffer seznamu souborù
+int				BufFileN = 0;				// poÃ¨et poloÅ¾ek v bufferu
+ADRFILE*		BufFile = NULL;				// buffer seznamu souborÃ¹
 
-int				GroupNum;					// èíslo generované skupiny
-CText			GroupNumT;					// èíslo skupiny pøevedené na text
+int				GroupNum;					// Ã¨Ã­slo generovanÃ© skupiny
+CText			GroupNumT;					// Ã¨Ã­slo skupiny pÃ¸evedenÃ© na text
 
 #if defined(_INSTALL) || defined(COMPACT)
-CText			GroupFile;					// jméno souboru skupiny TMP
-CText			GroupFile2;					// jméno souboru skupiny DAT
+CText			GroupFile;					// jmÃ©no souboru skupiny TMP
+CText			GroupFile2;					// jmÃ©no souboru skupiny DAT
 HANDLE			GroupFileH = NULL;			// handle souboru skupiny
 #endif
 
@@ -112,27 +112,27 @@ HINSTANCE	hInstance = NULL;			// instance programu
 // sekce dat
 
 IMAGE_SECTION_HEADER	SetupHeader = {
-	'.', 's', 'e', 't', 'u', 'p', 'd', 0,		// jméno sekce
-	0,											// virtuální velikost
-	0,											// virtuální adresa
+	'.', 's', 'e', 't', 'u', 'p', 'd', 0,		// jmÃ©no sekce
+	0,											// virtuÃ¡lnÃ­ velikost
+	0,											// virtuÃ¡lnÃ­ adresa
 	0,											// velikost dat v souboru
 	0,											// offset dat v souboru
-	0,											// ... (offset relokací)
-	0,											// ... (offset èísel øádkù)
-	0,											// ... (poèet relokací)
-	0,											// ... (poèet èísel øádkù)
+	0,											// ... (offset relokacÃ­)
+	0,											// ... (offset Ã¨Ã­sel Ã¸Ã¡dkÃ¹)
+	0,											// ... (poÃ¨et relokacÃ­)
+	0,											// ... (poÃ¨et Ã¨Ã­sel Ã¸Ã¡dkÃ¹)
 	IMAGE_SCN_MEM_READ |						// vlastnosti
 	IMAGE_SCN_MEM_DISCARDABLE |
 	IMAGE_SCN_CNT_INITIALIZED_DATA
 };
 
-// velikost stránky zarovnávání pamìti
+// velikost strÃ¡nky zarovnÃ¡vÃ¡nÃ­ pamÃ¬ti
 #ifndef _M_ALPHA
-#define	PAGESIZE		0x1000			// velikost alokaèní stránky pro ostatní procesory (4096)
-#define PAGEFILE		0x1000			// velikost stránky v souboru
+#define	PAGESIZE		0x1000			// velikost alokaÃ¨nÃ­ strÃ¡nky pro ostatnÃ­ procesory (4096)
+#define PAGEFILE		0x1000			// velikost strÃ¡nky v souboru
 #else
-#define	PAGESIZE		0x2000			// velikost alokaèní stránky pro procesor Alpha (8192)
-#define PAGEFILE		0x2000			// velikost stránky v souboru
+#define	PAGESIZE		0x2000			// velikost alokaÃ¨nÃ­ strÃ¡nky pro procesor Alpha (8192)
+#define PAGEFILE		0x2000			// velikost strÃ¡nky v souboru
 #endif
 
 
@@ -144,7 +144,7 @@ void debugbreak(const char* text)
 	::MessageBox(
 		NULL,
 		text,
-		"Chyba generátoru",
+		"Chyba generÃ¡toru",
 		MB_OK | MB_ICONERROR);
 
 	::ExitProcess(1);
@@ -152,7 +152,7 @@ void debugbreak(const char* text)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// spuštìní programu
+// spuÅ¡tÃ¬nÃ­ programu
 
 #if defined(_INSTALL) || defined(COMPACT)
 
@@ -162,7 +162,7 @@ int Exec(CText command, CText aktdir, BOOL wait)
 	command.TrimLeft();
 	if (command.IsEmpty()) return 255;
 
-// korekce aktivního adresáøe
+// korekce aktivnÃ­ho adresÃ¡Ã¸e
 	if (aktdir.Length() > 1)
 	{
 		if (aktdir.LastChar() == '\\')
@@ -171,7 +171,7 @@ int Exec(CText command, CText aktdir, BOOL wait)
 		}
 	}
 
-// inicializace startovací tabulky
+// inicializace startovacÃ­ tabulky
 	STARTUPINFO si;
 	MemFill(&si, sizeof(si), 0);
 	si.cb = sizeof(si);
@@ -180,34 +180,34 @@ int Exec(CText command, CText aktdir, BOOL wait)
 	PROCESS_INFORMATION pi;
 	MemFill(&pi, sizeof(pi), 0);
 
-// spuštìní programu
+// spuÅ¡tÃ¬nÃ­ programu
 	::CreateProcess(
-		NULL,								// jméno programu
-		(LPTSTR)(LPCTSTR)command,			// pøíkazový øádek
-		NULL,								// ochranné atributy procesu
-		NULL,								// ochranné atributy vlákna
-		FALSE,								// dìdiènost handlù
+		NULL,								// jmÃ©no programu
+		(LPTSTR)(LPCTSTR)command,			// pÃ¸Ã­kazovÃ½ Ã¸Ã¡dek
+		NULL,								// ochrannÃ© atributy procesu
+		NULL,								// ochrannÃ© atributy vlÃ¡kna
+		FALSE,								// dÃ¬diÃ¨nost handlÃ¹
 #ifdef _UNICODE
 		CREATE_UNICODE_ENVIRONMENT			// parametry
 #else
 		0
 #endif
 		| CREATE_DEFAULT_ERROR_MODE,
-		NULL,								// prostøedí
-		aktdir.IsEmpty() ? NULL : (LPCTSTR)aktdir, // výchozí adresáø
+		NULL,								// prostÃ¸edÃ­
+		aktdir.IsEmpty() ? NULL : (LPCTSTR)aktdir, // vÃ½chozÃ­ adresÃ¡Ã¸
 		&si,								// adresa STARTUPINFO
 		&pi);								// adresa PROCESS_INFORMATION
 
-// èekání na ukonèení programu
+// Ã¨ekÃ¡nÃ­ na ukonÃ¨enÃ­ programu
 	if (wait)
 	{
-		::WaitForSingleObject(pi.hProcess, INFINITE);	// èekání na ukonèení procesu
-		::GetExitCodeProcess(pi.hProcess, (DWORD*)&result);	// zjištìní návratového kódu
+		::WaitForSingleObject(pi.hProcess, INFINITE);	// Ã¨ekÃ¡nÃ­ na ukonÃ¨enÃ­ procesu
+		::GetExitCodeProcess(pi.hProcess, (DWORD*)&result);	// zjiÅ¡tÃ¬nÃ­ nÃ¡vratovÃ©ho kÃ³du
 	}
 
-// uzavøení handle procesu
-	::CloseHandle(pi.hProcess);				// uzavøení handle procesu
-	::CloseHandle(pi.hThread);				// uzavøení handle toku
+// uzavÃ¸enÃ­ handle procesu
+	::CloseHandle(pi.hProcess);				// uzavÃ¸enÃ­ handle procesu
+	::CloseHandle(pi.hThread);				// uzavÃ¸enÃ­ handle toku
 
 	return result;
 }
@@ -215,11 +215,11 @@ int Exec(CText command, CText aktdir, BOOL wait)
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
-// vyhledání souborù v jednom podadresáøi (voláno rekurzivnì, není poèáteèní ani koncový "\")
+// vyhledÃ¡nÃ­ souborÃ¹ v jednom podadresÃ¡Ã¸i (volÃ¡no rekurzivnÃ¬, nenÃ­ poÃ¨Ã¡teÃ¨nÃ­ ani koncovÃ½ "\")
 
 void ReadDir(CText path)
 {
-// plná cesta
+// plnÃ¡ cesta
 	CText path2;
 	if (path.IsEmpty())
 	{
@@ -230,32 +230,32 @@ void ReadDir(CText path)
 		path2 = GroupNumT + _T('\\') + path;
 	}
 
-// ovìøení platnosti adresáøe
-	ASSERT((int)::GetFileAttributes(path2) != -1, "Neplatná cesta " + path2);
+// ovÃ¬Ã¸enÃ­ platnosti adresÃ¡Ã¸e
+	ASSERT((int)::GetFileAttributes(path2) != -1, "NeplatnÃ¡ cesta " + path2);
 
-// zahájení vyhledávání souborù a podadresáøù
+// zahÃ¡jenÃ­ vyhledÃ¡vÃ¡nÃ­ souborÃ¹ a podadresÃ¡Ã¸Ã¹
 	WIN32_FIND_DATA fnd;
 	HANDLE find = ::FindFirstFile(path2 + _T("\\*.*"), &fnd);
-	ASSERT(find != INVALID_HANDLE_VALUE, "Nenalezen žádný soubor v adresáøi " + path2);
+	ASSERT(find != INVALID_HANDLE_VALUE, "Nenalezen Å¾Ã¡dnÃ½ soubor v adresÃ¡Ã¸i " + path2);
 
 	CText name1;
 	CText name2;
 
-// dokud je další položka
+// dokud je dalÅ¡Ã­ poloÅ¾ka
 	do {
 
-// pøíprava jména nalezeného souboru/adresáøe
+// pÃ¸Ã­prava jmÃ©na nalezenÃ©ho souboru/adresÃ¡Ã¸e
 		name1 = fnd.cFileName;
 
-// test, zda se jedná o adresáø
+// test, zda se jednÃ¡ o adresÃ¡Ã¸
 		if (fnd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
 		{
 
-// test, zda je to platný adresáø
+// test, zda je to platnÃ½ adresÃ¡Ã¸
 			if ((name1 != _T("..")) && (name1 != _T(".")))
 			{
 
-// vnoøení do adresáøe
+// vnoÃ¸enÃ­ do adresÃ¡Ã¸e
 				if (path.IsEmpty())
 				{
 					ReadDir(name1);
@@ -271,7 +271,7 @@ void ReadDir(CText path)
 		else
 		{
 
-// pøíprava jména souboru
+// pÃ¸Ã­prava jmÃ©na souboru
 			if (path.IsEmpty())
 			{
 				name2 = name1;
@@ -281,66 +281,66 @@ void ReadDir(CText path)
 				name2 = path + _T('\\') + name1;
 			}
 
-// soubor PETER.EXE bude použit jako vzor pro datum a èas
+// soubor PETER.EXE bude pouÅ¾it jako vzor pro datum a Ã¨as
 			name1.UpperCase();
 			if (name1 == _T("PETER.EXE"))
 			{
 				::FileTimeToLocalFileTime(&fnd.ftLastWriteTime, &Head.DateTime);
 			}
 
-// zvýšení velikosti bufferu
+// zvÃ½Å¡enÃ­ velikosti bufferu
 			BufFileN++;
 			BufFile = (ADRFILE*) MemSize(BufFile, BufFileN * sizeof(ADRFILE));
-			ASSERT(BufFile, "Pøeteèení pamìti");
+			ASSERT(BufFile, "PÃ¸eteÃ¨enÃ­ pamÃ¬ti");
 
-// pøíprava pøipony
+// pÃ¸Ã­prava pÃ¸ipony
 			name2.UpperCase();
 			int pos = name2.RevFind(_T('.')) + 1;
-			ASSERT(pos > 0, "Soubor bez pøípony " + name2);
+			ASSERT(pos > 0, "Soubor bez pÃ¸Ã­pony " + name2);
 			name1 = name2.Right(name2.Length() - pos);
 
-// úschova informací o souboru
+// Ãºschova informacÃ­ o souboru
 			BufFile[BufFileN-1].Name.Init(name2);
 			BufFile[BufFileN-1].Ext.Init(name1);
 			BufFile[BufFileN-1].Size = fnd.nFileSizeLow;
 
-// zaøazení souboru do evidence skupiny
-			Head.Groups[GroupNum].Size += ((fnd.nFileSizeLow + 0x3fff) & ~0x3fff) / 1024; // zarovnání na alokaèní blok 16KB
+// zaÃ¸azenÃ­ souboru do evidence skupiny
+			Head.Groups[GroupNum].Size += ((fnd.nFileSizeLow + 0x3fff) & ~0x3fff) / 1024; // zarovnÃ¡nÃ­ na alokaÃ¨nÃ­ blok 16KB
 			Head.Groups[GroupNum].SizeFiles += 2*sizeof(long) + sizeof(BYTE) + name2.Length();
 		}
 
 
-// nalezení další položky
+// nalezenÃ­ dalÅ¡Ã­ poloÅ¾ky
 	} while (::FindNextFile(find, &fnd));
 
-// uzavøení hledání
+// uzavÃ¸enÃ­ hledÃ¡nÃ­
 	::FindClose(find);
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení jedné skupiny
+// naÃ¨tenÃ­ jednÃ© skupiny
 
 void ReadGroup(int group)
 {
-// pøíprava jména skupiny
+// pÃ¸Ã­prava jmÃ©na skupiny
 	GroupNum = group;
 	GroupNumT.Int(group);
 
-// vytvoøení souboru skupiny TMP
+// vytvoÃ¸enÃ­ souboru skupiny TMP
 #if defined(_INSTALL) || defined(COMPACT)
 	GroupFile = _T("GRP") + GroupNumT + _T(".TMP");
 	GroupFile2 = _T("GRP") + GroupNumT + _T(".DAT");
 	GroupFileH = ::CreateFile(GroupFile, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-	ASSERT(GroupFileH != INVALID_HANDLE_VALUE, "Nelze vytvoøit soubor " + GroupFile);
+	ASSERT(GroupFileH != INVALID_HANDLE_VALUE, "Nelze vytvoÃ¸it soubor " + GroupFile);
 #else
 	printf(CText("skupina ") + GroupNumT + CText("\n"));
 #endif
 
-// vyhledání souborù v adresáøi skupiny
+// vyhledÃ¡nÃ­ souborÃ¹ v adresÃ¡Ã¸i skupiny
 	ReadDir(EmptyText);
 
-// setøídìní seznamu souborù
+// setÃ¸Ã­dÃ¬nÃ­ seznamu souborÃ¹
 	CText name;
 	CText ext;
 	int size;
@@ -369,14 +369,14 @@ void ReadGroup(int group)
 		}
 	}
 
-// buffer k pøenesení dat souborù
+// buffer k pÃ¸enesenÃ­ dat souborÃ¹
 #define BUFSIZE 0xf000
 
 	BYTE* buf = (BYTE*)MemGet(BUFSIZE);
-	ASSERT(buf, "Chyba pamìti");
+	ASSERT(buf, "Chyba pamÃ¬ti");
 	long check;
 
-// cyklus pøes všechny soubory
+// cyklus pÃ¸es vÅ¡echny soubory
 	for (i = 0; i < BufFileN; i++)
 	{
 		check = 0;
@@ -384,15 +384,15 @@ void ReadGroup(int group)
 // velikost dat souboru
 		size = BufFile[i].Size;
 
-// plné jméno souboru
+// plnÃ© jmÃ©no souboru
 		name = GroupNumT + _T('\\') + BufFile[i].Name;
 
-// otevøení souboru pro ètení
+// otevÃ¸enÃ­ souboru pro Ã¨tenÃ­
 		HANDLE file = ::CreateFile(name, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_SYSTEM |
 							FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_READONLY, NULL);
-		ASSERT(file != INVALID_HANDLE_VALUE, "Nelze otevøít soubor " + name);
+		ASSERT(file != INVALID_HANDLE_VALUE, "Nelze otevÃ¸Ã­t soubor " + name);
 
-// dokud jsou nìjaká data
+// dokud jsou nÃ¬jakÃ¡ data
 		DWORD readwrite;
 
 		while (size > 0)
@@ -401,12 +401,12 @@ void ReadGroup(int group)
 			if (size0 > BUFSIZE) size0 = BUFSIZE;
 			size -= size0;
 
-			VERIFY(::ReadFile(file, buf, size0, &readwrite, NULL), "Chyba ètení souboru " + name);
-			ASSERT((int)readwrite == size0, "Chyba ètení souboru " + name);
+			VERIFY(::ReadFile(file, buf, size0, &readwrite, NULL), "Chyba Ã¨tenÃ­ souboru " + name);
+			ASSERT((int)readwrite == size0, "Chyba Ã¨tenÃ­ souboru " + name);
 
 #if defined(_INSTALL) || defined(COMPACT)
-			VERIFY(::WriteFile(GroupFileH, buf, size0, &readwrite, NULL), "Chyba zápisu do souboru " + GroupFile);
-			ASSERT((int)readwrite == size0, "Chyba zápisu do souboru " + GroupFile);
+			VERIFY(::WriteFile(GroupFileH, buf, size0, &readwrite, NULL), "Chyba zÃ¡pisu do souboru " + GroupFile);
+			ASSERT((int)readwrite == size0, "Chyba zÃ¡pisu do souboru " + GroupFile);
 #endif
 
 			BYTE* buf0 = buf;
@@ -428,45 +428,45 @@ void ReadGroup(int group)
 		}
 		BufFile[i].Check = check;
 
-// ovìøení, zda už nejsou žádná data
+// ovÃ¬Ã¸enÃ­, zda uÅ¾ nejsou Å¾Ã¡dnÃ¡ data
 		::ReadFile(file, buf, BUFSIZE, &readwrite, NULL);
-		ASSERT((int)readwrite == 0, "Chyba ètení souboru" + name);
+		ASSERT((int)readwrite == 0, "Chyba Ã¨tenÃ­ souboru" + name);
 
-// uzavøení vstupního souboru
+// uzavÃ¸enÃ­ vstupnÃ­ho souboru
 		::CloseHandle(file);
 	}
 
-// zrušení bufferu dat
+// zruÅ¡enÃ­ bufferu dat
 	MemFree(buf);
 
-// uzavøení výstupního souboru skupiny
+// uzavÃ¸enÃ­ vÃ½stupnÃ­ho souboru skupiny
 #if defined(_INSTALL) || defined(COMPACT)
 	::CloseHandle(GroupFileH);
 
 // komprimace souboru
 	::DeleteFile(GroupFile2);
-	ASSERT((int)::GetFileAttributes(GroupFile2) == -1, "Nelze zrušit soubor " + GroupFile2);
+	ASSERT((int)::GetFileAttributes(GroupFile2) == -1, "Nelze zruÅ¡it soubor " + GroupFile2);
 	Exec(_T("HLPGEN.EXE ") + GroupFile + _T(' ') + GroupFile2, EmptyText, TRUE);
 	printf("\n");
-	ASSERT((int)::GetFileAttributes(GroupFile2) != -1, "Nevytvoøen soubor " + GroupFile2);
+	ASSERT((int)::GetFileAttributes(GroupFile2) != -1, "NevytvoÃ¸en soubor " + GroupFile2);
 	::DeleteFile(GroupFile);
-	ASSERT((int)::GetFileAttributes(GroupFile) == -1, "Nelze zrušit soubor " + GroupFile);
+	ASSERT((int)::GetFileAttributes(GroupFile) == -1, "Nelze zruÅ¡it soubor " + GroupFile);
 
-// úschova velikosti komprimovaných dat skupiny
+// Ãºschova velikosti komprimovanÃ½ch dat skupiny
 	GroupFileH = ::CreateFile(GroupFile2, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-	ASSERT(GroupFileH != INVALID_HANDLE_VALUE, "Nelze otevøít soubor " + GroupFile2);
+	ASSERT(GroupFileH != INVALID_HANDLE_VALUE, "Nelze otevÃ¸Ã­t soubor " + GroupFile2);
 	Head.Groups[GroupNum].SizeGroup = ::GetFileSize(GroupFileH, NULL);
 	::CloseHandle(GroupFileH);
 #else
 	Head.Groups[GroupNum].SizeGroup = 0;
 #endif
 
-// zaøazení seznamu souborù
+// zaÃ¸azenÃ­ seznamu souborÃ¹
 	Head.Groups[GroupNum].Files = BufFileN;
 	i = FilesS;
 	FilesS = i + Head.Groups[GroupNum].SizeFiles;
 	Files = (BYTE*)MemSize(Files, FilesS);
-	ASSERT(Files, "Chyba pamìti");
+	ASSERT(Files, "Chyba pamÃ¬ti");
 	BYTE* dst = Files + i;
 
 	for (i = 0; i < BufFileN; i++)
@@ -481,9 +481,9 @@ void ReadGroup(int group)
 		dst += BufFile[i].Name.Length();
 	}
 
-	ASSERT((dst - Files) == FilesS, "Nesouhlasí velikost seznamu souborù");
+	ASSERT((dst - Files) == FilesS, "NesouhlasÃ­ velikost seznamu souborÃ¹");
 
-// zrušení seznamu souborù
+// zruÅ¡enÃ­ seznamu souborÃ¹
 	for (i = 0; i < BufFileN; i++)
 	{
 		BufFile[i].Name.Term();
@@ -496,18 +496,18 @@ void ReadGroup(int group)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naètení textu jako jméno souboru
+// naÃ¨tenÃ­ textu jako jmÃ©no souboru
 
 #ifdef _INSTALL
 
 void ReadText(CText name)
 {
-// otevøení souboru pro ètení
+// otevÃ¸enÃ­ souboru pro Ã¨tenÃ­
 	HANDLE file = ::CreateFile(name, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_SYSTEM |
 						FILE_ATTRIBUTE_ARCHIVE | FILE_ATTRIBUTE_HIDDEN | FILE_ATTRIBUTE_READONLY, NULL);
-	ASSERT(file != INVALID_HANDLE_VALUE, "Nelze otevøít soubor " + name);
+	ASSERT(file != INVALID_HANDLE_VALUE, "Nelze otevÃ¸Ã­t soubor " + name);
 
-// soubor PATH.TXT bude použit jako vzor pro datum a èas
+// soubor PATH.TXT bude pouÅ¾it jako vzor pro datum a Ã¨as
 	CText name1;
 	name1 = name;
 	name1.UpperCase();
@@ -518,34 +518,34 @@ void ReadText(CText name)
 		::FileTimeToLocalFileTime(&datetime, &Head.DateTime);
 	}
 
-// pøíprava velikosti souboru
+// pÃ¸Ã­prava velikosti souboru
 	int size = ::GetFileSize(file, NULL);
 
-// zvýšení seznamu
+// zvÃ½Å¡enÃ­ seznamu
 	Head.Groups[0].Files++;
 	int i = 2*sizeof(long) + sizeof(BYTE) + size;
 	Head.Groups[0].SizeFiles += i;
 	int dstoff = FilesS;
 	FilesS = dstoff + i;
 	Files = (BYTE*)MemSize(Files, FilesS);
-	ASSERT(Files, "Chyba pamìti");
+	ASSERT(Files, "Chyba pamÃ¬ti");
 	BYTE* dst = Files + dstoff;
 
-// uložení informací
+// uloÅ¾enÃ­ informacÃ­
 	*(long*)dst = 0;			// velikost
 	dst += sizeof(long);
-	*(long*)dst = 0;			// kontrolní souèet
+	*(long*)dst = 0;			// kontrolnÃ­ souÃ¨et
 	dst += sizeof(long);
-	ASSERT(size < 256, "Pøeteèení délky textu v " + name);
-	*(BYTE*)dst = (BYTE)size;	// délka textu
+	ASSERT(size < 256, "PÃ¸eteÃ¨enÃ­ dÃ©lky textu v " + name);
+	*(BYTE*)dst = (BYTE)size;	// dÃ©lka textu
 	dst += sizeof(BYTE);
 
-// naètení textu
+// naÃ¨tenÃ­ textu
 	DWORD readwrite;
-	VERIFY(::ReadFile(file, dst, size, &readwrite, NULL), "Chyba ètení souboru " + name);
-	ASSERT((int)readwrite == size, "Chyba ètení souboru " + name);
+	VERIFY(::ReadFile(file, dst, size, &readwrite, NULL), "Chyba Ã¨tenÃ­ souboru " + name);
+	ASSERT((int)readwrite == size, "Chyba Ã¨tenÃ­ souboru " + name);
 
-// uzavøení vstupního souboru
+// uzavÃ¸enÃ­ vstupnÃ­ho souboru
 	::CloseHandle(file);
 }
 
@@ -572,7 +572,7 @@ int main(int argc, char* argv[])
 #endif
 #endif // _INSTALL
 
-// inicializace záhlaví instalaèních dat
+// inicializace zÃ¡hlavÃ­ instalaÃ¨nÃ­ch dat
 	MemFill(&Head, sizeof(Head), 0);
 	Head.Ident[0] = 'S';
 	Head.Ident[1] = 'E';
@@ -581,11 +581,11 @@ int main(int argc, char* argv[])
 
 #ifdef _INSTALL
 
-// naètení informací pro InstData mód
+// naÃ¨tenÃ­ informacÃ­ pro InstData mÃ³d
 	ReadText(_T("0\\Path.txt"));
 	ReadText(_T("0\\Title.txt"));
 
-// naètení souborù skupin
+// naÃ¨tenÃ­ souborÃ¹ skupin
 	for (int i = 1; i < GROUPSNUM; i++)
 #else
 	for (int i = 0; i < GROUPSNUM; i++)
@@ -594,14 +594,14 @@ int main(int argc, char* argv[])
 		ReadGroup(i);
 	}
 
-// musí být datum a èas
+// musÃ­ bÃ½t datum a Ã¨as
 #ifdef _INSTALL
-	ASSERT((Head.DateTime.dwLowDateTime != 0) || (Head.DateTime.dwLowDateTime != 0), "Chybí soubor PATH.TXT");
+	ASSERT((Head.DateTime.dwLowDateTime != 0) || (Head.DateTime.dwLowDateTime != 0), "ChybÃ­ soubor PATH.TXT");
 #else
-	ASSERT((Head.DateTime.dwLowDateTime != 0) || (Head.DateTime.dwLowDateTime != 0), "Chybí soubor PETER.EXE");
+	ASSERT((Head.DateTime.dwLowDateTime != 0) || (Head.DateTime.dwLowDateTime != 0), "ChybÃ­ soubor PETER.EXE");
 #endif
 
-// kontrolní souèet záhlaví
+// kontrolnÃ­ souÃ¨et zÃ¡hlavÃ­
 	long check = 0;
 	BYTE* data = (BYTE*)&Head + 8;
 	int n = sizeof(INSTHEAD) - 8;
@@ -622,7 +622,7 @@ int main(int argc, char* argv[])
 		data++;
 	}
 
-// kontrolní souèet seznamu souborù
+// kontrolnÃ­ souÃ¨et seznamu souborÃ¹
 	data = Files;
 	n = FilesS;
 
@@ -644,12 +644,12 @@ int main(int argc, char* argv[])
 
 	Head.Check = check;
 
-// pracovní buffer
+// pracovnÃ­ buffer
 	BYTE* buf = (BYTE*)MemGet(BUFSIZE);
-	ASSERT(buf, "Chyba pamìti");
+	ASSERT(buf, "Chyba pamÃ¬ti");
 	DWORD readwrite;
 
-// vytvoøení výstupního souboru
+// vytvoÃ¸enÃ­ vÃ½stupnÃ­ho souboru
 #ifdef _INSTALL
 	::DeleteFile(_T("DataInst.exe"));
 	HANDLE file = ::CreateFile(_T("DataInst.exe"), GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -668,55 +668,55 @@ int main(int argc, char* argv[])
 #endif
 #endif // _INSTALL
 
-	ASSERT(file != INVALID_HANDLE_VALUE, "Chyba vytvoøení souboru Setup.exe");
+	ASSERT(file != INVALID_HANDLE_VALUE, "Chyba vytvoÃ¸enÃ­ souboru Setup.exe");
 
-// otevøení vstupního souboru SETUP.EXE
+// otevÃ¸enÃ­ vstupnÃ­ho souboru SETUP.EXE
 	HANDLE file0 = ::CreateFile(_T("Setup\\Setup.exe"), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	ASSERT(file0 != INVALID_HANDLE_VALUE, "Nenalezen soubor Setup\\Setup.exe");
 
-// pøíprava velikosti souboru SETUP.EXE
+// pÃ¸Ã­prava velikosti souboru SETUP.EXE
 	int size = ::GetFileSize(file0, NULL);
 #ifndef _INSTALL
-	ASSERT(size > 66000, "Vadný soubor SETUP.EXE");
+	ASSERT(size > 66000, "VadnÃ½ soubor SETUP.EXE");
 #endif
 
-// offset zaèátku dat v souboru
+// offset zaÃ¨Ã¡tku dat v souboru
 	int dataoff = (size + (PAGEFILE-1)) & ~(PAGEFILE-1);
 
-// naètení prvního bloku dat
+// naÃ¨tenÃ­ prvnÃ­ho bloku dat
 	int size0 = size;
 	if (size0 > BUFSIZE) size0 = BUFSIZE;
 	size -= size0;
 
-	VERIFY(::ReadFile(file0, buf, size0, &readwrite, NULL), "Chyba ètení ze souboru Setup\\Setup.exe");
-	ASSERT((int)readwrite == size0, "Chyba ètení ze souboru Setup\\Setup.exe");
+	VERIFY(::ReadFile(file0, buf, size0, &readwrite, NULL), "Chyba Ã¨tenÃ­ ze souboru Setup\\Setup.exe");
+	ASSERT((int)readwrite == size0, "Chyba Ã¨tenÃ­ ze souboru Setup\\Setup.exe");
 
-// adresa záhlaví NT
+// adresa zÃ¡hlavÃ­ NT
 	CBuf bf;
 	bf.Adr(buf);
 	bf.Size(size0);
 	IMAGE_NT_HEADERS* hdr = bf.NTHeader();
 	ASSERT (hdr, "Chyba struktury Setup\\Setup.exe");
 
-// pøíprava virtuální adresy dat
+// pÃ¸Ã­prava virtuÃ¡lnÃ­ adresy dat
 	int datavirt = (hdr->OptionalHeader.SizeOfImage + PAGESIZE-1) & ~(PAGESIZE-1);
 
-// adresa vkládané sekce
+// adresa vklÃ¡danÃ© sekce
 	IMAGE_SECTION_HEADER* sec = (IMAGE_SECTION_HEADER*)((BYTE*)(&hdr->OptionalHeader) 
 		+ hdr->FileHeader.SizeOfOptionalHeader + hdr->FileHeader.NumberOfSections 
 		* sizeof(IMAGE_SECTION_HEADER));
 
-// zvýšení èítaèe sekcí
+// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e sekcÃ­
 	hdr->FileHeader.NumberOfSections++;
 
-// nastavení sekce
+// nastavenÃ­ sekce
 	MemCopy(sec, &SetupHeader, IMAGE_SIZEOF_SECTION_HEADER);
 
-// nastavení offsetu zaèátku dat v souboru a virtuální adresy
+// nastavenÃ­ offsetu zaÃ¨Ã¡tku dat v souboru a virtuÃ¡lnÃ­ adresy
 	sec->PointerToRawData = dataoff;
 	sec->VirtualAddress = datavirt;
 
-// nastavení virtuální velikosti dat
+// nastavenÃ­ virtuÃ¡lnÃ­ velikosti dat
 	int datasize = sizeof(Head) + FilesS;
 
 #if defined(_INSTALL) || defined(COMPACT)
@@ -729,51 +729,51 @@ int main(int argc, char* argv[])
 	sec->Misc.VirtualSize = datasize;
 	sec->SizeOfRawData = (datasize + 0x1ff) & ~0x1ff;
 
-// nová velikost obrazu celého programu
+// novÃ¡ velikost obrazu celÃ©ho programu
 	hdr->OptionalHeader.SizeOfImage = (datavirt + datasize + PAGESIZE-1) & ~(PAGESIZE-1);
 
-// uložení prvního bloku dat
-	VERIFY(::WriteFile(file, buf, size0, &readwrite, NULL), "Chyba zápisu do souboru Setup.exe");
-	ASSERT((int)readwrite == size0, "Chyba zápisu do souboru Setup.exe");
+// uloÅ¾enÃ­ prvnÃ­ho bloku dat
+	VERIFY(::WriteFile(file, buf, size0, &readwrite, NULL), "Chyba zÃ¡pisu do souboru Setup.exe");
+	ASSERT((int)readwrite == size0, "Chyba zÃ¡pisu do souboru Setup.exe");
 
-// pøenesení souboru SETUP.EXE
+// pÃ¸enesenÃ­ souboru SETUP.EXE
 	while (size > 0)
 	{
 		size0 = size;
 		if (size0 > BUFSIZE) size0 = BUFSIZE;
 		size -= size0;
 
-		VERIFY(::ReadFile(file0, buf, size0, &readwrite, NULL), "Chyba ètení ze souboru Setup\\Setup.exe");
-		ASSERT((int)readwrite == size0, "Chyba ètení ze souboru Setup\\Setup.exe");
-		VERIFY(::WriteFile(file, buf, size0, &readwrite, NULL), "Chyba zápisu do souboru Setup.exe");
-		ASSERT((int)readwrite == size0, "Chyba zápisu do souboru Setup.exe");
+		VERIFY(::ReadFile(file0, buf, size0, &readwrite, NULL), "Chyba Ã¨tenÃ­ ze souboru Setup\\Setup.exe");
+		ASSERT((int)readwrite == size0, "Chyba Ã¨tenÃ­ ze souboru Setup\\Setup.exe");
+		VERIFY(::WriteFile(file, buf, size0, &readwrite, NULL), "Chyba zÃ¡pisu do souboru Setup.exe");
+		ASSERT((int)readwrite == size0, "Chyba zÃ¡pisu do souboru Setup.exe");
 	}
 
-// ovìøení, zda už nejsou žádná data
+// ovÃ¬Ã¸enÃ­, zda uÅ¾ nejsou Å¾Ã¡dnÃ¡ data
 	::ReadFile(file0, buf, BUFSIZE, &readwrite, NULL);
-	ASSERT(readwrite == 0, "Chyba ètení ze souboru Setup\\Setup.exe");
+	ASSERT(readwrite == 0, "Chyba Ã¨tenÃ­ ze souboru Setup\\Setup.exe");
 
-// zarovnání délky programu
+// zarovnÃ¡nÃ­ dÃ©lky programu
 	i = dataoff - ::GetFileSize(file0, NULL);
-	ASSERT(i >= 0, "Chyba ètení ze souboru Setup\\Setup.exe");
+	ASSERT(i >= 0, "Chyba Ã¨tenÃ­ ze souboru Setup\\Setup.exe");
 	if (i > 0)
 	{
 		MemFill(buf, i, 0);
 		::WriteFile(file, buf, i, &readwrite, NULL);
 	}
 
-// uzavøení souboru SETUP.EXE
+// uzavÃ¸enÃ­ souboru SETUP.EXE
 	::CloseHandle(file0);
 
-// uložení záhlaví
-	VERIFY(::WriteFile(file, &Head, sizeof(INSTHEAD), &readwrite, NULL), "Chyba zápisu do souboru Setup.exe");
-	ASSERT((int)readwrite == sizeof(Head), "Chyba zápisu do souboru Setup.exe");
+// uloÅ¾enÃ­ zÃ¡hlavÃ­
+	VERIFY(::WriteFile(file, &Head, sizeof(INSTHEAD), &readwrite, NULL), "Chyba zÃ¡pisu do souboru Setup.exe");
+	ASSERT((int)readwrite == sizeof(Head), "Chyba zÃ¡pisu do souboru Setup.exe");
 
-// uložení seznamu souborù
-	VERIFY(::WriteFile(file, Files, FilesS, &readwrite, NULL), "Chyba zápisu do souboru Setup.exe");
-	ASSERT((int)readwrite == FilesS, "Chyba zápisu do souboru Setup.exe");
+// uloÅ¾enÃ­ seznamu souborÃ¹
+	VERIFY(::WriteFile(file, Files, FilesS, &readwrite, NULL), "Chyba zÃ¡pisu do souboru Setup.exe");
+	ASSERT((int)readwrite == FilesS, "Chyba zÃ¡pisu do souboru Setup.exe");
 
-// pøenesení dat skupin
+// pÃ¸enesenÃ­ dat skupin
 #if defined(_INSTALL) || defined(COMPACT)
 
 #ifdef _INSTALL
@@ -786,7 +786,7 @@ int main(int argc, char* argv[])
 		name.Int(i);
 		name = _T("GRP") + name + _T(".DAT");
 		file0 = ::CreateFile(name, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
-		ASSERT(file0 != INVALID_HANDLE_VALUE, "Chyba otevøení souboru " + name);
+		ASSERT(file0 != INVALID_HANDLE_VALUE, "Chyba otevÃ¸enÃ­ souboru " + name);
 
 		size = Head.Groups[i].SizeGroup;
 
@@ -796,25 +796,25 @@ int main(int argc, char* argv[])
 			if (size0 > BUFSIZE) size0 = BUFSIZE;
 			size -= size0;
 
-			VERIFY(::ReadFile(file0, buf, size0, &readwrite, NULL), "Chyba ètení ze souboru " + name);
-			ASSERT((int)readwrite == size0, "Chyba ètení ze souboru " + name);
-			VERIFY(::WriteFile(file, buf, size0, &readwrite, NULL), "Chyba zápisu do souboru Setup.exe");
-			ASSERT((int)readwrite == size0, "Chyba zápisu do souboru Setup.exe");
+			VERIFY(::ReadFile(file0, buf, size0, &readwrite, NULL), "Chyba Ã¨tenÃ­ ze souboru " + name);
+			ASSERT((int)readwrite == size0, "Chyba Ã¨tenÃ­ ze souboru " + name);
+			VERIFY(::WriteFile(file, buf, size0, &readwrite, NULL), "Chyba zÃ¡pisu do souboru Setup.exe");
+			ASSERT((int)readwrite == size0, "Chyba zÃ¡pisu do souboru Setup.exe");
 		}
 
-// ovìøení, zda už nejsou žádná data
+// ovÃ¬Ã¸enÃ­, zda uÅ¾ nejsou Å¾Ã¡dnÃ¡ data
 		::ReadFile(file0, buf, BUFSIZE, &readwrite, NULL);
-		ASSERT(readwrite == 0, "Chyba ètení ze souboru " + name);
+		ASSERT(readwrite == 0, "Chyba Ã¨tenÃ­ ze souboru " + name);
 
-// uzavøení souboru skupiny
+// uzavÃ¸enÃ­ souboru skupiny
 		::CloseHandle(file0);
 	}
 
 #endif
 
-// zarovnání výstupního souboru na sektor
+// zarovnÃ¡nÃ­ vÃ½stupnÃ­ho souboru na sektor
 	size = ::SetFilePointer(file, 0, NULL, FILE_CURRENT);
-	ASSERT(size > 0, "Chyba zápisu do Setup.exe");
+	ASSERT(size > 0, "Chyba zÃ¡pisu do Setup.exe");
 	i = ((size + 0x1ff) & ~0x1ff) - size;
 
 	if (i > 0)
@@ -823,18 +823,18 @@ int main(int argc, char* argv[])
 		::WriteFile(file, buf, i, &readwrite, NULL);
 	}
 
-// zrušení bufferu dat
+// zruÅ¡enÃ­ bufferu dat
 	MemFree(buf);
 
-// nastavení data a èasu souboru
+// nastavenÃ­ data a Ã¨asu souboru
 	FILETIME datetime;
 	::LocalFileTimeToFileTime(&Head.DateTime, &datetime);
 	::SetFileTime(file, NULL, NULL, &datetime);
 
-// zavøení výstupního souboru
+// zavÃ¸enÃ­ vÃ½stupnÃ­ho souboru
 	::CloseHandle(file);
 
-// zrušení souborù skupin
+// zruÅ¡enÃ­ souborÃ¹ skupin
 #if defined(_INSTALL) || defined(COMPACT)
 
 #ifdef _INSTALL

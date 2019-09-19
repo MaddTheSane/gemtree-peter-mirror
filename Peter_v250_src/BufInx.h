@@ -1,23 +1,23 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer pøemapování indexù						*
+*							Buffer pÃ¸emapovÃ¡nÃ­ indexÃ¹						*
 *																			*
 \***************************************************************************/
 
 class CBufIndex
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	int*	m_Data;			// ukazatel na data
-	int		m_Num;			// poèet poloek v bufferu
-	int		m_Max;			// velikost bufferu (poloek)
+	int		m_Num;			// poÃ¨et poloÅ¾ek v bufferu
+	int		m_Max;			// velikost bufferu (poloÅ¾ek)
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -25,35 +25,35 @@ public:
 	CBufIndex();
 	~CBufIndex();
 
-// statickı konstruktor a destruktor
+// statickÃ½ konstruktor a destruktor
 	void Init();
 	void Term();
 
-// zrušení všech poloek v bufferu
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu
 	void DelAll();
 
-// poskytnutí adresy dat
+// poskytnutÃ­ adresy dat
 	inline int* Data() const { return m_Data; };
 
-// poskytnutí/nastavení poètu poloek v bufferu
-// (nové poloky neinicializované, vrací FALSE=chyba pamìti)
+// poskytnutÃ­/nastavenÃ­ poÃ¨tu poloÅ¾ek v bufferu
+// (novÃ© poloÅ¾ky neinicializovanÃ©, vracÃ­ FALSE=chyba pamÃ¬ti)
 	inline int Num() const { return m_Num; };
 	bool _fastcall Num(const int num);
 
-// nastavení poètu poloek s vymazáním "-1", vrací FALSE=chyba pamìti
+// nastavenÃ­ poÃ¨tu poloÅ¾ek s vymazÃ¡nÃ­m "-1", vracÃ­ FALSE=chyba pamÃ¬ti
 	bool _fastcall NumClear(const int num);
 
-// vymazání všech poloek v bufferu zadanou hodnotou
+// vymazÃ¡nÃ­ vÅ¡ech poloÅ¾ek v bufferu zadanou hodnotou
 	void _fastcall Clear(const int clear);
 
-// kontrola platnosti poloky (kontroluje se pouze rozsah indexu)
+// kontrola platnosti poloÅ¾ky (kontroluje se pouze rozsah indexu)
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)m_Num); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline int& operator[] (const int index) 
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -66,15 +66,15 @@ public:
 	inline const int& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// poskytnutí poloky (s kontrolou platnosti indexu, pro neplatnou vrátí -1)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu, pro neplatnou vrÃ¡tÃ­ -1)
 	int _fastcall Get(const int index) const;
 
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const int data);
 
-// pøidání poloky na konec bufferu (vrací index poloky, pøi chybì pamìti vrací <0)
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky na konec bufferu (vracÃ­ index poloÅ¾ky, pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ <0)
 	int _fastcall Add(const int data);
 
-// operátor pøiøazení (pøi chybì pamìti poèet poloek nesouhlasí)
+// operÃ¡tor pÃ¸iÃ¸azenÃ­ (pÃ¸i chybÃ¬ pamÃ¬ti poÃ¨et poloÅ¾ek nesouhlasÃ­)
 	const CBufIndex& _fastcall operator= (const CBufIndex& srcbuf);
 };

@@ -6,132 +6,132 @@
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// typy prvkù oken
+// typy prvkÃ¹ oken
 
 enum WINTYP {
 	WINITEM_WINDOW,					// okno
-	WINITEM_WINDOWRO,				// okno bez uzavøení
-	WINITEM_BUTTON,					// tlaèítko
-	WINITEM_DEFBUTTON,				// implicitní tlaèítko
-	WINITEM_BUTTONICON,				// ikonovı spínaè
-	WINITEM_BUTTONCHECK,			// zaškrtávací tlaèítko
-	WINITEM_BUTTONCHECK2,			// tlaèítkovı pøepínaè
-	WINITEM_BUTTON3,				// 3-stavovı pøepínaè
-	WINITEM_BUTTONRADIO,			// pøepínací tlaèítko
-	WINITEM_BUTTONRADIO2,			// pøepínací tlaèítko = zaèátek skupiny
-	WINITEM_EDIT,					// textovı øádek
-	WINITEM_MEMO,					// textové pole
+	WINITEM_WINDOWRO,				// okno bez uzavÃ¸enÃ­
+	WINITEM_BUTTON,					// tlaÃ¨Ã­tko
+	WINITEM_DEFBUTTON,				// implicitnÃ­ tlaÃ¨Ã­tko
+	WINITEM_BUTTONICON,				// ikonovÃ½ spÃ­naÃ¨
+	WINITEM_BUTTONCHECK,			// zaÅ¡krtÃ¡vacÃ­ tlaÃ¨Ã­tko
+	WINITEM_BUTTONCHECK2,			// tlaÃ¨Ã­tkovÃ½ pÃ¸epÃ­naÃ¨
+	WINITEM_BUTTON3,				// 3-stavovÃ½ pÃ¸epÃ­naÃ¨
+	WINITEM_BUTTONRADIO,			// pÃ¸epÃ­nacÃ­ tlaÃ¨Ã­tko
+	WINITEM_BUTTONRADIO2,			// pÃ¸epÃ­nacÃ­ tlaÃ¨Ã­tko = zaÃ¨Ã¡tek skupiny
+	WINITEM_EDIT,					// textovÃ½ Ã¸Ã¡dek
+	WINITEM_MEMO,					// textovÃ© pole
 	WINITEM_GROUP,					// skupina
 	WINITEM_LISTBOX,				// seznam
-	WINITEM_LISTEDIT,				// seznam s editací
-	WINITEM_COMBOBOX,				// rozbalovací seznam
-	WINITEM_COMBOEDIT,				// rozbalovací seznam s editací
+	WINITEM_LISTEDIT,				// seznam s editacÃ­
+	WINITEM_COMBOBOX,				// rozbalovacÃ­ seznam
+	WINITEM_COMBOEDIT,				// rozbalovacÃ­ seznam s editacÃ­
 	WINITEM_WINTEXT,				// text
 	WINITEM_WINICON,				// ikona
-	WINITEM_WINPIC,					// obrázek
-	WINITEM_RICHEDIT,				// textové pole Richedit
-	WINITEM_RICHMEMO,				// textové pole bez zalamování
-	WINITEM_PROGRESS,				// indikátor prùbìhu
-	WINITEM_HTRACKBAR,				// horizontální táhlo
-	WINITEM_VTRACKBAR,				// vertikální táhlo
+	WINITEM_WINPIC,					// obrÃ¡zek
+	WINITEM_RICHEDIT,				// textovÃ© pole Richedit
+	WINITEM_RICHMEMO,				// textovÃ© pole bez zalamovÃ¡nÃ­
+	WINITEM_PROGRESS,				// indikÃ¡tor prÃ¹bÃ¬hu
+	WINITEM_HTRACKBAR,				// horizontÃ¡lnÃ­ tÃ¡hlo
+	WINITEM_VTRACKBAR,				// vertikÃ¡lnÃ­ tÃ¡hlo
 	WINITEM_TABLE,					// tabulka
-	WINITEM_HSCROLLBAR,				// horizontální posuvník
-	WINITEM_VSCROLLBAR,				// vertikální posuvník
-	WINITEM_TABS,					// záloky
+	WINITEM_HSCROLLBAR,				// horizontÃ¡lnÃ­ posuvnÃ­k
+	WINITEM_VSCROLLBAR,				// vertikÃ¡lnÃ­ posuvnÃ­k
+	WINITEM_TABS,					// zÃ¡loÅ¾ky
 };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky prvku okna
+// struktura poloÅ¾ky prvku okna
 
 typedef struct WINITEM_
 {
 	HWND	Wnd;					// handle prvku
-	int		Parent;					// index rodièe prvku (0=hlavní okno, -1=nic)
+	int		Parent;					// index rodiÃ¨e prvku (0=hlavnÃ­ okno, -1=nic)
 	int		Typ;					// typ prvku
-	int		Prev;					// pøedcházející prvek okna (vèetnì samotného okna)
-	int		Next;					// následující prvek okna (vèetnì samotného okna)
+	int		Prev;					// pÃ¸edchÃ¡zejÃ­cÃ­ prvek okna (vÃ¨etnÃ¬ samotnÃ©ho okna)
+	int		Next;					// nÃ¡sledujÃ­cÃ­ prvek okna (vÃ¨etnÃ¬ samotnÃ©ho okna)
 	CString	Text;					// text prvku
 	CIcon	Icon;					// ikona
-	CPicture Picture;				// obrázek
-	BYTE*	PictureData;			// cachovaná data obrázku se zarovnáním na 4 bajty (NULL=není)
+	CPicture Picture;				// obrÃ¡zek
+	BYTE*	PictureData;			// cachovanÃ¡ data obrÃ¡zku se zarovnÃ¡nÃ­m na 4 bajty (NULL=nenÃ­)
 	int		Left;					// pozice prvku zleva (v bodech)
 	int		Top;					// pozice prvku shora (v bodech)
-	int		Width;					// šíøka prvku (v bodech)
-	int		Height;					// vıška prvku (v bodech)
-	int		ClientWidth;			// klientská šíøka prvku (v bodech)
-	int		ClientHeight;			// klientská vıška prvku (v bodech)
-	bool	HasCaption;				// má titulek
-	bool	HasBorder;				// má okraj
-	bool	HasSize;				// okno s mìnitelnou velikostí (nebo další varianta okraje dialog. prvku)
-	bool	AlwaysTop;				// vdy nahoøe
-	bool	MayClose;				// moné uzavøení okna
-	bool	TabStop;				// zaráka pro TAB
-	bool	Show;					// pøíznak zobrazení prvku
-	bool	Disable;				// pøíznak zákazu prvku
-	bool	Click;					// kliknuto na tlaèítko
-	bool	TextValid;				// text je platnı
-	bool	Check;					// pøepínaè zapnut
-	bool	Check3;					// nedefinovanı stav pøepínaèe
-	bool	Bold;					// zvıraznìnı text
-	bool	Italic;					// kurzíva
-	bool	Underline;				// podtrení
-	bool	Strikeout;				// pøeškrtnutí
-	bool	Serif;					// patièky
-	bool	Fixed;					// text s pevnou rozteèí
-	int		FontHeight;				// bodová vıška znakù (0=bìná)
-	double	FontWidth;				// relativní šíøka znakù (0=bìná, 1=základní)
-	double	Angle;					// úhel sklonu (0=bìnı)
+	int		Width;					// Å¡Ã­Ã¸ka prvku (v bodech)
+	int		Height;					// vÃ½Å¡ka prvku (v bodech)
+	int		ClientWidth;			// klientskÃ¡ Å¡Ã­Ã¸ka prvku (v bodech)
+	int		ClientHeight;			// klientskÃ¡ vÃ½Å¡ka prvku (v bodech)
+	bool	HasCaption;				// mÃ¡ titulek
+	bool	HasBorder;				// mÃ¡ okraj
+	bool	HasSize;				// okno s mÃ¬nitelnou velikostÃ­ (nebo dalÅ¡Ã­ varianta okraje dialog. prvku)
+	bool	AlwaysTop;				// vÅ¾dy nahoÃ¸e
+	bool	MayClose;				// moÅ¾nÃ© uzavÃ¸enÃ­ okna
+	bool	TabStop;				// zarÃ¡Å¾ka pro TAB
+	bool	Show;					// pÃ¸Ã­znak zobrazenÃ­ prvku
+	bool	Disable;				// pÃ¸Ã­znak zÃ¡kazu prvku
+	bool	Click;					// kliknuto na tlaÃ¨Ã­tko
+	bool	TextValid;				// text je platnÃ½
+	bool	Check;					// pÃ¸epÃ­naÃ¨ zapnut
+	bool	Check3;					// nedefinovanÃ½ stav pÃ¸epÃ­naÃ¨e
+	bool	Bold;					// zvÃ½raznÃ¬nÃ½ text
+	bool	Italic;					// kurzÃ­va
+	bool	Underline;				// podtrÅ¾enÃ­
+	bool	Strikeout;				// pÃ¸eÅ¡krtnutÃ­
+	bool	Serif;					// patiÃ¨ky
+	bool	Fixed;					// text s pevnou rozteÃ¨Ã­
+	int		FontHeight;				// bodovÃ¡ vÃ½Å¡ka znakÃ¹ (0=bÃ¬Å¾nÃ¡)
+	double	FontWidth;				// relativnÃ­ Å¡Ã­Ã¸ka znakÃ¹ (0=bÃ¬Å¾nÃ¡, 1=zÃ¡kladnÃ­)
+	double	Angle;					// Ãºhel sklonu (0=bÃ¬Å¾nÃ½)
 	int		FontCol;				// barva textu
-	int		FontBack;				// barva pozadí
-	HBRUSH	FontBrush;				// štìtec pozadí
-	HFONT	Font;					// aktuální font
+	int		FontBack;				// barva pozadÃ­
+	HBRUSH	FontBrush;				// Å¡tÃ¬tec pozadÃ­
+	HFONT	Font;					// aktuÃ¡lnÃ­ font
   // tabulka
-	bool	TabHead;				// tabulka má záhlaví
-	int		TabCol;					// aktivní sloupec tabulky
-	int		TabRow;					// aktivní øádek tabulky
-	int		TabRowF;				// aktivní øádek tabulky se zamìøením
-	int		TabCols;				// poèet sloupcù tabulky
-	int		TabRows;				// poèet øádkù tabulky
-	CString* TabData;				// data tabulky (po øádcích)
-	BYTE*	TabAlign;				// zarovnání sloupcù tabulky
-	int		TabDataMax;				// velikost bufferu seznamu dat tabulky (poèet poloek)
-  // posuvník
-	int		ScrollMax;				// maximální hodnota pozice posuvníku (0 a SCROLLRANGE-PAGE)
-	double	ScrollPage;				// délka stránky (0.0001 a 1)
-	double	ScrollPos;				// aktuální pozice (0 a 1)
+	bool	TabHead;				// tabulka mÃ¡ zÃ¡hlavÃ­
+	int		TabCol;					// aktivnÃ­ sloupec tabulky
+	int		TabRow;					// aktivnÃ­ Ã¸Ã¡dek tabulky
+	int		TabRowF;				// aktivnÃ­ Ã¸Ã¡dek tabulky se zamÃ¬Ã¸enÃ­m
+	int		TabCols;				// poÃ¨et sloupcÃ¹ tabulky
+	int		TabRows;				// poÃ¨et Ã¸Ã¡dkÃ¹ tabulky
+	CString* TabData;				// data tabulky (po Ã¸Ã¡dcÃ­ch)
+	BYTE*	TabAlign;				// zarovnÃ¡nÃ­ sloupcÃ¹ tabulky
+	int		TabDataMax;				// velikost bufferu seznamu dat tabulky (poÃ¨et poloÅ¾ek)
+  // posuvnÃ­k
+	int		ScrollMax;				// maximÃ¡lnÃ­ hodnota pozice posuvnÃ­ku (0 aÅ¾ SCROLLRANGE-PAGE)
+	double	ScrollPage;				// dÃ©lka strÃ¡nky (0.0001 aÅ¾ 1)
+	double	ScrollPos;				// aktuÃ¡lnÃ­ pozice (0 aÅ¾ 1)
 } WINITEM;
 
-#define SCROLLRANGE	10000			// rozsah posuvníku
+#define SCROLLRANGE	10000			// rozsah posuvnÃ­ku
 
 /////////////////////////////////////////////////////////////////////////////
-// prvky oken (index 0 = hlavní okno)
+// prvky oken (index 0 = hlavnÃ­ okno)
 
 class CBufWin
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	WINITEM*		m_Data;			// ukazatel na data
-	bool*			m_Valid;		// pøíznaky platnosti poloek
-	int				m_Num;			// poèet platnıch poloek v bufferu
-	int				m_Max;			// velikost bufferu (poloek)
-	int				m_Next;			// pøíští volná poloka (-1 = není)
+	bool*			m_Valid;		// pÃ¸Ã­znaky platnosti poloÅ¾ek
+	int				m_Num;			// poÃ¨et platnÃ½ch poloÅ¾ek v bufferu
+	int				m_Max;			// velikost bufferu (poloÅ¾ek)
+	int				m_Next;			// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka (-1 = nenÃ­)
 
-// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	inline int NewItem()
 	{
-		if (m_Next < 0)				// není další poloka?
+		if (m_Next < 0)				// nenÃ­ dalÅ¡Ã­ poloÅ¾ka?
 		{
-			NewData();				// vytvoøení novıch dat
+			NewData();				// vytvoÃ¸enÃ­ novÃ½ch dat
 		}
 
-		int i = m_Next;				// pøíští volna poloka
-		m_Next = *(int*)(m_Data + i); // další poloka
-		m_Valid[i] = true;			// nastavení pøíznaku platnosti poloky
+		int i = m_Next;				// pÃ¸Ã­Å¡tÃ­ volna poloÅ¾ka
+		m_Next = *(int*)(m_Data + i); // dalÅ¡Ã­ poloÅ¾ka
+		m_Valid[i] = true;			// nastavenÃ­ pÃ¸Ã­znaku platnosti poloÅ¾ky
 		WINITEM* item = m_Data + i;
 		MemFill(item, sizeof(WINITEM), 0);
 		item->Text.Init();			// inicializace textu
@@ -143,14 +143,14 @@ private:
 		item->ScrollPage = 0.1;
 		item->Prev = i;
 		item->Next = i;
-		m_Num++;					// zvıšení èítaèe platnıch poloek
+		m_Num++;					// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e platnÃ½ch poloÅ¾ek
 		return i;
 	};
 
-// vytvoøení novıch dat (oddìleno kvùli lepší optimalizaci)
+// vytvoÃ¸enÃ­ novÃ½ch dat (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -158,33 +158,33 @@ public:
 	CBufWin();
 	~CBufWin();
 
-// statickı konstruktor a destruktor
-	void Init();			// statickı konstruktor
-	void Term();			// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();			// statickÃ½ konstruktor
+	void Term();			// statickÃ½ destruktor
 
-// zrušení všech poloek v bufferu (ukládání zaène opìt po øadì od zaèátku)
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu (uklÃ¡dÃ¡nÃ­ zaÃ¨ne opÃ¬t po Ã¸adÃ¬ od zaÃ¨Ã¡tku)
 	void DelAll();
 
-// poskytnutí bufferu dat
+// poskytnutÃ­ bufferu dat
 	inline WINITEM* Data() const { return m_Data; };
 
-// poskytnutí pole platností
+// poskytnutÃ­ pole platnostÃ­
 	inline bool* Valid() const { return m_Valid; };
 
-// poskytnutí poètu platnıch poloek v bufferu
+// poskytnutÃ­ poÃ¨tu platnÃ½ch poloÅ¾ek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu (vèetnì zrušenıch poloek)
+// poskytnutÃ­ velikosti bufferu (vÃ¨etnÃ¬ zruÅ¡enÃ½ch poloÅ¾ek)
 	inline int Max() const { return m_Max; };
 
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 	inline BOOL IsValid(const int index) const
 		{ return (((DWORD)index < (DWORD)m_Max) && m_Valid[index]); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return (((DWORD)index >= (DWORD)m_Max) || !m_Valid[index]); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline WINITEM& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -197,9 +197,9 @@ public:
 	inline const WINITEM& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// zrušení poloky (s kontrolou platnosti indexu)
+// zruÅ¡enÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Del(const int index);
 
-// vytvoøení prázdné poloky (vrací index poloky)
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int _fastcall New();
 };

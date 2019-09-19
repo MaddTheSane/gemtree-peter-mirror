@@ -7,24 +7,24 @@
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minimální velikost
+#pragma optimize("s", on)			// optimalizace na minimÃ¡lnÃ­ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad vırazu se zvukem (vrací true = operace OK)
+// pÃ¸eklad vÃ½razu se zvukem (vracÃ­ true = operace OK)
 
 bool _fastcall CompSnd(int index)
 {
-// adresa zdrojového prvku
+// adresa zdrojovÃ©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 
-// kontrola, zda je poloka vypnuta
+// kontrola, zda je poloÅ¾ka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// vÃ¬tvenÃ­ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_SND:
@@ -66,13 +66,13 @@ bool _fastcall CompSnd(int index)
 		return false;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_SND);	// funkce s návratem zvuku
+		return CompFunc(index, IDF_SND);	// funkce s nÃ¡vratem zvuku
 
 	case IDF_SOUND_CONV_8BIT:
-		return CompSndPar(index, FSoundConv8Bit);	// konverze na 8 bitù
+		return CompSndPar(index, FSoundConv8Bit);	// konverze na 8 bitÃ¹
 
 	case IDF_SOUND_CONV_16BIT:
-		return CompSndPar(index, FSoundConv16Bit);	// konverze na 16 bitù
+		return CompSndPar(index, FSoundConv16Bit);	// konverze na 16 bitÃ¹
 
 	case IDF_SOUND_CONV_STEREO:
 		return CompSndPar(index, FSoundConvStereo);	// konverze na stereo
@@ -90,7 +90,7 @@ bool _fastcall CompSnd(int index)
 		return CompSndPar(index, FSoundConv44100);	// konverze na frekvenci 44100
 
 	case IDF_SOUND_ADD:
-		return CompSndGrp(index, FSoundAdd, FSoundAdd1);	// souèet zvukù
+		return CompSndGrp(index, FSoundAdd, FSoundAdd1);	// souÃ¨et zvukÃ¹
 
 	case IDF_SOUND_SPEED:							// konverze rychlosti zvuku
 		CompAddItem(FSoundSpeed);
@@ -98,14 +98,14 @@ bool _fastcall CompSnd(int index)
 		CompNumSubPar(index, IDF_SOUND_SPEED_K, 1);
 		return true;
 
-	case IDF_TONGEN:								// tónovı generátor
+	case IDF_TONGEN:								// tÃ³novÃ½ generÃ¡tor
 		CompAddItem(FTonGen);
 		CompNumSubPar(index, IDF_TONGEN_F, 1000);
 		CompNumSubPar(index, IDF_TONGEN_T, 1);
 		return true;
 
 	case IDF_FILE_SOUND:
-		CompAddItem(FGetFileSound);			// naètení zvuku
+		CompAddItem(FGetFileSound);			// naÃ¨tenÃ­ zvuku
 		return true;
 
 	case IDF_SOUND_CONV_PCM:
@@ -118,7 +118,7 @@ bool _fastcall CompSnd(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem zvuku
+// pÃ¸eklad pÃ¸Ã­kazu s parametrem zvuku
 
 bool CompSndPar(int index, PROCCOM func)
 {
@@ -144,31 +144,31 @@ bool CompSndPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem zvuku (hledanım podle identifikace)
+// pÃ¸eklad pÃ¸Ã­kazu s podparametrem zvuku (hledanÃ½m podle identifikace)
 
 void CompSndSubPar(int index, int idf)
 {
 // korekce identifikace funkce
 	idf -= IDF;
 
-// ukazatel vıchozího prvku
+// ukazatel vÃ½chozÃ­ho prvku
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda má poloka nìjaké potomky
+// kontrola, zda mÃ¡ poloÅ¾ka nÃ¬jakÃ© potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus pøes všechny potomky
+// cyklus pÃ¸es vÅ¡echny potomky
 		do {
 
-// adresa dalšího potomka
+// adresa dalÅ¡Ã­ho potomka
 			index += posun;
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledanı prvek - naètení prvku
+// test, zda to je hledanÃ½ prvek - naÃ¨tenÃ­ prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompSnd(index + 1))
@@ -176,13 +176,13 @@ void CompSndSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro pøíští prvek
+// posun pro pÃ¸Ã­Å¡tÃ­ prvek
 			posun = item2->Items;
 
-// dokud je další potomek
+// dokud je dalÅ¡Ã­ potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// pouije se implicitní hodnota - prázdnı zvuk
+// pouÅ¾ije se implicitnÃ­ hodnota - prÃ¡zdnÃ½ zvuk
 	CompAddItem(FSoundEmpty);
 }

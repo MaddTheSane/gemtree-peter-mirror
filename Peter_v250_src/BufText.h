@@ -1,49 +1,49 @@
 
 /***************************************************************************\
 *																			*
-*								Textové øetìzce								*
+*								TextovÃ© Ã¸etÃ¬zce								*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura položky dat øetìzce (8 bajtù + data + koncová 0)
+// struktura poloÅ¾ky dat Ã¸etÃ¬zce (8 bajtÃ¹ + data + koncovÃ¡ 0)
 
 typedef struct TEXTDATA_
 {
-	long	Refer;					// (4) èítaè referencí na textový øetìzec
-	long	Length;					// (4) délka øetìzce ve znacích (bez koncové 0)
-	TCHAR	Data[1];				// (x*1 nebo x*2) textová data + koncová 0
+	long	Refer;					// (4) Ã¨Ã­taÃ¨ referencÃ­ na textovÃ½ Ã¸etÃ¬zec
+	long	Length;					// (4) dÃ©lka Ã¸etÃ¬zce ve znacÃ­ch (bez koncovÃ© 0)
+	TCHAR	Data[1];				// (x*1 nebo x*2) textovÃ¡ data + koncovÃ¡ 0
 } TEXTDATA;
 
-#define SIZEOFTEXTDATA	(2*sizeof(long)) // velikost záhlaví datové položky (bez dat)
+#define SIZEOFTEXTDATA	(2*sizeof(long)) // velikost zÃ¡hlavÃ­ datovÃ© poloÅ¾ky (bez dat)
 
-extern TEXTDATA EmptyTextData;	// data prázdného øetìzce
-extern	const CText	EmptyText;	// prázdný øetìzec
+extern TEXTDATA EmptyTextData;	// data prÃ¡zdnÃ©ho Ã¸etÃ¬zce
+extern	const CText	EmptyText;	// prÃ¡zdnÃ½ Ã¸etÃ¬zec
 
 /////////////////////////////////////////////////////////////////////////////
-// statické funkce
+// statickÃ© funkce
 
-// vytvoøení dat textu - délka zadána ve znacích (pøi chybì pamìti vrací NULL)
+// vytvoÃ¸enÃ­ dat textu - dÃ©lka zadÃ¡na ve znacÃ­ch (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ NULL)
 TEXTDATA* _fastcall NewTextData(int length);
 
-// zrušení dat textu (oddìleno kvùli lepší optimalizaci)
+// zruÅ¡enÃ­ dat textu (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 void _fastcall DelTextData(TEXTDATA* data);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// textový øetìzec
+// textovÃ½ Ã¸etÃ¬zec
 
 class CText
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	TEXTDATA*		pData;			// ukazatel na data textu
 
-// pøipojení dat textu
+// pÃ¸ipojenÃ­ dat textu
 	inline void attach(TEXTDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -52,7 +52,7 @@ private:
 		LongIncrement(&(data->Refer));
 	}
 
-// odpojení (a zrušení) dat textu
+// odpojenÃ­ (a zruÅ¡enÃ­) dat textu
 	inline void detach(TEXTDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -64,11 +64,11 @@ private:
 		}
 	}
 
-// zmìna velikosti bufferu (délka zadána ve znacích) - zajistí pøivlastnìní bufferu
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// zmÃ¬na velikosti bufferu (dÃ©lka zadÃ¡na ve znacÃ­ch) - zajistÃ­ pÃ¸ivlastnÃ¬nÃ­ bufferu
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool SizeBuffer(int length);
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -76,53 +76,53 @@ public:
 	CText();
 	CText(const CText& src);
 	CText(TEXTDATA* data);
-	CText(const TCHAR chr);					// pøi chybì pamìti bude øetìzec prázdný
-	CText(LPCTSTR text);						// pøi chybì pamìti bude øetìzec prázdný
-	CText(LPCTSTR text, const int length);	// pøi chybì pamìti bude øetìzec prázdný
+	CText(const TCHAR chr);					// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(LPCTSTR text);						// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(LPCTSTR text, const int length);	// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
 #ifdef _UNICODE
-	CText(LPCSTR text);						// pøi chybì pamìti bude øetìzec prázdný
-	CText(LPCSTR text, const int length);		// pøi chybì pamìti bude øetìzec prázdný
+	CText(LPCSTR text);						// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(LPCSTR text, const int length);		// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
 #else //_UNICODE
-	CText(LPCWSTR text);						// pøi chybì pamìti bude øetìzec prázdný
-	CText(LPCWSTR text, const int length);	// pøi chybì pamìti bude øetìzec prázdný
+	CText(LPCWSTR text);						// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(LPCWSTR text, const int length);	// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
 #endif //_UNICODE
 	~CText();
 
-// sluèovací konstruktury
-	CText(const CText& str1, const CText& str2);	// pøi chybì pamìti bude øetìzec prázdný
-	CText(LPCTSTR txt, const CText& str);			// pøi chybì pamìti bude øetìzec prázdný
-	CText(const CText& str, LPCTSTR txt);			// pøi chybì pamìti bude øetìzec prázdný
-	CText(const TCHAR chr, const CText& str);		// pøi chybì pamìti bude øetìzec prázdný
-	CText(const CText& str, const TCHAR chr);		// pøi chybì pamìti bude øetìzec prázdný
+// sluÃ¨ovacÃ­ konstruktury
+	CText(const CText& str1, const CText& str2);	// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(LPCTSTR txt, const CText& str);			// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(const CText& str, LPCTSTR txt);			// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(const TCHAR chr, const CText& str);		// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
+	CText(const CText& str, const TCHAR chr);		// pÃ¸i chybÃ¬ pamÃ¬ti bude Ã¸etÃ¬zec prÃ¡zdnÃ½
 
-// statický konstruktor a destruktor
+// statickÃ½ konstruktor a destruktor
 	void Init();
 	void _fastcall Init(const CText& src);
 	void _fastcall Init(TEXTDATA* data);
-	bool _fastcall Init(const TCHAR chr);		// pøi chybì pamìti vrátí FALSE, text není platný
-	bool _fastcall Init(LPCTSTR text);			// pøi chybì pamìti vrátí FALSE, text není platný
-	bool _fastcall Init(LPCTSTR text, const int length); // pøi chybì pamìti vrátí FALSE, text není platný
+	bool _fastcall Init(const TCHAR chr);		// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, text nenÃ­ platnÃ½
+	bool _fastcall Init(LPCTSTR text);			// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, text nenÃ­ platnÃ½
+	bool _fastcall Init(LPCTSTR text, const int length); // pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, text nenÃ­ platnÃ½
 #ifdef _UNICODE
-	bool _fastcall Init(LPCSTR text);			// pøi chybì pamìti vrátí FALSE, text není platný
-	bool _fastcall Init(LPCSTR text, const int length); // pøi chybì pamìti vrátí FALSE, text není platný
+	bool _fastcall Init(LPCSTR text);			// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, text nenÃ­ platnÃ½
+	bool _fastcall Init(LPCSTR text, const int length); // pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, text nenÃ­ platnÃ½
 #else //_UNICODE
-	bool _fastcall Init(LPCWSTR text);			// pøi chybì pamìti vrátí FALSE, text není platný
-	bool _fastcall Init(LPCWSTR text, const int length); // pøi chybì pamìti vrátí FALSE, text není platný
+	bool _fastcall Init(LPCWSTR text);			// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, text nenÃ­ platnÃ½
+	bool _fastcall Init(LPCWSTR text, const int length); // pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, text nenÃ­ platnÃ½
 #endif //_UNICODE
 	void Term();
 
-// poskytnutí adresy dat
+// poskytnutÃ­ adresy dat
 	inline TEXTDATA* Data() const { return pData; };
 	inline TCHAR* DataData() const { return pData->Data; };
 
-// poskytnutí délky øetìzce
+// poskytnutÃ­ dÃ©lky Ã¸etÃ¬zce
 	inline int Length() const { return pData->Length; }
 
-// kontrola, zda je øetìzec prázdný
+// kontrola, zda je Ã¸etÃ¬zec prÃ¡zdnÃ½
 	inline BOOL IsEmpty() const { return pData->Length == 0; };
 	inline BOOL IsNotEmpty() const { return pData->Length != 0; };
 
-// zápis do bufferu (bez koncové nuly)
+// zÃ¡pis do bufferu (bez koncovÃ© nuly)
 	void Write(TCHAR* buf) const;
 #ifdef _UNICODE
 	void Write(LPSTR buf) const;
@@ -130,7 +130,7 @@ public:
 	void Write(LPWSTR buf) const;
 #endif
 
-// zápis do bufferu (s koncovou nulou)
+// zÃ¡pis do bufferu (s koncovou nulou)
 	void WriteNull(TCHAR* buf) const;
 #ifdef _UNICODE
 	void WriteNull(LPSTR buf) const;
@@ -139,9 +139,9 @@ public:
 #endif
 
 
-// ------- hledání
+// ------- hledÃ¡nÃ­
 
-// hledání (<0 = nenalezeno, pos=výchozí pozice)
+// hledÃ¡nÃ­ (<0 = nenalezeno, pos=vÃ½chozÃ­ pozice)
 	int _fastcall Find(const CText& str) const;
 	int _fastcall Find(const CText& str, int pos) const;
 	int _fastcall Find(LPCTSTR txt) const;
@@ -149,76 +149,76 @@ public:
 	int _fastcall Find(const TCHAR chr) const;
 	int _fastcall Find(const TCHAR chr, int pos) const;
 	
-// hledání znaku od konce øetìzce zpìt (<0 = nenalezeno, pos=výchozí pozice)
+// hledÃ¡nÃ­ znaku od konce Ã¸etÃ¬zce zpÃ¬t (<0 = nenalezeno, pos=vÃ½chozÃ­ pozice)
 	int _fastcall RevFind(const TCHAR chr) const;
 	int _fastcall RevFind(const TCHAR chr, int pos) const;
 
 // -------- modifikace textu
 
-// vyprázdnìní øetìzce (pøipojí prázdný øetìzec)
+// vyprÃ¡zdnÃ¬nÃ­ Ã¸etÃ¬zce (pÃ¸ipojÃ­ prÃ¡zdnÃ½ Ã¸etÃ¬zec)
 	void Empty();
 
-// konverze malá/velká písmena
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// konverze malÃ¡/velkÃ¡ pÃ­smena
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool UpperCase();
 	bool LowerCase();
 
-// normalizace na ASCII znaky - pro jméno souboru
+// normalizace na ASCII znaky - pro jmÃ©no souboru
 	void NormAscii();
 
-// levá èást øetìzce (pøi chybì pamìti vrátí prázdný øetìzec)
+// levÃ¡ Ã¨Ã¡st Ã¸etÃ¬zce (pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ prÃ¡zdnÃ½ Ã¸etÃ¬zec)
 	CText _fastcall Left(int count) const;
 
-// pravá èást øetìzce (pøi chybì pamìti vrátí prázdný øetìzec)
+// pravÃ¡ Ã¨Ã¡st Ã¸etÃ¬zce (pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ prÃ¡zdnÃ½ Ã¸etÃ¬zec)
 	CText _fastcall Right(int count) const;
 
-// støední èást øetìzce (pøi chybì pamìti vrátí prázdný øetìzec)
+// stÃ¸ednÃ­ Ã¨Ã¡st Ã¸etÃ¬zce (pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ prÃ¡zdnÃ½ Ã¸etÃ¬zec)
 	CText _fastcall Mid(int first, int count = 0x7fffffff) const;
 
-// zrušení textu z konce øetìzce
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// zruÅ¡enÃ­ textu z konce Ã¸etÃ¬zce
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool Delete(int first, int count = 0x7fffffff);
 
-// zrušení posledního znaku z konce øetìzce
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// zruÅ¡enÃ­ poslednÃ­ho znaku z konce Ã¸etÃ¬zce
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool DeleteLast();
 
-// odstranìní mezer ze zaèátku/konce øetìzce
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// odstranÃ¬nÃ­ mezer ze zaÃ¨Ã¡tku/konce Ã¸etÃ¬zce
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool TrimLeft();
 	bool TrimRight();
 
-// korekce výskytu nuly v textu (provádí se ve spoleèném bufferu všech promìnných)
+// korekce vÃ½skytu nuly v textu (provÃ¡dÃ­ se ve spoleÃ¨nÃ©m bufferu vÅ¡ech promÃ¬nnÃ½ch)
 	void KorigNul();
 
-// korekce jména na zkrácené jméno pro knihovnu
+// korekce jmÃ©na na zkrÃ¡cenÃ© jmÃ©no pro knihovnu
 	void KorigShort();
 
-// nastavení èísla jména objektu (1, 2, ...)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// nastavenÃ­ Ã¨Ã­sla jmÃ©na objektu (1, 2, ...)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool _fastcall SetNumObj(const int num);
 
-// pøidání textu
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// pÃ¸idÃ¡nÃ­ textu
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool _fastcall Add(const CText& str);
 	bool _fastcall Add(LPCTSTR txt);
 	bool _fastcall Add(const TCHAR chr);
 
-// pøidání textu èísla
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// pÃ¸idÃ¡nÃ­ textu Ã¨Ã­sla
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool _fastcall AddInt(const int num);
 	bool _fastcall AddDouble(const double num);
 
-// souèet textù
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// souÃ¨et textÃ¹
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool _fastcall Add(const CText& str1, const CText& str2);
 	bool _fastcall Add(LPCTSTR txt, const CText& str);
 	bool _fastcall Add(const CText& str, LPCTSTR txt);
 	bool _fastcall Add(const TCHAR chr, const CText& str);
 	bool _fastcall Add(const CText& str, const TCHAR chr);
 
-// nastavení textu
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// nastavenÃ­ textu
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	void _fastcall Set(const CText& str);
 	bool _fastcall Set(LPCTSTR txt);
 	bool _fastcall Set(LPCTSTR txt, const int length);
@@ -231,35 +231,35 @@ public:
 #endif //_UNICODE
 	bool _fastcall Set(const TCHAR chr);
 
-// naètení textu z resource do dialogového prvku
+// naÃ¨tenÃ­ textu z resource do dialogovÃ©ho prvku
 	void LoadDialogText(const HWND wnd, int id);
 
-// naètení textu z resource do dialogového prvku s nastavením bìžného fontu
+// naÃ¨tenÃ­ textu z resource do dialogovÃ©ho prvku s nastavenÃ­m bÃ¬Å¾nÃ©ho fontu
 	void LoadDialogTextFont(const HWND wnd, int id);
 
-// naètení textu z resource (pøi chybì vrací FALSE, obsah prázdný text)
+// naÃ¨tenÃ­ textu z resource (pÃ¸i chybÃ¬ vracÃ­ FALSE, obsah prÃ¡zdnÃ½ text)
 	bool Load(const int nID);
 
-// naètení ze souboru formátu TXT (FALSE=chyba, obsah nezmìnìn)
+// naÃ¨tenÃ­ ze souboru formÃ¡tu TXT (FALSE=chyba, obsah nezmÃ¬nÃ¬n)
 	bool LoadFile(CText jmeno);
 
-// uložení textu do souboru formátu TXT (FALSE=chyba)
+// uloÅ¾enÃ­ textu do souboru formÃ¡tu TXT (FALSE=chyba)
 	bool SaveFile(CText jmeno) const;
 
-// ------- pøístup ke znakùm v bufferu
+// ------- pÃ¸Ã­stup ke znakÃ¹m v bufferu
 
-// kopie do vlastního bufferu pøed modifikací
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie do vlastnÃ­ho bufferu pÃ¸ed modifikacÃ­
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool CopyWrite();
 
-// kontrola, zda je index znaku platný
+// kontrola, zda je index znaku platnÃ½
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)pData->Length); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)pData->Length); };
 
-// poskytnutí pøístupu ke znaku na pozici (bez kontroly a bez pøivlastnìní bufferu!)
+// poskytnutÃ­ pÃ¸Ã­stupu ke znaku na pozici (bez kontroly a bez pÃ¸ivlastnÃ¬nÃ­ bufferu!)
 	inline TCHAR& operator[] (int index)
 		{ ASSERT(IsValid(index)); return pData->Data[index]; }
 
@@ -272,72 +272,72 @@ public:
 	inline const TCHAR& At(int index) const
 		{ ASSERT(IsValid(index)); return pData->Data[index]; }
 
-// poskytnutí znaku na pozici s kontrolou (pro neplatný znak vrátí 0)
+// poskytnutÃ­ znaku na pozici s kontrolou (pro neplatnÃ½ znak vrÃ¡tÃ­ 0)
 	TCHAR _fastcall Get(const int index) const;
 
-// nastavení znaku na pozici s kontrolou (zajistí pøivlastnìní bufferu)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// nastavenÃ­ znaku na pozici s kontrolou (zajistÃ­ pÃ¸ivlastnÃ¬nÃ­ bufferu)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool _fastcall Set(const int index, const TCHAR chr);
 
-// poskytnutí posledního znaku øetìzce (pro prázdný øetìzec vrací 0)
+// poskytnutÃ­ poslednÃ­ho znaku Ã¸etÃ¬zce (pro prÃ¡zdnÃ½ Ã¸etÃ¬zec vracÃ­ 0)
 	TCHAR _fastcall LastChar() const;
 
 // ------- text oken
 
-// naètení textu okna (pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn)
+// naÃ¨tenÃ­ textu okna (pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n)
 	bool GetWindowText(const HWND wnd);
 
-// nastavení textu okna
+// nastavenÃ­ textu okna
 	void _fastcall SetWindowText(const HWND wnd) const;
 	void _fastcall SetWindowTextFont(const HWND wnd) const;
 
-// naètení textu dialogového prvku (pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn)
+// naÃ¨tenÃ­ textu dialogovÃ©ho prvku (pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n)
 	bool GetDialogText(const HWND wnd, int id);
 
-// nastavení textu dialogového prvku
+// nastavenÃ­ textu dialogovÃ©ho prvku
 	void _fastcall SetDialogText(const HWND wnd, int id) const;
 
-// nastavení textu dialogového prvku s nastavením bìžného fontu
+// nastavenÃ­ textu dialogovÃ©ho prvku s nastavenÃ­m bÃ¬Å¾nÃ©ho fontu
 	void _fastcall SetDialogTextFont(const HWND wnd, int id) const;
 
-// -------- adresáøe a soubory
+// -------- adresÃ¡Ã¸e a soubory
 
-// naètení aktivního adresáøe (pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn)
+// naÃ¨tenÃ­ aktivnÃ­ho adresÃ¡Ã¸e (pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n)
 	bool GetAktDir();
 
-// korekce textu na jméno souboru (vypuštìní zakázaných znakù, 
-//	vrací opravenou pozici kurzoru)
-//  ignoruje chybu pamìti pøi pøivlastnìní bufferu (pøivlastnit pøedem)
+// korekce textu na jmÃ©no souboru (vypuÅ¡tÃ¬nÃ­ zakÃ¡zanÃ½ch znakÃ¹, 
+//	vracÃ­ opravenou pozici kurzoru)
+//  ignoruje chybu pamÃ¬ti pÃ¸i pÃ¸ivlastnÃ¬nÃ­ bufferu (pÃ¸ivlastnit pÃ¸edem)
 	int FileName(int curs);
 
-// korekce textu na jméno cesty (vypuštìní zakázaných znakù, 
-//	vrací opravenou pozici kurzoru)
-//  ignoruje chybu pamìti pøi pøivlastnìní bufferu (pøivlastnit pøedem)
+// korekce textu na jmÃ©no cesty (vypuÅ¡tÃ¬nÃ­ zakÃ¡zanÃ½ch znakÃ¹, 
+//	vracÃ­ opravenou pozici kurzoru)
+//  ignoruje chybu pamÃ¬ti pÃ¸i pÃ¸ivlastnÃ¬nÃ­ bufferu (pÃ¸ivlastnit pÃ¸edem)
 	int PathName(int curs);
 
-// -------- konverze èísel
+// -------- konverze Ã¨Ã­sel
 
-// konverze èísla INT na text (pøi chybì pamìti vrací FALSE)
+// konverze Ã¨Ã­sla INT na text (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE)
 	bool Int(int num);
 
-// konverze textu na èíslo INT
+// konverze textu na Ã¨Ã­slo INT
 	friend int Int(LPCTSTR text);
 
-// konverze èísla DWORD na HEX (8 èíslic) (pøi chybì pamìti vrací FALSE)
+// konverze Ã¨Ã­sla DWORD na HEX (8 Ã¨Ã­slic) (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE)
 	bool Hex(DWORD num);
 
-// konverze èísla DOUBLE na text (pøi chybì pamìti vrací false)
+// konverze Ã¨Ã­sla DOUBLE na text (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ false)
 	bool Double(double num);
 
-// konverze textu na èíslo DOUBLE
+// konverze textu na Ã¨Ã­slo DOUBLE
 	friend double Double(LPCTSTR txt);
 
-// -------- operátory
+// -------- operÃ¡tory
 
-// konverze na øetìzec LPCTSTR
+// konverze na Ã¸etÃ¬zec LPCTSTR
 	inline operator LPCTSTR() const { return pData->Data; }
 
-// operátory pøiøazení (nepoužívat - nehlásí chybu operace)
+// operÃ¡tory pÃ¸iÃ¸azenÃ­ (nepouÅ¾Ã­vat - nehlÃ¡sÃ­ chybu operace)
 	inline const CText& _fastcall operator= (const CText& str) { Set(str); return *this; }
 	inline const CText& _fastcall operator= (LPCTSTR txt) { Set(txt); return *this; }
 #ifdef _UNICODE
@@ -347,21 +347,21 @@ public:
 #endif //_UNICODE
 	inline const CText& _fastcall operator= (const TCHAR chr) { Set(chr); return *this; };
 
-// operátory pøiètení (nepoužívat - nehlásí chybu operace)
+// operÃ¡tory pÃ¸iÃ¨tenÃ­ (nepouÅ¾Ã­vat - nehlÃ¡sÃ­ chybu operace)
 
-// POZOR - funkce "+= CText" asi nefunguje (ruší starý obsah) !!!
+// POZOR - funkce "+= CText" asi nefunguje (ruÅ¡Ã­ starÃ½ obsah) !!!
 	inline const CText& _fastcall operator+=(const CText& str) { Add(str); return *this; }
 	inline const CText& _fastcall operator+=(LPCTSTR txt) { Add(txt); return *this; }
 	inline const CText& _fastcall operator+=(const TCHAR chr) { Add(chr); return *this; }
 
-// operátory souètu (nepoužívat - nehlásí chybu operace)
+// operÃ¡tory souÃ¨tu (nepouÅ¾Ã­vat - nehlÃ¡sÃ­ chybu operace)
 	inline friend CText _fastcall operator+ (const CText& str1, const CText& str2) { return CText(str1, str2); }
 	inline friend CText _fastcall operator+ (LPCTSTR txt, const CText& str) { return CText(txt, str); }
 	inline friend CText _fastcall operator+ (const CText& str, LPCTSTR txt) { return CText(str, txt); }
 	inline friend CText _fastcall operator+ (const TCHAR chr, const CText& str) { return CText(chr, str); }
 	inline friend CText _fastcall operator+ (const CText& str, const TCHAR chr) { return CText(str, chr); }
 
-// operátory porovnání
+// operÃ¡tory porovnÃ¡nÃ­
 	friend BOOL _fastcall operator==(const CText& str1, const CText& str2);
 	friend BOOL _fastcall operator==(LPCTSTR txt, const CText& str);
 	friend BOOL _fastcall operator==(const CText& str, LPCTSTR txt);
@@ -381,19 +381,19 @@ public:
 
 /***************************************************************************\
 *																			*
-*								Buffer textù								*
+*								Buffer textÃ¹								*
 *																			*
 \***************************************************************************/
 
 class CBufText : public CBuffer<CText>
 {
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
-// pøidání položky (vrací index položky, <0 = chyba)
-// provádí záznam do UNDO bufferu
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky, <0 = chyba)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	inline int _fastcall Add(const CText& data) { return CBuffer<CText>::Add(data); }
 	int _fastcall Add(TEXTDATA* data);
 	int _fastcall Add(const WCHAR* data);
@@ -401,31 +401,31 @@ public:
 	int _fastcall Add(const char* data);
 	int _fastcall Add(const char* data, const int len);
 
-// naètení textu z resource (vrací index položky, <0 = chyba)
+// naÃ¨tenÃ­ textu z resource (vracÃ­ index poloÅ¾ky, <0 = chyba)
 	int _fastcall Load(const int nID);
 };
 
 
 /***************************************************************************\
 *																			*
-*						Buffer vícejazyèných textù							*
+*						Buffer vÃ­cejazyÃ¨nÃ½ch textÃ¹							*
 *																			*
 \***************************************************************************/
 
-//extern const CMultiText	EmptyMultiText;		// prázdný vícejazykový øetìzec
+//extern const CMultiText	EmptyMultiText;		// prÃ¡zdnÃ½ vÃ­cejazykovÃ½ Ã¸etÃ¬zec
 
-// vícejazyèný text
+// vÃ­cejazyÃ¨nÃ½ text
 class CMultiText
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
-	CText		m_Data[JAZYKNUM];	// texty (prázdný = je implicitní)
+// promÃ¬nnÃ©
+	CText		m_Data[JAZYKNUM];	// texty (prÃ¡zdnÃ½ = je implicitnÃ­)
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -438,7 +438,7 @@ public:
 		}
 	}
 
-// inicializace s kopií
+// inicializace s kopiÃ­
 	void Init(const CMultiText& src)
 	{
 		for (int i = 0; i < JAZYKNUM; i++)
@@ -447,7 +447,7 @@ public:
 		}
 	}
 
-// pøerušení
+// pÃ¸eruÅ¡enÃ­
 	void Term()
 	{
 		for (int i = 0; i < JAZYKNUM; i++)
@@ -456,7 +456,7 @@ public:
 		}
 	}
 
-// vyprázdnìní
+// vyprÃ¡zdnÃ¬nÃ­
 	void Empty()
 	{
 		for (int i = 0; i < JAZYKNUM; i++)
@@ -465,26 +465,26 @@ public:
 		}
 	}
 
-// ètení zadané položky jazyku
+// Ã¨tenÃ­ zadanÃ© poloÅ¾ky jazyku
 	inline const CText& _fastcall MultiText(int index) const { return m_Data[index]; }
 
-// nastavení zadané položky jazyku
+// nastavenÃ­ zadanÃ© poloÅ¾ky jazyku
 	inline void _fastcall MultiText(int index, const CText& txt) { m_Data[index] = txt; }
 
-// nastavení bìžného textu
+// nastavenÃ­ bÃ¬Å¾nÃ©ho textu
 	inline void _fastcall MultiText(const CText& txt) { m_Data[Jazyk] = txt; }
 
-// zjištìní bìžného textu
+// zjiÅ¡tÃ¬nÃ­ bÃ¬Å¾nÃ©ho textu
 	const CText& _fastcall MultiText() const;
 
-// naètení textu z resource
+// naÃ¨tenÃ­ textu z resource
 	void _fastcall Load(const int nID);
 
-// nastavení èísla jména objektu (1, 2, ...)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// nastavenÃ­ Ã¨Ã­sla jmÃ©na objektu (1, 2, ...)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool _fastcall SetNumObj(const int num);
 
-// nastavení vícejazyèného textu
+// nastavenÃ­ vÃ­cejazyÃ¨nÃ©ho textu
 	inline const CMultiText& _fastcall operator= (const CMultiText& str)
 	{
 		for (int i = 0; i < JAZYKNUM; i++) { m_Data[i] = str.m_Data[i]; }
@@ -496,12 +496,12 @@ public:
 class CBufMultiText : public CBuffer<CMultiText>
 {
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
-// pøidání položky (vrací index položky, <0 = chyba)
-// provádí záznam do UNDO bufferu
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky, <0 = chyba)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	inline int _fastcall AddTxt(const CText& data)
 	{ 
 		int i = CBuffer<CMultiText>::New();
@@ -509,13 +509,13 @@ public:
 		return i;
 	}
 
-// zjištìní položky
+// zjiÅ¡tÃ¬nÃ­ poloÅ¾ky
 	inline const CText& _fastcall GetTxt(const int index) const
 	{
 		return (CBuffer<CMultiText>::Get(index)).MultiText();
 	}
 
-// nastavení položky
+// nastavenÃ­ poloÅ¾ky
 	inline void _fastcall SetTxt(const int index, const CText& txt)
 	{
 		if (CBuffer<CMultiText>::IsValid(index))
@@ -525,7 +525,7 @@ public:
 	}
 
 
-// naètení položek z resource
+// naÃ¨tenÃ­ poloÅ¾ek z resource
 	int _fastcall Load(const int nID);
 
 //	int _fastcall Add(TEXTDATA* data);
@@ -534,6 +534,6 @@ public:
 //	int _fastcall Add(const char* data);
 //	int _fastcall Add(const char* data, const int len);
 
-// naètení textu z resource (vrací index položky, <0 = chyba)
+// naÃ¨tenÃ­ textu z resource (vracÃ­ index poloÅ¾ky, <0 = chyba)
 //	int _fastcall Load(const int nID);
 };

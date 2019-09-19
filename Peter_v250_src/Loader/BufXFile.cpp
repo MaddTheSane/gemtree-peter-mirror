@@ -4,7 +4,7 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer objektù X souboru						*
+*							Buffer objektÃ¹ X souboru						*
 *																			*
 \***************************************************************************/
 
@@ -14,7 +14,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // definice
 
-// pøeddefinované šablony
+// pÃ¸eddefinovanÃ© Å¡ablony
 typedef enum _TEMPNAME
 {
 	TEMP_HEADER,
@@ -59,7 +59,7 @@ typedef enum _TEMPNAME
 #define TEMPNAME_FIRST TEMP_HEADER
 #define TEMPNAME_NUM (TEMPNAME_LAST - TEMPNAME_FIRST)
 
-// jména šablon
+// jmÃ©na Å¡ablon
 CString TempNames[TEMPNAME_NUM] = 
 {
 	"Header",
@@ -99,70 +99,70 @@ CString TempNames[TEMPNAME_NUM] =
 //	"ProgressiveMesh",
 };
 
-// jména šablon	velkımi písmeny
-CString TempNamesUpper[TEMPNAME_NUM];	// jména šablon velkımi písmeny
+// jmÃ©na Å¡ablon	velkÃ½mi pÃ­smeny
+CString TempNamesUpper[TEMPNAME_NUM];	// jmÃ©na Å¡ablon velkÃ½mi pÃ­smeny
 
-// slova binárního formátu X (kadé slovo je (2) WORD)
-#define TOKEN_NAME 1			// jméno šablony (následuje: (4) délka x jména, (x) jméno)
-#define TOKEN_STRING 2			// text (následuje: (4) délka x textu, (x) text, (4) terminátor støedník nebo èárka
-#define TOKEN_INTEGER 3			// celé èíslo (následuje: (4) hodnota èísla)
-#define TOKEN_GUID 5			// GUID (následuje: (4) pole 1, (2) pole 2, (2) pole 3, (8) pole 4)
-#define TOKEN_INTEGER_LIST 6	// seznam celıch èísel (následuje: (4) poèet x èísel, (4*x) èísla)
-#define TOKEN_FLOAT_LIST 7		// seznam desetinnıch èísel (následuje: (4) poèet x èísel, (4*x nebo 8*x) èísla)
+// slova binÃ¡rnÃ­ho formÃ¡tu X (kaÅ¾dÃ© slovo je (2) WORD)
+#define TOKEN_NAME 1			// jmÃ©no Å¡ablony (nÃ¡sleduje: (4) dÃ©lka x jmÃ©na, (x) jmÃ©no)
+#define TOKEN_STRING 2			// text (nÃ¡sleduje: (4) dÃ©lka x textu, (x) text, (4) terminÃ¡tor stÃ¸ednÃ­k nebo Ã¨Ã¡rka
+#define TOKEN_INTEGER 3			// celÃ© Ã¨Ã­slo (nÃ¡sleduje: (4) hodnota Ã¨Ã­sla)
+#define TOKEN_GUID 5			// GUID (nÃ¡sleduje: (4) pole 1, (2) pole 2, (2) pole 3, (8) pole 4)
+#define TOKEN_INTEGER_LIST 6	// seznam celÃ½ch Ã¨Ã­sel (nÃ¡sleduje: (4) poÃ¨et x Ã¨Ã­sel, (4*x) Ã¨Ã­sla)
+#define TOKEN_FLOAT_LIST 7		// seznam desetinnÃ½ch Ã¨Ã­sel (nÃ¡sleduje: (4) poÃ¨et x Ã¨Ã­sel, (4*x nebo 8*x) Ã¨Ã­sla)
 
-#define TOKEN_OBRACE 10			// levá sloená závorka {
-#define TOKEN_CBRACE 11			// pravá sloená závorka }
-#define TOKEN_OPAREN 12			// levá závorka (
-#define TOKEN_CPAREN 13			// pravá závorka )
-#define TOKEN_OBRACKET 14		// levá lomená závorka [
-#define TOKEN_CBRACKET 15		// pravá lomená závorka ]
-#define TOKEN_OANGLE 16			// levá úhlová závorka
-#define TOKEN_CANGLE 17			// pravá úhlová závorka
-#define TOKEN_DOT 18			// teèka
-#define TOKEN_COMMA 19			// èárka
-#define TOKEN_SEMICOLON 20		// støedník
-#define TOKEN_TEMPLATE 31		// šablona
-#define TOKEN_WORD 40			// èíslo WORD
-#define TOKEN_DWORD 41			// èíslo DWORD
-#define TOKEN_FLOAT 42			// èíslo FLOAT
-#define TOKEN_DOUBLE 43			// èíslo DOUBLE
-#define TOKEN_CHAR 44			// èíslo CHAR
-#define TOKEN_UCHAR 45			// èíslo BYTE
-#define TOKEN_SWORD 46			// èíslo SHORT INT
-#define TOKEN_SDWORD 47			// èíslo LONG INT
+#define TOKEN_OBRACE 10			// levÃ¡ sloÅ¾enÃ¡ zÃ¡vorka {
+#define TOKEN_CBRACE 11			// pravÃ¡ sloÅ¾enÃ¡ zÃ¡vorka }
+#define TOKEN_OPAREN 12			// levÃ¡ zÃ¡vorka (
+#define TOKEN_CPAREN 13			// pravÃ¡ zÃ¡vorka )
+#define TOKEN_OBRACKET 14		// levÃ¡ lomenÃ¡ zÃ¡vorka [
+#define TOKEN_CBRACKET 15		// pravÃ¡ lomenÃ¡ zÃ¡vorka ]
+#define TOKEN_OANGLE 16			// levÃ¡ ÃºhlovÃ¡ zÃ¡vorka
+#define TOKEN_CANGLE 17			// pravÃ¡ ÃºhlovÃ¡ zÃ¡vorka
+#define TOKEN_DOT 18			// teÃ¨ka
+#define TOKEN_COMMA 19			// Ã¨Ã¡rka
+#define TOKEN_SEMICOLON 20		// stÃ¸ednÃ­k
+#define TOKEN_TEMPLATE 31		// Å¡ablona
+#define TOKEN_WORD 40			// Ã¨Ã­slo WORD
+#define TOKEN_DWORD 41			// Ã¨Ã­slo DWORD
+#define TOKEN_FLOAT 42			// Ã¨Ã­slo FLOAT
+#define TOKEN_DOUBLE 43			// Ã¨Ã­slo DOUBLE
+#define TOKEN_CHAR 44			// Ã¨Ã­slo CHAR
+#define TOKEN_UCHAR 45			// Ã¨Ã­slo BYTE
+#define TOKEN_SWORD 46			// Ã¨Ã­slo SHORT INT
+#define TOKEN_SDWORD 47			// Ã¨Ã­slo LONG INT
 #define TOKEN_VOID 48			// data
-#define TOKEN_LPSTR 49			// text	zakonèenı 0
+#define TOKEN_LPSTR 49			// text	zakonÃ¨enÃ½ 0
 #define TOKEN_UNICODE 50		// text UNICODE
-#define TOKEN_CSTRING 51		// formátovanı text s délkou
+#define TOKEN_CSTRING 51		// formÃ¡tovanÃ½ text s dÃ©lkou
 #define TOKEN_ARRAY 52			// pole
 
 /////////////////////////////////////////////////////////////////////////////
-// poloka seznamu objektù
+// poloÅ¾ka seznamu objektÃ¹
 
 typedef struct MESHITEM_
 {
-// obecné parametry
+// obecnÃ© parametry
 	TEMPNAME		Type;			// typ objektu
-	int				Level;			// úroveò v hiearchii (0 = root)
-	CString			Name;			// jméno objektu
+	int				Level;			// ÃºroveÃ² v hiearchii (0 = root)
+	CString			Name;			// jmÃ©no objektu
 
-// ---- následují povinné parametry objektu
+// ---- nÃ¡sledujÃ­ povinnÃ© parametry objektu
 
 // Header
 	int				HeaderMaj;		// verze - major
 	int				HeaderMin;		// verze - minor
-	int				HeaderFlags;	// pøíznaky
+	int				HeaderFlags;	// pÃ¸Ã­znaky
 
 // Vector
 	D3DVECTOR		Vector;			// data vektoru
 
 // Coords2d
-	float			CoordsU;		// souøadnice U
-	float			CoordsV;		// souøadnice V
+	float			CoordsU;		// souÃ¸adnice U
+	float			CoordsV;		// souÃ¸adnice V
 
 // Quaternion
-	float			QuaterS;		// úhel otoèení quaternionu
-	D3DVECTOR		QuaterV;		// smìr quaternionu
+	float			QuaterS;		// Ãºhel otoÃ¨enÃ­ quaternionu
+	D3DVECTOR		QuaterV;		// smÃ¬r quaternionu
 
 // Matrix4x4 a FrameTransformMatrix
 	D3DMATRIX		Matrix;			// objekt Matrix4x4
@@ -172,79 +172,79 @@ typedef struct MESHITEM_
 
 // IndexedColor
 	DWORD			ColorIndex;		// index barvy
-	D3DCOLORVALUE	ColorIndexCol;	// indexová barva
+	D3DCOLORVALUE	ColorIndexCol;	// indexovÃ¡ barva
 
 // Boolean
-	bool			Boolean;		// logická hodnota
+	bool			Boolean;		// logickÃ¡ hodnota
 
 // Boolead2d
-	bool			BooleanU;		// opakování souøadnice U
-	bool			BooleanV;		// opakování souøadnice V
+	bool			BooleanU;		// opakovÃ¡nÃ­ souÃ¸adnice U
+	bool			BooleanV;		// opakovÃ¡nÃ­ souÃ¸adnice V
 
 // Material
-	D3DMATERIAL8	Material;		// materiál
-//	D3DCOLORVALUE	MaterialDif;	// difusní barva materiálu
+	D3DMATERIAL8	Material;		// materiÃ¡l
+//	D3DCOLORVALUE	MaterialDif;	// difusnÃ­ barva materiÃ¡lu
 //	float			MaterialPower;	// matnost
 //	D3DCOLORVALUE	MaterialSpec;	// barva odlesku
-//	D3DCOLORVALUE	MaterialEmis;	// barva svítivosti
+//	D3DCOLORVALUE	MaterialEmis;	// barva svÃ­tivosti
 
 // TextureFilename
-	CString			TextFilename;	// jméno souboru s texturou
+	CString			TextFilename;	// jmÃ©no souboru s texturou
 
 // MeshFace
-	int				FaceNum;		// poèet indexù vrcholù
-	int*			Face;			// buffer indexù vrcholù plošek
+	int				FaceNum;		// poÃ¨et indexÃ¹ vrcholÃ¹
+	int*			Face;			// buffer indexÃ¹ vrcholÃ¹ ploÅ¡ek
 
 // MeshFaceWraps
-	int				FaceWrapNum;	// poèet poloek parametrù wrap (mìl by bıt = FaceNum)
-	bool*			FaceWrap;		// buffer parametrù wrap (kadá poloka má 2 hodnoty bool)
+	int				FaceWrapNum;	// poÃ¨et poloÅ¾ek parametrÃ¹ wrap (mÃ¬l by bÃ½t = FaceNum)
+	bool*			FaceWrap;		// buffer parametrÃ¹ wrap (kaÅ¾dÃ¡ poloÅ¾ka mÃ¡ 2 hodnoty bool)
 
 // MeshTextureCoords
-	DWORD			TextureCoordsNum; // poèet poloek souøadnic textur (0=zrušeno, jsou samé 0)
-	float*			TextureCoords;	// buffer souøadnic textur (kadá poloka má 2 hodnoty float)
+	DWORD			TextureCoordsNum; // poÃ¨et poloÅ¾ek souÃ¸adnic textur (0=zruÅ¡eno, jsou samÃ© 0)
+	float*			TextureCoords;	// buffer souÃ¸adnic textur (kaÅ¾dÃ¡ poloÅ¾ka mÃ¡ 2 hodnoty float)
 
 // MeshNormals
-	int				NormalNum;		// poèet normál
-	D3DVECTOR*		Normal;			// buffer normál
-	int				NormalFaceNum;	// poèet plošek definice normál
-	int*			NormalFace;		// buffer plošek (støídá se poèet indexù a pole indexù)
+	int				NormalNum;		// poÃ¨et normÃ¡l
+	D3DVECTOR*		Normal;			// buffer normÃ¡l
+	int				NormalFaceNum;	// poÃ¨et ploÅ¡ek definice normÃ¡l
+	int*			NormalFace;		// buffer ploÅ¡ek (stÃ¸Ã­dÃ¡ se poÃ¨et indexÃ¹ a pole indexÃ¹)
 
 // MeshVertexColors
-	int				VertexColorNum;	// poèet indexovıch barev
-	int*			VertexColorInx;	// buffer indexù indexovıch barev
-	D3DCOLORVALUE*	VertexColor;	// buffer barev indexovıch barev
+	int				VertexColorNum;	// poÃ¨et indexovÃ½ch barev
+	int*			VertexColorInx;	// buffer indexÃ¹ indexovÃ½ch barev
+	D3DCOLORVALUE*	VertexColor;	// buffer barev indexovÃ½ch barev
 
 // MeshMaterialList
-	int				MaterialNum;	// poèet definic materiálù
-	int				MaterialFaceNum; // poèet indexù plošek
-	int*			MaterialFace;	// buffer indexù plošek materiálù
+	int				MaterialNum;	// poÃ¨et definic materiÃ¡lÃ¹
+	int				MaterialFaceNum; // poÃ¨et indexÃ¹ ploÅ¡ek
+	int*			MaterialFace;	// buffer indexÃ¹ ploÅ¡ek materiÃ¡lÃ¹
 
 // Mesh
-	int				MeshVerticesNum;// poèet vrcholù objektu
-	D3DVECTOR*		MeshVertices;	// buffer vrcholù objektu
-	int				MeshFaceNum;	// poèet plošek objektu (kadá 3 vrcholy)
-	int*			MeshFace;		// buffer plošek objektu (kadá ploška 3 indexy)
-	int				MeshFaceOldNum;	// pùvodní poèet plošek (bez pøevodu na trojúhelníky)
-	int*			MeshFaceOld;	// poèet odpovídajících novıch plošek (po 3 bodech)
+	int				MeshVerticesNum;// poÃ¨et vrcholÃ¹ objektu
+	D3DVECTOR*		MeshVertices;	// buffer vrcholÃ¹ objektu
+	int				MeshFaceNum;	// poÃ¨et ploÅ¡ek objektu (kaÅ¾dÃ¡ 3 vrcholy)
+	int*			MeshFace;		// buffer ploÅ¡ek objektu (kaÅ¾dÃ¡ ploÅ¡ka 3 indexy)
+	int				MeshFaceOldNum;	// pÃ¹vodnÃ­ poÃ¨et ploÅ¡ek (bez pÃ¸evodu na trojÃºhelnÃ­ky)
+	int*			MeshFaceOld;	// poÃ¨et odpovÃ­dajÃ­cÃ­ch novÃ½ch ploÅ¡ek (po 3 bodech)
 
 // Frame
 
 // FloatKeys
-//	DWORD			FloatKeysNum;	// poèet klíèù
-//	float*			FloatKeys;		// buffer klíèù
+//	DWORD			FloatKeysNum;	// poÃ¨et klÃ­Ã¨Ã¹
+//	float*			FloatKeys;		// buffer klÃ­Ã¨Ã¹
 
 // TimedFloatKeys
-//	DWORD			FloatTime;		// poèet èasovıch klíèù
-//	DWORD*			FloatTimeKeysNum; // poèty poloek èasovıch klíèù
-//	DWORD			FloatTimeKeysSize; // velikost bufferu èasovıch klíèù (poloek float)
-//	float*			FloatTimeKeys;	// buffer èasovıch klíèù (klíèe jsou sekvenènì za sebou)
+//	DWORD			FloatTime;		// poÃ¨et Ã¨asovÃ½ch klÃ­Ã¨Ã¹
+//	DWORD*			FloatTimeKeysNum; // poÃ¨ty poloÅ¾ek Ã¨asovÃ½ch klÃ­Ã¨Ã¹
+//	DWORD			FloatTimeKeysSize; // velikost bufferu Ã¨asovÃ½ch klÃ­Ã¨Ã¹ (poloÅ¾ek float)
+//	float*			FloatTimeKeys;	// buffer Ã¨asovÃ½ch klÃ­Ã¨Ã¹ (klÃ­Ã¨e jsou sekvenÃ¨nÃ¬ za sebou)
 
 // AnimationKey
-//	DWORD			AnimKeyType;	// typ klíèe
-//	DWORD			AnimKeysNum;	// poèet klíèù
+//	DWORD			AnimKeyType;	// typ klÃ­Ã¨e
+//	DWORD			AnimKeysNum;	// poÃ¨et klÃ­Ã¨Ã¹
 
 // AnimationOptions
-//	DWORD			AnimOpen;		// pøíznak otevøené animace
+//	DWORD			AnimOpen;		// pÃ¸Ã­znak otevÃ¸enÃ© animace
 //	DWORD			AnimQuality;	// kvalita animace
 
 // Animation
@@ -252,30 +252,30 @@ typedef struct MESHITEM_
 // AnimationSet
 
 // Patch
-//	DWORD			PatchIndNum;	// poèet indexù patch
-//	DWORD*			PatchInd;		// buffer indexù patch
+//	DWORD			PatchIndNum;	// poÃ¨et indexÃ¹ patch
+//	DWORD*			PatchInd;		// buffer indexÃ¹ patch
 
 // PatchMesh
-//	DWORD			PatchVertNum;	// poèet vrcholù
-//	D3DVECTOR*		PatchVer;		// buffer vrcholù
-//	DWORD			PatchNum;		// poèet patch
+//	DWORD			PatchVertNum;	// poÃ¨et vrcholÃ¹
+//	D3DVECTOR*		PatchVer;		// buffer vrcholÃ¹
+//	DWORD			PatchNum;		// poÃ¨et patch
 //	DWORD*			Patch;			// buffer patch
 
 // VertexDuplicationIndices
-//	DWORD			DuplIndNum;		// poèet indexù
-//	DWORD			DuplIndOrig;	// poèet pùvodních vrcholù
-//	DWORD*			DuplInd;		// buffer indexù
+//	DWORD			DuplIndNum;		// poÃ¨et indexÃ¹
+//	DWORD			DuplIndOrig;	// poÃ¨et pÃ¹vodnÃ­ch vrcholÃ¹
+//	DWORD*			DuplInd;		// buffer indexÃ¹
 
 // XSkinMeshHeader
-//	WORD			MaxSkinVertWeight; // max. váha na vrchol
-//	WORD			MaxSkinFaceWeight; // max. váha na plošku
-//	WORD			Bones;				// poèet kostí
+//	WORD			MaxSkinVertWeight; // max. vÃ¡ha na vrchol
+//	WORD			MaxSkinFaceWeight; // max. vÃ¡ha na ploÅ¡ku
+//	WORD			Bones;				// poÃ¨et kostÃ­
 
 // SkinWeights
-	CString			SkinNodeName;	// jméno vìtve
-//	DWORD			SkinWeightNum;	// poèet vah
-//	DWORD*			SkinVertInd;	// buffer indexù vrcholù
-//	float*			SkinWeight;		// buffer vah vrcholù
+	CString			SkinNodeName;	// jmÃ©no vÃ¬tve
+//	DWORD			SkinWeightNum;	// poÃ¨et vah
+//	DWORD*			SkinVertInd;	// buffer indexÃ¹ vrcholÃ¹
+//	float*			SkinWeight;		// buffer vah vrcholÃ¹
 //	D3DMATRIX		SkinMatrix;		// offset
 
 } MESHITEM;
@@ -283,32 +283,32 @@ typedef struct MESHITEM_
 /////////////////////////////////////////////////////////////////////////////
 // data
 
-// buffer se vstupními daty
-BYTE*		MeshData = NULL;		// data s definicí objektu
-int			MeshDataN = 0;			// velikost dat (bajtù)
-CString		MeshPath;				// domovská cesta do adresáøe objektu (prázdné = není)
+// buffer se vstupnÃ­mi daty
+BYTE*		MeshData = NULL;		// data s definicÃ­ objektu
+int			MeshDataN = 0;			// velikost dat (bajtÃ¹)
+CString		MeshPath;				// domovskÃ¡ cesta do adresÃ¡Ã¸e objektu (prÃ¡zdnÃ© = nenÃ­)
 
-// pracovní promìnné
-int			MeshDataR = 0;			// ukazatel ètenıch dat z bufferu (ukazuje i za konec dat)
-CString		MeshText;				// naètenı textovı øetìzec
-int			MeshArrayN = 0;			// èítaè naèítanıch dat z pole v binárním tvaru (0=není)
-bool		MeshArrayTypeFloat = false;	// typ poloek naèítaného pole v binárním tvaru je FLOAT
-bool		MeshNumIsValid = false;	// pøíznak, e bylo naèteno platné èíslo
+// pracovnÃ­ promÃ¬nnÃ©
+int			MeshDataR = 0;			// ukazatel Ã¨tenÃ½ch dat z bufferu (ukazuje i za konec dat)
+CString		MeshText;				// naÃ¨tenÃ½ textovÃ½ Ã¸etÃ¬zec
+int			MeshArrayN = 0;			// Ã¨Ã­taÃ¨ naÃ¨Ã­tanÃ½ch dat z pole v binÃ¡rnÃ­m tvaru (0=nenÃ­)
+bool		MeshArrayTypeFloat = false;	// typ poloÅ¾ek naÃ¨Ã­tanÃ©ho pole v binÃ¡rnÃ­m tvaru je FLOAT
+bool		MeshNumIsValid = false;	// pÃ¸Ã­znak, Å¾e bylo naÃ¨teno platnÃ© Ã¨Ã­slo
 
-int			MeshLevel = 0;			// aktuální úroveò vnoøení objektù
+int			MeshLevel = 0;			// aktuÃ¡lnÃ­ ÃºroveÃ² vnoÃ¸enÃ­ objektÃ¹
 
-// buffer objektù
-MESHITEM*	Data = NULL;			// buffer dat objektù
-int			DataNum = 0;			// poèet poloek v bufferu
-int			DataMax = 0;			// velikost bufferu (poloek)
+// buffer objektÃ¹
+MESHITEM*	Data = NULL;			// buffer dat objektÃ¹
+int			DataNum = 0;			// poÃ¨et poloÅ¾ek v bufferu
+int			DataMax = 0;			// velikost bufferu (poloÅ¾ek)
 
-// parametry naètené ze záhlaví
-int			MeshMajorVer;			// hlavní èíslo verze
-int			MeshMinorVer;			// vedlejší èíslo verze
-bool		MeshTextFormat;			// je textovı formát dat
+// parametry naÃ¨tenÃ© ze zÃ¡hlavÃ­
+int			MeshMajorVer;			// hlavnÃ­ Ã¨Ã­slo verze
+int			MeshMinorVer;			// vedlejÅ¡Ã­ Ã¨Ã­slo verze
+bool		MeshTextFormat;			// je textovÃ½ formÃ¡t dat
 bool		MeshDoubleFormat;		// je velikost dat Double
 
-// naètení bajtu z bufferu (nejsou-li další data, vrací 0);
+// naÃ¨tenÃ­ bajtu z bufferu (nejsou-li dalÅ¡Ã­ data, vracÃ­ 0);
 BYTE MeshReadByte()
 {
 	int r = MeshDataR;
@@ -323,13 +323,13 @@ BYTE MeshReadByte()
 	}
 }
 
-// navrácení bajtu do bufferu (vrátí ukazatel)
+// navrÃ¡cenÃ­ bajtu do bufferu (vrÃ¡tÃ­ ukazatel)
 void MeshReadBack()
 {
 	if (MeshDataR > 0) MeshDataR--;
 }
 
-// vypuštìní mezer pøed textem (vèetnì komentáøù)
+// vypuÅ¡tÃ¬nÃ­ mezer pÃ¸ed textem (vÃ¨etnÃ¬ komentÃ¡Ã¸Ã¹)
 void MeshReadFlush()
 {
 	for (;;)
@@ -368,7 +368,7 @@ void MeshReadFlush()
 	}
 }
 
-// naètení binárních data
+// naÃ¨tenÃ­ binÃ¡rnÃ­ch data
 void MeshReadData(void* data, int num)
 {
 	for (; num > 0; num--)
@@ -378,14 +378,14 @@ void MeshReadData(void* data, int num)
 	}
 }
 
-// naètení textu èísla (dot = teèka povolena)
+// naÃ¨tenÃ­ textu Ã¨Ã­sla (dot = teÃ¨ka povolena)
 void MeshReadNum(bool dot)
 {
 	MeshText.Empty();
 	MeshReadFlush();
 
-	bool ignor = false;		// ignorovat zbytek èísla (za teèkou)
-	bool first = true;		// je to první znak
+	bool ignor = false;		// ignorovat zbytek Ã¨Ã­sla (za teÃ¨kou)
+	bool first = true;		// je to prvnÃ­ znak
 
 	for (;;)
 	{
@@ -420,7 +420,7 @@ void MeshReadNum(bool dot)
 			}
 			break;
 
-	// není-li teèka povolená, zbytek èísla se ignoruje
+	// nenÃ­-li teÃ¨ka povolenÃ¡, zbytek Ã¨Ã­sla se ignoruje
 		case '.':
 			if (dot)
 			{
@@ -441,7 +441,7 @@ void MeshReadNum(bool dot)
 	}
 }
 
-// naètení èísla BYTE nebo UCHAR
+// naÃ¨tenÃ­ Ã¨Ã­sla BYTE nebo UCHAR
 BYTE MeshReadUChar()
 {
 	if (MeshTextFormat)
@@ -455,7 +455,7 @@ BYTE MeshReadUChar()
 	}
 }
 
-// naètení èísla CHAR
+// naÃ¨tenÃ­ Ã¨Ã­sla CHAR
 char MeshReadChar()
 {
 	if (MeshTextFormat)
@@ -469,7 +469,7 @@ char MeshReadChar()
 	}
 }
 
-// naètení èísla WORD
+// naÃ¨tenÃ­ Ã¨Ã­sla WORD
 WORD MeshReadWord()
 {
 	if (MeshTextFormat)
@@ -485,7 +485,7 @@ WORD MeshReadWord()
 	}
 }
 
-// naètení èísla SWORD
+// naÃ¨tenÃ­ Ã¨Ã­sla SWORD
 short int MeshReadSWord()
 {
 	if (MeshTextFormat)
@@ -501,7 +501,7 @@ short int MeshReadSWord()
 	}
 }
 
-// naètení èísla DWORD
+// naÃ¨tenÃ­ Ã¨Ã­sla DWORD
 DWORD MeshReadDWord()
 {
 	if (MeshTextFormat)
@@ -517,7 +517,7 @@ DWORD MeshReadDWord()
 	}
 }
 
-// naètení èísla SDWORD
+// naÃ¨tenÃ­ Ã¨Ã­sla SDWORD
 long int MeshReadSDWord()
 {
 	if (MeshTextFormat)
@@ -533,7 +533,7 @@ long int MeshReadSDWord()
 	}
 }
 
-// naètení èísla FLOAT
+// naÃ¨tenÃ­ Ã¨Ã­sla FLOAT
 float MeshReadFloat()
 {
 	if (MeshTextFormat)
@@ -549,7 +549,7 @@ float MeshReadFloat()
 	}
 }
 
-// naètení èísla DOUBLE
+// naÃ¨tenÃ­ Ã¨Ã­sla DOUBLE
 double MeshReadDouble()
 {
 	if (MeshTextFormat)
@@ -565,7 +565,7 @@ double MeshReadDouble()
 	}
 }
 
-// naètení jednoznakového slova (textovı tvar)
+// naÃ¨tenÃ­ jednoznakovÃ©ho slova (textovÃ½ tvar)
 bool _fastcall MeshReadTokenText(BYTE token)
 {
 	MeshReadFlush();
@@ -575,7 +575,7 @@ bool _fastcall MeshReadTokenText(BYTE token)
 	return false;
 }
 
-// naètení jednoznakového slova (binární tvar)
+// naÃ¨tenÃ­ jednoznakovÃ©ho slova (binÃ¡rnÃ­ tvar)
 bool _fastcall MeshReadTokenBin(WORD token)
 {
 	if (MeshArrayN > 0) return false;
@@ -590,7 +590,7 @@ bool _fastcall MeshReadTokenBin(WORD token)
 	return true;
 }
 
-// naètení slova (binární nebo textovı tvar)
+// naÃ¨tenÃ­ slova (binÃ¡rnÃ­ nebo textovÃ½ tvar)
 bool _fastcall MeshReadToken(WORD tokenbin, BYTE tokentext)
 {
 	if (MeshTextFormat)
@@ -603,7 +603,7 @@ bool _fastcall MeshReadToken(WORD tokenbin, BYTE tokentext)
 	}
 }
 
-// naètení levé sloené závorky
+// naÃ¨tenÃ­ levÃ© sloÅ¾enÃ© zÃ¡vorky
 bool MeshReadOBrace()
 {
 	if (MeshReadToken(TOKEN_OBRACE, '{'))
@@ -614,7 +614,7 @@ bool MeshReadOBrace()
 	return false;
 }
 
-// naètení pravé sloené závorky
+// naÃ¨tenÃ­ pravÃ© sloÅ¾enÃ© zÃ¡vorky
 bool MeshReadCBrace()
 {
 	if (MeshReadToken(TOKEN_CBRACE, '}'))
@@ -625,7 +625,7 @@ bool MeshReadCBrace()
 	return false;
 }
 
-// naètení èárky nebo støedníku
+// naÃ¨tenÃ­ Ã¨Ã¡rky nebo stÃ¸ednÃ­ku
 bool MeshReadCommaSemicolon()
 {
 	return (bool)
@@ -633,7 +633,7 @@ bool MeshReadCommaSemicolon()
 		MeshReadToken(TOKEN_COMMA, ','));
 }
 
-// naètení celého èísla (automatickı formát)
+// naÃ¨tenÃ­ celÃ©ho Ã¨Ã­sla (automatickÃ½ formÃ¡t)
 int MeshReadInt()
 {
 	MeshNumIsValid = false;
@@ -655,7 +655,7 @@ int MeshReadInt()
 	else
 	{
 
-// naètení èísla z pole
+// naÃ¨tenÃ­ Ã¨Ã­sla z pole
 		if (MeshArrayN > 0)
 		{
 			MeshNumIsValid = true;
@@ -679,10 +679,10 @@ int MeshReadInt()
 			}
 		}
 
-// naètení dalšího slova
+// naÃ¨tenÃ­ dalÅ¡Ã­ho slova
 		WORD token = MeshReadWord();
 
-// zaèátek pole - celá èísla
+// zaÃ¨Ã¡tek pole - celÃ¡ Ã¨Ã­sla
 		if (token == TOKEN_INTEGER_LIST)
 		{
 			MeshArrayTypeFloat = false;
@@ -690,7 +690,7 @@ int MeshReadInt()
 			return MeshReadInt();
 		}
 
-// zaèátek pole - desetinná èísla
+// zaÃ¨Ã¡tek pole - desetinnÃ¡ Ã¨Ã­sla
 		if (token == TOKEN_FLOAT_LIST)
 		{
 			MeshArrayTypeFloat = true;
@@ -698,7 +698,7 @@ int MeshReadInt()
 			return MeshReadInt();
 		}
 		   
-// celé èíslo
+// celÃ© Ã¨Ã­slo
 		if (token == TOKEN_INTEGER)
 		{
 			int num = (int)MeshReadDWord();
@@ -771,14 +771,14 @@ int MeshReadInt()
 			return num;
 		}
 
-// neplatné slovo - návrat
+// neplatnÃ© slovo - nÃ¡vrat
 		MeshReadBack();
 		MeshReadBack();
 		return 0;
 	}
 }
 
-// naètení celého èísla s omezením na 64KB
+// naÃ¨tenÃ­ celÃ©ho Ã¨Ã­sla s omezenÃ­m na 64KB
 int MeshReadInt64()
 {
 	int i = MeshReadInt();
@@ -788,7 +788,7 @@ int MeshReadInt64()
 }
 
 
-// naètení desetinného èísla (automatickı formát)
+// naÃ¨tenÃ­ desetinnÃ©ho Ã¨Ã­sla (automatickÃ½ formÃ¡t)
 float MeshReadReal()
 {
 	MeshNumIsValid = false;
@@ -810,7 +810,7 @@ float MeshReadReal()
 	else
 	{
 
-// naètení èísla z pole
+// naÃ¨tenÃ­ Ã¨Ã­sla z pole
 		if (MeshArrayN > 0)
 		{
 			MeshNumIsValid = true;
@@ -834,10 +834,10 @@ float MeshReadReal()
 			}
 		}
 
-// naètení dalšího slova
+// naÃ¨tenÃ­ dalÅ¡Ã­ho slova
 		WORD token = MeshReadWord();
 
-// zaèátek pole - celá èísla
+// zaÃ¨Ã¡tek pole - celÃ¡ Ã¨Ã­sla
 		if (token == TOKEN_INTEGER_LIST)
 		{
 			MeshArrayTypeFloat = false;
@@ -845,7 +845,7 @@ float MeshReadReal()
 			return MeshReadReal();
 		}
 
-// zaèátek pole - desetinná èísla
+// zaÃ¨Ã¡tek pole - desetinnÃ¡ Ã¨Ã­sla
 		if (token == TOKEN_FLOAT_LIST)
 		{
 			MeshArrayTypeFloat = true;
@@ -853,7 +853,7 @@ float MeshReadReal()
 			return MeshReadReal();
 		}
 		   
-// celé èíslo
+// celÃ© Ã¨Ã­slo
 		if (token == TOKEN_INTEGER)
 		{
 			int num = (int)MeshReadDWord();
@@ -926,14 +926,14 @@ float MeshReadReal()
 			return (float)num;
 		}
 
-// neplatné slovo - návrat
+// neplatnÃ© slovo - nÃ¡vrat
 		MeshReadBack();
 		MeshReadBack();
 		return 0;
 	}
 }
 
-// naètení vektoru
+// naÃ¨tenÃ­ vektoru
 void MeshReadVector(D3DVECTOR* v)
 {
 	v->x = MeshReadReal();
@@ -942,7 +942,7 @@ void MeshReadVector(D3DVECTOR* v)
 	MeshReadCommaSemicolon();
 }
 
-// naètení matice
+// naÃ¨tenÃ­ matice
 void MeshReadMatrix(D3DMATRIX* m)
 {
 	float* mm = &(m->_11);
@@ -954,7 +954,7 @@ void MeshReadMatrix(D3DMATRIX* m)
 	MeshReadCommaSemicolon();
 }
 
-// naètení barvy RGB
+// naÃ¨tenÃ­ barvy RGB
 void MeshReadRGB(D3DCOLORVALUE* col)
 {
 	col->r = MeshReadReal();
@@ -964,7 +964,7 @@ void MeshReadRGB(D3DCOLORVALUE* col)
 	MeshReadCommaSemicolon();
 }
 
-// naètení barvy RGBA
+// naÃ¨tenÃ­ barvy RGBA
 void MeshReadRGBA(D3DCOLORVALUE* col)
 {
 	col->r = MeshReadReal();
@@ -974,7 +974,7 @@ void MeshReadRGBA(D3DCOLORVALUE* col)
 	MeshReadCommaSemicolon();
 }
 
-// pøeskoèení zbylıch poloek pole
+// pÃ¸eskoÃ¨enÃ­ zbylÃ½ch poloÅ¾ek pole
 void MeshReadFlushArray()
 {
 	do {
@@ -982,7 +982,7 @@ void MeshReadFlushArray()
 	} while (MeshNumIsValid);
 }
 
-// naètení jména
+// naÃ¨tenÃ­ jmÃ©na
 void MeshReadName()
 {
 	MeshText.Empty();
@@ -1025,7 +1025,7 @@ void MeshReadName()
 	}
 }
 
-// naètení textu (jména souboru textury)
+// naÃ¨tenÃ­ textu (jmÃ©na souboru textury)
 void MeshReadString()
 {
 	MeshText.Empty();
@@ -1103,7 +1103,7 @@ void MeshReadString()
 	MeshReadCommaSemicolon();
 }
 
-// naètení 1 textového znaku do bufferu textu
+// naÃ¨tenÃ­ 1 textovÃ©ho znaku do bufferu textu
 void MeshRead1Text()
 {
 	BYTE data = MeshReadByte();
@@ -1117,26 +1117,26 @@ void MeshRead1Text()
 	}
 }
 
-// naètení textu o délce 3 znaky ze záhlaví + 1 mezera za textem se vypustí
+// naÃ¨tenÃ­ textu o dÃ©lce 3 znaky ze zÃ¡hlavÃ­ + 1 mezera za textem se vypustÃ­
 void ReadMeshHeadText()
 {
-	MeshText.Empty();		// vyprázdnìní bufferu textu
-	MeshReadFlush();		// vypuštìní mezer
+	MeshText.Empty();		// vyprÃ¡zdnÃ¬nÃ­ bufferu textu
+	MeshReadFlush();		// vypuÅ¡tÃ¬nÃ­ mezer
 
-	MeshRead1Text();		// naètení 1. znaku
-	MeshRead1Text();		// naètení 2. znaku
-	MeshRead1Text();		// naètení 3. znaku
+	MeshRead1Text();		// naÃ¨tenÃ­ 1. znaku
+	MeshRead1Text();		// naÃ¨tenÃ­ 2. znaku
+	MeshRead1Text();		// naÃ¨tenÃ­ 3. znaku
 
-	MeshText.LowerCase();	// pøevod na malá písmena
+	MeshText.LowerCase();	// pÃ¸evod na malÃ¡ pÃ­smena
 
-	if (MeshReadByte() != ' ') MeshReadBack(); // vypuštìní 1 mezery
+	if (MeshReadByte() != ' ') MeshReadBack(); // vypuÅ¡tÃ¬nÃ­ 1 mezery
 }
 
-// naètení èísla o pevné délce ze záhlaví (jako text)
+// naÃ¨tenÃ­ Ã¨Ã­sla o pevnÃ© dÃ©lce ze zÃ¡hlavÃ­ (jako text)
 int ReadMeshHeadNum(int len)
 {
-	MeshText.Empty();		// vyprázdnìní bufferu textu
-	MeshReadFlush();		// vypuštìní mezer
+	MeshText.Empty();		// vyprÃ¡zdnÃ¬nÃ­ bufferu textu
+	MeshReadFlush();		// vypuÅ¡tÃ¬nÃ­ mezer
 
 	for (; len > 0; len--)
 	{
@@ -1154,55 +1154,55 @@ int ReadMeshHeadNum(int len)
 	return Int(MeshText);
 }
 
-// naètení záhlaví objektu
+// naÃ¨tenÃ­ zÃ¡hlavÃ­ objektu
 void ReadMeshHead()
 {
-// implicitní parametry souboru
-	MeshMajorVer = 3;					// implicitní hlavní èíslo verze
-	MeshMinorVer = 2;					// implicitní vedlejší èíslo verze
-	MeshTextFormat = true;				// implicitnì bude textovı formát
-	MeshDoubleFormat = false;			// implicitnì jsou data float
+// implicitnÃ­ parametry souboru
+	MeshMajorVer = 3;					// implicitnÃ­ hlavnÃ­ Ã¨Ã­slo verze
+	MeshMinorVer = 2;					// implicitnÃ­ vedlejÅ¡Ã­ Ã¨Ã­slo verze
+	MeshTextFormat = true;				// implicitnÃ¬ bude textovÃ½ formÃ¡t
+	MeshDoubleFormat = false;			// implicitnÃ¬ jsou data float
 
-// naètení záhlaví "xof"
-	int olddatar = MeshDataR;			// úschova ukazatele dat
+// naÃ¨tenÃ­ zÃ¡hlavÃ­ "xof"
+	int olddatar = MeshDataR;			// Ãºschova ukazatele dat
 
-	ReadMeshHeadText();					// naètení identifikátoru záhlaví
+	ReadMeshHeadText();					// naÃ¨tenÃ­ identifikÃ¡toru zÃ¡hlavÃ­
 	if (MeshText == "xof")
 	{
 
-// naètení hlavního èísla verze
-		olddatar = MeshDataR;			// úschova ukazatele dat
+// naÃ¨tenÃ­ hlavnÃ­ho Ã¨Ã­sla verze
+		olddatar = MeshDataR;			// Ãºschova ukazatele dat
 		
 		int n = ReadMeshHeadNum(2);
 		if (n > 0)
 		{
 			MeshMajorVer = n;
 
-// naètení vedlejšího èísla verze
+// naÃ¨tenÃ­ vedlejÅ¡Ã­ho Ã¨Ã­sla verze
 			MeshMinorVer = ReadMeshHeadNum(2);
-			olddatar = MeshDataR;		// úschova ukazatele dat
+			olddatar = MeshDataR;		// Ãºschova ukazatele dat
 
-// naètení identifikátoru formátu
+// naÃ¨tenÃ­ identifikÃ¡toru formÃ¡tu
 			ReadMeshHeadText();
 
 			if (MeshText == "bin")
 			{
-				olddatar = MeshDataR;			// úschova ukazatele dat
+				olddatar = MeshDataR;			// Ãºschova ukazatele dat
 				MeshTextFormat = false;
 			}
 			else
 			{
 				if (MeshText == "txt")
 				{
-					olddatar = MeshDataR;			// úschova ukazatele dat
+					olddatar = MeshDataR;			// Ãºschova ukazatele dat
 				}
 				else
 				{
 					if (MeshText == "com")
 					{
 						MeshTextFormat = false;
-						ReadMeshHeadText();				// naètení typu komprese
-						olddatar = MeshDataR;			// úschova ukazatele dat
+						ReadMeshHeadText();				// naÃ¨tenÃ­ typu komprese
+						olddatar = MeshDataR;			// Ãºschova ukazatele dat
 					}
 					else
 					{
@@ -1211,17 +1211,17 @@ void ReadMeshHead()
 				}
 			}
 
-// naètení rozmìru èísel
+// naÃ¨tenÃ­ rozmÃ¬ru Ã¨Ã­sel
 			n = ReadMeshHeadNum(4);
 			if (n == 64)
 			{
 				MeshDoubleFormat = true;
-				olddatar = MeshDataR;			// úschova ukazatele dat
+				olddatar = MeshDataR;			// Ãºschova ukazatele dat
 			}
 
 			if (n == 32)
 			{
-				olddatar = MeshDataR;			// úschova ukazatele dat
+				olddatar = MeshDataR;			// Ãºschova ukazatele dat
 			}
 		}
 	}
@@ -1231,14 +1231,14 @@ void ReadMeshHead()
 
 
 
-// naètení jména šablony (-1 = není)
+// naÃ¨tenÃ­ jmÃ©na Å¡ablony (-1 = nenÃ­)
 int ReadTemplateName()
 {
 	MeshReadName();
 
 	if (MeshText.IsEmpty()) return -1;
 
-// vyhledání jména šablony
+// vyhledÃ¡nÃ­ jmÃ©na Å¡ablony
 	for (int i = 0; i < TEMPNAME_NUM; i++)
 	{
 		if (MeshText == TempNames[i])
@@ -1247,7 +1247,7 @@ int ReadTemplateName()
 		}
 	}
 
-// druhı pokus - bez rozlišení velkıch a malıch písmen
+// druhÃ½ pokus - bez rozliÅ¡enÃ­ velkÃ½ch a malÃ½ch pÃ­smen
 	MeshText.UpperCase();
 
 	for (i = 0; i < TEMPNAME_NUM; i++)
@@ -1258,7 +1258,7 @@ int ReadTemplateName()
 		}
 	}
 
-// naètení binárních kódù
+// naÃ¨tenÃ­ binÃ¡rnÃ­ch kÃ³dÃ¹
 	if (!MeshTextFormat)
 	{
 		if (MeshReadTokenBin(TOKEN_TEMPLATE)) return TOKEN_TEMPLATE;
@@ -1267,7 +1267,7 @@ int ReadTemplateName()
 	return -1;
 }
 
-// duplikace datového bloku
+// duplikace datovÃ©ho bloku
 void DuplikData(void** adr, int size)
 {
 	if (*adr == NULL) return;
@@ -1278,15 +1278,15 @@ void DuplikData(void** adr, int size)
 }
 
 
-// naètení objektù jedné hladiny
+// naÃ¨tenÃ­ objektÃ¹ jednÃ© hladiny
 void ReadMeshLevel()
 {
 
-// naètení jména šablony
+// naÃ¨tenÃ­ jmÃ©na Å¡ablony
 	for (;;)
 	{
 
-// test, zda je vnoøenı objekt {}
+// test, zda je vnoÃ¸enÃ½ objekt {}
 		if (MeshReadOBrace())
 		{
 			MeshReadName();
@@ -1301,7 +1301,7 @@ void ReadMeshLevel()
 					{
 						int toplevel = Data[i].Level;
 
-// kopie objektu (a všech vnoøenıch objektù)
+// kopie objektu (a vÅ¡ech vnoÃ¸enÃ½ch objektÃ¹)
 
 						do {
 							int j = DataNum;
@@ -1350,11 +1350,11 @@ void ReadMeshLevel()
 			continue;
 		}
 
-// naètení identifikátoru šablony
+// naÃ¨tenÃ­ identifikÃ¡toru Å¡ablony
 		int tempID = ReadTemplateName();
 		if (tempID < 0) return;
 
-// pøeskoèení template
+// pÃ¸eskoÃ¨enÃ­ template
 		if (tempID == TEMP_TEMPLATE)
 		{
 			if (MeshTextFormat)
@@ -1382,8 +1382,8 @@ void ReadMeshLevel()
 			continue;
 		}
 
-// vytvoøení poloky objektu
-		int i = DataNum;	// aktuálí poèet poloek
+// vytvoÃ¸enÃ­ poloÅ¾ky objektu
+		int i = DataNum;	// aktuÃ¡lÃ­ poÃ¨et poloÅ¾ek
 		if (i == DataMax)
 		{
 			if (i == 0)
@@ -1405,15 +1405,15 @@ void ReadMeshLevel()
 		item->TextFilename.Init();
 		item->SkinNodeName.Init();
 
-// naètení jména objektu
+// naÃ¨tenÃ­ jmÃ©na objektu
 		MeshReadName();
 		item->Name = MeshText;
 
-// otevøení definice objektu
+// otevÃ¸enÃ­ definice objektu
 		if (MeshReadOBrace())
 		{
 
-// naètení povinné definice poloky
+// naÃ¨tenÃ­ povinnÃ© definice poloÅ¾ky
 			switch(tempID)
 			{
 			case TEMP_HEADER:
@@ -1806,20 +1806,20 @@ void ReadMeshLevel()
 				ASSERTERROR;
 			}
 
-// pøeskoèení nadbyteènıch èíselnıch poloek
+// pÃ¸eskoÃ¨enÃ­ nadbyteÃ¨nÃ½ch Ã¨Ã­selnÃ½ch poloÅ¾ek
 			MeshReadFlushArray();
 
-// naètení nepovinné definice objektù
+// naÃ¨tenÃ­ nepovinnÃ© definice objektÃ¹
 			ReadMeshLevel();
 
-// uzavírací závorka
+// uzavÃ­racÃ­ zÃ¡vorka
 			MeshReadCBrace();
 		}
 	}
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení objektu (vrací index nebo -1 = nenalezeno)
+// nalezenÃ­ objektu (vracÃ­ index nebo -1 = nenalezeno)
 
 int FindObject(int first, int level, TEMPNAME type)
 {
@@ -1842,7 +1842,7 @@ int FindObject(int first, int level, TEMPNAME type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení definice objektu
+// uloÅ¾enÃ­ definice objektu
 
 void SetMesh(int iteminx, int datainx)
 {
@@ -1852,7 +1852,7 @@ void SetMesh(int iteminx, int datainx)
 	int vertices = src->MeshVerticesNum;
 	int faces = src->MeshFaceNum;
 
-// test platnosti parametrù
+// test platnosti parametrÃ¹
 	if ((vertices > 0) && (faces > 0))
 	{
 		dst->Type = D3DFTYPE_OBJECT;
@@ -1861,29 +1861,29 @@ void SetMesh(int iteminx, int datainx)
 		int MeshFaceOldNum = src->MeshFaceOldNum;
 		int* MeshFaceOld = src->MeshFaceOld;
 
-// vytvoøení bufferù
+// vytvoÃ¸enÃ­ bufferÃ¹
 		dst->VertNum = vertices;
 		dst->Vertex = (D3DVECTOR*)MemGet(vertices * sizeof(D3DVECTOR));
 		dst->Normal = (D3DVECTOR*)MemGet(vertices * sizeof(D3DVECTOR));
 		dst->TextUV[0] = (float*)MemGet(vertices * 2 * sizeof(float));
 
-// pøenesení definice vrcholù
+// pÃ¸enesenÃ­ definice vrcholÃ¹
 		MemCopy(dst->Vertex, src->MeshVertices, vertices * sizeof(D3DVECTOR));
 
-// automatické souøadnice textury
+// automatickÃ© souÃ¸adnice textury
 		for (i = 0; i < vertices; i++)
 		{
 			dst->TextUV[0][2*i] = (float)(dst->Vertex[i].x + 0.5);
 			dst->TextUV[0][2*i+1] = (float)(0.5 - dst->Vertex[i].y);
 		}
 
-// vytvoøení bufferu plošek
+// vytvoÃ¸enÃ­ bufferu ploÅ¡ek
 		int* facedst = (int*)MemGet(faces * 3 * sizeof(int));
 //		MemFill(facedst, faces * 3 * sizeof(WORD), 0);
 		dst->Face = facedst;
 		dst->FaceNum = faces;
 
-// naètení plošek
+// naÃ¨tenÃ­ ploÅ¡ek
 		MemCopy(facedst, src->MeshFace, faces * 3 * sizeof(int));
 
 /*
@@ -1906,7 +1906,7 @@ void SetMesh(int iteminx, int datainx)
 			facesrc++;
 			facedst++;
 
-// vıpoèet automatické normály
+// vÃ½poÃ¨et automatickÃ© normÃ¡ly
 			D3DVECTOR v1 = dst->Vertex[facedst[0]];
 			D3DVECTOR v2 = dst->Vertex[facedst[1]];
 			D3DVECTOR v3 = dst->Vertex[facedst[2]];
@@ -1936,16 +1936,16 @@ void SetMesh(int iteminx, int datainx)
 		}
 */
 
-// velmi pøibliné nastavení normál - jako vektory vrcholù
+// velmi pÃ¸ibliÅ¾nÃ© nastavenÃ­ normÃ¡l - jako vektory vrcholÃ¹
 		MemCopy(dst->Normal, dst->Vertex, vertices * sizeof(D3DVECTOR));
 
-// vıpoèet hranice
+// vÃ½poÃ¨et hranice
 		D3DF_MapBound(iteminx);
 
 
 		int newlevel = src->Level + 1;
 
-// naètené souøadnice textury
+// naÃ¨tenÃ© souÃ¸adnice textury
 		i = FindObject(datainx + 1, newlevel, TEMP_MESHTEXTURECOORDS);
 		if (i >= 0)
 		{
@@ -1955,7 +1955,7 @@ void SetMesh(int iteminx, int datainx)
 			MemCopy(dst->TextUV[0], src->TextureCoords, n * 2 * sizeof(float));
 		}
 
-// naètené barvy vrcholù (musí bıt pøed ètením materiálù, protoe zatím souhlasí èísla vrcholù)
+// naÃ¨tenÃ© barvy vrcholÃ¹ (musÃ­ bÃ½t pÃ¸ed Ã¨tenÃ­m materiÃ¡lÃ¹, protoÅ¾e zatÃ­m souhlasÃ­ Ã¨Ã­sla vrcholÃ¹)
 		i = FindObject(datainx + 1, newlevel, TEMP_MESHVERTEXCOLORS);
 		if (i >= 0)
 		{
@@ -2004,7 +2004,7 @@ void SetMesh(int iteminx, int datainx)
 			}
 		}
 
-// naètené materiály plošek
+// naÃ¨tenÃ© materiÃ¡ly ploÅ¡ek
 		i = FindObject(datainx + 1, newlevel, TEMP_MESHMATERIALLIST);
 		if (i >= 0)
 		{
@@ -2051,16 +2051,16 @@ void SetMesh(int iteminx, int datainx)
 							filename = MeshPath + '\\' + filename;
 						}
 
-					// uzavøení souborù
+					// uzavÃ¸enÃ­ souborÃ¹
 						FileClose();
 
-					// nulování offsetu	pro ètení
+					// nulovÃ¡nÃ­ offsetu	pro Ã¨tenÃ­
 						FileReadOff = 0;
 
-					// nastavení jména souboru
+					// nastavenÃ­ jmÃ©na souboru
 						FileRead = filename;
 
-					// naètení obrázku
+					// naÃ¨tenÃ­ obrÃ¡zku
 						ASSERT(dst->Texture[0] == -1);
 
 						CPicture pic;
@@ -2205,7 +2205,7 @@ void SetMesh(int iteminx, int datainx)
 			}
 		}
 
-// naètené normály
+// naÃ¨tenÃ© normÃ¡ly
 		i = FindObject(datainx + 1, newlevel, TEMP_MESHNORMALS);
 		if (i >= 0)
 		{
@@ -2270,11 +2270,11 @@ void SetMesh(int iteminx, int datainx)
 void AddMeshes(int parent, int first, int level);
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení definice rámu
+// uloÅ¾enÃ­ definice rÃ¡mu
 
 void SetFrame(int iteminx, int datainx)
 {
-// nastavení matice rámu
+// nastavenÃ­ matice rÃ¡mu
 	int i = FindObject(datainx + 1, Data[datainx].Level + 1, TEMP_FRAMETRANSFORMMATRIX);
 
 	if (i >= 0)
@@ -2282,7 +2282,7 @@ void SetFrame(int iteminx, int datainx)
 		D3DF_SetTransMatrix(iteminx, &(Data[i].Matrix));
 	}
 
-// nalezení objektu patøícího do rámu
+// nalezenÃ­ objektu patÃ¸Ã­cÃ­ho do rÃ¡mu
 	i = FindObject(datainx + 1, Data[datainx].Level + 1, TEMP_MESH);
 
 	if (i >= 0)
@@ -2290,20 +2290,20 @@ void SetFrame(int iteminx, int datainx)
 		SetMesh(iteminx, i);
 	}
 
-// pøipojení ostatních rámù
+// pÃ¸ipojenÃ­ ostatnÃ­ch rÃ¡mÃ¹
 	AddMeshes(iteminx, datainx+1, Data[datainx].Level + 1);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøipojení objektù zadané úrovnì
-// parent: 0=je první objekt
+// pÃ¸ipojenÃ­ objektÃ¹ zadanÃ© ÃºrovnÃ¬
+// parent: 0=je prvnÃ­ objekt
 
 void AddMeshes(int parent, int first, int level)
 {
 	int i;
 	int oldfirst = first;
 
-// nalezení všech rámù
+// nalezenÃ­ vÅ¡ech rÃ¡mÃ¹
 	for (;;)
 	{
 		i = FindObject(first, level, TEMP_FRAME);
@@ -2340,7 +2340,7 @@ void AddMeshes(int parent, int first, int level)
 		}
 	}
 
-// k tomu pøipojení všech objektù bez rámù (nejsou-li rámy)
+// k tomu pÃ¸ipojenÃ­ vÅ¡ech objektÃ¹ bez rÃ¡mÃ¹ (nejsou-li rÃ¡my)
 	if (parent == 0)
 	{
 		first = oldfirst;
@@ -2374,18 +2374,18 @@ void AddMeshes(int parent, int first, int level)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení objektu z bufferu
+// naÃ¨tenÃ­ objektu z bufferu
 
 void ReadMesh(BYTE* data, int size, CString path)
 {
 
-// úschova adresy a velikosti dat
+// Ãºschova adresy a velikosti dat
 	MeshData = data;
 	MeshDataN = size;
 	if (path.LastChar() == '\\') path.Delete(path.Length() - 1, 1);
 	MeshPath = path;
 
-// pøíprava jmen šablon s velkımi písmeny
+// pÃ¸Ã­prava jmen Å¡ablon s velkÃ½mi pÃ­smeny
 	int i;
 	if (TempNamesUpper[0].IsEmpty())
 	{
@@ -2396,25 +2396,25 @@ void ReadMesh(BYTE* data, int size, CString path)
 		}
 	}
 
-// inicializace pracovních promìnnıch
+// inicializace pracovnÃ­ch promÃ¬nnÃ½ch
 	MeshDataR = 0;
 	MeshArrayN = 0;
 	MeshLevel = 0;
 
-// naètení záhlaví objektu
+// naÃ¨tenÃ­ zÃ¡hlavÃ­ objektu
 	ReadMeshHead();
 
-// naètení objektù
+// naÃ¨tenÃ­ objektÃ¹
 	ReadMeshLevel();
 //	ASSERT(MeshDataR >= MeshDataN);
 
-// vytvoøení prázdného objektu
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ©ho objektu
 	D3D_ID = D3DF_New();
 
-// nalezení rámu
+// nalezenÃ­ rÃ¡mu
 	AddMeshes(0, 0, 0);
 
-// zrušení bufferù
+// zruÅ¡enÃ­ bufferÃ¹
 	for (i = 0; i < DataNum; i++)
 	{
 		MESHITEM* item = Data + i;
@@ -2446,4 +2446,4 @@ void ReadMesh(BYTE* data, int size, CString path)
 
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------

@@ -1,13 +1,13 @@
 
 /***************************************************************************\
 *																			*
-*							Prov·dÏnÌ programu - sprajt						*
+*							Prov√°d√¨n√≠ programu - sprajt						*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inline vol·nÌ p¯Ìkazu - sprajt
+// inline vol√°n√≠ p√∏√≠kazu - sprajt
 
 inline void FSprite(CSprite& sprite)
 {
@@ -17,13 +17,13 @@ inline void FSprite(CSprite& sprite)
 
 
 // funkce
-void _fastcall FSpriteFunc(CSprite& sprite);		// funkce s n·vratem sprajtu
+void _fastcall FSpriteFunc(CSprite& sprite);		// funkce s n√°vratem sprajtu
 
-// promÏnnÈ
-void _fastcall FSpriteEmpty(CSprite& sprite);		// pr·zdn˝ sprajt
-void _fastcall FSpriteObj(CSprite& sprite);			// glob·lnÌ sprajt (Data = index)
-void _fastcall FSpriteObjList(CSprite& sprite);		// globalnÌ sprajt v seznamu (Data = index, List = seznam)
-void _fastcall FSpriteLoc(CSprite& sprite);			// lok·lnÌ sprajt (Data = index)
-void _fastcall FSpriteLocList(CSprite& sprite);		// lok·lnÌ sprajt v seznamu (Data = index, List = seznam)
+// prom√¨nn√©
+void _fastcall FSpriteEmpty(CSprite& sprite);		// pr√°zdn√Ω sprajt
+void _fastcall FSpriteObj(CSprite& sprite);			// glob√°ln√≠ sprajt (Data = index)
+void _fastcall FSpriteObjList(CSprite& sprite);		// globaln√≠ sprajt v seznamu (Data = index, List = seznam)
+void _fastcall FSpriteLoc(CSprite& sprite);			// lok√°ln√≠ sprajt (Data = index)
+void _fastcall FSpriteLocList(CSprite& sprite);		// lok√°ln√≠ sprajt v seznamu (Data = index, List = seznam)
 
-void _fastcall FGetFileSprite(CSprite& sprite);		// naËtenÌ sprajtu ze souboru
+void _fastcall FGetFileSprite(CSprite& sprite);		// na√®ten√≠ sprajtu ze souboru

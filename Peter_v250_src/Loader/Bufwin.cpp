@@ -8,30 +8,30 @@
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení novıch dat
+// vytvoÃ¸enÃ­ novÃ½ch dat
 
-#define NEWDATANUM 40			// poèet novì vytvoøenıch poloek (2 KB)
+#define NEWDATANUM 40			// poÃ¨et novÃ¬ vytvoÃ¸enÃ½ch poloÅ¾ek (2 KB)
 
 void CBufWin::NewData()
 {
-	int i = NEWDATANUM;		// poèet novıch poloek
-	int next = m_Max;		// pøíští poloka - 1
-	m_Max = next + i;		// zvıšení poètu poloek (o 2 KB)
+	int i = NEWDATANUM;		// poÃ¨et novÃ½ch poloÅ¾ek
+	int next = m_Max;		// pÃ¸Ã­Å¡tÃ­ poloÅ¾ka - 1
+	m_Max = next + i;		// zvÃ½Å¡enÃ­ poÃ¨tu poloÅ¾ek (o 2 KB)
 
-	MemBuf(m_Data, m_Max);	// zvıšení velikosti bufferu
+	MemBuf(m_Data, m_Max);	// zvÃ½Å¡enÃ­ velikosti bufferu
 
-	MemBuf(m_Valid, m_Max);	// zvıšení velikosti bufferu platnosti
-	MemFill(m_Valid + next, NEWDATANUM, false); // nastavení pøíznakù na neplatné poloky
+	MemBuf(m_Valid, m_Max);	// zvÃ½Å¡enÃ­ velikosti bufferu platnosti
+	MemFill(m_Valid + next, NEWDATANUM, false); // nastavenÃ­ pÃ¸Ã­znakÃ¹ na neplatnÃ© poloÅ¾ky
 
 	WINITEM* data = m_Data + next - 1; // ukazatel dat - 1
 	for (; i > 0; i--)
 	{
-		data++;				// zvıšení ukazatele poloek
-		next++;				// zvıšení indexu pøíští poloky
-		*(int*)data = next; // odkaz na pøíští poloku
+		data++;				// zvÃ½Å¡enÃ­ ukazatele poloÅ¾ek
+		next++;				// zvÃ½Å¡enÃ­ indexu pÃ¸Ã­Å¡tÃ­ poloÅ¾ky
+		*(int*)data = next; // odkaz na pÃ¸Ã­Å¡tÃ­ poloÅ¾ku
 	}
-	*(int*)data = m_Next;	// navázání na další poloku
-	m_Next = m_Max-NEWDATANUM;	// odkaz na první novou poloku
+	*(int*)data = m_Next;	// navÃ¡zÃ¡nÃ­ na dalÅ¡Ã­ poloÅ¾ku
+	m_Next = m_Max-NEWDATANUM;	// odkaz na prvnÃ­ novou poloÅ¾ku
 };
 
 
@@ -40,64 +40,64 @@ void CBufWin::NewData()
 
 CBufWin::CBufWin()
 {
-	m_Data = NULL;			// není buffer dat
-	m_Valid = NULL;			// není buffer platnosti
-	m_Num = 0;				// není ádná platná poloka
-	m_Max = 0;				// není buffer poloek
-	m_Next = -1;			// pøiští volná poloka (-1=není)
+	m_Data = NULL;			// nenÃ­ buffer dat
+	m_Valid = NULL;			// nenÃ­ buffer platnosti
+	m_Num = 0;				// nenÃ­ Å¾Ã¡dnÃ¡ platnÃ¡ poloÅ¾ka
+	m_Max = 0;				// nenÃ­ buffer poloÅ¾ek
+	m_Next = -1;			// pÃ¸iÅ¡tÃ­ volnÃ¡ poloÅ¾ka (-1=nenÃ­)
 }
 
 CBufWin::~CBufWin()
 {
-	DelAll();				// zrušení všech poloek
+	DelAll();				// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// statickı konstruktor a destruktor
+// statickÃ½ konstruktor a destruktor
 
 void CBufWin::Init()
 {
-	m_Data = NULL;			// není buffer dat
-	m_Valid = NULL;			// není buffer platnosti
-	m_Num = 0;				// není ádná platná poloka
-	m_Max = 0;				// není buffer poloek
-	m_Next = -1;			// pøiští volná poloka (-1=není)
+	m_Data = NULL;			// nenÃ­ buffer dat
+	m_Valid = NULL;			// nenÃ­ buffer platnosti
+	m_Num = 0;				// nenÃ­ Å¾Ã¡dnÃ¡ platnÃ¡ poloÅ¾ka
+	m_Max = 0;				// nenÃ­ buffer poloÅ¾ek
+	m_Next = -1;			// pÃ¸iÅ¡tÃ­ volnÃ¡ poloÅ¾ka (-1=nenÃ­)
 }
 
 void CBufWin::Term()
 {
-	DelAll();				// zrušení všech poloek
+	DelAll();				// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení všech poloek v bufferu (ukládání zaène opìt po øadì)
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu (uklÃ¡dÃ¡nÃ­ zaÃ¨ne opÃ¬t po Ã¸adÃ¬)
 
 void CBufWin::DelAll()
 {
-// zrušení poloek
+// zruÅ¡enÃ­ poloÅ¾ek
 	for (int i = m_Max-1; i >= 0; i--)
 	{
 		Del(i);
 	}
 
-// zrušení bufferu
-	MemBuf(m_Data, 0);			// zrušení bufferu dat
-	MemBuf(m_Valid, 0);			// zrušení bufferu platnosti
-	m_Num = 0;					// není ádná platná poloka
-	m_Max = 0;					// není ádná poloka v bufferu
-	m_Next = -1;				// není pøíští poloka
+// zruÅ¡enÃ­ bufferu
+	MemBuf(m_Data, 0);			// zruÅ¡enÃ­ bufferu dat
+	MemBuf(m_Valid, 0);			// zruÅ¡enÃ­ bufferu platnosti
+	m_Num = 0;					// nenÃ­ Å¾Ã¡dnÃ¡ platnÃ¡ poloÅ¾ka
+	m_Max = 0;					// nenÃ­ Å¾Ã¡dnÃ¡ poloÅ¾ka v bufferu
+	m_Next = -1;				// nenÃ­ pÃ¸Ã­Å¡tÃ­ poloÅ¾ka
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení poloky (s kontrolou platnosti indexu)
+// zruÅ¡enÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 
 void _fastcall CBufWin::Del(const int index)
 {
-	if (IsValid(index))						// je index platnı?
+	if (IsValid(index))						// je index platnÃ½?
 	{
 		WINITEM* item = m_Data + index;
-		item->Text.Term();			// ukonèení textu
+		item->Text.Term();			// ukonÃ¨enÃ­ textu
 		item->Icon.Term();
 		item->Picture.Term();
 		MemFree(item->PictureData);
@@ -109,7 +109,7 @@ void _fastcall CBufWin::Del(const int index)
 			::DeleteObject(item->FontBrush);
 		}
 
-		FreeFont(item->Font);				// uvolnìní fontu
+		FreeFont(item->Font);				// uvolnÃ¬nÃ­ fontu
 
 		for (int i = item->TabRows * item->TabCols - 1; i >= 0; i--)
 		{
@@ -119,19 +119,19 @@ void _fastcall CBufWin::Del(const int index)
 		MemFree(item->TabData);
 		MemFree(item->TabAlign);
 
-		*(int*)(m_Data + index) = m_Next;	// pøíští volná poloka
-		m_Valid[index] = false;				// zrušení pøíznaku platnosti
-		m_Num--;							// sníení èítaèe platnıch poloek
-		m_Next = index;						// odkaz na tuto poloku
+		*(int*)(m_Data + index) = m_Next;	// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka
+		m_Valid[index] = false;				// zruÅ¡enÃ­ pÃ¸Ã­znaku platnosti
+		m_Num--;							// snÃ­Å¾enÃ­ Ã¨Ã­taÃ¨e platnÃ½ch poloÅ¾ek
+		m_Next = index;						// odkaz na tuto poloÅ¾ku
 	}
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení poloky (vrací index poloky)
+// vytvoÃ¸enÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 
 int _fastcall CBufWin::New()
 {
-	int result = NewItem();		// vytvoøení nové poloky
+	int result = NewItem();		// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	return result;
 }

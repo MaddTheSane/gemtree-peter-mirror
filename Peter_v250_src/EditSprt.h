@@ -1,69 +1,69 @@
 
 /***************************************************************************\
 *																			*
-*								Editor sprajtù								*
+*								Editor sprajtÃ¹								*
 *																			*
 \***************************************************************************/
 
 namespace EditSprite
 {
-extern	BOOL	MDraging;				// pøíznak taení ikony editoru sprajtù
-//extern	CIcon*	EditIcon;				// editovaná ikona
-extern	int		Index;					// editovanı sprajt
-extern	int		IndexPic;				// index editovaného obrázku
+extern	BOOL	MDraging;				// pÃ¸Ã­znak taÅ¾enÃ­ ikony editoru sprajtÃ¹
+//extern	CIcon*	EditIcon;				// editovanÃ¡ ikona
+extern	int		Index;					// editovanÃ½ sprajt
+extern	int		IndexPic;				// index editovanÃ©ho obrÃ¡zku
 
-// inicializace pøi startu
+// inicializace pÃ¸i startu
 	void StartInit();
 
-// zahájení editace
+// zahÃ¡jenÃ­ editace
 	void BegEdit(int index);
 
-// nastavení rozmìrù plochy
+// nastavenÃ­ rozmÃ¬rÃ¹ plochy
 	void OnDimen();
 
-// ----------- obsluha zobrazení ------------
+// ----------- obsluha zobrazenÃ­ ------------
 
-// pøepoèet rozmìrù editoru ikon a obrázkù
+// pÃ¸epoÃ¨et rozmÃ¬rÃ¹ editoru ikon a obrÃ¡zkÃ¹
 	void ReCalc();
 
-// zobrazení celého okna editoru
+// zobrazenÃ­ celÃ©ho okna editoru
 	void Disp();
 
-// aktualizaèní pøekreslení plochy (s pøepoètem rozmìrù)
+// aktualizaÃ¨nÃ­ pÃ¸ekreslenÃ­ plochy (s pÃ¸epoÃ¨tem rozmÃ¬rÃ¹)
 	void ReDisp();
 
-// aktualizaèní pøekreslení plochy
+// aktualizaÃ¨nÃ­ pÃ¸ekreslenÃ­ plochy
 	void DispAkt(HDC dc);
 
-// ---------------- obsluha posuvníkù ---------
+// ---------------- obsluha posuvnÃ­kÃ¹ ---------
 
-// pøesun posuvníkù pøi zmìnì rozmìrù okna
+// pÃ¸esun posuvnÃ­kÃ¹ pÃ¸i zmÃ¬nÃ¬ rozmÃ¬rÃ¹ okna
 	HDWP MoveScroll(HDWP hdwp);
 
-// aktualizace zobrazení posuvníkù
+// aktualizace zobrazenÃ­ posuvnÃ­kÃ¹
 	void SetScroll();
 
-// horizontální posuvník
+// horizontÃ¡lnÃ­ posuvnÃ­k
 	void OnHScroll(int code, int pos);
 
-// vertikální posuvník
+// vertikÃ¡lnÃ­ posuvnÃ­k
 	void OnVScroll(int code, int pos);
 
 // -------------- obsluha editace -----------
 
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 	void EndDrag();
 
-// stisk tlaèítka myši (TRUE = obsloueno)
+// stisk tlaÃ¨Ã­tka myÅ¡i (TRUE = obslouÅ¾eno)
 	BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick);
 
-// posun myši
+// posun myÅ¡i
 	void OnMouseMove(UINT flags, int x, int y);
 
-// uvolnìní tlaèítka myši
+// uvolnÃ¬nÃ­ tlaÃ¨Ã­tka myÅ¡i
 	void OnButtonUp(UINT keys, BOOL right);
 
-// poloení obrázku zvnìjšku
+// poloÅ¾enÃ­ obrÃ¡zku zvnÃ¬jÅ¡ku
 	void DragDrop(int pic);
 
 // test
@@ -71,6 +71,6 @@ extern	int		IndexPic;				// index editovaného obrázku
 
 // -------------- obsluha UNDO -------------
 
-// úschova pro UNDO
+// Ãºschova pro UNDO
 	void PushUndo();
 }

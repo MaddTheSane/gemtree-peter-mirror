@@ -5,7 +5,7 @@
 *																			*
 \***************************************************************************/
 
-// korekce lokálních promìnnıch (pøi volání ve vstupních parametrech)
+// korekce lokÃ¡lnÃ­ch promÃ¬nnÃ½ch (pÃ¸i volÃ¡nÃ­ ve vstupnÃ­ch parametrech)
 
 extern int KorigNum;
 extern int KorigLog;
@@ -22,13 +22,13 @@ extern int KorigLst;
 typedef bool (_fastcall *COMPCOMP) (int index);
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou (data = poèet parametrù)
+// pÃ¸eklad pÃ¸Ã­kazu se skupinou (data = poÃ¨et parametrÃ¹)
 
 bool CompGroup(COMPCOMP comp, int index, PROCCOM func, PROCCOM func1);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad volání funkce (typ = ID promìnné vısledku, IDF_FNC = není)
+// pÃ¸eklad volÃ¡nÃ­ funkce (typ = ID promÃ¬nnÃ© vÃ½sledku, IDF_FNC = nenÃ­)
 
 bool CompFunc(int index, int typ);
 

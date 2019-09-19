@@ -9,23 +9,23 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaËnÌ pr·zdn· plocha (modifikuje se poËet referencÌ!)
+// inicializa√®n√≠ pr√°zdn√° plocha (modifikuje se po√®et referenc√≠!)
 
 MAPDATA*	EmptyMapData =	NULL;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// statick· inicializace ploch
+// statick√° inicializace ploch
 
 void InitMap()
 {
-#pragma warning ( disable: 4127)				// hl·öenÌ - konstantnÌ podmÌnka
+#pragma warning ( disable: 4127)				// hl√°≈°en√≠ - konstantn√≠ podm√≠nka
 	ASSERT(SIZEOFMAPITEM == 8);
-#pragma warning ( default: 4127)				// hl·öenÌ - konstantnÌ podmÌnka
+#pragma warning ( default: 4127)				// hl√°≈°en√≠ - konstantn√≠ podm√≠nka
 	EmptyMapData = (MAPDATA*)MemGet(SIZEOFMAPDATA + SIZEOFMAPITEM);
-	EmptyMapData->Refer = 1;			// poËet referencÌ
-	EmptyMapData->Width = 1;			// öÌ¯ka
-	EmptyMapData->Height = 1;			// v˝öka
+	EmptyMapData->Refer = 1;			// po√®et referenc√≠
+	EmptyMapData->Width = 1;			// ≈°√≠√∏ka
+	EmptyMapData->Height = 1;			// v√Ω≈°ka
 	EmptyMapData->Data[0].Icon.Init();	// inicializace ikony
 	EmptyMapData->Data[0].Param = 0;	// parametry
 }
@@ -56,7 +56,7 @@ CMap::~CMap()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CMap::Init()
 { 
@@ -80,7 +80,7 @@ void CMap::Term()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vymaz·nÌ plochy
+// vymaz√°n√≠ plochy
 
 void CMap::Clear()
 { 
@@ -96,16 +96,16 @@ void CMap::Clear()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastnÌho bufferu p¯ed modifikacÌ
+// kopie do vlastn√≠ho bufferu p√∏ed modifikac√≠
 
 void CMap::CopyWrite()
 {
-	MAPDATA* data = pData;			// adresa star˝ch dat
-	long* refer = &(data->Refer);	// poËet referencÌ
+	MAPDATA* data = pData;			// adresa star√Ωch dat
+	long* refer = &(data->Refer);	// po√®et referenc√≠
 
-	if (*refer > 1)					// je nÏjak˝ jin˝ majitel?
+	if (*refer > 1)					// je n√¨jak√Ω jin√Ω majitel?
 	{
-		NewBuffer(data->Width, data->Height);	// vytvo¯enÌ novÈho bufferu
+		NewBuffer(data->Width, data->Height);	// vytvo√∏en√≠ nov√©ho bufferu
 
 		MAPITEM* src = data->Data;
 		MAPITEM* dst = pData->Data;
@@ -117,7 +117,7 @@ void CMap::CopyWrite()
 			src++;
 		}
 
-// odpojenÌ star˝ch dat - v multithread m˘ûe nastat i zruöenÌ
+// odpojen√≠ star√Ωch dat - v multithread m√π≈æe nastat i zru≈°en√≠
 		if (LongDecrement(refer))
 		{
 #ifdef _MT
@@ -128,7 +128,7 @@ void CMap::CopyWrite()
 				item++;
 			}
 
-			MemFree(data);			// p¯ÌpadnÈ zruöenÌ dat
+			MemFree(data);			// p√∏√≠padn√© zru≈°en√≠ dat
 #endif	// _MT
 		}
 	}
@@ -136,7 +136,7 @@ void CMap::CopyWrite()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypr·zdnÏnÌ plochy (uvolnÏnÌ dat)
+// vypr√°zdn√¨n√≠ plochy (uvoln√¨n√≠ dat)
 
 void CMap::Empty()
 { 
@@ -146,43 +146,43 @@ void CMap::Empty()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ novÈ plochy (p¯ipraveno k z·pisu, data jsou n·hodn·)
+// vytvo√∏en√≠ nov√© plochy (p√∏ipraveno k z√°pisu, data jsou n√°hodn√°)
 
 void CMap::New(int width, int height)
 {
-	Detach();						// odpojenÌ starÈ plochy
-	NewBuffer(width, height);		// vytvo¯enÌ novÈho bufferu
+	Detach();						// odpojen√≠ star√© plochy
+	NewBuffer(width, height);		// vytvo√∏en√≠ nov√©ho bufferu
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ prvku (s kontrolou platnosti offsetu/indexu)
+// poskytnut√≠ prvku (s kontrolou platnosti offsetu/indexu)
 
 const MAPITEM& _fastcall CMap::Get(const int off) const
 {
-	if (IsValid(off))				// je offset platn˝?
+	if (IsValid(off))				// je offset platn√Ω?
 	{
-		return pData->Data[off];	// prvek na danÈm offsetu
+		return pData->Data[off];	// prvek na dan√©m offsetu
 	}
-	return EmptyMapData->Data[0];	// neplatn˝ offset
+	return EmptyMapData->Data[0];	// neplatn√Ω offset
 }
 
 const MAPITEM& _fastcall CMap::Get(const int x, const int y) const
 {
-	if (IsValid(x, y))				// je index platn˝?
+	if (IsValid(x, y))				// je index platn√Ω?
 	{
 		return pData->Data[x + y*pData->Width];	// prvek
 	}
-	return EmptyMapData->Data[0];	// neplatn˝ offset
+	return EmptyMapData->Data[0];	// neplatn√Ω offset
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ prvku (s kontrolou platnosti offsetu/indexu)
+// nastaven√≠ prvku (s kontrolou platnosti offsetu/indexu)
 
 void _fastcall CMap::Set(const int off, const MAPITEM& data)
 {
-	if (IsValid(off))				// je offset platn˝?
+	if (IsValid(off))				// je offset platn√Ω?
 	{
 		MAPITEM* item = pData->Data + off;
 		item->Icon = data.Icon;
@@ -192,7 +192,7 @@ void _fastcall CMap::Set(const int off, const MAPITEM& data)
 
 void _fastcall CMap::Set(const int x, const int y, const MAPITEM& data)
 {
-	if (IsValid(x, y))				// je index platn˝?
+	if (IsValid(x, y))				// je index platn√Ω?
 	{
 		MAPITEM* item = pData->Data + x + y*pData->Width;
 		item->Icon = data.Icon;
@@ -202,12 +202,12 @@ void _fastcall CMap::Set(const int x, const int y, const MAPITEM& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CMap& CMap::operator= (const CMap& src)
 {
-	Detach();				// zruöenÌ star˝ch dat
-	Attach(src.pData);		// p¯i¯azenÌ nov˝ch dat
+	Detach();				// zru≈°en√≠ star√Ωch dat
+	Attach(src.pData);		// p√∏i√∏azen√≠ nov√Ωch dat
 	return *this;
 }
 
@@ -223,73 +223,73 @@ const CMap& CMap::operator= (const CMap& src)
 
 CBufMap::CBufMap()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 CBufMap::~CBufMap()
 {
-	DelAll();				// zruöenÌ vöech poloûek
+	DelAll();				// zru≈°en√≠ v≈°ech polo≈æek
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CBufMap::Init()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 void CBufMap::Term()
 {
-	DelAll();				// zruöenÌ vöech poloûek
+	DelAll();				// zru≈°en√≠ v≈°ech polo≈æek
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ nov˝ch dat
+// vytvo√∏en√≠ nov√Ωch dat
 
 void CBufMap::NewData()
 {
 	m_Max *= 2;
 	if (m_Max == 0) m_Max = 0x400;
-//	m_Max += 0x400;			// zv˝öenÌ poËtu poloûek (o 4 KB)
-	MemBuf(m_Data, m_Max);	// zv˝öenÌ velikosti bufferu
+//	m_Max += 0x400;			// zv√Ω≈°en√≠ po√®tu polo≈æek (o 4 KB)
+	MemBuf(m_Data, m_Max);	// zv√Ω≈°en√≠ velikosti bufferu
 };
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ vöech poloûek v bufferu
+// zru≈°en√≠ v≈°ech polo≈æek v bufferu
  
 void CBufMap::DelAll()
 {
-	Del(m_Num);					// zruöenÌ poloûek
-	MemBuf(m_Data, 0);			// zruöenÌ bufferu dat
-	m_Max = 0;					// nenÌ û·dn· poloûka v bufferu
+	Del(m_Num);					// zru≈°en√≠ polo≈æek
+	MemBuf(m_Data, 0);			// zru≈°en√≠ bufferu dat
+	m_Max = 0;					// nen√≠ ≈æ√°dn√° polo≈æka v bufferu
 }
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutÌ poloûky (s kontrolou platnosti indexu)
+// poskytnut√≠ polo≈æky (s kontrolou platnosti indexu)
 
 const CMap& _fastcall CBufMap::Get(const int index) const
 {
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
-		return m_Data[index];	// poloûka na danÈm indexu
+		return m_Data[index];	// polo≈æka na dan√©m indexu
 	}
-	return EmptyMap;			// pro neplatn˝ index vr·tÌ pr·zdnou plochu
+	return EmptyMap;			// pro neplatn√Ω index vr√°t√≠ pr√°zdnou plochu
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poloûky (s kontrolou platnosti indexu)
+// nastaven√≠ polo≈æky (s kontrolou platnosti indexu)
 
 void _fastcall CBufMap::Set(const int index, const CMap& data)
 {
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
 		m_Data[index] = data;
 	}
@@ -297,11 +297,11 @@ void _fastcall CBufMap::Set(const int index, const CMap& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypr·zdnÏnÌ poloûky (bez jejÌho zruöenÌ - jen pro uvolnÏnÌ dat)
+// vypr√°zdn√¨n√≠ polo≈æky (bez jej√≠ho zru≈°en√≠ - jen pro uvoln√¨n√≠ dat)
 
 void _fastcall CBufMap::Empty(const int index)
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		m_Data[index].Empty();
 	}
@@ -309,7 +309,7 @@ void _fastcall CBufMap::Empty(const int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûek z konce bufferu
+// zru≈°en√≠ polo≈æek z konce bufferu
 
 void _fastcall CBufMap::Del(int num)
 {
@@ -327,68 +327,68 @@ void _fastcall CBufMap::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ poloûky (vracÌ index poloûky)
+// vytvo√∏en√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int CBufMap::New()
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init();		// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init();		// inicializace polo≈æky
 	return result;
 }
 
 int CBufMap::New(int width, int height)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init(width, height);	// inicializace poloûky
-	m_Data[result].Clear();		// vymaz·nÌ plochy
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init(width, height);	// inicializace polo≈æky
+	m_Data[result].Clear();		// vymaz√°n√≠ plochy
 	return result;
 }
 
 ////////////////////////////////////////////////////////////////////
-// p¯id·nÌ poloûky (vracÌ index poloûky)
+// p√∏id√°n√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int _fastcall CBufMap::Add(const CMap& data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init(data.Data());	// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init(data.Data());	// inicializace polo≈æky
 	return result;
 }
 
 int _fastcall CBufMap::Add(MAPDATA* data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init(data);	// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init(data);	// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// duplikace poloûky (s kontrolou platnosti indexu, vracÌ index prvnÌ poloûky)
+// duplikace polo≈æky (s kontrolou platnosti indexu, vrac√≠ index prvn√≠ polo≈æky)
 
 int _fastcall CBufMap::Dup(const int index)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
-		m_Data[result].Init(m_Data[index].Data());	// kopie poloûky
+		m_Data[result].Init(m_Data[index].Data());	// kopie polo≈æky
 	}
 	else
 	{
-		m_Data[result].Init();		// inicializace neplatnÈ poloûky
+		m_Data[result].Init();		// inicializace neplatn√© polo≈æky
 	}
 	return result;
 }
 
 int _fastcall CBufMap::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		MAPDATA* data = m_Data[index].Data();
 
-		m_Data[result].Init(data);		// kopie poloûky
+		m_Data[result].Init(data);		// kopie polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -397,7 +397,7 @@ int _fastcall CBufMap::Dup(const int index, int num)
 	}
 	else
 	{
-		m_Data[result].Init();		// inicializace neplatnÈ poloûky
+		m_Data[result].Init();		// inicializace neplatn√© polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -409,19 +409,19 @@ int _fastcall CBufMap::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CBufMap& CBufMap::operator= (const CBufMap& src)
 {
-	Del(m_Num);					// zruöenÌ star˝ch dat
+	Del(m_Num);					// zru≈°en√≠ star√Ωch dat
 
-	int index = 0;				// index naËÌtanÈ poloûky
-	int i = src.m_Num;			// velikost zdrojovÈho bufferu
+	int index = 0;				// index na√®√≠tan√© polo≈æky
+	int i = src.m_Num;			// velikost zdrojov√©ho bufferu
 
-	for (; i > 0; i--)			// pro vöechny poloûky v bufferu
+	for (; i > 0; i--)			// pro v≈°echny polo≈æky v bufferu
 	{
-		Add(src[index]);	// kopie poloûky
-		index++;				// inkrementace ËtecÌho indexu
+		Add(src[index]);	// kopie polo≈æky
+		index++;				// inkrementace √®tec√≠ho indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

@@ -25,18 +25,18 @@ void debugbreak(const char* text);
 #endif	// UNICODE
 #endif	// _UNICODE
 
-#define ICONWIDTH 32								// šíøka ikon
-#define ICONHEIGHT 32								// výška ikon
+#define ICONWIDTH 32								// Å¡Ã­Ã¸ka ikon
+#define ICONHEIGHT 32								// vÃ½Å¡ka ikon
 #define ICONSIZE (ICONWIDTH*ICONHEIGHT)				// velikost ikon v bajtech
 
 #define WIN32_LEAN_AND_MEAN		// Exclude rarely-used stuff from Windows headers
 
 #include <stdio.h>
-#include <windows.h>					// základní definice WINDOWS
-#include <math.h>						// matematické operace
-//#include <alphaops.h>					// matematické konstanty
-#include <tchar.h>						// obsluha znakù UNICODE/MB
-#include <commctrl.h>					// doplòkové ovládací prvky
+#include <windows.h>					// zÃ¡kladnÃ­ definice WINDOWS
+#include <math.h>						// matematickÃ© operace
+//#include <alphaops.h>					// matematickÃ© konstanty
+#include <tchar.h>						// obsluha znakÃ¹ UNICODE/MB
+#include <commctrl.h>					// doplÃ²kovÃ© ovlÃ¡dacÃ­ prvky
 #include <richedit.h>					// RichEdit
 #include <malloc.h>
 

@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer reálnıch èísel							*
+*							Buffer reÃ¡lnÃ½ch Ã¨Ã­sel							*
 *																			*
 \***************************************************************************/
 
@@ -9,32 +9,32 @@
 class CBufReal
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	double*		m_Data;		// ukazatel na data
-	int			m_Num;		// poèet platnıch poloek v bufferu
-	int			m_Max;		// velikost bufferu (poloek)
+	int			m_Num;		// poÃ¨et platnÃ½ch poloÅ¾ek v bufferu
+	int			m_Max;		// velikost bufferu (poloÅ¾ek)
 
-// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	inline int NewItem()
 	{
 		int i = m_Num;
-		if (i >= m_Max)				// není další poloka?
+		if (i >= m_Max)				// nenÃ­ dalÅ¡Ã­ poloÅ¾ka?
 		{
-			NewData();				// vytvoøení novıch dat
+			NewData();				// vytvoÃ¸enÃ­ novÃ½ch dat
 		}
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení novıch dat (oddìleno kvùli lepší optimalizaci)
+// vytvoÃ¸enÃ­ novÃ½ch dat (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 	void NewData();
 
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -42,71 +42,71 @@ public:
 	CBufReal();
 	~CBufReal();
 
-// statickı konstruktor a destruktor
-	void Init();			// statickı konstruktor
-	void Term();			// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();			// statickÃ½ konstruktor
+	void Term();			// statickÃ½ destruktor
 
-// zrušení všech poloek v bufferu
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu
 	void DelAll();
 
-// zjištìní poètu platnıch poloek v bufferu
+// zjiÅ¡tÃ¬nÃ­ poÃ¨tu platnÃ½ch poloÅ¾ek v bufferu
 	inline int Num() const { return m_Num; };
 
-// nastavení poètu poloek v bufferu (nové poloky neinicializované)
+// nastavenÃ­ poÃ¨tu poloÅ¾ek v bufferu (novÃ© poloÅ¾ky neinicializovanÃ©)
 	void _fastcall Num(int num);
 
-// zjištìní velikosti bufferu (vèetnì zrušenıch poloek)
+// zjiÅ¡tÃ¬nÃ­ velikosti bufferu (vÃ¨etnÃ¬ zruÅ¡enÃ½ch poloÅ¾ek)
 	inline int Max() const { return m_Max; };
 
 // data bufferu
 	inline double* Data() const { return m_Data; };
 
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)m_Num); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline double& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline const double& operator[] (const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// poskytnutí poloky (s kontrolou platnosti indexu)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	double _fastcall Get(const int index) const;
 
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const double data);
 
-// vloení poloky do bufferu na poadovanou pozici (omezí index)
+// vloÅ¾enÃ­ poloÅ¾ky do bufferu na poÅ¾adovanou pozici (omezÃ­ index)
 	void _fastcall Insert(int index, const double data);
 
-// zrušení poloek z konce bufferu
+// zruÅ¡enÃ­ poloÅ¾ek z konce bufferu
 	void _fastcall Del(int num);
 
-// zrušení poloky z bufferu (ostatní poloky se pøisunou)
+// zruÅ¡enÃ­ poloÅ¾ky z bufferu (ostatnÃ­ poloÅ¾ky se pÃ¸isunou)
 	void _fastcall DelItem(const int index);
 
-// vytvoøení prázdné poloky (vrací index poloky)
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int New();
 
-// pøidání poloky (vrací index poloky)
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int _fastcall Add(const double data);
 
-// duplikace poloky (s kontrolou platnosti indexu, vrací index první poloky)
+// duplikace poloÅ¾ky (s kontrolou platnosti indexu, vracÃ­ index prvnÃ­ poloÅ¾ky)
 	int _fastcall Dup(const int index);
 	int _fastcall Dup(const int index, int num);
 
-// naètení èísla ze souboru (naèítá do promìnné, true=operace OK)
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru (naÃ¨Ã­tÃ¡ do promÃ¬nnÃ©, true=operace OK)
 //	bool LoadFile(double& data, CString jmeno);
 
-// uloení èísla do souboru formátu NUM (false=chyba)
+// uloÅ¾enÃ­ Ã¨Ã­sla do souboru formÃ¡tu NUM (false=chyba)
 //	bool SaveFile(double data, CString jmeno) const;
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CBufReal& operator= (const CBufReal& src);
 };

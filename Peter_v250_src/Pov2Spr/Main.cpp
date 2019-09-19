@@ -2,7 +2,7 @@
 #include "Main.h"
 
 //////////////////////////////////////////////////////////////////////////////
-// inicializaËnÌ segmenty CRT (konstruktory a destruktory)
+// inicializa√®n√≠ segmenty CRT (konstruktory a destruktory)
 
 typedef void (__cdecl *_PVFV)(void);		// ukazatel na funkci void fnc(void)
 typedef void (*PFV)(void);					// funkce void fnc(void)
@@ -12,44 +12,44 @@ _PVFV	__xc_a[] = { NULL };				// konstruktory C++
 #pragma data_seg(".CRT$XCZ")
 _PVFV	__xc_z[] = { NULL };
 
-#pragma data_seg()							// resetov·nÌ na bÏûnou datovou sekci
+#pragma data_seg()							// resetov√°n√≠ na b√¨≈ænou datovou sekci
 
-#pragma comment(linker, "/MERGE:.CRT=.data")	// p¯ipojenÌ CRT sekcÌ do datovÈ sekce
+#pragma comment(linker, "/MERGE:.CRT=.data")	// p√∏ipojen√≠ CRT sekc√≠ do datov√© sekce
 
 
 //////////////////////////////////////////////////////////////////////////////
-// glob·lnÌ promÏnnÈ
+// glob√°ln√≠ prom√¨nn√©
 
-CString		CommandLine;				// p¯Ìkazov˝ ¯·dek
-int			VerzeOS;					// verze systÈmu
+CString		CommandLine;				// p√∏√≠kazov√Ω √∏√°dek
+int			VerzeOS;					// verze syst√©mu
 HINSTANCE	hInstance = NULL;			// instance programu
 
 BYTE*		StdPalImport;				// tabulka importu palet
 BYTE*		StdPalImportDither;			// tabulka importu palet s ditheringem
-BITMAPINFO* StdBitmapInfo;				// standardnÌ z·hlavÌ BMP
-BYTE*		KonvPal;					// konverznÌ tabulka palet
+BITMAPINFO* StdBitmapInfo;				// standardn√≠ z√°hlav√≠ BMP
+BYTE*		KonvPal;					// konverzn√≠ tabulka palet
 
 
-bool	ConsoleOn = false;		// p¯Ìznak reûimu konzoly
+bool	ConsoleOn = false;		// p√∏√≠znak re≈æimu konzoly
 HANDLE	ConIn = INVALID_HANDLE_VALUE;	// handle pro vstup z konzoly
-HANDLE	ConOut = INVALID_HANDLE_VALUE;	// handle pro v˝stup na konzolu
-HANDLE	ConErr = INVALID_HANDLE_VALUE;	// handle pro chybov˝ v˝stup na konzolu
+HANDLE	ConOut = INVALID_HANDLE_VALUE;	// handle pro v√Ωstup na konzolu
+HANDLE	ConErr = INVALID_HANDLE_VALUE;	// handle pro chybov√Ω v√Ωstup na konzolu
 
-bool	Dither = true;					// pouûÌt dithering
+bool	Dither = true;					// pou≈æ√≠t dithering
 
 //////////////////////////////////////////////////////////////////////////////
-// pr·zdnÈ objekty (nap¯. pro n·vrat neplatnÈ poloûky z funkce)
+// pr√°zdn√© objekty (nap√∏. pro n√°vrat neplatn√© polo≈æky z funkce)
 
-CString		EmptyString;				// pr·zdn˝ ¯etÏzec
-CPicture	EmptyPicture;				// pr·zdn˝ obr·zek
-CSprite		EmptySprite;				// pr·zdn˝ sprajt
+CString		EmptyString;				// pr√°zdn√Ω √∏et√¨zec
+CPicture	EmptyPicture;				// pr√°zdn√Ω obr√°zek
+CSprite		EmptySprite;				// pr√°zdn√Ω sprajt
 
 //////////////////////////////////////////////////////////////////////////////
 // konstanty
 
-const char*	Compiled =	"Gemtree 32-compiler"; // jen tak pro zmatenÌ
+const char*	Compiled =	"Gemtree 32-compiler"; // jen tak pro zmaten√≠
 
-// tabulka hladin standardnÌch barev (rozsah 0 aû 256)
+// tabulka hladin standardn√≠ch barev (rozsah 0 a≈æ 256)
 const int ColLevTab[] = 
 {
 	64*4,
@@ -61,36 +61,36 @@ const int ColLevTab[] =
 };
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// po zmÏnÏ palet zruö soubor PALIMP.DAT a spusù DEBUG verzi pro novÈ vygenerov·nÌ
-// (pozor - generov·nÌ m˘ûe trvat desÌtky sekund). Potom znovu p¯eklad.
+// po zm√¨n√¨ palet zru≈° soubor PALIMP.DAT a spus¬ù DEBUG verzi pro nov√© vygenerov√°n√≠
+// (pozor - generov√°n√≠ m√π≈æe trvat des√≠tky sekund). Potom znovu p√∏eklad.
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-// tabulka odstÌn˘ standardnÌch barev (0 aû 255) - po¯adÌ B, G, R, F,
+// tabulka odst√≠n√π standardn√≠ch barev (0 a≈æ 255) - po√∏ad√≠ B, G, R, F,
 const RGBQUAD ColColTab[] = 
 { 
-	0,		0,		255,		0,			//  0: Ëerven·
+	0,		0,		255,		0,			//  0: √®erven√°
 	72,		72,		255,		0,			//  1:
 	116,	116,	255,		0,			//  2:
 	158,	166,	255,		0,			//  3:
 	210,	220,	255,		0,			//  4:
-	0,		114,	255,		0,			//  5: hnÏd·
+	0,		114,	255,		0,			//  5: hn√¨d√°
 	150,	198,	255,		0,			//  6:
-	0,		182,	255,		0,			//  7: oranûov·
+	0,		182,	255,		0,			//  7: oran≈æov√°
 	96,		192,	255,		0,			//  8:
-	0,		255,	255,		0,			//  9: ûlut·
+	0,		255,	255,		0,			//  9: ≈ælut√°
 	128,	255,	255,		0,			// 10:
-	192,	255,	255,		0,			// 11: svÏtle ûlut·
-	0,		255,	178,		0,			// 12: ûlutozelen·
-	0,		255,	0,			0,			// 13: zelen·
+	192,	255,	255,		0,			// 11: sv√¨tle ≈ælut√°
+	0,		255,	178,		0,			// 12: ≈ælutozelen√°
+	0,		255,	0,			0,			// 13: zelen√°
 	128,	255,	128,		0,			// 14:
 	192,	255,	192,		0,			// 15:
-	146,	255,	0,			0,			// 16: namodrale zelen·
+	146,	255,	0,			0,			// 16: namodrale zelen√°
 	222,	255,	138,		0,			// 17:
-	255,	255,	0,			0,			// 18: modrozelen·
+	255,	255,	0,			0,			// 18: modrozelen√°
 	255,	186,	0,			0,			// 19:
 	255,	222,	124,		0,			// 20:
 	255,	128,	0,			0,			// 21:
-	255,	0,		0,			0,			// 22: modr·
+	255,	0,		0,			0,			// 22: modr√°
 	255,	80,		72,			0,			// 23:
 	255,	144,	128,		0,			// 24:
 	255,	192,	154,		0,			// 25:
@@ -98,46 +98,46 @@ const RGBQUAD ColColTab[] =
 	255,	0,		114,		0,			// 27:
 	255,	0,		174,		0,			// 28:
 	255,	162,	198,		0,			// 29:
-	255,	0,		255,		0,			// 30: fialov·
-	255,	128,	255,		0,			// 31: svÏtle fialov·
-	138,	0,		255,		0,			// 32: fialovÏ Ëerven·
+	255,	0,		255,		0,			// 30: fialov√°
+	255,	128,	255,		0,			// 31: sv√¨tle fialov√°
+	138,	0,		255,		0,			// 32: fialov√¨ √®erven√°
 	192,	128,	255,		0,			// 33:
 	210,	186,	255,		0,			// 34:
 
-	255,	255,	255,		0,			// 35: bÌl· (nepouûije se, vygeneruje se)
-	96,		96,		96,			0,			// 36: öed· (nepouûije se, vygeneruje se)
+	255,	255,	255,		0,			// 35: b√≠l√° (nepou≈æije se, vygeneruje se)
+	96,		96,		96,			0,			// 36: ≈°ed√° (nepou≈æije se, vygeneruje se)
 };
 
-const int ColLev = sizeof(ColLevTab)/sizeof(ColLevTab[0]);	// poËet hladin barev
-const int ColCol = sizeof(ColColTab)/sizeof(ColColTab[0]);	// poËet odstÌn˘ barev
-const int StdColors = ResCols + ColCol*ColLev;			// poËet vlastnÌch palet (zaËÌnajÌ od 0)
-const BYTE WhiteCol = StdColors - 2*ColLev;			// bÌl· barva
-const BYTE BlackCol = StdColors - 1;				// Ëern· barva
+const int ColLev = sizeof(ColLevTab)/sizeof(ColLevTab[0]);	// po√®et hladin barev
+const int ColCol = sizeof(ColColTab)/sizeof(ColColTab[0]);	// po√®et odst√≠n√π barev
+const int StdColors = ResCols + ColCol*ColLev;			// po√®et vlastn√≠ch palet (za√®√≠naj√≠ od 0)
+const BYTE WhiteCol = StdColors - 2*ColLev;			// b√≠l√° barva
+const BYTE BlackCol = StdColors - 1;				// √®ern√° barva
 
 //////////////////////////////////////////////////////////////////////////////
-// lok·lnÌ promÏnnÈ
+// lok√°ln√≠ prom√¨nn√©
 
 #ifdef _MT
-static	CRITICAL_SECTION	ExitCriticalSection;	// kritick· sekce pro konec programu
+static	CRITICAL_SECTION	ExitCriticalSection;	// kritick√° sekce pro konec programu
 #endif
 
-//CString UvText(  _T("Pov2Spr v1.0 - konverze obr·zk˘ na sprajt; (c) Miroslav NÏmeËek\n"));
-//CString HelpText(_T("   POV2SPR vstup v˝stup smÏr˘ klid pohyb prodleva hladina krok dither\n")
-//				 _T("               vstup .... vstupnÌ soubor BMP prvnÌho obr·zku\n")
-//				 _T("               v˝stup ... v˝stupnÌ soubor SPR sprajtu\n")
-//				 _T("               smÏr˘ .... poËet smÏr˘ 0 aû 1000\n")
-//				 _T("               klid ..... poËet klidov˝ch f·zÌ 1 aû 1000\n")
-//				 _T("               pohyb .... poËet f·zÌ pohybu 0 aû 1000\n")
-//				 _T("               prodleva . prodleva mezi f·zemi v milisekund·ch\n")
-//				 _T("               hladina .. hladina k zobrazenÌ, 0=p¯edmÏty\n")
-//				 _T("               krok ..... poËet f·zÌ na jednotkovou vzd·lenost\n")
-//				 _T("               dither ... pouûÌt dithering 1=ano, 0=ne\n")
-//				 _T("stisknÏte <Enter>... "));
+//CString UvText(  _T("Pov2Spr v1.0 - konverze obr√°zk√π na sprajt; (c) Miroslav N√¨me√®ek\n"));
+//CString HelpText(_T("   POV2SPR vstup v√Ωstup sm√¨r√π klid pohyb prodleva hladina krok dither\n")
+//				 _T("               vstup .... vstupn√≠ soubor BMP prvn√≠ho obr√°zku\n")
+//				 _T("               v√Ωstup ... v√Ωstupn√≠ soubor SPR sprajtu\n")
+//				 _T("               sm√¨r√π .... po√®et sm√¨r√π 0 a≈æ 1000\n")
+//				 _T("               klid ..... po√®et klidov√Ωch f√°z√≠ 1 a≈æ 1000\n")
+//				 _T("               pohyb .... po√®et f√°z√≠ pohybu 0 a≈æ 1000\n")
+//				 _T("               prodleva . prodleva mezi f√°zemi v milisekund√°ch\n")
+//				 _T("               hladina .. hladina k zobrazen√≠, 0=p√∏edm√¨ty\n")
+//				 _T("               krok ..... po√®et f√°z√≠ na jednotkovou vzd√°lenost\n")
+//				 _T("               dither ... pou≈æ√≠t dithering 1=ano, 0=ne\n")
+//				 _T("stiskn√¨te <Enter>... "));
 //
-//CString WriteErr1(_T("Chyba z·pisu do v˝stupnÌho souboru "));
+//CString WriteErr1(_T("Chyba z√°pisu do v√Ωstupn√≠ho souboru "));
 //CString WriteErr2(_T("!\n"));
 //
-//CString ReadErr1(_T("Chyba ËtenÌ ze vstupnÌho souboru "));
+//CString ReadErr1(_T("Chyba √®ten√≠ ze vstupn√≠ho souboru "));
 //CString ReadErr2(_T("!\n"));
 
 CString UvText(  _T("Pov2Spr v1.1 - pictures to sprite conversion; (c) Ing. Miroslav Nemecek\n"));
@@ -159,10 +159,10 @@ CString WriteErr2(_T("!\n"));
 CString ReadErr1(_T("Error reading from input file "));
 CString ReadErr2(_T("!\n"));
 
-CString InName;				// vstupnÌ soubor
-CString OutName;			// v˝stupnÌ soubor
-CPicture Picture;			// vstupnÌ obr·zek
-CSprite Sprite;				// v˝stupnÌ sprajt
+CString InName;				// vstupn√≠ soubor
+CString OutName;			// v√Ωstupn√≠ soubor
+CPicture Picture;			// vstupn√≠ obr√°zek
+CSprite Sprite;				// v√Ωstupn√≠ sprajt
 
 /***************************************************************************\
 *																			*
@@ -171,14 +171,14 @@ CSprite Sprite;				// v˝stupnÌ sprajt
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ/vypnutÌ konzoly
+// zapnut√≠/vypnut√≠ konzoly
 
 void ConsoleOnSet(bool on)
 {
 	if (ConsoleOn == on) return;
 	ConsoleOn = on;
 
-// zapnutÌ konzoly
+// zapnut√≠ konzoly
 	if (on)
 	{
 		if ((ConIn == INVALID_HANDLE_VALUE) || (ConIn == NULL))
@@ -201,7 +201,7 @@ void ConsoleOnSet(bool on)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// v˝stup textu na konzolu
+// v√Ωstup textu na konzolu
 
 void ConsoleOut(const CString& text)
 {
@@ -215,7 +215,7 @@ void ConsoleOut(const CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// v˝stup chybovÈho textu na konzolu
+// v√Ωstup chybov√©ho textu na konzolu
 
 void ConsoleErr(const CString& text)
 {
@@ -257,11 +257,11 @@ CString CommandPar(int i)
 	int beg = 0;
 	int len = CommandLine.Length();
 
-// nalezenÌ parametru
+// nalezen√≠ parametru
 	for (; i >= 0; i--)
 	{
 
-// nalezenÌ zaË·tku parametru
+// nalezen√≠ za√®√°tku parametru
 		while (	(pos < len) && 
 				(CommandLine[pos] <= _T(' ')) && 
 				(CommandLine[pos] > 0)) 
@@ -270,7 +270,7 @@ CString CommandPar(int i)
 		}
 		beg = pos;
 
-// nalezenÌ konce parametru
+// nalezen√≠ konce parametru
 		bool uvoz = false;
 		while (	(pos < len) &&
 				(	(CommandLine[pos] < 0) ||
@@ -283,10 +283,10 @@ CString CommandPar(int i)
 		}
 	}
 
-// p¯enesenÌ parametru
+// p√∏enesen√≠ parametru
 	text = CommandLine.Mid(beg, pos-beg);
 
-// zruöenÌ uvozovek
+// zru≈°en√≠ uvozovek
 	pos = 0;
 	len = text.Length();
 	while (pos < len)
@@ -304,7 +304,7 @@ CString CommandPar(int i)
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// inicializace ˙seku inicializaËnÌch/terminaËnÌch funkcÌ
+// inicializace √∫seku inicializa√®n√≠ch/termina√®n√≠ch funkc√≠
 
 void InitTerm(_PVFV* beg, _PVFV* end)
 {
@@ -319,22 +319,22 @@ void InitTerm(_PVFV* beg, _PVFV* end)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// hlavnÌ start programu
+// hlavn√≠ start programu
 
 void mainCRTStartup()
 {
-// ˙schova verze systÈmu
+// √∫schova verze syst√©mu
 	VerzeOS = (int)::GetVersion();
 
 // handle instance programu
 	hInstance = ::GetModuleHandle(NULL);
 
-// inicializace uzamyk·nÌ ukonËenÌ programu
+// inicializace uzamyk√°n√≠ ukon√®en√≠ programu
 #ifdef _MT
 	::InitializeCriticalSection(&ExitCriticalSection);
 #endif
 
-// inicializace spr·vce pamÏti
+// inicializace spr√°vce pam√¨ti
 	if (!MemInit()) 
 	{
 		Exit(EXITCODE_MEMERR);
@@ -345,81 +345,81 @@ void mainCRTStartup()
 	WORD stat;
 	_asm {
 		wait						// synchronizace
-		fnstcw		stat			// uloûenÌ ¯ÌdicÌho slova
+		fnstcw		stat			// ulo≈æen√≠ √∏√≠dic√≠ho slova
 		wait						// synchronizace
-		mov			ax,stat			// stav ¯ÌdicÌho slova
-		and			ah,not 0xc		// implicitnÌ zaokrouhlov·nÌ
-		or			ah,3			// p¯esnost 64 bit˘
-		mov			stat,ax			// nov˝ stav ¯ÌdicÌho slova
-		fldcw		stat			// nastavenÌ novÈho ¯ÌdicÌho slova
+		mov			ax,stat			// stav √∏√≠dic√≠ho slova
+		and			ah,not 0xc		// implicitn√≠ zaokrouhlov√°n√≠
+		or			ah,3			// p√∏esnost 64 bit√π
+		mov			stat,ax			// nov√Ω stav √∏√≠dic√≠ho slova
+		fldcw		stat			// nastaven√≠ nov√©ho √∏√≠dic√≠ho slova
 	}
 #endif
 
-// inicializace dat pr·zdnÈ ikony a pr·zdnÈho obr·zku
+// inicializace dat pr√°zdn√© ikony a pr√°zdn√©ho obr√°zku
 	EmptyPictureData.Data = (BYTE*)MemGet(ICONSIZE);
 	MemFill(EmptyPictureData.Data, ICONSIZE, BackCol);
 
-// inicializace obsluhy sprajt˘
-	InitSprite();						// statick· inicializace sprajt˘
+// inicializace obsluhy sprajt√π
+	InitSprite();						// statick√° inicializace sprajt√π
 
-// inicializace glob·lnÌch objekt˘
+// inicializace glob√°ln√≠ch objekt√π
 	InitTerm(__xc_a, __xc_z);
 
-// inicializace standardnÌho z·hlavÌ BMP
+// inicializace standardn√≠ho z√°hlav√≠ BMP
 	StdBitmapInfo = (BITMAPINFO*) MemGet(sizeof(BITMAPINFO) + sizeof(RGBQUAD)*255);
-	MemFill(StdBitmapInfo, sizeof(BITMAPINFO) + sizeof(RGBQUAD)*255);	// vynulov·nÌ
-	StdBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);	// velikost z·hlavÌ
-	StdBitmapInfo->bmiHeader.biWidth = ICONWIDTH;	// öÌ¯ka bitmapy
-	StdBitmapInfo->bmiHeader.biHeight = ICONHEIGHT;	// v˝öka bitmapy
-	StdBitmapInfo->bmiHeader.biPlanes = 1;			// poËet barevn˝ch rovin
-	StdBitmapInfo->bmiHeader.biBitCount = 8;		// poËet bit˘ na bod
-	StdBitmapInfo->bmiHeader.biCompression = BI_RGB; // nenÌ komprese
-	StdBitmapInfo->bmiHeader.biClrImportant = StdColors; // poËet d˘leûit˝ch palet
+	MemFill(StdBitmapInfo, sizeof(BITMAPINFO) + sizeof(RGBQUAD)*255);	// vynulov√°n√≠
+	StdBitmapInfo->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);	// velikost z√°hlav√≠
+	StdBitmapInfo->bmiHeader.biWidth = ICONWIDTH;	// ≈°√≠√∏ka bitmapy
+	StdBitmapInfo->bmiHeader.biHeight = ICONHEIGHT;	// v√Ω≈°ka bitmapy
+	StdBitmapInfo->bmiHeader.biPlanes = 1;			// po√®et barevn√Ωch rovin
+	StdBitmapInfo->bmiHeader.biBitCount = 8;		// po√®et bit√π na bod
+	StdBitmapInfo->bmiHeader.biCompression = BI_RGB; // nen√≠ komprese
+	StdBitmapInfo->bmiHeader.biClrImportant = StdColors; // po√®et d√πle≈æit√Ωch palet
 
-// vytvo¯enÌ standardnÌch palet
-	RGBQUAD* rgb = StdBitmapInfo->bmiColors;		// zaË·tek tabulky palet
+// vytvo√∏en√≠ standardn√≠ch palet
+	RGBQUAD* rgb = StdBitmapInfo->bmiColors;		// za√®√°tek tabulky palet
 
-// nemÏnit paletu barvu pozadÌ - pouûÌv· se p¯i importu obr·zk˘
-	rgb->rgbRed =	BACKCOLOR_RED;					// pr˘hledn· barva
+// nem√¨nit paletu barvu pozad√≠ - pou≈æ√≠v√° se p√∏i importu obr√°zk√π
+	rgb->rgbRed =	BACKCOLOR_RED;					// pr√πhledn√° barva
 	rgb->rgbGreen =	BACKCOLOR_GREEN;
 	rgb->rgbBlue =	BACKCOLOR_BLUE;
 	rgb++;
 
-	rgb->rgbRed =	SHADCOLOR_RED;					// barva stÌnu
+	rgb->rgbRed =	SHADCOLOR_RED;					// barva st√≠nu
 	rgb->rgbGreen =	SHADCOLOR_GREEN;
 	rgb->rgbBlue =	SHADCOLOR_BLUE;
 	rgb++;
 
 	int i,j,k;
-	for (i = 0; i < (ColCol-2); i++)				// pro vöechny barvy bez bÌlÈ a öedÈ
+	for (i = 0; i < (ColCol-2); i++)				// pro v≈°echny barvy bez b√≠l√© a ≈°ed√©
 	{
-		*rgb = ColColTab[i];						// p¯enesenÌ z·kladnÌ barvy
+		*rgb = ColColTab[i];						// p√∏enesen√≠ z√°kladn√≠ barvy
 
-		for (j = 1; j < ColLev; j++)				// pro vöechny odstÌny
+		for (j = 1; j < ColLev; j++)				// pro v≈°echny odst√≠ny
 		{
-			k = ColLevTab[j];						// n·sobÌcÌ koeficient
-			rgb[j].rgbRed = (BYTE)(rgb->rgbRed*k/256);		// Ëerven·
-			rgb[j].rgbGreen = (BYTE)(rgb->rgbGreen*k/256);	// zelen·
-			rgb[j].rgbBlue = (BYTE)(rgb->rgbBlue*k/256);	// modr·
+			k = ColLevTab[j];						// n√°sob√≠c√≠ koeficient
+			rgb[j].rgbRed = (BYTE)(rgb->rgbRed*k/256);		// √®erven√°
+			rgb[j].rgbGreen = (BYTE)(rgb->rgbGreen*k/256);	// zelen√°
+			rgb[j].rgbBlue = (BYTE)(rgb->rgbBlue*k/256);	// modr√°
 		}
-		rgb += ColLev;								// adresa dalöÌ barvy
+		rgb += ColLev;								// adresa dal≈°√≠ barvy
 	}
 
-	i = WhiteCol;									// index bÌlÈ barvy
-	for (; i <= BlackCol; i++)						// od bÌlÈ barvy aû po Ëernou
+	i = WhiteCol;									// index b√≠l√© barvy
+	for (; i <= BlackCol; i++)						// od b√≠l√© barvy a≈æ po √®ernou
 	{
-		k = (BlackCol-i)*255/(2*ColLev-1);			// odstÌn bÌlÈ barvy
-		rgb->rgbRed = (BYTE)k;						// Ëerven·
-		rgb->rgbGreen = (BYTE)k;					// zelen·
-		rgb->rgbBlue = (BYTE)k;						// modr·
-		rgb++;										// zv˝öenÌ adresy barvy
+		k = (BlackCol-i)*255/(2*ColLev-1);			// odst√≠n b√≠l√© barvy
+		rgb->rgbRed = (BYTE)k;						// √®erven√°
+		rgb->rgbGreen = (BYTE)k;					// zelen√°
+		rgb->rgbBlue = (BYTE)k;						// modr√°
+		rgb++;										// zv√Ω≈°en√≠ adresy barvy
 	}
 
-// vygenerov·nÌ tabulky pro import palet a tabulky palet (pro konverzi BMP)
+// vygenerov√°n√≠ tabulky pro import palet a tabulky palet (pro konverzi BMP)
 	StdPalImport = (BYTE*)MemGet(64 * 64 * 64);		// tabulka pro import palet
 	StdPalImportDither = (BYTE*)MemGet(64 * 64 * 64 * 4);	// tabulka pro import palet s dithering
 
-// naËtenÌ tabulky importu palet
+// na√®ten√≠ tabulky importu palet
 	HRSRC hRes = ::FindResource(hInstance, MAKEINTRESOURCE(IDN_PALIMP), _T("LOADER"));
 	HGLOBAL hData = ::LoadResource(hInstance, hRes);
 	ASSERT((hRes != NULL) && (hData != NULL));
@@ -432,10 +432,10 @@ void mainCRTStartup()
 	if ((hRes == NULL) || (hData == NULL)) Exit(EXITCODE_LOADRES);
 	DeKomp(StdPalImportDither, 64*64*64*4, (BYTE*)::LockResource(hData)+6, ::SizeofResource(hInstance, hRes)-6);
 
-// vytvo¯enÌ konverznÌ tabulky palet pro Ìmport soubor˘ BMP
-	KonvPal = (BYTE*)MemGet(256);			// konverznÌ tabulka palet
+// vytvo√∏en√≠ konverzn√≠ tabulky palet pro √≠mport soubor√π BMP
+	KonvPal = (BYTE*)MemGet(256);			// konverzn√≠ tabulka palet
 
-// ˙schova p¯ÌkazovÈho ¯·dku
+// √∫schova p√∏√≠kazov√©ho √∏√°dku
 	ConsoleOut(UvText);
 	CommandLine = ::GetCommandLine();
 
@@ -486,13 +486,13 @@ void mainCRTStartup()
 
 	Dither = (Int(CommandPar(9)) != 0);
 
-// cyklus p¯es vöechny obr·zky
+// cyklus p√∏es v≈°echny obr√°zky
 	for (int faze = 0; faze < klid+pohyb; faze++)
 	{
 		for (int smer = 0; smer < smeru; smer++)
 		{
 
-// naËtenÌ obr·zku
+// na√®ten√≠ obr√°zku
 			if (!Sprite.At(faze, smer).LoadFile2(InName))
 			{
 				ConsoleOut(ReadErr1);
@@ -501,14 +501,14 @@ void mainCRTStartup()
 				Exit(1);
 			}
 
-// zmenöenÌ obr·zku
+// zmen≈°en√≠ obr√°zku
 //			Sprite.At(faze, smer).HalfSize();
 			Sprite.At(faze, smer).Resize(Sprite.Width(), Sprite.Height());
 
-// zruöenÌ vstupnÌho souboru
+// zru≈°en√≠ vstupn√≠ho souboru
 //			::DeleteFile(InName);
 
-// zv˝öenÌ jmÈna souboru
+// zv√Ω≈°en√≠ jm√©na souboru
 			int pos = InName.RevFind('.');
 			if (pos < 0) 
 			{
@@ -526,7 +526,7 @@ void mainCRTStartup()
 		}
 	}
 
-// z·pis spraju
+// z√°pis spraju
 	if (!Sprite.SaveFile(OutName))
 	{
 		ConsoleOut(WriteErr1);
@@ -540,46 +540,46 @@ void mainCRTStartup()
 };
 
 //////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ programu
+// ukon√®en√≠ programu
 
 void Exit(int code)
 {
-// uzamknutÌ ukonËenÌ programu
+// uzamknut√≠ ukon√®en√≠ programu
 #ifdef _MT
 	::EnterCriticalSection(&ExitCriticalSection);
 #endif
 
-// ukonËenÌ spr·vce pamÏti
+// ukon√®en√≠ spr√°vce pam√¨ti
 	MemTerm();
 
-// uvolnÏnÌ uzamyk·nÌ ukonËenÌ programu
+// uvoln√¨n√≠ uzamyk√°n√≠ ukon√®en√≠ programu
 #ifdef _MT
 	::DeleteCriticalSection(&ExitCriticalSection);
 #endif
 
-// ukonËenÌ programu
+// ukon√®en√≠ programu
 	ExitProcess(code);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// generov·nÌ konverznÌ tabulky barev obr·zku
+// generov√°n√≠ konverzn√≠ tabulky barev obr√°zku
 
 void GenKonvPal(BITMAPINFO* bmp)
 {
-// lok·lnÌ promÏnnÈ
-	int			i;									// ËÌtaË barev
-	int			palet = bmp->bmiHeader.biClrUsed;	// poËet palet v bitmapÏ
-	RGBQUAD*	col = bmp->bmiColors;				// ukazatel barevn˝ch sloûek
-	BYTE*		pal = KonvPal;						// ukazatel konverznÌch palet
-	DWORD		BackColData = *(DWORD*)(StdBitmapInfo->bmiColors + BackCol); // paleta pozadÌ
-	DWORD		ShadColData = *(DWORD*)(StdBitmapInfo->bmiColors + ShadCol); // paleta stÌnu
+// lok√°ln√≠ prom√¨nn√©
+	int			i;									// √®√≠ta√® barev
+	int			palet = bmp->bmiHeader.biClrUsed;	// po√®et palet v bitmap√¨
+	RGBQUAD*	col = bmp->bmiColors;				// ukazatel barevn√Ωch slo≈æek
+	BYTE*		pal = KonvPal;						// ukazatel konverzn√≠ch palet
+	DWORD		BackColData = *(DWORD*)(StdBitmapInfo->bmiColors + BackCol); // paleta pozad√≠
+	DWORD		ShadColData = *(DWORD*)(StdBitmapInfo->bmiColors + ShadCol); // paleta st√≠nu
 
-// p¯Ìprava poËtu palet
+// p√∏√≠prava po√®tu palet
 	if (palet == 0) palet = (1 << bmp->bmiHeader.biBitCount);
 	i = palet;
 	if ((palet < 1) || (palet > 256)) return;
 
-// cyklus p¯es platnÈ barvy
+// cyklus p√∏es platn√© barvy
 	for (; i > 0; i--)
 	{
 		if (*(DWORD*)col == BackColData)
@@ -601,25 +601,25 @@ void GenKonvPal(BITMAPINFO* bmp)
 		col++;
 	}
 
-// vymaz·nÌ zbyl˝ch neplatn˝ch barev (import na Ëernou barvu)
+// vymaz√°n√≠ zbyl√Ωch neplatn√Ωch barev (import na √®ernou barvu)
 	MemFill(pal, 256-palet, BlackCol);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vygenerov·nÌ st¯ednÌ barvy (ze 4 bod˘)
+// vygenerov√°n√≠ st√∏edn√≠ barvy (ze 4 bod√π)
 
 BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 {
-// lok·lnÌ promÏnnÈ
-	int			r = 0;									// Ëerven· sloûka
-	int			g = 0;									// zelen· sloûka
-	int			b = 0;									// modr· sloûka
-	BYTE		n = 0;									// poËet platn˝ch bod˘
+// lok√°ln√≠ prom√¨nn√©
+	int			r = 0;									// √®erven√° slo≈æka
+	int			g = 0;									// zelen√° slo≈æka
+	int			b = 0;									// modr√° slo≈æka
+	BYTE		n = 0;									// po√®et platn√Ωch bod√π
 	RGBQUAD*	rgb;									// ukazatel palet
-	int			shad = 0;								// ËÌtaË stÌn˘
+	int			shad = 0;								// √®√≠ta√® st√≠n√π
 
-// prvnÌ bod
+// prvn√≠ bod
 	if (col1 != BackCol)
 	{
 		if (col1 == ShadCol)
@@ -628,15 +628,15 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col1;			// definice palet bodu
-			r = rgb->rgbRed;								// Ëerven· sloûka
-			g = rgb->rgbGreen;								// zelen· sloûka
-			b = rgb->rgbBlue;								// modr· sloûka
+			r = rgb->rgbRed;								// √®erven√° slo≈æka
+			g = rgb->rgbGreen;								// zelen√° slo≈æka
+			b = rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// druh˝ bod
+// druh√Ω bod
 	if (col2 != BackCol)
 	{
 		if (col2 == ShadCol)
@@ -645,15 +645,15 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col2;			// definice palet bodu
-			r += rgb->rgbRed;								// Ëerven· sloûka
-			g += rgb->rgbGreen;								// zelen· sloûka
-			b += rgb->rgbBlue;								// modr· sloûka
+			r += rgb->rgbRed;								// √®erven√° slo≈æka
+			g += rgb->rgbGreen;								// zelen√° slo≈æka
+			b += rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// t¯etÌ bod
+// t√∏et√≠ bod
 	if (col3 != BackCol)
 	{
 		if (col3 == ShadCol)
@@ -662,15 +662,15 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col3;			// definice palet bodu
-			r += rgb->rgbRed;								// Ëerven· sloûka
-			g += rgb->rgbGreen;								// zelen· sloûka
-			b += rgb->rgbBlue;								// modr· sloûka
+			r += rgb->rgbRed;								// √®erven√° slo≈æka
+			g += rgb->rgbGreen;								// zelen√° slo≈æka
+			b += rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// Ëtvrt˝ bod
+// √®tvrt√Ω bod
 	if (col4 != BackCol)
 	{
 		if (col4 == ShadCol)
@@ -679,27 +679,27 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col4;			// definice palet bodu
-			r += rgb->rgbRed;								// Ëerven· sloûka
-			g += rgb->rgbGreen;								// zelen· sloûka
-			b += rgb->rgbBlue;								// modr· sloûka
+			r += rgb->rgbRed;								// √®erven√° slo≈æka
+			g += rgb->rgbGreen;								// zelen√° slo≈æka
+			b += rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// bod byl stÌn
+// bod byl st√≠n
 	if (shad > 2)
 	{
 		return ShadCol;
 	}
 
-// bod byl pozadÌ
+// bod byl pozad√≠
 	if (n < 2)
 	{
 		return BackCol;
 	}
 
-// jinak vygenerov·nÌ bodu podle barevn˝ch sloûek
+// jinak vygenerov√°n√≠ bodu podle barevn√Ωch slo≈æek
 	else
 	{
 		return PalImport((BYTE)(r/n), (BYTE)(g/n), (BYTE)(b/n));
@@ -707,19 +707,19 @@ BYTE _fastcall ColAvrg(BYTE col1, BYTE col2, BYTE col3, BYTE col4)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vygenerov·nÌ st¯ednÌ barvy (ze 4 bod˘) s ditheringem
+// vygenerov√°n√≠ st√∏edn√≠ barvy (ze 4 bod√π) s ditheringem
 
 BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 {
-// lok·lnÌ promÏnnÈ
-	int			r = 0;									// Ëerven· sloûka
-	int			g = 0;									// zelen· sloûka
-	int			b = 0;									// modr· sloûka
-	BYTE		n = 0;									// poËet platn˝ch bod˘
+// lok√°ln√≠ prom√¨nn√©
+	int			r = 0;									// √®erven√° slo≈æka
+	int			g = 0;									// zelen√° slo≈æka
+	int			b = 0;									// modr√° slo≈æka
+	BYTE		n = 0;									// po√®et platn√Ωch bod√π
 	RGBQUAD*	rgb;									// ukazatel palet
-	int			shad = 0;								// ËÌtaË stÌn˘
+	int			shad = 0;								// √®√≠ta√® st√≠n√π
 
-// prvnÌ bod
+// prvn√≠ bod
 	if (col1 != BackCol)
 	{
 		if (col1 == ShadCol)
@@ -728,15 +728,15 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col1;			// definice palet bodu
-			r = rgb->rgbRed;								// Ëerven· sloûka
-			g = rgb->rgbGreen;								// zelen· sloûka
-			b = rgb->rgbBlue;								// modr· sloûka
+			r = rgb->rgbRed;								// √®erven√° slo≈æka
+			g = rgb->rgbGreen;								// zelen√° slo≈æka
+			b = rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// druh˝ bod
+// druh√Ω bod
 	if (col2 != BackCol)
 	{
 		if (col2 == ShadCol)
@@ -745,15 +745,15 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col2;			// definice palet bodu
-			r += rgb->rgbRed;								// Ëerven· sloûka
-			g += rgb->rgbGreen;								// zelen· sloûka
-			b += rgb->rgbBlue;								// modr· sloûka
+			r += rgb->rgbRed;								// √®erven√° slo≈æka
+			g += rgb->rgbGreen;								// zelen√° slo≈æka
+			b += rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// t¯etÌ bod
+// t√∏et√≠ bod
 	if (col3 != BackCol)
 	{
 		if (col3 == ShadCol)
@@ -762,15 +762,15 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col3;			// definice palet bodu
-			r += rgb->rgbRed;								// Ëerven· sloûka
-			g += rgb->rgbGreen;								// zelen· sloûka
-			b += rgb->rgbBlue;								// modr· sloûka
+			r += rgb->rgbRed;								// √®erven√° slo≈æka
+			g += rgb->rgbGreen;								// zelen√° slo≈æka
+			b += rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// Ëtvrt˝ bod
+// √®tvrt√Ω bod
 	if (col4 != BackCol)
 	{
 		if (col4 == ShadCol)
@@ -779,27 +779,27 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 		}
 		else
 		{
-			n++;											// zv˝öenÌ ËÌtaËe bod˘
+			n++;											// zv√Ω≈°en√≠ √®√≠ta√®e bod√π
 			rgb = StdBitmapInfo->bmiColors + col4;			// definice palet bodu
-			r += rgb->rgbRed;								// Ëerven· sloûka
-			g += rgb->rgbGreen;								// zelen· sloûka
-			b += rgb->rgbBlue;								// modr· sloûka
+			r += rgb->rgbRed;								// √®erven√° slo≈æka
+			g += rgb->rgbGreen;								// zelen√° slo≈æka
+			b += rgb->rgbBlue;								// modr√° slo≈æka
 		}
 	}
 
-// bod byl stÌn
+// bod byl st√≠n
 	if (shad > 2)
 	{
 		return ShadCol;
 	}
 
-// bod byl pozadÌ
+// bod byl pozad√≠
 	if (n < 2)
 	{
 		return BackCol;
 	}
 
-// jinak vygenerov·nÌ bodu podle barevn˝ch sloûek
+// jinak vygenerov√°n√≠ bodu podle barevn√Ωch slo≈æek
 	else
 	{
 		return PalImportDither((BYTE)(r/n), (BYTE)(g/n), (BYTE)(b/n), x, y);
@@ -809,13 +809,13 @@ BYTE ColAvrgDither(BYTE col1, BYTE col2, BYTE col3, BYTE col4, int x, int y)
 /////////////////////////////////////////////////////////////////////////////
 // dekomprese dat
 
-#define MAXLENX 25					// min. dÈlka dlouhÈho ¯etÏzce
-#define MAXLEN (MAXLENX+254)		// maxim·lnÌ dÈlka ¯etÏzce
-#define SUBSTLEN	7				// dÈlka nahrazen· dlouh˝m kÛdem
+#define MAXLENX 25					// min. d√©lka dlouh√©ho √∏et√¨zce
+#define MAXLEN (MAXLENX+254)		// maxim√°ln√≠ d√©lka √∏et√¨zce
+#define SUBSTLEN	7				// d√©lka nahrazen√° dlouh√Ωm k√≥dem
 
 void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 {
-// naËtenÌ jednoho bitu ze stavovÈho slova
+// na√®ten√≠ jednoho bitu ze stavov√©ho slova
 #define DekBit		bit = status & 1;				\
 					status >>= 1;					\
 					if (status == 0)				\
@@ -832,24 +832,24 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 					}
 
 
-	BYTE* dst = dstBuf;				// ukazatel cÌlovÈ adresy
-	int dsti = 0;					// ËÌtaË cÌlov˝ch dat
-	BYTE* src = srcBuf;				// ukazatel zdrojovÈ adresy
-	int srci = 0;					// ËÌtaË zdrojov˝ch dat
-	BYTE* src2;						// pomocn˝ ukazatel
+	BYTE* dst = dstBuf;				// ukazatel c√≠lov√© adresy
+	int dsti = 0;					// √®√≠ta√® c√≠lov√Ωch dat
+	BYTE* src = srcBuf;				// ukazatel zdrojov√© adresy
+	int srci = 0;					// √®√≠ta√® zdrojov√Ωch dat
+	BYTE* src2;						// pomocn√Ω ukazatel
 	int srci2;
 
-	WORD status = 0;				// st¯adaË stavovÈho slova
-	BYTE offsetL, offsetH;			// offset k opakov·nÌ
-	int delka;						// dÈlka k opakov·nÌ
-	int bit;						// 1 = naËten˝ bit
+	WORD status = 0;				// st√∏ada√® stavov√©ho slova
+	BYTE offsetL, offsetH;			// offset k opakov√°n√≠
+	int delka;						// d√©lka k opakov√°n√≠
+	int bit;						// 1 = na√®ten√Ω bit
 
 	for (;;)
 	{
-// naËtenÌ prvnÌho bitu p¯Ìznaku
+// na√®ten√≠ prvn√≠ho bitu p√∏√≠znaku
 		DekBit
 
-// p¯esun bajtu bez komprese
+// p√∏esun bajtu bez komprese
 		if (bit == 0)
 		{
 			if (srci >= srcNum) break;
@@ -861,23 +861,23 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 			srci++;
 		}
 
-// jinak bude opakov·nÌ ¯etÏzce
+// jinak bude opakov√°n√≠ √∏et√¨zce
 		else
 		{
 			offsetH = 0;
 			offsetL = 0;
 
-// prvnÌ bit dÈlky
+// prvn√≠ bit d√©lky
 			DekBit
 			delka = bit;
 
-// zv˝öenÌ ËÌtaËe dÈlky
+// zv√Ω≈°en√≠ √®√≠ta√®e d√©lky
 			for (;;)
 			{
 				delka++;
 				delka++;
 
-// naËtenÌ p¯Ìznaku konce kÛdu
+// na√®ten√≠ p√∏√≠znaku konce k√≥du
 				DekBit
 
 				if (bit == 0)
@@ -893,7 +893,7 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 				}
 			}
 
-// korekce pro n·hradnÌ kÛd
+// korekce pro n√°hradn√≠ k√≥d
 			if (delka >= SUBSTLEN)
 			{
 				if (delka == SUBSTLEN)
@@ -911,7 +911,7 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 				}
 			}
 
-// stanovenÌ offsetu - vyööÌ bajt
+// stanoven√≠ offsetu - vy≈°≈°√≠ bajt
 			if (delka != 2)
 			{
 				DekBit
@@ -960,13 +960,13 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 				}
 			}
 
-// naËtenÌ offsetu - niûöÌ bajt
+// na√®ten√≠ offsetu - ni≈æ≈°√≠ bajt
 			if (srci >= srcNum) break;
 			offsetL = *src;
 			src++;
 			srci++;
 
-// p¯enesenÌ ¯etÏzce
+// p√∏enesen√≠ √∏et√¨zce
 			srci2 = dsti - (WORD)(offsetL + offsetH*256);
 			if (srci2 < 0) break;
 			src2 = &(dstBuf[srci2]);
@@ -987,17 +987,17 @@ void DeKomp(BYTE* dstBuf, int dstNum, BYTE* srcBuf, int srcNum)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod re·lnÈho ËÌsla na celÈ ËÌslo se zaokrouhlenÌm k nejbliûöÌ hodnotÏ
+// p√∏evod re√°ln√©ho √®√≠sla na cel√© √®√≠slo se zaokrouhlen√≠m k nejbli≈æ≈°√≠ hodnot√¨
 
 int Round(double num)
 {
 #ifdef _M_IX86
 
-	DWORD		result;				// v˝sledek operace
+	DWORD		result;				// v√Ωsledek operace
 
 	_asm {
-		fld			num				// naËtenÌ ËÌsla k provedenÌ operace
-		fistp		result			// p¯evod ËÌsla na celÈ ËÌslo
+		fld			num				// na√®ten√≠ √®√≠sla k proveden√≠ operace
+		fistp		result			// p√∏evod √®√≠sla na cel√© √®√≠slo
 	}
 	return result;
 
@@ -1016,27 +1016,27 @@ int Round(double num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod re·lnÈho ËÌsla na celÈ ËÌslo s o¯ÌznutÌm k nule
+// p√∏evod re√°ln√©ho √®√≠sla na cel√© √®√≠slo s o√∏√≠znut√≠m k nule
 
 int Round0(double num)
 {
 #ifdef _M_IX86
 
-	WORD		oldstat;			// star˝ stav ¯ÌdicÌho slova
-	WORD		newstat;			// nov˝ stav ¯ÌdicÌho slova
-	int			result;				// v˝sledek operace
+	WORD		oldstat;			// star√Ω stav √∏√≠dic√≠ho slova
+	WORD		newstat;			// nov√Ω stav √∏√≠dic√≠ho slova
+	int			result;				// v√Ωsledek operace
 
 	_asm {
-		fld			num				// naËtenÌ ËÌsla k provedenÌ operace
+		fld			num				// na√®ten√≠ √®√≠sla k proveden√≠ operace
 		wait						// synchronizace
-		fnstcw		oldstat			// uloûeni ¯ÌdicÌho slova
+		fnstcw		oldstat			// ulo≈æeni √∏√≠dic√≠ho slova
 		wait						// synchronizace
-		mov			ax,oldstat		// star˝ stav ¯ÌdicÌho slova
-		or			ah,0xc			// mÛd zaokrouhlenÌ smÏrem k nule
-		mov			newstat,ax		// nov˝ stav ¯ÌdicÌho slova
-		fldcw		newstat			// nastavenÌ novÈho ¯ÌdicÌho slova
-		fistp		result			// p¯evod ËÌsla na celÈ ËÌslo
-		fldcw		oldstat			// navr·cenÌ p˘vodnÌho ¯ÌdicÌho slova
+		mov			ax,oldstat		// star√Ω stav √∏√≠dic√≠ho slova
+		or			ah,0xc			// m√≥d zaokrouhlen√≠ sm√¨rem k nule
+		mov			newstat,ax		// nov√Ω stav √∏√≠dic√≠ho slova
+		fldcw		newstat			// nastaven√≠ nov√©ho √∏√≠dic√≠ho slova
+		fistp		result			// p√∏evod √®√≠sla na cel√© √®√≠slo
+		fldcw		oldstat			// navr√°cen√≠ p√πvodn√≠ho √∏√≠dic√≠ho slova
 	}
 	return result;
 
@@ -1048,28 +1048,28 @@ int Round0(double num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod re·lnÈho ËÌsla na celÈ ËÌslo se zaokrouhlenÌm nahoru (ke kladnÈ hodnotÏ)
+// p√∏evod re√°ln√©ho √®√≠sla na cel√© √®√≠slo se zaokrouhlen√≠m nahoru (ke kladn√© hodnot√¨)
 
 int RoundP(double num)
 {
 #ifdef _M_IX86
 
-	WORD		oldstat;			// star˝ stav ¯ÌdicÌho slova
-	WORD		newstat;			// nov˝ stav ¯ÌdicÌho slova
-	int			result;				// v˝sledek operace
+	WORD		oldstat;			// star√Ω stav √∏√≠dic√≠ho slova
+	WORD		newstat;			// nov√Ω stav √∏√≠dic√≠ho slova
+	int			result;				// v√Ωsledek operace
 
 	_asm {
-		fld			num				// naËtenÌ ËÌsla k provedenÌ operace
+		fld			num				// na√®ten√≠ √®√≠sla k proveden√≠ operace
 		wait						// synchronizace
-		fnstcw		oldstat			// uloûeni ¯ÌdicÌho slova
+		fnstcw		oldstat			// ulo≈æeni √∏√≠dic√≠ho slova
 		wait						// synchronizace
-		mov			ax,oldstat		// star˝ stav ¯ÌdicÌho slova
-		and			ah,not 0xc;		// vynulov·nÌ ¯ÌdicÌch bit˘ pro zaokrouhlenÌ
-		or			ah,8			// mÛd zaokrouhlenÌ smÏrem nahoru
-		mov			newstat,ax		// nov˝ stav ¯ÌdicÌho slova
-		fldcw		newstat			// nastavenÌ novÈho ¯ÌdicÌho slova
-		fistp		result			// p¯evod ËÌsla na celÈ ËÌslo
-		fldcw		oldstat			// navr·cenÌ p˘vodnÌho ¯ÌdicÌho slova
+		mov			ax,oldstat		// star√Ω stav √∏√≠dic√≠ho slova
+		and			ah,not 0xc;		// vynulov√°n√≠ √∏√≠dic√≠ch bit√π pro zaokrouhlen√≠
+		or			ah,8			// m√≥d zaokrouhlen√≠ sm√¨rem nahoru
+		mov			newstat,ax		// nov√Ω stav √∏√≠dic√≠ho slova
+		fldcw		newstat			// nastaven√≠ nov√©ho √∏√≠dic√≠ho slova
+		fistp		result			// p√∏evod √®√≠sla na cel√© √®√≠slo
+		fldcw		oldstat			// navr√°cen√≠ p√πvodn√≠ho √∏√≠dic√≠ho slova
 	}
 	return result;
 
@@ -1090,28 +1090,28 @@ int RoundP(double num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod re·lnÈho ËÌsla na celÈ ËÌslo se zaokrouhlenÌm dol˘ (k z·pornÈ hodnotÏ)
+// p√∏evod re√°ln√©ho √®√≠sla na cel√© √®√≠slo se zaokrouhlen√≠m dol√π (k z√°porn√© hodnot√¨)
 
 int RoundM(double num)
 {
 #ifdef _M_IX86
 
-	WORD		oldstat;			// star˝ stav ¯ÌdicÌho slova
-	WORD		newstat;			// nov˝ stav ¯ÌdicÌho slova
-	int			result;				// v˝sledek operace
+	WORD		oldstat;			// star√Ω stav √∏√≠dic√≠ho slova
+	WORD		newstat;			// nov√Ω stav √∏√≠dic√≠ho slova
+	int			result;				// v√Ωsledek operace
 
 	_asm {
-		fld			num				// naËtenÌ ËÌsla k provedenÌ operace
+		fld			num				// na√®ten√≠ √®√≠sla k proveden√≠ operace
 		wait						// synchronizace
-		fnstcw		oldstat			// uloûeni ¯ÌdicÌho slova
+		fnstcw		oldstat			// ulo≈æeni √∏√≠dic√≠ho slova
 		wait						// synchronizace
-		mov			ax,oldstat		// star˝ stav ¯ÌdicÌho slova
-		and			ah,not 0xc;		// vynulov·nÌ ¯ÌdicÌch bit˘ pro zaokrouhlenÌ
-		or			ah,4			// mÛd zaokrouhlenÌ smÏrem dol˘
-		mov			newstat,ax		// nov˝ stav ¯ÌdicÌho slova
-		fldcw		newstat			// nastavenÌ novÈho ¯ÌdicÌho slova
-		fistp		result			// p¯evod ËÌsla na celÈ ËÌslo
-		fldcw		oldstat			// navr·cenÌ p˘vodnÌho ¯ÌdicÌho slova
+		mov			ax,oldstat		// star√Ω stav √∏√≠dic√≠ho slova
+		and			ah,not 0xc;		// vynulov√°n√≠ √∏√≠dic√≠ch bit√π pro zaokrouhlen√≠
+		or			ah,4			// m√≥d zaokrouhlen√≠ sm√¨rem dol√π
+		mov			newstat,ax		// nov√Ω stav √∏√≠dic√≠ho slova
+		fldcw		newstat			// nastaven√≠ nov√©ho √∏√≠dic√≠ho slova
+		fistp		result			// p√∏evod √®√≠sla na cel√© √®√≠slo
+		fldcw		oldstat			// navr√°cen√≠ p√πvodn√≠ho √∏√≠dic√≠ho slova
 	}
 	return result;
 

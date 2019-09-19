@@ -3,36 +3,36 @@
 
 /***************************************************************************\
 *																			*
-*					Provádìní programu - èíselnı vıraz						*
+*					ProvÃ¡dÃ¬nÃ­ programu - Ã¨Ã­selnÃ½ vÃ½raz						*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("t", on)			// optimalizace na maximální rychlost
+#pragma optimize("t", on)			// optimalizace na maximÃ¡lnÃ­ rychlost
 
-SYSTEMTIME	SystemTime;				// pomocná promìnná pro obsluhu èasu
+SYSTEMTIME	SystemTime;				// pomocnÃ¡ promÃ¬nnÃ¡ pro obsluhu Ã¨asu
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na int - seøíznuto smìrem k nule
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na int - seÃ¸Ã­znuto smÃ¬rem k nule
 
 //int FInt() { return (int)FNum(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení úhlu s normalizací rozsahu 0 a 2pi
+// naÃ¨tenÃ­ Ãºhlu s normalizacÃ­ rozsahu 0 aÅ¾ 2pi
 
-#pragma warning ( disable: 4725)	// hlášení - problémová instrukce
+#pragma warning ( disable: 4725)	// hlÃ¡Å¡enÃ­ - problÃ©movÃ¡ instrukce
 
 double FAngle()
 {
 
-// naètení úhlu
+// naÃ¨tenÃ­ Ãºhlu
 	double num = FNum();
 
-// bude normalizace pro kladnı úhel > 2pi
+// bude normalizace pro kladnÃ½ Ãºhel > 2pi
 	if (num >= pi2)
 	{
 
-// normalizace velkıch kladnıch úhlù
+// normalizace velkÃ½ch kladnÃ½ch ÃºhlÃ¹
 		if (num >= pi8)
 		{
 			double num2 = pi2;
@@ -40,16 +40,16 @@ double FAngle()
 #ifdef _M_IX86
 
 			_asm {
-				fld			num2		// naètení dìlitele -> ST0
-				fld			num			// naètení dìlence -> ST0, dìlitel -> ST1
-X1:				fprem					// zbytek -> ST0, v ST1 zùstává dìlitel
+				fld			num2		// naÃ¨tenÃ­ dÃ¬litele -> ST0
+				fld			num			// naÃ¨tenÃ­ dÃ¬lence -> ST0, dÃ¬litel -> ST1
+X1:				fprem					// zbytek -> ST0, v ST1 zÃ¹stÃ¡vÃ¡ dÃ¬litel
 				wait					// synchronizace
-				fnstsw		ax			// naètení stavového slova
+				fnstsw		ax			// naÃ¨tenÃ­ stavovÃ©ho slova
 				wait					// synchronizace
-				sahf					// nastavení stavovıch pøíznakù
-				jp			X1			// operace neúplná - pokraèování
-				fstp		num			// vısledek operace
-				fstp		st(0)		// zrušení ST0 (dìlitel)
+				sahf					// nastavenÃ­ stavovÃ½ch pÃ¸Ã­znakÃ¹
+				jp			X1			// operace neÃºplnÃ¡ - pokraÃ¨ovÃ¡nÃ­
+				fstp		num			// vÃ½sledek operace
+				fstp		st(0)		// zruÅ¡enÃ­ ST0 (dÃ¬litel)
 			}
 
 #else
@@ -58,22 +58,22 @@ X1:				fprem					// zbytek -> ST0, v ST1 zùstává dìlitel
 
 #endif
 
-#define MULT 360						// tj. 5*3*3*2*2*2 (asi tak moné násobky)
-#define EPS 0.01						// asi tak pro rozeznání násobku
+#define MULT 360						// tj. 5*3*3*2*2*2 (asi tak moÅ¾nÃ© nÃ¡sobky)
+#define EPS 0.01						// asi tak pro rozeznÃ¡nÃ­ nÃ¡sobku
 
-// zarovnání nepøesností, pokud se jedná o nìjakı podíl úhlu
+// zarovnÃ¡nÃ­ nepÃ¸esnostÃ­, pokud se jednÃ¡ o nÃ¬jakÃ½ podÃ­l Ãºhlu
 			double num3 = num / pi * MULT;
-			int m = Round(num3);		// to jsou moné násobky
-			double num4 = num3 - m;		// odchylka od násobkù
+			int m = Round(num3);		// to jsou moÅ¾nÃ© nÃ¡sobky
+			double num4 = num3 - m;		// odchylka od nÃ¡sobkÃ¹
 			if ((num4 <= EPS) && (num4 >= -EPS))
 			{
-				num = m * pi / MULT;	// zarovnání vısledku
+				num = m * pi / MULT;	// zarovnÃ¡nÃ­ vÃ½sledku
 
 				if (num >= pi2) num += pi2m;
 			}
 		}
 
-// jinak normalizace malıch kladnıch úhlù
+// jinak normalizace malÃ½ch kladnÃ½ch ÃºhlÃ¹
 		else
 		{
 			do 
@@ -85,11 +85,11 @@ X1:				fprem					// zbytek -> ST0, v ST1 zùstává dìlitel
 	else
 	{
 
-// bude normalizace pro zápornı úhel < 0
+// bude normalizace pro zÃ¡pornÃ½ Ãºhel < 0
 		if (num < 0)
 		{
 
-// normalizace velkıch zápornıch úhlù
+// normalizace velkÃ½ch zÃ¡pornÃ½ch ÃºhlÃ¹
 			if (num <= pi8m)
 			{
 				num = -num;
@@ -98,16 +98,16 @@ X1:				fprem					// zbytek -> ST0, v ST1 zùstává dìlitel
 #ifdef _M_IX86
 
 				_asm {
-					fld			num2		// naètení dìlitele -> ST0
-					fld			num			// naètení dìlence -> ST0, dìlitel -> ST1
-X2:					fprem					// zbytek -> ST0, v ST1 zùstává dìlitel
+					fld			num2		// naÃ¨tenÃ­ dÃ¬litele -> ST0
+					fld			num			// naÃ¨tenÃ­ dÃ¬lence -> ST0, dÃ¬litel -> ST1
+X2:					fprem					// zbytek -> ST0, v ST1 zÃ¹stÃ¡vÃ¡ dÃ¬litel
 					wait					// synchronizace
-					fnstsw		ax			// naètení stavového slova
+					fnstsw		ax			// naÃ¨tenÃ­ stavovÃ©ho slova
 					wait					// synchronizace
-					sahf					// nastavení stavovıch pøíznakù
-					jp			X2			// operace neúplná - pokraèování
-					fstp		num			// vısledek operace
-					fstp		st(0)		// zrušení ST0 (dìlitel)
+					sahf					// nastavenÃ­ stavovÃ½ch pÃ¸Ã­znakÃ¹
+					jp			X2			// operace neÃºplnÃ¡ - pokraÃ¨ovÃ¡nÃ­
+					fstp		num			// vÃ½sledek operace
+					fstp		st(0)		// zruÅ¡enÃ­ ST0 (dÃ¬litel)
 				}
 
 #else
@@ -119,19 +119,19 @@ X2:					fprem					// zbytek -> ST0, v ST1 zùstává dìlitel
 				num = pi2 - num;
 				if (num >= pi2) num += pi2m;
 
-// zarovnání nepøesností, pokud se jedná o nìjakı podíl úhlu
+// zarovnÃ¡nÃ­ nepÃ¸esnostÃ­, pokud se jednÃ¡ o nÃ¬jakÃ½ podÃ­l Ãºhlu
 				double num3 = num / pi * MULT;
-				int m = Round(num3);		// to jsou moné násobky
-				double num4 = num3 - m;		// odchylka od násobkù
+				int m = Round(num3);		// to jsou moÅ¾nÃ© nÃ¡sobky
+				double num4 = num3 - m;		// odchylka od nÃ¡sobkÃ¹
 				if ((num4 <= EPS) && (num4 >= -EPS))
 				{
-					num = m * pi / MULT;	// zarovnání vısledku
+					num = m * pi / MULT;	// zarovnÃ¡nÃ­ vÃ½sledku
 
 					if (num >= pi2) num += pi2m;
 				}
 			}
 
-// jinak normalizace malıch zápornıch úhlù
+// jinak normalizace malÃ½ch zÃ¡pornÃ½ch ÃºhlÃ¹
 			else
 			{
 				do 
@@ -145,51 +145,51 @@ X2:					fprem					// zbytek -> ST0, v ST1 zùstává dìlitel
 	return num;
 }
 
-#pragma warning ( default: 4725)	// hlášení - problémová instrukce
+#pragma warning ( default: 4725)	// hlÃ¡Å¡enÃ­ - problÃ©movÃ¡ instrukce
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na int se zaokrouhlením
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na int se zaokrouhlenÃ­m
 
 int FIntR()
 {
-	int result;						// vısledek operace
-	double num;						// naètené èíslo
+	int result;						// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
 
-	num = FNum();					// naètení èísla
+	num = FNum();					// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	result = Round(num);			// zaokrouhlení èísla
+	result = Round(num);			// zaokrouhlenÃ­ Ã¨Ã­sla
 
 #endif
 
-	return result;					// vısledek operace
+	return result;					// vÃ½sledek operace
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na DWORD se zaokrouhlením
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na DWORD se zaokrouhlenÃ­m
 
 DWORD FIntRN()
 {
-	__int64 result;					// vısledek operace
-	double num;						// naètené èíslo
+	__int64 result;					// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
 
-	num = FNum();					// naètení èísla
+	num = FNum();					// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -200,29 +200,29 @@ DWORD FIntRN()
 	}
 	else
 	{
-		result = Round(num);			// zaokrouhlení èísla
+		result = Round(num);			// zaokrouhlenÃ­ Ã¨Ã­sla
 	}
 
 #endif
 
-	return (DWORD)result;				// vısledek operace
+	return (DWORD)result;				// vÃ½sledek operace
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na INT64 se zaokrouhlením
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na INT64 se zaokrouhlenÃ­m
 
 hyper FIntHN()
 {
-	hyper result;					// vısledek operace
-	double num;						// naètené èíslo
+	hyper result;					// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
 
-	num = FNum();					// naètení èísla
+	num = FNum();					// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -239,142 +239,142 @@ hyper FIntHN()
 		}
 		else
 		{
-			result = Round(num);			// zaokrouhlení èísla
+			result = Round(num);			// zaokrouhlenÃ­ Ã¨Ã­sla
 		}
 	}
 
 #endif
 
-	return result;				// vısledek operace
+	return result;				// vÃ½sledek operace
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na grafickou souøadnici X
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na grafickou souÃ¸adnici X
 
 int FIntX()
 {
-	int result;						// vısledek operace
-	double num;						// naètené èíslo
+	int result;						// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
 
-	num = FNum() * ICONWIDTH;		// naètení èísla
+	num = FNum() * ICONWIDTH;		// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	result = Round(num);			// zaokrouhlení èísla
+	result = Round(num);			// zaokrouhlenÃ­ Ã¨Ã­sla
 
 #endif
 
-	return result;					// vısledek operace
+	return result;					// vÃ½sledek operace
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru vynásobeného * 1000 (èas v milisekundách)
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru vynÃ¡sobenÃ©ho * 1000 (Ã¨as v milisekundÃ¡ch)
 
 int FInt1000()
 {
-	int result;						// vısledek operace
-	double num;						// naètené èíslo
+	int result;						// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
 
-	num = FNum() * 1000;			// naètení èísla
+	num = FNum() * 1000;			// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	result = Round(num);			// zaokrouhlení èísla
+	result = Round(num);			// zaokrouhlenÃ­ Ã¨Ã­sla
 
 #endif
 
-	return result;					// vısledek operace
+	return result;					// vÃ½sledek operace
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru vynásobeného * ICONWIDTH * 2 (prùmìr kruhu)
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru vynÃ¡sobenÃ©ho * ICONWIDTH * 2 (prÃ¹mÃ¬r kruhu)
 
 int FIntX2()
 {
-	int result;						// vısledek operace
-	double num;						// naètené èíslo
+	int result;						// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
 
-	num = FNum() * ICONWIDTH * 2;				// naètení èísla
+	num = FNum() * ICONWIDTH * 2;				// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	result = Round(num);			// zaokrouhlení èísla
+	result = Round(num);			// zaokrouhlenÃ­ Ã¨Ã­sla
 
 #endif
 
-	return result;					// vısledek operace
+	return result;					// vÃ½sledek operace
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru vynásobeného * 18.20648 (èas v èasovıch impulsech)
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru vynÃ¡sobenÃ©ho * 18.20648 (Ã¨as v Ã¨asovÃ½ch impulsech)
 
 int FInt18()
 {
-	int result;						// vısledek operace
-	double num;						// naètené èíslo
+	int result;						// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
 
-	num = FNum() * 18.20648;		// naètení èísla
+	num = FNum() * 18.20648;		// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	result = Round(num);			// zaokrouhlení èísla
+	result = Round(num);			// zaokrouhlenÃ­ Ã¨Ã­sla
 
 #endif
 
-	return result;					// vısledek operace
+	return result;					// vÃ½sledek operace
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru s vynásobením * 255 a omezením 0 a 255
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru s vynÃ¡sobenÃ­m * 255 a omezenÃ­m 0 aÅ¾ 255
 
 BYTE FInt255()
 {
-	int result;						// vısledek operace
-	double num;						// naètené èíslo
-	num = FNum() * 255;				// naètení èísla
+	int result;						// vÃ½sledek operace
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
+	num = FNum() * 255;				// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		result			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	result = Round(num);			// naètení èísla se zaokrouhlením
+	result = Round(num);			// naÃ¨tenÃ­ Ã¨Ã­sla se zaokrouhlenÃ­m
 
 #endif
 
@@ -390,24 +390,24 @@ BYTE FInt255()
 		}
 	}
 
-	return (BYTE)result;			// vısledek operace
+	return (BYTE)result;			// vÃ½sledek operace
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na souborovı èas
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na souborovÃ½ Ã¨as
 
 __int64 FNumFileTime()
 {
-	__int64 cas;					// pomocná promìnná k naètení èasu
-	double num;						// naètené èíslo
-	num = FNum() * FILETIMEKONV;	// naètení èísla
+	__int64 cas;					// pomocnÃ¡ promÃ¬nnÃ¡ k naÃ¨tenÃ­ Ã¨asu
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
+	num = FNum() * FILETIMEKONV;	// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		cas				// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		cas				// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -423,24 +423,24 @@ __int64 FNumFileTime()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na systémovı èas
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na systÃ©movÃ½ Ã¨as
 
 void FNumSysTime()
 {
-	__int64 cas = FNumFileTime();	// naètení souborového èasu
+	__int64 cas = FNumFileTime();	// naÃ¨tenÃ­ souborovÃ©ho Ã¨asu
 	::FileTimeToSystemTime((FILETIME*)&cas, &SystemTime);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èíselného parametru pøevedeného na svìtovı souborovı èas
+// naÃ¨tenÃ­ Ã¨Ã­selnÃ©ho parametru pÃ¸evedenÃ©ho na svÃ¬tovÃ½ souborovÃ½ Ã¨as
 
 __int64 FNumFileTimeUTC()
 {
-// naètení lokálního èasu
-	__int64 cas = FNumFileTime();	// naètení lokálního èasu
+// naÃ¨tenÃ­ lokÃ¡lnÃ­ho Ã¨asu
+	__int64 cas = FNumFileTime();	// naÃ¨tenÃ­ lokÃ¡lnÃ­ho Ã¨asu
 
-// pøevod na svìtovı èas
+// pÃ¸evod na svÃ¬tovÃ½ Ã¨as
 	__int64 cas2;
 	::LocalFileTimeToFileTime((FILETIME*)&cas, (FILETIME*)&cas2);
 
@@ -449,34 +449,34 @@ __int64 FNumFileTimeUTC()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení barvy
+// naÃ¨tenÃ­ barvy
 
 int FNumCol()
 {
 /*
-	DWORD barva;					// naètená barva
-	double num;						// naètené èíslo
-	num = FNum();					// naètení èísla
+	DWORD barva;					// naÃ¨tenÃ¡ barva
+	double num;						// naÃ¨tenÃ© Ã¨Ã­slo
+	num = FNum();					// naÃ¨tenÃ­ Ã¨Ã­sla
 
 #ifdef _M_IX86
 
 	_asm {
-		fld			num				// naètení èísla do koprocesoru
-		fistp		barva			// pøevod èísla na celé èíslo
+		fld			num				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		barva			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	barva = Round(num);				// zaokrouhlení èísla
+	barva = Round(num);				// zaokrouhlenÃ­ Ã¨Ã­sla
 
 #endif
 */
-	return PalImport(FIntRN());		// vısledek operace
+	return PalImport(FIntRN());		// vÃ½sledek operace
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení souøadnic Petra (ECX = adresa x, EDX = adresa y)
+// naÃ¨tenÃ­ souÃ¸adnic Petra (ECX = adresa x, EDX = adresa y)
 
 bool _fastcall PetrXY(int& x, int& y)
 {
@@ -484,10 +484,10 @@ bool _fastcall PetrXY(int& x, int& y)
 
 	__asm {
 		mov			eax,[Sprite.m_Data]								// adresa dat sprajtu
-		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilX  // naètení souøadnice X
-		fistp		dword ptr [ecx]									// pøevod X na celé èíslo
-		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilY  // naètení souøadnice Y
-		fistp		dword ptr [edx]									// pøevod Y na celé èíslo
+		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilX  // naÃ¨tenÃ­ souÃ¸adnice X
+		fistp		dword ptr [ecx]									// pÃ¸evod X na celÃ© Ã¨Ã­slo
+		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilY  // naÃ¨tenÃ­ souÃ¸adnice Y
+		fistp		dword ptr [edx]									// pÃ¸evod Y na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -497,13 +497,13 @@ bool _fastcall PetrXY(int& x, int& y)
 
 #endif
 
-// kontrola platnosti souøadnice
+// kontrola platnosti souÃ¸adnice
 	return (((DWORD)x < (DWORD)WidthN) && ((DWORD)y < (DWORD)HeightN));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení souøadnic Petry (ECX = adresa x, EDX = adresa y)
+// naÃ¨tenÃ­ souÃ¸adnic Petry (ECX = adresa x, EDX = adresa y)
 
 bool _fastcall Petr2XY(int& x, int& y)
 {
@@ -511,10 +511,10 @@ bool _fastcall Petr2XY(int& x, int& y)
 
 	__asm {
 		mov			eax,[Sprite.m_Data]								// adresa dat sprajtu
-		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilX  // naètení souøadnice X
-		fistp		dword ptr [ecx]									// pøevod X na celé èíslo
-		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilY  // naètení souøadnice Y
-		fistp		dword ptr [edx]									// pøevod Y na celé èíslo
+		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilX  // naÃ¨tenÃ­ souÃ¸adnice X
+		fistp		dword ptr [ecx]									// pÃ¸evod X na celÃ© Ã¨Ã­slo
+		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilY  // naÃ¨tenÃ­ souÃ¸adnice Y
+		fistp		dword ptr [edx]									// pÃ¸evod Y na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -524,27 +524,27 @@ bool _fastcall Petr2XY(int& x, int& y)
 
 #endif
 
-// kontrola platnosti souøadnice
+// kontrola platnosti souÃ¸adnice
 	return (((DWORD)x < (DWORD)WidthN) && ((DWORD)y < (DWORD)HeightN));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pozice Petra (NULL=neplatná)
+// naÃ¨tenÃ­ pozice Petra (NULL=neplatnÃ¡)
 
 MAPITEM* PetrXYMap()
 {
-	int x;			// souøadnice X Petra
-	int y;			// souøadnice Y Petra
+	int x;			// souÃ¸adnice X Petra
+	int y;			// souÃ¸adnice Y Petra
 
 #ifdef _M_IX86
 
 	__asm {
 		mov			eax,[Sprite.m_Data]								// adresa dat sprajtu
-		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilX  // naètení souøadnice X
-		fistp		dword ptr x										// pøevod X na celé èíslo
-		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilY  // naètení souøadnice Y
-		fistp		dword ptr y										// pøevod Y na celé èíslo
+		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilX  // naÃ¨tenÃ­ souÃ¸adnice X
+		fistp		dword ptr x										// pÃ¸evod X na celÃ© Ã¨Ã­slo
+		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilY  // naÃ¨tenÃ­ souÃ¸adnice Y
+		fistp		dword ptr y										// pÃ¸evod Y na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -554,7 +554,7 @@ MAPITEM* PetrXYMap()
 
 #endif
 
-// kontrola platnosti souøadnice
+// kontrola platnosti souÃ¸adnice
 	if (((DWORD)x < (DWORD)WidthN) && ((DWORD)y < (DWORD)HeightN))
 	{
 		return &Map[0].At(x, y);
@@ -567,21 +567,21 @@ MAPITEM* PetrXYMap()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pozice Petry (NULL=neplatná)
+// naÃ¨tenÃ­ pozice Petry (NULL=neplatnÃ¡)
 
 MAPITEM* Petr2XYMap()
 {
-	int x;			// souøadnice X Petra
-	int y;			// souøadnice Y Petra
+	int x;			// souÃ¸adnice X Petra
+	int y;			// souÃ¸adnice Y Petra
 
 #ifdef _M_IX86
 
 	__asm {
 		mov			eax,[Sprite.m_Data]								// adresa dat sprajtu
-		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilX  // naètení souøadnice X
-		fistp		dword ptr x										// pøevod X na celé èíslo
-		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilY  // naètení souøadnice Y
-		fistp		dword ptr y										// pøevod Y na celé èíslo
+		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilX  // naÃ¨tenÃ­ souÃ¸adnice X
+		fistp		dword ptr x										// pÃ¸evod X na celÃ© Ã¨Ã­slo
+		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilY  // naÃ¨tenÃ­ souÃ¸adnice Y
+		fistp		dword ptr y										// pÃ¸evod Y na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -591,7 +591,7 @@ MAPITEM* Petr2XYMap()
 
 #endif
 
-// kontrola platnosti souøadnice
+// kontrola platnosti souÃ¸adnice
 	if (((DWORD)x < (DWORD)WidthN) && ((DWORD)y < (DWORD)HeightN))
 	{
 		return &Map[0].At(x, y);
@@ -604,7 +604,7 @@ MAPITEM* Petr2XYMap()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøíští souøadnice Petra (ECX = adresa x, EDX = adresa y)
+// naÃ¨tenÃ­ pÃ¸Ã­Å¡tÃ­ souÃ¸adnice Petra (ECX = adresa x, EDX = adresa y)
 
 bool _fastcall PetrXYNext(int& x, int& y)
 {
@@ -612,10 +612,10 @@ bool _fastcall PetrXYNext(int& x, int& y)
 
 	__asm {
 		mov			eax,[Sprite.m_Data]								// adresa dat sprajtu
-		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilX  // naètení souøadnice X
-		fistp		dword ptr [ecx]									// pøevod X na celé èíslo
-		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilY  // naètení souøadnice Y
-		fistp		dword ptr [edx]									// pøevod Y na celé èíslo
+		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilX  // naÃ¨tenÃ­ souÃ¸adnice X
+		fistp		dword ptr [ecx]									// pÃ¸evod X na celÃ© Ã¨Ã­slo
+		fld			qword ptr [eax + 0*TYPE CSprite]CSprite.m_CilY  // naÃ¨tenÃ­ souÃ¸adnice Y
+		fistp		dword ptr [edx]									// pÃ¸evod Y na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -627,36 +627,36 @@ bool _fastcall PetrXYNext(int& x, int& y)
 
 	switch (16 * Sprite[0].SmerN() / Sprite[0].Smer())
 	{
-	case 1:					// vpravo mírnì vzhùru
-	case 2:					// vpravo vzhùru
-	case 3:					// mírnì vpravo vzhùru
+	case 1:					// vpravo mÃ­rnÃ¬ vzhÃ¹ru
+	case 2:					// vpravo vzhÃ¹ru
+	case 3:					// mÃ­rnÃ¬ vpravo vzhÃ¹ru
 		x++;
 
-	case 4:					// vzhùru
+	case 4:					// vzhÃ¹ru
 		y++;
 		break;
 
-	case 5:					// mírnì vlevo vzhùru
-	case 6:					// vlevo vzhùru
-	case 7:					// vlevo mírnì vzhùru
+	case 5:					// mÃ­rnÃ¬ vlevo vzhÃ¹ru
+	case 6:					// vlevo vzhÃ¹ru
+	case 7:					// vlevo mÃ­rnÃ¬ vzhÃ¹ru
 		y++;
 
 	case 8:					// vlevo
 		x--;
 		break;
 
-	case 9:					// vlevo mírnì dolù
-	case 10:				// vlevo dolù
-	case 11:				// mírnì vlevo dolù
+	case 9:					// vlevo mÃ­rnÃ¬ dolÃ¹
+	case 10:				// vlevo dolÃ¹
+	case 11:				// mÃ­rnÃ¬ vlevo dolÃ¹
 		x--;
 
-	case 12:				// dolù
+	case 12:				// dolÃ¹
 		y--;
 		break;
 
-	case 13:				// mírnì vpravo dolù
-	case 14:				// vpravo dolù
-	case 15:				// vpravo mírnì dolù
+	case 13:				// mÃ­rnÃ¬ vpravo dolÃ¹
+	case 14:				// vpravo dolÃ¹
+	case 15:				// vpravo mÃ­rnÃ¬ dolÃ¹
 		y--;
 
 	case 0:					// vpravo
@@ -664,13 +664,13 @@ bool _fastcall PetrXYNext(int& x, int& y)
 		break;
 	}
 
-// kontrola platnosti souøadnice
+// kontrola platnosti souÃ¸adnice
 	return (((DWORD)x < (DWORD)WidthN) && ((DWORD)y < (DWORD)HeightN));
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøíští souøadnice Petry (ECX = adresa x, EDX = adresa y)
+// naÃ¨tenÃ­ pÃ¸Ã­Å¡tÃ­ souÃ¸adnice Petry (ECX = adresa x, EDX = adresa y)
 
 bool _fastcall Petr2XYNext(int& x, int& y)
 {
@@ -678,10 +678,10 @@ bool _fastcall Petr2XYNext(int& x, int& y)
 
 	__asm {
 		mov			eax,[Sprite.m_Data]								// adresa dat sprajtu
-		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilX  // naètení souøadnice X
-		fistp		dword ptr [ecx]									// pøevod X na celé èíslo
-		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilY  // naètení souøadnice Y
-		fistp		dword ptr [edx]									// pøevod Y na celé èíslo
+		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilX  // naÃ¨tenÃ­ souÃ¸adnice X
+		fistp		dword ptr [ecx]									// pÃ¸evod X na celÃ© Ã¨Ã­slo
+		fld			qword ptr [eax + 1*TYPE CSprite]CSprite.m_CilY  // naÃ¨tenÃ­ souÃ¸adnice Y
+		fistp		dword ptr [edx]									// pÃ¸evod Y na celÃ© Ã¨Ã­slo
 	}
 
 #else
@@ -693,36 +693,36 @@ bool _fastcall Petr2XYNext(int& x, int& y)
 
 	switch (16 * Sprite[1].SmerN() / Sprite[1].Smer())
 	{
-	case 1:					// vpravo mírnì vzhùru
-	case 2:					// vpravo vzhùru
-	case 3:					// mírnì vpravo vzhùru
+	case 1:					// vpravo mÃ­rnÃ¬ vzhÃ¹ru
+	case 2:					// vpravo vzhÃ¹ru
+	case 3:					// mÃ­rnÃ¬ vpravo vzhÃ¹ru
 		x++;
 
-	case 4:					// vzhùru
+	case 4:					// vzhÃ¹ru
 		y++;
 		break;
 
-	case 5:					// mírnì vlevo vzhùru
-	case 6:					// vlevo vzhùru
-	case 7:					// vlevo mírnì vzhùru
+	case 5:					// mÃ­rnÃ¬ vlevo vzhÃ¹ru
+	case 6:					// vlevo vzhÃ¹ru
+	case 7:					// vlevo mÃ­rnÃ¬ vzhÃ¹ru
 		y++;
 
 	case 8:					// vlevo
 		x--;
 		break;
 
-	case 9:					// vlevo mírnì dolù
-	case 10:				// vlevo dolù
-	case 11:				// mírnì vlevo dolù
+	case 9:					// vlevo mÃ­rnÃ¬ dolÃ¹
+	case 10:				// vlevo dolÃ¹
+	case 11:				// mÃ­rnÃ¬ vlevo dolÃ¹
 		x--;
 
-	case 12:				// dolù
+	case 12:				// dolÃ¹
 		y--;
 		break;
 
-	case 13:				// mírnì vpravo dolù
-	case 14:				// vpravo dolù
-	case 15:				// vpravo mírnì dolù
+	case 13:				// mÃ­rnÃ¬ vpravo dolÃ¹
+	case 14:				// vpravo dolÃ¹
+	case 15:				// vpravo mÃ­rnÃ¬ dolÃ¹
 		y--;
 
 	case 0:					// vpravo
@@ -730,7 +730,7 @@ bool _fastcall Petr2XYNext(int& x, int& y)
 		break;
 	}
 
-// kontrola platnosti souøadnice
+// kontrola platnosti souÃ¸adnice
 	return (((DWORD)x < (DWORD)WidthN) && ((DWORD)y < (DWORD)HeightN));
 }
 
@@ -742,45 +742,45 @@ bool _fastcall Petr2XYNext(int& x, int& y)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// funkce s návratem èíselné hodnoty
+// funkce s nÃ¡vratem Ã¨Ã­selnÃ© hodnoty
 
 double FNumFunc()
 {
-// úschova indexu volané funkce
+// Ãºschova indexu volanÃ© funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// Ãºschova indexu promÃ¬nnÃ© s nÃ¡vratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnnıch
+// inicializace lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 
-// úschova ukazatele programu
+// Ãºschova ukazatele programu
 	EXECITEM* oldexe = ExecItem;
 
-// nová adresa programu
+// novÃ¡ adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoÃ¸enÃ­
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
 
-// vyvolání funkce
+// vyvolÃ¡nÃ­ funkce
 		FCommand();
 	}
 	Hloubka++;
 
-// návrat adresy programu
+// nÃ¡vrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení poadavku o pøerušení
+// zruÅ¡enÃ­ poÅ¾adavku o pÃ¸eruÅ¡enÃ­
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
-// návrat vısledku operace
+// nÃ¡vrat vÃ½sledku operace
 	double result = Real[Real.Num() - res];
 
-// zrušení lokálních promìnnıch
+// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 
 	return result;
@@ -789,18 +789,18 @@ double FNumFunc()
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								promÃ¬nnÃ©									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// èíselná konstanta
+// Ã¨Ã­selnÃ¡ konstanta
 
 double FNumConst() { return ExecItem[-1].Double; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globální promìnná (Data = index)
+// globÃ¡lnÃ­ promÃ¬nnÃ¡ (Data = index)
 
 double FNumObj()
 {
@@ -813,14 +813,14 @@ double FNumObj()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globalní promìnná v seznamu (Data = index, List = seznam)
+// globalnÃ­ promÃ¬nnÃ¡ v seznamu (Data = index, List = seznam)
 
 double FNumObjList()
 {
 // index seznamu
 	int list = ExecItem[-1].List;
 
-// index promìnné, inkrementace indexu seznamu
+// index promÃ¬nnÃ©, inkrementace indexu seznamu
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
@@ -830,11 +830,11 @@ double FNumObjList()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální promìnná (Data = index)
+// lokÃ¡lnÃ­ promÃ¬nnÃ¡ (Data = index)
 
 double FNumLoc()
 {
-// index promìnné
+// index promÃ¬nnÃ©
 	int inx = Real.Num() - ExecItem[-1].Data;
 
 // data
@@ -843,14 +843,14 @@ double FNumLoc()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální promìnná v seznamu (Data = index, List = seznam)
+// lokÃ¡lnÃ­ promÃ¬nnÃ¡ v seznamu (Data = index, List = seznam)
 
 double FNumLocList()
 {
 // index seznamu
 	int list = List.Num() - ExecItem[-1].List;
 
-// index promìnné, inkrementace indexu seznamu
+// index promÃ¬nnÃ©, inkrementace indexu seznamu
 	int inx = Real.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
@@ -860,7 +860,7 @@ double FNumLocList()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// index globálního seznamu
+// index globÃ¡lnÃ­ho seznamu
 
 double FGetList()
 {
@@ -873,7 +873,7 @@ double FGetList()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// index lokálního seznamu
+// index lokÃ¡lnÃ­ho seznamu
 
 double FGetListLoc()
 {
@@ -886,46 +886,46 @@ double FGetListLoc()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inkrementace globálního seznamu
+// inkrementace globÃ¡lnÃ­ho seznamu
 
 double FGetListAuto()
 {
 // index seznamu
 	int list = ExecItem[-1].List;
 
-// nastavení nové hodnoty inkrementace
+// nastavenÃ­ novÃ© hodnoty inkrementace
 	return List[list].Auto;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inkrementace lokálního seznamu
+// inkrementace lokÃ¡lnÃ­ho seznamu
 
 double FGetListAutoLoc()
 {
 // index seznamu
 	int list = List.Num() - ExecItem[-1].List;
 
-// nastavení nové hodnoty inkrementace
+// nastavenÃ­ novÃ© hodnoty inkrementace
 	return List[list].Auto;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice X globálního sprajtu (Data = index)
+// souÃ¸adnice X globÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteX()
 {
 // index sprajtu
 	int inx = ExecItem[-1].Data;
 
-// souøadnice X sprajtu
+// souÃ¸adnice X sprajtu
 	return Sprite[inx].AktX();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice X sprajtu v seznamu (Data = index, List = seznam)
+// souÃ¸adnice X sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteXList()
 {
@@ -936,26 +936,26 @@ double FGetSpriteXList()
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// souøadnice X sprajtu
+// souÃ¸adnice X sprajtu
 	return Sprite[inx].AktX();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice X lokálního sprajtu (Data = index)
+// souÃ¸adnice X lokÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteXLoc()
 {
 // index sprajtu
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 
-// souøadnice X sprajtu
+// souÃ¸adnice X sprajtu
 	return Sprite[inx].AktX();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice X lokálního sprajtu v seznamu (Data = index, List = seznam)
+// souÃ¸adnice X lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteXLocList()
 {
@@ -966,26 +966,26 @@ double FGetSpriteXLocList()
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// souøadnice X sprajtu
+// souÃ¸adnice X sprajtu
 	return Sprite[inx].AktX();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice Y globálního sprajtu (Data = index)
+// souÃ¸adnice Y globÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteY()
 {
 // index sprajtu
 	int inx = ExecItem[-1].Data;
 
-// souøadnice Y sprajtu
+// souÃ¸adnice Y sprajtu
 	return Sprite[inx].AktY();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice Y sprajtu v seznamu (Data = index, List = seznam)
+// souÃ¸adnice Y sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteYList()
 {
@@ -996,26 +996,26 @@ double FGetSpriteYList()
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// souøadnice Y sprajtu
+// souÃ¸adnice Y sprajtu
 	return Sprite[inx].AktY();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice Y lokálního sprajtu (Data = index)
+// souÃ¸adnice Y lokÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteYLoc()
 {
 // index sprajtu
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 
-// souøadnice Y sprajtu
+// souÃ¸adnice Y sprajtu
 	return Sprite[inx].AktY();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souøadnice Y lokálního sprajtu v seznamu (Data = index, List = seznam)
+// souÃ¸adnice Y lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteYLocList()
 {
@@ -1026,26 +1026,26 @@ double FGetSpriteYLocList()
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// souøadnice Y sprajtu
+// souÃ¸adnice Y sprajtu
 	return Sprite[inx].AktY();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// smìr globálního sprajtu (Data = index)
+// smÃ¬r globÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteSmer()
 {
 // index sprajtu
 	int inx = ExecItem[-1].Data;
 
-// smìr sprajtu
+// smÃ¬r sprajtu
 	return Sprite[inx].SmerR();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// smìr sprajtu v seznamu (Data = index, List = seznam)
+// smÃ¬r sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteSmerList()
 {
@@ -1056,26 +1056,26 @@ double FGetSpriteSmerList()
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// smìr sprajtu
+// smÃ¬r sprajtu
 	return Sprite[inx].SmerR();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// smìr lokálního sprajtu (Data = index)
+// smÃ¬r lokÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteSmerLoc()
 {
 // index sprajtu
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 
-// smìr sprajtu
+// smÃ¬r sprajtu
 	return Sprite[inx].SmerR();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// smìr lokálního sprajtu v seznamu (Data = index, List = seznam)
+// smÃ¬r lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteSmerLocList()
 {
@@ -1086,26 +1086,26 @@ double FGetSpriteSmerLocList()
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// smìr sprajtu
+// smÃ¬r sprajtu
 	return Sprite[inx].SmerR();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// fáze globálního sprajtu (Data = index)
+// fÃ¡ze globÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteFaze()
 {
 // index sprajtu
 	int inx = ExecItem[-1].Data;
 
-// fáze sprajtu
+// fÃ¡ze sprajtu
 	return SpriteNextFaze(inx);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// fáze sprajtu v seznamu (Data = index, List = seznam)
+// fÃ¡ze sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteFazeList()
 {
@@ -1116,26 +1116,26 @@ double FGetSpriteFazeList()
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// fáze sprajtu
+// fÃ¡ze sprajtu
 	return SpriteNextFaze(inx);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// fáze lokálního sprajtu (Data = index)
+// fÃ¡ze lokÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteFazeLoc()
 {
 // index sprajtu
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 
-// fáze sprajtu
+// fÃ¡ze sprajtu
 	return SpriteNextFaze(inx);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// fáze lokálního sprajtu v seznamu (Data = index, List = seznam)
+// fÃ¡ze lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteFazeLocList()
 {
@@ -1146,13 +1146,13 @@ double FGetSpriteFazeLocList()
 	int inx = Sprite.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// fáze sprajtu
+// fÃ¡ze sprajtu
 	return SpriteNextFaze(inx);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stav globálního sprajtu (Data = index)
+// stav globÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteStatus()
 {
@@ -1182,7 +1182,7 @@ double FGetSpriteStatusList()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stav lokálního sprajtu (Data = index)
+// stav lokÃ¡lnÃ­ho sprajtu (Data = index)
 
 double FGetSpriteStatusLoc()
 {
@@ -1195,7 +1195,7 @@ double FGetSpriteStatusLoc()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stav lokálního sprajtu v seznamu (Data = index, List = seznam)
+// stav lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
 
 double FGetSpriteStatusLocList()
 {
@@ -1218,13 +1218,13 @@ double FGetSpriteStatusLocList()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// Petr - smìr
+// Petr - smÃ¬r
 
 double FGetSmer() { return Sprite[0].SmerR(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Petra - smìr
+// Petra - smÃ¬r
 
 double FGetSmer2() { return Sprite[1].SmerR(); }
 
@@ -1254,14 +1254,14 @@ double FGetPozY2() { return Sprite[1].AktY(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla - Petr
+// naÃ¨tenÃ­ Ã¨Ã­sla - Petr
 
 double _fastcall FGetSwcN(int mask, char rot)
 {
-// naètení pozice Petra
+// naÃ¨tenÃ­ pozice Petra
 	MAPITEM* item = PetrXYMap();
 
-// naètení èísla, je-li platná pozice
+// naÃ¨tenÃ­ Ã¨Ã­sla, je-li platnÃ¡ pozice
 	if (item != NULL)
 	{
 		return (((int)item->Param & mask) >> rot);
@@ -1275,14 +1275,14 @@ double FGetSwcN3() { return FGetSwcN(MAP_VALUE3_MASK, MAP_VALUE3_ROT); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla - Petra
+// naÃ¨tenÃ­ Ã¨Ã­sla - Petra
 
 double _fastcall FGet2SwcN(int mask, char rot)
 {
-// naètení pozice Petry
+// naÃ¨tenÃ­ pozice Petry
 	MAPITEM* item = Petr2XYMap();
 
-// naètení èísla, je-li platná pozice
+// naÃ¨tenÃ­ Ã¨Ã­sla, je-li platnÃ¡ pozice
 	if (item != NULL)
 	{
 		return (((int)item->Param & mask) >> rot);
@@ -1297,7 +1297,7 @@ double FGetSwcN32() { return FGet2SwcN(MAP_VALUE3_MASK, MAP_VALUE3_ROT); };
 
 /***************************************************************************\
 *																			*
-*								vıpoèty										*
+*								vÃ½poÃ¨ty										*
 *																			*
 \***************************************************************************/
 
@@ -1362,13 +1362,13 @@ double FArcCoTg() { return atan(1/FNum()); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// celé èíslo
+// celÃ© Ã¨Ã­slo
 
 double FNumInt() { return (int)FNum(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// desetinná èást èísla
+// desetinnÃ¡ Ã¨Ã¡st Ã¨Ã­sla
 
 double FFrac()
 {
@@ -1378,7 +1378,7 @@ double FFrac()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// absolutní hodnota
+// absolutnÃ­ hodnota
 
 double FAbs() { return fabs(FNum()); };
 
@@ -1390,89 +1390,89 @@ double FSqrt() { return sqrt(FNum()); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// faktoriál
+// faktoriÃ¡l
 
 double FFact()
 {
-// naètení èísla pro vıpoèet faktoriálu
+// naÃ¨tenÃ­ Ã¨Ã­sla pro vÃ½poÃ¨et faktoriÃ¡lu
 	int citac = FIntR();
 
-// kladná hodnota v povoleném rozsahu
+// kladnÃ¡ hodnota v povolenÃ©m rozsahu
 	if ((DWORD)citac <= MAXFACT+1) return FactTab[citac];
 
-// pøeteèení kladnım smìrem
+// pÃ¸eteÃ¨enÃ­ kladnÃ½m smÃ¬rem
 	if (citac > 0) return FactTab[MAXFACT+1];
 
-// absolutní hodnota èísla
+// absolutnÃ­ hodnota Ã¨Ã­sla
 	citac = -citac;
 
-// pøeteèení zápornım smìrem
+// pÃ¸eteÃ¨enÃ­ zÃ¡pornÃ½m smÃ¬rem
 	if (citac > MAXFACT) return -FactTab[MAXFACT+1];
 
-// hodnota v záporném smìru (lichá èísla jsou záporná)
+// hodnota v zÃ¡pornÃ©m smÃ¬ru (lichÃ¡ Ã¨Ã­sla jsou zÃ¡pornÃ¡)
 	if (citac & 1) return -FactTab[citac];
 	return FactTab[citac];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// náhodné èíslo s násobkem
+// nÃ¡hodnÃ© Ã¨Ã­slo s nÃ¡sobkem
 
 double FRand() { return FNum() * Rand(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// náhodné èíslo bez násobku
+// nÃ¡hodnÃ© Ã¨Ã­slo bez nÃ¡sobku
 
 double FRand0() { return Rand(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod stupòù na radiány
+// pÃ¸evod stupÃ²Ã¹ na radiÃ¡ny
 
 double FDegRad() { return FNum() * degrad; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod radiánù na stupnì
+// pÃ¸evod radiÃ¡nÃ¹ na stupnÃ¬
 
 double FRadDeg() { return FNum() * raddeg; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// dekadickı logaritmus
+// dekadickÃ½ logaritmus
 
 double FLog() { return log10(FNum()); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøirozenı logaritmus
+// pÃ¸irozenÃ½ logaritmus
 
 double FLn() { return log(FNum()); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøirozenı exponent
+// pÃ¸irozenÃ½ exponent
 
 double FExp() { return exp(FNum()); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor ADD (Data = poèet prvkù - 1)
+// operÃ¡tor ADD (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FAdd()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	double num = FNum();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// operace s dalším èíslem
+// operace s dalÅ¡Ã­m Ã¨Ã­slem
 		num += FNum();
 	}
 	return num;
@@ -1480,27 +1480,27 @@ double FAdd()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor SUB pro 1 prvek
+// operÃ¡tor SUB pro 1 prvek
 
 double FSub1() { return -FNum(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor SUB (Data = poèet prvkù - 1)
+// operÃ¡tor SUB (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FSub()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	double num = FNum();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// operace s dalším èíslem (tento zápis je efektivnìjší pro pøeklad)
+// operace s dalÅ¡Ã­m Ã¨Ã­slem (tento zÃ¡pis je efektivnÃ¬jÅ¡Ã­ pro pÃ¸eklad)
 		num = -(FNum() - num);
 	}
 	return num;
@@ -1508,51 +1508,51 @@ double FSub()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor MUL (Data = poèet prvkù - 1)
+// operÃ¡tor MUL (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FMul()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	double num = FNum();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// operace s dalším èíslem
+// operace s dalÅ¡Ã­m Ã¨Ã­slem
 		num *= FNum();
 	}
 	return num;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor DIV pro 1 prvek
+// operÃ¡tor DIV pro 1 prvek
 
 double FDiv1() { return 1/FNum(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor DIV (Data = poèet prvkù - 1)
+// operÃ¡tor DIV (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FDiv()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	double num = FNum();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího èísla
+// naÃ¨tenÃ­ dalÅ¡Ã­ho Ã¨Ã­sla
 		double num2 = FNum();
 
-// operace s dalším èíslem (v pøípadì 0 / 0 bude vısledek 1)
+// operace s dalÅ¡Ã­m Ã¨Ã­slem (v pÃ¸Ã­padÃ¬ 0 / 0 bude vÃ½sledek 1)
 		if (num == num2)
 		{
 			num = 1;
@@ -1568,7 +1568,7 @@ double FDiv()
 /////////////////////////////////////////////////////////////////////////////
 // operace MOD
 
-#pragma warning ( disable: 4725)	// hlášení - problémová instrukce
+#pragma warning ( disable: 4725)	// hlÃ¡Å¡enÃ­ - problÃ©movÃ¡ instrukce
 
 double NumMod(double num1, double num2)
 {
@@ -1590,16 +1590,16 @@ double NumMod(double num1, double num2)
 #ifdef _M_IX86
 
 	_asm {
-		fld			num2			// naètení dìlitele -> ST0
-		fld			num1			// naètení dìlence -> ST0, dìlitel -> ST1
-X1:		fprem						// zbytek -> ST0, v ST1 zùstává dìlitel
+		fld			num2			// naÃ¨tenÃ­ dÃ¬litele -> ST0
+		fld			num1			// naÃ¨tenÃ­ dÃ¬lence -> ST0, dÃ¬litel -> ST1
+X1:		fprem						// zbytek -> ST0, v ST1 zÃ¹stÃ¡vÃ¡ dÃ¬litel
 		wait						// synchronizace
-		fnstsw		ax				// naètení stavového slova
+		fnstsw		ax				// naÃ¨tenÃ­ stavovÃ©ho slova
 		wait						// synchronizace
-		sahf						// nastavení stavovıch pøíznakù
-		jp			X1				// operace neúplná - pokraèování
-		fstp		num				// vısledek operace
-		fstp		st(0)			// zrušení ST0 (dìlitel)
+		sahf						// nastavenÃ­ stavovÃ½ch pÃ¸Ã­znakÃ¹
+		jp			X1				// operace neÃºplnÃ¡ - pokraÃ¨ovÃ¡nÃ­
+		fstp		num				// vÃ½sledek operace
+		fstp		st(0)			// zruÅ¡enÃ­ ST0 (dÃ¬litel)
 	}
 
 #else
@@ -1611,46 +1611,46 @@ X1:		fprem						// zbytek -> ST0, v ST1 zùstává dìlitel
 		return num;
 }
 
-#pragma warning ( default: 4725)	// hlášení - problémová instrukce
+#pragma warning ( default: 4725)	// hlÃ¡Å¡enÃ­ - problÃ©movÃ¡ instrukce
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor MOD (Data = poèet prvkù - 1)
+// operÃ¡tor MOD (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FMod()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	double num = FNum();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// operace s dalším èíslem
-		double num2 = FNum();			// naètení dalšího èísla
+// operace s dalÅ¡Ã­m Ã¨Ã­slem
+		double num2 = FNum();			// naÃ¨tenÃ­ dalÅ¡Ã­ho Ã¨Ã­sla
 		num = NumMod(num, num2);
 	}
 	return num;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor MOCNINA (Data = poèet prvkù - 1)
+// operÃ¡tor MOCNINA (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FMocn()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	double num = FNum();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// umocnìní dalším èíslem
+// umocnÃ¬nÃ­ dalÅ¡Ã­m Ã¨Ã­slem
 		num = pow(num, FNum());
 	}
 	return num;
@@ -1658,7 +1658,7 @@ double FMocn()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// druhá mocnina
+// druhÃ¡ mocnina
 
 double FNumSqr()
 {
@@ -1674,43 +1674,43 @@ double FNumSqr()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení jasu barvy
+// nastavenÃ­ jasu barvy
 
 double FColorLevel()
 {
-// naètení barvy, pøevod na základní jas barvy
+// naÃ¨tenÃ­ barvy, pÃ¸evod na zÃ¡kladnÃ­ jas barvy
 	int col = FNumCol();
 	if ((col == BackCol) || (col == ShadCol)) col = BlackCol;
 	col = (col - ResCols) / ColLev * ColLev + ResCols;
 
-// pøíprava poètu odstínù pro barvu
-	int cols = ColLev + 1;				// poèet odstínù pro bìné barvy
-	if (col >= StdColors - 2*ColLev)	// je to bílá nebo šedá?
+// pÃ¸Ã­prava poÃ¨tu odstÃ­nÃ¹ pro barvu
+	int cols = ColLev + 1;				// poÃ¨et odstÃ­nÃ¹ pro bÃ¬Å¾nÃ© barvy
+	if (col >= StdColors - 2*ColLev)	// je to bÃ­lÃ¡ nebo Å¡edÃ¡?
 	{
-		col = StdColors - 2*ColLev;		// korekce na bílou barvu
-		cols = 2*ColLev;				// poèet odstínù pro bílou barvu
+		col = StdColors - 2*ColLev;		// korekce na bÃ­lou barvu
+		cols = 2*ColLev;				// poÃ¨et odstÃ­nÃ¹ pro bÃ­lou barvu
 	}
 
-// naètení jasu barvy
+// naÃ¨tenÃ­ jasu barvy
 	double level = FNum()*(cols-1);
 
-// pøevod na index jasu barvy
+// pÃ¸evod na index jasu barvy
 	int jas;
 	
 #ifdef _M_IX86
 
 	_asm {
-		fld			level				// naètení èísla do koprocesoru
-		fistp		jas					// pøevod èísla na celé èíslo
+		fld			level				// naÃ¨tenÃ­ Ã¨Ã­sla do koprocesoru
+		fistp		jas					// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
 	}
 
 #else
 
-	jas = Round(level);					// zaokrouhlení èísla
+	jas = Round(level);					// zaokrouhlenÃ­ Ã¨Ã­sla
 
 #endif
 	
-// omezení indexu jasu barvy
+// omezenÃ­ indexu jasu barvy
 	if ((DWORD)jas >= (DWORD)cols)
 	{
 		if (jas < 0)
@@ -1723,53 +1723,53 @@ double FColorLevel()
 		}
 	}
 
-// pro jas 0 se pouije èerná barva
+// pro jas 0 se pouÅ¾ije Ã¨ernÃ¡ barva
 	if (jas == 0) return 0;
 
-// vısledná barva
+// vÃ½slednÃ¡ barva
 	return PalExport(col + cols - 1 - jas);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// syntéza barvy
+// syntÃ©za barvy
 
 double FColorSynth()
 {
 	DWORD color;
-	((BYTE*)&color)[0] = FInt255();		// èervená
-	((BYTE*)&color)[1] = FInt255();		// zelená
-	((BYTE*)&color)[2] = FInt255();		// modrá
+	((BYTE*)&color)[0] = FInt255();		// Ã¨ervenÃ¡
+	((BYTE*)&color)[1] = FInt255();		// zelenÃ¡
+	((BYTE*)&color)[2] = FInt255();		// modrÃ¡
 	((BYTE*)&color)[3] = (BYTE)(FInt255() ^ 0xff);// alfa
 	return color;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy bodu
+// zjiÅ¡tÃ¬nÃ­ barvy bodu
 
 double FGetPoint()
 {
-// naètení souøadnic bodu
+// naÃ¨tenÃ­ souÃ¸adnic bodu
 	int x = FIntX();
 	int y = FIntY();
 
-// implicitní barva - pozadí
+// implicitnÃ­ barva - pozadÃ­
 	int col = BackCol;
 
-// kontrola platnosty souøadnice bodu
+// kontrola platnosty souÃ¸adnice bodu
 	if (((DWORD)x < (DWORD)Width) && ((DWORD)y < (DWORD)Height))
 	{
 
-// naètení bodu
+// naÃ¨tenÃ­ bodu
 		col = BackBuf[x + y*WidthByte];
 	}
 
-// vısledná barva
+// vÃ½slednÃ¡ barva
 	return PalExport(col);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní šíøky obrázku
+// zjiÅ¡tÃ¬nÃ­ Å¡Ã­Ã¸ky obrÃ¡zku
 
 double FGetPicWidth()
 {
@@ -1780,7 +1780,7 @@ double FGetPicWidth()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní vıšky obrázku
+// zjiÅ¡tÃ¬nÃ­ vÃ½Å¡ky obrÃ¡zku
 
 double FGetPicHeight()
 {
@@ -1791,7 +1791,7 @@ double FGetPicHeight()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní šíøky pole k zobrazení centrovaného textu
+// zjiÅ¡tÃ¬nÃ­ Å¡Ã­Ã¸ky pole k zobrazenÃ­ centrovanÃ©ho textu
 
 double FGetGraphAreaWidth()
 {
@@ -1802,69 +1802,69 @@ double FGetGraphAreaWidth()
 
 /***************************************************************************\
 *																			*
-*							obsluha èasu									*
+*							obsluha Ã¨asu									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení aktuálního èasu
+// naÃ¨tenÃ­ aktuÃ¡lnÃ­ho Ã¨asu
 
 double FGetTimeCurrent()
 {
-// naètení aktuálního èasu
+// naÃ¨tenÃ­ aktuÃ¡lnÃ­ho Ã¨asu
 	SYSTEMTIME systime;
 	::GetLocalTime(&systime);
 
-// pøevod na souborovı èas
+// pÃ¸evod na souborovÃ½ Ã¨as
 	__int64 cas;
 	::SystemTimeToFileTime(&systime, (FILETIME*)&cas);
 
-// návrat vısledku
+// nÃ¡vrat vÃ½sledku
 	return (double)cas / FILETIMEKONV;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod na zvìtovı èas
+// pÃ¸evod na zvÃ¬tovÃ½ Ã¨as
 
 double FTimeUtc()
 {
-// naètení èasu s pøevodem na svìtovı èas
+// naÃ¨tenÃ­ Ã¨asu s pÃ¸evodem na svÃ¬tovÃ½ Ã¨as
 	__int64 cas = FNumFileTimeUTC();
 
-// návrat vısledku
+// nÃ¡vrat vÃ½sledku
 	return (double)cas / FILETIMEKONV;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod na místní èas
+// pÃ¸evod na mÃ­stnÃ­ Ã¨as
 
 double FTimeLocal()
 {
-// naètení èasu k pøevodu
+// naÃ¨tenÃ­ Ã¨asu k pÃ¸evodu
 	__int64 cas = FNumFileTime();
 
-// pøevod èísla
+// pÃ¸evod Ã¨Ã­sla
 	__int64 cas2;
 	::FileTimeToLocalFileTime((FILETIME*)&cas, (FILETIME*)&cas2);
 
-// návrat vısledku
+// nÃ¡vrat vÃ½sledku
 	return (double)cas2 / FILETIMEKONV;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// syntéza èasu
+// syntÃ©za Ã¨asu
 
 double FTimeComp()
 {
-// naètení sloek èasu
+// naÃ¨tenÃ­ sloÅ¾ek Ã¨asu
 	SYSTEMTIME systime;
 
 	int i = FIntR();
 	if (i < 1601) i = 1601;
-	if (i > 9999) i = 9999;		// system povoluje a 30000, ale kvùli zobrazení radìji jen 4 èíslice
+	if (i > 9999) i = 9999;		// system povoluje aÅ¾ 30000, ale kvÃ¹li zobrazenÃ­ radÃ¬ji jen 4 Ã¨Ã­slice
 	systime.wYear = (WORD)i;
 
 	i = FIntR();
@@ -1933,7 +1933,7 @@ double FTimeComp()
 	}
 	systime.wMilliseconds = (WORD)i;
 
-// provedení konverze
+// provedenÃ­ konverze
 	__int64 cas;
 	if (!::SystemTimeToFileTime(&systime, (FILETIME*)&cas))
 	{
@@ -1964,103 +1964,103 @@ double FTimeComp()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení roku z èasu
+// naÃ¨tenÃ­ roku z Ã¨asu
 
 double FGetTimeYear() { FNumSysTime(); return SystemTime.wYear; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení mìsíce z èasu
+// naÃ¨tenÃ­ mÃ¬sÃ­ce z Ã¨asu
 
 double FGetTimeMonth() { FNumSysTime(); return SystemTime.wMonth; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení dne z èasu
+// naÃ¨tenÃ­ dne z Ã¨asu
 
 double FGetTimeDay() { FNumSysTime(); return SystemTime.wDay; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení dne v tıdnu z èasu
+// naÃ¨tenÃ­ dne v tÃ½dnu z Ã¨asu
 
 double FGetTimeWeek() { FNumSysTime(); return SystemTime.wDayOfWeek; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení hodiny z èasu
+// naÃ¨tenÃ­ hodiny z Ã¨asu
 
 double FGetTimeHour() { FNumSysTime(); return SystemTime.wHour; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení minuty z èasu
+// naÃ¨tenÃ­ minuty z Ã¨asu
 
 double FGetTimeMin() { FNumSysTime(); return SystemTime.wMinute; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení sekundy z èasu
+// naÃ¨tenÃ­ sekundy z Ã¨asu
 
 double FGetTimeSec() { FNumSysTime(); return SystemTime.wSecond; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení milisekundy z èasu
+// naÃ¨tenÃ­ milisekundy z Ã¨asu
 
 double FGetTimeMSec() { FNumSysTime(); return SystemTime.wMilliseconds; }
 
 
 /***************************************************************************\
 *																			*
-*							obsluha myši									*
+*							obsluha myÅ¡i									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení souøadnice X myši
+// naÃ¨tenÃ­ souÃ¸adnice X myÅ¡i
 
 double FMouseX() { return MouseX; }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení souøadnice Y myši
+// naÃ¨tenÃ­ souÃ¸adnice Y myÅ¡i
 
 double FMouseY() { return MouseY; }
 
 
 /***************************************************************************\
 *																			*
-*							obsluha dialogù									*
+*							obsluha dialogÃ¹									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog box s návratem hodnoty
+// dialog box s nÃ¡vratem hodnoty
 
 double FNumDialogBox()
 {
-// naètení textu nadpisu okna
+// naÃ¨tenÃ­ textu nadpisu okna
 	CString nadpis;
 	FText(nadpis);
 
-// naètení textu hlášení
+// naÃ¨tenÃ­ textu hlÃ¡Å¡enÃ­
 	CString text;
 	FText(text);
 
-// èíslo ikony
+// Ã¨Ã­slo ikony
 	int icon = FIntR();
 
-// typ tlaèítek
+// typ tlaÃ¨Ã­tek
 	int but = FIntR();
 
-// implicitní tlaèítko
+// implicitnÃ­ tlaÃ¨Ã­tko
 	int def = FIntR();
 
-// pro nadpis se pouije první øádek textu
+// pro nadpis se pouÅ¾ije prvnÃ­ Ã¸Ã¡dek textu
 	int crlf = nadpis.Find(13);
 	if (crlf >= 0) nadpis.Delete(crlf);
 
-// korekce povolenıch hodnot
+// korekce povolenÃ½ch hodnot
 	if ((DWORD)icon > 4) icon = 0;
 	if ((DWORD)but > 5) but = 0;
 	if (def < 1) def = 1;
@@ -2081,17 +2081,17 @@ double FNumDialogBox()
 
 	if (def > buts) def = buts;
 
-// vypnutí celoobrazovkového módu
+// vypnutÃ­ celoobrazovkovÃ©ho mÃ³du
 //	SetFullScreen(false);
 
 #ifndef _MINI
 	D3Render(true);
 #endif // _MINI
 
-// pøekreslení displeje pøed vyvoláním dialogu
+// pÃ¸ekreslenÃ­ displeje pÃ¸ed vyvolÃ¡nÃ­m dialogu
 	ReDisp();
 
-// vyvolání dialogu
+// vyvolÃ¡nÃ­ dialogu
 	IsOverlay = true;
 
 	int result = ::MessageBox(Win[DialogParent].Wnd, text, nadpis,
@@ -2106,16 +2106,16 @@ double FNumDialogBox()
 
 /***************************************************************************\
 *																			*
-*							obsluha souborù									*
+*							obsluha souborÃ¹									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní velikosti disku
+// zjiÅ¡tÃ¬nÃ­ velikosti disku
 
 double FGetDiskSize()
 {	
-// naètení informací o disku
+// naÃ¨tenÃ­ informacÃ­ o disku
 	GetDiskSpace();
 
 // velikost disku
@@ -2124,47 +2124,47 @@ double FGetDiskSize()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní volného místa disku
+// zjiÅ¡tÃ¬nÃ­ volnÃ©ho mÃ­sta disku
 
 double FGetDiskFree()
 {	
-// naètení informací o disku
+// naÃ¨tenÃ­ informacÃ­ o disku
 	GetDiskSpace();
 
-// volné místo disku
+// volnÃ© mÃ­sto disku
 	return (double)DiskFree;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení sériového èísla disku
+// naÃ¨tenÃ­ sÃ©riovÃ©ho Ã¨Ã­sla disku
 
 double FGetDiskSerial()
 {
-// promìnná k naètení èísla
+// promÃ¬nnÃ¡ k naÃ¨tenÃ­ Ã¨Ã­sla
 	__int64 serial = 0;
 
-// naètení sériového èísla disku
+// naÃ¨tenÃ­ sÃ©riovÃ©ho Ã¨Ã­sla disku
 	::GetVolumeInformation(NULL, NULL, 0, (DWORD*)&serial, NULL, NULL, NULL, 0);
 
-// naètenı údaj (pøi chybì nebo kdy èíslo není zùstane = 0)
+// naÃ¨tenÃ½ Ãºdaj (pÃ¸i chybÃ¬ nebo kdyÅ¾ Ã¨Ã­slo nenÃ­ zÃ¹stane = 0)
 	return (double)serial;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení informací o vstupním souboru (false = chyba)
+// naÃ¨tenÃ­ informacÃ­ o vstupnÃ­m souboru (false = chyba)
 
 bool FGetFileInfo(WIN32_FIND_DATA* wfd)
 {
-// uzavøení souborù
+// uzavÃ¸enÃ­ souborÃ¹
 	FileClose();
 
-// kontrola zadání jména
+// kontrola zadÃ¡nÃ­ jmÃ©na
 	if (FileRead.IsNotEmpty())
 	{
 
-// nalezení souboru
+// nalezenÃ­ souboru
 		HANDLE find = ::FindFirstFile(FileRead, wfd);
 		if (find != INVALID_HANDLE_VALUE)
 		{
@@ -2182,21 +2182,21 @@ bool FGetFileInfo(WIN32_FIND_DATA* wfd)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// èas vytvoøení souboru
+// Ã¨as vytvoÃ¸enÃ­ souboru
 
 double FGetFileCreate()
 {
-// naètení informací o souboru
+// naÃ¨tenÃ­ informacÃ­ o souboru
 	WIN32_FIND_DATA wfd;
 	if (FGetFileInfo(&wfd))
 	{
 
-// pøevod èasu na lokální èas
+// pÃ¸evod Ã¨asu na lokÃ¡lnÃ­ Ã¨as
 		__int64 cas;
 		if (::FileTimeToLocalFileTime(&wfd.ftCreationTime, (FILETIME*)&cas))
 		{
 
-// návrat vısledku
+// nÃ¡vrat vÃ½sledku
 			return (double)cas / FILETIMEKONV;
 		}
 	}
@@ -2207,21 +2207,21 @@ double FGetFileCreate()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// èas ètení ze souboru
+// Ã¨as Ã¨tenÃ­ ze souboru
 
 double FGetFileOpen()
 {
-// naètení informací o souboru
+// naÃ¨tenÃ­ informacÃ­ o souboru
 	WIN32_FIND_DATA wfd;
 	if (FGetFileInfo(&wfd))
 	{
 
-// pøevod èasu na lokální èas
+// pÃ¸evod Ã¨asu na lokÃ¡lnÃ­ Ã¨as
 		__int64 cas;
 		if (::FileTimeToLocalFileTime(&wfd.ftLastAccessTime, (FILETIME*)&cas))
 		{
 
-// návrat vısledku
+// nÃ¡vrat vÃ½sledku
 			return (double)cas / FILETIMEKONV;
 		}
 	}
@@ -2232,21 +2232,21 @@ double FGetFileOpen()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// èas zápisu do souboru
+// Ã¨as zÃ¡pisu do souboru
 
 double FGetFileModi()
 {
-// naètení informací o souboru
+// naÃ¨tenÃ­ informacÃ­ o souboru
 	WIN32_FIND_DATA wfd;
 	if (FGetFileInfo(&wfd))
 	{
 
-// pøevod èasu na lokální èas
+// pÃ¸evod Ã¨asu na lokÃ¡lnÃ­ Ã¨as
 		__int64 cas;
 		if (::FileTimeToLocalFileTime(&wfd.ftLastWriteTime, (FILETIME*)&cas))
 		{
 
-// návrat vısledku
+// nÃ¡vrat vÃ½sledku
 			return (double)cas / FILETIMEKONV;
 		}
 	}
@@ -2257,29 +2257,29 @@ double FGetFileModi()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// offset pro ètení ze souboru
+// offset pro Ã¨tenÃ­ ze souboru
 
 double FGetFileReadOff() { return FileReadOff; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// offset pro zápis do souboru
+// offset pro zÃ¡pis do souboru
 
 double FGetFileWriteOff() { return FileWriteOff; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní velikosti souboru
+// zjiÅ¡tÃ¬nÃ­ velikosti souboru
 
 double FGetFileSize()
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	int size = 0;
 
-// vyprázdìní zápisového bufferu a otevøení ètecího souboru
+// vyprÃ¡zdÃ¬nÃ­ zÃ¡pisovÃ©ho bufferu a otevÃ¸enÃ­ Ã¨tecÃ­ho souboru
 	if (FileWriteFlush() && FileReadOpen())
 	{
-// zjištìní velikosti souboru
+// zjiÅ¡tÃ¬nÃ­ velikosti souboru
 		int res = ::GetFileSize(FileReadHandle, NULL);
 
 // chyba
@@ -2293,37 +2293,37 @@ double FGetFileSize()
 		}
 	}
 
-// zjištìná velikost
+// zjiÅ¡tÃ¬nÃ¡ velikost
 	return size;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// délka textu s pevnou délkou
+// dÃ©lka textu s pevnou dÃ©lkou
 
 double FGetFileTextNLen() { return FileTextNLen; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení typu disku
+// naÃ¨tenÃ­ typu disku
 
 double FFileDiskType() { return ::GetDriveType(NULL); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru bajt se znaménkem
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru bajt se znamÃ©nkem
 
 double FGetFileByteS() { return (char)FileReadByte(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru bajt bez znaménka
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru bajt bez znamÃ©nka
 
 double FGetFileByteU() { return (BYTE)FileReadByte(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru slovo se znaménkem
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru slovo se znamÃ©nkem
 
 double FGetFileWordS()
 { 
@@ -2335,7 +2335,7 @@ double FGetFileWordS()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru slovo bez znaménka
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru slovo bez znamÃ©nka
 
 double FGetFileWordU()
 { 
@@ -2347,7 +2347,7 @@ double FGetFileWordU()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru 3 bajty se znaménkem
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru 3 bajty se znamÃ©nkem
 
 double FGetFile3ByteS()
 { 
@@ -2366,7 +2366,7 @@ double FGetFile3ByteS()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru 3 bajty bez znaménka
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru 3 bajty bez znamÃ©nka
 
 double FGetFile3ByteU()
 { 
@@ -2379,7 +2379,7 @@ double FGetFile3ByteU()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru dvojslovo se znaménkem
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru dvojslovo se znamÃ©nkem
 
 double FGetFileDWordS()
 { 
@@ -2393,7 +2393,7 @@ double FGetFileDWordS()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru dvojslovo bez znaménka
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru dvojslovo bez znamÃ©nka
 
 double FGetFileDWordU()
 { 
@@ -2408,7 +2408,7 @@ double FGetFileDWordU()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru FLOAT
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru FLOAT
 
 double FGetFileFloat()
 {
@@ -2422,7 +2422,7 @@ double FGetFileFloat()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru DOUBLE
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru DOUBLE
 
 double FGetFileDouble()
 {
@@ -2446,37 +2446,37 @@ double FGetFileDouble()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní délky CD
+// zjiÅ¡tÃ¬nÃ­ dÃ©lky CD
 
 double FCDGetLength()
 {
-// aktualizace údajù o CD
+// aktualizace ÃºdajÃ¹ o CD
 	CDAkt();
 
-// délka CD
+// dÃ©lka CD
 	return (double)CDLength / 1000;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní poètu stop CD
+// zjiÅ¡tÃ¬nÃ­ poÃ¨tu stop CD
 
 double FCDGetTracks()
 {
-// aktualizace údajù o CD
+// aktualizace ÃºdajÃ¹ o CD
 	CDAkt();
 
-// poèet stop CD
+// poÃ¨et stop CD
 	return CDTracks;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pozice CD
+// zjiÅ¡tÃ¬nÃ­ pozice CD
 
 double FCDGetPos()
 {
-// aktualizace údajù o CD
+// aktualizace ÃºdajÃ¹ o CD
 	CDAkt();
 
 // pozice CD
@@ -2485,40 +2485,40 @@ double FCDGetPos()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní aktivní stopy CD
+// zjiÅ¡tÃ¬nÃ­ aktivnÃ­ stopy CD
 
 double FCDGetTrack()
 {
-// aktualizace údajù o CD
+// aktualizace ÃºdajÃ¹ o CD
 	CDAkt();
 
-// aktivní stopa
+// aktivnÃ­ stopa
 	return CDTrack;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní délky aktivní stopy
+// zjiÅ¡tÃ¬nÃ­ dÃ©lky aktivnÃ­ stopy
 
 double FCDGetTrackLength()
 {
-// aktualizace údajù o CD
+// aktualizace ÃºdajÃ¹ o CD
 	CDAkt();
 
-// délka stopy CD
+// dÃ©lka stopy CD
 	return (double)CDTrackLength / 1000;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pozice aktivní stopy CD
+// zjiÅ¡tÃ¬nÃ­ pozice aktivnÃ­ stopy CD
 
 double FCDGetTrackPos()
 {
-// aktualizace údajù o CD
+// aktualizace ÃºdajÃ¹ o CD
 	CDAkt();
 
-// pozice aktivní stopy CD
+// pozice aktivnÃ­ stopy CD
 	return (double)CDTrackPos / 1000;
 }
 
@@ -2530,7 +2530,7 @@ double FCDGetTrackPos()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// ïélka pøehrávané hudby
+// Ã¯Ã©lka pÃ¸ehrÃ¡vanÃ© hudby
 
 double FMusicLen() { return (double)MusicDelka / 1000; }
 
@@ -2548,7 +2548,7 @@ double FGetMusicPos() { return (double)MusicAktPos / 1000; }
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// poèet bitù na vzorek
+// poÃ¨et bitÃ¹ na vzorek
 
 double FGetSoundBit()
 {
@@ -2559,7 +2559,7 @@ double FGetSoundBit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vzorkovací kmitoèet
+// vzorkovacÃ­ kmitoÃ¨et
 
 double FGetSoundFreq()
 {
@@ -2569,7 +2569,7 @@ double FGetSoundFreq()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// délka zvuku
+// dÃ©lka zvuku
 
 double FGetSoundLength()
 {
@@ -2599,7 +2599,7 @@ double FGetSoundPos() { return GetSoundPos(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// rozlišovací kód
+// rozliÅ¡ovacÃ­ kÃ³d
 
 double FGetSoundDistinguish()
 {
@@ -2609,26 +2609,26 @@ double FGetSoundDistinguish()
 
 /***************************************************************************\
 *																			*
-*								obsluha textù								*
+*								obsluha textÃ¹								*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// délka textu
+// dÃ©lka textu
 
 double FTextLen()
 {
-// délka textu
+// dÃ©lka textu
 	int len;
 
-// následující úsek ponechat v závorkách, aby se vyvolal
-// destruktor textu døíve ne se èíslo uloí do koprocesoru:
+// nÃ¡sledujÃ­cÃ­ Ãºsek ponechat v zÃ¡vorkÃ¡ch, aby se vyvolal
+// destruktor textu dÃ¸Ã­ve neÅ¾ se Ã¨Ã­slo uloÅ¾Ã­ do koprocesoru:
 	{
-// naètení textu
+// naÃ¨tenÃ­ textu
 		CString text;
 		FText(text);
 
-// délka textu
+// dÃ©lka textu
 		len = text.Length();
 	}
 	return len;
@@ -2636,63 +2636,63 @@ double FTextLen()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøevod textu na èíslo
+// pÃ¸evod textu na Ã¨Ã­slo
 
 double FTextScan()
 {
 // adresa textu
 	LPCTSTR txt;
 
-// následující úsek ponechat v závorkách, aby se vyvolal
-// destruktor textu døíve ne se èíslo uloí do koprocesoru:
+// nÃ¡sledujÃ­cÃ­ Ãºsek ponechat v zÃ¡vorkÃ¡ch, aby se vyvolal
+// destruktor textu dÃ¸Ã­ve neÅ¾ se Ã¨Ã­slo uloÅ¾Ã­ do koprocesoru:
 	{
-// naètení textu
+// naÃ¨tenÃ­ textu
 		CString text;
 		FText(text);
 		txt = text;
 	}
 
-// pøevod textu na èíslo
+// pÃ¸evod textu na Ã¨Ã­slo
 	return Double(txt);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení textu
+// nalezenÃ­ textu
 
 double FTextFind()
 {
-// hledanı text
+// hledanÃ½ text
 	CString subtext;
 	FText(subtext);
 
-// prohledávanı text
+// prohledÃ¡vanÃ½ text
 	CString text;
 	FText(text);
 
-// nalezení textu
+// nalezenÃ­ textu
 	int pos = text.Find(subtext);
 	return pos;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// abecední poøadí znaku
+// abecednÃ­ poÃ¸adÃ­ znaku
 
 double FTextOrd()
 {
-// pomocnı registr
+// pomocnÃ½ registr
 	int result;
 
-// následující úsek ponechat v závorkách, aby se vyvolal
-// destruktor textu døíve ne se èíslo uloí do koprocesoru:
+// nÃ¡sledujÃ­cÃ­ Ãºsek ponechat v zÃ¡vorkÃ¡ch, aby se vyvolal
+// destruktor textu dÃ¸Ã­ve neÅ¾ se Ã¨Ã­slo uloÅ¾Ã­ do koprocesoru:
 	{
 
-// naètení textu (znaku)
+// naÃ¨tenÃ­ textu (znaku)
 		CString text;
 		FText(text);
 
-// kódu znaku (není-li ádnı znak, vrátí se koncovı bajt 0)
+// kÃ³du znaku (nenÃ­-li Å¾Ã¡dnÃ½ znak, vrÃ¡tÃ­ se koncovÃ½ bajt 0)
 #ifdef _UNICODE
 		result = (WORD)text.DataData()[0];
 #else
@@ -2700,17 +2700,17 @@ double FTextOrd()
 #endif
 	}
 
-// návrat vısledku
+// nÃ¡vrat vÃ½sledku
 	return result;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní poètu øádkù textu
+// zjiÅ¡tÃ¬nÃ­ poÃ¨tu Ã¸Ã¡dkÃ¹ textu
 
 double FTextLineNum()
 {
-// naètení textu
+// naÃ¨tenÃ­ textu
 	CString text;
 	FText(text);
 	return text.LineNum();
@@ -2719,26 +2719,26 @@ double FTextLineNum()
 
 /***************************************************************************\
 *																			*
-*								obsluha klávesnice							*
+*								obsluha klÃ¡vesnice							*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení klávesy bez èekání
+// naÃ¨tenÃ­ klÃ¡vesy bez Ã¨ekÃ¡nÃ­
 
 double FVKey()
 {
-// pøíprava vısledku operace
+// pÃ¸Ã­prava vÃ½sledku operace
 	int result = 0;
 
-// test, zda byla pøijata klávesa
+// test, zda byla pÃ¸ijata klÃ¡vesa
 	if (KeyBufRead != KeyBufWrite)
 	{
 
-// naètení klávesy z bufferu
+// naÃ¨tenÃ­ klÃ¡vesy z bufferu
 		result = KeyBuf[KeyBufRead];
 
-// zvıšení ètecí adresy
+// zvÃ½Å¡enÃ­ Ã¨tecÃ­ adresy
 		KeyBufRead++;
 		if (KeyBufRead >= KEYBUFSIZE) KeyBufRead = 0;
 	}
@@ -2748,14 +2748,14 @@ double FVKey()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení klávesy s èekáním
+// naÃ¨tenÃ­ klÃ¡vesy s Ã¨ekÃ¡nÃ­m
 
 double FVKeyWait()
 {
-// pøíprava vısledku operace
+// pÃ¸Ã­prava vÃ½sledku operace
 	int result = 0;
 
-// èekání na vstup znaku z klávesnice (nebo na pøerušení)
+// Ã¨ekÃ¡nÃ­ na vstup znaku z klÃ¡vesnice (nebo na pÃ¸eruÅ¡enÃ­)
 	while ((Break == 0) && 
 			(KeyBufRead == KeyBufWrite) && 
 			(!ConsoleOn))
@@ -2766,14 +2766,14 @@ double FVKeyWait()
 		TimeWait(1);
 	}
 
-// kontrola, zda byla pøijata klávesa (zda to nebylo jen pøerušení)
+// kontrola, zda byla pÃ¸ijata klÃ¡vesa (zda to nebylo jen pÃ¸eruÅ¡enÃ­)
 	if (KeyBufRead != KeyBufWrite)
 	{
 
-// naètení klávesy z bufferu
+// naÃ¨tenÃ­ klÃ¡vesy z bufferu
 		result = KeyBuf[KeyBufRead];
 
-// zvıšení ètecí adresy
+// zvÃ½Å¡enÃ­ Ã¨tecÃ­ adresy
 		KeyBufRead++;
 		if (KeyBufRead >= KEYBUFSIZE) KeyBufRead = 0;
 	}
@@ -2789,15 +2789,15 @@ double FVKeyWait()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// šíøka plochy
+// Å¡Ã­Ã¸ka plochy
 
 double FGetMapWidth()
 {
-// naètení plochy
+// naÃ¨tenÃ­ plochy
 	CMap map;
 	FMap(map);
 
-// šíøka plochy
+// Å¡Ã­Ã¸ka plochy
 	return map.Width();
 }
 
@@ -2805,15 +2805,15 @@ double FGetMapWidth0() { return Map[0].Width(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vıška plochy
+// vÃ½Å¡ka plochy
 
 double FGetMapHeight()
 {
-// naètení plochy
+// naÃ¨tenÃ­ plochy
 	CMap map;
 	FMap(map);
 
-// vıška plochy
+// vÃ½Å¡ka plochy
 	return map.Height();
 }
 
@@ -2821,19 +2821,19 @@ double FGetMapHeight0() { return Map[0].Height(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla z plochy
+// naÃ¨tenÃ­ Ã¨Ã­sla z plochy
 
 double _fastcall FGetMapNum(int mask, char rot)
 {
-// naètení plochy
+// naÃ¨tenÃ­ plochy
 	CMap map;
 	FMap(map);
 
-// naètení souøadnic
+// naÃ¨tenÃ­ souÃ¸adnic
 	int x = FIntR();
 	int y = FIntR();
 
-// èíslo na pozici
+// Ã¨Ã­slo na pozici
 	if (((DWORD)x < (DWORD)map.Width()) && ((DWORD)y < (DWORD)map.Height()))
 	{
 		return (((int)map.At(x, y).Param & mask) >> rot);
@@ -2847,7 +2847,7 @@ double FGetMapNum3() { return FGetMapNum(MAP_VALUE3_MASK, MAP_VALUE3_ROT); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení okna k zobrazení sprajtù
+// naÃ¨tenÃ­ okna k zobrazenÃ­ sprajtÃ¹
 
 double FGetSpriteWinX1() { return (double)SpriteWinX1 / ICONWIDTH; }
 double FGetSpriteWinY1() { return (double)SpriteWinY1 / ICONHEIGHT; }
@@ -2856,13 +2856,13 @@ double FGetSpriteWinY2() { return (double)SpriteWinY2 / ICONHEIGHT; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// návratovı kód
+// nÃ¡vratovÃ½ kÃ³d
 
 double FGetReturnCode() { return ReturnCode; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// spuštìní programu
+// spuÅ¡tÃ¬nÃ­ programu
 
 double FGetExecWait()
 {
@@ -2922,13 +2922,13 @@ double FJoystickZ()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// ID aktivního prvku
+// ID aktivnÃ­ho prvku
 
 double FGetWindowID() { return WindowID; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení okna
+// vytvoÃ¸enÃ­ okna
 
 double FWindowNew()
 {
@@ -2938,7 +2938,7 @@ double FWindowNew()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení okna
+// vytvoÃ¸enÃ­ okna
 
 double FWindowRONew()
 {
@@ -2947,7 +2947,7 @@ double FWindowRONew()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení tlaèítka
+// vytvoÃ¸enÃ­ tlaÃ¨Ã­tka
 
 double FButtonNew()
 {
@@ -3009,7 +3009,7 @@ double FGroupBoxNew()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// indikátor
+// indikÃ¡tor
 
 CString	ProgressClass(PROGRESS_CLASS);
 
@@ -3022,7 +3022,7 @@ double FProgressNew()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// táhlo
+// tÃ¡hlo
 
 CString	TrackbarClass(TRACKBAR_CLASS);
 
@@ -3043,7 +3043,7 @@ double FVTrackbarNew()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// posuvník
+// posuvnÃ­k
 
 CString	ScrollbarClass("SCROLLBAR");
 
@@ -3080,17 +3080,17 @@ double FGetWindowPos()
 			return ((double)::SendMessage(item->Wnd, PBM_GETPOS, 0, 0) / 100);
 
 		case WINITEM_LISTBOX:
-			// není-li nic oznaèeno, vrací LB_ERR = -1
+			// nenÃ­-li nic oznaÃ¨eno, vracÃ­ LB_ERR = -1
 			return (double)(int)::SendMessage(item->Wnd, LB_GETCURSEL, 0, 0);
 
 		case WINITEM_TABS:
-			// není-li nic oznaèeno, vrací -1
+			// nenÃ­-li nic oznaÃ¨eno, vracÃ­ -1
 			return (double)(int)::SendMessage(item->Wnd, TCM_GETCURSEL, 0, 0);
 
 		case WINITEM_LISTEDIT:
 		case WINITEM_COMBOBOX:
 		case WINITEM_COMBOEDIT:
-			// není-li nic oznaèeno, vrací CB_ERR = -1
+			// nenÃ­-li nic oznaÃ¨eno, vracÃ­ CB_ERR = -1
 			return (double)(int)::SendMessage(item->Wnd, CB_GETCURSEL, 0, 0);
 
 		case WINITEM_EDIT:
@@ -3178,7 +3178,7 @@ double FGetWindowPos2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// editaèní pole
+// editaÃ¨nÃ­ pole
 
 double FEditNew()
 {
@@ -3198,8 +3198,8 @@ HINSTANCE RichEditLib = NULL;
 
 double RichNew(int typ, int par)
 {
-// !!!!!!!!!!!!!!!!! Novìjší verze RichEdit pøi naètení textu vymae UNDO buffer
-// !!!!!!!!!!!!!!!!! u novìjší verze RichEdit nefunguje hledání textu
+// !!!!!!!!!!!!!!!!! NovÃ¬jÅ¡Ã­ verze RichEdit pÃ¸i naÃ¨tenÃ­ textu vymaÅ¾e UNDO buffer
+// !!!!!!!!!!!!!!!!! u novÃ¬jÅ¡Ã­ verze RichEdit nefunguje hledÃ¡nÃ­ textu
 	if (RichEditLib == NULL)
 	{
 //		RichEditLib = ::LoadLibrary(_T("RICHED20.DLL"));
@@ -3276,14 +3276,14 @@ CString	ListviewClass(WC_LISTVIEW);
 
 double FTableNew()
 {
-// naètení seznamu titulkù
+// naÃ¨tenÃ­ seznamu titulkÃ¹
 	CString text;
 	FText(text);
 
 	int cols = text.LineNum();
 	if (cols <= 0) cols = 1;
 
-// pøíprava jednotlivıch titulkù
+// pÃ¸Ã­prava jednotlivÃ½ch titulkÃ¹
 	CBufText coltit;
 	bool head = false;
 	for (int i = 0; i < cols; i++)
@@ -3293,7 +3293,7 @@ double FTableNew()
 		if (coltit[i].IsNotEmpty()) head = true;
 	}
 
-// vytvoøení tabulky
+// vytvoÃ¸enÃ­ tabulky
 	::InitCommonControls();
 
 	WindowItemNew(WINITEM_TABLE, ListviewClass, 32*8, 128, LVS_REPORT | LVS_SINGLESEL | LVS_OWNERDRAWFIXED | LVS_SHOWSELALWAYS
@@ -3302,7 +3302,7 @@ double FTableNew()
 	WINITEM* item = &Win[WindowID];
 	item->HasCaption = true;
 
-// vytvoøení sloupeèkù
+// vytvoÃ¸enÃ­ sloupeÃ¨kÃ¹
 	HWND wnd = item->Wnd;
 	item->TabAlign = (BYTE*)MemGet(cols*sizeof(BYTE));
 
@@ -3325,7 +3325,7 @@ double FTableNew()
 		::SendMessage(wnd, LVM_INSERTCOLUMN, i, (LPARAM)&col);
 	}
 
-// vytvoøení prvního øádku
+// vytvoÃ¸enÃ­ prvnÃ­ho Ã¸Ã¡dku
 	i = 32;
 	while (i < cols) i *= 2;
 
@@ -3428,7 +3428,7 @@ double FWinPicNew()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// rozmìry okna
+// rozmÃ¬ry okna
 
 double FGetWindowX()
 {
@@ -3515,7 +3515,7 @@ double FGetWindowHInt()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vıška fontù
+// vÃ½Å¡ka fontÃ¹
 
 double FGetFontHeight()
 {
@@ -3530,7 +3530,7 @@ double FGetFontHeight()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// šíøka fontù
+// Å¡Ã­Ã¸ka fontÃ¹
 
 double FGetFontWidth()
 {
@@ -3545,7 +3545,7 @@ double FGetFontWidth()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// úhel textu
+// Ãºhel textu
 
 double FGetFontAngle()
 {
@@ -3575,7 +3575,7 @@ double FGetFontCol()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// barva pozadí
+// barva pozadÃ­
 
 double FGetFontBack()
 {
@@ -3605,7 +3605,7 @@ double FGetFocus() { return WindowFocus; };
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 1
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 1
 
 double FGetGameN1()
 {
@@ -3614,7 +3614,7 @@ double FGetGameN1()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 2
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 2
 
 double FGetGameN2()
 {
@@ -3623,7 +3623,7 @@ double FGetGameN2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 3
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 3
 
 double FGetGameN3()
 {
@@ -3632,7 +3632,7 @@ double FGetGameN3()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 4
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 4
 
 double FGetGameN4()
 {
@@ -3641,7 +3641,7 @@ double FGetGameN4()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 5
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 5
 
 double FGetGameN5()
 {
@@ -3650,7 +3650,7 @@ double FGetGameN5()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 6
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 6
 
 double FGetGameN6()
 {
@@ -3659,7 +3659,7 @@ double FGetGameN6()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 7
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 7
 
 double FGetGameN7()
 {
@@ -3668,7 +3668,7 @@ double FGetGameN7()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní èíselné hodnoty hry 8
+// zjiÅ¡tÃ¬nÃ­ Ã¨Ã­selnÃ© hodnoty hry 8
 
 double FGetGameN8()
 {
@@ -3677,7 +3677,7 @@ double FGetGameN8()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní max. poètu hráèù
+// zjiÅ¡tÃ¬nÃ­ max. poÃ¨tu hrÃ¡Ã¨Ã¹
 
 double FGetPlayerMax()
 {
@@ -3685,7 +3685,7 @@ double FGetPlayerMax()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní indexu hráèe
+// zjiÅ¡tÃ¬nÃ­ indexu hrÃ¡Ã¨e
 
 double FPlayerInx()
 {
@@ -3693,7 +3693,7 @@ double FPlayerInx()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøíjem paketu
+// pÃ¸Ã­jem paketu
 
 double FGetGamePacket()
 {
@@ -3701,7 +3701,7 @@ double FGetGamePacket()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla z paketu
+// naÃ¨tenÃ­ Ã¨Ã­sla z paketu
 
 double FGetGameDataN()
 {
@@ -3711,7 +3711,7 @@ double FGetGameDataN()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení bajtu z paketu
+// naÃ¨tenÃ­ bajtu z paketu
 
 double FGetGameDataB()
 {
@@ -3727,7 +3727,7 @@ double FGetGameDataB()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní vysílacího portu UDP
+// zjiÅ¡tÃ¬nÃ­ vysÃ­lacÃ­ho portu UDP
 
 double FGetUDPSendPort()
 {
@@ -3736,7 +3736,7 @@ double FGetUDPSendPort()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní velikosti pøijímacího bufferu UDP
+// zjiÅ¡tÃ¬nÃ­ velikosti pÃ¸ijÃ­macÃ­ho bufferu UDP
 
 double FGetUDPRecSize()
 {
@@ -3744,7 +3744,7 @@ double FGetUDPRecSize()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøijímacího portu UDP
+// zjiÅ¡tÃ¬nÃ­ pÃ¸ijÃ­macÃ­ho portu UDP
 
 double FGetUDPRecPort()
 {
@@ -3753,7 +3753,7 @@ double FGetUDPRecPort()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøíjem datového bloku UDP
+// pÃ¸Ã­jem datovÃ©ho bloku UDP
 
 double FGetUDPMem()
 {
@@ -3767,83 +3767,83 @@ double FGetUDPMem()
 }
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 /***************************************************************************\
 *																			*
-*							Bitové operace									*
+*							BitovÃ© operace									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor BIT-AND (Data = poèet prvkù - 1)
+// operÃ¡tor BIT-AND (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FBitAnd()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	DWORD num = FIntRN();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// operace s dalším èíslem
+// operace s dalÅ¡Ã­m Ã¨Ã­slem
 		num &= FIntRN();
 	}
 	return num;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor BIT-OR (Data = poèet prvkù - 1)
+// operÃ¡tor BIT-OR (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FBitOr()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	DWORD num = FIntRN();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// operace s dalším èíslem
+// operace s dalÅ¡Ã­m Ã¨Ã­slem
 		num |= FIntRN();
 	}
 	return num;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor BIT-XOR (Data = poèet prvkù - 1)
+// operÃ¡tor BIT-XOR (Data = poÃ¨et prvkÃ¹ - 1)
 
 double FBitXor()
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního èísla
+// naÃ¨tenÃ­ prvnÃ­ho Ã¨Ã­sla
 	DWORD num = FIntRN();
 
-// cyklus pøes další èísla
+// cyklus pÃ¸es dalÅ¡Ã­ Ã¨Ã­sla
 	for (; i > 0; i--)
 	{
 
-// operace s dalším èíslem
+// operace s dalÅ¡Ã­m Ã¨Ã­slem
 		num ^= FIntRN();
 	}
 	return num;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// bitovı doplnìk
+// bitovÃ½ doplnÃ¬k
 
 double FBitNot()
 { 
-// naètení èísla
+// naÃ¨tenÃ­ Ã¨Ã­sla
 	DWORD num = FIntRN();
 	num = ~num;
 	return num;
@@ -3854,7 +3854,7 @@ double FBitNot()
 
 double FBitLeft()
 { 
-// naètení èísla
+// naÃ¨tenÃ­ Ã¨Ã­sla
 	DWORD num = FIntRN();
 
 	num = (num << 1) | (num >> 31);
@@ -3868,7 +3868,7 @@ double FBitLeft()
 
 double FBitRight()
 { 
-// naètení èísla
+// naÃ¨tenÃ­ Ã¨Ã­sla
 	DWORD num = FIntRN();
 
 	num = (num >> 1) | (num << 31);
@@ -3879,13 +3879,13 @@ double FBitRight()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní znakové sady
+// zjiÅ¡tÃ¬nÃ­ znakovÃ© sady
 
 double FGetCodePage() { return CodePage; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní jazyku
+// zjiÅ¡tÃ¬nÃ­ jazyku
 
 double FGetLanguage() { return LangID; }
 
@@ -3900,11 +3900,11 @@ double FGetLanguage() { return LangID; }
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// otevøení portu
+// otevÃ¸enÃ­ portu
 
 double FComOpen()
 {
-// naètení textu
+// naÃ¨tenÃ­ textu
 	CString text;
 	FText(text);
 
@@ -3918,7 +3918,7 @@ double FComOpen()
 		text.Delete(id, 1);
 	}
 
-// nalezení volné poloky
+// nalezenÃ­ volnÃ© poloÅ¾ky
 	for (id = 0; id < COMSMAX; id++)
 	{
 		if (Coms[id].File == INVALID_HANDLE_VALUE) break;
@@ -3927,28 +3927,28 @@ double FComOpen()
 
 	COMITEM* item = Coms + id;
 
-// otevøení zaøízení
+// otevÃ¸enÃ­ zaÃ¸Ã­zenÃ­
 	HANDLE file = ::CreateFile(
-		text,									// jméno zaøízení
-		GENERIC_READ | GENERIC_WRITE,			// poadovanı pøístup
-		0,										// sdílení není povoleno
-		NULL,									// nelze sdílet s podprocesy
-		OPEN_EXISTING,							// zaøízení musí existovat
-		FILE_ATTRIBUTE_NORMAL,					// atributy normální
-		NULL);									// není šablona
+		text,									// jmÃ©no zaÃ¸Ã­zenÃ­
+		GENERIC_READ | GENERIC_WRITE,			// poÅ¾adovanÃ½ pÃ¸Ã­stup
+		0,										// sdÃ­lenÃ­ nenÃ­ povoleno
+		NULL,									// nelze sdÃ­let s podprocesy
+		OPEN_EXISTING,							// zaÃ¸Ã­zenÃ­ musÃ­ existovat
+		FILE_ATTRIBUTE_NORMAL,					// atributy normÃ¡lnÃ­
+		NULL);									// nenÃ­ Å¡ablona
 	if (file == INVALID_HANDLE_VALUE) return -1;
 	item->File = file;
 
-// inicializace bufferù (pro pøijímací buffer > 1024 dìlá chyby v datech nad 1024 !!!!)
+// inicializace bufferÃ¹ (pro pÃ¸ijÃ­macÃ­ buffer > 1024 dÃ¬lÃ¡ chyby v datech nad 1024 !!!!)
 	::SetupComm(file, 1010, 64);
 
-// hlášení událostí se nebude pouívat
+// hlÃ¡Å¡enÃ­ udÃ¡lostÃ­ se nebude pouÅ¾Ã­vat
 	::SetCommMask(file, 0);
 
-// vyprázdnìní bufferù
+// vyprÃ¡zdnÃ¬nÃ­ bufferÃ¹
 	::PurgeComm(file, PURGE_TXABORT | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_RXCLEAR);
 
-// nastavení time-out
+// nastavenÃ­ time-out
 	COMMTIMEOUTS to;
 	to.ReadIntervalTimeout = 100;
 	to.ReadTotalTimeoutMultiplier = 100;
@@ -3957,10 +3957,10 @@ double FComOpen()
 	to.WriteTotalTimeoutConstant = 0;
 	::SetCommTimeouts(file, &to);
 
-// nastavení jako aktivní port
+// nastavenÃ­ jako aktivnÃ­ port
 	ComAkt = id;
 
-// inicializace parametrù portu
+// inicializace parametrÃ¹ portu
 	GetComDCB();
 
 	DCB olddcb;
@@ -3982,7 +3982,7 @@ double FComOpen()
 	dcb->fErrorChar = TRUE;
 	dcb->EofChar = 0;
 
-// aktualizace parametrù, pokud byla zmìna
+// aktualizace parametrÃ¹, pokud byla zmÃ¬na
 	if (!MemCompare(&olddcb, dcb, sizeof(DCB)))
 	{
 		SetComDCB();
@@ -3992,7 +3992,7 @@ double FComOpen()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktivní port
+// aktivnÃ­ port
 
 double FGetComID()
 {
@@ -4000,7 +4000,7 @@ double FGetComID()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pøenosové rychlosti portu
+// zjiÅ¡tÃ¬nÃ­ pÃ¸enosovÃ© rychlosti portu
 
 double FGetComBaud()
 {
@@ -4013,7 +4013,7 @@ double FGetComBaud()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní poètu bitù portu
+// zjiÅ¡tÃ¬nÃ­ poÃ¨tu bitÃ¹ portu
 
 double FGetComBits()
 {
@@ -4026,7 +4026,7 @@ double FGetComBits()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní parity
+// zjiÅ¡tÃ¬nÃ­ parity
 
 double FGetComParit()
 {
@@ -4043,7 +4043,7 @@ double FGetComParit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení bajtu
+// naÃ¨tenÃ­ bajtu
 
 double FGetComNum()
 {
@@ -4051,7 +4051,7 @@ double FGetComNum()
 }
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 
 /***************************************************************************\
@@ -4064,31 +4064,31 @@ double FGetComNum()
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní typu signálu
+// zjiÅ¡tÃ¬nÃ­ typu signÃ¡lu
 
 double FGetLineType()
 {
 // inicializace mixeru
 	if (!MixDevInit() || ((DWORD)MixLineA >= (DWORD)MixLineN)) return -1;
 
-// zjištìní typu signálu
+// zjiÅ¡tÃ¬nÃ­ typu signÃ¡lu
 	return MixLine[MixLineA].Type;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní typu ovládacího prvku
+// zjiÅ¡tÃ¬nÃ­ typu ovlÃ¡dacÃ­ho prvku
 
 double FGetCtrlType()
 {
 // inicializace mixeru
 	if (!MixDevInit() || ((DWORD)MixCtrlA >= (DWORD)MixCtrlN)) return -1;
 
-// zjištìní typu ovládacího prvku
+// zjiÅ¡tÃ¬nÃ­ typu ovlÃ¡dacÃ­ho prvku
 	return MixCtrl[MixCtrlA].Type;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní hodnoty ovládacího prvku
+// zjiÅ¡tÃ¬nÃ­ hodnoty ovlÃ¡dacÃ­ho prvku
 
 double FGetCtrlVal()
 {
@@ -4096,19 +4096,19 @@ double FGetCtrlVal()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní poètu kanálù prvku
+// zjiÅ¡tÃ¬nÃ­ poÃ¨tu kanÃ¡lÃ¹ prvku
 
 double FGetMixChannel()
 {
 // inicializace mixeru
 	if (!MixDevInit() || ((DWORD)MixCtrlA >= (DWORD)MixCtrlN)) return 0;
 
-// zjištìní poètu kanálù
+// zjiÅ¡tÃ¬nÃ­ poÃ¨tu kanÃ¡lÃ¹
 	return MixCtrl[MixCtrlA].Channels;
 }
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 /***************************************************************************\
 *																			*
@@ -4120,7 +4120,7 @@ double FGetMixChannel()
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní módu odstraòováni ploch objektu Direct3D
+// zjiÅ¡tÃ¬nÃ­ mÃ³du odstraÃ²ovÃ¡ni ploch objektu Direct3D
 
 double FGetD3DOCulling()
 {
@@ -4132,9 +4132,9 @@ double FGetD3DOCulling()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení zdi (je voláno i pro vytvoøení 2D objektu)
+// vytvoÃ¸enÃ­ zdi (je volÃ¡no i pro vytvoÃ¸enÃ­ 2D objektu)
 
-// tabulka se pouívá i pøi zobrazení textury pozadí scény v OpenGL
+// tabulka se pouÅ¾Ã­vÃ¡ i pÃ¸i zobrazenÃ­ textury pozadÃ­ scÃ©ny v OpenGL
 D3DVECTOR wall_vertices[4] = {
 	-0.5,  0.5, 0,			// 0      0-----1
      0.5,  0.5, 0,			// 1	  |	  /	|
@@ -4154,7 +4154,7 @@ D3DVECTOR wall_normals[4] = {
 	0, 0, -1
 };
 
-// tabulka se pouívá i pøi zobrazení textury pozadí scény v OpenGL
+// tabulka se pouÅ¾Ã­vÃ¡ i pÃ¸i zobrazenÃ­ textury pozadÃ­ scÃ©ny v OpenGL
 float wall_text[2*4] = {
 	0, 0,	// 0
 	1, 0,	// 1
@@ -4175,28 +4175,28 @@ double FD3DWall()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení statického 2D objektu
+// vytvoÃ¸enÃ­ statickÃ©ho 2D objektu
 
 D3DVECTOR static2D_vertices[16] = {
-// 1. stìna
+// 1. stÃ¬na
 	-0.5,  0.5,    0,		// 0
      0.5,  0.5,    0,		// 1
     -0.5, -0.5,    0,		// 2
      0.5, -0.5,    0,		// 3
 
-// 2. stìna
+// 2. stÃ¬na
 	   0,  0.5, -0.5,		// 4
        0,  0.5,  0.5,		// 5
        0, -0.5, -0.5,		// 6
        0, -0.5,  0.5,		// 7
 
-// 3. stìna
+// 3. stÃ¬na
 	 0.5,  0.5,    0,		// 8
     -0.5,  0.5,    0,		// 9
      0.5, -0.5,    0,		// 10
     -0.5, -0.5,    0,		// 11
 
-// 4. stìna
+// 4. stÃ¬na
 	   0,  0.5,  0.5,		// 12
        0,  0.5, -0.5,		// 13
        0, -0.5,  0.5,		// 14
@@ -4204,43 +4204,43 @@ D3DVECTOR static2D_vertices[16] = {
 };
 
 int static2D_faces[24] = {
-// 1. stìna
+// 1. stÃ¬na
 	0, 1, 2,
 	2, 1, 3,
 
-// 2. stìna
+// 2. stÃ¬na
 	4, 5, 6,
 	6, 5, 7,
 
-// 3. stìna
+// 3. stÃ¬na
 	8, 9, 10,
 	10, 9, 11,
 
-// 4. stìna
+// 4. stÃ¬na
     12, 13, 14,
 	14, 13, 15
 };
 
 D3DVECTOR static2D_normals[16] = {
-// 1. stìna
+// 1. stÃ¬na
 	0, 0, -1,
 	0, 0, -1,
 	0, 0, -1,
 	0, 0, -1,
 
-// 2. stìna
+// 2. stÃ¬na
 	1, 0,  0,
 	1, 0,  0,
 	1, 0,  0,
 	1, 0,  0,
 
-// 3. stìna
+// 3. stÃ¬na
 	0, 0,  1,
 	0, 0,  1,
 	0, 0,  1,
 	0, 0,  1,
 
-// 4. stìna
+// 4. stÃ¬na
 	-1, 0, 0,
 	-1, 0, 0,
 	-1, 0, 0,
@@ -4248,25 +4248,25 @@ D3DVECTOR static2D_normals[16] = {
 };
 
 float static2D_text[2*16] = {
-// 1. stìna
+// 1. stÃ¬na
 	0, 0,
 	1, 0,
 	0, 1,
 	1, 1,
 
-// 2. stìna
+// 2. stÃ¬na
 	0, 0,
 	1, 0,
 	0, 1,
 	1, 1,
 
-// 3. stìna
+// 3. stÃ¬na
 	0, 0,
 	1, 0,
 	0, 1,
 	1, 1,
 
-// 4. stìna
+// 4. stÃ¬na
 	0, 0,
 	1, 0,
 	0, 1,
@@ -4303,11 +4303,11 @@ double FD3D2DStatic()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení trojúhelníku
+// vytvoÃ¸enÃ­ trojÃºhelnÃ­ku
 
 D3DVECTOR triangle_vertices[3] = {
 	-0.5, -0.5, 0,			// 0 (vlevo dole)
-     0,    0.5, 0,			// 1 (uprostøed nahoøe)
+     0,    0.5, 0,			// 1 (uprostÃ¸ed nahoÃ¸e)
      0.5, -0.5, 0			// 2 (vpravo dole)
 };
 
@@ -4339,7 +4339,7 @@ double FD3DTriangle()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení krychle
+// vytvoÃ¸enÃ­ krychle
 
 //    3----7
 //    |\    \ 
@@ -4350,41 +4350,41 @@ double FD3DTriangle()
 
 D3DVECTOR cube_vertices[24] = {
 
-// horní stìna (musí bıt jako první stìna!)
-    -0.5,  0.5,  0.5,	// ( 0) 3 horní stìny
-     0.5,  0.5,  0.5,	// ( 1) 7 horní stìny
-    -0.5,  0.5, -0.5,	// ( 2) 2 horní stìny
-     0.5,  0.5, -0.5,	// ( 3) 6 horní stìny
+// hornÃ­ stÃ¬na (musÃ­ bÃ½t jako prvnÃ­ stÃ¬na!)
+    -0.5,  0.5,  0.5,	// ( 0) 3 hornÃ­ stÃ¬ny
+     0.5,  0.5,  0.5,	// ( 1) 7 hornÃ­ stÃ¬ny
+    -0.5,  0.5, -0.5,	// ( 2) 2 hornÃ­ stÃ¬ny
+     0.5,  0.5, -0.5,	// ( 3) 6 hornÃ­ stÃ¬ny
 
-// pøední stìna
-    -0.5,  0.5, -0.5,	// ( 4) 2 pøední stìny
-     0.5,  0.5, -0.5,	// ( 5) 6 pøední stìny
-	-0.5, -0.5, -0.5,	// ( 6) 0 pøední stìny
-     0.5, -0.5, -0.5,	// ( 7) 4 pøední stìny
+// pÃ¸ednÃ­ stÃ¬na
+    -0.5,  0.5, -0.5,	// ( 4) 2 pÃ¸ednÃ­ stÃ¬ny
+     0.5,  0.5, -0.5,	// ( 5) 6 pÃ¸ednÃ­ stÃ¬ny
+	-0.5, -0.5, -0.5,	// ( 6) 0 pÃ¸ednÃ­ stÃ¬ny
+     0.5, -0.5, -0.5,	// ( 7) 4 pÃ¸ednÃ­ stÃ¬ny
 
-// zadní stìna
-     0.5,  0.5,  0.5,	// ( 8) 7 zadní stìny
-    -0.5,  0.5,  0.5,	// ( 9) 3 zadní stìny
-     0.5, -0.5,  0.5,	// (10) 5 zadní stìny
-    -0.5, -0.5,  0.5,	// (11) 1 zadní stìny
+// zadnÃ­ stÃ¬na
+     0.5,  0.5,  0.5,	// ( 8) 7 zadnÃ­ stÃ¬ny
+    -0.5,  0.5,  0.5,	// ( 9) 3 zadnÃ­ stÃ¬ny
+     0.5, -0.5,  0.5,	// (10) 5 zadnÃ­ stÃ¬ny
+    -0.5, -0.5,  0.5,	// (11) 1 zadnÃ­ stÃ¬ny
 
-// levá stìna
-    -0.5,  0.5,  0.5,	// (12) 3 levé stìny
-    -0.5,  0.5, -0.5,	// (13) 2 levé stìny
-    -0.5, -0.5,  0.5,	// (14) 1 levé stìny
-	-0.5, -0.5, -0.5,	// (15) 0 levé stìny
+// levÃ¡ stÃ¬na
+    -0.5,  0.5,  0.5,	// (12) 3 levÃ© stÃ¬ny
+    -0.5,  0.5, -0.5,	// (13) 2 levÃ© stÃ¬ny
+    -0.5, -0.5,  0.5,	// (14) 1 levÃ© stÃ¬ny
+	-0.5, -0.5, -0.5,	// (15) 0 levÃ© stÃ¬ny
 
-// pravá stìna
-     0.5,  0.5, -0.5,	// (16) 6 pravé stìny
-     0.5,  0.5,  0.5,	// (17) 7 pravé stìny
-     0.5, -0.5, -0.5,	// (18) 4 pravé stìny
-     0.5, -0.5,  0.5,	// (19) 5 pravé stìny
+// pravÃ¡ stÃ¬na
+     0.5,  0.5, -0.5,	// (16) 6 pravÃ© stÃ¬ny
+     0.5,  0.5,  0.5,	// (17) 7 pravÃ© stÃ¬ny
+     0.5, -0.5, -0.5,	// (18) 4 pravÃ© stÃ¬ny
+     0.5, -0.5,  0.5,	// (19) 5 pravÃ© stÃ¬ny
 
-// dolní stìna (musí bıt jako poslední stìna!)
-	-0.5, -0.5, -0.5,	// (20) 0 dolní stìny
-     0.5, -0.5, -0.5,	// (21) 4 dolní stìny
-    -0.5, -0.5,  0.5,	// (22) 1 dolní stìny
-     0.5, -0.5,  0.5,	// (23) 5 dolní stìny
+// dolnÃ­ stÃ¬na (musÃ­ bÃ½t jako poslednÃ­ stÃ¬na!)
+	-0.5, -0.5, -0.5,	// (20) 0 dolnÃ­ stÃ¬ny
+     0.5, -0.5, -0.5,	// (21) 4 dolnÃ­ stÃ¬ny
+    -0.5, -0.5,  0.5,	// (22) 1 dolnÃ­ stÃ¬ny
+     0.5, -0.5,  0.5,	// (23) 5 dolnÃ­ stÃ¬ny
 };
 
 //    3----7
@@ -4395,22 +4395,22 @@ D3DVECTOR cube_vertices[24] = {
 //      0----4
 
 int cube_faces[36] = {
-	0,	1,	2,			// horní stìna (3-7-2 a 2-7-6)
+	0,	1,	2,			// hornÃ­ stÃ¬na (3-7-2 a 2-7-6)
 	2,	1,	3,
 
-	4,	5,	6,			// pøední stìna (2-6-0 a 0-6-4)
+	4,	5,	6,			// pÃ¸ednÃ­ stÃ¬na (2-6-0 a 0-6-4)
 	6,  5,	7,
 
-	8,  9,  10,			// zadní stìna (7-3-5 a 5-3-1)
+	8,  9,  10,			// zadnÃ­ stÃ¬na (7-3-5 a 5-3-1)
 	10, 9,  11,
 
-	12, 13, 14,			// levá stìna (3-2-1 a 1-2-0)
+	12, 13, 14,			// levÃ¡ stÃ¬na (3-2-1 a 1-2-0)
 	14, 13, 15,
 
-	16, 17, 18,			// pravá stìna (6-7-4 a 4-7-5)
+	16, 17, 18,			// pravÃ¡ stÃ¬na (6-7-4 a 4-7-5)
 	18, 17, 19,
 
-	20, 21, 22,			// dolní stìna (0-4-1 a 1-4-5)
+	20, 21, 22,			// dolnÃ­ stÃ¬na (0-4-1 a 1-4-5)
 	22, 21, 23,
 };
 
@@ -4422,71 +4422,71 @@ int cube_faces[36] = {
 //      0----4
 
 D3DVECTOR cube_normals[24] = {
-	 0,  1,  0,		// 3 horní stìny
-	 0,  1,  0,		// 7 horní stìny
-	 0,  1,  0,		// 2 horní stìny
-	 0,  1,  0,		// 6 horní stìny
+	 0,  1,  0,		// 3 hornÃ­ stÃ¬ny
+	 0,  1,  0,		// 7 hornÃ­ stÃ¬ny
+	 0,  1,  0,		// 2 hornÃ­ stÃ¬ny
+	 0,  1,  0,		// 6 hornÃ­ stÃ¬ny
 
-	 0,  0, -1,		// 2 pøední stìny
-	 0,  0, -1,		// 6 pøední stìny
-	 0,  0, -1,		// 0 pøední stìny
-	 0,  0, -1,		// 4 pøední stìny
+	 0,  0, -1,		// 2 pÃ¸ednÃ­ stÃ¬ny
+	 0,  0, -1,		// 6 pÃ¸ednÃ­ stÃ¬ny
+	 0,  0, -1,		// 0 pÃ¸ednÃ­ stÃ¬ny
+	 0,  0, -1,		// 4 pÃ¸ednÃ­ stÃ¬ny
 
-	 0,  0,  1,		// 7 zadní stìny
-	 0,  0,  1,		// 3 zadní stìny
-	 0,  0,  1,		// 5 zadní stìny
-	 0,  0,  1,		// 1 zadní stìny
+	 0,  0,  1,		// 7 zadnÃ­ stÃ¬ny
+	 0,  0,  1,		// 3 zadnÃ­ stÃ¬ny
+	 0,  0,  1,		// 5 zadnÃ­ stÃ¬ny
+	 0,  0,  1,		// 1 zadnÃ­ stÃ¬ny
 
-	-1,  0,  0,		// 3 levé stìny
-	-1,  0,  0,		// 2 levé stìny
-	-1,  0,  0,		// 1 levé stìny
-	-1,  0,  0,		// 0 levé stìny
+	-1,  0,  0,		// 3 levÃ© stÃ¬ny
+	-1,  0,  0,		// 2 levÃ© stÃ¬ny
+	-1,  0,  0,		// 1 levÃ© stÃ¬ny
+	-1,  0,  0,		// 0 levÃ© stÃ¬ny
 
-	 1,  0,  0,		// 6 pravé stìny
-	 1,  0,  0,		// 7 pravé stìny
-	 1,  0,  0,		// 4 pravé stìny
-	 1,  0,  0,		// 5 pravé stìny
+	 1,  0,  0,		// 6 pravÃ© stÃ¬ny
+	 1,  0,  0,		// 7 pravÃ© stÃ¬ny
+	 1,  0,  0,		// 4 pravÃ© stÃ¬ny
+	 1,  0,  0,		// 5 pravÃ© stÃ¬ny
 
-	 0, -1,  0,		// 0 dolní stìny
-	 0, -1,  0,		// 4 dolní stìny
-	 0, -1,  0,		// 1 dolní stìny
-	 0, -1,  0,		// 5 dolní stìny
+	 0, -1,  0,		// 0 dolnÃ­ stÃ¬ny
+	 0, -1,  0,		// 4 dolnÃ­ stÃ¬ny
+	 0, -1,  0,		// 1 dolnÃ­ stÃ¬ny
+	 0, -1,  0,		// 5 dolnÃ­ stÃ¬ny
 };
 
-// Mapování èástí textury:
-//     zadní     levá      dolní
-//     pøední    pravá     horní
+// MapovÃ¡nÃ­ Ã¨Ã¡stÃ­ textury:
+//     zadnÃ­     levÃ¡      dolnÃ­
+//     pÃ¸ednÃ­    pravÃ¡     hornÃ­
 
 float cube_text[2*24] = {
-	(float)2/3,		0.5,			// 3 horní stìny
-	1,				0.5,			// 7 horní stìny
-	(float)2/3,		1,				// 2 horní stìny
-	1,				1,				// 6 horní stìny
+	(float)2/3,		0.5,			// 3 hornÃ­ stÃ¬ny
+	1,				0.5,			// 7 hornÃ­ stÃ¬ny
+	(float)2/3,		1,				// 2 hornÃ­ stÃ¬ny
+	1,				1,				// 6 hornÃ­ stÃ¬ny
 
-	0,				0.5,			// 2 pøední stìny
-	(float)1/3,		0.5,			// 6 pøední stìny
-	0,				1,				// 0 pøední stìny
-	(float)1/3,		1,				// 4 pøední stìny
+	0,				0.5,			// 2 pÃ¸ednÃ­ stÃ¬ny
+	(float)1/3,		0.5,			// 6 pÃ¸ednÃ­ stÃ¬ny
+	0,				1,				// 0 pÃ¸ednÃ­ stÃ¬ny
+	(float)1/3,		1,				// 4 pÃ¸ednÃ­ stÃ¬ny
 
-	0,				0,				// 7 zadní stìny
-	(float)1/3,		0,				// 3 zadní stìny
-	0,				0.5,			// 5 zadní stìny
-	(float)1/3,		0.5,			// 1 zadní stìny
+	0,				0,				// 7 zadnÃ­ stÃ¬ny
+	(float)1/3,		0,				// 3 zadnÃ­ stÃ¬ny
+	0,				0.5,			// 5 zadnÃ­ stÃ¬ny
+	(float)1/3,		0.5,			// 1 zadnÃ­ stÃ¬ny
 
-	(float)1/3,		0,				// 3 levé stìny
-	(float)2/3,		0,				// 2 levé stìny
-	(float)1/3,		0.5,			// 1 levé stìny
-	(float)2/3,		0.5,			// 0 levé stìny
+	(float)1/3,		0,				// 3 levÃ© stÃ¬ny
+	(float)2/3,		0,				// 2 levÃ© stÃ¬ny
+	(float)1/3,		0.5,			// 1 levÃ© stÃ¬ny
+	(float)2/3,		0.5,			// 0 levÃ© stÃ¬ny
 
-	(float)1/3,		0.5,			// 6 pravé stìny
-	(float)2/3,		0.5,			// 7 pravé stìny
-	(float)1/3,		1,				// 4 pravé stìny
-	(float)2/3,		1,				// 5 pravé stìny
+	(float)1/3,		0.5,			// 6 pravÃ© stÃ¬ny
+	(float)2/3,		0.5,			// 7 pravÃ© stÃ¬ny
+	(float)1/3,		1,				// 4 pravÃ© stÃ¬ny
+	(float)2/3,		1,				// 5 pravÃ© stÃ¬ny
 
-	(float)2/3,		0,				// 0 dolní stìny
-	1,				0,				// 4 dolní stìny
-	(float)2/3,		0.5,			// 1 dolní stìny
-	1,				0.5,			// 5 dolní stìny
+	(float)2/3,		0,				// 0 dolnÃ­ stÃ¬ny
+	1,				0,				// 4 dolnÃ­ stÃ¬ny
+	(float)2/3,		0.5,			// 1 dolnÃ­ stÃ¬ny
+	1,				0.5,			// 5 dolnÃ­ stÃ¬ny
 };
 
 
@@ -4524,36 +4524,36 @@ double FD3DCube()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// generátor rotaèních objektù - shora dolù (závìrem zruší globální buffery)
+// generÃ¡tor rotaÃ¨nÃ­ch objektÃ¹ - shora dolÃ¹ (zÃ¡vÃ¬rem zruÅ¡Ã­ globÃ¡lnÃ­ buffery)
 
-// popisovaè øady
+// popisovaÃ¨ Ã¸ady
 typedef struct GENROWITEM_
 {
-	double	dy;					// rozdíl souøadnic Y k další øadì
-	double	dr;					// rozdíl polomìrù R k další øadì
-	double	length;				// délka spojnice k další øadì
-	double	angle;				// úhel spojnice k další øadì
-	double	norm1;				// úhel normály - první øada
-	double	norm2;				// úhel normály - druhá øada
-	int		vn;					// poèet vrcholù v jedné øadì (bez zdvojnásobení)
-	bool	r0;					// pøíznak nulového polomìru
-	bool	smooth;				// pøíznak zjemnìní normály - spoleèná normála pro obì strany
-	bool	close;				// objekt je uzavøenı (konec a poèátek jsou totoné)
-	bool	prev;				// pøíznak, e jsou trojúhelníky zpìt (nahoru)
-	bool	next;				// pøíznak, e jsou trojúhelníky vpøed (dolù)
-	bool	use2;				// pøíznak pouití 2 øad vrcholù
+	double	dy;					// rozdÃ­l souÃ¸adnic Y k dalÅ¡Ã­ Ã¸adÃ¬
+	double	dr;					// rozdÃ­l polomÃ¬rÃ¹ R k dalÅ¡Ã­ Ã¸adÃ¬
+	double	length;				// dÃ©lka spojnice k dalÅ¡Ã­ Ã¸adÃ¬
+	double	angle;				// Ãºhel spojnice k dalÅ¡Ã­ Ã¸adÃ¬
+	double	norm1;				// Ãºhel normÃ¡ly - prvnÃ­ Ã¸ada
+	double	norm2;				// Ãºhel normÃ¡ly - druhÃ¡ Ã¸ada
+	int		vn;					// poÃ¨et vrcholÃ¹ v jednÃ© Ã¸adÃ¬ (bez zdvojnÃ¡sobenÃ­)
+	bool	r0;					// pÃ¸Ã­znak nulovÃ©ho polomÃ¬ru
+	bool	smooth;				// pÃ¸Ã­znak zjemnÃ¬nÃ­ normÃ¡ly - spoleÃ¨nÃ¡ normÃ¡la pro obÃ¬ strany
+	bool	close;				// objekt je uzavÃ¸enÃ½ (konec a poÃ¨Ã¡tek jsou totoÅ¾nÃ©)
+	bool	prev;				// pÃ¸Ã­znak, Å¾e jsou trojÃºhelnÃ­ky zpÃ¬t (nahoru)
+	bool	next;				// pÃ¸Ã­znak, Å¾e jsou trojÃºhelnÃ­ky vpÃ¸ed (dolÃ¹)
+	bool	use2;				// pÃ¸Ã­znak pouÅ¾itÃ­ 2 Ã¸ad vrcholÃ¹
 } GENROWITEM;
 
-int			genRows;			// poèet øad objektu
-double*		genY = NULL;		// buffer souøadnic Y (shora dolù)
-double*		genR = NULL;		// buffer polomìrù øad
+int			genRows;			// poÃ¨et Ã¸ad objektu
+double*		genY = NULL;		// buffer souÃ¸adnic Y (shora dolÃ¹)
+double*		genR = NULL;		// buffer polomÃ¬rÃ¹ Ã¸ad
 
-// parametr sm = zjemòovat vdy (=koule, toroid)
+// parametr sm = zjemÃ²ovat vÅ¾dy (=koule, toroid)
 
 void GenRot(bool sm)
 {
 
-// pro malı poèet øad se vytvoøí náhradní prázdná skupina
+// pro malÃ½ poÃ¨et Ã¸ad se vytvoÃ¸Ã­ nÃ¡hradnÃ­ prÃ¡zdnÃ¡ skupina
 	if (genRows <= 1)
 	{
 		MemFree(genY);
@@ -4563,35 +4563,35 @@ void GenRot(bool sm)
 		return;
 	}
 
-// pøíprava promìnnıch
-	int level = D3DLevel;			// poèet dìlení (polovina)
-	int level2 = level*2;			// poèet dìlení na celı obvod
-	double alfa = pi / level;		// úhel na jeden díl
-	double alfa2 = alfa/2;			// polovièní úhel na jeden díl
+// pÃ¸Ã­prava promÃ¬nnÃ½ch
+	int level = D3DLevel;			// poÃ¨et dÃ¬lenÃ­ (polovina)
+	int level2 = level*2;			// poÃ¨et dÃ¬lenÃ­ na celÃ½ obvod
+	double alfa = pi / level;		// Ãºhel na jeden dÃ­l
+	double alfa2 = alfa/2;			// poloviÃ¨nÃ­ Ãºhel na jeden dÃ­l
 	int i,j;
 
-// pøíprava bufferu popisovaèe øad
+// pÃ¸Ã­prava bufferu popisovaÃ¨e Ã¸ad
 	GENROWITEM* gr = (GENROWITEM*)MemGet(genRows * sizeof(GENROWITEM));
-	GENROWITEM* item = gr;									// ukazatel poloek popisovaèe øady
+	GENROWITEM* item = gr;									// ukazatel poloÅ¾ek popisovaÃ¨e Ã¸ady
 
-	double delka = 0;										// celková délka spojnic
-	int vN = 0;												// poèet vrcholù celkem
-	int fN = 0;												// poèet plošek celkem
+	double delka = 0;										// celkovÃ¡ dÃ©lka spojnic
+	int vN = 0;												// poÃ¨et vrcholÃ¹ celkem
+	int fN = 0;												// poÃ¨et ploÅ¡ek celkem
 
-// cyklus pøes všechny øady
-	bool firstrow = true;									// pøíznak, e to je první øada
+// cyklus pÃ¸es vÅ¡echny Ã¸ady
+	bool firstrow = true;									// pÃ¸Ã­znak, Å¾e to je prvnÃ­ Ã¸ada
 
 	for (i = 0; i < genRows; i++)
 	{
 
-// pøíznak poslední øady
+// pÃ¸Ã­znak poslednÃ­ Ã¸ady
 		bool lastrow = (i == (genRows - 1));
 
-// pøíznak nulového polomìru
+// pÃ¸Ã­znak nulovÃ©ho polomÃ¬ru
 		bool r00 = (genR[i] == 0);
 		item->r0 = r00;
 
-// rozdíl souøadnic Y a polomìrù R k další øadì
+// rozdÃ­l souÃ¸adnic Y a polomÃ¬rÃ¹ R k dalÅ¡Ã­ Ã¸adÃ¬
 		double dy0 = 0;
 		double dr0 = 0;
 
@@ -4604,12 +4604,12 @@ void GenRot(bool sm)
 		item->dy = dy0;
 		item->dr = dr0;
 
-// délka spojnice k další øadì
+// dÃ©lka spojnice k dalÅ¡Ã­ Ã¸adÃ¬
 		double d0 = sqrt(dy0*dy0 + dr0*dr0);
 		item->length = d0;
 		delka += d0;
 		
-// úhel spojnice k další øadì
+// Ãºhel spojnice k dalÅ¡Ã­ Ã¸adÃ¬
 		double a0 = 0;
 		if (d0 != 0)
 		{
@@ -4624,11 +4624,11 @@ void GenRot(bool sm)
 		}
 		item->angle = a0;
 				 
-// rozdíl úhlu s pøedešlou øadou (pro první a poslední øadu se poèítá úhel sám se sebou)
-// (první a poslední øada mùe splıvat, je-li uzavøenı objekt - napø. torus)
-// (pro zjednodušení pøedpokládáme, e uzavøenı objekt má konce vdy zjemnìné,
-//  protoe na zaèátku neznáme smìrník konce)
-		bool close = false;					// pøíznak uzavøeného objektu
+// rozdÃ­l Ãºhlu s pÃ¸edeÅ¡lou Ã¸adou (pro prvnÃ­ a poslednÃ­ Ã¸adu se poÃ¨Ã­tÃ¡ Ãºhel sÃ¡m se sebou)
+// (prvnÃ­ a poslednÃ­ Ã¸ada mÃ¹Å¾e splÃ½vat, je-li uzavÃ¸enÃ½ objekt - napÃ¸. torus)
+// (pro zjednoduÅ¡enÃ­ pÃ¸edpoklÃ¡dÃ¡me, Å¾e uzavÃ¸enÃ½ objekt mÃ¡ konce vÅ¾dy zjemnÃ¬nÃ©,
+//  protoÅ¾e na zaÃ¨Ã¡tku neznÃ¡me smÃ¬rnÃ­k konce)
+		bool close = false;					// pÃ¸Ã­znak uzavÃ¸enÃ©ho objektu
 
 		double da = uhel90;
 
@@ -4654,7 +4654,7 @@ void GenRot(bool sm)
 
 		if (da > pi) da = pi2 - da;
 
-// porovnání úhlu, zda bude zjemnìní (zvláštní korekce se provádí pro kouli se sloitostí 2)
+// porovnÃ¡nÃ­ Ãºhlu, zda bude zjemnÃ¬nÃ­ (zvlÃ¡Å¡tnÃ­ korekce se provÃ¡dÃ­ pro kouli se sloÅ¾itostÃ­ 2)
 		bool smooth0;
 		if (level == 2)
 		{
@@ -4662,51 +4662,51 @@ void GenRot(bool sm)
 				(genR[0] == 0) && 
 				(genR[2] == 0))
 			{
-				smooth0 = true;				// zvláštní pøípad - koule se sloitostí 2 (úhel 90 stupòù)
+				smooth0 = true;				// zvlÃ¡Å¡tnÃ­ pÃ¸Ã­pad - koule se sloÅ¾itostÃ­ 2 (Ãºhel 90 stupÃ²Ã¹)
 			}
 			else
 			{
-				smooth0 = (da < 1.4);		// tj. úhel asi 80 stupòù
+				smooth0 = (da < 1.4);		// tj. Ãºhel asi 80 stupÃ²Ã¹
 			}
 		}
 		else
 		{
 			if (level == 3)
 			{
-				smooth0 = (da < 1.1);		// tj. úhel asi 64 stupòù, aby vyhovìla koule se sloitostí 3
+				smooth0 = (da < 1.1);		// tj. Ãºhel asi 64 stupÃ²Ã¹, aby vyhovÃ¬la koule se sloÅ¾itostÃ­ 3
 			}
 			else
 			{
-				smooth0 = (da < 0.8);		// tj. úhel asi 45.8 stupòù, aby vyhovìla koule se sloitostí 4
+				smooth0 = (da < 0.8);		// tj. Ãºhel asi 45.8 stupÃ²Ã¹, aby vyhovÃ¬la koule se sloÅ¾itostÃ­ 4
 			}
 		}
-		if (close || sm) smooth0 = true;		// pro uzavøenı objekt (nebo nucené zjemnìní) zjemníme vdy
+		if (close || sm) smooth0 = true;		// pro uzavÃ¸enÃ½ objekt (nebo nucenÃ© zjemnÃ¬nÃ­) zjemnÃ­me vÅ¾dy
 
 		item->smooth = smooth0;
 		item->close = close;
 
-// pøíznak, e jsou trojúhelníky zpìt (nahoru)
+// pÃ¸Ã­znak, Å¾e jsou trojÃºhelnÃ­ky zpÃ¬t (nahoru)
 		bool prev0 = (!r00 && !firstrow);
 		item->prev = prev0;
 		if (prev0) fN += level2;
 
-// pøíznak, e jsou trojúhelníky vpøed (dolù)
+// pÃ¸Ã­znak, Å¾e jsou trojÃºhelnÃ­ky vpÃ¸ed (dolÃ¹)
 		bool next0 = (!r00 && !lastrow);
 		item->next = next0;
 		if (next0) fN += level2;
 
-// pøíznak pouití 2 øad vrcholù
+// pÃ¸Ã­znak pouÅ¾itÃ­ 2 Ã¸ad vrcholÃ¹
 		bool use20 = (prev0 && next0 && !smooth0);
 		item->use2 = use20;
 
-// poèet vrcholù v jedné øadì
+// poÃ¨et vrcholÃ¹ v jednÃ© Ã¸adÃ¬
 		int vn00 = level2;
 		if (!r00) vn00++;
 		item->vn = vn00;
 		if (use20) vn00 = vn00 * 2;
 		vN += vn00;
 
-// vıpoèet úhlu normál
+// vÃ½poÃ¨et Ãºhlu normÃ¡l
 		double n2 = a0 + uhel90;
 		double n1 = n2;
 
@@ -4804,12 +4804,12 @@ void GenRot(bool sm)
 		item->norm1 = n1;
 		item->norm2 = n2;
 
-// pøíprava pro další øadu
+// pÃ¸Ã­prava pro dalÅ¡Ã­ Ã¸adu
 		firstrow = false;
 		item++;
 	}
 
-// kontrola platnosti bodù - vytvoøí se náhradní prázdná skupina
+// kontrola platnosti bodÃ¹ - vytvoÃ¸Ã­ se nÃ¡hradnÃ­ prÃ¡zdnÃ¡ skupina
 	if (delka == 0)
 	{
 		MemFree(gr);
@@ -4820,71 +4820,71 @@ void GenRot(bool sm)
 		return;
 	}
 
-// vytvoøení vıstupních bufferù
-	D3DVECTOR* v = (D3DVECTOR*)MemGet(vN * sizeof(D3DVECTOR)); // buffer vektorù vrcholù
-	D3DVECTOR* n = (D3DVECTOR*)MemGet(vN * sizeof(D3DVECTOR)); // buffer vektorù normál
-	float* t = (float*)MemGet(vN * 2 * sizeof(float));		// buffer souøadnic textur
-	int* f = (int*)MemGet(fN * 3 * sizeof(int));			// buffer plošek
+// vytvoÃ¸enÃ­ vÃ½stupnÃ­ch bufferÃ¹
+	D3DVECTOR* v = (D3DVECTOR*)MemGet(vN * sizeof(D3DVECTOR)); // buffer vektorÃ¹ vrcholÃ¹
+	D3DVECTOR* n = (D3DVECTOR*)MemGet(vN * sizeof(D3DVECTOR)); // buffer vektorÃ¹ normÃ¡l
+	float* t = (float*)MemGet(vN * 2 * sizeof(float));		// buffer souÃ¸adnic textur
+	int* f = (int*)MemGet(fN * 3 * sizeof(int));			// buffer ploÅ¡ek
 
-// promìnné ke generování
-	double even = false;									// pøíznak sudé øady
+// promÃ¬nnÃ© ke generovÃ¡nÃ­
+	double even = false;									// pÃ¸Ã­znak sudÃ© Ã¸ady
 
-	D3DVECTOR* vp = v;										// ukládací adresa vektorù vrcholù
-	D3DVECTOR* np = n;										// ukládaví adresa vektorù normál
-	float* tp = t;											// ukládací adresa souøadnic textur
-	int* fp = f;											// ukládací adresa plošek
+	D3DVECTOR* vp = v;										// uklÃ¡dacÃ­ adresa vektorÃ¹ vrcholÃ¹
+	D3DVECTOR* np = n;										// uklÃ¡davÃ­ adresa vektorÃ¹ normÃ¡l
+	float* tp = t;											// uklÃ¡dacÃ­ adresa souÃ¸adnic textur
+	int* fp = f;											// uklÃ¡dacÃ­ adresa ploÅ¡ek
 
 	int inx = 0;											// ukazatel indexu bodu
-	double del = 0;											// ukazatel souøadnice textury
-	delka = 1/delka;										// délka jako násobitel (pro zrychlení vıpoètu)
+	double del = 0;											// ukazatel souÃ¸adnice textury
+	delka = 1/delka;										// dÃ©lka jako nÃ¡sobitel (pro zrychlenÃ­ vÃ½poÃ¨tu)
 
-// cyklus pøes všechny øady bodù
-	item = gr;												// ukazatel poloek popisovaèe øady
+// cyklus pÃ¸es vÅ¡echny Ã¸ady bodÃ¹
+	item = gr;												// ukazatel poloÅ¾ek popisovaÃ¨e Ã¸ady
 
 	for (i = 0; i < genRows; i++)
 	{
 
-// pøíprava promìnnıch
-		double r = genR[i];									// polomìr øady
-		double y = genY[i];									// souøadnice Y øady
+// pÃ¸Ã­prava promÃ¬nnÃ½ch
+		double r = genR[i];									// polomÃ¬r Ã¸ady
+		double y = genY[i];									// souÃ¸adnice Y Ã¸ady
 
-		int vn = item->vn;									// poèet vrcholù v øadì
+		int vn = item->vn;									// poÃ¨et vrcholÃ¹ v Ã¸adÃ¬
 
-		bool use2 = item->use2;								// vytvoøí se 2 øady vrcholù
+		bool use2 = item->use2;								// vytvoÃ¸Ã­ se 2 Ã¸ady vrcholÃ¹
 
-		float nn1 = (float)sin(item->norm1);				// normála první øady vrcholù (sloka y)
+		float nn1 = (float)sin(item->norm1);				// normÃ¡la prvnÃ­ Ã¸ady vrcholÃ¹ (sloÅ¾ka y)
 		float nn2 = nn1;
 		double rr1 = cos(item->norm1);
 		double rr2 = rr1;
 
 		if (use2)
 		{
-			nn2 = (float)sin(item->norm2);					// normála druhé øady vrcholù (sloka y)
+			nn2 = (float)sin(item->norm2);					// normÃ¡la druhÃ© Ã¸ady vrcholÃ¹ (sloÅ¾ka y)
 			rr2 = cos(item->norm2);
 		}
 
-		double gama = 0;									// ukazatel smìru otoèení bodu
+		double gama = 0;									// ukazatel smÃ¬ru otoÃ¨enÃ­ bodu
 		if (even)
 		{
-			gama = alfa2;									// pro sudou øadu odsazení
+			gama = alfa2;									// pro sudou Ã¸adu odsazenÃ­
 		}
 		else
 		{
-			if (item->r0) gama = alfa;						// první bod se nevytváøí
+			if (item->r0) gama = alfa;						// prvnÃ­ bod se nevytvÃ¡Ã¸Ã­
 		}
 
-// vygenerování vrcholù
+// vygenerovÃ¡nÃ­ vrcholÃ¹
 		for (j = vn; j > 0; j--)
 		{
 			double cosgama = cos(gama);
 			double singama = sin(gama);
 
-// souøadnice vrcholu
+// souÃ¸adnice vrcholu
 			vp->x = (float)(-r*singama);
 			vp->y = (float)y;
 			vp->z = (float)(r*cosgama);
 
-// normála vrcholu
+// normÃ¡la vrcholu
 			np->x = (float)(-rr1*singama);
 			np->y = nn1;
 			np->z = (float)(rr1*cosgama);
@@ -4894,7 +4894,7 @@ void GenRot(bool sm)
 			tp++;
 			*tp = (float)del;
 
-// vytvoøení druhého vrcholu
+// vytvoÃ¸enÃ­ druhÃ©ho vrcholu
 			if (use2)
 			{
 				vp[vn] = vp[0];
@@ -4907,14 +4907,14 @@ void GenRot(bool sm)
 				tp[2*vn] = tp[0];
 			}
 
-// zvıšení ukazatelù
+// zvÃ½Å¡enÃ­ ukazatelÃ¹
 			vp++;
 			np++;
 			tp++;
 			gama += alfa;
 		}
 
-// pøeskoèení druhé øady vrcholù
+// pÃ¸eskoÃ¨enÃ­ druhÃ© Ã¸ady vrcholÃ¹
 		if (use2)
 		{
 			vp += vn;
@@ -4922,7 +4922,7 @@ void GenRot(bool sm)
 			tp += 2*vn;
 		}
 
-// vygenerování horní øady trojúhelníkù
+// vygenerovÃ¡nÃ­ hornÃ­ Ã¸ady trojÃºhelnÃ­kÃ¹
 		if (item->prev)
 		{
 			int inx2 = inx;
@@ -4930,17 +4930,17 @@ void GenRot(bool sm)
 			for (j = 0; j < level2; j++)
 			{
 
-			// levı bod
+			// levÃ½ bod
 				*fp = inx2;
 				fp++;
 
-			// horní bod
+			// hornÃ­ bod
 				int k = inx2 - item[-1].vn;
 				if (even && !item[-1].r0) k = k + 1;
 				*fp = k;
 				fp++;
 
-			// pravı bod
+			// pravÃ½ bod
 				*fp = inx2 + 1;
 				fp++;
 
@@ -4949,7 +4949,7 @@ void GenRot(bool sm)
 		}
 
 
-// vygenerování dolní øady trojúhelníkù
+// vygenerovÃ¡nÃ­ dolnÃ­ Ã¸ady trojÃºhelnÃ­kÃ¹
 		if (item->next)
 		{
 			int inx2 = inx;
@@ -4957,15 +4957,15 @@ void GenRot(bool sm)
 
 			for (j = 0; j < level2; j++)
 			{
-			// levı bod
+			// levÃ½ bod
 				*fp = inx2;
 				fp++;
 
-			// pravı bod
+			// pravÃ½ bod
 				*fp = inx2 + 1;
 				fp++;
 
-			// dolní bod
+			// dolnÃ­ bod
 				int k = inx2 + vn;
 				if (even && !item[1].r0) k = k + 1;
 				*fp = k;
@@ -4976,32 +4976,32 @@ void GenRot(bool sm)
 		}
 
 
-// zvıšení ukazatele délky (pro textury)
+// zvÃ½Å¡enÃ­ ukazatele dÃ©lky (pro textury)
 		del += item->length*delka;
 
-// zvıšení ukazatele indexu vrcholu
-		inx = inx + vn;							// zvıšení ukazatele indexu poloek
+// zvÃ½Å¡enÃ­ ukazatele indexu vrcholu
+		inx = inx + vn;							// zvÃ½Å¡enÃ­ ukazatele indexu poloÅ¾ek
 		if (use2) inx = inx + vn;
 
-// pøíprava pro další øadu
-		even = !even;							// zmìna pøíznaku sudé øady
+// pÃ¸Ã­prava pro dalÅ¡Ã­ Ã¸adu
+		even = !even;							// zmÃ¬na pÃ¸Ã­znaku sudÃ© Ã¸ady
 		item++;
 	}
 
 	ASSERT(inx == vN);
 	ASSERT(fp == (f + 3*fN));
 
-// vytvoøení objektu
+// vytvoÃ¸enÃ­ objektu
 	int index = D3DF_CreateMesh(vN, v, fN, f);
 	D3DF_SetNormal(index, n);
 	D3DF_SetTextUV(index, t, 0);
 	D3D_ID = index;
 	D3DF_SetAddress(index, D3DTADDRESS_WRAP, D3DTADDRESS_CLAMP, 0);
 
-// korekce pro pravorukı souøadnı systém
+// korekce pro pravorukÃ½ souÃ¸adnÃ½ systÃ©m
 	D3DF_KorRightHand();
 
-// zrušení bufferù
+// zruÅ¡enÃ­ bufferÃ¹
 	MemFree(v);
 	MemFree(n);
 	MemFree(f);
@@ -5012,11 +5012,11 @@ void GenRot(bool sm)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení kruhu
+// vytvoÃ¸enÃ­ kruhu
 
 double FD3DCircle()
 {
-	int rows = (D3DLevel/16) + 2;		// poèet pásù
+	int rows = (D3DLevel/16) + 2;		// poÃ¨et pÃ¡sÃ¹
 
 	genRows = rows;
 
@@ -5044,8 +5044,8 @@ double FD3DCircle()
 
 	GenRot(false);
 
-// pøevrácení kruhu, aby smìøoval "-z"
-// (zde se pøedpokládá, e buffery ještì nebyly vytvoøeny!!!)
+// pÃ¸evrÃ¡cenÃ­ kruhu, aby smÃ¬Ã¸oval "-z"
+// (zde se pÃ¸edpoklÃ¡dÃ¡, Å¾e buffery jeÅ¡tÃ¬ nebyly vytvoÃ¸eny!!!)
 	D3DFITEM* item = GetID();
 
 	ASSERT(item->VertNum > 0);
@@ -5087,11 +5087,11 @@ double FD3DCircle()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení koule
+// vytvoÃ¸enÃ­ koule
 
 double FD3DSphere()
 {
-	int rows = D3DLevel + 1;		// poèet øad bodù vnitøního pásu
+	int rows = D3DLevel + 1;		// poÃ¨et Ã¸ad bodÃ¹ vnitÃ¸nÃ­ho pÃ¡su
 	genRows = rows;
 
 	genY = (double*)MemGet(genRows * sizeof(double));
@@ -5122,11 +5122,11 @@ double FD3DSphere()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení polokoule
+// vytvoÃ¸enÃ­ polokoule
 
 double FD3DHemisphere()
 {
-	int rows = (D3DLevel+1)/2 + 1;		// poèet øad bodù vnitøního pásu
+	int rows = (D3DLevel+1)/2 + 1;		// poÃ¨et Ã¸ad bodÃ¹ vnitÃ¸nÃ­ho pÃ¡su
 	if (D3DCreateLower)
 	{
 		genRows = rows + 1;
@@ -5165,18 +5165,18 @@ double FD3DHemisphere()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení torusu
+// vytvoÃ¸enÃ­ torusu
 
 double FD3DTorus()
 {
-	double r = FNum()/2;			// menší polomìr
+	double r = FNum()/2;			// menÅ¡Ã­ polomÃ¬r
 
-	if (r < 0.0001)				// minimální polomìr
+	if (r < 0.0001)				// minimÃ¡lnÃ­ polomÃ¬r
 	{
-		return FD3DEmpty();			// vytvoøí se jen skupina
+		return FD3DEmpty();			// vytvoÃ¸Ã­ se jen skupina
 	}
 
-	int rows = 2*D3DLevel + 1;			// poèet generovanıch bodù
+	int rows = 2*D3DLevel + 1;			// poÃ¨et generovanÃ½ch bodÃ¹
 	genRows = rows;
 
 	genY = (double*)MemGet(genRows * sizeof(double));
@@ -5215,12 +5215,12 @@ double FD3DTorus()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení válce
+// vytvoÃ¸enÃ­ vÃ¡lce
 
 double FD3DCylinder()
 {
-	int rows = D3DLevel/8 + 2;			// poèet øad bodù vnitøního pásu
-	int extra = (D3DLevel/20);			// pøídavné øádky nahoøe a dole
+	int rows = D3DLevel/8 + 2;			// poÃ¨et Ã¸ad bodÃ¹ vnitÃ¸nÃ­ho pÃ¡su
+	int extra = (D3DLevel/20);			// pÃ¸Ã­davnÃ© Ã¸Ã¡dky nahoÃ¸e a dole
 
 	genRows = rows;
 
@@ -5290,12 +5290,12 @@ double FD3DCylinder()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení kuele
+// vytvoÃ¸enÃ­ kuÅ¾ele
 
 double FD3DCone()
 {
-	int rows = D3DLevel/8 + 2;			// poèet øad bodù vnitøního pásu
-	int extra = (D3DLevel/20);			// pøídavné øádky dole
+	int rows = D3DLevel/8 + 2;			// poÃ¨et Ã¸ad bodÃ¹ vnitÃ¸nÃ­ho pÃ¡su
+	int extra = (D3DLevel/20);			// pÃ¸Ã­davnÃ© Ã¸Ã¡dky dole
 
 	genRows = rows;
 
@@ -5349,20 +5349,20 @@ double FD3DCone()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení komolého kuele
+// vytvoÃ¸enÃ­ komolÃ©ho kuÅ¾ele
 
 double FD3DCone2()
 {
-	double r = FNum()/2;			// menší polomìr
+	double r = FNum()/2;			// menÅ¡Ã­ polomÃ¬r
 
-	if (r < 0.001)					// minimální polomìr
+	if (r < 0.001)					// minimÃ¡lnÃ­ polomÃ¬r
 	{
 		return FD3DCone();
 	}
 
-	int rows = D3DLevel/8 + 2;			// poèet øad bodù vnitøního pásu
-	int extra1 = (Round(2*r*D3DLevel)/20);	// pøídavné øádky nahoøe
-	int extra2 = (D3DLevel/20);			// pøídavné øádky dole
+	int rows = D3DLevel/8 + 2;			// poÃ¨et Ã¸ad bodÃ¹ vnitÃ¸nÃ­ho pÃ¡su
+	int extra1 = (Round(2*r*D3DLevel)/20);	// pÃ¸Ã­davnÃ© Ã¸Ã¡dky nahoÃ¸e
+	int extra2 = (D3DLevel/20);			// pÃ¸Ã­davnÃ© Ã¸Ã¡dky dole
 
 	genRows = rows;
 
@@ -5435,7 +5435,7 @@ double FD3DCone2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení svìtla
+// vytvoÃ¸enÃ­ svÃ¬tla
 
 double FD3DLight()
 {		
@@ -5449,7 +5449,7 @@ double FD3DLight()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// klonování
+// klonovÃ¡nÃ­
 
 double FD3DClone()
 {
@@ -5467,15 +5467,15 @@ double FD3DClone()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení objektu ze souboru
+// naÃ¨tenÃ­ objektu ze souboru
 
 double FD3DFile()
 {
-// naètení jména souboru
+// naÃ¨tenÃ­ jmÃ©na souboru
 	CString text;
 	FText(text);
 
-// úprava jména souboru
+// Ãºprava jmÃ©na souboru
 	text.TrimLeft();
 	text.TrimRight();
 	text.PathName(0);
@@ -5487,13 +5487,13 @@ READERROR:
 		return FD3DEmpty();
 	}
 
-// otevøení souboru
+// otevÃ¸enÃ­ souboru
 	HANDLE file = ::CreateFile(text, GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,
 			NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	if (FileReadHandle == INVALID_HANDLE_VALUE) goto READERROR;
 
-// zjištìní velikosti souboru
+// zjiÅ¡tÃ¬nÃ­ velikosti souboru
 	int size = (int)::GetFileSize(file, NULL);
 
 	if (size <= 10)
@@ -5503,10 +5503,10 @@ READERROR2:
 		goto READERROR;
 	}
 
-// vytvoøení datového bufferu
+// vytvoÃ¸enÃ­ datovÃ©ho bufferu
 	BYTE* data = (BYTE*)MemGet(size);
 
-// naètení souboru
+// naÃ¨tenÃ­ souboru
 	DWORD read = 0;
 
 	if ((::ReadFile(file, (void*)data, size, &read, NULL) == FALSE) ||
@@ -5517,20 +5517,20 @@ READERROR2:
 	}
 	::CloseHandle(file);
 
-// pøíprava cesty do adresáøe souboru
+// pÃ¸Ã­prava cesty do adresÃ¡Ã¸e souboru
 	text.Delete(text.RevFind('\\'));
 
-// vytvoøení objektu
+// vytvoÃ¸enÃ­ objektu
 	ReadMesh(data, size, text);
 
-// zrušení datového bufferu
+// zruÅ¡enÃ­ datovÃ©ho bufferu
 	MemFree(data);
 
 	return D3D_ID;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení objektu z textu
+// naÃ¨tenÃ­ objektu z textu
 
 double FD3DText()
 {
@@ -5544,7 +5544,7 @@ double FD3DText()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní ID aktivního objektu
+// zjiÅ¡tÃ¬nÃ­ ID aktivnÃ­ho objektu
 
 double FGetD3DObjectID()
 {
@@ -5552,7 +5552,7 @@ double FGetD3DObjectID()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní poøadí rotací objektù
+// zjiÅ¡tÃ¬nÃ­ poÃ¸adÃ­ rotacÃ­ objektÃ¹
 
 double FGetD3DOrder()
 {
@@ -5561,7 +5561,7 @@ double FGetD3DOrder()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní mìøítka ve smìru X
+// zjiÅ¡tÃ¬nÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru X
 
 double FGetD3DScaleX()
 {
@@ -5570,7 +5570,7 @@ double FGetD3DScaleX()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní mìøítka ve smìru Y
+// zjiÅ¡tÃ¬nÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru Y
 
 double FGetD3DScaleY()
 {
@@ -5579,7 +5579,7 @@ double FGetD3DScaleY()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní mìøítka ve smìru Z
+// zjiÅ¡tÃ¬nÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru Z
 
 double FGetD3DScaleZ()
 {
@@ -5588,7 +5588,7 @@ double FGetD3DScaleZ()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní rotace podle osy X
+// zjiÅ¡tÃ¬nÃ­ rotace podle osy X
 
 double FGetD3DRotateX()
 {
@@ -5597,7 +5597,7 @@ double FGetD3DRotateX()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní rotace podle osy Y
+// zjiÅ¡tÃ¬nÃ­ rotace podle osy Y
 
 double FGetD3DRotateY()
 {
@@ -5606,7 +5606,7 @@ double FGetD3DRotateY()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní rotace podle osy Z
+// zjiÅ¡tÃ¬nÃ­ rotace podle osy Z
 
 double FGetD3DRotateZ()
 {
@@ -5615,7 +5615,7 @@ double FGetD3DRotateZ()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní posunu ve smìru X
+// zjiÅ¡tÃ¬nÃ­ posunu ve smÃ¬ru X
 
 double FGetD3DTransX()
 {
@@ -5624,7 +5624,7 @@ double FGetD3DTransX()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní posunu ve smìru Y
+// zjiÅ¡tÃ¬nÃ­ posunu ve smÃ¬ru Y
 
 double FGetD3DTransY()
 {
@@ -5633,7 +5633,7 @@ double FGetD3DTransY()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní posunu ve smìru Z
+// zjiÅ¡tÃ¬nÃ­ posunu ve smÃ¬ru Z
 
 double FGetD3DTransZ()
 {
@@ -5642,7 +5642,7 @@ double FGetD3DTransZ()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy objektu (-1=vnitøní objektu, -2=z rodièe, jinak urèená)
+// zjiÅ¡tÃ¬nÃ­ barvy objektu (-1=vnitÃ¸nÃ­ objektu, -2=z rodiÃ¨e, jinak urÃ¨enÃ¡)
 
 double FGetD3DColor()
 {
@@ -5658,7 +5658,7 @@ double FGetD3DColor()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy svítivosti
+// zjiÅ¡tÃ¬nÃ­ barvy svÃ­tivosti
 
 double FGetD3DEmissive()
 {
@@ -5671,7 +5671,7 @@ double FGetD3DEmissive()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní odrazu rozptıleného svìtla
+// zjiÅ¡tÃ¬nÃ­ odrazu rozptÃ½lenÃ©ho svÃ¬tla
 
 double FGetD3DAmbiRef()
 {
@@ -5686,7 +5686,7 @@ double FGetD3DAmbiRef()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní matnosti
+// zjiÅ¡tÃ¬nÃ­ matnosti
 
 double FGetD3DPower()
 {
@@ -5699,7 +5699,7 @@ double FGetD3DPower()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy odlesku
+// zjiÅ¡tÃ¬nÃ­ barvy odlesku
 
 double FGetD3DSpecular()
 {
@@ -5712,7 +5712,7 @@ double FGetD3DSpecular()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy svìtla
+// zjiÅ¡tÃ¬nÃ­ barvy svÃ¬tla
 
 double FGetD3DLightColor()
 {
@@ -5730,7 +5730,7 @@ double FGetD3DLightColor()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní typu svìtla
+// zjiÅ¡tÃ¬nÃ­ typu svÃ¬tla
 
 double FGetD3DLightType()
 {
@@ -5748,7 +5748,7 @@ double FGetD3DLightType()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní úhlu svìtelného kuele
+// zjiÅ¡tÃ¬nÃ­ Ãºhlu svÃ¬telnÃ©ho kuÅ¾ele
 
 double FGetD3DLightUmbra()
 {
@@ -5766,7 +5766,7 @@ double FGetD3DLightUmbra()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní úhlu polostínu svìtla
+// zjiÅ¡tÃ¬nÃ­ Ãºhlu polostÃ­nu svÃ¬tla
 
 double FGetD3DLightPenumbra()
 {
@@ -5784,7 +5784,7 @@ double FGetD3DLightPenumbra()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní dosahu svìtla
+// zjiÅ¡tÃ¬nÃ­ dosahu svÃ¬tla
 
 double FGetD3DLightRange()
 {
@@ -5802,7 +5802,7 @@ double FGetD3DLightRange()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní intenzity svìtla
+// zjiÅ¡tÃ¬nÃ­ intenzity svÃ¬tla
 
 double FGetD3DLightCatten()
 {
@@ -5820,7 +5820,7 @@ double FGetD3DLightCatten()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní lineárního útlumu svìtla
+// zjiÅ¡tÃ¬nÃ­ lineÃ¡rnÃ­ho Ãºtlumu svÃ¬tla
 
 double FGetD3DLightLatten()
 {
@@ -5838,7 +5838,7 @@ double FGetD3DLightLatten()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní kvadratického útlumu svìtla
+// zjiÅ¡tÃ¬nÃ­ kvadratickÃ©ho Ãºtlumu svÃ¬tla
 
 double FGetD3DLightQatten()
 {
@@ -5856,7 +5856,7 @@ double FGetD3DLightQatten()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní projekce
+// zjiÅ¡tÃ¬nÃ­ projekce
 
 double FGetD3DProjection()
 {
@@ -5864,7 +5864,7 @@ double FGetD3DProjection()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy pozadí scény
+// zjiÅ¡tÃ¬nÃ­ barvy pozadÃ­ scÃ©ny
 
 double FGetD3DSceneColor()
 {
@@ -5874,7 +5874,7 @@ double FGetD3DSceneColor()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní ambient svìtla
+// zjiÅ¡tÃ¬nÃ­ ambient svÃ¬tla
 
 double FGetD3DAmbient()
 {	
@@ -5882,7 +5882,7 @@ double FGetD3DAmbient()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy mlhy
+// zjiÅ¡tÃ¬nÃ­ barvy mlhy
 
 double FGetD3DFogColor()
 {
@@ -5891,7 +5891,7 @@ double FGetD3DFogColor()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní módy mlhy
+// zjiÅ¡tÃ¬nÃ­ mÃ³dy mlhy
 
 double FGetD3DFogMode()
 {
@@ -5901,7 +5901,7 @@ double FGetD3DFogMode()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní zaèátku mlhy
+// zjiÅ¡tÃ¬nÃ­ zaÃ¨Ã¡tku mlhy
 
 double FGetD3DFogStart()
 {
@@ -5909,7 +5909,7 @@ double FGetD3DFogStart()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní konce mlhy
+// zjiÅ¡tÃ¬nÃ­ konce mlhy
 
 double FGetD3DFogEnd()
 {
@@ -5917,7 +5917,7 @@ double FGetD3DFogEnd()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní hustotu mlhy
+// zjiÅ¡tÃ¬nÃ­ hustotu mlhy
 
 double FGetD3DFogDensity()
 {
@@ -5925,7 +5925,7 @@ double FGetD3DFogDensity()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní projekèní roviny
+// zjiÅ¡tÃ¬nÃ­ projekÃ¨nÃ­ roviny
 
 double FGetD3DViewFront()
 {
@@ -5933,7 +5933,7 @@ double FGetD3DViewFront()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní vzdálenosti dohledu
+// zjiÅ¡tÃ¬nÃ­ vzdÃ¡lenosti dohledu
 
 double FGetD3DViewBack()
 {
@@ -5941,7 +5941,7 @@ double FGetD3DViewBack()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vyhledání objektu
+// vyhledÃ¡nÃ­ objektu
 
 //double FD3DPick()
 //{		
@@ -6028,7 +6028,7 @@ double FGetD3DViewBack()
 //}
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení 2D objektu
+// vytvoÃ¸enÃ­ 2D objektu
 
 double FD3D2DObject()
 {
@@ -6060,7 +6060,7 @@ double FD3D2DObject()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení prázdného objektu
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ©ho objektu
 
 double FD3DEmpty()
 {
@@ -6069,7 +6069,7 @@ double FD3DEmpty()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní sloitosti objektù
+// zjiÅ¡tÃ¬nÃ­ sloÅ¾itosti objektÃ¹
 
 double FGetD3DSplits()
 {
@@ -6078,7 +6078,7 @@ double FGetD3DSplits()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní ovladaèe
+// zjiÅ¡tÃ¬nÃ­ ovladaÃ¨e
 
 double FGetD3DDriver()
 {
@@ -6086,7 +6086,7 @@ double FGetD3DDriver()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní rozhraní
+// zjiÅ¡tÃ¬nÃ­ rozhranÃ­
 
 double FGetD3DInterface()
 {
@@ -6094,28 +6094,28 @@ double FGetD3DInterface()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení rotaèního objektu
+// vytvoÃ¸enÃ­ rotaÃ¨nÃ­ho objektu
 
 double FD3DRotary()
 {
-// naètení textu definice
+// naÃ¨tenÃ­ textu definice
 	CString text;
 	FText(text);
 
 #define MAX_ROWS 10000
 
-// naètení definice bodù
-	int lin = 0;					// ukazatel øádku textu
-	CString line;					// jeden øádek textu
-	genRows = 0;					// èítaè øádkù s body
-	genY = (double*)MemGet(MAX_ROWS * sizeof(double));	// buffer souøadnice Y
-	genR = (double*)MemGet(MAX_ROWS * sizeof(double));	// buffer polomìru bodu
+// naÃ¨tenÃ­ definice bodÃ¹
+	int lin = 0;					// ukazatel Ã¸Ã¡dku textu
+	CString line;					// jeden Ã¸Ã¡dek textu
+	genRows = 0;					// Ã¨Ã­taÃ¨ Ã¸Ã¡dkÃ¹ s body
+	genY = (double*)MemGet(MAX_ROWS * sizeof(double));	// buffer souÃ¸adnice Y
+	genR = (double*)MemGet(MAX_ROWS * sizeof(double));	// buffer polomÃ¬ru bodu
 
 	for (int i = text.LineNum(); i > 0; i--)
 	{
 
-// naètení jednoho øádku textu
-		line = text.GetLine(lin);		// jeden øádek z textu
+// naÃ¨tenÃ­ jednoho Ã¸Ã¡dku textu
+		line = text.GetLine(lin);		// jeden Ã¸Ã¡dek z textu
 		lin++;
 
 		line.TrimLeft();
@@ -6123,10 +6123,10 @@ double FD3DRotary()
 		if (line.IsNotEmpty())
 		{
 
-// naètení souøadnice Y
+// naÃ¨tenÃ­ souÃ¸adnice Y
 			genY[genRows] = Double(line);
 
-// naètení polomìru bodu
+// naÃ¨tenÃ­ polomÃ¬ru bodu
 			int pos = line.Find(' ');
 			if (pos < 0) pos = line.Find(';');
 			if (pos < 0) pos = line.Find(9);
@@ -6145,34 +6145,34 @@ double FD3DRotary()
 				}
 			}
 
-// zvıšení èítaèe øádkù bodù
+// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e Ã¸Ã¡dkÃ¹ bodÃ¹
 			genRows++;
 			if (genRows == MAX_ROWS) break;
 		}
 	}
 
-// vytvoøení objektu
+// vytvoÃ¸enÃ­ objektu
 	GenRot(false);
 
 	return D3D_ID;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// generátor terénu (zruší globální buffery)
+// generÃ¡tor terÃ©nu (zruÅ¡Ã­ globÃ¡lnÃ­ buffery)
 
 //#define MAXVERT 0xf000 // MaxVertexNum
 
-int		terWidth;				// šíøka terénu (políèek)
-int		terHeight;				// vıška terénu (políèek)
-float*	terMap;					// mapa terénu (width*height hodnot 0 a 1),
-								// poøadí zleva doprava a zdola nahoru,
-								// (levı sloupec a poslední øada se zduplikují)
+int		terWidth;				// Å¡Ã­Ã¸ka terÃ©nu (polÃ­Ã¨ek)
+int		terHeight;				// vÃ½Å¡ka terÃ©nu (polÃ­Ã¨ek)
+float*	terMap;					// mapa terÃ©nu (width*height hodnot 0 aÅ¾ 1),
+								// poÃ¸adÃ­ zleva doprava a zdola nahoru,
+								// (levÃ½ sloupec a poslednÃ­ Ã¸ada se zduplikujÃ­)
 
 void GenTerrain()
 {
 	int i,j;
 
-// omezení velikosti terénu
+// omezenÃ­ velikosti terÃ©nu
 	i = terWidth * terHeight * 4;
 	int korwidth = terWidth;
 	int korheight = terHeight;
@@ -6185,7 +6185,7 @@ void GenTerrain()
 //		ASSERT((korwidth * korheight * 4) <= MAXVERT);
 //	}
 
-// vytvoøení bufferu vıškové mapy (s duplikací okrajù)
+// vytvoÃ¸enÃ­ bufferu vÃ½Å¡kovÃ© mapy (s duplikacÃ­ okrajÃ¹)
 	float* termap = (float*)MemGet((korwidth+1)*(korheight+1)*sizeof(float));
 	float* ter = termap + korwidth + 1;
 	float* tersrc = terMap;
@@ -6203,7 +6203,7 @@ void GenTerrain()
 	terHeight = korheight;
 	MemFree(terMap);
 
-// vytvoøení bufferu vektorù vrcholù (od dolní øady nahoru, zleva doprava, kadé políèko má 4 vrcholy)
+// vytvoÃ¸enÃ­ bufferu vektorÃ¹ vrcholÃ¹ (od dolnÃ­ Ã¸ady nahoru, zleva doprava, kaÅ¾dÃ© polÃ­Ã¨ko mÃ¡ 4 vrcholy)
 	int vertN = terWidth*terHeight*4;
 	D3DVECTOR* vert = (D3DVECTOR*)MemGet(vertN*sizeof(D3DVECTOR));
 	D3DVECTOR* v = vert;
@@ -6221,13 +6221,13 @@ void GenTerrain()
 		for (j = terWidth; j > 0; j--)
 		{
 
-		// levı dolní roh
+		// levÃ½ dolnÃ­ roh
 			v->x = (float)x;
 			v->y = ter[0];
 			v->z = (float)z;
 			v++;
 
-		// levı horní roh
+		// levÃ½ hornÃ­ roh
 			v->x = (float)x;
 			v->y = ter[terWidth+1];
 			v->z = (float)z2;
@@ -6235,13 +6235,13 @@ void GenTerrain()
 
 			x += dx;
 
-		// pravı horní roh
+		// pravÃ½ hornÃ­ roh
 			v->x = (float)x;
 			v->y = ter[terWidth+2];
 			v->z = (float)z2;
 			v++;
 
-		// pravı dolní roh
+		// pravÃ½ dolnÃ­ roh
 			v->x = (float)x;
 			v->y = ter[1];
 			v->z = (float)z;
@@ -6254,14 +6254,14 @@ void GenTerrain()
 		z = z2;
 	}
 
-// vytvoøení bufferu normál (stejná organizace jako vektor vrcholù)
+// vytvoÃ¸enÃ­ bufferu normÃ¡l (stejnÃ¡ organizace jako vektor vrcholÃ¹)
 	D3DVECTOR* norm = (D3DVECTOR*)MemGet(vertN * sizeof(D3DVECTOR));
 	D3DVECTOR* n = norm;
 	v = vert;
 
-// Normála je násobek vektorù: A x B = {Ay*Bz-Az*By,Az*Bx-Ax*Bz,Ax*By-Ay*Bx)
+// NormÃ¡la je nÃ¡sobek vektorÃ¹: A x B = {Ay*Bz-Az*By,Az*Bx-Ax*Bz,Ax*By-Ay*Bx)
 // pro A={dx,dxn,0} a B={0,dzn,dz} je N={dz*dxn,-dz*dx,dzn*dx}
-// Vektory nejsou normalizované - provede se pøi jejich uloení.
+// Vektory nejsou normalizovanÃ© - provede se pÃ¸i jejich uloÅ¾enÃ­.
 
 	float dy = (float)(dz * dx);
 
@@ -6269,31 +6269,31 @@ void GenTerrain()
 	{
 		for (j = terWidth; j > 0; j--)
 		{
-			double dx1 = (v[0].y - v[3].y);		// rozdíl dole
-			double dx2 = (v[1].y - v[2].y);		// rozdíl nahoøe
+			double dx1 = (v[0].y - v[3].y);		// rozdÃ­l dole
+			double dx2 = (v[1].y - v[2].y);		// rozdÃ­l nahoÃ¸e
 
-			double dz1 = (v[0].y - v[1].y);		// rozdíl vlevo
-			double dz2 = (v[3].y - v[2].y);		// rozdíl vpravo
+			double dz1 = (v[0].y - v[1].y);		// rozdÃ­l vlevo
+			double dz2 = (v[3].y - v[2].y);		// rozdÃ­l vpravo
 
-		// levı dolní roh
+		// levÃ½ dolnÃ­ roh
 			n->x = (float)(dz*dx1);
 			n->y = dy;
 			n->z = (float)(dz1*dx);
 			n++;
 
-		// levı horní roh
+		// levÃ½ hornÃ­ roh
 			n->x = (float)(dz*dx2);
 			n->y = dy;
 			n->z = (float)(dz1*dx);
 			n++;
 
-		// pravı horní roh
+		// pravÃ½ hornÃ­ roh
 			n->x = (float)(dz*dx2);
 			n->y = dy;
 			n->z = (float)(dz2*dx);
 			n++;
 
-		// pravı dolní roh
+		// pravÃ½ dolnÃ­ roh
 			n->x = (float)(dz*dx1);
 			n->y = dy;
 			n->z = (float)(dz2*dx);
@@ -6303,7 +6303,7 @@ void GenTerrain()
 		}
 	}
 
-// vyhlazení normál
+// vyhlazenÃ­ normÃ¡l
 	n = norm;
 
 	int down = (terHeight-1)*terWidth*4;
@@ -6334,7 +6334,7 @@ void GenTerrain()
 		down = -4*terWidth;
 	}	 
 
-// vytvoøení bufferu implicitního mapování textury
+// vytvoÃ¸enÃ­ bufferu implicitnÃ­ho mapovÃ¡nÃ­ textury
 	float* text = (float*)MemGet(vertN * 2 * sizeof(float));
 	float* t = text;
 
@@ -6351,13 +6351,13 @@ void GenTerrain()
 
 		for (j = terWidth; j > 0; j--)
 		{
-		// levı dolní roh
+		// levÃ½ dolnÃ­ roh
 			*t = u;
 			t++;
 			*t = v1;
 			t++;
 
-		// levı horní roh
+		// levÃ½ hornÃ­ roh
 			*t = u;
 			t++;
 			*t = v2;
@@ -6365,13 +6365,13 @@ void GenTerrain()
 
 			u += 0.25;
 
-		// pravı horní roh
+		// pravÃ½ hornÃ­ roh
 			*t = u;
 			t++;
 			*t = v2;
 			t++;
 
-		// pravı dolní roh
+		// pravÃ½ dolnÃ­ roh
 			*t = u;
 			t++;
 			*t = v1;
@@ -6394,8 +6394,8 @@ void GenTerrain()
 		}
 	}
 
-// vytvoøení plošek (zleva doprava, zdola nahoru)
-// orientace rohù políèka:
+// vytvoÃ¸enÃ­ ploÅ¡ek (zleva doprava, zdola nahoru)
+// orientace rohÃ¹ polÃ­Ã¨ka:
 //		1    2
 //      0    3
 
@@ -6407,7 +6407,7 @@ void GenTerrain()
 
 	for (i = terHeight*terWidth; i > 0; i--)
 	{
-	// 1. trojúhleník (vrcholy 0-1-2)
+	// 1. trojÃºhlenÃ­k (vrcholy 0-1-2)
 		*f = inx;
 		f++;
 		*f = inx + 1;
@@ -6415,7 +6415,7 @@ void GenTerrain()
 		*f = inx + 2;
 		f++;
 
-	// 2. trojúhelník (vrcholy 0-2-3)
+	// 2. trojÃºhelnÃ­k (vrcholy 0-2-3)
 		*f = inx;
 		f++;
 		*f = inx + 2;
@@ -6426,7 +6426,7 @@ void GenTerrain()
 		inx += 4;
 	}
 
-// vytvoøení objektu
+// vytvoÃ¸enÃ­ objektu
 	int index = D3DF_CreateMesh(vertN, vert, faceN, face);
 	D3DF_SetNormal(index, norm);
 	D3DF_SetTextUV(index, text, 0);
@@ -6440,7 +6440,7 @@ void GenTerrain()
 	D3DF_SetAddress(D3D_ID, D3DTADDRESS_WRAP, D3DTADDRESS_WRAP, 0);
 	D3DF_KorRightHand();
 
-// zrušení bufferù
+// zruÅ¡enÃ­ bufferÃ¹
 	MemFree(vert);
 	MemFree(face);
 	MemFree(norm);
@@ -6448,67 +6448,67 @@ void GenTerrain()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// popisovaè souseda ikony
+// popisovaÃ¨ souseda ikony
 
 typedef struct _ICONNEIGH
 {
 	int		icon;			// index ikony
-	int		smer;			// offset souseda (0 a 7)
+	int		smer;			// offset souseda (0 aÅ¾ 7)
 	int		neigh;			// index souseda
-	int		counter;		// èítaè vıskytu
+	int		counter;		// Ã¨Ã­taÃ¨ vÃ½skytu
 } ICONNEIGH;
 
-// pomocná tabulka smìrù X
+// pomocnÃ¡ tabulka smÃ¬rÃ¹ X
 const int smerX[8] =
 {
 	1,						// 0: doprava
-	1,						// 1: doprava o øádek zpìt (dolù)
-	0,						// 2: o øádek zpìt
-	-1,						// 3: doleva o øádek zpìt (dolù)
+	1,						// 1: doprava o Ã¸Ã¡dek zpÃ¬t (dolÃ¹)
+	0,						// 2: o Ã¸Ã¡dek zpÃ¬t
+	-1,						// 3: doleva o Ã¸Ã¡dek zpÃ¬t (dolÃ¹)
 	-1,						// 4: doleva
-	-1,						// 5: doleva o øádek vpøed (nahoru)
-	0,						// 6: o øádek vpøed
-	1						// 7: doprava o øádek vpøed (nahoru)
+	-1,						// 5: doleva o Ã¸Ã¡dek vpÃ¸ed (nahoru)
+	0,						// 6: o Ã¸Ã¡dek vpÃ¸ed
+	1						// 7: doprava o Ã¸Ã¡dek vpÃ¸ed (nahoru)
 };
 
-// pomocná tabulka smìrù Y
+// pomocnÃ¡ tabulka smÃ¬rÃ¹ Y
 const int smerY[8] =
 {
 	0,						// 0: doprava
-	-1,						// 1: doprava o øádek zpìt (dolù)
-	-1,						// 2: o øádek zpìt
-	-1,						// 3: doleva o øádek zpìt (dolù)
+	-1,						// 1: doprava o Ã¸Ã¡dek zpÃ¬t (dolÃ¹)
+	-1,						// 2: o Ã¸Ã¡dek zpÃ¬t
+	-1,						// 3: doleva o Ã¸Ã¡dek zpÃ¬t (dolÃ¹)
 	0,						// 4: doleva
-	1,						// 5: doleva o øádek vpøed (nahoru)
-	1,						// 6: o øádek vpøed
-	1						// 7: doprava o øádek vpøed (nahoru)
+	1,						// 5: doleva o Ã¸Ã¡dek vpÃ¸ed (nahoru)
+	1,						// 6: o Ã¸Ã¡dek vpÃ¸ed
+	1						// 7: doprava o Ã¸Ã¡dek vpÃ¸ed (nahoru)
 };
 
-#define ICONBORD	16							// šíøka pøídavného pásu kolem ikon (v bodech)
-#define ICONSIZEB	(ICONWIDTH + 2*ICONBORD)	// šíøka a vıška ikony s pøídavnım pásem
+#define ICONBORD	16							// Å¡Ã­Ã¸ka pÃ¸Ã­davnÃ©ho pÃ¡su kolem ikon (v bodech)
+#define ICONSIZEB	(ICONWIDTH + 2*ICONBORD)	// Å¡Ã­Ã¸ka a vÃ½Å¡ka ikony s pÃ¸Ã­davnÃ½m pÃ¡sem
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení terénu z plochy
+// vytvoÃ¸enÃ­ terÃ©nu z plochy
 
 double FD3DTerrainMap()
 {
 
-// naètení plochy
+// naÃ¨tenÃ­ plochy
 	CMap map;
 	FMap(map);
 
-// pøíprava parametrù plochy
+// pÃ¸Ã­prava parametrÃ¹ plochy
 	terWidth = map.Width();
 	terHeight = map.Height();
 	int size = terWidth * terHeight;
 	int i,j;
 
-// pøíprava bufferu pro zmapování ikon a vıšek
+// pÃ¸Ã­prava bufferu pro zmapovÃ¡nÃ­ ikon a vÃ½Å¡ek
 	CIcon* ico = (CIcon*)MemGet(size * sizeof(CIcon));
 	int* icomap = (int*)MemGet(size * sizeof(int));
 	int icons = 0;
 
-// zmapování ikon
+// zmapovÃ¡nÃ­ ikon
 	CIcon ico0;
 
 	for (i = 0; i < size; i++)
@@ -6532,7 +6532,7 @@ double FD3DTerrainMap()
 		icomap[i] = j;
 	}
 
-// vyhledání èetností sousedù ikon
+// vyhledÃ¡nÃ­ Ã¨etnostÃ­ sousedÃ¹ ikon
 	ICONNEIGH* iconneigh = (ICONNEIGH*)MemGet(8 * size * sizeof(ICONNEIGH));
 	int neighN = 0;
 
@@ -6541,15 +6541,15 @@ double FD3DTerrainMap()
 
 	for (i = 0; i < size; i++)
 	{
-		int icoinx = icomap[i];			// støedová ikona
+		int icoinx = icomap[i];			// stÃ¸edovÃ¡ ikona
 		
-		for (j = 0; j < 8; j++)			// cyklus pøes všechny sousedy
+		for (j = 0; j < 8; j++)			// cyklus pÃ¸es vÅ¡echny sousedy
 		{
-			int x2 = x + smerX[j];		// souøadnice X souseda
+			int x2 = x + smerX[j];		// souÃ¸adnice X souseda
 			if (x2 < 0) x2 = terWidth - 1;
 			if (x2 >= terWidth) x2 = 0;
 
-			int y2 = y + smerY[j];		// souøadnice Y souseda
+			int y2 = y + smerY[j];		// souÃ¸adnice Y souseda
 			if (y2 < 0) y2 = terHeight - 1;
 			if (y2 >= terHeight) y2 = 0;
 
@@ -6587,7 +6587,7 @@ double FD3DTerrainMap()
 		}
 	}
 
-// vyhledání nejèastìjších sousedù (tabulka je po 8 polokách indexù sousedù)
+// vyhledÃ¡nÃ­ nejÃ¨astÃ¬jÅ¡Ã­ch sousedÃ¹ (tabulka je po 8 poloÅ¾kÃ¡ch indexÃ¹ sousedÃ¹)
 	int* neighTab = (int*)MemGet(icons * 8 * sizeof(int));
 	int* neighP = neighTab;
 
@@ -6611,12 +6611,12 @@ double FD3DTerrainMap()
 				item++;
 			}
 
-			ASSERT(count > 0);		// (to by byla chyba v této proceduøe)
+			ASSERT(count > 0);		// (to by byla chyba v tÃ©to proceduÃ¸e)
 			neighP++;
 		}
 	}
 
-// pøíprava textury
+// pÃ¸Ã­prava textury
 	int icopicWH = 32;
 	int icoWH;
 
@@ -6631,7 +6631,7 @@ double FD3DTerrainMap()
 	BYTE* picdata = pic.DataData();
 	MemFill(picdata, icopicWH * icopicWH, BlackCol);
 
-// dekódování ikon textury (od horní øady dolù)
+// dekÃ³dovÃ¡nÃ­ ikon textury (od hornÃ­ Ã¸ady dolÃ¹)
 	int radek = 1;
 	int pozice = 0;
 
@@ -6642,7 +6642,7 @@ double FD3DTerrainMap()
 		ico[i].DeComp();
 		BYTE* src = ico[i].DataData();
 
-	// pøenesení ikony
+	// pÃ¸enesenÃ­ ikony
 		BYTE* dst = dst0; 
 		for (j = ICONHEIGHT; j > 0; j--)
 		{
@@ -6651,7 +6651,7 @@ double FD3DTerrainMap()
 			dst += icopicWH;
 		}
 
-	// pøenesení sousedù
+	// pÃ¸enesenÃ­ sousedÃ¹
 		for (j = 0; j < 8; j++)
 		{
 			src = ico[neighTab[8*i + j]].DataData();
@@ -6674,7 +6674,7 @@ double FD3DTerrainMap()
 				width = ICONBORD;
 			}
 
-		// zpìt (dolù)
+		// zpÃ¬t (dolÃ¹)
 			if (smerY[j] < 0)
 			{
 				src += ((ICONHEIGHT-ICONBORD)*ICONWIDTH);
@@ -6682,7 +6682,7 @@ double FD3DTerrainMap()
 				height = ICONBORD;
 			}
 
-		// vpøed (nahoru)
+		// vpÃ¸ed (nahoru)
 			if (smerY[j] > 0)
 			{
 				height = ICONBORD;
@@ -6697,7 +6697,7 @@ double FD3DTerrainMap()
 			}
 		}
 
-	// zvıšení ukazatele pozice
+	// zvÃ½Å¡enÃ­ ukazatele pozice
 		pozice++;
 		if (pozice == icoWH)
 		{
@@ -6706,7 +6706,7 @@ double FD3DTerrainMap()
 		}
 	}
 
-// vytvoøení bufferu vıškové mapy (od dolní øady nahoru)
+// vytvoÃ¸enÃ­ bufferu vÃ½Å¡kovÃ© mapy (od dolnÃ­ Ã¸ady nahoru)
 	float* ter = (float*)MemGet(size*sizeof(float));
 	terMap = ter;
 
@@ -6716,7 +6716,7 @@ double FD3DTerrainMap()
 		ter++;
 	}
 
-// zrušení bufferù
+// zruÅ¡enÃ­ bufferÃ¹
 	for (i = 0; i < icons; i++)
 	{
 		ico[i].Term();
@@ -6726,7 +6726,7 @@ double FD3DTerrainMap()
 	MemFree(neighTab);
 	MemFree(iconneigh);
 
-// vytvoøení objektu
+// vytvoÃ¸enÃ­ objektu
 	int oldwidth = terWidth;
 
 	GenTerrain();
@@ -6737,7 +6737,7 @@ double FD3DTerrainMap()
 	size = oldwidth * newheight;
 	oldwidth -= newwidth;
 
-// vytvoøení bufferu mapování textur
+// vytvoÃ¸enÃ­ bufferu mapovÃ¡nÃ­ textur
 	float* t = (float*)MemGet(newsize*2*4*sizeof(float));
 	float* tp = t;
 
@@ -6759,13 +6759,13 @@ double FD3DTerrainMap()
 		*tp = v2;
 		tp++;
 
-		// vlevo nahoøe
+		// vlevo nahoÃ¸e
 		*tp = u;
 		tp++;
 		*tp = v;
 		tp++;
 
-		// vpravo nahoøe
+		// vpravo nahoÃ¸e
 		*tp = u2;
 		tp++;
 		*tp = v;
@@ -6785,17 +6785,17 @@ double FD3DTerrainMap()
 		}
 	}
 
-// nastavení mapování textur
+// nastavenÃ­ mapovÃ¡nÃ­ textur
 	D3DF_SetTextUV(D3D_ID, t, 0);
 
-// zrušení bufferù
+// zruÅ¡enÃ­ bufferÃ¹
 	MemFree(t);
 	MemFree(icomap);
 
-// nastavení opakování textury
+// nastavenÃ­ opakovÃ¡nÃ­ textury
 	D3DF_SetAddress(D3D_ID, D3DTADDRESS_WRAP, D3DTADDRESS_WRAP, 0);
 
-// nastavení textury
+// nastavenÃ­ textury
 	D3DFITEM* item = GetID();
 	item->MatSource = MATSOURCE_FRAME;
 
@@ -6810,29 +6810,29 @@ double FD3DTerrainMap()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení terénu z obrázku
+// vytvoÃ¸enÃ­ terÃ©nu z obrÃ¡zku
 
 double FD3D2DTerrain()
 {
 
-// naètení obrázku s terénem
+// naÃ¨tenÃ­ obrÃ¡zku s terÃ©nem
 	CPicture pic;
 	FPicture(pic);
 
-// pøíprava parametrù obrázku
+// pÃ¸Ã­prava parametrÃ¹ obrÃ¡zku
 	pic.DeComp();
 	int width = pic.Width();
 	int height = pic.Height();
 
-#define OKRAJ	4			// pøídavnı okraj
+#define OKRAJ	4			// pÃ¸Ã­davnÃ½ okraj
 
-// pracovní obrázek s vìtšími rozmìry
-	int korig = OKRAJ; //Round(OKRAJ*D3DSmooth);		 	// pøidané body
+// pracovnÃ­ obrÃ¡zek s vÃ¬tÅ¡Ã­mi rozmÃ¬ry
+	int korig = OKRAJ; //Round(OKRAJ*D3DSmooth);		 	// pÃ¸idanÃ© body
 	int widthnew = width + 2*korig;
 	int heightnew = height + 2*korig;
 	CPicture pic2(widthnew, heightnew);
 
-// kopie pùvodního obrázku (s duplikací okrajù)
+// kopie pÃ¹vodnÃ­ho obrÃ¡zku (s duplikacÃ­ okrajÃ¹)
 	BYTE* dst = pic2.DataData() + korig*widthnew;
 	BYTE* src = pic.DataData();
 	int i;
@@ -6855,7 +6855,7 @@ double FD3D2DTerrain()
 // konverze dat na TrueColor
 	BYTE* buf = pic2.ExportTrueAlphaBeta();
 
-// konverze obrázku na zmenšenou velikost
+// konverze obrÃ¡zku na zmenÅ¡enou velikost
 	int widthnew2 = Round(widthnew / D3DSmooth); // / D3DSmooth);
 	if (widthnew2 < 2) widthnew = 2;
 //	if (widthnew2 < ((2*OKRAJ+2)/2)) widthnew2 = ((2*OKRAJ+2)/2);
@@ -6865,7 +6865,7 @@ double FD3D2DTerrain()
 
 	buf = ZoomTrueColor(buf, widthnew, heightnew, widthnew2, heightnew2);
 
-// konverze obrázku na správnou velikost
+// konverze obrÃ¡zku na sprÃ¡vnou velikost
 //	widthnew = Round(widthnew / D3DSmooth);
 //	if (widthnew < (2*OKRAJ+2)) widthnew = (2*OKRAJ+2);
 //	heightnew = Round(heightnew / D3DSmooth);
@@ -6876,7 +6876,7 @@ double FD3D2DTerrain()
 //	width = widthnew - 2*OKRAJ;
 //	height = heightnew - 2*OKRAJ;
 
-// konverze obrázku na vıškové body
+// konverze obrÃ¡zku na vÃ½Å¡kovÃ© body
 	float* ter = (float*)MemGet(width*height*sizeof(float));
 	terMap = ter;
 
@@ -6897,13 +6897,13 @@ double FD3D2DTerrain()
 	terWidth = width;
 	terHeight = height;
 
-// zrušení bufferu
+// zruÅ¡enÃ­ bufferu
 	MemFree(buf);
 
-// vytvoøení objektu
+// vytvoÃ¸enÃ­ objektu
 	GenTerrain();
 
-// nastavení opakování textury
+// nastavenÃ­ opakovÃ¡nÃ­ textury
 	D3DF_SetAddress(D3D_ID, D3DTADDRESS_WRAP, D3DTADDRESS_WRAP, 0);
 
 	return D3D_ID;
@@ -6911,46 +6911,46 @@ double FD3D2DTerrain()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní úrovnì terénu
+// zjiÅ¡tÃ¬nÃ­ ÃºrovnÃ¬ terÃ©nu
 
 double FD3DLevel()
 {
 
-// naètení horizontální souøadnice
+// naÃ¨tenÃ­ horizontÃ¡lnÃ­ souÃ¸adnice
 	double x = FNum();
 	if (x == 0x1000000)
 	{
 		x = D3DF_Get(1)->TransX;
 	}
 
-// naètení vertikální souøadnice
+// naÃ¨tenÃ­ vertikÃ¡lnÃ­ souÃ¸adnice
 	double y = FNum();
 	if (y == 0x1000000)
 	{
 		y = D3DF_Get(1)->TransZ;
 	}
 
-// aktuální terén
+// aktuÃ¡lnÃ­ terÃ©n
 	double h = 0;
 
 	if (D3DF_IsValid(TerenID))
 	{
 		D3DFITEM* frame = D3DF_Get(TerenID);
 		
-// test, zda to je terén
+// test, zda to je terÃ©n
 		if (frame->IsTerrain &&
 			(frame->TerMap != NULL))
 		{
 
-// odeètení souøadnice X a Z
+// odeÃ¨tenÃ­ souÃ¸adnice X a Z
 			x -= frame->TransX;
 			y -= frame->TransZ;
 
-// korekce mìøítka X a Z
+// korekce mÃ¬Ã¸Ã­tka X a Z
 			x /= frame->ScaleX;
 			y /= frame->ScaleZ;
 
-// modulování souøadnic
+// modulovÃ¡nÃ­ souÃ¸adnic
 			x = x + 0.5;
 			y = y + 0.5;
 
@@ -6978,11 +6978,11 @@ double FD3DLevel()
 			ASSERT(y <= 1);
 			if (y < 0) y = 0;
 
-// pøepoèet na bodové souøadnice
+// pÃ¸epoÃ¨et na bodovÃ© souÃ¸adnice
 			x = x * frame->TerWidth;
 			y = y * frame->TerHeight;
 
-// souøadnice poèáteèního bodu
+// souÃ¸adnice poÃ¨Ã¡teÃ¨nÃ­ho bodu
 			int x0 = Round0(x);
 			double dx = x - x0;
 			if (x0 >= frame->TerWidth)
@@ -6999,16 +6999,16 @@ double FD3DLevel()
 				dy = 1;
 			}
 
-// zjištìní 4 bodù
+// zjiÅ¡tÃ¬nÃ­ 4 bodÃ¹
 			int ww = frame->TerWidth + 1;
 
 			float* t = frame->TerMap + y0*ww + x0;
 			float n1 = t[0];	// 1: vlevo dole
 			float n2 = t[1];	// 2: vpravo dole
-			float n3 = t[ww];	// 3: vlevo nahoøe
-			float n4 = t[ww+1];	// 4: vpravo nahoøe
+			float n3 = t[ww];	// 3: vlevo nahoÃ¸e
+			float n4 = t[ww+1];	// 4: vpravo nahoÃ¸e
 
-// vıpoèet vıšky (trojúhelník 1-4-2 a 1-3-4)
+// vÃ½poÃ¨et vÃ½Å¡ky (trojÃºhelnÃ­k 1-4-2 a 1-3-4)
 			if (dx > dy)
 			{
 				h = n1 + (n2 - n1)*dx + (n4 - n2)*dy;
@@ -7018,10 +7018,10 @@ double FD3DLevel()
 				h = n1 + (n3 - n1)*dy + (n4 - n3)*dx;
 			}
 
-// vynásobení mìøítkem Y
+// vynÃ¡sobenÃ­ mÃ¬Ã¸Ã­tkem Y
 			h *= frame->ScaleY;
 
-// pøiètení souøadnice Y
+// pÃ¸iÃ¨tenÃ­ souÃ¸adnice Y
 			h += frame->TransY;
 		}
 	}
@@ -7029,7 +7029,7 @@ double FD3DLevel()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní vyhlazení textur
+// zjiÅ¡tÃ¬nÃ­ vyhlazenÃ­ textur
 
 double FGetD3DSmooth()
 {
@@ -7037,7 +7037,7 @@ double FGetD3DSmooth()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní prùhlednosti objektu Direct3D
+// zjiÅ¡tÃ¬nÃ­ prÃ¹hlednosti objektu Direct3D
 
 double FGetD3DTransparent()
 {
@@ -7049,7 +7049,7 @@ double FGetD3DTransparent()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní alfa úrovnì Direct3D
+// zjiÅ¡tÃ¬nÃ­ alfa ÃºrovnÃ¬ Direct3D
 
 double FGetD3DAlphaRef()
 {
@@ -7061,7 +7061,7 @@ double FGetD3DAlphaRef()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uplynulı pøesnı èas 
+// uplynulÃ½ pÃ¸esnÃ½ Ã¨as 
 
 double FD3DElapsed0()
 {
@@ -7069,7 +7069,7 @@ double FD3DElapsed0()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uplynulı pøesnı èas 
+// uplynulÃ½ pÃ¸esnÃ½ Ã¨as 
 
 double FD3DElapsed()
 {	  
@@ -7078,7 +7078,7 @@ double FD3DElapsed()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// rychlost renderování
+// rychlost renderovÃ¡nÃ­
 
 double FD3DSpeed()
 {
@@ -7086,7 +7086,7 @@ double FD3DSpeed()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// volná videopamì
+// volnÃ¡ videopamÃ¬Â
 
 double FD3DFree()
 {
@@ -7098,7 +7098,7 @@ double FD3DFree()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení 2D obrázku
+// vytvoÃ¸enÃ­ 2D obrÃ¡zku
 
 double FD3DPicture()
 {
@@ -7141,14 +7141,14 @@ double FD3DPicture()
 	item->ZTest = D3DCMP_ALWAYS;
 	item->ZWrite = FALSE;
 
-// pøipojení ke kameøe
+// pÃ¸ipojenÃ­ ke kameÃ¸e
 	D3DF_Link(1, D3D_ID);
 
 	return D3D_ID;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení èoèkového odlesku
+// vytvoÃ¸enÃ­ Ã¨oÃ¨kovÃ©ho odlesku
 
 double FD3DLensFlare()
 {
@@ -7201,7 +7201,7 @@ double FD3DLensFlare()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní poètu stupòù textur
+// zjiÅ¡tÃ¬nÃ­ poÃ¨tu stupÃ²Ã¹ textur
 
 double FGetD3DStage()
 {
@@ -7209,7 +7209,7 @@ double FGetD3DStage()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní operace barev
+// zjiÅ¡tÃ¬nÃ­ operace barev
 
 double FGetD3DColorOp()
 {
@@ -7221,7 +7221,7 @@ double FGetD3DColorOp()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní argumentu 1 barev
+// zjiÅ¡tÃ¬nÃ­ argumentu 1 barev
 
 double FGetD3DColorArg1()
 {
@@ -7233,7 +7233,7 @@ double FGetD3DColorArg1()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní argumentu 2 barev
+// zjiÅ¡tÃ¬nÃ­ argumentu 2 barev
 
 double FGetD3DColorArg2()
 {
@@ -7245,7 +7245,7 @@ double FGetD3DColorArg2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní operace alfa
+// zjiÅ¡tÃ¬nÃ­ operace alfa
 
 double FGetD3DAlphaOp()
 {
@@ -7257,7 +7257,7 @@ double FGetD3DAlphaOp()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní argumentu 1 alfa
+// zjiÅ¡tÃ¬nÃ­ argumentu 1 alfa
 
 double FGetD3DAlphaArg1()
 {
@@ -7269,7 +7269,7 @@ double FGetD3DAlphaArg1()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní argumentu 2 alfa
+// zjiÅ¡tÃ¬nÃ­ argumentu 2 alfa
 
 double FGetD3DAlphaArg2()
 {
@@ -7281,7 +7281,7 @@ double FGetD3DAlphaArg2()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní horizontálního adresování
+// zjiÅ¡tÃ¬nÃ­ horizontÃ¡lnÃ­ho adresovÃ¡nÃ­
 
 double FGetD3DAddressU()
 {
@@ -7293,7 +7293,7 @@ double FGetD3DAddressU()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní vertikálního adresování
+// zjiÅ¡tÃ¬nÃ­ vertikÃ¡lnÃ­ho adresovÃ¡nÃ­
 
 double FGetD3DAddressV()
 {
@@ -7305,7 +7305,7 @@ double FGetD3DAddressV()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy okolí textury
+// zjiÅ¡tÃ¬nÃ­ barvy okolÃ­ textury
 /*
 double FGetD3DBorder()
 {
@@ -7317,7 +7317,7 @@ double FGetD3DBorder()
 }
 */
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní zjemnìní vzdálenıch textur
+// zjiÅ¡tÃ¬nÃ­ zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
 
 double FGetD3DBias()
 {
@@ -7329,7 +7329,7 @@ double FGetD3DBias()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní barvy faktoru textur
+// zjiÅ¡tÃ¬nÃ­ barvy faktoru textur
 
 double FGetD3DTFactor()
 {
@@ -7341,7 +7341,7 @@ double FGetD3DTFactor()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// poèet úrovní mipmaps
+// poÃ¨et ÃºrovnÃ­ mipmaps
 
 double FGetD3DMipMaps()
 {
@@ -7360,7 +7360,7 @@ double FGetD3DMipMaps()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní renderovací skupiny
+// zjiÅ¡tÃ¬nÃ­ renderovacÃ­ skupiny
 
 double FGetD3DZGroup()
 {
@@ -7372,7 +7372,7 @@ double FGetD3DZGroup()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní hloubkového testu
+// zjiÅ¡tÃ¬nÃ­ hloubkovÃ©ho testu
 
 double FGetD3DZTest()
 {
@@ -7384,7 +7384,7 @@ double FGetD3DZTest()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní dosahu stínu
+// zjiÅ¡tÃ¬nÃ­ dosahu stÃ­nu
 
 double FGetD3DShadowRange()
 {
@@ -7396,7 +7396,7 @@ double FGetD3DShadowRange()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní objektu pro LOD
+// zjiÅ¡tÃ¬nÃ­ objektu pro LOD
 
 double FGetD3DLODObject()
 {
@@ -7408,7 +7408,7 @@ double FGetD3DLODObject()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní vzdálenosti pro LOD
+// zjiÅ¡tÃ¬nÃ­ vzdÃ¡lenosti pro LOD
 
 double FGetD3DLODDistance()
 {
@@ -7420,7 +7420,7 @@ double FGetD3DLODDistance()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní max. stupnì morfování
+// zjiÅ¡tÃ¬nÃ­ max. stupnÃ¬ morfovÃ¡nÃ­
 
 double FGetD3DMorphModel()
 {
@@ -7432,7 +7432,7 @@ double FGetD3DMorphModel()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní stupnì morfování
+// zjiÅ¡tÃ¬nÃ­ stupnÃ¬ morfovÃ¡nÃ­
 
 double FGetD3DMorphLevel()
 {
@@ -7445,11 +7445,11 @@ double FGetD3DMorphLevel()
 
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vıpoèet vzdálenosti bodu
+// vÃ½poÃ¨et vzdÃ¡lenosti bodu
 
 double FPolarRadius()
 {
@@ -7462,7 +7462,7 @@ double FPolarRadius()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vıpoèet úhlu bodu
+// vÃ½poÃ¨et Ãºhlu bodu
 
 double FPolarAngle()
 {
@@ -7476,22 +7476,22 @@ double FPolarAngle()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesnı èítaè èasu
+// pÃ¸esnÃ½ Ã¨Ã­taÃ¨ Ã¨asu
 
-bool PrecTimerInit = false;			// probìhla inicializace pøesného èasu
+bool PrecTimerInit = false;			// probÃ¬hla inicializace pÃ¸esnÃ©ho Ã¨asu
 
-// pøesnı èítaè èasu
-bool IsPerformanceTimer = false;	// je pøesnı èítaè èasu
-double PerfFrequency = 0;			// frekvence pøesného èítaèe èasu
-__int64 PerfCounter = 0;			// naètená hodnota pøesného èítaèe èasu
+// pÃ¸esnÃ½ Ã¨Ã­taÃ¨ Ã¨asu
+bool IsPerformanceTimer = false;	// je pÃ¸esnÃ½ Ã¨Ã­taÃ¨ Ã¨asu
+double PerfFrequency = 0;			// frekvence pÃ¸esnÃ©ho Ã¨Ã­taÃ¨e Ã¨asu
+__int64 PerfCounter = 0;			// naÃ¨tenÃ¡ hodnota pÃ¸esnÃ©ho Ã¨Ã­taÃ¨e Ã¨asu
 
-// multimediální èítaè
-double OldPrecTimer = 0;			// stará uschovaná hodnota èítaèe
-double AddPrecTimer = 0;			// pøidaná hodnota k èítaèi (pøeteèení po 49 dnech)
+// multimediÃ¡lnÃ­ Ã¨Ã­taÃ¨
+double OldPrecTimer = 0;			// starÃ¡ uschovanÃ¡ hodnota Ã¨Ã­taÃ¨e
+double AddPrecTimer = 0;			// pÃ¸idanÃ¡ hodnota k Ã¨Ã­taÃ¨i (pÃ¸eteÃ¨enÃ­ po 49 dnech)
 
 double FPreciseTimer()
 {
-// zjištìní, zda je pøesnı mìøiè èasu
+// zjiÅ¡tÃ¬nÃ­, zda je pÃ¸esnÃ½ mÃ¬Ã¸iÃ¨ Ã¨asu
 	if (!PrecTimerInit)
 	{
 		PrecTimerInit = true;
@@ -7505,7 +7505,7 @@ double FPreciseTimer()
 		}
 	}
 
-// obsluha pomocí èítaèe pøesného èasu
+// obsluha pomocÃ­ Ã¨Ã­taÃ¨e pÃ¸esnÃ©ho Ã¨asu
 	if (IsPerformanceTimer)
 	{
 		if (::QueryPerformanceCounter((LARGE_INTEGER*)&PerfCounter))
@@ -7514,11 +7514,11 @@ double FPreciseTimer()
 		}
 	}
 
-// naètení multimediálního èítaèe
+// naÃ¨tenÃ­ multimediÃ¡lnÃ­ho Ã¨Ã­taÃ¨e
 	double time = (double)(DWORD)::timeGetTime() * 0.001;
 	double newtime;
 
-// korekce pøi pøeteèení mìøící periody (49.71 dnù)
+// korekce pÃ¸i pÃ¸eteÃ¨enÃ­ mÃ¬Ã¸Ã­cÃ­ periody (49.71 dnÃ¹)
 	for (;;)
 	{
 		newtime = time + AddPrecTimer;
@@ -7540,15 +7540,15 @@ double FPreciseTimer()
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení DLL knihovny
+// naÃ¨tenÃ­ DLL knihovny
 
 double FDLLLoad()
 {
-// naètení jména knihovny
+// naÃ¨tenÃ­ jmÃ©na knihovny
 	CString jmeno;
 	FText(jmeno);
 
-// naètení knihovny
+// naÃ¨tenÃ­ knihovny
 	HINSTANCE inst = ::LoadLibrary(jmeno);
 	
 	return (double)(int)inst;
@@ -7556,37 +7556,37 @@ double FDLLLoad()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// importování DLL funkce
+// importovÃ¡nÃ­ DLL funkce
 
 double FDLLImport()
 {
-// naètení handle knihovny
+// naÃ¨tenÃ­ handle knihovny
 	int module = FIntR();
 
-// naètení jména funkce
+// naÃ¨tenÃ­ jmÃ©na funkce
 	CString jmeno;
 	FText(jmeno);
 
-// naètení poètu parametrù
+// naÃ¨tenÃ­ poÃ¨tu parametrÃ¹
 	int param = FIntR();
 
-// naètení pøíznaku volací konvence C
+// naÃ¨tenÃ­ pÃ¸Ã­znaku volacÃ­ konvence C
 	bool conv = FBool();
 
-// kontrola zadání parametrù
+// kontrola zadÃ¡nÃ­ parametrÃ¹
 	if ((module == 0) || jmeno.IsEmpty() || (param < 0) || (param > 0xffff)) return 0;
 
-// importování funkce
+// importovÃ¡nÃ­ funkce
 	FARPROC proc = ::GetProcAddress((HMODULE)module, (LPCSTR)jmeno);
 
-// pøi neúspìchu doplnìní o písmeno "A"
+// pÃ¸i neÃºspÃ¬chu doplnÃ¬nÃ­ o pÃ­smeno "A"
 	if (proc == NULL)
 	{
 		jmeno += 'A';
 		proc = ::GetProcAddress((HMODULE)module, (LPCSTR)jmeno);
 	}
 
-// pøi neúspìchu druhı pokus - vyhledání èíslem
+// pÃ¸i neÃºspÃ¬chu druhÃ½ pokus - vyhledÃ¡nÃ­ Ã¨Ã­slem
 /*
 	if (proc == NULL)
 	{
@@ -7603,10 +7603,10 @@ double FDLLImport()
 // kontrola platnosti funkce
 	if (proc == NULL) return 0;
 
-// vytvoøení bloku parametrù
+// vytvoÃ¸enÃ­ bloku parametrÃ¹
 	int* blok = (int*)MemGet(param*4 + 8);
 
-// inicializace bloku parametrù
+// inicializace bloku parametrÃ¹
 	blok[0] = (int)proc;
 	blok[1] = param;
 	if (conv) blok[1] |= 0x10000;
@@ -7616,47 +7616,47 @@ double FDLLImport()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// provedení DLL funkce
+// provedenÃ­ DLL funkce
 
 double FDLLExecNum()
 {
-// naètení bloku parametrù funkce
+// naÃ¨tenÃ­ bloku parametrÃ¹ funkce
 	int* blok = (int*)FIntR();
 
 	int	retcode = 0;
 
 #ifndef _M_IX86
-	nepodporovanı pøeklad!!!!	
+	nepodporovanÃ½ pÃ¸eklad!!!!	
 #endif
 
 _asm {
 		push	ecx
 
-		mov		esi,[blok]			// bloku parametrù
-		or		esi,esi				// jsou platná data?
-		jz		pasconv				// není platnı blok dat
+		mov		esi,[blok]			// bloku parametrÃ¹
+		or		esi,esi				// jsou platnÃ¡ data?
+		jz		pasconv				// nenÃ­ platnÃ½ blok dat
 		lods	dword ptr [esi]		// adresa funkce
 
 		xor		ecx,ecx
-		mov		cx,[esi]			// poèet parametrù
-		shl		ecx,2				// délka dat v bajtech
-		sub		esp,ecx				// vytvoøení místa pro parametry
+		mov		cx,[esi]			// poÃ¨et parametrÃ¹
+		shl		ecx,2				// dÃ©lka dat v bajtech
+		sub		esp,ecx				// vytvoÃ¸enÃ­ mÃ­sta pro parametry
 		mov		edi,esp
-		mov		cx,[esi]			// poèet parametrù
-		add		esi,4				// zaèátek parametrù v bloku
+		mov		cx,[esi]			// poÃ¨et parametrÃ¹
+		add		esi,4				// zaÃ¨Ã¡tek parametrÃ¹ v bloku
 		rep		movs dword ptr [edi], dword ptr [esi]
 
-		call	eax					// volání funkce
-		mov		[retcode],eax		// návratovı kód
+		call	eax					// volÃ¡nÃ­ funkce
+		mov		[retcode],eax		// nÃ¡vratovÃ½ kÃ³d
 
-		mov		esi,[blok]			// blok parametrù
-		test	byte ptr [esi+6],1	// je volací konvence C ?
-		jz		pasconv				// není C, je Pascal
+		mov		esi,[blok]			// blok parametrÃ¹
+		test	byte ptr [esi+6],1	// je volacÃ­ konvence C ?
+		jz		pasconv				// nenÃ­ C, je Pascal
 
 		xor		eax,eax
-		mov		ax,[esi+4]			// EAX <- poèet parametrù
-		shl		eax,2				// poèet bajtù
-		add		esp,eax				// návrat ukazatele zásobníku
+		mov		ax,[esi+4]			// EAX <- poÃ¨et parametrÃ¹
+		shl		eax,2				// poÃ¨et bajtÃ¹
+		add		esp,eax				// nÃ¡vrat ukazatele zÃ¡sobnÃ­ku
 
 pasconv:
 		pop		ecx
@@ -7666,38 +7666,38 @@ pasconv:
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení bloku pamìti
+// vytvoÃ¸enÃ­ bloku pamÃ¬ti
 
 double FMemoryNew()
 {
-// naètení velikosti bloku
+// naÃ¨tenÃ­ velikosti bloku
 	int size = FIntR();
 
-// vytvoøení pamìového bloku
+// vytvoÃ¸enÃ­ pamÃ¬ÂovÃ©ho bloku
 	void* blok = MemGet(size);
 
 	return (double)(int)blok;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti bloku pamìti
+// zmÃ¬na velikosti bloku pamÃ¬ti
 
 double FMemoryResize()
 {
-// naètení staré adresy bloku
+// naÃ¨tenÃ­ starÃ© adresy bloku
 	void* blok = (void*)FIntR();
 
-// naètení poadované velikosti bloku
+// naÃ¨tenÃ­ poÅ¾adovanÃ© velikosti bloku
 	int size = FIntR();
 
-// zmìna velikosti bloku
+// zmÃ¬na velikosti bloku
 	blok = MemSize(blok, size);
 
 	return (double)(int)blok;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukazatel ètení z pamìti
+// ukazatel Ã¨tenÃ­ z pamÃ¬ti
 
 double FGetMemoryRead()
 {
@@ -7705,7 +7705,7 @@ double FGetMemoryRead()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukazatel zápisu do pamìti
+// ukazatel zÃ¡pisu do pamÃ¬ti
 
 double FGetMemoryWrite()
 {
@@ -7713,18 +7713,18 @@ double FGetMemoryWrite()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// porovnání dat
+// porovnÃ¡nÃ­ dat
 
 double FMemoryCompare()
 {
-// naètení délky dat
+// naÃ¨tenÃ­ dÃ©lky dat
 	int len = FIntR();
 
 // adresa dat
 	char* buf1 = (char*)DLLMemoryRead;
 	char* buf2 = (char*)DLLMemoryWrite;
 
-// porovnání dat
+// porovnÃ¡nÃ­ dat
 	for (; ((len > 0) && (*buf1 == *buf2)); len--)
 	{
 		buf1++;
@@ -7738,7 +7738,7 @@ double FMemoryCompare()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// bajt se znaménkem
+// bajt se znamÃ©nkem
 
 double FGetMemoryByteS()
 {
@@ -7750,7 +7750,7 @@ double FGetMemoryByteS()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// bajt bez znaménka
+// bajt bez znamÃ©nka
 
 double FGetMemoryByteU()
 {
@@ -7762,7 +7762,7 @@ double FGetMemoryByteU()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// slovo se znaménkem
+// slovo se znamÃ©nkem
 
 double FGetMemoryWordS()
 {
@@ -7774,7 +7774,7 @@ double FGetMemoryWordS()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// slovo bez znaménka
+// slovo bez znamÃ©nka
 
 double FGetMemoryWordU()
 {
@@ -7786,7 +7786,7 @@ double FGetMemoryWordU()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// 3-bajt se znaménkem
+// 3-bajt se znamÃ©nkem
 
 double FGetMemory3ByteS()
 {
@@ -7800,7 +7800,7 @@ double FGetMemory3ByteS()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// 3-bajt bez znaménka
+// 3-bajt bez znamÃ©nka
 
 double FGetMemory3ByteU()
 {
@@ -7814,7 +7814,7 @@ double FGetMemory3ByteU()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// dvouslovo se znaménkem
+// dvouslovo se znamÃ©nkem
 
 double FGetMemoryDWordS()
 {
@@ -7826,7 +7826,7 @@ double FGetMemoryDWordS()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// dvouslovo bez znaménka
+// dvouslovo bez znamÃ©nka
 
 double FGetMemoryDWordU()
 {
@@ -7838,7 +7838,7 @@ double FGetMemoryDWordU()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// reálné èíslo 4 bajty
+// reÃ¡lnÃ© Ã¨Ã­slo 4 bajty
 
 double FGetMemoryFloat()
 {
@@ -7850,7 +7850,7 @@ double FGetMemoryFloat()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// reálné èíslo 8 bajtù
+// reÃ¡lnÃ© Ã¨Ã­slo 8 bajtÃ¹
 
 double FGetMemoryDouble()
 {
@@ -7862,7 +7862,7 @@ double FGetMemoryDouble()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// délka textu s pevnou délkou
+// dÃ©lka textu s pevnou dÃ©lkou
 
 double FGetMemoryTextNLen()
 {
@@ -7871,7 +7871,7 @@ double FGetMemoryTextNLen()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// handle okenního prvku
+// handle okennÃ­ho prvku
 
 double FWindowHandle()
 {
@@ -7888,29 +7888,29 @@ double FWindowHandle()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení 3D objektu z pamìti
+// vytvoÃ¸enÃ­ 3D objektu z pamÃ¬ti
 
 double FMemory3D()
 {
-// naètení parametrù
-	int vN = FIntR();						// poèet vrcholù
-	D3DVECTOR* vert = (D3DVECTOR*)FIntR();	// buffer vrcholù
-	D3DVECTOR* norm = (D3DVECTOR*)FIntR();	// buffer normál
+// naÃ¨tenÃ­ parametrÃ¹
+	int vN = FIntR();						// poÃ¨et vrcholÃ¹
+	D3DVECTOR* vert = (D3DVECTOR*)FIntR();	// buffer vrcholÃ¹
+	D3DVECTOR* norm = (D3DVECTOR*)FIntR();	// buffer normÃ¡l
 	float* text = (float*)FIntR();			// buffer textur
 	D3DCOLORVALUE* col = (D3DCOLORVALUE*)FIntR(); // buffer barev
-	int fN = FIntR();						// poèet plošek
-	int* face = (int*)FIntR();				// buffer plošek
+	int fN = FIntR();						// poÃ¨et ploÅ¡ek
+	int* face = (int*)FIntR();				// buffer ploÅ¡ek
 
-// omezení indexù plošek
+// omezenÃ­ indexÃ¹ ploÅ¡ek
 	for (int i = fN*3 - 1; i >= 0; i--)
 	{
 		if (face[i] >= vN) face[i] = 0;
 	}
 
-// vytvoøení objektu
+// vytvoÃ¸enÃ­ objektu
 	int inx = D3DF_CreateMesh(vN, vert, fN, face);
 
-// nastavení normál
+// nastavenÃ­ normÃ¡l
 	if (norm != NULL)
 	{
 		D3DF_SetNormal(inx, norm);
@@ -7920,13 +7920,13 @@ double FMemory3D()
 		D3DF_AutoNormals(inx, 0.5);
 	}
 
-// nastavení mapování textur
+// nastavenÃ­ mapovÃ¡nÃ­ textur
 	if (text != NULL)
 	{
 		D3DF_SetTextUV(inx, text, 0);
 	}
 
-// nastavení barev
+// nastavenÃ­ barev
 	if (col != NULL)
 	{
 		D3DF_SetVertCol(inx, col);
@@ -7940,7 +7940,7 @@ double FMemory3D()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení pamìového bloku z 3D objektu
+// vytvoÃ¸enÃ­ pamÃ¬ÂovÃ©ho bloku z 3D objektu
 
 double FD3DMemory()
 {
@@ -7997,7 +7997,7 @@ double FD3DMemory()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// poskytnutí potomka 3D objektu
+// poskytnutÃ­ potomka 3D objektu
 
 double FD3DChild0()
 {
@@ -8012,13 +8012,13 @@ double FD3DChild()
 {
 	int inx = FIntR();
 
-// nalezení prvního potomka
+// nalezenÃ­ prvnÃ­ho potomka
 	if (inx == -1)
 	{
 		return FD3DChild0();
 	}
 
-// nalezení rodièe
+// nalezenÃ­ rodiÃ¨e
 	if (inx == -2)
 	{
 		if (IsValidID())
@@ -8028,7 +8028,7 @@ double FD3DChild()
 		return -1;
 	}
 
-// nalezení dalšího potomka
+// nalezenÃ­ dalÅ¡Ã­ho potomka
 	if (D3DF_IsValid(inx))
 	{
 		D3DFITEM* item = D3DF_Get(inx);
@@ -8045,7 +8045,7 @@ double FD3DChild()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// ètení konfiguraèního èísla
+// Ã¨tenÃ­ konfiguraÃ¨nÃ­ho Ã¨Ã­sla
 
 double FGetIniNum()
 {
@@ -8064,7 +8064,7 @@ double FGetIniNum0()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// skupina klíèù registru
+// skupina klÃ­Ã¨Ã¹ registru
 
 double FGetRegKey()
 {
@@ -8072,11 +8072,11 @@ double FGetRegKey()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ètení èísla z registru
+// Ã¨tenÃ­ Ã¨Ã­sla z registru
 
 int GetRegNum(int cislo)
 {
-// otevøení klíèe
+// otevÃ¸enÃ­ klÃ­Ã¨e
 	HKEY hkey;
 
 	if (::RegOpenKeyEx(
@@ -8087,7 +8087,7 @@ int GetRegNum(int cislo)
 		&hkey) == ERROR_SUCCESS)
 	{
 
-// naètení hodnoty klíèe
+// naÃ¨tenÃ­ hodnoty klÃ­Ã¨e
 		DWORD bufsize = 4;
 
 		::RegQueryValueEx(
@@ -8098,7 +8098,7 @@ int GetRegNum(int cislo)
 			(BYTE*)&cislo,
 			&bufsize);
 
-// uzavøení klíèe
+// uzavÃ¸enÃ­ klÃ­Ã¨e
 		::RegCloseKey(hkey);
 	}
 
@@ -8117,4 +8117,4 @@ double FGetRegNum0()
 }
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------

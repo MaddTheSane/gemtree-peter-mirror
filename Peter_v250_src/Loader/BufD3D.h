@@ -15,47 +15,47 @@
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky textury
+// struktura poloÅ¾ky textury
 
-// Do referencí se zapoèítává i reference z obrázku. Poloka je proto zrušena
-// z bufferu a ve chvíli zrušení obrázku, potom a je ref=0
+// Do referencÃ­ se zapoÃ¨Ã­tÃ¡vÃ¡ i reference z obrÃ¡zku. PoloÅ¾ka je proto zruÅ¡ena
+// z bufferu aÅ¾ ve chvÃ­li zruÅ¡enÃ­ obrÃ¡zku, potom aÅ¾ je ref=0
 
 typedef struct D3DTITEM_
 {
-	int					Ref;		// poèet referencí na texturu (0=poloka je volná)
-	CPicture			Pic;		// obrázek textury
-	BOOL				Mips;		// aktuální textura vytvoøena s mipmaps
-	int					MipMaps;	// max. poèet úrovní mipmaps (0=neomezeno)
-	void*				Data1;		// data textury pro rozhraní 1 (NULL=není)
-	void*				Data2;		// data textury pro rozhraní 2 (NULL=není)
+	int					Ref;		// poÃ¨et referencÃ­ na texturu (0=poloÅ¾ka je volnÃ¡)
+	CPicture			Pic;		// obrÃ¡zek textury
+	BOOL				Mips;		// aktuÃ¡lnÃ­ textura vytvoÃ¸ena s mipmaps
+	int					MipMaps;	// max. poÃ¨et ÃºrovnÃ­ mipmaps (0=neomezeno)
+	void*				Data1;		// data textury pro rozhranÃ­ 1 (NULL=nenÃ­)
+	void*				Data2;		// data textury pro rozhranÃ­ 2 (NULL=nenÃ­)
 } D3DTITEM;
 
 ////////////////////////////////////////////////////////////////////
 // data bufferu textur
 
-extern	int				D3DT_Num;	// poèet poloek v bufferu textur
-extern	int				D3DT_Max;	// velikost bufferu textur (poloek)
+extern	int				D3DT_Num;	// poÃ¨et poloÅ¾ek v bufferu textur
+extern	int				D3DT_Max;	// velikost bufferu textur (poloÅ¾ek)
 extern	D3DTITEM*		D3DT_Data;	// buffer textur
 
-extern	int				D3DT_Active[MAX_STAGES];	// aktivnì nastavená textura (i je-li vypnutá)
+extern	int				D3DT_Active[MAX_STAGES];	// aktivnÃ¬ nastavenÃ¡ textura (i je-li vypnutÃ¡)
 extern	bool			D3DT_On[MAX_STAGES];	// textura je zapnuta
 
 struct D3DFITEM_;
 
-//extern	D3DFITEM_*		D3D_Rend[3*MAX_ZBIAS]; // poloky k renderování (bìné/blending/2D)
+//extern	D3DFITEM_*		D3D_Rend[3*MAX_ZBIAS]; // poloÅ¾ky k renderovÃ¡nÃ­ (bÃ¬Å¾nÃ©/blending/2D)
 
 ////////////////////////////////////////////////////////////////////
-// pøidání textury do seznamu textur, vrací index textury
+// pÃ¸idÃ¡nÃ­ textury do seznamu textur, vracÃ­ index textury
 
 int D3DT_Add(CPicture pic);
 
 ////////////////////////////////////////////////////////////////////
-// uvolnìní textury (kontroluje platnost indexu)
+// uvolnÃ¬nÃ­ textury (kontroluje platnost indexu)
 
 void D3DT_Del(int index);
 
 ////////////////////////////////////////////////////////////////////
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 
 inline BOOL D3DT_IsValid(const int index)
 { 
@@ -64,7 +64,7 @@ inline BOOL D3DT_IsValid(const int index)
 };
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutí adresy poloky (bez kontroly indexu)
+// poskytnutÃ­ adresy poloÅ¾ky (bez kontroly indexu)
 
 inline D3DTITEM* D3DT_Get(const int index)
 { 
@@ -73,72 +73,72 @@ inline D3DTITEM* D3DT_Get(const int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// resetování cachování bufferu (pøed ukonèením ovladaèe)
+// resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e)
 
 void D3DT_Reset();
 
 
 ////////////////////////////////////////////////////////////////////
-// mìkké resetování cachování bufferu (pøed resetováním ovladaèe pøi zmìnì viewportu)
-// - v souèasnosti není potøeba ádná obsluha
+// mÃ¬kkÃ© resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed resetovÃ¡nÃ­m ovladaÃ¨e pÃ¸i zmÃ¬nÃ¬ viewportu)
+// - v souÃ¨asnosti nenÃ­ potÃ¸eba Å¾Ã¡dnÃ¡ obsluha
 
 inline void D3DT_SoftReset() {}
 
 ////////////////////////////////////////////////////////////////////
-// nastavení aktivní textury (-1 = vypnuta)
+// nastavenÃ­ aktivnÃ­ textury (-1 = vypnuta)
 
 void D3DT_Akt(int index, int stage);
 
 
 /***************************************************************************\
 *																			*
-*								D3D buffer - materiál						*
+*								D3D buffer - materiÃ¡l						*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky materiálu
+// struktura poloÅ¾ky materiÃ¡lu
 
 typedef struct D3DMITEM_
 {
-	D3DMATERIAL8		Material;	// materiál objektu
-	void*				Data1;		// data objektu 1 (NULL=není)
-	void*				Data2;		// data objektu 2 (NULL=není)
+	D3DMATERIAL8		Material;	// materiÃ¡l objektu
+	void*				Data1;		// data objektu 1 (NULL=nenÃ­)
+	void*				Data2;		// data objektu 2 (NULL=nenÃ­)
 } D3DMITEM;
 
 /////////////////////////////////////////////////////////////////////////////
-// data bufferu materiálù (poloka 0 = implicitní materiál)
+// data bufferu materiÃ¡lÃ¹ (poloÅ¾ka 0 = implicitnÃ­ materiÃ¡l)
 
-extern	int				D3DM_Num;		// poèet poloek v bufferu materiálù
-extern	int				D3DM_Max;		// velikost bufferu materiálù (poloek)	
-extern	int				D3DM_Akt;		// aktivnì nastavenı materiál
-extern	D3DMITEM*		D3DM_Data;		// buffer materiálù
+extern	int				D3DM_Num;		// poÃ¨et poloÅ¾ek v bufferu materiÃ¡lÃ¹
+extern	int				D3DM_Max;		// velikost bufferu materiÃ¡lÃ¹ (poloÅ¾ek)	
+extern	int				D3DM_Akt;		// aktivnÃ¬ nastavenÃ½ materiÃ¡l
+extern	D3DMITEM*		D3DM_Data;		// buffer materiÃ¡lÃ¹
 
 ////////////////////////////////////////////////////////////////////
-// pøidání materiálu do bufferu materiálù (vrací index materiálu)
-// - pokud materiál ji existuje, vrací index existujícího materiálu
+// pÃ¸idÃ¡nÃ­ materiÃ¡lu do bufferu materiÃ¡lÃ¹ (vracÃ­ index materiÃ¡lu)
+// - pokud materiÃ¡l jiÅ¾ existuje, vracÃ­ index existujÃ­cÃ­ho materiÃ¡lu
 
 int D3DM_Add(D3DMATERIAL8* mat);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení materiálu jako aktivní (bez kontroly indexu)
+// nastavenÃ­ materiÃ¡lu jako aktivnÃ­ (bez kontroly indexu)
 
 void D3DM_Set(const int index);
 
 ////////////////////////////////////////////////////////////////////
-// resetování cachování bufferu (pøed ukonèením ovladaèe)
+// resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e)
 
 void D3DM_Reset();
 
 
 ////////////////////////////////////////////////////////////////////
-// mìkké resetování cachování bufferu (pøed resetováním ovladaèe pøi zmìnì viewportu)
+// mÃ¬kkÃ© resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed resetovÃ¡nÃ­m ovladaÃ¨e pÃ¸i zmÃ¬nÃ¬ viewportu)
 
 inline void D3DM_SoftReset() { D3DM_Reset(); }
 
 
 ////////////////////////////////////////////////////////////////////
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 
 inline BOOL D3DM_IsValid(const int index)
 { 
@@ -147,7 +147,7 @@ inline BOOL D3DM_IsValid(const int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutí adresy poloky (bez kontroly indexu)
+// poskytnutÃ­ adresy poloÅ¾ky (bez kontroly indexu)
 
 inline D3DMITEM* D3DM_Get(const int index)
 { 
@@ -157,66 +157,66 @@ inline D3DMITEM* D3DM_Get(const int index)
 
 /***************************************************************************\
 *																			*
-*								D3D buffer - svìtla							*
+*								D3D buffer - svÃ¬tla							*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky svìtla
+// struktura poloÅ¾ky svÃ¬tla
 
 typedef struct D3DLITEM_
 {
-	bool				IsUsed;		// svìtlo je pouité
-	bool				Akt;		// je nutné aktualizovat svìtlo
-									// (platí i pro zrušené svìtlo)
-	bool				Enable;		// svìtlo je zapnuto
-	D3DLIGHT8			Light;		// popisovaè svìtla
-	int					Frame;		// index rámu s odkazem na svìtlo
-	DWORD				Diffuse;	// difusní (a specular) barva zadaná uivatelem
-	double				Range;		// dosah zadanı uivatelem
-	double				Intens;		// intenzita svìtla zadaná uivatelem (1=normal)
-	double				Attenuation1; // lineární zeslabení zadané uivatelem
-	double				Attenuation2; // kvadratické zeslabení zadané uivatelem
-	double				Theta;		// úhel svìtelného kuele (vnitøní kuel)
-	double				Phi;		// úhel polostínu (vnìjší kuel)
-	void*				Data1;		// data objektu 1 (NULL=není)
-	void*				Data2;		// data objektu 2 (NULL=není)
+	bool				IsUsed;		// svÃ¬tlo je pouÅ¾itÃ©
+	bool				Akt;		// je nutnÃ© aktualizovat svÃ¬tlo
+									// (platÃ­ i pro zruÅ¡enÃ© svÃ¬tlo)
+	bool				Enable;		// svÃ¬tlo je zapnuto
+	D3DLIGHT8			Light;		// popisovaÃ¨ svÃ¬tla
+	int					Frame;		// index rÃ¡mu s odkazem na svÃ¬tlo
+	DWORD				Diffuse;	// difusnÃ­ (a specular) barva zadanÃ¡ uÅ¾ivatelem
+	double				Range;		// dosah zadanÃ½ uÅ¾ivatelem
+	double				Intens;		// intenzita svÃ¬tla zadanÃ¡ uÅ¾ivatelem (1=normal)
+	double				Attenuation1; // lineÃ¡rnÃ­ zeslabenÃ­ zadanÃ© uÅ¾ivatelem
+	double				Attenuation2; // kvadratickÃ© zeslabenÃ­ zadanÃ© uÅ¾ivatelem
+	double				Theta;		// Ãºhel svÃ¬telnÃ©ho kuÅ¾ele (vnitÃ¸nÃ­ kuÅ¾el)
+	double				Phi;		// Ãºhel polostÃ­nu (vnÃ¬jÅ¡Ã­ kuÅ¾el)
+	void*				Data1;		// data objektu 1 (NULL=nenÃ­)
+	void*				Data2;		// data objektu 2 (NULL=nenÃ­)
 } D3DLITEM;
 
 ////////////////////////////////////////////////////////////////////
-// data bufferu svìtel
+// data bufferu svÃ¬tel
 
-extern	int				D3DL_Num;	// poèet poloek v bufferu svìtel (vèetnì volnıch)
-extern	int				D3DL_Max;	// velikost bufferu svìtel (poloek)	
-extern	D3DLITEM*		D3DL_Data;	// buffer svìtel
+extern	int				D3DL_Num;	// poÃ¨et poloÅ¾ek v bufferu svÃ¬tel (vÃ¨etnÃ¬ volnÃ½ch)
+extern	int				D3DL_Max;	// velikost bufferu svÃ¬tel (poloÅ¾ek)	
+extern	D3DLITEM*		D3DL_Data;	// buffer svÃ¬tel
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nového svìtla (vrací index svìtla)
+// vytvoÃ¸enÃ­ novÃ©ho svÃ¬tla (vracÃ­ index svÃ¬tla)
 
 int D3DL_New();
 
 ////////////////////////////////////////////////////////////////////
-// aktualizace svìtel
+// aktualizace svÃ¬tel
 
 void D3DL_AktLight();
 
 ////////////////////////////////////////////////////////////////////
-// zrušení svìtla (kontroluje platnost indexu)
+// zruÅ¡enÃ­ svÃ¬tla (kontroluje platnost indexu)
 
 void D3DL_Del(int index);
 
 ////////////////////////////////////////////////////////////////////
-// resetování bufferu svìtel
+// resetovÃ¡nÃ­ bufferu svÃ¬tel
 
 void D3DL_Reset();
 
 ////////////////////////////////////////////////////////////////////
-// mìkké resetování cachování bufferu (pøed resetováním ovladaèe pøi zmìnì viewportu)
+// mÃ¬kkÃ© resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed resetovÃ¡nÃ­m ovladaÃ¨e pÃ¸i zmÃ¬nÃ¬ viewportu)
 
 inline void D3DL_SoftReset() { D3DL_Reset(); }
 
 ////////////////////////////////////////////////////////////////////
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 
 inline BOOL D3DL_IsValid(const int index)
 { 
@@ -225,7 +225,7 @@ inline BOOL D3DL_IsValid(const int index)
 };
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutí adresy poloky (bez kontroly indexu)
+// poskytnutÃ­ adresy poloÅ¾ky (bez kontroly indexu)
 
 inline D3DLITEM* D3DL_Get(const int index)
 { 
@@ -236,30 +236,30 @@ inline D3DLITEM* D3DL_Get(const int index)
 
 /***************************************************************************\
 *																			*
-*								D3D buffer - rámy							*
+*								D3D buffer - rÃ¡my							*
 *																			*
 \***************************************************************************/
 
-// omezení poètu vrcholù
-#define MAXVERTICES	1024	// maximální poèet vrcholù pro jeden objekt
+// omezenÃ­ poÃ¨tu vrcholÃ¹
+#define MAXVERTICES	1024	// maximÃ¡lnÃ­ poÃ¨et vrcholÃ¹ pro jeden objekt
 
-// vzor jednotkové matice
+// vzor jednotkovÃ© matice
 extern	D3DMATRIX	Matrix1Vzor;
 
-// typy rámù
+// typy rÃ¡mÃ¹
 typedef enum _D3DFTYPE
 {
-	D3DFTYPE_GROUP = 0,		// prázdnı rám (nebo scéna, index 0)
+	D3DFTYPE_GROUP = 0,		// prÃ¡zdnÃ½ rÃ¡m (nebo scÃ©na, index 0)
 	D3DFTYPE_CAMERA,		// kamera (index 1)
-	D3DFTYPE_OBJECT,		// 3D objekt (mesh, terén)
+	D3DFTYPE_OBJECT,		// 3D objekt (mesh, terÃ©n)
 	D3DFTYPE_DECAL,			// 2D objekt
-	D3DFTYPE_PICTURE,		// 2D obrázek (pøipojen ke kameøe, index 1)
-	D3DFTYPE_LIGHT,			// svìtlo
-	D3DFTYPE_SECTOR,		// sektor objektu rozdìleného na èásti
-	D3DFTYPE_LENSFLARE,		// èoèkovı odlesk (pøipojen ke kameøe, index 1)
+	D3DFTYPE_PICTURE,		// 2D obrÃ¡zek (pÃ¸ipojen ke kameÃ¸e, index 1)
+	D3DFTYPE_LIGHT,			// svÃ¬tlo
+	D3DFTYPE_SECTOR,		// sektor objektu rozdÃ¬lenÃ©ho na Ã¨Ã¡sti
+	D3DFTYPE_LENSFLARE,		// Ã¨oÃ¨kovÃ½ odlesk (pÃ¸ipojen ke kameÃ¸e, index 1)
 } D3DFTYPE;
 
-// typy poøadí rotací
+// typy poÃ¸adÃ­ rotacÃ­
 typedef enum _D3DORDER
 {
 	D3DFORDER_XYZ = 0,		// XYZ
@@ -270,15 +270,15 @@ typedef enum _D3DORDER
 	D3DFORDER_ZYX = 5		// ZYX
 } D3DORDER;
 
-// zdroj materiálu
+// zdroj materiÃ¡lu
 typedef enum _MATSOURCE
 {
-	MATSOURCE_OBJECT = 0,	// vnitøní materiál objektu (=implicitnì)
-	MATSOURCE_PARENT,		// materiál zdìdìn od rodièe
-	MATSOURCE_FRAME			// implicitní materiál tohoto rámu
+	MATSOURCE_OBJECT = 0,	// vnitÃ¸nÃ­ materiÃ¡l objektu (=implicitnÃ¬)
+	MATSOURCE_PARENT,		// materiÃ¡l zdÃ¬dÃ¬n od rodiÃ¨e
+	MATSOURCE_FRAME			// implicitnÃ­ materiÃ¡l tohoto rÃ¡mu
 } MATSOURCE;
 
-// typy prùhlednosti (nastaveno pro zdroj nebo cíl blending operace)
+// typy prÃ¹hlednosti (nastaveno pro zdroj nebo cÃ­l blending operace)
 typedef enum _BLENDTYPE
 {
 	BLEND_ZERO			= 0,	// (0, 0, 0, 0)
@@ -291,191 +291,191 @@ typedef enum _BLENDTYPE
 	BLEND_INVDSTCOLOR	= 7,	// (1-Rd, 1-Gd, 1-Bd, 1-Ad)
 	BLEND_DSTALPHA		= 8,	// (Ad, Ad, Ad, Ad)
 	BLEND_INVDSTALPHA	= 9,	// (1-Ad, 1-Ad, 1-Ad, 1-Ad)
-	BLEND_SATURATE		= 10,	// menší ze sloek SRC/DST
-	BLEND_INVALID		= -1,	// neplatnı typ operace
+	BLEND_SATURATE		= 10,	// menÅ¡Ã­ ze sloÅ¾ek SRC/DST
+	BLEND_INVALID		= -1,	// neplatnÃ½ typ operace
 } BLENDTYPE;
 
-extern	int	BlendTabD3D[11];	// tabulka blending operací pro Direct3D
-extern	int	BlendTabOGL[11];	// tabulka blending operací pro OpenGL
+extern	int	BlendTabD3D[11];	// tabulka blending operacÃ­ pro Direct3D
+extern	int	BlendTabOGL[11];	// tabulka blending operacÃ­ pro OpenGL
 
-extern	BLENDTYPE	D3DSrcBlend; // aktuální nastavení blending operace zdroje
-extern	BLENDTYPE	D3DDstBlend; // aktuální nastavení blending operace cíle
-extern	int			D3DAlphaRef;// aktuální nastavení alfa úrovnì
+extern	BLENDTYPE	D3DSrcBlend; // aktuÃ¡lnÃ­ nastavenÃ­ blending operace zdroje
+extern	BLENDTYPE	D3DDstBlend; // aktuÃ¡lnÃ­ nastavenÃ­ blending operace cÃ­le
+extern	int			D3DAlphaRef;// aktuÃ¡lnÃ­ nastavenÃ­ alfa ÃºrovnÃ¬
 
-extern	int			D3DColorOp[MAX_STAGES];		// aktuální nastavení operací barev
-extern	int			D3DColorArg1[MAX_STAGES];	// aktuální nastavení argumentu 1 operací barev
-extern	int			D3DColorArg2[MAX_STAGES];	// aktuální nastavení argumentu 2 operací barev
-extern	int			D3DAlphaOp[MAX_STAGES];		// aktuální nastavení operací barev
-extern	int			D3DAlphaArg1[MAX_STAGES];	// aktuální nastavení argumentu 1 operací barev
-extern	int			D3DAlphaArg2[MAX_STAGES];	// aktuální nastavení argumentu 2 operací barev
-extern	int			D3DAddressU[MAX_STAGES];	// aktuální adresování textur U
-extern	int			D3DAddressV[MAX_STAGES];	// aktuální adresování textur V
-//extern	int			D3DBorder[MAX_STAGES];		// barva okolí textur
-extern	float		D3DBias[MAX_STAGES];		// zjemnìní vzdálenıch textur
-extern	DWORD		D3DTFactor;					// aktuální nastavení faktoru textur
-extern	BOOL		D3DZWrite;					// aktuální hodnota hloubkového zápisu
-extern	int			D3DZTest;					// aktuální hodnota hloubkového testu
+extern	int			D3DColorOp[MAX_STAGES];		// aktuÃ¡lnÃ­ nastavenÃ­ operacÃ­ barev
+extern	int			D3DColorArg1[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 1 operacÃ­ barev
+extern	int			D3DColorArg2[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 2 operacÃ­ barev
+extern	int			D3DAlphaOp[MAX_STAGES];		// aktuÃ¡lnÃ­ nastavenÃ­ operacÃ­ barev
+extern	int			D3DAlphaArg1[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 1 operacÃ­ barev
+extern	int			D3DAlphaArg2[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 2 operacÃ­ barev
+extern	int			D3DAddressU[MAX_STAGES];	// aktuÃ¡lnÃ­ adresovÃ¡nÃ­ textur U
+extern	int			D3DAddressV[MAX_STAGES];	// aktuÃ¡lnÃ­ adresovÃ¡nÃ­ textur V
+//extern	int			D3DBorder[MAX_STAGES];		// barva okolÃ­ textur
+extern	float		D3DBias[MAX_STAGES];		// zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
+extern	DWORD		D3DTFactor;					// aktuÃ¡lnÃ­ nastavenÃ­ faktoru textur
+extern	BOOL		D3DZWrite;					// aktuÃ¡lnÃ­ hodnota hloubkovÃ©ho zÃ¡pisu
+extern	int			D3DZTest;					// aktuÃ¡lnÃ­ hodnota hloubkovÃ©ho testu
 
-extern	int			D3DAktMat;					// první poloka k aktualizaci matic (-1=není)
+extern	int			D3DAktMat;					// prvnÃ­ poloÅ¾ka k aktualizaci matic (-1=nenÃ­)
 
 /////////////////////////////////////////////////////////////////////////////
-// popisovaè automatického mapování textur
+// popisovaÃ¨ automatickÃ©ho mapovÃ¡nÃ­ textur
 
 typedef struct AUTOMAP_
 {
-	int				method;			// metoda mapování (0=adresy, 1=vrcholy, 2=plošky)
-	int				type;			// typ mapování (0=plocha, 1=válec, 2=koule, 3=chrom, 4=èoèka)
-	double			ox;				// souøadnice X poèátku mapování
-	double			oy;				// souøadnice Y poèátku mapování
-	double			oz;				// souøadnice Z poèátku mapování
+	int				method;			// metoda mapovÃ¡nÃ­ (0=adresy, 1=vrcholy, 2=ploÅ¡ky)
+	int				type;			// typ mapovÃ¡nÃ­ (0=plocha, 1=vÃ¡lec, 2=koule, 3=chrom, 4=Ã¨oÃ¨ka)
+	double			ox;				// souÃ¸adnice X poÃ¨Ã¡tku mapovÃ¡nÃ­
+	double			oy;				// souÃ¸adnice Y poÃ¨Ã¡tku mapovÃ¡nÃ­
+	double			oz;				// souÃ¸adnice Z poÃ¨Ã¡tku mapovÃ¡nÃ­
 	double			rz;				// rotace podle osy Z
 	double			rx;				// rotace podle osy X
 	double			ry;				// rotace podle osy Y
-	double			ou;				// poèátek textury horizontálnì
-	double			ov;				// poèátek textury vertikálnì
-	double			su;				// mìøítko textury horizontálnì
-	double			sv;				// mìøítko textury vertikálnì
+	double			ou;				// poÃ¨Ã¡tek textury horizontÃ¡lnÃ¬
+	double			ov;				// poÃ¨Ã¡tek textury vertikÃ¡lnÃ¬
+	double			su;				// mÃ¬Ã¸Ã­tko textury horizontÃ¡lnÃ¬
+	double			sv;				// mÃ¬Ã¸Ã­tko textury vertikÃ¡lnÃ¬
 
-	D3DMATRIX		m;				// pouitá transformaèní matice
-									//   testují se jen èleny 1 a 3,
-									//	 èleny _41 a _43 uchovávají
+	D3DMATRIX		m;				// pouÅ¾itÃ¡ transformaÃ¨nÃ­ matice
+									//   testujÃ­ se jen Ã¨leny 1 aÅ¾ 3,
+									//	 Ã¨leny _41 aÅ¾ _43 uchovÃ¡vajÃ­
 									//	 vektor k pozorovateli
-									// Pro neplatné mapování (napø. zmìna
-									// parametrù) je _41 a _43 = 0
+									// Pro neplatnÃ© mapovÃ¡nÃ­ (napÃ¸. zmÃ¬na
+									// parametrÃ¹) je _41 aÅ¾ _43 = 0
 
 } AUTOMAP;
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky rámu D3D (vıpoèty se provádí v pøesnosti float)
+// struktura poloÅ¾ky rÃ¡mu D3D (vÃ½poÃ¨ty se provÃ¡dÃ­ v pÃ¸esnosti float)
 
 typedef struct D3DFITEM_
 {
-	D3DFTYPE			Type;		// typ rámu
+	D3DFTYPE			Type;		// typ rÃ¡mu
 
-	int					Index;		// index této poloky
+	int					Index;		// index tÃ©to poloÅ¾ky
 
-// hiearchie (na zaèátku je scéna s indexem 0, nemá sousedy ani rodièe)
-	int					Parent;		// index rodièe (-1 = není, 0 = scéna)
-	int					Child;		// první potomek (-1 = není)
-	int					Prev;		// pøedcházející soused stejné úrovnì (-1 = není)
-	int					Next;		// další soused stejné úrovnì (-1 = není)
+// hiearchie (na zaÃ¨Ã¡tku je scÃ©na s indexem 0, nemÃ¡ sousedy ani rodiÃ¨e)
+	int					Parent;		// index rodiÃ¨e (-1 = nenÃ­, 0 = scÃ©na)
+	int					Child;		// prvnÃ­ potomek (-1 = nenÃ­)
+	int					Prev;		// pÃ¸edchÃ¡zejÃ­cÃ­ soused stejnÃ© ÃºrovnÃ¬ (-1 = nenÃ­)
+	int					Next;		// dalÅ¡Ã­ soused stejnÃ© ÃºrovnÃ¬ (-1 = nenÃ­)
 
-// informace k renderování
-	int					Dist;		// druhá mocnina vzdálenosti od kamery k poloce
-	int					RendGroup;	// renderovací skupina (0 a 15)
+// informace k renderovÃ¡nÃ­
+	int					Dist;		// druhÃ¡ mocnina vzdÃ¡lenosti od kamery k poloÅ¾ce
+	int					RendGroup;	// renderovacÃ­ skupina (0 aÅ¾ 15)
 	BOOL				ZWrite;		// zapisovat hloubkovou informaci
-	int					ZTest;		// hloubkovı test (1 a 8)
+	int					ZTest;		// hloubkovÃ½ test (1 aÅ¾ 8)
 
-// rozdìlení objektu na èásti
-	BOOL				AktSector;	// aktualizovat generování sektorù
-	BOOL				UseSector;	// pouívají se sektory namísto objektu
-	BOOL				ParSector;	// meziúschova parametru od rodièe
+// rozdÃ¬lenÃ­ objektu na Ã¨Ã¡sti
+	BOOL				AktSector;	// aktualizovat generovÃ¡nÃ­ sektorÃ¹
+	BOOL				UseSector;	// pouÅ¾Ã­vajÃ­ se sektory namÃ­sto objektu
+	BOOL				ParSector;	// meziÃºschova parametru od rodiÃ¨e
 	BOOL				res2;
 
-// viditelnost rámu
+// viditelnost rÃ¡mu
 	bool				Visible;	// zapnuta viditelnost
 
-// nastavení objektu
-	bool				Wireframe;	// vyplòování ploch
-	bool				Lighton;	// osvìtlení
-	bool				Shades;		// plynulé stínování
-	bool				MagFilter[MAX_STAGES];	// filtrace zvìtšenıch textur
-	bool				MinFilter[MAX_STAGES];	// filtrace zmenšenıch textur
-	bool				MipFilter[MAX_STAGES];	// filtrace vzdálenıch textur
-	short				Culling;	// zobrazené plochy (0=obì, 1=pøední, 2=zadní)
+// nastavenÃ­ objektu
+	bool				Wireframe;	// vyplÃ²ovÃ¡nÃ­ ploch
+	bool				Lighton;	// osvÃ¬tlenÃ­
+	bool				Shades;		// plynulÃ© stÃ­novÃ¡nÃ­
+	bool				MagFilter[MAX_STAGES];	// filtrace zvÃ¬tÅ¡enÃ½ch textur
+	bool				MinFilter[MAX_STAGES];	// filtrace zmenÅ¡enÃ½ch textur
+	bool				MipFilter[MAX_STAGES];	// filtrace vzdÃ¡lenÃ½ch textur
+	short				Culling;	// zobrazenÃ© plochy (0=obÃ¬, 1=pÃ¸ednÃ­, 2=zadnÃ­)
 	short				res3;
 
-// sníená úroveò detailù LOD
-	int					LODPrev;	// pøedcházející objekt pro LOD (-1=není)
-	int					LODNext;	// další objekt pro LOD (-1=není)
-	double				LODMax;		// maximální vzdálenost pro LOD
-	float				LODMin2;	// minimální vzdálenost pro LOD ^2 (vèetnì této hodnoty)
-	float				LODMax2;	// maximální vzdálenost pro LOD ^2 (bez této hodnoty)
+// snÃ­Å¾enÃ¡ ÃºroveÃ² detailÃ¹ LOD
+	int					LODPrev;	// pÃ¸edchÃ¡zejÃ­cÃ­ objekt pro LOD (-1=nenÃ­)
+	int					LODNext;	// dalÅ¡Ã­ objekt pro LOD (-1=nenÃ­)
+	double				LODMax;		// maximÃ¡lnÃ­ vzdÃ¡lenost pro LOD
+	float				LODMin2;	// minimÃ¡lnÃ­ vzdÃ¡lenost pro LOD ^2 (vÃ¨etnÃ¬ tÃ©to hodnoty)
+	float				LODMax2;	// maximÃ¡lnÃ­ vzdÃ¡lenost pro LOD ^2 (bez tÃ©to hodnoty)
 
-// multitexturové operace
-	int					Stages;		// aktivní poèet stupòù, pro které jsou vygenerovány buffery
+// multitexturovÃ© operace
+	int					Stages;		// aktivnÃ­ poÃ¨et stupÃ²Ã¹, pro kterÃ© jsou vygenerovÃ¡ny buffery
 	int					ColorOp[MAX_STAGES];	// operace barvy
-	int					ColorArg1[MAX_STAGES];	// první argument barvy
-	int					ColorArg2[MAX_STAGES];	// druhı argument barvy
+	int					ColorArg1[MAX_STAGES];	// prvnÃ­ argument barvy
+	int					ColorArg2[MAX_STAGES];	// druhÃ½ argument barvy
 	int					AlphaOp[MAX_STAGES];	// operace alfa
-	int					AlphaArg1[MAX_STAGES];	// první argument alfa
-	int					AlphaArg2[MAX_STAGES];	// druhı argument alfa
-	int					AddressU[MAX_STAGES];	// mód adresování U
-	int					AddressV[MAX_STAGES];	// mód adresování V
-//	int					Border[MAX_STAGES];		// barva okolí textury v barvách Petra (BGR)
-//	DWORD				BorderRGB[MAX_STAGES];	// barva okolí v módu RGB
-//	D3DCOLORVALUE		BorderF[MAX_STAGES];	// barva okolí v módu float
-	float				Bias[MAX_STAGES];		// zjemnìní vzdálenıch textur (0=bìné)
-	bool				UseText[MAX_STAGES];	// stupeò pouívá pøíkazy vyuívající texturu
-	DWORD				TFactor;				// faktor textur v barvách Petra (BGR)
-	DWORD				TFactorRGB;				// faktor textur v barvách RGB
-	D3DCOLORVALUE		TFactorF;				// faktor textur v barvách float
+	int					AlphaArg1[MAX_STAGES];	// prvnÃ­ argument alfa
+	int					AlphaArg2[MAX_STAGES];	// druhÃ½ argument alfa
+	int					AddressU[MAX_STAGES];	// mÃ³d adresovÃ¡nÃ­ U
+	int					AddressV[MAX_STAGES];	// mÃ³d adresovÃ¡nÃ­ V
+//	int					Border[MAX_STAGES];		// barva okolÃ­ textury v barvÃ¡ch Petra (BGR)
+//	DWORD				BorderRGB[MAX_STAGES];	// barva okolÃ­ v mÃ³du RGB
+//	D3DCOLORVALUE		BorderF[MAX_STAGES];	// barva okolÃ­ v mÃ³du float
+	float				Bias[MAX_STAGES];		// zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur (0=bÃ¬Å¾nÃ©)
+	bool				UseText[MAX_STAGES];	// stupeÃ² pouÅ¾Ã­vÃ¡ pÃ¸Ã­kazy vyuÅ¾Ã­vajÃ­cÃ­ texturu
+	DWORD				TFactor;				// faktor textur v barvÃ¡ch Petra (BGR)
+	DWORD				TFactorRGB;				// faktor textur v barvÃ¡ch RGB
+	D3DCOLORVALUE		TFactorF;				// faktor textur v barvÃ¡ch float
 
 // hranice (koule)
-	double				BoundR0;	// vlastní netransformovanı polomìr hranice
-	double				BoundR;		// netransformovanı polomìr s potomky
-	double				ParScale;	// pøechodnì uschované mìøítko od rodièe
-	bool				ParClip;	// uschovanı pøíznak od rodièe - testovat viditelnost
-	bool				AktClip;	// poloku je nutné testovat bìhem renderování
-	bool				AktBound;	// aktualizovat polomìr hranice s potomky
+	double				BoundR0;	// vlastnÃ­ netransformovanÃ½ polomÃ¬r hranice
+	double				BoundR;		// netransformovanÃ½ polomÃ¬r s potomky
+	double				ParScale;	// pÃ¸echodnÃ¬ uschovanÃ© mÃ¬Ã¸Ã­tko od rodiÃ¨e
+	bool				ParClip;	// uschovanÃ½ pÃ¸Ã­znak od rodiÃ¨e - testovat viditelnost
+	bool				AktClip;	// poloÅ¾ku je nutnÃ© testovat bÃ¬hem renderovÃ¡nÃ­
+	bool				AktBound;	// aktualizovat polomÃ¬r hranice s potomky
 	bool				res4;
 
-// svìtlo
-	int					Light;		// index svìtla (-1 = není)
+// svÃ¬tlo
+	int					Light;		// index svÃ¬tla (-1 = nenÃ­)
 
-// transformace rámu
-	D3DORDER			Order;		// poøadí rotací
-	double				ScaleX;		// zmìna mìøítka ve smìru X
-	double				ScaleY;		// zmìna mìøítka ve smìru Y
-	double				ScaleZ;		// zmìna mìøítka ve smìru Z
-	double				ScaleB;		// mìøítko pro hranici (vìtší z mìøítek)
-	double				RotateX;	// rotace podle osy X (normalizováno 0 a 2pi)
-	double				SinX;		// sinus úhlu rotace podle X
-	double				CosX;		// kosinus úhlu rotace podle X
-	double				RotateY;	// rotace podle osy Y (normalizováno 0 a 2pi)
-	double				RotateY2D;	// pøídavné natoèení 2D objektu na kameru
-	double				RotateX2D;	// uschovaná souøadnice X relativnì ke kameøe
-	double				RotateZ2D;	// uschovaná souøadnice Z relativnì ke kameøe
+// transformace rÃ¡mu
+	D3DORDER			Order;		// poÃ¸adÃ­ rotacÃ­
+	double				ScaleX;		// zmÃ¬na mÃ¬Ã¸Ã­tka ve smÃ¬ru X
+	double				ScaleY;		// zmÃ¬na mÃ¬Ã¸Ã­tka ve smÃ¬ru Y
+	double				ScaleZ;		// zmÃ¬na mÃ¬Ã¸Ã­tka ve smÃ¬ru Z
+	double				ScaleB;		// mÃ¬Ã¸Ã­tko pro hranici (vÃ¬tÅ¡Ã­ z mÃ¬Ã¸Ã­tek)
+	double				RotateX;	// rotace podle osy X (normalizovÃ¡no 0 aÅ¾ 2pi)
+	double				SinX;		// sinus Ãºhlu rotace podle X
+	double				CosX;		// kosinus Ãºhlu rotace podle X
+	double				RotateY;	// rotace podle osy Y (normalizovÃ¡no 0 aÅ¾ 2pi)
+	double				RotateY2D;	// pÃ¸Ã­davnÃ© natoÃ¨enÃ­ 2D objektu na kameru
+	double				RotateX2D;	// uschovanÃ¡ souÃ¸adnice X relativnÃ¬ ke kameÃ¸e
+	double				RotateZ2D;	// uschovanÃ¡ souÃ¸adnice Z relativnÃ¬ ke kameÃ¸e
 	int					res8;
 
-	double				SinY;		// sinus úhlu rotace podle Y
-	double				CosY;		// kosinus úhlu rotace podle Y
-	double				RotateZ;	// rotace podle osy Z (normalizováno 0 a 2pi)
-	double				SinZ;		// sinus úhlu rotace podle Z
-	double				CosZ;		// kosinus úhlu rotace podle Z
-	double				TransX;		// posun ve smìru X
-	double				TransY;		// posun ve smìru Y
-	double				TransZ;		// posun ve smìru Z
+	double				SinY;		// sinus Ãºhlu rotace podle Y
+	double				CosY;		// kosinus Ãºhlu rotace podle Y
+	double				RotateZ;	// rotace podle osy Z (normalizovÃ¡no 0 aÅ¾ 2pi)
+	double				SinZ;		// sinus Ãºhlu rotace podle Z
+	double				CosZ;		// kosinus Ãºhlu rotace podle Z
+	double				TransX;		// posun ve smÃ¬ru X
+	double				TransY;		// posun ve smÃ¬ru Y
+	double				TransZ;		// posun ve smÃ¬ru Z
 
-	bool				IsRotX;		// je rotace podle osy X (tj. úhel != 0)
-	bool				IsRotY;		// je rotace podle osy Y (tj. úhel != 0)
-	bool				IsRotZ;		// je rotace podle osy Z (tj. úhel != 0)
+	bool				IsRotX;		// je rotace podle osy X (tj. Ãºhel != 0)
+	bool				IsRotY;		// je rotace podle osy Y (tj. Ãºhel != 0)
+	bool				IsRotZ;		// je rotace podle osy Z (tj. Ãºhel != 0)
 
-	bool				AktOwn;		// aktualizovat vlastní matici
-	bool				AktWorld;	// aktualizovat vıslednou matici
+	bool				AktOwn;		// aktualizovat vlastnÃ­ matici
+	bool				AktWorld;	// aktualizovat vÃ½slednou matici
 
-	bool				AktMat;		// zahrnut do øetìzce aktualizace matic
+	bool				AktMat;		// zahrnut do Ã¸etÃ¬zce aktualizace matic
 	short				res5;
 
-	int					AktMatPrev;	// pøedchozí poloka pro aktualizaci matic (-1=je první)
-	int					AktMatNext;	// následující poloka pro aktualizaci matic (-1=je poslední)
+	int					AktMatPrev;	// pÃ¸edchozÃ­ poloÅ¾ka pro aktualizaci matic (-1=je prvnÃ­)
+	int					AktMatNext;	// nÃ¡sledujÃ­cÃ­ poloÅ¾ka pro aktualizaci matic (-1=je poslednÃ­)
 
-	D3DMATRIX			MatrixOwn;	// vlastní transformaèní matice
-	D3DMATRIX			MatrixWorld;// vısledná transformaèní matice (+matice rodièe)
+	D3DMATRIX			MatrixOwn;	// vlastnÃ­ transformaÃ¨nÃ­ matice
+	D3DMATRIX			MatrixWorld;// vÃ½slednÃ¡ transformaÃ¨nÃ­ matice (+matice rodiÃ¨e)
 
-// automatické mapování textur
-	AUTOMAP*			AutoMap;	// automatické mapování textur (NULL=není)
+// automatickÃ© mapovÃ¡nÃ­ textur
+	AUTOMAP*			AutoMap;	// automatickÃ© mapovÃ¡nÃ­ textur (NULL=nenÃ­)
 
-// parametry terénu
-	bool				IsTerrain;	// objekt je terén
+// parametry terÃ©nu
+	bool				IsTerrain;	// objekt je terÃ©n
 	bool				res6;
 	short				res7;
-	int					TerWidth;	// šíøka terénu (políèek)
-	int					TerHeight;	// vıška terénu (políèek)
-	float*				TerMap;		// mapa terénu ((width+1)*(height+1) hodnot 0 a 1)
+	int					TerWidth;	// Å¡Ã­Ã¸ka terÃ©nu (polÃ­Ã¨ek)
+	int					TerHeight;	// vÃ½Å¡ka terÃ©nu (polÃ­Ã¨ek)
+	float*				TerMap;		// mapa terÃ©nu ((width+1)*(height+1) hodnot 0 aÅ¾ 1)
 
-// klonování (pro 1 objekt je ClonePrev = CloneNext = Index)
-// u klonù jsou sdílené tyto buffery:
+// klonovÃ¡nÃ­ (pro 1 objekt je ClonePrev = CloneNext = Index)
+// u klonÃ¹ jsou sdÃ­lenÃ© tyto buffery:
 
 //		TerMap
 
@@ -498,110 +498,110 @@ typedef struct D3DFITEM_
 //		Data1
 //		Data2
 
-	int					ClonePrev;	// pøedcházející klon (není klon: ClonePrev == Index)
-	int					CloneNext;	// další klon (není klon: CloneNext == Index)
+	int					ClonePrev;	// pÃ¸edchÃ¡zejÃ­cÃ­ klon (nenÃ­ klon: ClonePrev == Index)
+	int					CloneNext;	// dalÅ¡Ã­ klon (nenÃ­ klon: CloneNext == Index)
 
 // vzor objektu
-	int					VertNum;	// poèet vrcholù v seznamu vrcholù, normál, barev a souøadnic textur
-	D3DVECTOR*			Vertex;		// seznam vektorù vrcholù
-	D3DVECTOR*			Normal;		// seznam vektorù normál
-	DWORD				AutoCol;	// aktuální automatická barva vrcholù (MAXDWORD = není)
-	DWORD*				VertCol;	// seznam barev vrcholù RGBA (NULL=není)
-	D3DCOLORVALUE*		VertColF;	// seznam barev vrcholù FLOAT (NULL=není)
-	float*				TextUV[MAX_STAGES];	// souøadnice U a V textur (NULL=nejsou)
-	int					FaceNum;	// poèet plošek v seznamu plošek
-	int*				Face;		// seznam plošek (kadá 3 vrcholy)
-	WORD*				FaceW;		// seznam plošek ve formátu WORD (jen pokud to vyaduje driver)
+	int					VertNum;	// poÃ¨et vrcholÃ¹ v seznamu vrcholÃ¹, normÃ¡l, barev a souÃ¸adnic textur
+	D3DVECTOR*			Vertex;		// seznam vektorÃ¹ vrcholÃ¹
+	D3DVECTOR*			Normal;		// seznam vektorÃ¹ normÃ¡l
+	DWORD				AutoCol;	// aktuÃ¡lnÃ­ automatickÃ¡ barva vrcholÃ¹ (MAXDWORD = nenÃ­)
+	DWORD*				VertCol;	// seznam barev vrcholÃ¹ RGBA (NULL=nenÃ­)
+	D3DCOLORVALUE*		VertColF;	// seznam barev vrcholÃ¹ FLOAT (NULL=nenÃ­)
+	float*				TextUV[MAX_STAGES];	// souÃ¸adnice U a V textur (NULL=nejsou)
+	int					FaceNum;	// poÃ¨et ploÅ¡ek v seznamu ploÅ¡ek
+	int*				Face;		// seznam ploÅ¡ek (kaÅ¾dÃ¡ 3 vrcholy)
+	WORD*				FaceW;		// seznam ploÅ¡ek ve formÃ¡tu WORD (jen pokud to vyÅ¾aduje driver)
 
-// implicitní povrch (barvy (int) jsou ve formátru Petra, tj. BGR)
-	MATSOURCE			MatSource;	// pouitı zdroj materiálu
-	DWORD				Diffuse;	// difusní barva materiálu zadaná uivatelem
-	DWORD				Ambient;	// ambient barva zadaná uivatelem (MAXDWORD=jako difusní)
-	DWORD				Emissive;	// emisivní barva materiálu zadaná uivatelem
-	DWORD				Specular;	// barva odlesku materiálu zadaná uivatelem
-	double				Power;		// mocnina barvy odlesku zadaná uivatelem (0 a 128)
-	int					Material;	// index materiálu (0 = implicitní)
-	int					ParMat;		// index materiálu rodièe
-									// (pouívá se pouze k pøechodné úschovì
-									// materiálu rodièe bìhem renderování)
-	DWORD				ParDif;		// difusní barva materiálu rodièe (pouze k úschovì)
+// implicitnÃ­ povrch (barvy (int) jsou ve formÃ¡tru Petra, tj. BGR)
+	MATSOURCE			MatSource;	// pouÅ¾itÃ½ zdroj materiÃ¡lu
+	DWORD				Diffuse;	// difusnÃ­ barva materiÃ¡lu zadanÃ¡ uÅ¾ivatelem
+	DWORD				Ambient;	// ambient barva zadanÃ¡ uÅ¾ivatelem (MAXDWORD=jako difusnÃ­)
+	DWORD				Emissive;	// emisivnÃ­ barva materiÃ¡lu zadanÃ¡ uÅ¾ivatelem
+	DWORD				Specular;	// barva odlesku materiÃ¡lu zadanÃ¡ uÅ¾ivatelem
+	double				Power;		// mocnina barvy odlesku zadanÃ¡ uÅ¾ivatelem (0 aÅ¾ 128)
+	int					Material;	// index materiÃ¡lu (0 = implicitnÃ­)
+	int					ParMat;		// index materiÃ¡lu rodiÃ¨e
+									// (pouÅ¾Ã­vÃ¡ se pouze k pÃ¸echodnÃ© ÃºschovÃ¬
+									// materiÃ¡lu rodiÃ¨e bÃ¬hem renderovÃ¡nÃ­)
+	DWORD				ParDif;		// difusnÃ­ barva materiÃ¡lu rodiÃ¨e (pouze k ÃºschovÃ¬)
 
-// morfování
-	int					MorphMax;	// poèet stupòù morfování (0=není)
-	double				MorphStage;	// aktuální stupeò morfování (0 a MorphMax)
-	D3DVECTOR**			MorphVert;	// buffery vrcholù
-	D3DVECTOR**			MorphNorm;	// buffery normál
-	float**				MorphUV;	// buffery souøadnic textur (pro kadı stupeò MAX_STAGES bufferù)
+// morfovÃ¡nÃ­
+	int					MorphMax;	// poÃ¨et stupÃ²Ã¹ morfovÃ¡nÃ­ (0=nenÃ­)
+	double				MorphStage;	// aktuÃ¡lnÃ­ stupeÃ² morfovÃ¡nÃ­ (0 aÅ¾ MorphMax)
+	D3DVECTOR**			MorphVert;	// buffery vrcholÃ¹
+	D3DVECTOR**			MorphNorm;	// buffery normÃ¡l
+	float**				MorphUV;	// buffery souÃ¸adnic textur (pro kaÅ¾dÃ½ stupeÃ² MAX_STAGES bufferÃ¹)
 
 // textura
-	int					Texture[MAX_STAGES]; // index textury (-1 = není)
-	int					ParText;	// index textury 0 rodièe
-									// (pouívá se pouze k pøechodné úschovì
-									// textury rodièe bìhem renderování)
+	int					Texture[MAX_STAGES]; // index textury (-1 = nenÃ­)
+	int					ParText;	// index textury 0 rodiÃ¨e
+									// (pouÅ¾Ã­vÃ¡ se pouze k pÃ¸echodnÃ© ÃºschovÃ¬
+									// textury rodiÃ¨e bÃ¬hem renderovÃ¡nÃ­)
 
-// prùhlednost
+// prÃ¹hlednost
 	bool				IsBlend;	// je zapnut alpha blending (SRC<>1 nebo DST<>0)
-	bool				IsAlphaRef;	// je zapnuto alfa porovnávání
-	bool				BlendRend;	// vyaduje dodateènı prùchod pro alfa blending
+	bool				IsAlphaRef;	// je zapnuto alfa porovnÃ¡vÃ¡nÃ­
+	bool				BlendRend;	// vyÅ¾aduje dodateÃ¨nÃ½ prÃ¹chod pro alfa blending
 	BLENDTYPE			SrcBlend;	// blending operace pro zdroj
-	BLENDTYPE			DstBlend;	// blending operace pro cíl
-	int					SrcDstBlend; // kód blending operace v kódu uivatele = SRC + 10*DST
-									// (1=normal, 11=oheò, 20=sklo, 54=pøekryv)
-	double				AlphaRef;	// referenèní úroveò alfa kanálu (0=normal)
-	int					AlphaRef2;	// referenèní úroveò ve tvaru BYTE (0=normal)
+	BLENDTYPE			DstBlend;	// blending operace pro cÃ­l
+	int					SrcDstBlend; // kÃ³d blending operace v kÃ³du uÅ¾ivatele = SRC + 10*DST
+									// (1=normal, 11=oheÃ², 20=sklo, 54=pÃ¸ekryv)
+	double				AlphaRef;	// referenÃ¨nÃ­ ÃºroveÃ² alfa kanÃ¡lu (0=normal)
+	int					AlphaRef2;	// referenÃ¨nÃ­ ÃºroveÃ² ve tvaru BYTE (0=normal)
 
-// stín (pro pøegenerování bufferù staèí zrušit jen "ShadeVert")
-	double				ShadowRange; // dosah stínu
-	bool				IsShadow;	// je zapnut stín
-	bool				ShadowParent; // odvozovat vektor dopadu stínu od rodièe
-	D3DVECTOR			ShadowPoint; // poslední vektor dopadu stínu ([0,0,0]=neplatnı)
+// stÃ­n (pro pÃ¸egenerovÃ¡nÃ­ bufferÃ¹ staÃ¨Ã­ zruÅ¡it jen "ShadeVert")
+	double				ShadowRange; // dosah stÃ­nu
+	bool				IsShadow;	// je zapnut stÃ­n
+	bool				ShadowParent; // odvozovat vektor dopadu stÃ­nu od rodiÃ¨e
+	D3DVECTOR			ShadowPoint; // poslednÃ­ vektor dopadu stÃ­nu ([0,0,0]=neplatnÃ½)
 
-	int					ShadeVertN;	// poèet vrcholù
-	D3DVECTOR*			ShadeVert;	// buffer vrcholù (vypuštìné zdvojené vrcholy)
-	int*				ShadeFace;	// buffer plošek (kadá ploška 3 indexy vrcholù)
-	D3DVECTOR*			ShadeNorm;	// buffer normál plošek
-	// hrany jsou kolem plošky orientovány proti smìru hodinovıch ruèièek (=kladnı smìr pro vìjíø)
+	int					ShadeVertN;	// poÃ¨et vrcholÃ¹
+	D3DVECTOR*			ShadeVert;	// buffer vrcholÃ¹ (vypuÅ¡tÃ¬nÃ© zdvojenÃ© vrcholy)
+	int*				ShadeFace;	// buffer ploÅ¡ek (kaÅ¾dÃ¡ ploÅ¡ka 3 indexy vrcholÃ¹)
+	D3DVECTOR*			ShadeNorm;	// buffer normÃ¡l ploÅ¡ek
+	// hrany jsou kolem ploÅ¡ky orientovÃ¡ny proti smÃ¬ru hodinovÃ½ch ruÃ¨iÃ¨ek (=kladnÃ½ smÃ¬r pro vÃ¬jÃ­Ã¸)
 	// vrcholy hran: 0: v1-v3, 1: v3-v2, 2: v2-v1
-	int*				ShadeEdgeV;	// vrcholy hran plošek (kadá ploška 3 hrany po 2 vrcholech)
-	int*				ShadeEdgeN;	// protichùdná hrana sousední plošky (kadá ploška 3 indexy hran, -1=není)
-	int*				ShadeNext;	// navazující hrana první vpravo z 2. vrcholu (kadá ploška 3 indexy)
-	int*				ShadeLeft;	// další hrana z vrcholu 1 smìrem doleva (kadá ploška 3 indexy)
+	int*				ShadeEdgeV;	// vrcholy hran ploÅ¡ek (kaÅ¾dÃ¡ ploÅ¡ka 3 hrany po 2 vrcholech)
+	int*				ShadeEdgeN;	// protichÃ¹dnÃ¡ hrana sousednÃ­ ploÅ¡ky (kaÅ¾dÃ¡ ploÅ¡ka 3 indexy hran, -1=nenÃ­)
+	int*				ShadeNext;	// navazujÃ­cÃ­ hrana prvnÃ­ vpravo z 2. vrcholu (kaÅ¾dÃ¡ ploÅ¡ka 3 indexy)
+	int*				ShadeLeft;	// dalÅ¡Ã­ hrana z vrcholu 1 smÃ¬rem doleva (kaÅ¾dÃ¡ ploÅ¡ka 3 indexy)
 
-	char*				ShadeEdgeS;	// stav hrany (kadá ploška 3 hrany)
-									//   bit 0: ploška vlevo osvícená
-									//   bit 1: ploška vpravo osvícená
+	char*				ShadeEdgeS;	// stav hrany (kaÅ¾dÃ¡ ploÅ¡ka 3 hrany)
+									//   bit 0: ploÅ¡ka vlevo osvÃ­cenÃ¡
+									//   bit 1: ploÅ¡ka vpravo osvÃ­cenÃ¡
 
-	int					ShadowFanN;	// poèet obrysù v bufferu (poèet "vìjíøù")
-	int					ShadowFan0;	// délka bufferu stínu celkem (=poèet vrcholù)
-	int*				ShadowFan;	// poèty vrcholù pro jednotlivé obrysy ("vìjíøe")
-	D3DVECTOR*			ShadowVolume; // buffer stínu (vìjíøe, 1 vrchol poèátek, zbytek vrcholy vìjíøe)
+	int					ShadowFanN;	// poÃ¨et obrysÃ¹ v bufferu (poÃ¨et "vÃ¬jÃ­Ã¸Ã¹")
+	int					ShadowFan0;	// dÃ©lka bufferu stÃ­nu celkem (=poÃ¨et vrcholÃ¹)
+	int*				ShadowFan;	// poÃ¨ty vrcholÃ¹ pro jednotlivÃ© obrysy ("vÃ¬jÃ­Ã¸e")
+	D3DVECTOR*			ShadowVolume; // buffer stÃ­nu (vÃ¬jÃ­Ã¸e, 1 vrchol poÃ¨Ã¡tek, zbytek vrcholy vÃ¬jÃ­Ã¸e)
 
-// datové buffery ovladaèù
-	void*				Data1;		// datovı buffer 1 (vrcholy), NULL=není
-	void*				Data2;		// datovı buffer 2 (indexy), NULL=není
-	void*				Data3;		// datovı buffer pro stíny, NULL=není
+// datovÃ© buffery ovladaÃ¨Ã¹
+	void*				Data1;		// datovÃ½ buffer 1 (vrcholy), NULL=nenÃ­
+	void*				Data2;		// datovÃ½ buffer 2 (indexy), NULL=nenÃ­
+	void*				Data3;		// datovÃ½ buffer pro stÃ­ny, NULL=nenÃ­
 
 } D3DFITEM;
 
 
 ////////////////////////////////////////////////////////////////////
-// popisovaèe bufferu rámù
+// popisovaÃ¨e bufferu rÃ¡mÃ¹
 
 extern	D3DFITEM*	D3DF_Data;		// ukazatel na data
-extern	bool*		D3DF_Valid;		// pøíznaky platnosti poloek
-extern	int			D3DF_Max;		// velikost bufferu (poloek)
-extern	int			D3DF_Next;		// pøíští volná poloka (-1 = není)
+extern	bool*		D3DF_Valid;		// pÃ¸Ã­znaky platnosti poloÅ¾ek
+extern	int			D3DF_Max;		// velikost bufferu (poloÅ¾ek)
+extern	int			D3DF_Next;		// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka (-1 = nenÃ­)
 
 ////////////////////////////////////////////////////////////////////
-// seznam skupin renderování
+// seznam skupin renderovÃ¡nÃ­
 
-extern	BOOL		RendSort[MAX_RENDGROUP];	// pøíznaky tøídìní skupin
-extern	int			RendNum[MAX_RENDGROUP];		// poèty poloek v bufferech
-extern	D3DFITEM**	RendItems[MAX_RENDGROUP];	// seznam poloek k renderování
-extern	int			RendMax;					// velikost bufferù poloek
+extern	BOOL		RendSort[MAX_RENDGROUP];	// pÃ¸Ã­znaky tÃ¸Ã­dÃ¬nÃ­ skupin
+extern	int			RendNum[MAX_RENDGROUP];		// poÃ¨ty poloÅ¾ek v bufferech
+extern	D3DFITEM**	RendItems[MAX_RENDGROUP];	// seznam poloÅ¾ek k renderovÃ¡nÃ­
+extern	int			RendMax;					// velikost bufferÃ¹ poloÅ¾ek
 
 ////////////////////////////////////////////////////////////////////
-// vynulování matice
+// vynulovÃ¡nÃ­ matice
 
 inline void Matrix0(D3DMATRIX* m)
 {
@@ -609,7 +609,7 @@ inline void Matrix0(D3DMATRIX* m)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení jednotkové matice
+// vytvoÃ¸enÃ­ jednotkovÃ© matice
 
 inline void Matrix1(D3DMATRIX* m)
 {
@@ -617,190 +617,190 @@ inline void Matrix1(D3DMATRIX* m)
 }
 
 ////////////////////////////////////////////////////////////////////
-// aktualizace transformaèních matic všech objektù
-// (provádí se pøi sníené pøesnosti FPU!)
+// aktualizace transformaÃ¨nÃ­ch matic vÅ¡ech objektÃ¹
+// (provÃ¡dÃ­ se pÃ¸i snÃ­Å¾enÃ© pÃ¸esnosti FPU!)
 
 void D3DF_AktMatrix();
 
 ////////////////////////////////////////////////////////////////////
-// transpozice matice (zdrojová a cílová matice mùe bıt stejná)
+// transpozice matice (zdrojovÃ¡ a cÃ­lovÃ¡ matice mÃ¹Å¾e bÃ½t stejnÃ¡)
 
 void _fastcall MatrixTrans(D3DMATRIX* dst, D3DMATRIX* src);
 
 ////////////////////////////////////////////////////////////////////
-// vynásobení dvou matic (m = m1 * m2), vısledná matice nesmí bıt vstupní!
+// vynÃ¡sobenÃ­ dvou matic (m = m1 * m2), vÃ½slednÃ¡ matice nesmÃ­ bÃ½t vstupnÃ­!
 
 void _fastcall MatrixMul(D3DMATRIX* m, const D3DMATRIX* m1, const D3DMATRIX* m2);
 
 ////////////////////////////////////////////////////////////////////
-// inverze matice (zdrojová a cílová matice mùe bıt stejná)
+// inverze matice (zdrojovÃ¡ a cÃ­lovÃ¡ matice mÃ¹Å¾e bÃ½t stejnÃ¡)
 
 void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src);
 
 ////////////////////////////////////////////////////////////////////
-// vynásobení vektoru maticí (provádí se pøi sníené pøesnosti FPU)
-// (zdrojovı i cílovı vektor mohou bıt shodné)
+// vynÃ¡sobenÃ­ vektoru maticÃ­ (provÃ¡dÃ­ se pÃ¸i snÃ­Å¾enÃ© pÃ¸esnosti FPU)
+// (zdrojovÃ½ i cÃ­lovÃ½ vektor mohou bÃ½t shodnÃ©)
 
 void VecXMat(D3DVECTOR* dst, D3DVECTOR* src, D3DMATRIX* mat);
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení transformací podle transformaèní matice
+// nastavenÃ­ transformacÃ­ podle transformaÃ¨nÃ­ matice
 
 void D3DF_SetTransMatrix(int index, D3DMATRIX* m);
 
 ////////////////////////////////////////////////////////////////////
-// pøipojení do øetìzce aktualizace matic (kontroluje, zda je pøipojen)
+// pÃ¸ipojenÃ­ do Ã¸etÃ¬zce aktualizace matic (kontroluje, zda je pÃ¸ipojen)
 
 void _fastcall D3DF_AktMatLink(D3DFITEM* item);
 
 ////////////////////////////////////////////////////////////////////
-// odpojení z øetìzce aktualizace matic (kontroluje, zda je pøipojen)
+// odpojenÃ­ z Ã¸etÃ¬zce aktualizace matic (kontroluje, zda je pÃ¸ipojen)
 
 void _fastcall D3DF_AktMatUnlink(D3DFITEM* item);
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nové poloky bufferu (vrací index poloky)
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky bufferu (vracÃ­ index poloÅ¾ky)
 
 int D3DF_New();
 
 ////////////////////////////////////////////////////////////////////
-// pøíprava poloky k modifikaci (odpojení od klonù)
+// pÃ¸Ã­prava poloÅ¾ky k modifikaci (odpojenÃ­ od klonÃ¹)
 
 void D3DF_Modi(int index);
 
 ////////////////////////////////////////////////////////////////////
-// kopie poloky s potomky (vrací index nové poloky)
+// kopie poloÅ¾ky s potomky (vracÃ­ index novÃ© poloÅ¾ky)
 
 int D3DF_Copy(int index);
 
 ////////////////////////////////////////////////////////////////////
-// zrušení poloky (kontroluje platnost indexu)
+// zruÅ¡enÃ­ poloÅ¾ky (kontroluje platnost indexu)
 
 void _fastcall D3DF_Del(const int index);
 
 ////////////////////////////////////////////////////////////////////
-// resetování cachování bufferu (pøed ukonèením ovladaèe)
+// resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e)
 
 void D3DF_Reset();
 
 ////////////////////////////////////////////////////////////////////
-// mìkké resetování cachování bufferu (pøed resetováním ovladaèe pøi zmìnì viewportu)
-// - v souèasnosti není potøeba ádná obsluha
+// mÃ¬kkÃ© resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed resetovÃ¡nÃ­m ovladaÃ¨e pÃ¸i zmÃ¬nÃ¬ viewportu)
+// - v souÃ¨asnosti nenÃ­ potÃ¸eba Å¾Ã¡dnÃ¡ obsluha
 
 inline void D3DF_SoftReset() {}
 
 ////////////////////////////////////////////////////////////////////
-// zrušení všech poloek v bufferu (ukládání zaène opìt po øadì)
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu (uklÃ¡dÃ¡nÃ­ zaÃ¨ne opÃ¬t po Ã¸adÃ¬)
 
 void D3DF_DelAll();
 
 ////////////////////////////////////////////////////////////////////
-// zrušení bufferù morfování
+// zruÅ¡enÃ­ bufferÃ¹ morfovÃ¡nÃ­
 
 void D3DF_MorphReset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace mìøítka pro hranici
+// aktualizace mÃ¬Ã¸Ã­tka pro hranici
 
 void AktScaleB(D3DFITEM* item);
 
 ////////////////////////////////////////////////////////////////////
-// inicializace manaeru vrcholù (index poloky musí bıt platnı!)
+// inicializace manaÅ¾eru vrcholÃ¹ (index poloÅ¾ky musÃ­ bÃ½t platnÃ½!)
 
 void D3DF_UsedInit(int inx);
 
 ////////////////////////////////////////////////////////////////////
-// duplikace vrcholu (parametr = index vrcholu plošky), vrací novı index
+// duplikace vrcholu (parametr = index vrcholu ploÅ¡ky), vracÃ­ novÃ½ index
 
 int D3DF_UsedDuplik(int faceinx);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení normály vrcholu (pro danı index vrcholu plošky)
+// nastavenÃ­ normÃ¡ly vrcholu (pro danÃ½ index vrcholu ploÅ¡ky)
 
 void D3DF_UsedNormal(int faceinx, float nx, float ny, float nz);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení barvy vrcholu (pro danı index vrcholu plošky)
+// nastavenÃ­ barvy vrcholu (pro danÃ½ index vrcholu ploÅ¡ky)
 
 void D3DF_UsedColor(int faceinx, DWORD col, float r, float g, float b, float a);
 
 void D3DF_UsedColorB(int faceinx, BYTE r, BYTE g, BYTE b, BYTE a);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení adresy textury vrcholu (pro danı index vrcholu plošky)
+// nastavenÃ­ adresy textury vrcholu (pro danÃ½ index vrcholu ploÅ¡ky)
 
 void D3DF_UsedTextUV(int faceinx, float u, float v, int stage);
 
 ////////////////////////////////////////////////////////////////////
-// napojení poloky na rodièe (s odpojením od pøedcházejícího rodièe)
-// kontroluje platnost obou indexù
+// napojenÃ­ poloÅ¾ky na rodiÃ¨e (s odpojenÃ­m od pÃ¸edchÃ¡zejÃ­cÃ­ho rodiÃ¨e)
+// kontroluje platnost obou indexÃ¹
 
 void _fastcall D3DF_Link(const int parent, const int child);
 
 ////////////////////////////////////////////////////////////////////
-// zmapování vlastní hranice (index musí bıt platnı)
+// zmapovÃ¡nÃ­ vlastnÃ­ hranice (index musÃ­ bÃ½t platnÃ½)
 
 void D3DF_MapBound(int index);
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení objektu (vrací index objektu)
-// Po vytvoøení objektu je nutné nastavit normály!!!
+// vytvoÃ¸enÃ­ objektu (vracÃ­ index objektu)
+// Po vytvoÃ¸enÃ­ objektu je nutnÃ© nastavit normÃ¡ly!!!
 
 int D3DF_CreateMesh(int vertN, D3DVECTOR* vert, int faceN, int* face);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení normál objektu (poèet normál musí souhlasit s poètem vrcholù!)
+// nastavenÃ­ normÃ¡l objektu (poÃ¨et normÃ¡l musÃ­ souhlasit s poÃ¨tem vrcholÃ¹!)
 
 void D3DF_SetNormal(int index, D3DVECTOR* norm);
 
 ////////////////////////////////////////////////////////////////////
-// korekce novì vytvoøeného aktuálního objektu pro pravorukı souøadnı systém
+// korekce novÃ¬ vytvoÃ¸enÃ©ho aktuÃ¡lnÃ­ho objektu pro pravorukÃ½ souÃ¸adnÃ½ systÃ©m
 
 void D3DF_KorRightHand();
 
 ////////////////////////////////////////////////////////////////////
-// nastavení barev vrcholù objektu (poèet musí souhlasit s poètem vrcholù!)
+// nastavenÃ­ barev vrcholÃ¹ objektu (poÃ¨et musÃ­ souhlasit s poÃ¨tem vrcholÃ¹!)
 
 void D3DF_SetVertCol(int index, D3DCOLORVALUE* col);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení mapování textur (poèet musí souhlasit s poètem vrcholù!)
+// nastavenÃ­ mapovÃ¡nÃ­ textur (poÃ¨et musÃ­ souhlasit s poÃ¨tem vrcholÃ¹!)
 
 void D3DF_SetTextUV(int index, float* textuv, int stage);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení adresování a zalamování textury
+// nastavenÃ­ adresovÃ¡nÃ­ a zalamovÃ¡nÃ­ textury
 
 void D3DF_SetAddress(int index, int adru, int adrv, int stage);
 
 ////////////////////////////////////////////////////////////////////
-// nastavení blending módu (1=normal, 11=oheò, 20=sklo, 54=pøekryv, 100=saturace)
+// nastavenÃ­ blending mÃ³du (1=normal, 11=oheÃ², 20=sklo, 54=pÃ¸ekryv, 100=saturace)
 
 void D3DF_SetBlend(int index, int blendmode);
 
 ////////////////////////////////////////////////////////////////////
-// vygenerování normál (kontroluje index)
+// vygenerovÃ¡nÃ­ normÃ¡l (kontroluje index)
 
 void D3DF_AutoNormals(int index, double angle);
 
 ////////////////////////////////////////////////////////////////////
-// renderování objektù (pro Direct3D musí bıt BeginScene a EndScene!)
+// renderovÃ¡nÃ­ objektÃ¹ (pro Direct3D musÃ­ bÃ½t BeginScene a EndScene!)
 
 void D3DF_Render();
 
 ////////////////////////////////////////////////////////////////////
-// renderování objektù s blending (pro Direct3D musí bıt BeginScene a EndScene!)
+// renderovÃ¡nÃ­ objektÃ¹ s blending (pro Direct3D musÃ­ bÃ½t BeginScene a EndScene!)
 
 void D3DF_RenderBlend();
 
 ////////////////////////////////////////////////////////////////////
-// renderování 2D obrázkù (pro Direct3D musí bıt BeginScene a EndScene!)
+// renderovÃ¡nÃ­ 2D obrÃ¡zkÃ¹ (pro Direct3D musÃ­ bÃ½t BeginScene a EndScene!)
 
 void D3DF_Render2D();
 
 ////////////////////////////////////////////////////////////////////
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 
 inline BOOL D3DF_IsValid(const int index)
 { 
@@ -811,7 +811,7 @@ inline BOOL D3DF_IsValid(const int index)
 inline BOOL IsValidID() { return D3DF_IsValid(D3D_ID); }
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutí adresy poloky (bez kontroly indexu)
+// poskytnutÃ­ adresy poloÅ¾ky (bez kontroly indexu)
 
 inline D3DFITEM* D3DF_Get(const int index)
 { 
@@ -822,107 +822,107 @@ inline D3DFITEM* D3DF_Get(const int index)
 inline D3DFITEM* GetID() { return D3DF_Get(D3D_ID); }
 
 
-// funkce aktivního rozhraní - definice
-typedef	void (*D3STOP) ();						// ukonèení àunkce zaøízení
-typedef	void (*D3SIZEVIEW) ();					// aktualizace viewportu po zmìnì velikosti
-typedef	void (*D3MOVEVIEW) ();					// aktualizace viewportu po pøesunu
-typedef	void (*D3DISP) ();						// zobrazení renderovacího bufferu
-typedef	void (*D3CLEAR) ();						// vymazání renderovací plochy
-typedef	void (*D3AKTPROJ) ();					// aktualizace projekèní matice
-typedef	void (*D3AKTVIEW) ();					// aktualizace pohledové matice
-typedef	void (*D3BEGIN) ();						// zahájení renderování scény
-typedef	void (*D3END) ();						// ukonèení renderování scény
-typedef void (*D3RENDER) (D3DFITEM* item);		// vyrenderování jednoho objektu
-typedef void (*D3RESET) (D3DFITEM* item);		// resetování objektu pøed ukonèením ovladaèe
-typedef void (*D3SRESET) (D3DFITEM* item);		// resetování stínu objektu pøed ukonèením ovladaèe
-typedef void (*D3AKTWIREFRAME) ();				// aktualizovat pøepínaè vyplòování ploch
-typedef void (*D3AKTLIGHTON) ();				// aktualizovat pøepínaè osvìtlení
-typedef void (*D3AKTSHADES) ();					// aktualizovat pøepínaè plynulého stínování
-typedef void (*D3AKTCULLING) ();				// aktualizovat pøepínaè odstraòování ploch
-typedef void (*D3AKTMAGFILTER) (int stage);		// aktualizovat pøepínaè filtrace zvìtšenıch textur
-typedef void (*D3AKTMINMIPFILTER) (int stage);	// aktualizovat pøepínaè filtrace zmenšenıch a vzdálenıch textur
-typedef void (*D3AKTLIGHT) (int inx, D3DLITEM* item);	// aktualizace poloky svìtla
-typedef void (*D3SETMATERIAL) (D3DMITEM* item);	// nastavení materiálu
-typedef void (*D3TEXTURERES) (D3DTITEM* item);	// resetování poloky textury pøed ukonèením ovladaèe
-typedef void (*D3TEXTURESET) (D3DTITEM* item, int stage);	// nastavení a zapnutí textury
-typedef void (*D3TEXTUREON) (D3DTITEM* item, int stage);	// zapnutí pùvodní textury
-typedef void (*D3TEXTUREOFF) (int stage);				// vypnutí textury
-typedef void (*D3MATRESET) (D3DMITEM* item);	// resetování materiálu
-typedef void (*D3LIGHTRESET) (int inx, D3DLITEM* item);	// resetování svìtla
-typedef void (*D3AKTAMBIENT) ();				// aktualizace ambient osvìtlení
-typedef int (*D3FREE) ();						// volná videopamì
+// funkce aktivnÃ­ho rozhranÃ­ - definice
+typedef	void (*D3STOP) ();						// ukonÃ¨enÃ­ Ã unkce zaÃ¸Ã­zenÃ­
+typedef	void (*D3SIZEVIEW) ();					// aktualizace viewportu po zmÃ¬nÃ¬ velikosti
+typedef	void (*D3MOVEVIEW) ();					// aktualizace viewportu po pÃ¸esunu
+typedef	void (*D3DISP) ();						// zobrazenÃ­ renderovacÃ­ho bufferu
+typedef	void (*D3CLEAR) ();						// vymazÃ¡nÃ­ renderovacÃ­ plochy
+typedef	void (*D3AKTPROJ) ();					// aktualizace projekÃ¨nÃ­ matice
+typedef	void (*D3AKTVIEW) ();					// aktualizace pohledovÃ© matice
+typedef	void (*D3BEGIN) ();						// zahÃ¡jenÃ­ renderovÃ¡nÃ­ scÃ©ny
+typedef	void (*D3END) ();						// ukonÃ¨enÃ­ renderovÃ¡nÃ­ scÃ©ny
+typedef void (*D3RENDER) (D3DFITEM* item);		// vyrenderovÃ¡nÃ­ jednoho objektu
+typedef void (*D3RESET) (D3DFITEM* item);		// resetovÃ¡nÃ­ objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
+typedef void (*D3SRESET) (D3DFITEM* item);		// resetovÃ¡nÃ­ stÃ­nu objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
+typedef void (*D3AKTWIREFRAME) ();				// aktualizovat pÃ¸epÃ­naÃ¨ vyplÃ²ovÃ¡nÃ­ ploch
+typedef void (*D3AKTLIGHTON) ();				// aktualizovat pÃ¸epÃ­naÃ¨ osvÃ¬tlenÃ­
+typedef void (*D3AKTSHADES) ();					// aktualizovat pÃ¸epÃ­naÃ¨ plynulÃ©ho stÃ­novÃ¡nÃ­
+typedef void (*D3AKTCULLING) ();				// aktualizovat pÃ¸epÃ­naÃ¨ odstraÃ²ovÃ¡nÃ­ ploch
+typedef void (*D3AKTMAGFILTER) (int stage);		// aktualizovat pÃ¸epÃ­naÃ¨ filtrace zvÃ¬tÅ¡enÃ½ch textur
+typedef void (*D3AKTMINMIPFILTER) (int stage);	// aktualizovat pÃ¸epÃ­naÃ¨ filtrace zmenÅ¡enÃ½ch a vzdÃ¡lenÃ½ch textur
+typedef void (*D3AKTLIGHT) (int inx, D3DLITEM* item);	// aktualizace poloÅ¾ky svÃ¬tla
+typedef void (*D3SETMATERIAL) (D3DMITEM* item);	// nastavenÃ­ materiÃ¡lu
+typedef void (*D3TEXTURERES) (D3DTITEM* item);	// resetovÃ¡nÃ­ poloÅ¾ky textury pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
+typedef void (*D3TEXTURESET) (D3DTITEM* item, int stage);	// nastavenÃ­ a zapnutÃ­ textury
+typedef void (*D3TEXTUREON) (D3DTITEM* item, int stage);	// zapnutÃ­ pÃ¹vodnÃ­ textury
+typedef void (*D3TEXTUREOFF) (int stage);				// vypnutÃ­ textury
+typedef void (*D3MATRESET) (D3DMITEM* item);	// resetovÃ¡nÃ­ materiÃ¡lu
+typedef void (*D3LIGHTRESET) (int inx, D3DLITEM* item);	// resetovÃ¡nÃ­ svÃ¬tla
+typedef void (*D3AKTAMBIENT) ();				// aktualizace ambient osvÃ¬tlenÃ­
+typedef int (*D3FREE) ();						// volnÃ¡ videopamÃ¬Â
 typedef void (*D3AKTFOG) ();					// aktualizace mlhy
-typedef void (*D3FOGON) (BOOL on);				// zapnutí mlhy
+typedef void (*D3FOGON) (BOOL on);				// zapnutÃ­ mlhy
 typedef void (*D3AKTSTATE) ();					// aktualizace stavu
-typedef void (*D3AKTBLEND) (D3DFITEM* item);	// aktualizace blending operací objektu
-typedef void (*D3AKTALPHA) (D3DFITEM* item);	// aktualizace referenèní úrovnì alfa
+typedef void (*D3AKTBLEND) (D3DFITEM* item);	// aktualizace blending operacÃ­ objektu
+typedef void (*D3AKTALPHA) (D3DFITEM* item);	// aktualizace referenÃ¨nÃ­ ÃºrovnÃ¬ alfa
 typedef void (*D3AKTPALETTE) (HWND wnd);		// aktualizace palet
-typedef void (*D3SETCOLOROP) (int op, int arg1, int arg2, int stage); // nastavení operace barev
-typedef void (*D3SETALPHAOP) (int op, int arg1, int arg2, int stage); // nastavení operace alfa
-typedef void (*D3SETADDRESS) (int adru, int adrv, int stage); // nastavení adresování textur
-//typedef void (*D3SETBORDER) (D3DFITEM* item, int stage); // nastavení barvy okolí textur
-typedef void (*D3SETBIAS) (float bias, int stage);	// nastavení zjemnìní vzdálenıch textur
-typedef void (*D3SETTFACTOR) (D3DFITEM* item);	// nastavení barvy faktoru textur
-typedef void (*D3SETZFUNC)(int func);			// nastavení Z funkce (1 a 8, v kódu DirectX, 0=vypnuto)
-typedef void (*D3SETZWRITE)(BOOL write);		// nastavení Z zápisu
-typedef void (*D3SENABLE) (BOOL enable);		// povolení stencil operací
-typedef void (*D3SETSOP) (int fail, int zfail, int zpass); // nastavení stencil operací
-typedef void (*D3SETSFUNC) (int func, int ref, DWORD mask); // nastavení stencil testu
-typedef void (*D3SETSMASK) (DWORD mask);		// nastavení zápisové masky do stencil bufferu
-typedef void (*D3SHADOW) (D3DFITEM* item);		// vyrenderování stínu jednoho objektu
-typedef void (*D3SHADOWS) ();					// vykreslení stínù
+typedef void (*D3SETCOLOROP) (int op, int arg1, int arg2, int stage); // nastavenÃ­ operace barev
+typedef void (*D3SETALPHAOP) (int op, int arg1, int arg2, int stage); // nastavenÃ­ operace alfa
+typedef void (*D3SETADDRESS) (int adru, int adrv, int stage); // nastavenÃ­ adresovÃ¡nÃ­ textur
+//typedef void (*D3SETBORDER) (D3DFITEM* item, int stage); // nastavenÃ­ barvy okolÃ­ textur
+typedef void (*D3SETBIAS) (float bias, int stage);	// nastavenÃ­ zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
+typedef void (*D3SETTFACTOR) (D3DFITEM* item);	// nastavenÃ­ barvy faktoru textur
+typedef void (*D3SETZFUNC)(int func);			// nastavenÃ­ Z funkce (1 aÅ¾ 8, v kÃ³du DirectX, 0=vypnuto)
+typedef void (*D3SETZWRITE)(BOOL write);		// nastavenÃ­ Z zÃ¡pisu
+typedef void (*D3SENABLE) (BOOL enable);		// povolenÃ­ stencil operacÃ­
+typedef void (*D3SETSOP) (int fail, int zfail, int zpass); // nastavenÃ­ stencil operacÃ­
+typedef void (*D3SETSFUNC) (int func, int ref, DWORD mask); // nastavenÃ­ stencil testu
+typedef void (*D3SETSMASK) (DWORD mask);		// nastavenÃ­ zÃ¡pisovÃ© masky do stencil bufferu
+typedef void (*D3SHADOW) (D3DFITEM* item);		// vyrenderovÃ¡nÃ­ stÃ­nu jednoho objektu
+typedef void (*D3SHADOWS) ();					// vykreslenÃ­ stÃ­nÃ¹
 
-// funkce aktivního rozhraní
-extern	D3STOP			pD3Stop;				// ukonèení funkce zaøízení
-extern	D3SIZEVIEW		pD3SizeView;			// aktualizace viewportu po zmìnì velikosti
-extern	D3MOVEVIEW		pD3MoveView;			// aktualizace viewportu po pøesunu
-extern	D3DISP			pD3Disp;				// zobrazení renderovacího bufferu
-extern	D3DISP			pD3Disp;				// zobrazení renderovacího bufferu
-extern	D3CLEAR			pD3Clear;				// vymazání renderovací plochy
-extern	D3AKTPROJ		pD3AktProj;				// aktualizace projekèní matice
-extern	D3AKTVIEW		pD3AktView;				// aktualizace pohledové matice
-extern	D3BEGIN			pD3Begin;				// zahájení renderování scény
-extern	D3END			pD3End;					// ukonèení renderování scény
-extern	D3RENDER		pD3Render;				// vyrenderování jednoho objektu
-extern	D3RESET			pD3Reset;				// resetování objektu pøed ukonèením ovladaèe
-extern	D3SRESET		pD3SReset;				// resetování stínu objektu pøed ukonèením ovladaèe
-extern	D3AKTWIREFRAME	pD3AktWireframe;		// aktualizovat pøepínaè vyplòování ploch
-extern	D3AKTLIGHTON	pD3AktLightOn;			// aktualizovat pøepínaè osvìtlení
-extern	D3AKTSHADES		pD3AktShades;			// aktualizovat pøepínaè plynulého stínování
-extern	D3AKTCULLING	pD3AktCulling;			// aktualizovat pøepínaè odstraòování ploch
-extern	D3AKTMAGFILTER	pD3AktMagFilter;		// aktualizovat pøepínaè filtrace zvìtšenıch textur
-extern	D3AKTMINMIPFILTER pD3AktMinMipFilter;	// aktualizovat pøepínaè filtrace zmenšenıch a vzdalenıch textur
-extern	D3AKTLIGHT		pD3AktLight;			// aktualizace poloky svìtla
-extern	D3SETMATERIAL	pD3SetMaterial;			// nastavení materiálu
-extern	D3TEXTURERES	pD3TextureRes;			// resetování poloky textury pøed ukonèením ovladaèe
-extern	D3TEXTURESET	pD3TextureSet;			// nastavení a zapnutí textury
-extern	D3TEXTUREON		pD3TextureOn;			// zapnutí pùvodní textury
-extern	D3TEXTUREOFF	pD3TextureOff;			// vypnutí textury
-extern	D3MATRESET		pD3MatReset;			// resetování materiálu
-extern	D3LIGHTRESET	pD3LightReset;			// resetování svìtla
-extern	D3AKTAMBIENT	pD3AktAmbient;			// aktualizace ambient osvìtlení
-extern	D3FREE			pD3Free;				// volná videopamì
+// funkce aktivnÃ­ho rozhranÃ­
+extern	D3STOP			pD3Stop;				// ukonÃ¨enÃ­ funkce zaÃ¸Ã­zenÃ­
+extern	D3SIZEVIEW		pD3SizeView;			// aktualizace viewportu po zmÃ¬nÃ¬ velikosti
+extern	D3MOVEVIEW		pD3MoveView;			// aktualizace viewportu po pÃ¸esunu
+extern	D3DISP			pD3Disp;				// zobrazenÃ­ renderovacÃ­ho bufferu
+extern	D3DISP			pD3Disp;				// zobrazenÃ­ renderovacÃ­ho bufferu
+extern	D3CLEAR			pD3Clear;				// vymazÃ¡nÃ­ renderovacÃ­ plochy
+extern	D3AKTPROJ		pD3AktProj;				// aktualizace projekÃ¨nÃ­ matice
+extern	D3AKTVIEW		pD3AktView;				// aktualizace pohledovÃ© matice
+extern	D3BEGIN			pD3Begin;				// zahÃ¡jenÃ­ renderovÃ¡nÃ­ scÃ©ny
+extern	D3END			pD3End;					// ukonÃ¨enÃ­ renderovÃ¡nÃ­ scÃ©ny
+extern	D3RENDER		pD3Render;				// vyrenderovÃ¡nÃ­ jednoho objektu
+extern	D3RESET			pD3Reset;				// resetovÃ¡nÃ­ objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
+extern	D3SRESET		pD3SReset;				// resetovÃ¡nÃ­ stÃ­nu objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
+extern	D3AKTWIREFRAME	pD3AktWireframe;		// aktualizovat pÃ¸epÃ­naÃ¨ vyplÃ²ovÃ¡nÃ­ ploch
+extern	D3AKTLIGHTON	pD3AktLightOn;			// aktualizovat pÃ¸epÃ­naÃ¨ osvÃ¬tlenÃ­
+extern	D3AKTSHADES		pD3AktShades;			// aktualizovat pÃ¸epÃ­naÃ¨ plynulÃ©ho stÃ­novÃ¡nÃ­
+extern	D3AKTCULLING	pD3AktCulling;			// aktualizovat pÃ¸epÃ­naÃ¨ odstraÃ²ovÃ¡nÃ­ ploch
+extern	D3AKTMAGFILTER	pD3AktMagFilter;		// aktualizovat pÃ¸epÃ­naÃ¨ filtrace zvÃ¬tÅ¡enÃ½ch textur
+extern	D3AKTMINMIPFILTER pD3AktMinMipFilter;	// aktualizovat pÃ¸epÃ­naÃ¨ filtrace zmenÅ¡enÃ½ch a vzdalenÃ½ch textur
+extern	D3AKTLIGHT		pD3AktLight;			// aktualizace poloÅ¾ky svÃ¬tla
+extern	D3SETMATERIAL	pD3SetMaterial;			// nastavenÃ­ materiÃ¡lu
+extern	D3TEXTURERES	pD3TextureRes;			// resetovÃ¡nÃ­ poloÅ¾ky textury pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
+extern	D3TEXTURESET	pD3TextureSet;			// nastavenÃ­ a zapnutÃ­ textury
+extern	D3TEXTUREON		pD3TextureOn;			// zapnutÃ­ pÃ¹vodnÃ­ textury
+extern	D3TEXTUREOFF	pD3TextureOff;			// vypnutÃ­ textury
+extern	D3MATRESET		pD3MatReset;			// resetovÃ¡nÃ­ materiÃ¡lu
+extern	D3LIGHTRESET	pD3LightReset;			// resetovÃ¡nÃ­ svÃ¬tla
+extern	D3AKTAMBIENT	pD3AktAmbient;			// aktualizace ambient osvÃ¬tlenÃ­
+extern	D3FREE			pD3Free;				// volnÃ¡ videopamÃ¬Â
 extern	D3AKTFOG		pD3AktFog;				// aktualizace mlhy
-extern	D3FOGON			pD3FogOn;				// zapnutí mlhy
+extern	D3FOGON			pD3FogOn;				// zapnutÃ­ mlhy
 extern	D3AKTSTATE		pD3AktState;			// aktualizace stavu
-extern	D3AKTBLEND		pD3AktBlend;			// aktualizace blending operací objektu
-extern	D3AKTALPHA		pD3AktAlfa;				// aktualizace referenèní úrovnì alfa
+extern	D3AKTBLEND		pD3AktBlend;			// aktualizace blending operacÃ­ objektu
+extern	D3AKTALPHA		pD3AktAlfa;				// aktualizace referenÃ¨nÃ­ ÃºrovnÃ¬ alfa
 extern	D3AKTPALETTE	pD3AktPalette;			// aktualizace palet
-extern	D3SETCOLOROP	pD3SetColorOp;			// nastavení operace barev
-extern	D3SETALPHAOP	pD3SetAlphaOp;			// nastavení operace alfa
-extern	D3SETADDRESS	pD3SetAddress;			// nastavení adresování textur
-//extern	D3SETBORDER		pD3SetBorder;			// nastavení barvy okolí textur
-extern	D3SETBIAS		pD3SetBias;				// nastavení zjemnìní vzdálenıch textur
-extern	D3SETTFACTOR	pD3SetTFactor;			// nastavení barvy faktoru textur
-extern	D3SETZFUNC		pD3SetZFunc;			// nastavení Z funkce (1 a 8, v kódu DirectX)
-extern	D3SETZWRITE		pD3SetZWrite;			// nastavení hloubkového zápisu
-extern	D3SENABLE		pD3SEnable;				// povolení stencil operací
-extern	D3SETSOP		pD3SetSOp;				// nastavení stencil operací
-extern	D3SETSFUNC		pD3SetSFunc;			// nastavení stencil testu
-extern	D3SETSMASK		pD3SetSMask;			// nastavení zápisové masky do stencil bufferu
-extern	D3SHADOW		pD3Shadow;				// vyrenderování stínu jednoho objektu
-extern	D3SHADOWS		pD3Shadows;				// vykreslení stínù
+extern	D3SETCOLOROP	pD3SetColorOp;			// nastavenÃ­ operace barev
+extern	D3SETALPHAOP	pD3SetAlphaOp;			// nastavenÃ­ operace alfa
+extern	D3SETADDRESS	pD3SetAddress;			// nastavenÃ­ adresovÃ¡nÃ­ textur
+//extern	D3SETBORDER		pD3SetBorder;			// nastavenÃ­ barvy okolÃ­ textur
+extern	D3SETBIAS		pD3SetBias;				// nastavenÃ­ zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
+extern	D3SETTFACTOR	pD3SetTFactor;			// nastavenÃ­ barvy faktoru textur
+extern	D3SETZFUNC		pD3SetZFunc;			// nastavenÃ­ Z funkce (1 aÅ¾ 8, v kÃ³du DirectX)
+extern	D3SETZWRITE		pD3SetZWrite;			// nastavenÃ­ hloubkovÃ©ho zÃ¡pisu
+extern	D3SENABLE		pD3SEnable;				// povolenÃ­ stencil operacÃ­
+extern	D3SETSOP		pD3SetSOp;				// nastavenÃ­ stencil operacÃ­
+extern	D3SETSFUNC		pD3SetSFunc;			// nastavenÃ­ stencil testu
+extern	D3SETSMASK		pD3SetSMask;			// nastavenÃ­ zÃ¡pisovÃ© masky do stencil bufferu
+extern	D3SHADOW		pD3Shadow;				// vyrenderovÃ¡nÃ­ stÃ­nu jednoho objektu
+extern	D3SHADOWS		pD3Shadows;				// vykreslenÃ­ stÃ­nÃ¹
 
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------

@@ -3,35 +3,35 @@
 
 /***************************************************************************\
 *																			*
-*						Provádìní programu - obrázek						*
+*						ProvÃ¡dÃ¬nÃ­ programu - obrÃ¡zek						*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("t", on)			// optimalizace na maximální rychlost
+#pragma optimize("t", on)			// optimalizace na maximÃ¡lnÃ­ rychlost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení vıøezu obrázku z plochy
+// naÃ¨tenÃ­ vÃ½Ã¸ezu obrÃ¡zku z plochy
 
 void _fastcall FPicGet(CPicture& pic)
 {
-// vyprázdnìní obrázku
+// vyprÃ¡zdnÃ¬nÃ­ obrÃ¡zku
 	pic.Empty();
 
-// naètení parametrù vıøezu
-	int x = FIntX();				// poèátek vıøezu X
-	int y = FIntY();				// poèátek vıøezu Y
-	int width = FIntX();			// šíøka vıøezu
-	int height = FIntY();			// vıška vıøezu
+// naÃ¨tenÃ­ parametrÃ¹ vÃ½Ã¸ezu
+	int x = FIntX();				// poÃ¨Ã¡tek vÃ½Ã¸ezu X
+	int y = FIntY();				// poÃ¨Ã¡tek vÃ½Ã¸ezu Y
+	int width = FIntX();			// Å¡Ã­Ã¸ka vÃ½Ã¸ezu
+	int height = FIntY();			// vÃ½Å¡ka vÃ½Ã¸ezu
 
-// korekce pro údaje mimo rozsah
+// korekce pro Ãºdaje mimo rozsah
 	if (width >= 100000) width = Width;
 	if (height >= 100000) height = Height;
 
-// kontrola platnosti parametrù
+// kontrola platnosti parametrÃ¹
 	if ((width <= 0) || (height <= 0)) return;
 
-// okraje obrázku vlevo a vpravo, šíøka støední èásti
+// okraje obrÃ¡zku vlevo a vpravo, Å¡Ã­Ã¸ka stÃ¸ednÃ­ Ã¨Ã¡sti
 	int width0 = width;
 
 	int width1 = 0;
@@ -51,7 +51,7 @@ void _fastcall FPicGet(CPicture& pic)
 		width0 -= width2;
 	}
 	
-// okraje obrázku dole a nahoøe, vıška støední èásti
+// okraje obrÃ¡zku dole a nahoÃ¸e, vÃ½Å¡ka stÃ¸ednÃ­ Ã¨Ã¡sti
 	int height0 = height;
 
 	int height1 = 0;
@@ -71,15 +71,15 @@ void _fastcall FPicGet(CPicture& pic)
 		height0 -= height2;
 	}
 
-// vytvoøení obrázku
+// vytvoÃ¸enÃ­ obrÃ¡zku
 	pic.New(width, height);
 
-// vymazání dolních linek
+// vymazÃ¡nÃ­ dolnÃ­ch linek
 	BYTE* dst = pic.DataData();
 	MemFill(dst, height1*width, BlackCol);
 	dst += height1*width;
 
-// pøenesení dat obrázku
+// pÃ¸enesenÃ­ dat obrÃ¡zku
 	BYTE* src = BackBuf + x + y*WidthByte;
 	for (; height0 > 0; height0--)
 	{
@@ -94,7 +94,7 @@ void _fastcall FPicGet(CPicture& pic)
 		dst += width2;
 	}
 
-// vymazání dolních linek
+// vymazÃ¡nÃ­ dolnÃ­ch linek
 	MemFill(dst, height2*width, BlackCol);
 }
 
@@ -106,122 +106,122 @@ void _fastcall FPicGet(CPicture& pic)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// funkce s návratem obrázku
+// funkce s nÃ¡vratem obrÃ¡zku
 
 void _fastcall FPicFunc(CPicture& pic)
 {
-// úschova indexu volané funkce
+// Ãºschova indexu volanÃ© funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// Ãºschova indexu promÃ¬nnÃ© s nÃ¡vratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnnıch
+// inicializace lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 
-// úschova ukazatele programu
+// Ãºschova ukazatele programu
 	EXECITEM* oldexe = ExecItem;
 
-// nová adresa programu
+// novÃ¡ adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoÃ¸enÃ­
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
 
-// vyvolání funkce
+// vyvolÃ¡nÃ­ funkce
 		FCommand();
 	}
 	Hloubka++;
 
-// návrat adresy programu
+// nÃ¡vrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení poadavku o pøerušení
+// zruÅ¡enÃ­ poÅ¾adavku o pÃ¸eruÅ¡enÃ­
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
-// návrat vısledku operace
+// nÃ¡vrat vÃ½sledku operace
 	pic = Picture[Picture.Num() - res];
 
-// zrušení lokálních promìnnıch
+// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 }
 
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								promÃ¬nnÃ©									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// prázdnı obrázek
+// prÃ¡zdnÃ½ obrÃ¡zek
 
 void _fastcall FPicEmpty(CPicture& pic) { pic.Empty(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globální obrázek (Data = index)
+// globÃ¡lnÃ­ obrÃ¡zek (Data = index)
 
 void _fastcall FPicObj(CPicture& pic)
 {
-// index obrázku
+// index obrÃ¡zku
 	int inx = ExecItem[-1].Data;
 
-// nastavení obrázku
+// nastavenÃ­ obrÃ¡zku
 	pic = Picture[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globalní obrázek v seznamu (Data = index, List = seznam)
+// globalnÃ­ obrÃ¡zek v seznamu (Data = index, List = seznam)
 
 void _fastcall FPicObjList(CPicture& pic)
 {
 // index seznamu
 	int list = ExecItem[-1].List;
 
-// index obrázku, inkrementace indexu seznamu
+// index obrÃ¡zku, inkrementace indexu seznamu
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavení obrázku
+// nastavenÃ­ obrÃ¡zku
 	pic = Picture[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální obrázek (Data = index)
+// lokÃ¡lnÃ­ obrÃ¡zek (Data = index)
 
 void _fastcall FPicLoc(CPicture& pic)
 {
-// index obrázku
+// index obrÃ¡zku
 	int inx = Picture.Num() - ExecItem[-1].Data;
 
-// nastavení obrázku
+// nastavenÃ­ obrÃ¡zku
 	pic = Picture[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální obrázek v seznamu (Data = index, List = seznam)
+// lokÃ¡lnÃ­ obrÃ¡zek v seznamu (Data = index, List = seznam)
 
 void _fastcall FPicLocList(CPicture& pic)
 {
 // index seznamu
 	int list = List.Num() - ExecItem[-1].List;
 
-// index obrázku, inkrementace indexu seznamu
+// index obrÃ¡zku, inkrementace indexu seznamu
 	int inx = Picture.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavení obrázku
+// nastavenÃ­ obrÃ¡zku
 	pic = Picture[inx];
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení obrázku ze souboru
+// naÃ¨tenÃ­ obrÃ¡zku ze souboru
 
 void _fastcall FGetFilePicture(CPicture& pic)
 {
@@ -230,7 +230,7 @@ void _fastcall FGetFilePicture(CPicture& pic)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// horizontální pøevrácení obrázku
+// horizontÃ¡lnÃ­ pÃ¸evrÃ¡cenÃ­ obrÃ¡zku
 
 void _fastcall FPicXFlip(CPicture& pic)
 {
@@ -239,7 +239,7 @@ void _fastcall FPicXFlip(CPicture& pic)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vertikální pøevrácení obrázku
+// vertikÃ¡lnÃ­ pÃ¸evrÃ¡cenÃ­ obrÃ¡zku
 
 void _fastcall FPicYFlip(CPicture& pic)
 {
@@ -249,38 +249,38 @@ void _fastcall FPicYFlip(CPicture& pic)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna velikosti obrázku
+// zmÃ¬na velikosti obrÃ¡zku
 
 void _fastcall FPicZoom(CPicture& pic)
 {
-// naètení obrázku ke konverzi
+// naÃ¨tenÃ­ obrÃ¡zku ke konverzi
 	FPicture(pic);
 
-// naètení poadovanıch rozmìrù a pøepínaèù obrázku
-	int newwidth = FIntX();			// nová šíøka obrázku
-	int newheight = FIntY();		// nová vıška obrázku
+// naÃ¨tenÃ­ poÅ¾adovanÃ½ch rozmÃ¬rÃ¹ a pÃ¸epÃ­naÃ¨Ã¹ obrÃ¡zku
+	int newwidth = FIntX();			// novÃ¡ Å¡Ã­Ã¸ka obrÃ¡zku
+	int newheight = FIntY();		// novÃ¡ vÃ½Å¡ka obrÃ¡zku
 	bool inter = FBool();			// interpolace
 	bool dith = FBool();			// dithering
 
-// test, zda má bıt šíøka a vıška implicitní
+// test, zda mÃ¡ bÃ½t Å¡Ã­Ã¸ka a vÃ½Å¡ka implicitnÃ­
 	bool impwidth = ((newwidth > 0x8000) || (newwidth < -0x8000));
 	bool impheight = ((newheight > 0x8000) || (newheight < -0x8000));
 
-// obrázek se nemìní
+// obrÃ¡zek se nemÃ¬nÃ­
 	if (impwidth && impheight) return;
 
-// aktuální šíøka a vıška obrázku
+// aktuÃ¡lnÃ­ Å¡Ã­Ã¸ka a vÃ½Å¡ka obrÃ¡zku
 	int oldwidth = pic.Width();
 	int oldheight = pic.Height();
 
-// vısledkem bude prázdnı obrázek
+// vÃ½sledkem bude prÃ¡zdnÃ½ obrÃ¡zek
 	if ((oldwidth <= 0) || (oldheight <= 0) || (newwidth == 0) || (newheight == 0))
 	{
 		pic.Empty();
 		return;
 	}
 
-// implicitní šíøka
+// implicitnÃ­ Å¡Ã­Ã¸ka
 	if (impwidth)
 	{
 		newwidth = Round(((double)newheight/oldheight) * oldwidth);
@@ -288,7 +288,7 @@ void _fastcall FPicZoom(CPicture& pic)
 		if (newwidth > 0x8000) newwidth = 0x8000;
 	}
 
-// implicitní vıška
+// implicitnÃ­ vÃ½Å¡ka
 	if (impheight)
 	{
 		newheight = Round(((double)newwidth/oldwidth) * oldheight);
@@ -296,14 +296,14 @@ void _fastcall FPicZoom(CPicture& pic)
 		if (newheight > 0x8000) newheight = 0x8000;
 	}
 
-// kontrola po pøepoètech, zda nebude prázdnı obrázek
+// kontrola po pÃ¸epoÃ¨tech, zda nebude prÃ¡zdnÃ½ obrÃ¡zek
 	if ((newwidth == 0) || (newheight == 0))
 	{
 		pic.Empty();
 		return;
 	}
 
-// test, zda bude horizontální pøevrácení
+// test, zda bude horizontÃ¡lnÃ­ pÃ¸evrÃ¡cenÃ­
 	bool xflip1 = false;
 	bool xflip2 = false;
 	if (newwidth < 0)
@@ -320,7 +320,7 @@ void _fastcall FPicZoom(CPicture& pic)
 		}
 	}
 
-// test, zda bude vertikální pøevrácení
+// test, zda bude vertikÃ¡lnÃ­ pÃ¸evrÃ¡cenÃ­
 	bool yflip1 = false;
 	bool yflip2 = false;
 	if (newheight < 0)
@@ -337,7 +337,7 @@ void _fastcall FPicZoom(CPicture& pic)
 		}
 	}
 
-// provedení konverze s pøípadnım pøevrácením
+// provedenÃ­ konverze s pÃ¸Ã­padnÃ½m pÃ¸evrÃ¡cenÃ­m
 	if (xflip1) pic.XFlip();
 	if (yflip1) pic.YFlip();
 	pic.Zoom(newwidth, newheight, inter, dith);
@@ -346,48 +346,48 @@ void _fastcall FPicZoom(CPicture& pic)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna jasu obrázku
+// zmÃ¬na jasu obrÃ¡zku
 
 void _fastcall FPicLevel(CPicture& pic)
 {
-// naètení obrázku ke konverzi
+// naÃ¨tenÃ­ obrÃ¡zku ke konverzi
 	FPicture(pic);
 
-// naètení poadovaného jasu obrázku
-	double koef = FNum();			// koeficient jasu obrázku
+// naÃ¨tenÃ­ poÅ¾adovanÃ©ho jasu obrÃ¡zku
+	double koef = FNum();			// koeficient jasu obrÃ¡zku
 
-// naètení pøíznaku ditheringu
+// naÃ¨tenÃ­ pÃ¸Ã­znaku ditheringu
 	bool dith = FBool();			// dithering
 
-// konverze jasu obrázku
+// konverze jasu obrÃ¡zku
 	pic.Level(koef, dith);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// otoèení obrázku
+// otoÃ¨enÃ­ obrÃ¡zku
 
 void _fastcall FPicRotate(CPicture& pic)
 {
-// naètení obrázku ke konverzi
+// naÃ¨tenÃ­ obrÃ¡zku ke konverzi
 	FPicture(pic);
 
-// naètení poadovaného úhlu
+// naÃ¨tenÃ­ poÅ¾adovanÃ©ho Ãºhlu
 	double angle = FNum();
 
-// naètení pøíznaku interpolace
+// naÃ¨tenÃ­ pÃ¸Ã­znaku interpolace
 	bool inter = FBool();			// interpolace
 
-// naètení pøíznaku ditheringu
+// naÃ¨tenÃ­ pÃ¸Ã­znaku ditheringu
 	bool dith = FBool();			// dithering
 
-// otoèení obrázku
+// otoÃ¨enÃ­ obrÃ¡zku
 	pic.Rotate(angle, inter, dith);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení obrázku okna
+// naÃ¨tenÃ­ obrÃ¡zku okna
 
 void _fastcall FGetWindowPic(CPicture& pic)
 {
@@ -402,7 +402,7 @@ void _fastcall FGetWindowPic(CPicture& pic)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// konverze plochy na obrázek
+// konverze plochy na obrÃ¡zek
 
 void _fastcall FMapPicture(CPicture& pic)
 {
@@ -412,7 +412,7 @@ void _fastcall FMapPicture(CPicture& pic)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// konverze ikony na obrázek
+// konverze ikony na obrÃ¡zek
 
 void _fastcall FIconPicture(CPicture& pic)
 {
@@ -422,50 +422,50 @@ void _fastcall FIconPicture(CPicture& pic)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// maskování obrázku
+// maskovÃ¡nÃ­ obrÃ¡zku
 
 void _fastcall FPicMask(CPicture& pic)
 {
-// naètení obrázku ke konverzi
+// naÃ¨tenÃ­ obrÃ¡zku ke konverzi
 	FPicture(pic);
 
-// naètení masky
+// naÃ¨tenÃ­ masky
 	CPicture mask;
 	FPicture(mask);
 
-// maskování obrázku
+// maskovÃ¡nÃ­ obrÃ¡zku
 	pic.Mask(mask);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zámìna barev obrázku
+// zÃ¡mÃ¬na barev obrÃ¡zku
 
 void _fastcall FPicXCol(CPicture& pic)
 {
-// naètení obrázku ke konverzi
+// naÃ¨tenÃ­ obrÃ¡zku ke konverzi
 	FPicture(pic);
 
-// naètení barev
+// naÃ¨tenÃ­ barev
 	BYTE col1 = (BYTE)FNumCol();
 	BYTE col2 = (BYTE)FNumCol();
 
-// zámìna barev v obrázku
+// zÃ¡mÃ¬na barev v obrÃ¡zku
 	pic.XCol(col1, col2);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// náhrada barvy obrázku
+// nÃ¡hrada barvy obrÃ¡zku
 
 void _fastcall FPicSCol(CPicture& pic)
 {
-// naètení obrázku ke konverzi
+// naÃ¨tenÃ­ obrÃ¡zku ke konverzi
 	FPicture(pic);
 
-// naètení barev
+// naÃ¨tenÃ­ barev
 	BYTE oldcol = (BYTE)FNumCol();
 	BYTE newcol = (BYTE)FNumCol();
 
-// náhrada barvy v obrázku
+// nÃ¡hrada barvy v obrÃ¡zku
 	pic.SCol(oldcol, newcol);
 }
 
@@ -474,7 +474,7 @@ void _fastcall FPicSCol(CPicture& pic)
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní obrázku textury Direct3D objektu
+// zjiÅ¡tÃ¬nÃ­ obrÃ¡zku textury Direct3D objektu
 
 void _fastcall FGetD3DTexture(CPicture& pic)
 {
@@ -492,7 +492,7 @@ void _fastcall FGetD3DTexture(CPicture& pic)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní obrázku textury Direct3D pozadí scény
+// zjiÅ¡tÃ¬nÃ­ obrÃ¡zku textury Direct3D pozadÃ­ scÃ©ny
 
 void _fastcall FGetD3DSceneTexture(CPicture& pic)
 {
@@ -507,4 +507,4 @@ void _fastcall FGetD3DSceneTexture(CPicture& pic)
 }
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------

@@ -9,7 +9,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaËnÌ pr·zdn· hudba (modifikuje se poËet referencÌ!)
+// inicializa√®n√≠ pr√°zdn√° hudba (modifikuje se po√®et referenc√≠!)
 
 BYTE	EmptyMusicData0 = 0;
 
@@ -41,7 +41,7 @@ CMusic::~CMusic()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CMusic::Init()
 { 
@@ -65,25 +65,25 @@ void CMusic::Term()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kopie do vlastnÌho bufferu p¯ed modifikacÌ
+// kopie do vlastn√≠ho bufferu p√∏ed modifikac√≠
 
 void CMusic::CopyWrite()
 {
-	MUSICDATA* data = pData;			// adresa star˝ch dat
-	long* refer = &(data->Refer);		// poËet referencÌ
+	MUSICDATA* data = pData;			// adresa star√Ωch dat
+	long* refer = &(data->Refer);		// po√®et referenc√≠
 
-	if (*refer > 1)						// je nÏjak˝ jin˝ majitel?
+	if (*refer > 1)						// je n√¨jak√Ω jin√Ω majitel?
 	{
-		NewBuffer(data->Size);			// vytvo¯enÌ novÈho bufferu
+		NewBuffer(data->Size);			// vytvo√∏en√≠ nov√©ho bufferu
 		MemCopy(pData->Data, data->Data, pData->Size);
 		pData->Res = data->Res;
 
-// odpojenÌ star˝ch dat - v multithread m˘ûe nastat i zruöenÌ
+// odpojen√≠ star√Ωch dat - v multithread m√π≈æe nastat i zru≈°en√≠
 		if (LongDecrement(refer))
 		{
 #ifdef _MT
-			MemFree(data->Data);		// zruöenÌ dat
-			MemFree(data);				// zruöenÌ z·hlavÌ
+			MemFree(data->Data);		// zru≈°en√≠ dat
+			MemFree(data);				// zru≈°en√≠ z√°hlav√≠
 #endif	// _MT
 		}
 	}
@@ -91,7 +91,7 @@ void CMusic::CopyWrite()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypr·zdnÏnÌ hudby (uvolnÏnÌ dat)
+// vypr√°zdn√¨n√≠ hudby (uvoln√¨n√≠ dat)
 
 void CMusic::Empty()
 { 
@@ -101,26 +101,26 @@ void CMusic::Empty()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ novÈ hudby (p¯ipraveno k z·pisu, data jsou n·hodn·)
+// vytvo√∏en√≠ nov√© hudby (p√∏ipraveno k z√°pisu, data jsou n√°hodn√°)
 
 void CMusic::New(int size)
 {
-	Detach();						// odpojenÌ starÈ hudby
-	NewBuffer(size);				// vytvo¯enÌ novÈho bufferu
+	Detach();						// odpojen√≠ star√© hudby
+	NewBuffer(size);				// vytvo√∏en√≠ nov√©ho bufferu
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ hudby ze souboru
+// na√®ten√≠ hudby ze souboru
 
 void CMusic::LoadFile()
 {
 #ifndef _MINI
 
-// ˙schova offsetu souboru
+// √∫schova offsetu souboru
 	int oldoff = FileReadOff;
 
-// naËtenÌ z·hlavÌ souboru
+// na√®ten√≠ z√°hlav√≠ souboru
 	BYTE buf[16];
 	buf[0] = 0;
 	FileReadBlok(buf, 16);
@@ -141,7 +141,7 @@ void CMusic::LoadFile()
 		(buf[14] == 't') &&
 		(buf[15] == 'a'))
 
-// naËtenÌ souboru RIFF
+// na√®ten√≠ souboru RIFF
 	{
 		FileReadOff = oldoff;
 		New(size);
@@ -163,7 +163,7 @@ void CMusic::LoadFile()
 		return;
 	}
 
-// zjiötÏnÌ konce sekcÌ
+// zji≈°t√¨n√≠ konce sekc√≠
 	FileReadOff = oldoff + 14;
 	for (; count > 0; count--)
 	{
@@ -182,7 +182,7 @@ void CMusic::LoadFile()
 		FileReadOff += size;
 	}
 
-// naËtenÌ dat
+// na√®ten√≠ dat
 	size = FileReadOff - oldoff;
 	FileReadOff = oldoff;
 	if ((size <= 16) || (size > 100000000))
@@ -198,40 +198,40 @@ void CMusic::LoadFile()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uloûenÌ do souboru form·tu MID (false=chyba)
+// ulo≈æen√≠ do souboru form√°tu MID (false=chyba)
 /*
 bool CMusic::SaveFile(CString jmeno) const
 {
-// otev¯enÌ souboru
+// otev√∏en√≠ souboru
 	HANDLE hFile = ::CreateFile(jmeno, GENERIC_WRITE,
 		0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// test, zda byl soubor vytvo¯en
+// test, zda byl soubor vytvo√∏en
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		return false;
 	}
 
-// uloûenÌ souboru
+// ulo≈æen√≠ souboru
 	DWORD write;
 	BOOL result = ::WriteFile(hFile, pData->Data, pData->Size, &write, NULL);
 
-// uzav¯enÌ souboru
+// uzav√∏en√≠ souboru
 	::CloseHandle(hFile);
 
-// p¯i chybÏ zruöenÌ souboru
+// p√∏i chyb√¨ zru≈°en√≠ souboru
 	if (!result || (write != (DWORD)pData->Size))
 	{
 		::DeleteFile(jmeno);
 		return false;
 	}
 
-// p¯Ìznak - uloûeno OK
+// p√∏√≠znak - ulo≈æeno OK
 	return true;
 }
 */
 /////////////////////////////////////////////////////////////////////////////
-// uloûenÌ do souboru
+// ulo≈æen√≠ do souboru
 
 void CMusic::SaveFile() const
 {
@@ -241,12 +241,12 @@ void CMusic::SaveFile() const
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CMusic& CMusic::operator= (const CMusic& src)
 {
-	Detach();				// zruöenÌ star˝ch dat
-	Attach(src.pData);		// p¯i¯azenÌ nov˝ch dat
+	Detach();				// zru≈°en√≠ star√Ωch dat
+	Attach(src.pData);		// p√∏i√∏azen√≠ nov√Ωch dat
 	return *this;
 }
 
@@ -263,35 +263,35 @@ const CMusic& CMusic::operator= (const CMusic& src)
 
 CBufMusic::CBufMusic()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 CBufMusic::~CBufMusic()
 {
-	DelAll();				// zruöenÌ vöech poloûek
+	DelAll();				// zru≈°en√≠ v≈°ech polo≈æek
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CBufMusic::Init()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 void CBufMusic::Term()
 {
-	DelAll();				// zruöenÌ vöech poloûek
+	DelAll();				// zru≈°en√≠ v≈°ech polo≈æek
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ nov˝ch dat (oddÏleno kv˘li lepöÌ optimalizaci)
+// vytvo√∏en√≠ nov√Ωch dat (odd√¨leno kv√πli lep≈°√≠ optimalizaci)
 
 void CBufMusic::NewData()
 {
@@ -303,33 +303,33 @@ void CBufMusic::NewData()
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ vöech poloûek v bufferu
+// zru≈°en√≠ v≈°ech polo≈æek v bufferu
 
 void CBufMusic::DelAll()
 {
 	Del(m_Num);
-	MemBuf(m_Data, 0);			// zruöenÌ bufferu dat
-	m_Max = 0;					// nenÌ û·dn· poloûka v bufferu
+	MemBuf(m_Data, 0);			// zru≈°en√≠ bufferu dat
+	m_Max = 0;					// nen√≠ ≈æ√°dn√° polo≈æka v bufferu
 }
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutÌ poloûky (s kontrolou platnosti indexu)
+// poskytnut√≠ polo≈æky (s kontrolou platnosti indexu)
 
 const CMusic& _fastcall CBufMusic::Get(const int index) const
 {
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
-		return m_Data[index];	// poloûka na danÈm indexu
+		return m_Data[index];	// polo≈æka na dan√©m indexu
 	}
-	return EmptyMusic;			// pro neplatn˝ index vr·tÌ pr·zdnou hudbu
+	return EmptyMusic;			// pro neplatn√Ω index vr√°t√≠ pr√°zdnou hudbu
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poloûky (s kontrolou platnosti indexu)
+// nastaven√≠ polo≈æky (s kontrolou platnosti indexu)
 
 void _fastcall CBufMusic::Set(const int index, const CMusic& data)
 {
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
 		m_Data[index] = data;
 	}
@@ -337,11 +337,11 @@ void _fastcall CBufMusic::Set(const int index, const CMusic& data)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypr·zdnÏnÌ poloûky (bez jejÌho zruöenÌ - jen pro uvolnÏnÌ dat)
+// vypr√°zdn√¨n√≠ polo≈æky (bez jej√≠ho zru≈°en√≠ - jen pro uvoln√¨n√≠ dat)
 
 void _fastcall CBufMusic::Empty(const int index)
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		m_Data[index].Empty();
 	}
@@ -349,7 +349,7 @@ void _fastcall CBufMusic::Empty(const int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûek z konce bufferu
+// zru≈°en√≠ polo≈æek z konce bufferu
 
 void _fastcall CBufMusic::Del(int num)
 {
@@ -367,67 +367,67 @@ void _fastcall CBufMusic::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ poloûky (vracÌ index poloûky)
+// vytvo√∏en√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int CBufMusic::New()
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init();		// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init();		// inicializace polo≈æky
 	return result;
 }
 
 int CBufMusic::New(int size)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init(size);	// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init(size);	// inicializace polo≈æky
 	return result;
 }
 
 ////////////////////////////////////////////////////////////////////
-// p¯id·nÌ poloûky (vracÌ index poloûky)
+// p√∏id√°n√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int _fastcall CBufMusic::Add(const CMusic& data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init(data.Data());	// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init(data.Data());	// inicializace polo≈æky
 	return result;
 }
 
 int _fastcall CBufMusic::Add(MUSICDATA* data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result].Init(data);	// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result].Init(data);	// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// duplikace poloûky (s kontrolou platnosti indexu, vracÌ index prvnÌ poloûky)
+// duplikace polo≈æky (s kontrolou platnosti indexu, vrac√≠ index prvn√≠ polo≈æky)
 
 int _fastcall CBufMusic::Dup(const int index)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
-		m_Data[result].Init(m_Data[index].Data());	// kopie poloûky
+		m_Data[result].Init(m_Data[index].Data());	// kopie polo≈æky
 	}
 	else
 	{
-		m_Data[result].Init();		// inicializace neplatnÈ poloûky
+		m_Data[result].Init();		// inicializace neplatn√© polo≈æky
 	}
 	return result;
 }
 
 int _fastcall CBufMusic::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		MUSICDATA* data = m_Data[index].Data();
 
-		m_Data[result].Init(data);		// kopie poloûky
+		m_Data[result].Init(data);		// kopie polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -436,7 +436,7 @@ int _fastcall CBufMusic::Dup(const int index, int num)
 	}
 	else
 	{
-		m_Data[result].Init();		// inicializace neplatnÈ poloûky
+		m_Data[result].Init();		// inicializace neplatn√© polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -448,19 +448,19 @@ int _fastcall CBufMusic::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CBufMusic& CBufMusic::operator= (const CBufMusic& src)
 {
-	Del(m_Num);					// zruöenÌ star˝ch dat
+	Del(m_Num);					// zru≈°en√≠ star√Ωch dat
 
-	int index = 0;				// index naËÌtanÈ poloûky
-	int i = src.m_Num;			// velikost zdrojovÈho bufferu
+	int index = 0;				// index na√®√≠tan√© polo≈æky
+	int i = src.m_Num;			// velikost zdrojov√©ho bufferu
 
-	for (; i > 0; i--)			// pro vöechny poloûky v bufferu
+	for (; i > 0; i--)			// pro v≈°echny polo≈æky v bufferu
 	{
-		Add(src[index]);	// kopie poloûky
-		index++;				// inkrementace ËtecÌho indexu
+		Add(src[index]);	// kopie polo≈æky
+		index++;				// inkrementace √®tec√≠ho indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

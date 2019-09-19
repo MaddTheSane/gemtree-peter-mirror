@@ -7,24 +7,24 @@
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minimální velikost
+#pragma optimize("s", on)			// optimalizace na minimÃ¡lnÃ­ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu se sprajtem (vrací true = operace OK)
+// pÃ¸eklad vÃ½razu se sprajtem (vracÃ­ true = operace OK)
 
 bool _fastcall CompSpr(int index)
 {
-// adresa zdrojového prvku
+// adresa zdrojovÃ©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 
-// kontrola, zda je položka vypnuta
+// kontrola, zda je poloÅ¾ka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// vÃ¬tvenÃ­ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_SPRITE:
@@ -66,10 +66,10 @@ bool _fastcall CompSpr(int index)
 		return false;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_SPRITE);	// funkce s návratem sprajtu
+		return CompFunc(index, IDF_SPRITE);	// funkce s nÃ¡vratem sprajtu
 
 	case IDF_FILE_SPRITE:
-		CompAddItem(FGetFileSprite);			// naètení sprajtu
+		CompAddItem(FGetFileSprite);			// naÃ¨tenÃ­ sprajtu
 		return true;
 
 	default:
@@ -79,7 +79,7 @@ bool _fastcall CompSpr(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem sprajtu
+// pÃ¸eklad pÃ¸Ã­kazu s parametrem sprajtu
 
 bool CompSprPar(int index, PROCCOM func)
 {

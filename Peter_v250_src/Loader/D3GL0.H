@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhranÌ - OpenGL 1.0						*
+*							3D rozhran√≠ - OpenGL 1.0						*
 *																			*
 \***************************************************************************/
 
@@ -9,7 +9,7 @@
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// definice funkcÌ OpenGL 1.0
+// definice funkc√≠ OpenGL 1.0
 
 typedef	WINGDIAPI HGLRC (WINAPI *WGLCREATECONTEXT) (HDC);
 typedef	WINGDIAPI BOOL (WINAPI *WGLDELETECONTEXT) (HGLRC);
@@ -128,18 +128,18 @@ extern	GLSTENCILMASK		pglStencilMask;
 // OpenGL 1.0
 extern	HINSTANCE			D3GL0Lib;		// handle modulu OPENGL32.DLL
 
-// renderovacÌ povrch
-extern	HGLRC				D3GL0Cont;		// renderovacÌ povrch
+// renderovac√≠ povrch
+extern	HGLRC				D3GL0Cont;		// renderovac√≠ povrch
 extern	HPALETTE			D3GL0Pal;		// palety OpenGL
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ OpenGL 1.0 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ OpenGL 1.0 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3GL0InitD3();
 void D3GL0TermD3();
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ viewportu (vracÌ TRUE=operace OK)
+// nastaven√≠ viewportu (vrac√≠ TRUE=operace OK)
 
 void D3GL0SetView();
 void D3GL0SizeView();
@@ -152,140 +152,140 @@ void D3GL0InitPal(HDC dc);
 void D3GL0TermPal();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ kontextu za¯ÌzenÌ (vracÌ TRUE=OK)
+// vytvo√∏en√≠ kontextu za√∏√≠zen√≠ (vrac√≠ TRUE=OK)
 
 bool D3GL0InitCont();
 void D3GL0TermCont();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ funkce za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zah√°jen√≠ funkce za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3GL0Start(int type);
 void D3GL0Stop();
 
 /////////////////////////////////////////////////////////////////////////////
-// vymaz·nÌ renderovacÌ plochy
+// vymaz√°n√≠ renderovac√≠ plochy
 
 void D3GL0Clear();
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ renderovacÌho bufferu
+// zobrazen√≠ renderovac√≠ho bufferu
 
 void D3GL0Disp();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekËnÌ matice
+// aktualizace projek√®n√≠ matice
 
 void D3GL0AktProj();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pohledovÈ matice
+// aktualizace pohledov√© matice
 
 void D3GL0AktView();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ renderov·nÌ scÈny
+// zah√°jen√≠ renderov√°n√≠ sc√©ny
 
 void D3GL0Begin();
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ renderov·nÌ scÈny
+// ukon√®en√≠ renderov√°n√≠ sc√©ny
 
 void D3GL0End();
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ jednoho objektu
+// vyrenderov√°n√≠ jednoho objektu
 
 void D3GL0Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3GL0Reset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË vyplÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® vypl√≤ov√°n√≠ ploch
 
 void D3GL0AktWireframe();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË osvÏtlenÌ
+// aktualizovat p√∏ep√≠na√® osv√¨tlen√≠
 
 void D3GL0AktLightOn();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË plynulÈho stinov·nÌ
+// aktualizovat p√∏ep√≠na√® plynul√©ho stinov√°n√≠
 
 void D3GL0AktShades();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË odstraÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® odstra√≤ov√°n√≠ ploch
 
 void D3GL0AktCulling();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zvÏtöen˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zv√¨t≈°en√Ωch textur
 
 void D3GL0AktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zmenöen˝ch a vzd·len˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zmen≈°en√Ωch a vzd√°len√Ωch textur
 
 void D3GL0AktMinMipFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace poloûky svÏtla
+// aktualizace polo≈æky sv√¨tla
 
 void D3GL0AktLight(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ materi·lu
+// nastaven√≠ materi√°lu
 
 void D3GL0SetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky textury p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ polo≈æky textury p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3GL0TextureRes(D3DTITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ a zapnutÌ textury
+// nastaven√≠ a zapnut√≠ textury
 
 void D3GL0TextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ p˘vodnÌ textury
+// zapnut√≠ p√πvodn√≠ textury
 
 void D3GL0TextureOn(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ textury
+// vypnut√≠ textury
 
 void D3GL0TextureOff(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky materi·lu
+// resetov√°n√≠ polo≈æky materi√°lu
 
 void D3GL0MatReset(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky svÏtla
+// resetov√°n√≠ polo≈æky sv√¨tla
 
 void D3GL0LightReset(int inx, D3DLITEM* item);
 
 ////////////////////////////////////////////////////////////////////
-// zobrazenÌ textury OpenGL
+// zobrazen√≠ textury OpenGL
 
 void GLTexture(PICTUREDATA* picdata, BOOL mips);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvÏtlenÌ
+// aktualizace ambient osv√¨tlen√≠
 
 void D3GL0AktAmbient();
 
 /////////////////////////////////////////////////////////////////////////////
-// voln· videopamÏù
+// voln√° videopam√¨¬ù
 
 int D3GL0Free();
 
@@ -295,7 +295,7 @@ int D3GL0Free();
 void D3GL0AktFog();
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ mlhy
+// zapnut√≠ mlhy
 
 void D3GL0FogOn(BOOL on);
 
@@ -305,27 +305,27 @@ void D3GL0FogOn(BOOL on);
 void D3GL0AktState();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace blending operacÌ objektu
+// aktualizace blending operac√≠ objektu
 
 void D3GL0AktBlend(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenËnÌ ˙rovnÏ alfa
+// aktualizace referen√®n√≠ √∫rovn√¨ alfa
 
 void D3GL0AktAlfa(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace barev
+// nastaven√≠ operace barev
 
 void D3GL0SetColorOp(int op, int arg1, int arg2, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ adresov·nÌ textur
+// nastaven√≠ adresov√°n√≠ textur
 
 void D3GL0SetAddress(int adru, int adrv, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy okolÌ textur
+// nastaven√≠ barvy okol√≠ textur
 
 //void D3GL0SetBorder(D3DFITEM* item, int stage);
 
@@ -335,46 +335,46 @@ void D3GL0SetAddress(int adru, int adrv, int stage);
 void D3GL0AktPalette(HWND wnd);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z funkce (1 aû 8, v kÛdu DirectX, 0=vypnuto)
+// nastaven√≠ Z funkce (1 a≈æ 8, v k√≥du DirectX, 0=vypnuto)
 
 void D3GL0SetZFunc(int func);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z z·pisu
+// nastaven√≠ Z z√°pisu
 
 void D3GL0SetZWrite(BOOL write);
 
 /////////////////////////////////////////////////////////////////////////////
-// povolenÌ stencil operacÌ
+// povolen√≠ stencil operac√≠
 
 void D3GL0SEnable(BOOL enable);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil operacÌ
+// nastaven√≠ stencil operac√≠
 
 void D3GL0SetSOp(int fail, int zfail, int zpass);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil testu
+// nastaven√≠ stencil testu
 
 void D3GL0SetSFunc(int func, int ref, DWORD mask);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ z·pisovÈ masky do stencil bufferu
+// nastaven√≠ z√°pisov√© masky do stencil bufferu
 
 void D3GL0SetSMask(DWORD mask);
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ stÌnu jednoho objektu
+// vyrenderov√°n√≠ st√≠nu jednoho objektu
 
 void D3GL0Shadow(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ stÌn˘
+// vykreslen√≠ st√≠n√π
 
 void D3GL0Shadows();
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 

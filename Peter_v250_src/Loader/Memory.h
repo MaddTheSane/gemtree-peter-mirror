@@ -1,51 +1,51 @@
 
 /***************************************************************************\
 *																			*
-*								Obsluha pamÏti								*
+*								Obsluha pam√¨ti								*
 *																			*
 \***************************************************************************/
 
 
-extern bool MemoryOK;			// p¯Ìznak platnÈho spr·vce pamÏti
+extern bool MemoryOK;			// p√∏√≠znak platn√©ho spr√°vce pam√¨ti
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace spr·vce pamÏti
+// inicializace spr√°vce pam√¨ti
 
 bool MemInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ spr·vce pamÏti
+// ukon√®en√≠ spr√°vce pam√¨ti
 
 void MemTerm();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯idÏlenÌ bloku pamÏti (povolena 0) (NULL=chyba)
+// p√∏id√¨len√≠ bloku pam√¨ti (povolena 0) (NULL=chyba)
 
 void* _fastcall MemGet(int size);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnÏnÌ bloku pamÏti (povoleno NULL)
+// uvoln√¨n√≠ bloku pam√¨ti (povoleno NULL)
 
 void _fastcall MemFree(void* adr);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmÏna velikosti bloku pamÏti (povolena adresa NULL i velikost 0)
+// zm√¨na velikosti bloku pam√¨ti (povolena adresa NULL i velikost 0)
 
 void* _fastcall MemSize(void* adr, int size);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmÏna velikosti bufferu prvk˘ (zad·v· se reference na ukazatel a poËet prvk˘)
+// zm√¨na velikosti bufferu prvk√π (zad√°v√° se reference na ukazatel a po√®et prvk√π)
 
 #define MemBuf(adr, items)	*((void**)&adr) = MemSize((void*)adr, (items) * sizeof(adr[0]))
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor new
+// oper√°tor new
 
 inline void* operator new (unsigned int size)
 {
@@ -54,7 +54,7 @@ inline void* operator new (unsigned int size)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor delete
+// oper√°tor delete
 
 inline void operator delete (void* adr)
 {
@@ -63,7 +63,7 @@ inline void operator delete (void* adr)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vÌcetokov· inkrementace ËÌsla LONG INT
+// v√≠cetokov√° inkrementace √®√≠sla LONG INT
 
 #ifdef _MT
 #ifdef _M_IX86
@@ -89,7 +89,7 @@ inline void LongIncrement(long* num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vÌcetokov· dekrementace ËÌsla LONG INT (vracÌ true = v˝sledek je 0)
+// v√≠cetokov√° dekrementace √®√≠sla LONG INT (vrac√≠ true = v√Ωsledek je 0)
 
 #ifdef _MT
 #ifdef _M_IX86
@@ -115,7 +115,7 @@ inline BOOL LongDecrement(long* num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naplnÏnÌ bloku pamÏti konstantou
+// napln√¨n√≠ bloku pam√¨ti konstantou
 
 inline void MemFill(void* dst, int count, char val = 0)
 {
@@ -150,7 +150,7 @@ inline void MemCopy(void* dst, const void* src, int count)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯esun bloku dat
+// p√∏esun bloku dat
 
 inline void MemMove(void* dst, const void* src, int count)
 {
@@ -183,7 +183,7 @@ inline void MemMove(void* dst, const void* src, int count)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// porovn·nÌ bloku dat (true=shoda)
+// porovn√°n√≠ bloku dat (true=shoda)
 
 inline BOOL MemCompare(const void* buf1, const void* buf2, int count)
 {

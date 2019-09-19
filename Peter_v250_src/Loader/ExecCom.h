@@ -1,13 +1,13 @@
 
 /***************************************************************************\
 *																			*
-*							Provádìní programu - pøíkaz						*
+*							ProvÃ¡dÃ¬nÃ­ programu - pÃ¸Ã­kaz						*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inline volání pøíkazu
+// inline volÃ¡nÃ­ pÃ¸Ã­kazu
 
 inline void FCommand()
 {
@@ -18,225 +18,225 @@ inline void FCommand()
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-// nastavení transformací objektu
+// nastavenÃ­ transformacÃ­ objektu
 //void SetTransform(D3DFITEM* frame);
 
 /////////////////////////////////////////////////////////////////////////////
-// automatické mapování textury
+// automatickÃ© mapovÃ¡nÃ­ textury
 
 void D3DTextMap(D3DFITEM* item);
 
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 
-// vìtvení CASE
-void FCaseReal();				// CASE s èíslem
-void FCaseBool();				// CASE s logickım vırazem
+// vÃ¬tvenÃ­ CASE
+void FCaseReal();				// CASE s Ã¨Ã­slem
+void FCaseBool();				// CASE s logickÃ½m vÃ½razem
 void FCaseIcon();				// CASE s ikonou
 void FCaseSprite();				// CASE se spritem
 void FCaseMap();				// CASE s plochou
 void FCaseMusic();				// CASE s hudbou
 void FCaseText();				// CASE s textem
 void FCaseSound();				// CASE se zvukem
-void FCasePicture();			// CASE s obrázkem
+void FCasePicture();			// CASE s obrÃ¡zkem
 
 // funkce
-void FFunc();					// funkce s lokálními promìnnımi
-void FFunc0();					// funkce bez lokálních promìnnıch
-void FDupList();				// vytvoøení lokálního seznamu duplikací (Data = index vzoru)
-void FDelList();				// zrušení lokálního seznamu (Data = poèet)
-void FDupReal();				// vytvoøení lokální èíselné promìnné duplikací (Data = index vzoru)
-void FDupRealList();			// vytvoøení lokální èíselné promìnné seznamu (Data = index vzoru, List = poèet)
-void FNewReal();				// vytvoøení lokální èíselné promìnné s inicializací
-void FDelReal();				// zrušení lokálních èíselnıch promìnnıch (Data = poèet)
-void FDupBool();				// vytvoøení lokální logické promìnné duplikací (Data = index vzoru)
-void FDupBoolList();			// vytvoøení lokální logické promìnné seznamu (Data = index vzoru, List = poèet)
-void FNewBool();				// vytvoøení lokální logické promìnné s inicializací
-void FDelBool();				// zrušení lokálních logickıch promìnnıch (Data = poèet)
-void FDupIcon();				// vytvoøení lokální promìnné ikony duplikací (Data = index vzoru)
-void FDupIconList();			// vytvoøení lokální promìnné ikony seznamu (Data = index vzoru, List = poèet)
-void FNewIcon();				// vytvoøení lokální promìnné ikony s inicializací
-void FDelIcon();				// zrušení lokálních promìnnıch ikon (Data = poèet)
-void FDupSprite();				// vytvoøení lokální promìnné sprajtu duplikací (Data = index vzoru)
-void FDupSpriteList();			// vytvoøení lokální promìnné sprajtu seznamu (Data = index vzoru, List = poèet)
-void FNewSprite();				// vytvoøení lokální promìnné sprajtu s inicializací
-void FDelSprite();				// zrušení lokálních promìnnıch sprajtù (Data = poèet)
-void FDupMap();					// vytvoøení lokální promìnné plochy duplikací (Data = index vzoru)
-void FDupMapList();				// vytvoøení lokální promìnné plochy seznamu (Data = index vzoru, List = poèet)
-void FNewMap();					// vytvoøení lokální promìnné plochy s inicializací
-void FDelMap();					// zrušení lokálních promìnnıch ploch (Data = poèet)
-void FDupText();				// vytvoøení lokální promìnné textu duplikací (Data = index vzoru)
-void FDupTextList();			// vytvoøení lokální promìnné textu seznamu (Data = index vzoru, List = poèet)
-void FNewText();				// vytvoøení lokální promìnné textu s inicializací
-void FDelText();				// zrušení lokálních promìnnıch textù (Data = poèet)
-void FDupSound();				// vytvoøení lokální promìnné zvuku duplikací (Data = index vzoru)
-void FDupSoundList();			// vytvoøení lokální promìnné zvuku seznamu (Data = index vzoru, List = poèet)
-void FNewSound();				// vytvoøení lokální promìnné zvuku s inicializací
-void FDelSound();				// zrušení lokálních promìnnıch zvukù (Data = poèet)
-void FDupPicture();				// vytvoøení lokální promìnné obrázku duplikací (Data = index vzoru)
-void FDupPictureList();			// vytvoøení lokální promìnné obrázku seznamu (Data = index vzoru, List = poèet)
-void FNewPicture();				// vytvoøení lokální promìnné obrázku s inicializací
-void FDelPicture();				// zrušení lokálních promìnnıch obrázkù (Data = poèet)
-void FDupMusic();				// vytvoøení lokální promìnné hudby duplikací (Data = index vzoru)
-void FDupMusicList();			// vytvoøení lokální promìnné hudby seznamu (Data = index vzoru, List = poèet)
-void FNewMusic();				// vytvoøení lokální promìnné hudby s inicializací
-void FDelMusic();				// zrušení lokálních promìnnıch hudby (Data = poèet)
+void FFunc();					// funkce s lokÃ¡lnÃ­mi promÃ¬nnÃ½mi
+void FFunc0();					// funkce bez lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
+void FDupList();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ho seznamu duplikacÃ­ (Data = index vzoru)
+void FDelList();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ho seznamu (Data = poÃ¨et)
+void FDupReal();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ Ã¨Ã­selnÃ© promÃ¬nnÃ© duplikacÃ­ (Data = index vzoru)
+void FDupRealList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ Ã¨Ã­selnÃ© promÃ¬nnÃ© seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewReal();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ Ã¨Ã­selnÃ© promÃ¬nnÃ© s inicializacÃ­
+void FDelReal();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch Ã¨Ã­selnÃ½ch promÃ¬nnÃ½ch (Data = poÃ¨et)
+void FDupBool();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ logickÃ© promÃ¬nnÃ© duplikacÃ­ (Data = index vzoru)
+void FDupBoolList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ logickÃ© promÃ¬nnÃ© seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewBool();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ logickÃ© promÃ¬nnÃ© s inicializacÃ­
+void FDelBool();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch logickÃ½ch promÃ¬nnÃ½ch (Data = poÃ¨et)
+void FDupIcon();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© ikony duplikacÃ­ (Data = index vzoru)
+void FDupIconList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© ikony seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewIcon();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© ikony s inicializacÃ­
+void FDelIcon();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch ikon (Data = poÃ¨et)
+void FDupSprite();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© sprajtu duplikacÃ­ (Data = index vzoru)
+void FDupSpriteList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© sprajtu seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewSprite();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© sprajtu s inicializacÃ­
+void FDelSprite();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch sprajtÃ¹ (Data = poÃ¨et)
+void FDupMap();					// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© plochy duplikacÃ­ (Data = index vzoru)
+void FDupMapList();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© plochy seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewMap();					// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© plochy s inicializacÃ­
+void FDelMap();					// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch ploch (Data = poÃ¨et)
+void FDupText();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© textu duplikacÃ­ (Data = index vzoru)
+void FDupTextList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© textu seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewText();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© textu s inicializacÃ­
+void FDelText();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch textÃ¹ (Data = poÃ¨et)
+void FDupSound();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© zvuku duplikacÃ­ (Data = index vzoru)
+void FDupSoundList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© zvuku seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewSound();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© zvuku s inicializacÃ­
+void FDelSound();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch zvukÃ¹ (Data = poÃ¨et)
+void FDupPicture();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© obrÃ¡zku duplikacÃ­ (Data = index vzoru)
+void FDupPictureList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© obrÃ¡zku seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewPicture();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© obrÃ¡zku s inicializacÃ­
+void FDelPicture();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch obrÃ¡zkÃ¹ (Data = poÃ¨et)
+void FDupMusic();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© hudby duplikacÃ­ (Data = index vzoru)
+void FDupMusicList();			// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© hudby seznamu (Data = index vzoru, List = poÃ¨et)
+void FNewMusic();				// vytvoÃ¸enÃ­ lokÃ¡lnÃ­ promÃ¬nnÃ© hudby s inicializacÃ­
+void FDelMusic();				// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch hudby (Data = poÃ¨et)
 
-// nastavení promìnnıch
-void FSetList();				// nastavení indexu globálního seznamu
-void FSetListLoc();				// nastavení indexu lokálního seznamu
-void FSetListAuto();			// nastavení inkrementace globálního seznamu
-void FSetListAutoLoc();			// nastavení inkrementace lokálního seznamu
-void FSetIcon();				// nastavení globální ikony (Data = index)
-void FSetIconList();			// nastavení ikony v seznamu (Data = index, List = seznam)
-void FSetIconLoc();				// nastavení lokální ikony (Data = index)
-void FSetIconLocList();			// nastavení lokální ikony v seznamu (Data = index, List = seznam)
-void FSetLog();					// nastavení globální logické promìnné (Data = index)
-void FSetLogList();				// nastavení logické promìnné v seznamu (Data = index, List = seznam)
-void FSetLogLoc();				// nastavení lokální logické promìnné (Data = index)
-void FSetLogLocList();			// nastavení lokální logické promìnné v seznamu (Data = index, List = seznam)
-void FSetMap();					// nastavení globální plochy (Data = index)
-void FSetMapList();				// nastavení plochy v seznamu (Data = index, List = seznam)
-void FSetMapLoc();				// nastavení lokální plochy (Data = index)
-void FSetMapLocList();			// nastavení lokální plochy v seznamu (Data = index, List = seznam)
-void FSetNum();					// nastavení globálního èísla (Data = index)
-void FSetNumList();				// nastavení èísla v seznamu (Data = index, List = seznam)
-void FSetNumLoc();				// nastavení lokálního èísla (Data = index)
-void FSetNumLocList();			// nastavení lokálního èísla v seznamu (Data = index, List = seznam)
-void FSetPic();					// nastavení globálního obrázku (Data = index)
-void FSetPicList();				// nastavení obrázku v seznamu (Data = index, List = seznam)
-void FSetPicLoc();				// nastavení lokálního obrázku (Data = index)
-void FSetPicLocList();			// nastavení lokálního obrázku v seznamu (Data = index, List = seznam)
-void FSetSound();				// nastavení globálního zvuku (Data = index)
-void FSetSoundList();			// nastavení zvuku v seznamu (Data = index, List = seznam)
-void FSetSoundLoc();			// nastavení lokálního zvuku (Data = index)
-void FSetSoundLocList();		// nastavení lokálního zvuku v seznamu (Data = index, List = seznam)
-void FSetMusic();				// nastavení globální hudby (Data = index)
-void FSetMusicList();			// nastavení hudby v seznamu (Data = index, List = seznam)
-void FSetMusicLoc();			// nastavení lokální hudby (Data = index)
-void FSetMusicLocList();		// nastavení lokální hudby v seznamu (Data = index, List = seznam)
-void FSetText();				// nastavení globálního textu (Data = index)
-void FSetTextList();			// nastavení textu v seznamu (Data = index, List = seznam)
-void FSetTextLoc();				// nastavení lokálního textu (Data = index)
-void FSetTextLocList();			// nastavení lokálního textu v seznamu (Data = index, List = seznam)
-void FSetSprite();				// nastavení globálního sprajtu (Data = index)
-void FSetSpriteList();			// nastavení sprajtu v seznamu (Data = index, List = seznam)
-void FSetSpriteLoc();			// nastavení lokálního sprajtu (Data = index)
-void FSetSpriteLocList();		// nastavení lokálního sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteX();				// nastavení souøadnice X globálního sprajtu (Data = index)
-void FSpriteXList();			// nastavení souøadnice X sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteXLoc();				// nastavení souøadnice X lokálního sprajtu (Data = index)
-void FSpriteXLocList();			// nastavení souøadnice X lokálního sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteY();				// nastavení souøadnice Y globálního sprajtu (Data = index)
-void FSpriteYList();			// nastavení souøadnice Y sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteYLoc();				// nastavení souøadnice Y lokálního sprajtu (Data = index)
-void FSpriteYLocList();			// nastavení souøadnice Y lokálního sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteSmer();				// nastavení smìru globálního sprajtu (Data = index)
-void FSpriteSmerList();			// nastavení smìru sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteSmerLoc();			// nastavení smìru lokálního sprajtu (Data = index)
-void FSpriteSmerLocList();		// nastavení smìru lokálního sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteFaze();				// nastavení fáze globálního sprajtu (Data = index)
-void FSpriteFazeList();			// nastavení fáze sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteFazeLoc();			// nastavení fáze lokálního sprajtu (Data = index)
-void FSpriteFazeLocList();		// nastavení fáze lokálního sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteStatus();			// nastavení fáze globálního sprajtu (Data = index)
-void FSpriteStatusList();		// nastavení fáze sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteStatusLoc();		// nastavení fáze lokálního sprajtu (Data = index)
-void FSpriteStatusLocList();	// nastavení fáze lokálního sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteVis();				// nastavení viditelnosti globálního sprajtu (Data = index)
-void FSpriteVisList();			// nastavení viditelnosti sprajtu v seznamu (Data = index, List = seznam)
-void FSpriteVisLoc();			// nastavení viditelnosti lokálního sprajtu (Data = index)
-void FSpriteVisLocList();		// nastavení viditelnosti lokálního sprajtu v seznamu (Data = index, List = seznam)
+// nastavenÃ­ promÃ¬nnÃ½ch
+void FSetList();				// nastavenÃ­ indexu globÃ¡lnÃ­ho seznamu
+void FSetListLoc();				// nastavenÃ­ indexu lokÃ¡lnÃ­ho seznamu
+void FSetListAuto();			// nastavenÃ­ inkrementace globÃ¡lnÃ­ho seznamu
+void FSetListAutoLoc();			// nastavenÃ­ inkrementace lokÃ¡lnÃ­ho seznamu
+void FSetIcon();				// nastavenÃ­ globÃ¡lnÃ­ ikony (Data = index)
+void FSetIconList();			// nastavenÃ­ ikony v seznamu (Data = index, List = seznam)
+void FSetIconLoc();				// nastavenÃ­ lokÃ¡lnÃ­ ikony (Data = index)
+void FSetIconLocList();			// nastavenÃ­ lokÃ¡lnÃ­ ikony v seznamu (Data = index, List = seznam)
+void FSetLog();					// nastavenÃ­ globÃ¡lnÃ­ logickÃ© promÃ¬nnÃ© (Data = index)
+void FSetLogList();				// nastavenÃ­ logickÃ© promÃ¬nnÃ© v seznamu (Data = index, List = seznam)
+void FSetLogLoc();				// nastavenÃ­ lokÃ¡lnÃ­ logickÃ© promÃ¬nnÃ© (Data = index)
+void FSetLogLocList();			// nastavenÃ­ lokÃ¡lnÃ­ logickÃ© promÃ¬nnÃ© v seznamu (Data = index, List = seznam)
+void FSetMap();					// nastavenÃ­ globÃ¡lnÃ­ plochy (Data = index)
+void FSetMapList();				// nastavenÃ­ plochy v seznamu (Data = index, List = seznam)
+void FSetMapLoc();				// nastavenÃ­ lokÃ¡lnÃ­ plochy (Data = index)
+void FSetMapLocList();			// nastavenÃ­ lokÃ¡lnÃ­ plochy v seznamu (Data = index, List = seznam)
+void FSetNum();					// nastavenÃ­ globÃ¡lnÃ­ho Ã¨Ã­sla (Data = index)
+void FSetNumList();				// nastavenÃ­ Ã¨Ã­sla v seznamu (Data = index, List = seznam)
+void FSetNumLoc();				// nastavenÃ­ lokÃ¡lnÃ­ho Ã¨Ã­sla (Data = index)
+void FSetNumLocList();			// nastavenÃ­ lokÃ¡lnÃ­ho Ã¨Ã­sla v seznamu (Data = index, List = seznam)
+void FSetPic();					// nastavenÃ­ globÃ¡lnÃ­ho obrÃ¡zku (Data = index)
+void FSetPicList();				// nastavenÃ­ obrÃ¡zku v seznamu (Data = index, List = seznam)
+void FSetPicLoc();				// nastavenÃ­ lokÃ¡lnÃ­ho obrÃ¡zku (Data = index)
+void FSetPicLocList();			// nastavenÃ­ lokÃ¡lnÃ­ho obrÃ¡zku v seznamu (Data = index, List = seznam)
+void FSetSound();				// nastavenÃ­ globÃ¡lnÃ­ho zvuku (Data = index)
+void FSetSoundList();			// nastavenÃ­ zvuku v seznamu (Data = index, List = seznam)
+void FSetSoundLoc();			// nastavenÃ­ lokÃ¡lnÃ­ho zvuku (Data = index)
+void FSetSoundLocList();		// nastavenÃ­ lokÃ¡lnÃ­ho zvuku v seznamu (Data = index, List = seznam)
+void FSetMusic();				// nastavenÃ­ globÃ¡lnÃ­ hudby (Data = index)
+void FSetMusicList();			// nastavenÃ­ hudby v seznamu (Data = index, List = seznam)
+void FSetMusicLoc();			// nastavenÃ­ lokÃ¡lnÃ­ hudby (Data = index)
+void FSetMusicLocList();		// nastavenÃ­ lokÃ¡lnÃ­ hudby v seznamu (Data = index, List = seznam)
+void FSetText();				// nastavenÃ­ globÃ¡lnÃ­ho textu (Data = index)
+void FSetTextList();			// nastavenÃ­ textu v seznamu (Data = index, List = seznam)
+void FSetTextLoc();				// nastavenÃ­ lokÃ¡lnÃ­ho textu (Data = index)
+void FSetTextLocList();			// nastavenÃ­ lokÃ¡lnÃ­ho textu v seznamu (Data = index, List = seznam)
+void FSetSprite();				// nastavenÃ­ globÃ¡lnÃ­ho sprajtu (Data = index)
+void FSetSpriteList();			// nastavenÃ­ sprajtu v seznamu (Data = index, List = seznam)
+void FSetSpriteLoc();			// nastavenÃ­ lokÃ¡lnÃ­ho sprajtu (Data = index)
+void FSetSpriteLocList();		// nastavenÃ­ lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteX();				// nastavenÃ­ souÃ¸adnice X globÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteXList();			// nastavenÃ­ souÃ¸adnice X sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteXLoc();				// nastavenÃ­ souÃ¸adnice X lokÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteXLocList();			// nastavenÃ­ souÃ¸adnice X lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteY();				// nastavenÃ­ souÃ¸adnice Y globÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteYList();			// nastavenÃ­ souÃ¸adnice Y sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteYLoc();				// nastavenÃ­ souÃ¸adnice Y lokÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteYLocList();			// nastavenÃ­ souÃ¸adnice Y lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteSmer();				// nastavenÃ­ smÃ¬ru globÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteSmerList();			// nastavenÃ­ smÃ¬ru sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteSmerLoc();			// nastavenÃ­ smÃ¬ru lokÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteSmerLocList();		// nastavenÃ­ smÃ¬ru lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteFaze();				// nastavenÃ­ fÃ¡ze globÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteFazeList();			// nastavenÃ­ fÃ¡ze sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteFazeLoc();			// nastavenÃ­ fÃ¡ze lokÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteFazeLocList();		// nastavenÃ­ fÃ¡ze lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteStatus();			// nastavenÃ­ fÃ¡ze globÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteStatusList();		// nastavenÃ­ fÃ¡ze sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteStatusLoc();		// nastavenÃ­ fÃ¡ze lokÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteStatusLocList();	// nastavenÃ­ fÃ¡ze lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteVis();				// nastavenÃ­ viditelnosti globÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteVisList();			// nastavenÃ­ viditelnosti sprajtu v seznamu (Data = index, List = seznam)
+void FSpriteVisLoc();			// nastavenÃ­ viditelnosti lokÃ¡lnÃ­ho sprajtu (Data = index)
+void FSpriteVisLocList();		// nastavenÃ­ viditelnosti lokÃ¡lnÃ­ho sprajtu v seznamu (Data = index, List = seznam)
 
-// øídicí pøíkazy
-void FIf();						// podmínka IF
+// Ã¸Ã­dicÃ­ pÃ¸Ã­kazy
+void FIf();						// podmÃ­nka IF
 void FWhile();					// cyklus WHILE
 void FRepeat();					// cyklus REPEAT
-void FBreak();					// pøerušení cyklu
-void FReturn();					// pøerušení funkce
-void FCommandExec0();			// prázdnı pøíkaz
-void FCommandExec1();			// 1 pøíkaz
-void FCommandExec();			// posloupnost pøíkazù (Data = poèet pøíkazù - 1)
-void FWait1();					// èekání - 1 impuls
-void FWait();					// èekání
-void FSetStatus();				// nastavení textu stavového øádku
-void FSetCaption();				// nastavení textu nadpisu okna
+void FBreak();					// pÃ¸eruÅ¡enÃ­ cyklu
+void FReturn();					// pÃ¸eruÅ¡enÃ­ funkce
+void FCommandExec0();			// prÃ¡zdnÃ½ pÃ¸Ã­kaz
+void FCommandExec1();			// 1 pÃ¸Ã­kaz
+void FCommandExec();			// posloupnost pÃ¸Ã­kazÃ¹ (Data = poÃ¨et pÃ¸Ã­kazÃ¹ - 1)
+void FWait1();					// Ã¨ekÃ¡nÃ­ - 1 impuls
+void FWait();					// Ã¨ekÃ¡nÃ­
+void FSetStatus();				// nastavenÃ­ textu stavovÃ©ho Ã¸Ã¡dku
+void FSetCaption();				// nastavenÃ­ textu nadpisu okna
 
-// obsluha dialogù
+// obsluha dialogÃ¹
 void FDialogBox();				// dialog box
 
-// obsluha souborù
-void FFileNew();				// novı soubor
-void FDirNew();					// novı adresáø
-void FFileDelete();				// zrušení souboru/adresáøe
-void FFileAct();				// nastavení aktivního adresáøe
-void FDiskLabel();				// nastavení jmenovky disku
-void FFileRead();				// soubor pro ètení
-void FFileWrite();				// soubor pro zápis
-void FFileCopy();				// kopie souborù
-void FFileMove();				// pøesun souborù
-void FFileRO();					// nastavení atributu R/O
-void FFileHID();				// nastavení atributu HID
-void FFileSYS();				// nastavení atributu SYS
-void FFileARC();				// nastavení atributu ARC
-void FFileCreate();				// nastavení èasu vytvoøení souboru
-void FFileOpen();				// nastavení èasu ètení ze souboru
-void FFileModi();				// nastavení èasu zápisu do souboru
-void FFileSize();				// nastavení velikosti souboru
-void FFileReadOff();			// obsluha souborù
-void FFileWriteOff();			// nastavení offsetu pro zápis
-void FFileError();				// nastavení pøíznaku chyby
-void FFileTextNLen();			// nastavení délky textu s pevnou délkou
-void FFileByteS();				// zápis bajtu se znaménkem
-void FFileByteU();				// zápis bajtu bez znaménka
-void FFileWordS();				// zápis slova se znaménkem
-void FFileWordU();				// zápis slova bez znaménka
-void FFile3ByteS();				// zápis 3 bajtù se znaménkem
-void FFile3ByteU();				// zápis 3 bajtù bez znaménka
-void FFileDWordS();				// zápis dvojslova se znaménkem
-void FFileDWordU();				// zápis dvojslova bez znaménka
-void FFileFloat();				// zápis èísla FLOAT
-void FFileDouble();				// zápis èísla DOUBLE
-void FFileLogic();				// zápis logické hodnoty
-void FFileText0();				// zápis textu zakonèeného nulou
-void FFileTextCR();				// zápis textu zakonèeného CR/LF
-void FFileTextN();				// zápis textu s pevnou délkou
-void FFileTextUnicode();		// nastavení pøíznaku textu UNICODE
-void FFileIcon();				// zápis ikony
-void FFilePicture();			// zápis obrázku
-void FFileSound();				// zápis zvuku
-void FFileMusic();				// zápis hudby
-void FFileSprite();				// zápis sprajtu
+// obsluha souborÃ¹
+void FFileNew();				// novÃ½ soubor
+void FDirNew();					// novÃ½ adresÃ¡Ã¸
+void FFileDelete();				// zruÅ¡enÃ­ souboru/adresÃ¡Ã¸e
+void FFileAct();				// nastavenÃ­ aktivnÃ­ho adresÃ¡Ã¸e
+void FDiskLabel();				// nastavenÃ­ jmenovky disku
+void FFileRead();				// soubor pro Ã¨tenÃ­
+void FFileWrite();				// soubor pro zÃ¡pis
+void FFileCopy();				// kopie souborÃ¹
+void FFileMove();				// pÃ¸esun souborÃ¹
+void FFileRO();					// nastavenÃ­ atributu R/O
+void FFileHID();				// nastavenÃ­ atributu HID
+void FFileSYS();				// nastavenÃ­ atributu SYS
+void FFileARC();				// nastavenÃ­ atributu ARC
+void FFileCreate();				// nastavenÃ­ Ã¨asu vytvoÃ¸enÃ­ souboru
+void FFileOpen();				// nastavenÃ­ Ã¨asu Ã¨tenÃ­ ze souboru
+void FFileModi();				// nastavenÃ­ Ã¨asu zÃ¡pisu do souboru
+void FFileSize();				// nastavenÃ­ velikosti souboru
+void FFileReadOff();			// obsluha souborÃ¹
+void FFileWriteOff();			// nastavenÃ­ offsetu pro zÃ¡pis
+void FFileError();				// nastavenÃ­ pÃ¸Ã­znaku chyby
+void FFileTextNLen();			// nastavenÃ­ dÃ©lky textu s pevnou dÃ©lkou
+void FFileByteS();				// zÃ¡pis bajtu se znamÃ©nkem
+void FFileByteU();				// zÃ¡pis bajtu bez znamÃ©nka
+void FFileWordS();				// zÃ¡pis slova se znamÃ©nkem
+void FFileWordU();				// zÃ¡pis slova bez znamÃ©nka
+void FFile3ByteS();				// zÃ¡pis 3 bajtÃ¹ se znamÃ©nkem
+void FFile3ByteU();				// zÃ¡pis 3 bajtÃ¹ bez znamÃ©nka
+void FFileDWordS();				// zÃ¡pis dvojslova se znamÃ©nkem
+void FFileDWordU();				// zÃ¡pis dvojslova bez znamÃ©nka
+void FFileFloat();				// zÃ¡pis Ã¨Ã­sla FLOAT
+void FFileDouble();				// zÃ¡pis Ã¨Ã­sla DOUBLE
+void FFileLogic();				// zÃ¡pis logickÃ© hodnoty
+void FFileText0();				// zÃ¡pis textu zakonÃ¨enÃ©ho nulou
+void FFileTextCR();				// zÃ¡pis textu zakonÃ¨enÃ©ho CR/LF
+void FFileTextN();				// zÃ¡pis textu s pevnou dÃ©lkou
+void FFileTextUnicode();		// nastavenÃ­ pÃ¸Ã­znaku textu UNICODE
+void FFileIcon();				// zÃ¡pis ikony
+void FFilePicture();			// zÃ¡pis obrÃ¡zku
+void FFileSound();				// zÃ¡pis zvuku
+void FFileMusic();				// zÃ¡pis hudby
+void FFileSprite();				// zÃ¡pis sprajtu
 
-// obsluha èasu
-void FTimeCurrent();			// nastavení aktuálního èasu
+// obsluha Ã¨asu
+void FTimeCurrent();			// nastavenÃ­ aktuÃ¡lnÃ­ho Ã¨asu
 
 // obsluha CD disku
-void FCDPlay();					// pøehrátí CD 
-void FCDStop();					// zastavení pøehrávání CD
+void FCDPlay();					// pÃ¸ehrÃ¡tÃ­ CD 
+void FCDStop();					// zastavenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ CD
 void FCDPause();				// pauza CD
 void FCDPauseSet();				// pauza CD
-void FCDSetPos();				// nastavení pozice CD
-void FCDSetTrack();				// nastavení stopy CD
-void FCDSetTrackPos();			// nastavení pozice stopy CD
-void FCDEject();				// vysunutí CD
-void FCDEjectSet();				// vysunutí CD
+void FCDSetPos();				// nastavenÃ­ pozice CD
+void FCDSetTrack();				// nastavenÃ­ stopy CD
+void FCDSetTrackPos();			// nastavenÃ­ pozice stopy CD
+void FCDEject();				// vysunutÃ­ CD
+void FCDEjectSet();				// vysunutÃ­ CD
 
 // obsluha hudby
-void FMusicPlay();				// pøehrátí hudby
-void FMusicLoop();				// opakované pøehrávání hudby
-void FMusicStop();				// zastavení pøehrávání hudby
-void FMusicPause();				// pauza hudby se zmìnou
-void FMusicPauseSet();			// pauza hudby s nastavením
-void FSetMusicPos();			// nastavení pozice hudby
+void FMusicPlay();				// pÃ¸ehrÃ¡tÃ­ hudby
+void FMusicLoop();				// opakovanÃ© pÃ¸ehrÃ¡vÃ¡nÃ­ hudby
+void FMusicStop();				// zastavenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ hudby
+void FMusicPause();				// pauza hudby se zmÃ¬nou
+void FMusicPauseSet();			// pauza hudby s nastavenÃ­m
+void FSetMusicPos();			// nastavenÃ­ pozice hudby
 
 // obsluha Petra a Petry
-//void PeterWait();				// Petr - èekání na dokonèení pohybu
-//void Peter2Wait();				// Petra - èekání na dokonèení pohybu
-void FKrok();					// Petr - krok vpøed
-void FKrok2();					// Petra - krok vpøed
+//void PeterWait();				// Petr - Ã¨ekÃ¡nÃ­ na dokonÃ¨enÃ­ pohybu
+//void Peter2Wait();				// Petra - Ã¨ekÃ¡nÃ­ na dokonÃ¨enÃ­ pohybu
+void FKrok();					// Petr - krok vpÃ¸ed
+void FKrok2();					// Petra - krok vpÃ¸ed
 void FVlevo();					// Petr - vlevo
 void FVlevo2();					// Petra - vlevo
 void FVpravo();					// Petr - vpravo
@@ -245,106 +245,106 @@ void FVzad();					// Petr - vzad
 void FVzad2();					// Petra - vzad
 void FVisible();				// Petr - viditelnost
 void FVisible2();				// Petra - viditelnost
-void FSetPredmet();				// nastavení pøedmìtu pøed Petrem
-void FSetPredmet2();			// nastavení pøedmìtu pøed Petrou
-void FSetPredmetPoz();			// nastavení pøedmìtu pod Petrem
-void FSetPredmet2Poz();			// nastavení pøedmìtu pod Petrou
-void FSetSmer();				// Petr - nastavení smìru
-void FSetSmer2();				// Petra - nastavení smìru
-void FSetPozX();				// Petr - nastavení souøadnice X
-void FSetPozX2();				// Petra - nastavení souøadnice X
-void FSetPozY();				// Petr - nastavení souøadnice Y
-void FSetPozY2();				// Petra - nastavení souøadnice Y
-void FSetSwcN1();				// Petr - nastavení èísla 1
-void FSetSwcN2();				// Petr - nastavení èísla 2
-void FSetSwcN3();				// Petr - nastavení èísla 3
-void FSetSwcN12();				// Petr2 - nastavení èísla 1
-void FSetSwcN22();				// Petr2 - nastavení èísla 2
-void FSetSwcN32();				// Petr2 - nastavení èísla 3
-void FSetSwc1();				// Petr - nastavení pøepínaèe 1
-void FSetSwc2();				// Petr - nastavení pøepínaèe 2
-void FSetSwc3();				// Petr - nastavení pøepínaèe 3
-void FSetSwc4();				// Petr - nastavení pøepínaèe 4
-void FSetSwc5();				// Petr - nastavení pøepínaèe 5
-void FSetSwc12();				// Petra - nastavení pøepínaèe 1
-void FSetSwc22();				// Petra - nastavení pøepínaèe 2
-void FSetSwc32();				// Petra - nastavení pøepínaèe 3
-void FSetSwc42();				// Petra - nastavení pøepínaèe 4
-void FSetSwc52();				// Petra - nastavení pøepínaèe 5
+void FSetPredmet();				// nastavenÃ­ pÃ¸edmÃ¬tu pÃ¸ed Petrem
+void FSetPredmet2();			// nastavenÃ­ pÃ¸edmÃ¬tu pÃ¸ed Petrou
+void FSetPredmetPoz();			// nastavenÃ­ pÃ¸edmÃ¬tu pod Petrem
+void FSetPredmet2Poz();			// nastavenÃ­ pÃ¸edmÃ¬tu pod Petrou
+void FSetSmer();				// Petr - nastavenÃ­ smÃ¬ru
+void FSetSmer2();				// Petra - nastavenÃ­ smÃ¬ru
+void FSetPozX();				// Petr - nastavenÃ­ souÃ¸adnice X
+void FSetPozX2();				// Petra - nastavenÃ­ souÃ¸adnice X
+void FSetPozY();				// Petr - nastavenÃ­ souÃ¸adnice Y
+void FSetPozY2();				// Petra - nastavenÃ­ souÃ¸adnice Y
+void FSetSwcN1();				// Petr - nastavenÃ­ Ã¨Ã­sla 1
+void FSetSwcN2();				// Petr - nastavenÃ­ Ã¨Ã­sla 2
+void FSetSwcN3();				// Petr - nastavenÃ­ Ã¨Ã­sla 3
+void FSetSwcN12();				// Petr2 - nastavenÃ­ Ã¨Ã­sla 1
+void FSetSwcN22();				// Petr2 - nastavenÃ­ Ã¨Ã­sla 2
+void FSetSwcN32();				// Petr2 - nastavenÃ­ Ã¨Ã­sla 3
+void FSetSwc1();				// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 1
+void FSetSwc2();				// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 2
+void FSetSwc3();				// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 3
+void FSetSwc4();				// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 4
+void FSetSwc5();				// Petr - nastavenÃ­ pÃ¸epÃ­naÃ¨e 5
+void FSetSwc12();				// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 1
+void FSetSwc22();				// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 2
+void FSetSwc32();				// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 3
+void FSetSwc42();				// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 4
+void FSetSwc52();				// Petra - nastavenÃ­ pÃ¸epÃ­naÃ¨e 5
 
 // obsluha zvuku
-void FSoundPlay();				// pøehrátí zvuku
-void FSoundStop();				// zastavení všech zvukù
-void FSoundStop1();				// zastavení konkrétního zvuku
-void FSetSoundPos();			// nastavení pozice zvuku
+void FSoundPlay();				// pÃ¸ehrÃ¡tÃ­ zvuku
+void FSoundStop();				// zastavenÃ­ vÅ¡ech zvukÃ¹
+void FSoundStop1();				// zastavenÃ­ konkrÃ©tnÃ­ho zvuku
+void FSetSoundPos();			// nastavenÃ­ pozice zvuku
 void FSoundPause();				// pauza zvuku
 void FSoundPauseSet();			// pauza zvuku
-void FSetSoundDistinguish();	// nastavení rozlišovacího kódu
+void FSetSoundDistinguish();	// nastavenÃ­ rozliÅ¡ovacÃ­ho kÃ³du
 
 // obsluha grafiky
-extern int PointWidth;			// nastavená šíøka grafického bodu
-extern BYTE PointCol;			// nastavená barva grafického bodu
-void _fastcall CirclePoint(int x, int y); // zobrazení bodu nebo kruhu
-void FPoint();					// zobrazení bodu
-void FLine();					// zobrazení èáry
-void FBox();					// zobrazení obdélníku
-void FBoxFill();				// zobrazení vyplnìného obdélníku
-void FFill();					// vıplò
-void FCircle();					// krunice
+extern int PointWidth;			// nastavenÃ¡ Å¡Ã­Ã¸ka grafickÃ©ho bodu
+extern BYTE PointCol;			// nastavenÃ¡ barva grafickÃ©ho bodu
+void _fastcall CirclePoint(int x, int y); // zobrazenÃ­ bodu nebo kruhu
+void FPoint();					// zobrazenÃ­ bodu
+void FLine();					// zobrazenÃ­ Ã¨Ã¡ry
+void FBox();					// zobrazenÃ­ obdÃ©lnÃ­ku
+void FBoxFill();				// zobrazenÃ­ vyplnÃ¬nÃ©ho obdÃ©lnÃ­ku
+void FFill();					// vÃ½plÃ²
+void FCircle();					// kruÅ¾nice
 void FCircleFill();				// kruh
 void FSphere();					// koule
-void FTriangle();				// vyplnìnı trojùhelník
-void FGraphText();				// zobrazení textu
-void FSetGraphAreaWidth();		// nastavení šíøky pole k zobrazení centrovaného textu
-void FPicDisp();				// zobrazení obrázku
-void FTransparent();			// zprùhlednìní vıøezu
+void FTriangle();				// vyplnÃ¬nÃ½ trojÃ¹helnÃ­k
+void FGraphText();				// zobrazenÃ­ textu
+void FSetGraphAreaWidth();		// nastavenÃ­ Å¡Ã­Ã¸ky pole k zobrazenÃ­ centrovanÃ©ho textu
+void FPicDisp();				// zobrazenÃ­ obrÃ¡zku
+void FTransparent();			// zprÃ¹hlednÃ¬nÃ­ vÃ½Ã¸ezu
 
-// obsluha klávesnice
-void FComVKeyWait();			// èekání na klávesu
-void FComCharWait();			// èekání na snak z klávesnice
-void FKlavFlush();				// vyprázdnìní bufferu kláves
-void FSetNumLock();				// nastavení pøepínaèe Num Lock
-void FSetCapsLock();			// nastavení pøepínaèe Caps Lock
-void FSetScrollLock();			// nastavení pøepínaèe Scroll Lock
-void FSetInsertLock();			// nastavení pøepínaèe Insert
+// obsluha klÃ¡vesnice
+void FComVKeyWait();			// Ã¨ekÃ¡nÃ­ na klÃ¡vesu
+void FComCharWait();			// Ã¨ekÃ¡nÃ­ na snak z klÃ¡vesnice
+void FKlavFlush();				// vyprÃ¡zdnÃ¬nÃ­ bufferu klÃ¡ves
+void FSetNumLock();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e Num Lock
+void FSetCapsLock();			// nastavenÃ­ pÃ¸epÃ­naÃ¨e Caps Lock
+void FSetScrollLock();			// nastavenÃ­ pÃ¸epÃ­naÃ¨e Scroll Lock
+void FSetInsertLock();			// nastavenÃ­ pÃ¸epÃ­naÃ¨e Insert
 
-void FSpriteShiftX();			// hromadnı posun sprajtù ve smìru X
-void FSpriteShiftY();			// hromadnı posun sprajtù ve smìru Y
+void FSpriteShiftX();			// hromadnÃ½ posun sprajtÃ¹ ve smÃ¬ru X
+void FSpriteShiftY();			// hromadnÃ½ posun sprajtÃ¹ ve smÃ¬ru Y
 
-// okno k zobrazení sprajtù
+// okno k zobrazenÃ­ sprajtÃ¹
 void FSpriteWinX1();
 void FSpriteWinY1();
 void FSpriteWinX2();
 void FSpriteWinY2();
 
 // konzola
-void FConsoleOn();				// reim konzoly
-void FConsoleOut();				// vıstup textu na konzolu
-void FConsoleErr();				// vıstup chybového textu na konzolu
+void FConsoleOn();				// reÅ¾im konzoly
+void FConsoleOut();				// vÃ½stup textu na konzolu
+void FConsoleErr();				// vÃ½stup chybovÃ©ho textu na konzolu
 
-void FSetReturnCode();			// návratovı kód
+void FSetReturnCode();			// nÃ¡vratovÃ½ kÃ³d
 
-void FExec();					// spuštìní programu
-void FExecWait();				// spuštìní programu
+void FExec();					// spuÅ¡tÃ¬nÃ­ programu
+void FExecWait();				// spuÅ¡tÃ¬nÃ­ programu
 
 // dialog
-//void FDialogOn();				// reim dialogu
+//void FDialogOn();				// reÅ¾im dialogu
 //void FDialogOnSet();
-void FWindowID();				// èíslo prvku
-void FWindowDel();				// zrušení okna
+void FWindowID();				// Ã¨Ã­slo prvku
+void FWindowDel();				// zruÅ¡enÃ­ okna
 void FWindowText();				// text okna
 void FWindowX();				// pozice okna X
 void FWindowY();				// pozice okna Y
-void FWindowW();				// šíøka okna
-void FWindowH();				// vıška okna
-void FWindowWInt();				// vnitøní šíøka okna
-void FWindowHInt();				// vnitøní vıška okna
+void FWindowW();				// Å¡Ã­Ã¸ka okna
+void FWindowH();				// vÃ½Å¡ka okna
+void FWindowWInt();				// vnitÃ¸nÃ­ Å¡Ã­Ã¸ka okna
+void FWindowHInt();				// vnitÃ¸nÃ­ vÃ½Å¡ka okna
 void FWindowVisible();			// viditelnost okna
 void FWindowVisibleSet();		// viditelnost okna
-void FWindowDisable();			// zákaz okna
-void FWindowDisableSet();		// zákaz okna
-void FCheckBoxOn();				// pøepínaè
-void FCheckBoxOnSet();			// pøepínaè
+void FWindowDisable();			// zÃ¡kaz okna
+void FWindowDisableSet();		// zÃ¡kaz okna
+void FCheckBoxOn();				// pÃ¸epÃ­naÃ¨
+void FCheckBoxOnSet();			// pÃ¸epÃ­naÃ¨
 void FButton3On();
 void FButton3OnSet();
 void FFocus();					// okno s fokusem
@@ -365,248 +365,248 @@ void FFontWidthSet();
 void FFontAngleSet();
 void FFontColSet();
 void FFontBackSet();
-void FListBoxAdd();				// pøidání poloky do seznamu
-void FListBoxClear();			// vyprázdnìní seznamu
+void FListBoxAdd();				// pÃ¸idÃ¡nÃ­ poloÅ¾ky do seznamu
+void FListBoxClear();			// vyprÃ¡zdnÃ¬nÃ­ seznamu
 void FWindowIcon();				// ikona okna
-void FWindowPic();				// obrázek okna
-void FSetButtonEsc();			// tlaèítko pro klávesu Esc
-void FSetWindowPos();			// nastavení pozice v prvku okna
-void FSetWindowPos2();			// nastavení pozice 2 v prvku okna
-void FSetTableWidth();			// šíøka sloupce tabulky
-void FSetTableAlign();			// zarovnání sloupce tabulky
+void FWindowPic();				// obrÃ¡zek okna
+void FSetButtonEsc();			// tlaÃ¨Ã­tko pro klÃ¡vesu Esc
+void FSetWindowPos();			// nastavenÃ­ pozice v prvku okna
+void FSetWindowPos2();			// nastavenÃ­ pozice 2 v prvku okna
+void FSetTableWidth();			// Å¡Ã­Ã¸ka sloupce tabulky
+void FSetTableAlign();			// zarovnÃ¡nÃ­ sloupce tabulky
 
-void FSetWindowFrame();			// nastavení rámeèku okna
-void FSetWindowCaption();		// nastavení nadpisu okna
-void FSetWindowTop();			// nastavení okna vdy nahoøe
-void FSetWindowSize();			// nastavení okna s mìnitelnou velikostí
-void FSetWindowMayClose();		// nastavení povolení uzavøení okna
+void FSetWindowFrame();			// nastavenÃ­ rÃ¡meÃ¨ku okna
+void FSetWindowCaption();		// nastavenÃ­ nadpisu okna
+void FSetWindowTop();			// nastavenÃ­ okna vÅ¾dy nahoÃ¸e
+void FSetWindowSize();			// nastavenÃ­ okna s mÃ¬nitelnou velikostÃ­
+void FSetWindowMayClose();		// nastavenÃ­ povolenÃ­ uzavÃ¸enÃ­ okna
 void FSetWindowMaxim();			// maximalizace okna
 void FSetWindowMinim();			// minimalizace okna
 
-void FFullScreen();				// celoobrazokovı mód
-void FFullScreenSet();			// celoobrazokovı mód
+void FFullScreen();				// celoobrazokovÃ½ mÃ³d
+void FFullScreenSet();			// celoobrazokovÃ½ mÃ³d
 
-void FMouseCursor();			// kurzor myši
+void FMouseCursor();			// kurzor myÅ¡i
 
-void FSetMouseX();				// nastavení souøadnice X myši
-void FSetMouseY();				// nastavení souøadnice Y myši
+void FSetMouseX();				// nastavenÃ­ souÃ¸adnice X myÅ¡i
+void FSetMouseY();				// nastavenÃ­ souÃ¸adnice Y myÅ¡i
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha kurzoru myši (vrací TRUE = kurzor myši nastaven)
+// obsluha kurzoru myÅ¡i (vracÃ­ TRUE = kurzor myÅ¡i nastaven)
 
 BOOL OnSetCursor(int x, int y);
 
 // DirectPlay
-void FSetConnectAct();			// nastavení aktivního spojení
-void FSetGameAct();				// nastavení aktivní hry
-void FSetPlayerAct();			// nastavení aktivního hráèe
+void FSetConnectAct();			// nastavenÃ­ aktivnÃ­ho spojenÃ­
+void FSetGameAct();				// nastavenÃ­ aktivnÃ­ hry
+void FSetPlayerAct();			// nastavenÃ­ aktivnÃ­ho hrÃ¡Ã¨e
 
-void FSetGameN1();				// nastavení èíselné hodnoty hry 1
-void FSetGameN2();				// nastavení èíselné hodnoty hry 2
-void FSetGameN3();				// nastavení èíselné hodnoty hry 3
-void FSetGameN4();				// nastavení èíselné hodnoty hry 4
-void FSetGameN5();				// nastavení èíselné hodnoty hry 5
-void FSetGameN6();				// nastavení èíselné hodnoty hry 6
-void FSetGameN7();				// nastavení èíselné hodnoty hry 7
-void FSetGameN8();				// nastavení èíselné hodnoty hry 8
+void FSetGameN1();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 1
+void FSetGameN2();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 2
+void FSetGameN3();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 3
+void FSetGameN4();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 4
+void FSetGameN5();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 5
+void FSetGameN6();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 6
+void FSetGameN7();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 7
+void FSetGameN8();				// nastavenÃ­ Ã¨Ã­selnÃ© hodnoty hry 8
 
-void FSetGameL1();				// nastavení pøepínaèe hry 1
-void FSetGameL2();				// nastavení pøepínaèe hry 2
-void FSetGameL3();				// nastavení pøepínaèe hry 3
-void FSetGameL4();				// nastavení pøepínaèe hry 4
-void FSetGameL5();				// nastavení pøepínaèe hry 5
-void FSetGameL6();				// nastavení pøepínaèe hry 6
-void FSetGameL7();				// nastavení pøepínaèe hry 7
-void FSetGameL8();				// nastavení pøepínaèe hry 8
+void FSetGameL1();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 1
+void FSetGameL2();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 2
+void FSetGameL3();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 3
+void FSetGameL4();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 4
+void FSetGameL5();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 5
+void FSetGameL6();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 6
+void FSetGameL7();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 7
+void FSetGameL8();				// nastavenÃ­ pÃ¸epÃ­naÃ¨e hry 8
 
-void FSetPlayerMax();			// nastavení max. poètu hráèù
-void FSetGamePacket();			// vyslání datového paketu
-void FSetGamePacket0();			// vyslání datového paketu (všem)
-void FSetGameDataN();			// vyslání èísla paketem
-void FSetGameDataT();			// vyslání textu paketem (není pro UNICODE !!!)
-void FSetGameDataL();			// vyslání pøepínaèe paketem
-void FSetGameDataB();			// vyslání bajtu paketem
+void FSetPlayerMax();			// nastavenÃ­ max. poÃ¨tu hrÃ¡Ã¨Ã¹
+void FSetGamePacket();			// vyslÃ¡nÃ­ datovÃ©ho paketu
+void FSetGamePacket0();			// vyslÃ¡nÃ­ datovÃ©ho paketu (vÅ¡em)
+void FSetGameDataN();			// vyslÃ¡nÃ­ Ã¨Ã­sla paketem
+void FSetGameDataT();			// vyslÃ¡nÃ­ textu paketem (nenÃ­ pro UNICODE !!!)
+void FSetGameDataL();			// vyslÃ¡nÃ­ pÃ¸epÃ­naÃ¨e paketem
+void FSetGameDataB();			// vyslÃ¡nÃ­ bajtu paketem
 
 // UDP
-void FSetUDPSendIP();			// nastavení vysílací IP adresy UDP
-void FSetUDPSendPort();			// nastavení vysílacího portu UDP
-void FSetUDPRecSize();			// nastavení velikosti pøijímacího bufferu UDP (0=zavøení pøíjmu)
-void FSetUDPRecIP();			// nastavení pøijímací IP adresy UDP
-void FSetUDPRecPort();			// nastavení pøijímacího portu UDP
-void FSetUDPMem();				// odeslání binárního paketu UDP
-void FSetUDPText();				// odeslání textového paketu UDP
+void FSetUDPSendIP();			// nastavenÃ­ vysÃ­lacÃ­ IP adresy UDP
+void FSetUDPSendPort();			// nastavenÃ­ vysÃ­lacÃ­ho portu UDP
+void FSetUDPRecSize();			// nastavenÃ­ velikosti pÃ¸ijÃ­macÃ­ho bufferu UDP (0=zavÃ¸enÃ­ pÃ¸Ã­jmu)
+void FSetUDPRecIP();			// nastavenÃ­ pÃ¸ijÃ­macÃ­ IP adresy UDP
+void FSetUDPRecPort();			// nastavenÃ­ pÃ¸ijÃ­macÃ­ho portu UDP
+void FSetUDPMem();				// odeslÃ¡nÃ­ binÃ¡rnÃ­ho paketu UDP
+void FSetUDPText();				// odeslÃ¡nÃ­ textovÃ©ho paketu UDP
 
-void FSetCodePage();			// nastavení znakové sady
-void FSetUserFont();			// nastavení uivatelského fontu
-void FSetLanguage();			// nastavení jazyku
+void FSetCodePage();			// nastavenÃ­ znakovÃ© sady
+void FSetUserFont();			// nastavenÃ­ uÅ¾ivatelskÃ©ho fontu
+void FSetLanguage();			// nastavenÃ­ jazyku
 
-void FSetAlias();				// nastavení alias
+void FSetAlias();				// nastavenÃ­ alias
 
 // porty
-void FSetComID();				// nastavení aktivního portu
-void FComClose();				// uzavøení portu
-void FSetComBaud();				// nastavení pøenosové rychlosti portu
-void FSetComStop();				// nastavení stopbitù
-void FSetComBits();				// nastavení poètu bitù
-void FSetComParit();			// nastavení parity
-void FSetComText();				// vyslání znaku
-void FSetComNum();				// vyslání èísla
-void FSetComSend();				// povolení vysílání
-void FSetComReceive();			// povolení pøíjmu
+void FSetComID();				// nastavenÃ­ aktivnÃ­ho portu
+void FComClose();				// uzavÃ¸enÃ­ portu
+void FSetComBaud();				// nastavenÃ­ pÃ¸enosovÃ© rychlosti portu
+void FSetComStop();				// nastavenÃ­ stopbitÃ¹
+void FSetComBits();				// nastavenÃ­ poÃ¨tu bitÃ¹
+void FSetComParit();			// nastavenÃ­ parity
+void FSetComText();				// vyslÃ¡nÃ­ znaku
+void FSetComNum();				// vyslÃ¡nÃ­ Ã¨Ã­sla
+void FSetComSend();				// povolenÃ­ vysÃ­lÃ¡nÃ­
+void FSetComReceive();			// povolenÃ­ pÃ¸Ã­jmu
 
 // mixer
-void FSetMixDevice();			// nastavení aktivního mixeru
-void FSetMixLineDst();			// nastavení cílového signálu
-void FSetMixLineSrc();			// nastavení zdrojového signálu
-void FSetLineType();			// nastavení typu signálu
-void FSetMixControl();			// nastavení ovládacího prvku
-void FSetCtrlType();			// nastavení typu ovládacího prvku
-void FSetCtrlVal();				// nastavení hodnoty ovládacího prvku
-void FSetMixChannel();			// nastavení kanálu ovládacího prvku
-void FSetMixCtrlList();			// vıbìr hodnoty ovládacího prvku
+void FSetMixDevice();			// nastavenÃ­ aktivnÃ­ho mixeru
+void FSetMixLineDst();			// nastavenÃ­ cÃ­lovÃ©ho signÃ¡lu
+void FSetMixLineSrc();			// nastavenÃ­ zdrojovÃ©ho signÃ¡lu
+void FSetLineType();			// nastavenÃ­ typu signÃ¡lu
+void FSetMixControl();			// nastavenÃ­ ovlÃ¡dacÃ­ho prvku
+void FSetCtrlType();			// nastavenÃ­ typu ovlÃ¡dacÃ­ho prvku
+void FSetCtrlVal();				// nastavenÃ­ hodnoty ovlÃ¡dacÃ­ho prvku
+void FSetMixChannel();			// nastavenÃ­ kanÃ¡lu ovlÃ¡dacÃ­ho prvku
+void FSetMixCtrlList();			// vÃ½bÃ¬r hodnoty ovlÃ¡dacÃ­ho prvku
 
 // Direct3D
-void FSet3DMode();				// nastavení videomódu Direct3D
-void FDirect3DView();			// nastavení okna Direct3D
+void FSet3DMode();				// nastavenÃ­ videomÃ³du Direct3D
+void FDirect3DView();			// nastavenÃ­ okna Direct3D
 
-void FSetD3DWireframe();		// nastavení módu vıplnì Direct3D
-void FSetD3DLighton();			// zapnutí osvìtlení Direct3D
-void FSetD3DShades();			// nastavení módu stínování Direct3D
+void FSetD3DWireframe();		// nastavenÃ­ mÃ³du vÃ½plnÃ¬ Direct3D
+void FSetD3DLighton();			// zapnutÃ­ osvÃ¬tlenÃ­ Direct3D
+void FSetD3DShades();			// nastavenÃ­ mÃ³du stÃ­novÃ¡nÃ­ Direct3D
 void FD3DInvert();				// inverze objektu
-void FSetD3DMinFilter();		// zapnutí filtrace pøi zmenšení
-void FSetD3DMagFilter();		// zapnutí filtrace pøi zvìtšení
-void FSetD3DMipFilter();		// zapnutí filtrace pøi vzdálení
-void FSetD3DOWireframe();		// nastavení módu vıplnì objektu Direct3D
-void FSetD3DOLighton();			// zapnutí osvìtlení objektu Direct3D
-void FSetD3DOShades();			// nastavení módu stínování objektu Direct3D
-void FSetD3DOMinFilter();		// zapnutí filtrace pøi zmenšení textury objektu
-void FSetD3DOMagFilter();		// zapnutí filtrace pøi zvìtšení textury objektu
-void FSetD3DOMipFilter();		// zapnutí filtrace pøi vzdálení textury objektu
-void FSetD3DOCulling();			// nastavení odstraòování ploch objektu
+void FSetD3DMinFilter();		// zapnutÃ­ filtrace pÃ¸i zmenÅ¡enÃ­
+void FSetD3DMagFilter();		// zapnutÃ­ filtrace pÃ¸i zvÃ¬tÅ¡enÃ­
+void FSetD3DMipFilter();		// zapnutÃ­ filtrace pÃ¸i vzdÃ¡lenÃ­
+void FSetD3DOWireframe();		// nastavenÃ­ mÃ³du vÃ½plnÃ¬ objektu Direct3D
+void FSetD3DOLighton();			// zapnutÃ­ osvÃ¬tlenÃ­ objektu Direct3D
+void FSetD3DOShades();			// nastavenÃ­ mÃ³du stÃ­novÃ¡nÃ­ objektu Direct3D
+void FSetD3DOMinFilter();		// zapnutÃ­ filtrace pÃ¸i zmenÅ¡enÃ­ textury objektu
+void FSetD3DOMagFilter();		// zapnutÃ­ filtrace pÃ¸i zvÃ¬tÅ¡enÃ­ textury objektu
+void FSetD3DOMipFilter();		// zapnutÃ­ filtrace pÃ¸i vzdÃ¡lenÃ­ textury objektu
+void FSetD3DOCulling();			// nastavenÃ­ odstraÃ²ovÃ¡nÃ­ ploch objektu
 
-void FSetD3DVisible();			// nastavení viditelnosti objektu Direct3D
-void FSetD3DObjectID();			// nastavení aktivního objektu Direct3D
-void FD3DObjectDelete();		// zrušení objektu Direct3D
+void FSetD3DVisible();			// nastavenÃ­ viditelnosti objektu Direct3D
+void FSetD3DObjectID();			// nastavenÃ­ aktivnÃ­ho objektu Direct3D
+void FD3DObjectDelete();		// zruÅ¡enÃ­ objektu Direct3D
 
-void FSetD3DScaleX();			// nastavení mìøítka ve smìru X
-void FSetD3DScaleY();			// nastavení mìøítka ve smìru Y
-void FSetD3DScaleZ();			// nastavení mìøítka ve smìru Z
-void FSetD3DRotateX();			// nastavení rotace podle osy X
-void FSetD3DRotateY();			// nastavení rotace podle osy Y
-void FSetD3DRotateZ();			// nastavení rotace podle osy Z
-void FSetD3DTransX();			// nastavení posunu ve smìru X
-void FSetD3DTransY();			// nastavení posunu ve smìru Y
-void FSetD3DTransZ();			// nastavení posunu ve smìru Z
-void FSetD3DColor();			// nastavení barvy objektu
-void FSetD3DAmbiRef();			// nastavení odrazu rozptıleného svìtla
-void FSetD3DEmissive();			// nastavení barvy svítivosti
-void FSetD3DPower();			// nastavení matnosti
-void FSetD3DSpecular();			// nastavení barvy odlesku
-void FSetD3DTexture();			// nastavení textury objektu Direct3D
-void FD3DTextureFile();			// naètení textury objektu Direct3D ze souboru
-void FD3DTextMap();				// mapování textury
-void FSetD3DLightColor();		// nastavení barvy svìtla
-void FSetD3DLightType();		// nastavení typu svìtla
-void FSetD3DLightUmbra();		// nastavení úhlu stínu svìtla
-void FSetD3DLightPenumbra();	// nastavení úhlu polostínu svìtla
-void FSetD3DLightRange();		// nastavení dosahu svìtla
-void FSetD3DLightCatten();		// nastavení konstantního útlumu svìtla
-void FSetD3DLightLatten();		// nastavení lineárního útlumu svìtla
-void FSetD3DLightQatten();		// nastavení kvadratického útlumu svìtla
-void FSetD3DProjection();		// nastavení projekce
-void FD3DLink();				// pøipojení jiného objektu
-//void FD3DSave();				// uloení objektu do souboru
-void FSetD3DSceneColor();		// nastavení barvy pozadí scény
-void FSetD3DAmbient();			// nastavení ambient svìtla
-void FSetD3DSceneTexture();		// nastavení textury pozadí scény
-void FSetD3DFogColor();			// nastavení barvy mlhy
-void FSetD3DFogMode();			// nastavení módu mlhy
-void FSetD3DFogStart();			// nastavení zaèátku mlhy
-void FSetD3DFogEnd();			// nastavení konce mlhy
-void FSetD3DFogDensity();		// nastavení hustoty mlhy
-void FSetD3DViewFront();		// nastavení promítací roviny
-void FSetD3DViewBack();			// nastavení vzdálenosti dohledu
-void FSetD3DUpper();			// vytváøet horní podstavu
-void FSetD3DLower();			// vytváøet dolní podstavu
-void FSetD3DSplits();			// nastavení sloitosti objektù
-void FSetD3DOrder();			// nastavení poøadí rotací objektu
-void FSetD3DDriver();			// nastavení ovladaèe
-void FSetD3DInterface();		// nastavení rozhraní
-void FSetD3DMinFilter();		// zapnutí filtrace textur pøi zmenšení
-//void FSetD3DPersp();			// nastavení korekce perspektivy
-void FSetD3DSmooth();			// nastavení vyhlazení ditheringu textur
+void FSetD3DScaleX();			// nastavenÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru X
+void FSetD3DScaleY();			// nastavenÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru Y
+void FSetD3DScaleZ();			// nastavenÃ­ mÃ¬Ã¸Ã­tka ve smÃ¬ru Z
+void FSetD3DRotateX();			// nastavenÃ­ rotace podle osy X
+void FSetD3DRotateY();			// nastavenÃ­ rotace podle osy Y
+void FSetD3DRotateZ();			// nastavenÃ­ rotace podle osy Z
+void FSetD3DTransX();			// nastavenÃ­ posunu ve smÃ¬ru X
+void FSetD3DTransY();			// nastavenÃ­ posunu ve smÃ¬ru Y
+void FSetD3DTransZ();			// nastavenÃ­ posunu ve smÃ¬ru Z
+void FSetD3DColor();			// nastavenÃ­ barvy objektu
+void FSetD3DAmbiRef();			// nastavenÃ­ odrazu rozptÃ½lenÃ©ho svÃ¬tla
+void FSetD3DEmissive();			// nastavenÃ­ barvy svÃ­tivosti
+void FSetD3DPower();			// nastavenÃ­ matnosti
+void FSetD3DSpecular();			// nastavenÃ­ barvy odlesku
+void FSetD3DTexture();			// nastavenÃ­ textury objektu Direct3D
+void FD3DTextureFile();			// naÃ¨tenÃ­ textury objektu Direct3D ze souboru
+void FD3DTextMap();				// mapovÃ¡nÃ­ textury
+void FSetD3DLightColor();		// nastavenÃ­ barvy svÃ¬tla
+void FSetD3DLightType();		// nastavenÃ­ typu svÃ¬tla
+void FSetD3DLightUmbra();		// nastavenÃ­ Ãºhlu stÃ­nu svÃ¬tla
+void FSetD3DLightPenumbra();	// nastavenÃ­ Ãºhlu polostÃ­nu svÃ¬tla
+void FSetD3DLightRange();		// nastavenÃ­ dosahu svÃ¬tla
+void FSetD3DLightCatten();		// nastavenÃ­ konstantnÃ­ho Ãºtlumu svÃ¬tla
+void FSetD3DLightLatten();		// nastavenÃ­ lineÃ¡rnÃ­ho Ãºtlumu svÃ¬tla
+void FSetD3DLightQatten();		// nastavenÃ­ kvadratickÃ©ho Ãºtlumu svÃ¬tla
+void FSetD3DProjection();		// nastavenÃ­ projekce
+void FD3DLink();				// pÃ¸ipojenÃ­ jinÃ©ho objektu
+//void FD3DSave();				// uloÅ¾enÃ­ objektu do souboru
+void FSetD3DSceneColor();		// nastavenÃ­ barvy pozadÃ­ scÃ©ny
+void FSetD3DAmbient();			// nastavenÃ­ ambient svÃ¬tla
+void FSetD3DSceneTexture();		// nastavenÃ­ textury pozadÃ­ scÃ©ny
+void FSetD3DFogColor();			// nastavenÃ­ barvy mlhy
+void FSetD3DFogMode();			// nastavenÃ­ mÃ³du mlhy
+void FSetD3DFogStart();			// nastavenÃ­ zaÃ¨Ã¡tku mlhy
+void FSetD3DFogEnd();			// nastavenÃ­ konce mlhy
+void FSetD3DFogDensity();		// nastavenÃ­ hustoty mlhy
+void FSetD3DViewFront();		// nastavenÃ­ promÃ­tacÃ­ roviny
+void FSetD3DViewBack();			// nastavenÃ­ vzdÃ¡lenosti dohledu
+void FSetD3DUpper();			// vytvÃ¡Ã¸et hornÃ­ podstavu
+void FSetD3DLower();			// vytvÃ¡Ã¸et dolnÃ­ podstavu
+void FSetD3DSplits();			// nastavenÃ­ sloÅ¾itosti objektÃ¹
+void FSetD3DOrder();			// nastavenÃ­ poÃ¸adÃ­ rotacÃ­ objektu
+void FSetD3DDriver();			// nastavenÃ­ ovladaÃ¨e
+void FSetD3DInterface();		// nastavenÃ­ rozhranÃ­
+void FSetD3DMinFilter();		// zapnutÃ­ filtrace textur pÃ¸i zmenÅ¡enÃ­
+//void FSetD3DPersp();			// nastavenÃ­ korekce perspektivy
+void FSetD3DSmooth();			// nastavenÃ­ vyhlazenÃ­ ditheringu textur
 void FD3DNorm();				// normalizace objektu
-void FSetD3DTransparent();		// nastavení prùhlednosti
-void FSetD3DAlphaRef();			// nastavení alpfa referenèní úrovnì
-void FSetD3DStage();			// nastavení aktivního stupnì textur
-void FSetD3DColorOp();			// nastavení operace barev
-void FSetD3DColorArg1();		// nastavení argumentu 1 barev
-void FSetD3DColorArg2();		// nastavení argumentu 2 barev
-void FSetD3DAlphaOp();			// nastavení operace alfa
-void FSetD3DAlphaArg1();		// nastavení argumentu 1 barev
-void FSetD3DAlphaArg2();		// nastavení argumentu 2 barev
-void FSetD3DAddressU();			// nastavení horizontálního adresování
-void FSetD3DAddressV();			// nastavení vertikálního adresování
-//void FSetD3DBorder();			// nastavení barvy okolí textury
-void FSetD3DBias();				// nastavení zjemnìní vzdálenıch textur
-void FSetD3DTFactor();			// nastavení barvy faktoru textur
-void FSetD3DMipMaps();			// poèet úrovní mipmaps
-void FSetD3DZGroup();			// nastavení renderovací skupiny
-void FSetD3DZSort();			// nastavení tøídìní
-void FSetD3DZWrite();			// nastavení hloubkového zápisu
-void FSetD3DZTest();			// nastavení hloubkového testu
-void FSetD3DShadowRange();		// nastavení dosahu stínu
-void FD3DNormals();				// generování normál
-void FD3DNormals0();			// generování normál (implicitní parametr)
-void FD3DRender();				// renderování bez zobrazení
-void FSetD3DLODObject();		// nastavení objektu pro LOD
-void FSetD3DLODDistance();		// nastavení vzdálenosti pro LOD
-void FSetD3DMorphModel();		// nastavení vzoru morfování
-void FSetD3DMorphLevel();		// nastavení stupnì morfování
+void FSetD3DTransparent();		// nastavenÃ­ prÃ¹hlednosti
+void FSetD3DAlphaRef();			// nastavenÃ­ alpfa referenÃ¨nÃ­ ÃºrovnÃ¬
+void FSetD3DStage();			// nastavenÃ­ aktivnÃ­ho stupnÃ¬ textur
+void FSetD3DColorOp();			// nastavenÃ­ operace barev
+void FSetD3DColorArg1();		// nastavenÃ­ argumentu 1 barev
+void FSetD3DColorArg2();		// nastavenÃ­ argumentu 2 barev
+void FSetD3DAlphaOp();			// nastavenÃ­ operace alfa
+void FSetD3DAlphaArg1();		// nastavenÃ­ argumentu 1 barev
+void FSetD3DAlphaArg2();		// nastavenÃ­ argumentu 2 barev
+void FSetD3DAddressU();			// nastavenÃ­ horizontÃ¡lnÃ­ho adresovÃ¡nÃ­
+void FSetD3DAddressV();			// nastavenÃ­ vertikÃ¡lnÃ­ho adresovÃ¡nÃ­
+//void FSetD3DBorder();			// nastavenÃ­ barvy okolÃ­ textury
+void FSetD3DBias();				// nastavenÃ­ zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
+void FSetD3DTFactor();			// nastavenÃ­ barvy faktoru textur
+void FSetD3DMipMaps();			// poÃ¨et ÃºrovnÃ­ mipmaps
+void FSetD3DZGroup();			// nastavenÃ­ renderovacÃ­ skupiny
+void FSetD3DZSort();			// nastavenÃ­ tÃ¸Ã­dÃ¬nÃ­
+void FSetD3DZWrite();			// nastavenÃ­ hloubkovÃ©ho zÃ¡pisu
+void FSetD3DZTest();			// nastavenÃ­ hloubkovÃ©ho testu
+void FSetD3DShadowRange();		// nastavenÃ­ dosahu stÃ­nu
+void FD3DNormals();				// generovÃ¡nÃ­ normÃ¡l
+void FD3DNormals0();			// generovÃ¡nÃ­ normÃ¡l (implicitnÃ­ parametr)
+void FD3DRender();				// renderovÃ¡nÃ­ bez zobrazenÃ­
+void FSetD3DLODObject();		// nastavenÃ­ objektu pro LOD
+void FSetD3DLODDistance();		// nastavenÃ­ vzdÃ¡lenosti pro LOD
+void FSetD3DMorphModel();		// nastavenÃ­ vzoru morfovÃ¡nÃ­
+void FSetD3DMorphLevel();		// nastavenÃ­ stupnÃ¬ morfovÃ¡nÃ­
 
 // obsluha DDE
-void FSetDDEApp();				// nastavení jména aplikace DDE
+void FSetDDEApp();				// nastavenÃ­ jmÃ©na aplikace DDE
 
-void FSetActive();				// nastavení aktivní aplikace
-void FSetDialogGraph();			// nastavení grafického pozadí
+void FSetActive();				// nastavenÃ­ aktivnÃ­ aplikace
+void FSetDialogGraph();			// nastavenÃ­ grafickÃ©ho pozadÃ­
 
-void FPicPrint2();				// tisk obrázku
+void FPicPrint2();				// tisk obrÃ¡zku
 
 // obsluha DLL
-void FDLLFree();				// uvolnìní DLL knihovny
-void FDLLExecCom();				// provedení DLL funkce
-void FMemoryFree();				// zrušení bloku pamìti
-void FSetMemoryRead();			// ukazatel ètení z pamìti
-void FSetMemoryWrite();			// ukazatel zápisu do pamìti
+void FDLLFree();				// uvolnÃ¬nÃ­ DLL knihovny
+void FDLLExecCom();				// provedenÃ­ DLL funkce
+void FMemoryFree();				// zruÅ¡enÃ­ bloku pamÃ¬ti
+void FSetMemoryRead();			// ukazatel Ã¨tenÃ­ z pamÃ¬ti
+void FSetMemoryWrite();			// ukazatel zÃ¡pisu do pamÃ¬ti
 void FMemoryCopy();				// kopie dat
-void FSetMemoryByteS();			// bajt se znaménkem
-inline void FSetMemoryByteU() { FSetMemoryByteS(); } // bajt bez znaménka
-void FSetMemoryWordS();			// slovo se znaménkem
-inline void FSetMemoryWordU() { FSetMemoryWordS(); }	// slovo bez znaménka
-void FSetMemory3ByteS();		// 3-bajt se znaménkem
-inline void FSetMemory3ByteU() { FSetMemory3ByteS(); } // 3-bajt bez znaménka
-void FSetMemoryDWordS();		// dvouslovo se znaménkem
-void FSetMemoryDWordU();		// dvouslovo bez znaménka
-void FSetMemoryFloat();			// reálné èíslo 4 bajty
-void FSetMemoryDouble();		// reálné èíslo 8 bajtù
-void FSetMemoryBool();			// logická hodnota
-void FSetMemoryText0();			// text zakonèenı nulou
-void FSetMemoryText0P();		// ukazatel na text zakonèenı nulou
-void FSetMemoryTextN();			// text s pevnou délkou
-void FSetMemoryTextNLen();		// délka textu s pevnou délkou
-void FMemoryLoad();				// naètení bloku dat
-void FMemorySave();				// zápis bloku dat
+void FSetMemoryByteS();			// bajt se znamÃ©nkem
+inline void FSetMemoryByteU() { FSetMemoryByteS(); } // bajt bez znamÃ©nka
+void FSetMemoryWordS();			// slovo se znamÃ©nkem
+inline void FSetMemoryWordU() { FSetMemoryWordS(); }	// slovo bez znamÃ©nka
+void FSetMemory3ByteS();		// 3-bajt se znamÃ©nkem
+inline void FSetMemory3ByteU() { FSetMemory3ByteS(); } // 3-bajt bez znamÃ©nka
+void FSetMemoryDWordS();		// dvouslovo se znamÃ©nkem
+void FSetMemoryDWordU();		// dvouslovo bez znamÃ©nka
+void FSetMemoryFloat();			// reÃ¡lnÃ© Ã¨Ã­slo 4 bajty
+void FSetMemoryDouble();		// reÃ¡lnÃ© Ã¨Ã­slo 8 bajtÃ¹
+void FSetMemoryBool();			// logickÃ¡ hodnota
+void FSetMemoryText0();			// text zakonÃ¨enÃ½ nulou
+void FSetMemoryText0P();		// ukazatel na text zakonÃ¨enÃ½ nulou
+void FSetMemoryTextN();			// text s pevnou dÃ©lkou
+void FSetMemoryTextNLen();		// dÃ©lka textu s pevnou dÃ©lkou
+void FMemoryLoad();				// naÃ¨tenÃ­ bloku dat
+void FMemorySave();				// zÃ¡pis bloku dat
 
 // konfigurace
-void FSetIniFile();				// jméno konfiguraèního souboru
-void FSetIniSection();			// jméno konfiguraèní sekce
-void FSetIniValue();			// jméno konfiguraèního parametru
-void FSetIniDel();				// zrušení konfiguraèního parametru
-void FSetIniString();			// zápis konfiguraèního textu
-void FSetIniNum();				// zápis konfiguraèního èísla
-void FSetRegKey();				// skupina klíèù registrù
-void FSetRegSubkey();			// klíè registrù
-void FSetRegValue();			// jméno poloky registru
-void FSetRegDel();				// zrušení registru
-void FSetRegString();			// zápis textu do registru
-void FSetRegNum();				// zápis èísla do registru
+void FSetIniFile();				// jmÃ©no konfiguraÃ¨nÃ­ho souboru
+void FSetIniSection();			// jmÃ©no konfiguraÃ¨nÃ­ sekce
+void FSetIniValue();			// jmÃ©no konfiguraÃ¨nÃ­ho parametru
+void FSetIniDel();				// zruÅ¡enÃ­ konfiguraÃ¨nÃ­ho parametru
+void FSetIniString();			// zÃ¡pis konfiguraÃ¨nÃ­ho textu
+void FSetIniNum();				// zÃ¡pis konfiguraÃ¨nÃ­ho Ã¨Ã­sla
+void FSetRegKey();				// skupina klÃ­Ã¨Ã¹ registrÃ¹
+void FSetRegSubkey();			// klÃ­Ã¨ registrÃ¹
+void FSetRegValue();			// jmÃ©no poloÅ¾ky registru
+void FSetRegDel();				// zruÅ¡enÃ­ registru
+void FSetRegString();			// zÃ¡pis textu do registru
+void FSetRegNum();				// zÃ¡pis Ã¨Ã­sla do registru

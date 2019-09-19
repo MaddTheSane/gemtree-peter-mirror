@@ -7,21 +7,21 @@
 
 
 //////////////////////////////////////////////////////////////////////////////
-// komprese dat obrázku:
-//		dst = vıstupní buffer (mìl by bıt minimálnì o 1/8 vìtší ne vstupní buffer)
-//		src = vstupní buffer s daty
+// komprese dat obrÃ¡zku:
+//		dst = vÃ½stupnÃ­ buffer (mÃ¬l by bÃ½t minimÃ¡lnÃ¬ o 1/8 vÃ¬tÅ¡Ã­ neÅ¾ vstupnÃ­ buffer)
+//		src = vstupnÃ­ buffer s daty
 //		size = velikost dat ke kompresi
-//		width = délka linky bitmapy (pro offset pøedešlé linky)
-// vıstup: velikost dat ve vıstupním bufferu
+//		width = dÃ©lka linky bitmapy (pro offset pÃ¸edeÅ¡lÃ© linky)
+// vÃ½stup: velikost dat ve vÃ½stupnÃ­m bufferu
 
 int Compress(BYTE* dst, BYTE* src, int size, int width);
 
 
 //////////////////////////////////////////////////////////////////////////////
 // dekomprese dat
-//		dst = vıstupní buffer
-//		src = vstupní buffer s daty
-//		size = velikost vıstupních dat (nezkomprimovanıch)
-//		width = délka linky bitmapy (pro offset pøedešlé linky)
+//		dst = vÃ½stupnÃ­ buffer
+//		src = vstupnÃ­ buffer s daty
+//		size = velikost vÃ½stupnÃ­ch dat (nezkomprimovanÃ½ch)
+//		width = dÃ©lka linky bitmapy (pro offset pÃ¸edeÅ¡lÃ© linky)
 
 void DeCompress(BYTE* dst, BYTE* src, int size, int width);

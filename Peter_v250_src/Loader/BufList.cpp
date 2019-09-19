@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer seznam˘								*
+*								Buffer seznam√π								*
 *																			*
 \***************************************************************************/
 
@@ -15,142 +15,142 @@ LISTDATA	EmptyListData =	{ 0, 1, 0, 0 };
 
 CBufList::CBufList()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 CBufList::~CBufList()
 {
-	DelAll();				// zruöenÌ vöech poloûek
+	DelAll();				// zru≈°en√≠ v≈°ech polo≈æek
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CBufList::Init()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 void CBufList::Term()
 {
-	DelAll();				// zruöenÌ vöech poloûek
+	DelAll();				// zru≈°en√≠ v≈°ech polo≈æek
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ nov˝ch dat
+// vytvo√∏en√≠ nov√Ωch dat
 
 void CBufList::NewData()
 {
 	m_Max *= 2;
 	if (m_Max == 0) m_Max = 0x100;
-//	m_Max += 0x100;			// zv˝öenÌ poËtu poloûek (o 4 KB)
-	MemBuf(m_Data, m_Max);	// zv˝öenÌ velikosti bufferu
+//	m_Max += 0x100;			// zv√Ω≈°en√≠ po√®tu polo≈æek (o 4 KB)
+	MemBuf(m_Data, m_Max);	// zv√Ω≈°en√≠ velikosti bufferu
 };
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ vöech poloûek v bufferu
+// zru≈°en√≠ v≈°ech polo≈æek v bufferu
  
 void CBufList::DelAll()
 {
-	Del(m_Num);					// zruöenÌ poloûek
-	MemBuf(m_Data, 0);			// zruöenÌ bufferu dat
-	m_Max = 0;					// nenÌ û·dn· poloûka v bufferu
+	Del(m_Num);					// zru≈°en√≠ polo≈æek
+	MemBuf(m_Data, 0);			// zru≈°en√≠ bufferu dat
+	m_Max = 0;					// nen√≠ ≈æ√°dn√° polo≈æka v bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// automatick· inkrementace indexu (nekontroluje spr·vnost!)
+// automatick√° inkrementace indexu (nekontroluje spr√°vnost!)
 /*
 void _fastcall CBufList::AutoInc(int index)
 {
-// adresa poloûky seznamu
+// adresa polo≈æky seznamu
 	LISTDATA* list = m_Data + index;
 
 // test, zda bude inkrementace
 	if (list->Auto != 0)
 	{
 
-// nov˝ index
+// nov√Ω index
 		int newindex = list->Index + list->Auto;
 
-// kontrola p¯eteËenÌ indexu
+// kontrola p√∏ete√®en√≠ indexu
 		if ((DWORD)newindex >= (DWORD)list->Size)
 		{
 			while (newindex < 0) newindex += list->Size;
 			while (newindex >= list->Size) newindex -= list->Size;
 		}
 
-// nastavenÌ novÈho indexu
+// nastaven√≠ nov√©ho indexu
 		list->Index = newindex;
 	}
 }
 */
 
 ////////////////////////////////////////////////////////////////////
-// automatick· inkrementace indexu, vracÌ p˘vodnÌ index (nekontroluje spr·vnost!)
+// automatick√° inkrementace indexu, vrac√≠ p√πvodn√≠ index (nekontroluje spr√°vnost!)
 /*
 int _fastcall CBufList::AutoIncInx(int index)
 {
-// adresa poloûky seznamu
+// adresa polo≈æky seznamu
 	LISTDATA* list = m_Data + index;
 
-// ˙schova p˘vodnÌho indexu
+// √∫schova p√πvodn√≠ho indexu
 	int result = list->Index;
 
 // test, zda bude inkrementace
 	if (list->Auto != 0)
 	{
 
-// nov˝ index
+// nov√Ω index
 		int newindex = result + list->Auto;
 
-// kontrola p¯eteËenÌ indexu
+// kontrola p√∏ete√®en√≠ indexu
 		if ((DWORD)newindex >= (DWORD)list->Size)
 		{
 			while (newindex < 0) newindex += list->Size;
 			while (newindex >= list->Size) newindex -= list->Size;
 		}
 
-// nastavenÌ novÈho indexu
+// nastaven√≠ nov√©ho indexu
 		list->Index = newindex;
 	}
 
-// n·vrat p˘vodnÌho indexu
+// n√°vrat p√πvodn√≠ho indexu
 	return result;
 }
 */
 ////////////////////////////////////////////////////////////////////
-// poskytnutÌ poloûky (s kontrolou platnosti indexu)
+// poskytnut√≠ polo≈æky (s kontrolou platnosti indexu)
 
 const LISTDATA& _fastcall CBufList::Get(const int index) const
 {
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
-		return m_Data[index];	// poloûka na danÈm indexu
+		return m_Data[index];	// polo≈æka na dan√©m indexu
 	}
 	return EmptyListData;
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poloûky (s kontrolou platnosti indexu)
+// nastaven√≠ polo≈æky (s kontrolou platnosti indexu)
 
 void _fastcall CBufList::Set(const int index, const LISTDATA& data)
 {
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
 		m_Data[index] = data;
 	}
 }
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûek z konce bufferu
+// zru≈°en√≠ polo≈æek z konce bufferu
 
 void _fastcall CBufList::Del(int num)
 {
@@ -164,54 +164,54 @@ void _fastcall CBufList::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ poloûky (vracÌ index poloûky)
+// vytvo√∏en√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int CBufList::New()
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 	m_Data[result] = EmptyListData;
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// p¯id·nÌ poloûky (vracÌ index poloûky)
+// p√∏id√°n√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int _fastcall CBufList::Add(const LISTDATA& data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result] = data;		// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result] = data;		// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// duplikace poloûky (s kontrolou platnosti indexu, vracÌ index poloûky)
+// duplikace polo≈æky (s kontrolou platnosti indexu, vrac√≠ index polo≈æky)
 
 int _fastcall CBufList::Dup(const int index)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))			// je index platn˝?
+	if (IsValid(index))			// je index platn√Ω?
 	{
-		m_Data[result] = m_Data[index];		// kopie poloûky
+		m_Data[result] = m_Data[index];		// kopie polo≈æky
 	}
 	else
 	{
-		m_Data[result] = EmptyListData;		// inicializace neplatnÈ poloûky
+		m_Data[result] = EmptyListData;		// inicializace neplatn√© polo≈æky
 	}
 	return result;
 }
 
 int _fastcall CBufList::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		LISTDATA* data = &m_Data[index];
 
-		m_Data[result] = *data;			// kopie poloûky
+		m_Data[result] = *data;			// kopie polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -220,7 +220,7 @@ int _fastcall CBufList::Dup(const int index, int num)
 	}
 	else
 	{
-		m_Data[result] = EmptyListData;		// inicializace neplatnÈ poloûky
+		m_Data[result] = EmptyListData;		// inicializace neplatn√© polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -232,19 +232,19 @@ int _fastcall CBufList::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CBufList& CBufList::operator= (const CBufList& src)
 {
-	Del(m_Num);					// zruöenÌ star˝ch dat
+	Del(m_Num);					// zru≈°en√≠ star√Ωch dat
 
-	int index = 0;				// index naËÌtanÈ poloûky
-	int i = src.m_Num;			// velikost zdrojovÈho bufferu
+	int index = 0;				// index na√®√≠tan√© polo≈æky
+	int i = src.m_Num;			// velikost zdrojov√©ho bufferu
 
-	for (; i > 0; i--)			// pro vöechny poloûky v bufferu
+	for (; i > 0; i--)			// pro v≈°echny polo≈æky v bufferu
 	{
-		Add(src[index]);	// kopie poloûky
-		index++;				// inkrementace ËtecÌho indexu
+		Add(src[index]);	// kopie polo≈æky
+		index++;				// inkrementace √®tec√≠ho indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

@@ -3,28 +3,28 @@
 
 /***************************************************************************\
 *																			*
-*						Kompilace programu - obrázek						*
+*						Kompilace programu - obrÃ¡zek						*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minimální velikost
+#pragma optimize("s", on)			// optimalizace na minimÃ¡lnÃ­ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad vırazu s obrázkem (vrací true = operace OK)
+// pÃ¸eklad vÃ½razu s obrÃ¡zkem (vracÃ­ true = operace OK)
 
 bool _fastcall CompPic(int index)
 {
-// adresa zdrojového prvku
+// adresa zdrojovÃ©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 
-// kontrola, zda je poloka vypnuta
+// kontrola, zda je poloÅ¾ka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// vÃ¬tvenÃ­ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_PIC:
@@ -66,10 +66,10 @@ bool _fastcall CompPic(int index)
 		return false;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_PIC);	// funkce s návratem obrázku
+		return CompFunc(index, IDF_PIC);	// funkce s nÃ¡vratem obrÃ¡zku
 
 	case IDF_PIC_GET:
-		CompAddItem(FPicGet);					// naètení obrázku
+		CompAddItem(FPicGet);					// naÃ¨tenÃ­ obrÃ¡zku
 		CompNumSubPar(index, IDF_PIC_BLOCK_X, 0);
 		CompNumSubPar(index, IDF_PIC_BLOCK_Y, 0);
 		CompNumSubPar(index, IDF_PIC_BLOCK_W, 2000000);
@@ -77,17 +77,17 @@ bool _fastcall CompPic(int index)
 		return true;
 
 	case IDF_FILE_PICTURE:
-		CompAddItem(FGetFilePicture);			// naètení obrázku
+		CompAddItem(FGetFilePicture);			// naÃ¨tenÃ­ obrÃ¡zku
 		return true;
 
 	case IDF_PICTURE_XFLIP:
-		return CompPicPar(index, FPicXFlip);	// horizontální pøevrácení
+		return CompPicPar(index, FPicXFlip);	// horizontÃ¡lnÃ­ pÃ¸evrÃ¡cenÃ­
 
 	case IDF_PICTURE_YFLIP:
-		return CompPicPar(index, FPicYFlip);	// vertikální pøevrácení
+		return CompPicPar(index, FPicYFlip);	// vertikÃ¡lnÃ­ pÃ¸evrÃ¡cenÃ­
 
 	case IDF_PICTURE_ZOOM:
-		CompAddItem(FPicZoom);					// zmìna velikosti obrázku
+		CompAddItem(FPicZoom);					// zmÃ¬na velikosti obrÃ¡zku
 		CompPicSubPar(index, IDF_PICTURE_ZOOM_PIC);
 		CompNumSubPar(index, IDF_PICTURE_ZOOM_WIDTH, 2000000);
 		CompNumSubPar(index, IDF_PICTURE_ZOOM_HEIGHT, 2000000);
@@ -96,14 +96,14 @@ bool _fastcall CompPic(int index)
 		return true;
 
 	case IDF_PICTURE_LEVEL:
-		CompAddItem(FPicLevel);					// zmìna jasu obrázku
+		CompAddItem(FPicLevel);					// zmÃ¬na jasu obrÃ¡zku
 		CompPicSubPar(index, IDF_PICTURE_LEVEL_PIC);
 		CompNumSubPar(index, IDF_PICTURE_LEVEL_N, 1);
 		CompLogSubPar(index, IDF_PICTURE_ZOOM_DITH, FALSE);
 		return true;
 
 	case IDF_PICTURE_ROTATE:
-		CompAddItem(FPicRotate);					// otoèení obrázku
+		CompAddItem(FPicRotate);					// otoÃ¨enÃ­ obrÃ¡zku
 		CompPicSubPar(index, IDF_PICTURE_ROTATE_PIC);
 		CompNumSubPar(index, IDF_PICTURE_ROTATE_ANGLE, 0);
 		CompLogSubPar(index, IDF_PICTURE_ZOOM_INT, FALSE);
@@ -111,30 +111,30 @@ bool _fastcall CompPic(int index)
 		return true;
 
 	case IDF_WINDOW_PIC:
-		CompAddItem(FGetWindowPic);		// obrázek okna
+		CompAddItem(FGetWindowPic);		// obrÃ¡zek okna
 		return true;
 
 	case IDF_MAP_PICTURE:
-		return CompMapPar(index, FMapPicture);	// konverze plochy na obrázek
+		return CompMapPar(index, FMapPicture);	// konverze plochy na obrÃ¡zek
 
 	case IDF_ICON_PICTURE:
-		return CompIcoPar(index, FIconPicture);	// konverze ikony na obrázek
+		return CompIcoPar(index, FIconPicture);	// konverze ikony na obrÃ¡zek
 
 	case IDF_PICTURE_MASK:
-		CompAddItem(FPicMask);					// maskování obrázku
+		CompAddItem(FPicMask);					// maskovÃ¡nÃ­ obrÃ¡zku
 		CompPicSubPar(index, IDF_PICTURE_MASK_PIC);
 		CompPicSubPar(index, IDF_PICTURE_MASK_MASK);
 		return true;
 
 	case IDF_PICTURE_XCOL:
-		CompAddItem(FPicXCol);					// zámìna barev obrázku
+		CompAddItem(FPicXCol);					// zÃ¡mÃ¬na barev obrÃ¡zku
 		CompPicSubPar(index, IDF_PICTURE_MASK_PIC);
 		CompNumSubPar(index, IDF_PICTURE_XCOL1, 0xFFFFFF);
 		CompNumSubPar(index, IDF_PICTURE_XCOL2, 0);
 		return true;
 
 	case IDF_PICTURE_SCOL:
-		CompAddItem(FPicSCol);					// náhrada barvy obrázku
+		CompAddItem(FPicSCol);					// nÃ¡hrada barvy obrÃ¡zku
 		CompPicSubPar(index, IDF_PICTURE_MASK_PIC);
 		CompNumSubPar(index, IDF_PICTURE_SCOL1, 0xFFFFFF);
 		CompNumSubPar(index, IDF_PICTURE_SCOL2, 0);
@@ -143,16 +143,16 @@ bool _fastcall CompPic(int index)
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-	case IDF_DIRECT3D_TEXTURE:					// zjištìní textury obrázku Direct3D
+	case IDF_DIRECT3D_TEXTURE:					// zjiÅ¡tÃ¬nÃ­ textury obrÃ¡zku Direct3D
 		CompAddItem(FGetD3DTexture);
 		return true;
 
-	case IDF_DIRECT3D_SCENE_TEXTURE:			// zjištìní textury pozadí scény
+	case IDF_DIRECT3D_SCENE_TEXTURE:			// zjiÅ¡tÃ¬nÃ­ textury pozadÃ­ scÃ©ny
 		CompAddItem(FGetD3DSceneTexture);
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 	default:
 		return false;
@@ -161,7 +161,7 @@ bool _fastcall CompPic(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem obrázku
+// pÃ¸eklad pÃ¸Ã­kazu s parametrem obrÃ¡zku
 
 bool CompPicPar(int index, PROCCOM func)
 {
@@ -187,31 +187,31 @@ bool CompPicPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem obrázku (hledanım podle identifikace)
+// pÃ¸eklad pÃ¸Ã­kazu s podparametrem obrÃ¡zku (hledanÃ½m podle identifikace)
 
 void CompPicSubPar(int index, int idf)
 {
 // korekce identifikace funkce
 	idf -= IDF;
 
-// ukazatel vıchozího prvku
+// ukazatel vÃ½chozÃ­ho prvku
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda má poloka nìjaké potomky
+// kontrola, zda mÃ¡ poloÅ¾ka nÃ¬jakÃ© potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus pøes všechny potomky
+// cyklus pÃ¸es vÅ¡echny potomky
 		do {
 
-// adresa dalšího potomka
+// adresa dalÅ¡Ã­ho potomka
 			index += posun;
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledanı prvek - naètení prvku
+// test, zda to je hledanÃ½ prvek - naÃ¨tenÃ­ prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompPic(index + 1))
@@ -219,13 +219,13 @@ void CompPicSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro pøíští prvek
+// posun pro pÃ¸Ã­Å¡tÃ­ prvek
 			posun = item2->Items;
 
-// dokud je další potomek
+// dokud je dalÅ¡Ã­ potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// pouije se implicitní hodnota - prázdnı text
+// pouÅ¾ije se implicitnÃ­ hodnota - prÃ¡zdnÃ½ text
 	CompAddItem(FPicEmpty);
 }

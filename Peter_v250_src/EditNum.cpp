@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Editor èísel								*
+*								Editor Ã¨Ã­sel								*
 *																			*
 \***************************************************************************/
 
@@ -13,28 +13,28 @@ namespace EditNum
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-int		Index = -1;						// editovaná položka
-int		DispLeft;						// souøadnice X editaèního pole
-int		DispTop;						// souøadnice Y editaèního pole
-int		DispWidth;						// šíøka editaèního pole
-int		DispHeight;						// výška editaèního pole
+int		Index = -1;						// editovanÃ¡ poloÅ¾ka
+int		DispLeft;						// souÃ¸adnice X editaÃ¨nÃ­ho pole
+int		DispTop;						// souÃ¸adnice Y editaÃ¨nÃ­ho pole
+int		DispWidth;						// Å¡Ã­Ã¸ka editaÃ¨nÃ­ho pole
+int		DispHeight;						// vÃ½Å¡ka editaÃ¨nÃ­ho pole
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace pÃ¸i startu programu
 
 void StartInit()
 {
-// vytvoøení editaèního okna
+// vytvoÃ¸enÃ­ editaÃ¨nÃ­ho okna
 	EditNumWnd = ::CreateWindowEx(
-		WS_EX_CLIENTEDGE,				// rozšíøený styl
-		_T("EDIT"),						// tøída
+		WS_EX_CLIENTEDGE,				// rozÅ¡Ã­Ã¸enÃ½ styl
+		_T("EDIT"),						// tÃ¸Ã­da
 		NULL,							// text
 		WS_CHILD | ES_AUTOHSCROLL,		// styl
 		300,							// X
 		200,							// Y
-		100,							// šíøka
-		30,								// výška
-		MainFrame,						// rodiè
+		100,							// Å¡Ã­Ã¸ka
+		30,								// vÃ½Å¡ka
+		MainFrame,						// rodiÃ¨
 		NULL,							// ID
 		hInstance,						// instance
 		NULL);							// data
@@ -42,7 +42,7 @@ void StartInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace (musí být platný index!)
+// zahÃ¡jenÃ­ editace (musÃ­ bÃ½t platnÃ½ index!)
 
 void BegEdit(int index)
 {
@@ -50,13 +50,13 @@ void BegEdit(int index)
 	Index = index;
 	ASSERT(Real.IsValid(index));
 
-// zobrazení okna
+// zobrazenÃ­ okna
 	::ShowWindow(EditNumWnd, SW_SHOW);
 
-// pøíprava textu
+// pÃ¸Ã­prava textu
 	ReLoad();
 
-// zobrazení
+// zobrazenÃ­
 	Disp();
 
 // aktualizace voleb bloku
@@ -65,7 +65,7 @@ void BegEdit(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun editaèního pole
+// pÃ¸esun editaÃ¨nÃ­ho pole
 
 HDWP MoveEdit(HDWP hdwp)
 {
@@ -89,17 +89,17 @@ HDWP MoveEdit(HDWP hdwp)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení podkladu kolem editoru
+// zobrazenÃ­ podkladu kolem editoru
 
 void Disp()
 {
-// otevøení kontextu displeje
+// otevÃ¸enÃ­ kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// pÃ¸Ã­prava Å¡tÃ¬tce k vymazÃ¡nÃ­ podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // Å¡tÃ¬tec k vymazÃ¡nÃ­ plochy
 
-// vymazání plochy nahoøe nad editorem
+// vymazÃ¡nÃ­ plochy nahoÃ¸e nad editorem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -110,7 +110,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy dole pod editorem (left a right je nastaveno)
+// vymazÃ¡nÃ­ plochy dole pod editorem (left a right je nastaveno)
 	rc.top = DispTop + DispHeight;
 	rc.bottom = EditY + EditHeight - 2;
 	if (rc.top < rc.bottom)
@@ -118,7 +118,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vlevo od editoru (left je nastaveno)
+// vymazÃ¡nÃ­ plochy vlevo od editoru (left je nastaveno)
 	rc.right = DispLeft;
 	rc.top = DispTop;
 	rc.bottom = DispTop + DispHeight;
@@ -127,7 +127,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vpravo od editoru (top a bottom je nastaveno)
+// vymazÃ¡nÃ­ plochy vpravo od editoru (top a bottom je nastaveno)
 	rc.left = DispLeft + DispWidth;
 	rc.right = EditX + EditWidth - 2;
 	if (rc.left < rc.right)
@@ -135,16 +135,16 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// zrušení štìtce podkladu (i když podle dokumentace rušení není nutné)
+// zruÅ¡enÃ­ Å¡tÃ¬tce podkladu (i kdyÅ¾ podle dokumentace ruÅ¡enÃ­ nenÃ­ nutnÃ©)
 	::DeleteObject(brush);
 
-// uvolnìní kontextu displeje
+// uvolnÃ¬nÃ­ kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vstup znaku z klávesnice (TRUE=zrušit)
+// vstup znaku z klÃ¡vesnice (TRUE=zruÅ¡it)
 
 BOOL OnChar(TCHAR znak)
 {
@@ -179,11 +179,11 @@ BOOL OnChar(TCHAR znak)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr všeho
+// vÃ½bÃ¬r vÅ¡eho
 
 void SelectAll()
 {
-// výbìr všeho
+// vÃ½bÃ¬r vÅ¡eho
 	::SendMessage(EditNumWnd, EM_SETSEL, 0, (LPARAM)-1);
 
 // aktualizace voleb bloku
@@ -191,15 +191,15 @@ void SelectAll()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení bloku nebo znaku
+// zruÅ¡enÃ­ bloku nebo znaku
 
 void Delete()
 {
-// zjištìní oznaèeného úseku textu
+// zjiÅ¡tÃ¬nÃ­ oznaÃ¨enÃ©ho Ãºseku textu
 	long int start, end;
 	::SendMessage(EditNumWnd, EM_GETSEL, (WPARAM)&start, (WPARAM)&end);
 
-// není-li nic oznaèeno, ruší se znak za kurzorem (podhození klávesy DELETE)
+// nenÃ­-li nic oznaÃ¨eno, ruÅ¡Ã­ se znak za kurzorem (podhozenÃ­ klÃ¡vesy DELETE)
 	if (start == end)
 	{
 		::SendMessage(EditNumWnd, WM_KEYDOWN,	VK_DELETE, 0x01530001);
@@ -207,7 +207,7 @@ void Delete()
 	}
 	else
 
-// jinak zrušení oznaèeného úseku
+// jinak zruÅ¡enÃ­ oznaÃ¨enÃ©ho Ãºseku
 	{
 		::SendMessage(EditNumWnd, WM_CLEAR, 0, 0);
 	}
@@ -229,7 +229,7 @@ void Copy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøížení bloku
+// vystÃ¸Ã­Å¾enÃ­ bloku
 
 void Cut()
 {
@@ -241,7 +241,7 @@ void Cut()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// navrácení bloku
+// navrÃ¡cenÃ­ bloku
 
 void Paste()
 {
@@ -257,7 +257,7 @@ void Paste()
 
 void UpdateClipboard()
 {
-// kontrola, zda je režim editace
+// kontrola, zda je reÅ¾im editace
 	if (!ProgMode) return;
 
 	if ((FocusBuf == BufEdiID) && (EditMode == BufNumID))
@@ -279,7 +279,7 @@ void UpdateClipboard()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna textu
+// zmÃ¬na textu
 
 void OnChange()
 {
@@ -289,7 +289,7 @@ void OnChange()
 		txt.GetWindowText(EditNumWnd);
 		double num = Double(txt);
 		txt.Double(num);
-		num = Double(txt);				// opakování pro pøípad zadání vyšší pøesnosti
+		num = Double(txt);				// opakovÃ¡nÃ­ pro pÃ¸Ã­pad zadÃ¡nÃ­ vyÅ¡Å¡Ã­ pÃ¸esnosti
 		if (Real[Index] != num)
 		{
 			Undo.AddRealSet(Index, Real[Index]);
@@ -304,7 +304,7 @@ void OnChange()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// znovunaètení èísla
+// znovunaÃ¨tenÃ­ Ã¨Ã­sla
 
 void ReLoad()
 {

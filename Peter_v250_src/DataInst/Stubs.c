@@ -1,14 +1,14 @@
 
 /***************************************************************************\
 *																			*
-*								Doplòky jádra								*
+*								DoplÃ²ky jÃ¡dra								*
 *																			*
 \***************************************************************************/
 
-// Zde jsou doplòky vyadované pøekladaèem z jádra C++
-// POZOR - tento soubor musí zachovat jméno STUB.C !!!!
+// Zde jsou doplÃ²ky vyÅ¾adovanÃ© pÃ¸ekladaÃ¨em z jÃ¡dra C++
+// POZOR - tento soubor musÃ­ zachovat jmÃ©no STUB.C !!!!
 
-#pragma warning ( disable: 4100)		// hlášení - nepouitı formální parametr
+#pragma warning ( disable: 4100)		// hlÃ¡Å¡enÃ­ - nepouÅ¾itÃ½ formÃ¡lnÃ­ parametr
 
 int _fltused = 0x9875;
 int __fastflag = 0;
@@ -120,10 +120,10 @@ EXCEPTION_DISPOSITION __cdecl _except_handler3 (
 #endif // _M_IX86
 */
 
-// øízení korekcí chyb procesoru
-int _adjust_fdiv = 0;		// 1 = korigovat chyby instrukcí Pentia
+// Ã¸Ã­zenÃ­ korekcÃ­ chyb procesoru
+int _adjust_fdiv = 0;		// 1 = korigovat chyby instrukcÃ­ Pentia
 
-// nevolat funkci pøi inicializaci programu - je to destruktor 
+// nevolat funkci pÃ¸i inicializaci programu - je to destruktor 
 int atexit(void*(__cdecl *fnc)())
 {
 	return (fnc == (void*)0) ? -1 : 0;

@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhranÌ - OpenGL 1.1						*
+*							3D rozhran√≠ - OpenGL 1.1						*
 *																			*
 \***************************************************************************/
 
@@ -9,7 +9,7 @@
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// definice funkcÌ OpenGL 1.1
+// definice funkc√≠ OpenGL 1.1
 
 typedef	WINGDIAPI void (APIENTRY *GLARRAYELEMENT) (GLint index);
 typedef WINGDIAPI void (APIENTRY *GLBINDTEXTURE) (GLenum target, GLuint texture);
@@ -43,7 +43,7 @@ extern	GLTEXCOORDPOINTER	pglTexCoordPointer;
 extern	GLVERTEXPOINTER		pglVertexPointer;
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ OpenGL 1.1 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ OpenGL 1.1 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3GL1InitD3();
 void D3GL1TermD3();
@@ -52,26 +52,26 @@ inline void D3GL1SizeView() { D3GL0SizeView(); }
 inline void D3GL1MoveView() { D3GL0MoveView(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ funkce za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zah√°jen√≠ funkce za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3GL1Start(int type);
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ jednoho objektu
+// vyrenderov√°n√≠ jednoho objektu
 
 void D3GL1Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky textury p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ polo≈æky textury p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3GL1TextureRes(D3DTITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ a zapnutÌ textury
+// nastaven√≠ a zapnut√≠ textury
 
 void D3GL1TextureSet(D3DTITEM* item, int stage);
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------

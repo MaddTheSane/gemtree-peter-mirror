@@ -1,36 +1,36 @@
 
 /***************************************************************************\
 *																			*
-*							Provádìní programu - hudba						*
+*							ProvÃ¡dÃ¬nÃ­ programu - hudba						*
 *																			*
 \***************************************************************************/
 
-#define MUSICERRORWAIT	(5*18)		// èekání na nový pokus o otevøení zvuku
-#define MUSICSTOPWAIT	(4*18)		// èítaè pro zastavení hudby
-#define MUSICMAXDELKA	(24*60*60*1000) // max. délka hudby
+#define MUSICERRORWAIT	(5*18)		// Ã¨ekÃ¡nÃ­ na novÃ½ pokus o otevÃ¸enÃ­ zvuku
+#define MUSICSTOPWAIT	(4*18)		// Ã¨Ã­taÃ¨ pro zastavenÃ­ hudby
+#define MUSICMAXDELKA	(24*60*60*1000) // max. dÃ©lka hudby
 
 // obsluha hudby
-extern	UINT	MusicDevice;		// ID zaøízení MCI pro pøehrávání hudby (0=není otevøeno)
-extern	int		MusicDelka;			// délka hudby v ms
-extern	bool	MusicPlaing;		// pøíznak pøehrávání hudby
-extern	bool	MusicPausing;		// pøíznak pauzy hudby
-extern	bool	MusicEnd;			// pøíznak ukonèení pøehrávání
-extern	int		MusicError;			// povolení opakovaného otevøení hudby (pøi < 0)
-extern	int		MusicAktPos;		// aktuální pozice hudby
+extern	UINT	MusicDevice;		// ID zaÃ¸Ã­zenÃ­ MCI pro pÃ¸ehrÃ¡vÃ¡nÃ­ hudby (0=nenÃ­ otevÃ¸eno)
+extern	int		MusicDelka;			// dÃ©lka hudby v ms
+extern	bool	MusicPlaing;		// pÃ¸Ã­znak pÃ¸ehrÃ¡vÃ¡nÃ­ hudby
+extern	bool	MusicPausing;		// pÃ¸Ã­znak pauzy hudby
+extern	bool	MusicEnd;			// pÃ¸Ã­znak ukonÃ¨enÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­
+extern	int		MusicError;			// povolenÃ­ opakovanÃ©ho otevÃ¸enÃ­ hudby (pÃ¸i < 0)
+extern	int		MusicAktPos;		// aktuÃ¡lnÃ­ pozice hudby
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha hudby
 
-void MusicPlay(CMusic mus, bool loop);	// zahájení pøehrávání hudby
-void SetMusicPos(int pos);			// nastavení pozice hudby v ms
-void MusicPause();					// pauza pøehrávání
-void MusicStop();					// ukonèení pøehrávání hudby
-void OnMusicEnd();					// ukonèení pøehrávání (obsluha hlášení)
-void PlayMusicBack();				// obsluha hudby na pozadí
+void MusicPlay(CMusic mus, bool loop);	// zahÃ¡jenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ hudby
+void SetMusicPos(int pos);			// nastavenÃ­ pozice hudby v ms
+void MusicPause();					// pauza pÃ¸ehrÃ¡vÃ¡nÃ­
+void MusicStop();					// ukonÃ¨enÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ hudby
+void OnMusicEnd();					// ukonÃ¨enÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ (obsluha hlÃ¡Å¡enÃ­)
+void PlayMusicBack();				// obsluha hudby na pozadÃ­
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inline volání pøíkazu - hudba
+// inline volÃ¡nÃ­ pÃ¸Ã­kazu - hudba
 
 inline void FMusic(CMusic& music)
 {
@@ -40,13 +40,13 @@ inline void FMusic(CMusic& music)
 
 
 // funkce
-void _fastcall FMusicFunc(CMusic& music);		// funkce s návratem hudby
+void _fastcall FMusicFunc(CMusic& music);		// funkce s nÃ¡vratem hudby
 
-// promìnné
-void _fastcall FMusicEmpty(CMusic& music);		// prázdná hudba
-void _fastcall FMusicObj(CMusic& music);		// globální hudba (Data = index)
-void _fastcall FMusicObjList(CMusic& music);	// globalní hudba v seznamu (Data = index, List = seznam)
-void _fastcall FMusicLoc(CMusic& music);		// lokální hudba (Data = index)
-void _fastcall FMusicLocList(CMusic& music);	// lokální hudba v seznamu (Data = index, List = seznam)
+// promÃ¬nnÃ©
+void _fastcall FMusicEmpty(CMusic& music);		// prÃ¡zdnÃ¡ hudba
+void _fastcall FMusicObj(CMusic& music);		// globÃ¡lnÃ­ hudba (Data = index)
+void _fastcall FMusicObjList(CMusic& music);	// globalnÃ­ hudba v seznamu (Data = index, List = seznam)
+void _fastcall FMusicLoc(CMusic& music);		// lokÃ¡lnÃ­ hudba (Data = index)
+void _fastcall FMusicLocList(CMusic& music);	// lokÃ¡lnÃ­ hudba v seznamu (Data = index, List = seznam)
 
-void _fastcall FGetFileMusic(CMusic& music);	// naètení hudby ze souboru
+void _fastcall FGetFileMusic(CMusic& music);	// naÃ¨tenÃ­ hudby ze souboru

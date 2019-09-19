@@ -7,7 +7,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// pÃ¸idÃ¡nÃ­ jednoho prvku do bufferu programu (vracÃ­ index prvku)
 
 inline int CompAddItem(PROCTXT func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCTXT func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad textového výrazu (vrací true = operace OK)
+// pÃ¸eklad textovÃ©ho vÃ½razu (vracÃ­ true = operace OK)
 
 bool _fastcall CompTxt(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s textovým parametrem
+// pÃ¸eklad pÃ¸Ã­kazu s textovÃ½m parametrem
 
 bool CompTxtPar(int index, PROCCOM func, int data);
 
@@ -119,7 +119,7 @@ inline bool CompTxtPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou textových parametrù (data = poèet parametrù - 1)
+// pÃ¸eklad pÃ¸Ã­kazu se skupinou textovÃ½ch parametrÃ¹ (data = poÃ¨et parametrÃ¹ - 1)
 
 inline bool CompTxtGrp(int index, PROCLOG func, PROCLOG func1)
 	{ return CompGroup(CompTxt, index, (PROCCOM)func, (PROCCOM)func1); };
@@ -129,6 +129,6 @@ inline bool CompTxtGrp(int index, PROCTXT func, PROCTXT func1)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s textovým podparametrem (hledaným podle identifikace)
+// pÃ¸eklad pÃ¸Ã­kazu s textovÃ½m podparametrem (hledanÃ½m podle identifikace)
 
 void CompTxtSubPar(int index, int idf);

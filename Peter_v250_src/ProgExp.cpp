@@ -10,38 +10,38 @@
 /*
 namespace ProgExp
 {
-	TCHAR* m_Filtr = NULL;			// filtr souborù k zadání v dialogu
+	TCHAR* m_Filtr = NULL;			// filtr souborÃ¹ k zadÃ¡nÃ­ v dialogu
 	OPENFILENAME m_Ofn;				// struktura pro dialog
 	CText m_Nadpis;					// nadpis okna dialogu
-	CText m_Path;					// výchozí adresáø
-	CText m_Name;					// jméno souboru PET
-	TCHAR* m_File = NULL;			// buffer k zadání jména souboru
+	CText m_Path;					// vÃ½chozÃ­ adresÃ¡Ã¸
+	CText m_Name;					// jmÃ©no souboru PET
+	TCHAR* m_File = NULL;			// buffer k zadÃ¡nÃ­ jmÃ©na souboru
 	HANDLE m_Handle = NULL;			// handle souboru
-	BYTE* m_Data = NULL;			// datový buffer
-	int m_Read = 0;					// ètecí ukazatel z datového bufferu
-	int m_Num = 0;					// poèet bajtù v datovém bufferu
+	BYTE* m_Data = NULL;			// datovÃ½ buffer
+	int m_Read = 0;					// Ã¨tecÃ­ ukazatel z datovÃ©ho bufferu
+	int m_Num = 0;					// poÃ¨et bajtÃ¹ v datovÃ©m bufferu
 
-	int m_GrpInx = 0;				// index hlavní skupiny (-1 = není)
-	int	m_FncInx = 0;				// index hlavní funkce
-	int m_MapInx = 0;				// index hlavní plochy
-	int m_IcoInx = 0;				// index hlavní ikony
+	int m_GrpInx = 0;				// index hlavnÃ­ skupiny (-1 = nenÃ­)
+	int	m_FncInx = 0;				// index hlavnÃ­ funkce
+	int m_MapInx = 0;				// index hlavnÃ­ plochy
+	int m_IcoInx = 0;				// index hlavnÃ­ ikony
 	int m_PetInx = 0;				// index sprajtu Petra
 	int m_LucInx = 0;				// index sprajtu Lucky
 
-	CBufText m_NameInt;				// buffer interních jmen
-	CBufText m_NameObj;				// buffer globálních jmen
-	CBufText m_NameLoc;				// buffer lokálních jmen
+	CBufText m_NameInt;				// buffer internÃ­ch jmen
+	CBufText m_NameObj;				// buffer globÃ¡lnÃ­ch jmen
+	CBufText m_NameLoc;				// buffer lokÃ¡lnÃ­ch jmen
 
-#define BUFSIZE 4096				// velikost datového bufferu
+#define BUFSIZE 4096				// velikost datovÃ©ho bufferu
 
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog pro výbìr programu k exportu/importu (vrací TRUE=operace OK)
-// øetìzec _T("Programy Petra (*.pet)\0*.PET\0Všechny soubory (*.*)\0*.*\0\0")
+// dialog pro vÃ½bÃ¬r programu k exportu/importu (vracÃ­ TRUE=operace OK)
+// Ã¸etÃ¬zec _T("Programy Petra (*.pet)\0*.PET\0VÅ¡echny soubory (*.*)\0*.*\0\0")
 
 bool InitFiltr(bool export)
 {
-// vytvoøení bufferu pro filtr
+// vytvoÃ¸enÃ­ bufferu pro filtr
 	MemFree(m_Filtr);
 	TCHAR* m_Filtr = (TCHAR*)MemGet(1024);
 	if (m_Filtr == NULL) return false;
@@ -57,7 +57,7 @@ bool InitFiltr(bool export)
 	m_Filtr[filtrn] = 0;
 	filtrn++;
 
-// pøidání masky souborù "*.pet"
+// pÃ¸idÃ¡nÃ­ masky souborÃ¹ "*.pet"
 	txt = _T("*.PET");
 	txt.Write(m_Filtr + filtrn);
 	filtrn += txt.Length();
@@ -65,7 +65,7 @@ bool InitFiltr(bool export)
 	m_Filtr[filtrn] = 0;
 	filtrn++;
 
-// pøidání textu "Všechny soubory"
+// pÃ¸idÃ¡nÃ­ textu "VÅ¡echny soubory"
 	txt.Load(IDN_VSECHNY_SOUBORY);
 	txt.Add(_T(" (*.*)"));
 	txt.Write(m_Filtr + filtrn);
@@ -74,7 +74,7 @@ bool InitFiltr(bool export)
 	m_Filtr[filtrn] = 0;
 	filtrn++;
 
-// pøidání masky souborù "*.*"
+// pÃ¸idÃ¡nÃ­ masky souborÃ¹ "*.*"
 	txt = _T("*.*");
 	txt.Write(m_Filtr + filtrn);
 	filtrn += txt.Length();
@@ -82,10 +82,10 @@ bool InitFiltr(bool export)
 	m_Filtr[filtrn] = 0;
 	filtrn++;
 
-// koncová nula
+// koncovÃ¡ nula
 	m_Filtr[filtrn] = 0;
 
-// pøíprava struktury k zadání jména souboru
+// pÃ¸Ã­prava struktury k zadÃ¡nÃ­ jmÃ©na souboru
 	MemFill(&m_Ofn, sizeof(m_Ofn), 0);
 	m_Ofn.lStructSize = sizeof(m_Ofn);
 	m_Ofn.hwndOwner = MainFrame;
@@ -99,7 +99,7 @@ bool InitFiltr(bool export)
 		m_Ofn.Flags = OFN_HIDEREADONLY | OFN_NOCHANGEDIR | OFN_PATHMUSTEXIST;
 	}
 
-// pøíprava titulku okna
+// pÃ¸Ã­prava titulku okna
 	if (export)
 	{
 		m_Nadpis.Load(IDN_EXPORT2);
@@ -110,16 +110,16 @@ bool InitFiltr(bool export)
 	}
 	m_Ofn.lpstrTitle = m_Nadpis;
 
-// výchozí adresáø
+// vÃ½chozÃ­ adresÃ¡Ã¸
 	m_Path = ProgramPath + Cesta;
 	m_Ofn.lpstrInitialDir = m_Path;
 
-// pøednastavené jméno souboru
+// pÃ¸ednastavenÃ© jmÃ©no souboru
 	m_Name = Jmeno + _T(".pet");
 	int n = m_Name.Length() + 1;
 	if (n < 1024) n = 1024;
 
-// buffer k zadání jména souboru
+// buffer k zadÃ¡nÃ­ jmÃ©na souboru
 	MemFree(m_File);
 	m_File = (TCHAR*)MemGet(n*sizeof(TCHAR));
 	if (m_File == NULL) return false;
@@ -128,7 +128,7 @@ bool InitFiltr(bool export)
 	m_Ofn.lpstrFile = m_File;
 	m_Ofn.nMaxFile = n;
 
-// zadání jména souboru
+// zadÃ¡nÃ­ jmÃ©na souboru
 	if (export)
 	{
 		if (!::GetSaveFileName(&m_Ofn)) return false;
@@ -138,7 +138,7 @@ bool InitFiltr(bool export)
 		if (!::GetOpenFileName(&m_Ofn)) return false;
 	}
 
-// korekce jména souboru
+// korekce jmÃ©na souboru
 	m_Name = m_File;
 	m_Name.TrimLeft();
 	m_Name.TrimRight();
@@ -149,7 +149,7 @@ bool InitFiltr(bool export)
 		m_Name += _T(".pet");
 	}
 
-// pøíprava cesty do cílového adresáøe
+// pÃ¸Ã­prava cesty do cÃ­lovÃ©ho adresÃ¡Ã¸e
 	m_Path.Empty();
 	n = m_Name.RevFind('\\');
 	if (n >= 0)
@@ -158,7 +158,7 @@ bool InitFiltr(bool export)
 		m_Path.Delete(n + 1);
 	}
 
-// pøíprava datového bufferu
+// pÃ¸Ã­prava datovÃ©ho bufferu
 	MemFree(m_Data);
 	m_Data = (BYTE*)MemGet(BUFSIZE);
 	if (m_Data == NULL) return false;
@@ -169,7 +169,7 @@ bool InitFiltr(bool export)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zápis výstupního bufferu (vrací FALSE=chyba)
+// zÃ¡pis vÃ½stupnÃ­ho bufferu (vracÃ­ FALSE=chyba)
 
 bool WriteFlush()
 {
@@ -186,7 +186,7 @@ bool WriteFlush()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zápis bajtu do výstupního souboru (vrací FALSE=chyba)
+// zÃ¡pis bajtu do vÃ½stupnÃ­ho souboru (vracÃ­ FALSE=chyba)
 
 bool WriteByte(BYTE data)
 {
@@ -201,7 +201,7 @@ bool WriteByte(BYTE data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zápis dat do výstupního souboru (vrací FALSE=chyba)
+// zÃ¡pis dat do vÃ½stupnÃ­ho souboru (vracÃ­ FALSE=chyba)
 
 bool Write(BYTE* data, int num)
 {
@@ -214,7 +214,7 @@ bool Write(BYTE* data, int num)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zápis textu do výstupního souboru (vrací FALSE=chyba)
+// zÃ¡pis textu do vÃ½stupnÃ­ho souboru (vracÃ­ FALSE=chyba)
 
 bool WriteText(CText txt)
 {
@@ -232,29 +232,29 @@ bool WriteText(CText txt)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// exportování jednoho prvku (bez potomkù) (vrací FALSE=chyba)
+// exportovÃ¡nÃ­ jednoho prvku (bez potomkÃ¹) (vracÃ­ FALSE=chyba)
 
 bool ExportItem(PROGITEM* item)
 {
-// index deklaraèního jména
+// index deklaraÃ¨nÃ­ho jmÃ©na
 	int deklbuf = item->RefBlok;
 	int deklinx = item->RefIndex;
 
-// z bufferu struktur zmìna na interní buffer
+// z bufferu struktur zmÃ¬na na internÃ­ buffer
 	if (deklbuf == BufStrID)
 	{
 		deklbuf = BufStr[deklinx].RefBlok;
 		deklinx = BufStr[deklinx].RefIndex;
 	}
 
-// z bufferu tøíd zmìna na interní buffer
+// z bufferu tÃ¸Ã­d zmÃ¬na na internÃ­ buffer
 	if (deklbuf == BufClsID)
 	{
 		deklbuf = BufCls[deklinx].RefBlok;
 		deklinx = BufCls[deklinx].RefIndex;
 	}
 
-// zjištìní deklaraèní položky
+// zjiÅ¡tÃ¬nÃ­ deklaraÃ¨nÃ­ poloÅ¾ky
 	CText name;
 	CBufText* bf;
 
@@ -280,17 +280,17 @@ bool ExportItem(PROGITEM* item)
 		return false;
 	}
 
-// test, zda je deklaraèní jméno již známé
+// test, zda je deklaraÃ¨nÃ­ jmÃ©no jiÅ¾ znÃ¡mÃ©
 	if (bf->At(deklinx).IsEmpty())
 	{
 
-// deklaraèní jméno pro interní prvek
+// deklaraÃ¨nÃ­ jmÃ©no pro internÃ­ prvek
 //		if (deklbuf == BufIntID)
 //		{
 //			m_NameInt[deklinx] = InitTabFunc[deklinx].Import;
 //		}
 
-// deklaraèní jméno pro globální a lokální buffer
+// deklaraÃ¨nÃ­ jmÃ©no pro globÃ¡lnÃ­ a lokÃ¡lnÃ­ buffer
 //		else
 		{
 //			CText name2;
@@ -303,7 +303,7 @@ bool ExportItem(PROGITEM* item)
 //
 //			}
 
-			name = "èeský ÈESKÝ";
+			name = "Ã¨eskÃ½ ÃˆESKÃ";
 
 			WCHAR* buf = (WCHAR*)MemGet(1024);
 
@@ -322,7 +322,7 @@ bool ExportItem(PROGITEM* item)
 
 	}
 
-// exportované jméno
+// exportovanÃ© jmÃ©no
 	WriteText(bf->At(deklinx));
 
 
@@ -331,64 +331,64 @@ bool ExportItem(PROGITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// exportování programu
+// exportovÃ¡nÃ­ programu
 
 void OnExport()
 {
-// dialog k zadání cíle
+// dialog k zadÃ¡nÃ­ cÃ­le
 	if (!InitFiltr(true)) return;
 
-// pøíprava bufferu iterních jmen
+// pÃ¸Ã­prava bufferu iternÃ­ch jmen
 	m_NameInt.DelAll();
 	for (int i = BufInt.Max(); i > 0; i--)
 	{
 		m_NameInt.New();
 	}
 
-// pøíprava bufferu globálních jmen
+// pÃ¸Ã­prava bufferu globÃ¡lnÃ­ch jmen
 	m_NameObj.DelAll();
 	for (i = BufObj.Max(); i > 0; i--)
 	{
 		m_NameObj.New();
 	}
 
-// pøíprava bufferu lokálních jmen
+// pÃ¸Ã­prava bufferu lokÃ¡lnÃ­ch jmen
 	m_NameLoc.DelAll();
 	for (i = BufLoc.Max(); i > 0; i--)
 	{
 		m_NameLoc.New();
 	}
 
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	int index;
 
-// vytvoøení souboru
+// vytvoÃ¸enÃ­ souboru
 	m_Handle = ::CreateFile(m_Name, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (m_Handle == INVALID_HANDLE_VALUE) goto CHYBA;
 
-// nalezení indexu hlavní funkce
+// nalezenÃ­ indexu hlavnÃ­ funkce
 	index = BufLoc.SrcDat(BufEdiID, 0);
 	if (index < 0) goto CHYBA;
 	m_FncInx = BufObj.SrcDat(BufLocID, index);
 	if (m_FncInx < 0) goto CHYBA;
 
-// nalezení indexu hlavní plochy
+// nalezenÃ­ indexu hlavnÃ­ plochy
 	m_MapInx = BufObj.SrcDat(BufMapID, 0);
 	if (m_MapInx < 0) goto CHYBA;
 
-// nalezení indexu hlavní ikony
+// nalezenÃ­ indexu hlavnÃ­ ikony
 	m_IcoInx = BufObj.SrcDat(BufIcoID, 0);
 	if (m_IcoInx < 0) goto CHYBA;
 
-// nalezení indexu sprajtu Petra
+// nalezenÃ­ indexu sprajtu Petra
 	m_PetInx = BufObj.SrcDat(BufSprID, 0);
 	if (m_PetInx < 0) goto CHYBA;
 
-// nalezení indexu sprajtu Lucky
+// nalezenÃ­ indexu sprajtu Lucky
 	m_LucInx = BufObj.SrcDat(BufSprID, 1);
 	if (m_LucInx < 0) goto CHYBA;
 
-// uložení hlavní skupiny
+// uloÅ¾enÃ­ hlavnÃ­ skupiny
 	m_GrpInx = BufObj[m_FncInx].Parent;
 	if (m_GrpInx >= 0)
 	{
@@ -399,7 +399,7 @@ void OnExport()
 
 
 
-// cyklus pøes všechny globální objekty
+// cyklus pÃ¸es vÅ¡echny globÃ¡lnÃ­ objekty
 //	index = BufObj.First();
 
 
@@ -414,15 +414,15 @@ void OnExport()
 
 
 
-// vyprázdnìní zápisového bufferu
+// vyprÃ¡zdnÃ¬nÃ­ zÃ¡pisovÃ©ho bufferu
 	if (!WriteFlush()) goto CHYBA;
 
-// uzavøení souboru
+// uzavÃ¸enÃ­ souboru
 	::CloseHandle(m_Handle);
 	m_Handle = INVALID_HANDLE_VALUE;
 	return;
 
-// chybové hlášení
+// chybovÃ© hlÃ¡Å¡enÃ­
 CHYBA:
 	if (m_Handle != INVALID_HANDLE_VALUE)
 	{
@@ -434,11 +434,11 @@ CHYBA:
 
 
 /////////////////////////////////////////////////////////////////////////////
-// importování programu
+// importovÃ¡nÃ­ programu
 
 void OnImport()
 {
-// dialog k zadání cíle
+// dialog k zadÃ¡nÃ­ cÃ­le
 	if (!InitFiltr(false)) return;
 
 

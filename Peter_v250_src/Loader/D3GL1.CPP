@@ -6,7 +6,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhraní - OpenGL 1.1						*
+*							3D rozhranÃ­ - OpenGL 1.1						*
 *																			*
 \***************************************************************************/
 
@@ -29,24 +29,24 @@ GLTEXCOORDPOINTER	pglTexCoordPointer	= NULL;
 GLVERTEXPOINTER		pglVertexPointer	= NULL;
 
 // OpenGL 1.1
-bool				D3GL1D3Test			= false;	// probìhl test rozhraní OpenGL 1.1
-bool				D3GL1OK				= false;	// rozhraní OpenGL 1.1 vytvoøeno OK
+bool				D3GL1D3Test			= false;	// probÃ¬hl test rozhranÃ­ OpenGL 1.1
+bool				D3GL1OK				= false;	// rozhranÃ­ OpenGL 1.1 vytvoÃ¸eno OK
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní OpenGL 1.1 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhranÃ­ OpenGL 1.1 (vracÃ­ TRUE=rozhranÃ­ je vytvoÃ¸eno)
 
 bool D3GL1InitD3()
 {
-// test, zda inicializace ji probìhla
+// test, zda inicializace jiÅ¾ probÃ¬hla
 	if (!D3GL1D3Test)
 	{
 		D3GL1D3Test = true;
 
-// inicializace rozhraní OpenGL 1.0
+// inicializace rozhranÃ­ OpenGL 1.0
 		if (D3GL0InitD3())
 		{
 
-// vyhledání funkcí OpenGL 1.1
+// vyhledÃ¡nÃ­ funkcÃ­ OpenGL 1.1
 			pglArrayElement = (GLARRAYELEMENT)::GetProcAddress(D3GL0Lib, "glArrayElement");
 			pglBindTexture = (GLBINDTEXTURE)::GetProcAddress(D3GL0Lib, "glBindTexture");
 			pglColorPointer = (GLCOLORPOINTER)::GetProcAddress(D3GL0Lib, "glColorPointer");
@@ -61,7 +61,7 @@ bool D3GL1InitD3()
 			pglTexCoordPointer = (GLTEXCOORDPOINTER)::GetProcAddress(D3GL0Lib, "glTexCoordPointer");
 			pglVertexPointer = (GLVERTEXPOINTER)::GetProcAddress(D3GL0Lib, "glVertexPointer");
 
-// kontrola funkcí OpenGL 1.1
+// kontrola funkcÃ­ OpenGL 1.1
 			if (
 				(pglArrayElement != NULL) &&
 				(pglBindTexture != NULL) &&
@@ -83,19 +83,19 @@ bool D3GL1InitD3()
 		}
 	}
 
-// test, zda je rozhraní OpenGL 1.1 funkèní
+// test, zda je rozhranÃ­ OpenGL 1.1 funkÃ¨nÃ­
 	return D3GL1OK;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení rozhraní OpenGL 1.1
+// ukonÃ¨enÃ­ rozhranÃ­ OpenGL 1.1
 
 void D3GL1TermD3()
 {
-// ukonèení renderování
+// ukonÃ¨enÃ­ renderovÃ¡nÃ­
 	D3GL0Stop();
 
-// zrušení funkcí
+// zruÅ¡enÃ­ funkcÃ­
 /*
 	pglArrayElement = NULL;
 	pglBindTexture = NULL;
@@ -111,14 +111,14 @@ void D3GL1TermD3()
 	pglTexCoordPointer = NULL;
 	pglVertexPointer = NULL;
 */
-// zrušení pøíznaku, e byla inicializace
+// zruÅ¡enÃ­ pÃ¸Ã­znaku, Å¾e byla inicializace
 	D3GL1D3Test = false;
 	D3GL1OK = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahÃ¡jenÃ­ funkce zaÃ¸Ã­zenÃ­ (vracÃ­ TRUE=inicializace OK)
+// typ zaÃ¸Ã­zenÃ­: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3GL1Start(int type)
 {
@@ -126,11 +126,11 @@ bool D3GL1Start(int type)
 
 	if (!D3GL0Start(type)) return false;
 
-// opakovaná inicializace, pokud byla uvolnìna knihovna OpenGL
+// opakovanÃ¡ inicializace, pokud byla uvolnÃ¬na knihovna OpenGL
 	D3GL1InitD3();
 
-// inicializace adres funkcí zaøízení
-	pD3Render = D3GL1Render;		// vyrenderování jednoho objektu
+// inicializace adres funkcÃ­ zaÃ¸Ã­zenÃ­
+	pD3Render = D3GL1Render;		// vyrenderovÃ¡nÃ­ jednoho objektu
 	pD3TextureRes = D3GL1TextureRes;
 	pD3TextureSet = D3GL1TextureSet;
 
@@ -138,14 +138,14 @@ bool D3GL1Start(int type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderování jednoho objektu
+// vyrenderovÃ¡nÃ­ jednoho objektu
 
 void D3GL1Render(D3DFITEM* item)
 {
 	bool isFlare = (item->Type == D3DFTYPE_LENSFLARE);
 	bool isPic = ((item->Type == D3DFTYPE_PICTURE) || isFlare);
 
-// nastavení matice
+// nastavenÃ­ matice
 	pglMatrixMode(GL_MODELVIEW);
 
 	if (isPic)
@@ -161,7 +161,7 @@ void D3GL1Render(D3DFITEM* item)
 		pglMultMatrixf((float*)&item->MatrixWorld);
 	}
 
-// pøíprava pole normál
+// pÃ¸Ã­prava pole normÃ¡l
 	if (isPic)
 	{
 		pglDisableClientState(GL_NORMAL_ARRAY);
@@ -172,11 +172,11 @@ void D3GL1Render(D3DFITEM* item)
 		pglNormalPointer(GL_FLOAT, sizeof(D3DVECTOR), item->Normal);
 	}
 
-// pøíprava pole souøadnic textury
+// pÃ¸Ã­prava pole souÃ¸adnic textury
 	pglEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	pglTexCoordPointer(2, GL_FLOAT, 2*sizeof(float), item->TextUV[0]);
 
-// pøíprava bufferu vrcholù
+// pÃ¸Ã­prava bufferu vrcholÃ¹
 	pglEnableClientState(GL_VERTEX_ARRAY);
 
 	D3DVECTOR* buf = NULL;
@@ -229,7 +229,7 @@ void D3GL1Render(D3DFITEM* item)
 		pglVertexPointer(3, GL_FLOAT, sizeof(D3DVECTOR), item->Vertex);
 	}
 
-// pøíprava pole barev
+// pÃ¸Ã­prava pole barev
 	pglEnable(GL_COLOR_MATERIAL);
 //	pglColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
 
@@ -243,7 +243,7 @@ void D3GL1Render(D3DFITEM* item)
 		pglDisableClientState(GL_COLOR_ARRAY);
 	}
 
-// vykreslení objektu
+// vykreslenÃ­ objektu
 	pglDrawElements(GL_TRIANGLES, item->FaceNum*3, GL_UNSIGNED_INT, item->Face);
 
 	if (isPic)
@@ -254,7 +254,7 @@ void D3GL1Render(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování poloky textury pøed ukonèením ovladaèe
+// resetovÃ¡nÃ­ poloÅ¾ky textury pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
 
 void D3GL1TextureRes(D3DTITEM* item)
 {
@@ -266,7 +266,7 @@ void D3GL1TextureRes(D3DTITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení a zapnutí textury
+// nastavenÃ­ a zapnutÃ­ textury
 
 void D3GL1TextureSet(D3DTITEM* item, int stage)
 {
@@ -284,9 +284,9 @@ void D3GL1TextureSet(D3DTITEM* item, int stage)
 
 	pglTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	pglBindTexture(GL_TEXTURE_2D, (GLuint)item->Data1);
-	// po pøíkazu glBindTexture jsou pøepínaèe neplatné
+	// po pÃ¸Ã­kazu glBindTexture jsou pÃ¸epÃ­naÃ¨e neplatnÃ©
 	ResetD3DSwitch();
 }
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------

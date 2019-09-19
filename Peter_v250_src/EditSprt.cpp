@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Editor sprajtù								*
+*								Editor sprajtÃ¹								*
 *																			*
 \***************************************************************************/
 
@@ -13,110 +13,110 @@ namespace EditSprite
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-// parametry editovaného sprajtu
-int		Index = 0;						// editovanı sprajt
-int		IndexPic = 0;					// index editovaného obrázku
-int		Width;							// šíøka plochy v políèkách (bez okrajù)
-int		Height;							// vıška plochy v políèkách (bez okrajù)
-int		PicWidth;						// šíøka obrázku v bodech
-int		PicHeight;						// vıška obrázku v bodech
-int		KorWidth;						// zkorigovaná šíøka obrázku (minimálnì ICONWIDTH)
-int		KorHeight;						// zkorigovaná vıška obrázku (minimálnì ICONHEIGHT)
-int		MWidth;							// šíøka plochy v bodech + okraj vlevo
-int		MHeight;						// vıška plochy v bodech + okraj nahoøe
+// parametry editovanÃ©ho sprajtu
+int		Index = 0;						// editovanÃ½ sprajt
+int		IndexPic = 0;					// index editovanÃ©ho obrÃ¡zku
+int		Width;							// Å¡Ã­Ã¸ka plochy v polÃ­Ã¨kÃ¡ch (bez okrajÃ¹)
+int		Height;							// vÃ½Å¡ka plochy v polÃ­Ã¨kÃ¡ch (bez okrajÃ¹)
+int		PicWidth;						// Å¡Ã­Ã¸ka obrÃ¡zku v bodech
+int		PicHeight;						// vÃ½Å¡ka obrÃ¡zku v bodech
+int		KorWidth;						// zkorigovanÃ¡ Å¡Ã­Ã¸ka obrÃ¡zku (minimÃ¡lnÃ¬ ICONWIDTH)
+int		KorHeight;						// zkorigovanÃ¡ vÃ½Å¡ka obrÃ¡zku (minimÃ¡lnÃ¬ ICONHEIGHT)
+int		MWidth;							// Å¡Ã­Ã¸ka plochy v bodech + okraj vlevo
+int		MHeight;						// vÃ½Å¡ka plochy v bodech + okraj nahoÃ¸e
 
-// zobrazená èást plochy
-int		TLeft;							// poèáteèní bod plochy vlevo
-int		TTop;							// poèáteèní bod plochy nahoøe
+// zobrazenÃ¡ Ã¨Ã¡st plochy
+int		TLeft;							// poÃ¨Ã¡teÃ¨nÃ­ bod plochy vlevo
+int		TTop;							// poÃ¨Ã¡teÃ¨nÃ­ bod plochy nahoÃ¸e
 
-// zobrazení plochy na displeji vèetnì záhlaví (v bodech displeje)
-int		DLeft;							// poèátek zobrazení vlevo
-int		DTop;							// poèátek zobrazení nahoøe
-int		DWidth;							// zobrazená šíøka èásti plochy na displeji
-int		DHeight;						// zobrazená vıška èásti plochy na displeji
+// zobrazenÃ­ plochy na displeji vÃ¨etnÃ¬ zÃ¡hlavÃ­ (v bodech displeje)
+int		DLeft;							// poÃ¨Ã¡tek zobrazenÃ­ vlevo
+int		DTop;							// poÃ¨Ã¡tek zobrazenÃ­ nahoÃ¸e
+int		DWidth;							// zobrazenÃ¡ Å¡Ã­Ã¸ka Ã¨Ã¡sti plochy na displeji
+int		DHeight;						// zobrazenÃ¡ vÃ½Å¡ka Ã¨Ã¡sti plochy na displeji
 
-int		ILeft;							// index ikony vlevo (0 = levı okraj)
-int		IRight;							// index ikony vpravo (0 = levı okraj)
-int		ITop;							// index ikony nahoøe (0 = horní okraj)
-int		IBottom;						// index ikony dole (0 = horní okraj)
+int		ILeft;							// index ikony vlevo (0 = levÃ½ okraj)
+int		IRight;							// index ikony vpravo (0 = levÃ½ okraj)
+int		ITop;							// index ikony nahoÃ¸e (0 = hornÃ­ okraj)
+int		IBottom;						// index ikony dole (0 = hornÃ­ okraj)
 
-int		OLeft;							// zobrazená èást ikony vlevo
-int		ORight;							// zobrazená èást ikony vpravo
-int		OTop;							// zobrazená èást ikony nahoøe
-int		OBottom;						// zobrazená èást ikony dole
+int		OLeft;							// zobrazenÃ¡ Ã¨Ã¡st ikony vlevo
+int		ORight;							// zobrazenÃ¡ Ã¨Ã¡st ikony vpravo
+int		OTop;							// zobrazenÃ¡ Ã¨Ã¡st ikony nahoÃ¸e
+int		OBottom;						// zobrazenÃ¡ Ã¨Ã¡st ikony dole
 
-// nastavení novıch rozmìrù a vlastností
-int		NewDelay;						// nová prodleva mezi fázemi
-double	NewStep;						// novı poèet fází na krok
-int		NewLevel;						// nová hladina k zobrazení
-int		NewKlid;						// novı poèet fází pro klid
-int		NewWidth;						// nová šíøka obrázku
-int		NewHeight;						// nová vıška obrázku
-int		NewPohyb;						// novı poèet fází pro pohyb
-int		NewSmer;						// novı poèet smìrù
-BOOL	NewFill = FALSE;				// probíhá plnìní textù
+// nastavenÃ­ novÃ½ch rozmÃ¬rÃ¹ a vlastnostÃ­
+int		NewDelay;						// novÃ¡ prodleva mezi fÃ¡zemi
+double	NewStep;						// novÃ½ poÃ¨et fÃ¡zÃ­ na krok
+int		NewLevel;						// novÃ¡ hladina k zobrazenÃ­
+int		NewKlid;						// novÃ½ poÃ¨et fÃ¡zÃ­ pro klid
+int		NewWidth;						// novÃ¡ Å¡Ã­Ã¸ka obrÃ¡zku
+int		NewHeight;						// novÃ¡ vÃ½Å¡ka obrÃ¡zku
+int		NewPohyb;						// novÃ½ poÃ¨et fÃ¡zÃ­ pro pohyb
+int		NewSmer;						// novÃ½ poÃ¨et smÃ¬rÃ¹
+BOOL	NewFill = FALSE;				// probÃ­hÃ¡ plnÃ¬nÃ­ textÃ¹
 
-// obsluha taení
-BOOL	BegDrag = FALSE;				// pøíznak zahájení taení
-BOOL	MDraging = FALSE;				// pøíznak taení ikony editoru plochy
-int		BegX;							// souøadnice myši X pøed zahájením taení
-int		BegY;							// souøadnice myši Y pøed zahájením taení
-BOOL	CopyMode = FALSE;				// pøíznak módu kopírování
-int		DragX = MOUSEINV;				// souøadnice X taené ikony (MOUSEINV = není)
-int		DragY = MOUSEINV;				// souøadnice Y taené ikony (MOUSEINV = není)
-HIMAGELIST DragImageList;				// obrázek taení
+// obsluha taÅ¾enÃ­
+BOOL	BegDrag = FALSE;				// pÃ¸Ã­znak zahÃ¡jenÃ­ taÅ¾enÃ­
+BOOL	MDraging = FALSE;				// pÃ¸Ã­znak taÅ¾enÃ­ ikony editoru plochy
+int		BegX;							// souÃ¸adnice myÅ¡i X pÃ¸ed zahÃ¡jenÃ­m taÅ¾enÃ­
+int		BegY;							// souÃ¸adnice myÅ¡i Y pÃ¸ed zahÃ¡jenÃ­m taÅ¾enÃ­
+BOOL	CopyMode = FALSE;				// pÃ¸Ã­znak mÃ³du kopÃ­rovÃ¡nÃ­
+int		DragX = MOUSEINV;				// souÃ¸adnice X taÅ¾enÃ© ikony (MOUSEINV = nenÃ­)
+int		DragY = MOUSEINV;				// souÃ¸adnice Y taÅ¾enÃ© ikony (MOUSEINV = nenÃ­)
+HIMAGELIST DragImageList;				// obrÃ¡zek taÅ¾enÃ­
 int		HotSpotX;						// bod dotyku X
 int		HotSpotY;						// bod dotyku Y
 
-CBufIcon	MapSwcNum;					// ikony èísel
-CBufIcon	SpriteIcon;					// ikony sprajtù
+CBufIcon	MapSwcNum;					// ikony Ã¨Ã­sel
+CBufIcon	SpriteIcon;					// ikony sprajtÃ¹
 
-// testovací mód
-BOOL	TestMode = FALSE;				// je testovací mód
-int		TestLeft = 0;					// levı okraj pro test
-int		TestTop = 0;					// horní okraj pro test
-#define	TestWidthN 15					// poèet ikon horizontálnì
-#define	TestHeightN 11					// poèet ikon vertikálnì
-#define TestWidth (TestWidthN*ICONWIDTH)	// šíøka pro test
-#define	TestHeight (TestHeightN*ICONHEIGHT)	// vıška pro test
-UINT	TestTimer = 0;					// èasovaè pro test
-BYTE*	TestBuff = NULL;				// buffer s vıstupním obrázkem
-#define	TestTimerID 1434l				// ID èasovaèe
+// testovacÃ­ mÃ³d
+BOOL	TestMode = FALSE;				// je testovacÃ­ mÃ³d
+int		TestLeft = 0;					// levÃ½ okraj pro test
+int		TestTop = 0;					// hornÃ­ okraj pro test
+#define	TestWidthN 15					// poÃ¨et ikon horizontÃ¡lnÃ¬
+#define	TestHeightN 11					// poÃ¨et ikon vertikÃ¡lnÃ¬
+#define TestWidth (TestWidthN*ICONWIDTH)	// Å¡Ã­Ã¸ka pro test
+#define	TestHeight (TestHeightN*ICONHEIGHT)	// vÃ½Å¡ka pro test
+UINT	TestTimer = 0;					// Ã¨asovaÃ¨ pro test
+BYTE*	TestBuff = NULL;				// buffer s vÃ½stupnÃ­m obrÃ¡zkem
+#define	TestTimerID 1434l				// ID Ã¨asovaÃ¨e
 
-int		TestKlid;						// poèet klidovıch fází
-int		TestSmeru;						// poèet smìrù
-int		TestFazi;						// poèet fází
-int		TestDelay;						// prodleva mezi fázemi (v impulsech)
-double	TestKroku;						// poèet krokù na jednotku
+int		TestKlid;						// poÃ¨et klidovÃ½ch fÃ¡zÃ­
+int		TestSmeru;						// poÃ¨et smÃ¬rÃ¹
+int		TestFazi;						// poÃ¨et fÃ¡zÃ­
+int		TestDelay;						// prodleva mezi fÃ¡zemi (v impulsech)
+double	TestKroku;						// poÃ¨et krokÃ¹ na jednotku
 
-int		TestFaze = 0;					// aktuální fáze sprajtu
-int		TestSmer = 0;					// aktuální smìr sprajtu
-int		TestNext = 0;					// èítaè do pøíštího kroku
+int		TestFaze = 0;					// aktuÃ¡lnÃ­ fÃ¡ze sprajtu
+int		TestSmer = 0;					// aktuÃ¡lnÃ­ smÃ¬r sprajtu
+int		TestNext = 0;					// Ã¨Ã­taÃ¨ do pÃ¸Ã­Å¡tÃ­ho kroku
 
-int		TestPicWidth;					// šíøka obrázku sprajtu
-int		TestPicHeight;					// vıška obrázku sprajtu
-double	TestX;							// aktuální souøadnice X
-double	TestY;							// aktuální souøadnice Y
-double	TestEndX;						// cílová souøadnice X
-double	TestEndY;						// cílová souøadnice Y
+int		TestPicWidth;					// Å¡Ã­Ã¸ka obrÃ¡zku sprajtu
+int		TestPicHeight;					// vÃ½Å¡ka obrÃ¡zku sprajtu
+double	TestX;							// aktuÃ¡lnÃ­ souÃ¸adnice X
+double	TestY;							// aktuÃ¡lnÃ­ souÃ¸adnice Y
+double	TestEndX;						// cÃ­lovÃ¡ souÃ¸adnice X
+double	TestEndY;						// cÃ­lovÃ¡ souÃ¸adnice Y
 
 // ************************** obsluha volby editace *************************
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace pÃ¸i startu programu
 
 void StartInit()
 {
-// naètení ikon èísel
+// naÃ¨tenÃ­ ikon Ã¨Ã­sel
 	MapSwcNum.IconSize(8, 12);
 	MapSwcNum.Load(IDN_MAPSWCNUM, 10);
 	ASSERT(MapSwcNum.Num() == 10);
 
-// naètení pomocnıch ikon sprajtù (záhlaví)
+// naÃ¨tenÃ­ pomocnÃ½ch ikon sprajtÃ¹ (zÃ¡hlavÃ­)
 	SpriteIcon.Load(IDN_SPRITE_ICON, 26);
 	ASSERT(SpriteIcon.Num() == 26);
 
-// nastavení obrázkù pro sprajty 0 a 1 (Petr a Petra) (mají velikost ICONSIZE)
+// nastavenÃ­ obrÃ¡zkÃ¹ pro sprajty 0 a 1 (Petr a Petra) (majÃ­ velikost ICONSIZE)
 	CPicture* pic = Sprite0.DataData();
 	int j = 2;
 	for (int i = 0; i < 8; i++)
@@ -137,35 +137,35 @@ void StartInit()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace (musí bıt platnı index!)
+// zahÃ¡jenÃ­ editace (musÃ­ bÃ½t platnÃ½ index!)
 
 void BegEdit(int index)
 {
 	EndDrag();
 
-// úschova indexu sprajtu
+// Ãºschova indexu sprajtu
 	Index = index;						// index sprajtu
 	ASSERT(Sprite.IsValid(index));
-	Sprite[index].CopyWrite();			// kopie pøed zápisem
+	Sprite[index].CopyWrite();			// kopie pÃ¸ed zÃ¡pisem
 
-// úschova parametrù sprajtu
-	Width = Sprite[index].Faze();		// šíøka plochy v políèkách
-	Height = Sprite[index].Smer();		// vıška plochy v políèkách
-	PicWidth = Sprite[index].Width();	// šíøka obrázku sprajtu
-	KorWidth = PicWidth;				// zkorigovaná šíøka obrázku sprajtu
+// Ãºschova parametrÃ¹ sprajtu
+	Width = Sprite[index].Faze();		// Å¡Ã­Ã¸ka plochy v polÃ­Ã¨kÃ¡ch
+	Height = Sprite[index].Smer();		// vÃ½Å¡ka plochy v polÃ­Ã¨kÃ¡ch
+	PicWidth = Sprite[index].Width();	// Å¡Ã­Ã¸ka obrÃ¡zku sprajtu
+	KorWidth = PicWidth;				// zkorigovanÃ¡ Å¡Ã­Ã¸ka obrÃ¡zku sprajtu
 	if (KorWidth < ICONWIDTH) KorWidth = ICONWIDTH;
-	PicHeight = Sprite[index].Height();	// vıška obrázku sprajtu
-	KorHeight = PicHeight;				// zkorigovaná vıška sprajtu
+	PicHeight = Sprite[index].Height();	// vÃ½Å¡ka obrÃ¡zku sprajtu
+	KorHeight = PicHeight;				// zkorigovanÃ¡ vÃ½Å¡ka sprajtu
 	if (KorHeight < ICONHEIGHT) KorHeight = ICONHEIGHT;
 
-// pøepoèet rozloení a zobrazení obrázku
+// pÃ¸epoÃ¨et rozloÅ¾enÃ­ a zobrazenÃ­ obrÃ¡zku
 	Disp();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha dialogu pro zadání vlastností
+// obsluha dialogu pro zadÃ¡nÃ­ vlastnostÃ­
 
-// nastavení prodlevy
+// nastavenÃ­ prodlevy
 void DimenSetDelay(HWND wnd)
 {
 	CText txt;
@@ -175,7 +175,7 @@ void DimenSetDelay(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení prodlevy
+// naÃ¨tenÃ­ prodlevy
 void DimenGetDelay(HWND wnd)
 {
 	if (!NewFill)
@@ -190,7 +190,7 @@ void DimenGetDelay(HWND wnd)
 	}
 }
 
-// nastavení fází na krok
+// nastavenÃ­ fÃ¡zÃ­ na krok
 void DimenSetStep(HWND wnd)
 {
 	CText txt;
@@ -200,7 +200,7 @@ void DimenSetStep(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení fází na krok
+// naÃ¨tenÃ­ fÃ¡zÃ­ na krok
 void DimenGetStep(HWND wnd)
 {
 	if (!NewFill)
@@ -219,7 +219,7 @@ void DimenGetStep(HWND wnd)
 	}
 }
 
-// nastavení hladiny
+// nastavenÃ­ hladiny
 void DimenSetLevel(HWND wnd)
 {
 	CText txt;
@@ -229,7 +229,7 @@ void DimenSetLevel(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení hladiny
+// naÃ¨tenÃ­ hladiny
 void DimenGetLevel(HWND wnd)
 {
 	if (!NewFill)
@@ -240,7 +240,7 @@ void DimenGetLevel(HWND wnd)
 	}
 }
 
-// nastavení klidovıch fází
+// nastavenÃ­ klidovÃ½ch fÃ¡zÃ­
 void DimenSetKlid(HWND wnd)
 {
 	CText txt;
@@ -250,7 +250,7 @@ void DimenSetKlid(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení klidovıch fází
+// naÃ¨tenÃ­ klidovÃ½ch fÃ¡zÃ­
 void DimenGetKlid(HWND wnd)
 {
 	if (!NewFill)
@@ -263,7 +263,7 @@ void DimenGetKlid(HWND wnd)
 	}
 }
 
-// nastavení pohybovıch fází
+// nastavenÃ­ pohybovÃ½ch fÃ¡zÃ­
 void DimenSetPohyb(HWND wnd)
 {
 	CText txt;
@@ -273,7 +273,7 @@ void DimenSetPohyb(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení pohybovıch fází
+// naÃ¨tenÃ­ pohybovÃ½ch fÃ¡zÃ­
 void DimenGetPohyb(HWND wnd)
 {
 	if (!NewFill)
@@ -286,7 +286,7 @@ void DimenGetPohyb(HWND wnd)
 	}
 }
 
-// nastavení smìrù
+// nastavenÃ­ smÃ¬rÃ¹
 void DimenSetSmer(HWND wnd)
 {
 	CText txt;
@@ -296,7 +296,7 @@ void DimenSetSmer(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení smìrù
+// naÃ¨tenÃ­ smÃ¬rÃ¹
 void DimenGetSmer(HWND wnd)
 {
 	if (!NewFill)
@@ -309,7 +309,7 @@ void DimenGetSmer(HWND wnd)
 	}
 }
 
-// nastavení šíøky
+// nastavenÃ­ Å¡Ã­Ã¸ky
 void DimenSetWidth(HWND wnd)
 {
 	CText txt;
@@ -319,7 +319,7 @@ void DimenSetWidth(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení šíøky
+// naÃ¨tenÃ­ Å¡Ã­Ã¸ky
 void DimenGetWidth(HWND wnd)
 {
 	if (!NewFill)
@@ -332,7 +332,7 @@ void DimenGetWidth(HWND wnd)
 	}
 }
 
-// nastavení vıšky
+// nastavenÃ­ vÃ½Å¡ky
 void DimenSetHeight(HWND wnd)
 {
 	CText txt;
@@ -342,7 +342,7 @@ void DimenSetHeight(HWND wnd)
 	NewFill = FALSE;
 }
 
-// naètení vıšky
+// naÃ¨tenÃ­ vÃ½Å¡ky
 void DimenGetHeight(HWND wnd)
 {
 	if (!NewFill)
@@ -475,11 +475,11 @@ BOOL CALLBACK DimenDialogProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení parametrù sprajtu
+// nastavenÃ­ parametrÃ¹ sprajtu
 
 void OnDimen()
 {
-// pøíprava vıchozích rozmìrù
+// pÃ¸Ã­prava vÃ½chozÃ­ch rozmÃ¬rÃ¹
 	NewDelay = Sprite[Index].Delay();
 	NewStep = Sprite[Index].Kroku();
 	NewLevel = Sprite[Index].Level();
@@ -489,7 +489,7 @@ void OnDimen()
 	NewWidth = PicWidth;
 	NewHeight = PicHeight;
 
-// zadání novıch rozmìrù sprajtu
+// zadÃ¡nÃ­ novÃ½ch rozmÃ¬rÃ¹ sprajtu
 	if (::DialogBoxParam(
 			hInstance,
 			MAKEINTRESOURCE(IDN_SPRITEDIMEN),
@@ -497,7 +497,7 @@ void OnDimen()
 			(DLGPROC)DimenDialogProc,
 			(LPARAM)IDN_SPRITEDIMEN) != IDOK) return;
 
-// kontrola, zda byly parametry zmìnìny
+// kontrola, zda byly parametry zmÃ¬nÃ¬ny
 	if ((NewDelay == Sprite[Index].Delay()) && 
 		(NewStep == Sprite[Index].Kroku()) &&
 		(NewLevel == Sprite[Index].Level()) &&
@@ -510,13 +510,13 @@ void OnDimen()
 		return;
 	}
 
-// zapnutí kurzoru èekání
+// zapnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	BeginWaitCursor();
 
-// úschova pro UNDO
+// Ãºschova pro UNDO
 	PushUndo();
 
-// nastavení novıch parametrù sprajtu
+// nastavenÃ­ novÃ½ch parametrÃ¹ sprajtu
 	ASSERT(Sprite.IsValid(Index));
 	if (((NewKlid + NewPohyb) < Width) || (NewSmer < Height))
 	{
@@ -527,8 +527,8 @@ void OnDimen()
 	Sprite[Index].Kroku(NewStep);
 	Sprite[Index].Level(NewLevel);
 
-	Width = Sprite[Index].Faze();		// šíøka plochy v políèkách
-	Height = Sprite[Index].Smer();		// vıška plochy v políèkách
+	Width = Sprite[Index].Faze();		// Å¡Ã­Ã¸ka plochy v polÃ­Ã¨kÃ¡ch
+	Height = Sprite[Index].Smer();		// vÃ½Å¡ka plochy v polÃ­Ã¨kÃ¡ch
 
 	for (int i = Width*Height-1; i >= 0; i--)
 	{
@@ -536,78 +536,78 @@ void OnDimen()
 		Sprite[Index][i].Resize(NewWidth, NewHeight);
 	}
 
-	PicWidth = NewWidth;				// šíøka obrázku sprajtu
-	KorWidth = PicWidth;				// zkorigovaná šíøka obrázku sprajtu
+	PicWidth = NewWidth;				// Å¡Ã­Ã¸ka obrÃ¡zku sprajtu
+	KorWidth = PicWidth;				// zkorigovanÃ¡ Å¡Ã­Ã¸ka obrÃ¡zku sprajtu
 	if (KorWidth < ICONWIDTH) KorWidth = ICONWIDTH;
-	PicHeight = NewHeight;				// vıška obrázku sprajtu
-	KorHeight = PicHeight;				// zkorigovaná vıška sprajtu
+	PicHeight = NewHeight;				// vÃ½Å¡ka obrÃ¡zku sprajtu
+	KorHeight = PicHeight;				// zkorigovanÃ¡ vÃ½Å¡ka sprajtu
 	if (KorHeight < ICONHEIGHT) KorHeight = ICONHEIGHT;
 
-// pøekreslení displeje (a pøepoèet parametrù)
+// pÃ¸ekreslenÃ­ displeje (a pÃ¸epoÃ¨et parametrÃ¹)
 	Disp();
 
-// pøíznak modifikace
+// pÃ¸Ã­znak modifikace
 	SetModi();
 
-// vypnutí kurzoru èekání
+// vypnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	EndWaitCursor();
 }
 
 
 
-// ***************************** obsluha zobrazení **************************
+// ***************************** obsluha zobrazenÃ­ **************************
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepoèet rozmìrù
+// pÃ¸epoÃ¨et rozmÃ¬rÃ¹
 
 void ReCalc()
 {
-// šíøka a vıška plochy v bodech (vèetnì záhlaví)
+// Å¡Ã­Ã¸ka a vÃ½Å¡ka plochy v bodech (vÃ¨etnÃ¬ zÃ¡hlavÃ­)
 	MWidth = Width*KorWidth + ICONWIDTH;
 	MHeight = Height*KorHeight + ICONHEIGHT;
 
-// pøíprava zobrazené vıšky (korekce, je-li horizontální posuvník)
-	DHeight = EditHeight - 4;					// vıška k zobrazení
+// pÃ¸Ã­prava zobrazenÃ© vÃ½Å¡ky (korekce, je-li horizontÃ¡lnÃ­ posuvnÃ­k)
+	DHeight = EditHeight - 4;					// vÃ½Å¡ka k zobrazenÃ­
 	if (EditWidth - 4 - TRACKSIRKA < MWidth)
 	{
-		DHeight -= TRACKSIRKA;					// sníenı vıšky o horizontální posuvník
-		if (DHeight < 1) DHeight = 1;			// minimální šíøka
+		DHeight -= TRACKSIRKA;					// snÃ­Å¾enÃ½ vÃ½Å¡ky o horizontÃ¡lnÃ­ posuvnÃ­k
+		if (DHeight < 1) DHeight = 1;			// minimÃ¡lnÃ­ Å¡Ã­Ã¸ka
 	}
 
-// pøíprava zobrazené šíøky (korekce, je-li vertikální posuvník)
-	DWidth = EditWidth - 4;						//	šíøka k zobrazení
+// pÃ¸Ã­prava zobrazenÃ© Å¡Ã­Ã¸ky (korekce, je-li vertikÃ¡lnÃ­ posuvnÃ­k)
+	DWidth = EditWidth - 4;						//	Å¡Ã­Ã¸ka k zobrazenÃ­
 	if (DHeight < MHeight)
 	{
-		DWidth -= TRACKSIRKA;					// sníení šíøky o vertikální posuvník
-		if (DWidth < 1) DWidth = 1;				// minimální šíøka
+		DWidth -= TRACKSIRKA;					// snÃ­Å¾enÃ­ Å¡Ã­Ã¸ky o vertikÃ¡lnÃ­ posuvnÃ­k
+		if (DWidth < 1) DWidth = 1;				// minimÃ¡lnÃ­ Å¡Ã­Ã¸ka
 	}
 
-// zobrazenı poèátek
+// zobrazenÃ½ poÃ¨Ã¡tek
 	DLeft = EditX + 2 + (DWidth - MWidth)/2;
 	if (DWidth < MWidth) DLeft = EditX + 2;
 	DTop = EditY + 2 + (DHeight - MHeight)/2;
 	if (DHeight < MHeight) DTop = EditY + 2;
 
-// omezení na skuteènou vıšku a šíøku
-	if (DHeight > MHeight) DHeight = MHeight;	// omezení na skuteèné rozmìry
-	if (DWidth > MWidth) DWidth = MWidth;		// omezení na skuteèné rozmìry
+// omezenÃ­ na skuteÃ¨nou vÃ½Å¡ku a Å¡Ã­Ã¸ku
+	if (DHeight > MHeight) DHeight = MHeight;	// omezenÃ­ na skuteÃ¨nÃ© rozmÃ¬ry
+	if (DWidth > MWidth) DWidth = MWidth;		// omezenÃ­ na skuteÃ¨nÃ© rozmÃ¬ry
 
-// omezení poèáteèního bodu
+// omezenÃ­ poÃ¨Ã¡teÃ¨nÃ­ho bodu
 	if (TLeft < 0) TLeft = 0;
 	if (TLeft > MWidth - DWidth) TLeft = MWidth - DWidth;
 	if (TTop < 0) TTop = 0;
 	if (TTop > MHeight - DHeight) TTop = MHeight - DHeight;
 
-// pøepoèet zobrazeného poèátku na ikony a body
+// pÃ¸epoÃ¨et zobrazenÃ©ho poÃ¨Ã¡tku na ikony a body
 	if (TLeft < ICONWIDTH)
 	{
 		ILeft = 0;
-		OLeft = ICONWIDTH - TLeft;				// zobrazená èást ikony vlevo
+		OLeft = ICONWIDTH - TLeft;				// zobrazenÃ¡ Ã¨Ã¡st ikony vlevo
 	}
 	else
 	{
 		ILeft = (TLeft-ICONWIDTH) / KorWidth + 1;	// index ikony vlevo
-		OLeft = KorWidth - ((TLeft-ICONWIDTH) % KorWidth);	// zobrazená èást ikony vlevo
+		OLeft = KorWidth - ((TLeft-ICONWIDTH) % KorWidth);	// zobrazenÃ¡ Ã¨Ã¡st ikony vlevo
 	}
 
 	if (TTop < ICONHEIGHT)
@@ -617,11 +617,11 @@ void ReCalc()
 	}
 	else
 	{
-		ITop = (TTop-ICONHEIGHT) / KorHeight + 1;	// index ikony nahoøe
-		OTop = KorHeight - ((TTop-ICONHEIGHT) % KorHeight);	// zobrazená èást ikony nahoøe
+		ITop = (TTop-ICONHEIGHT) / KorHeight + 1;	// index ikony nahoÃ¸e
+		OTop = KorHeight - ((TTop-ICONHEIGHT) % KorHeight);	// zobrazenÃ¡ Ã¨Ã¡st ikony nahoÃ¸e
 	}
 
-// zobrazená èást ikon vpravo a dole
+// zobrazenÃ¡ Ã¨Ã¡st ikon vpravo a dole
 	ORight = KorWidth - ((MWidth - TLeft - DWidth) % KorWidth);
 	OBottom = KorHeight - ((MHeight - TTop - DHeight) % KorHeight);
 
@@ -629,39 +629,39 @@ void ReCalc()
 	IRight = ILeft + (DWidth - OLeft + KorWidth - 1) / KorWidth;
 	IBottom = ITop + (DHeight - OTop + KorHeight - 1) / KorHeight;
 
-// pøíznak zapnutí posuvníkù
+// pÃ¸Ã­znak zapnutÃ­ posuvnÃ­kÃ¹
 	HScrollDisp = (DWidth < MWidth);
 	VScrollDisp = (DHeight < MHeight);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení celého okna editoru
+// zobrazenÃ­ celÃ©ho okna editoru
 
 void Disp()
 {
-// pøepoèet zobrazení
+// pÃ¸epoÃ¨et zobrazenÃ­
 	ReCalc();
 
-// nastavení posuvníkù
+// nastavenÃ­ posuvnÃ­kÃ¹
 	SetScroll();
 
-// otevøení kontextu displeje
+// otevÃ¸enÃ­ kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// vıbìr vlastních palet
+// nastavenÃ­ vlastnÃ­ch palet
+	HPALETTE OldPal;					// Ãºschova pÃ¹vodnÃ­ch palet
+	OldPal = ::SelectPalette(dc,		// vÃ½bÃ¬r vlastnÃ­ch palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
-// vykreslení obrázku
+// vykreslenÃ­ obrÃ¡zku
 	DispAkt(dc);
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// pÃ¸Ã­prava Å¡tÃ¬tce k vymazÃ¡nÃ­ podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // Å¡tÃ¬tec k vymazÃ¡nÃ­ plochy
 
-// vymazání plochy nahoøe nad obrázkem
+// vymazÃ¡nÃ­ plochy nahoÃ¸e nad obrÃ¡zkem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -672,7 +672,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy dole pod obrázkem (left a right je nastaveno)
+// vymazÃ¡nÃ­ plochy dole pod obrÃ¡zkem (left a right je nastaveno)
 	rc.top = DTop + DHeight;
 	rc.bottom = EditY + EditHeight - 2;
 	if (rc.top < rc.bottom)
@@ -680,7 +680,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vlevo od obrázku (left je nastaveno)
+// vymazÃ¡nÃ­ plochy vlevo od obrÃ¡zku (left je nastaveno)
 	rc.right = DLeft;
 	rc.top = DTop;
 	rc.bottom = DTop + DHeight;
@@ -689,7 +689,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vpravo od obrázku (top a bottom je nastaveno)
+// vymazÃ¡nÃ­ plochy vpravo od obrÃ¡zku (top a bottom je nastaveno)
 	rc.left = DLeft + DWidth;
 	rc.right = EditX + EditWidth - 2;
 	if (rc.left < rc.right)
@@ -697,54 +697,54 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// zrušení štìtce podkladu (i kdy podle dokumentace rušení není nutné)
+// zruÅ¡enÃ­ Å¡tÃ¬tce podkladu (i kdyÅ¾ podle dokumentace ruÅ¡enÃ­ nenÃ­ nutnÃ©)
 	::DeleteObject(brush);
 
-// návrat pùvodních palet
+// nÃ¡vrat pÃ¹vodnÃ­ch palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnÃ¬nÃ­ kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizaèní pøekreslení obrázku (s pøepoètem rozmìrù)
+// aktualizaÃ¨nÃ­ pÃ¸ekreslenÃ­ obrÃ¡zku (s pÃ¸epoÃ¨tem rozmÃ¬rÃ¹)
 
 void ReDisp()
 {
-// pøepoèet zobrazení
+// pÃ¸epoÃ¨et zobrazenÃ­
 	ReCalc();
 
-// nastavení posuvníkù
+// nastavenÃ­ posuvnÃ­kÃ¹
 	SetScroll();
 
-// otevøení kontextu displeje
+// otevÃ¸enÃ­ kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// vıbìr vlastních palet
+// nastavenÃ­ vlastnÃ­ch palet
+	HPALETTE OldPal;					// Ãºschova pÃ¹vodnÃ­ch palet
+	OldPal = ::SelectPalette(dc,		// vÃ½bÃ¬r vlastnÃ­ch palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
-// vykreslení obrázku
+// vykreslenÃ­ obrÃ¡zku
 	DispAkt(dc);
 
-// návrat pùvodních palet
+// nÃ¡vrat pÃ¹vodnÃ­ch palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnÃ¬nÃ­ kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizaèní pøekreslení obrázku
+// aktualizaÃ¨nÃ­ pÃ¸ekreslenÃ­ obrÃ¡zku
 
 void DispAkt(HDC dc)
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	int i,j, k, l;
 	int width = ((IRight - ILeft + 1)*KorWidth + 7) & ~7;
 	int height = (IBottom - ITop + 1)*KorHeight;
@@ -752,32 +752,32 @@ void DispAkt(HDC dc)
 	BYTE* src;
 	BYTE col;
 	MapSwcNum[0].DeComp();
-	BYTE numcol = (MapSwcNum[0].DataData())[0];		// barva podkladu èíslic
-	int cislo;										// èíslo fáze v záhlaví
-	int cislic;										// poèet èíslic èísla v záhlaví
-	double uhel;									// smìr úhlu
-	double uhelsin;									// sinus úhlu
-	double uhelcos;									// cosinus úhlu
+	BYTE numcol = (MapSwcNum[0].DataData())[0];		// barva podkladu Ã¨Ã­slic
+	int cislo;										// Ã¨Ã­slo fÃ¡ze v zÃ¡hlavÃ­
+	int cislic;										// poÃ¨et Ã¨Ã­slic Ã¨Ã­sla v zÃ¡hlavÃ­
+	double uhel;									// smÃ¬r Ãºhlu
+	double uhelsin;									// sinus Ãºhlu
+	double uhelcos;									// cosinus Ãºhlu
 	CPicture* data = Sprite[Index].DataData();
 
-// vytvoøení bufferu k zobrazení
+// vytvoÃ¸enÃ­ bufferu k zobrazenÃ­
 	BYTE* buf = (BYTE*)MemGet(width*height);
 
-// zobrazení ikon
+// zobrazenÃ­ ikon
 	for (i = ILeft; i <= IRight; i++)
 	{
 		for (j = ITop; j <= IBottom; j++)
 		{
 
-// cílová adresa k uloení ikony
+// cÃ­lovÃ¡ adresa k uloÅ¾enÃ­ ikony
 			dst = buf + (i-ILeft)*KorWidth + (IBottom-j)*KorHeight*width;
 			if ((i > 0) && (ILeft == 0)) dst += ICONWIDTH - KorWidth;
 
-// je to horní øádek (záhlaví s èíslem fáze)?
+// je to hornÃ­ Ã¸Ã¡dek (zÃ¡hlavÃ­ s Ã¨Ã­slem fÃ¡ze)?
 			if (j == 0)
 			{
 
-// dekódování rohu záhlaví
+// dekÃ³dovÃ¡nÃ­ rohu zÃ¡hlavÃ­
 				if (i == 0)
 				{
 					SpriteIcon[1].DeComp();
@@ -791,11 +791,11 @@ void DispAkt(HDC dc)
 					}
 				}
 
-// jinak to bude èíslo fáze
+// jinak to bude Ã¨Ã­slo fÃ¡ze
 				else
 				{
 
-// vymazání ikony pro èíslo fáze
+// vymazÃ¡nÃ­ ikony pro Ã¨Ã­slo fÃ¡ze
 					col = OrangeCol;
 
 					for (k = ICONHEIGHT; k > 0; k--)
@@ -805,7 +805,7 @@ void DispAkt(HDC dc)
 					}
 					dst -= width*(ICONHEIGHT/2 + 6);
 
-// pøíprava barvy a èísla fáze (s rozlišením fáze pro klid)
+// pÃ¸Ã­prava barvy a Ã¨Ã­sla fÃ¡ze (s rozliÅ¡enÃ­m fÃ¡ze pro klid)
 					col = RedCol;
 					cislo = i - 1;
 					if (cislo >= Sprite[Index].Klid())
@@ -814,7 +814,7 @@ void DispAkt(HDC dc)
 						col = BlackCol;
 					}
 
-// pøíprava poètu èíslic a ukládaci adresy
+// pÃ¸Ã­prava poÃ¨tu Ã¨Ã­slic a uklÃ¡daci adresy
 					cislic = 1;
 					if (cislo >= 10) cislic++;
 					if (cislo >= 100) cislic++;
@@ -822,7 +822,7 @@ void DispAkt(HDC dc)
 					if (cislo >= 10000) cislo = 9999;
 					dst += KorWidth/2 - 8 + cislic*4;
 
-// dekódování znakù èíslic
+// dekÃ³dovÃ¡nÃ­ znakÃ¹ Ã¨Ã­slic
 					for (; cislic > 0; cislic--)
 					{
 						MapSwcNum[cislo % 10].DeComp();
@@ -847,15 +847,15 @@ void DispAkt(HDC dc)
 				}
 			}
 
-// není horní øádek
+// nenÃ­ hornÃ­ Ã¸Ã¡dek
 			else
 			{
 
-// je to záhlaví vlevo (smìr)?
+// je to zÃ¡hlavÃ­ vlevo (smÃ¬r)?
 				if (i == 0)
 				{
 
-// vymazání ikony pro smìr
+// vymazÃ¡nÃ­ ikony pro smÃ¬r
 					col = OrangeCol;
 
 					for (k = KorHeight; k > 0; k--)
@@ -865,7 +865,7 @@ void DispAkt(HDC dc)
 					}
 					dst -= width*((KorHeight+ICONHEIGHT)/2);
 
-// dekódování podkladu záhlaví pro smìr
+// dekÃ³dovÃ¡nÃ­ podkladu zÃ¡hlavÃ­ pro smÃ¬r
 					SpriteIcon[0].DeComp();
 					src = SpriteIcon[0].DataData();
 
@@ -877,12 +877,12 @@ void DispAkt(HDC dc)
 					}
 					dst -= width*(ICONHEIGHT/2) - ICONWIDTH/2;
 
-// pøíprava úhlu smìru
+// pÃ¸Ã­prava Ãºhlu smÃ¬ru
 					uhel = ((double)pi2 / Height) * (j - 1);
 					uhelsin = sin(uhel);
 					uhelcos = cos(uhel);
 
-// dekódování smìru
+// dekÃ³dovÃ¡nÃ­ smÃ¬ru
 					col = BlueCol;
 					for (k = ICONWIDTH/2 - 3; k >= 0; k--)
 					{
@@ -895,11 +895,11 @@ void DispAkt(HDC dc)
 					}
 				}
 
-// jinak jsou platná data
+// jinak jsou platnÃ¡ data
 				else
 				{
 
-// vymazání ikony pro obrázek
+// vymazÃ¡nÃ­ ikony pro obrÃ¡zek
 					col = BackCol;
 
 					for (k = KorHeight; k > 0; k--)
@@ -909,7 +909,7 @@ void DispAkt(HDC dc)
 					}
 					dst -= width*((KorHeight+PicHeight)/2) - (KorWidth-PicWidth)/2;
 
-// dekódování platné ikony
+// dekÃ³dovÃ¡nÃ­ platnÃ© ikony
 					data[(i-1) + (j-1)*Width].DeComp();
 					src = data[(i-1) + (j-1)*Width].DataData();
 	
@@ -924,7 +924,7 @@ void DispAkt(HDC dc)
 		}
 	}
 
-// zobrazení horizontálních èar rastru
+// zobrazenÃ­ horizontÃ¡lnÃ­ch Ã¨ar rastru
 	col = BlackCol;
 	dst = buf;
 	for (i = IBottom - ITop; i >= 0; i--)
@@ -939,7 +939,7 @@ void DispAkt(HDC dc)
 		MemFill(dst, width, col);
 	}
 
-// zobrazení vertikálních èar rastru
+// zobrazenÃ­ vertikÃ¡lnÃ­ch Ã¨ar rastru
 	for (i = IRight - ILeft + 1; i > 0; i--)
 	{
 		dst = buf + KorWidth*i - 1;
@@ -970,36 +970,36 @@ void DispAkt(HDC dc)
 		}
 	}
 
-// pøednastavení parametrù záhlaví bitmapy
+// pÃ¸ednastavenÃ­ parametrÃ¹ zÃ¡hlavÃ­ bitmapy
 	StdBitmapInfo->bmiHeader.biWidth = width;
 	StdBitmapInfo->bmiHeader.biHeight = DHeight;
 
-// zobrazení
+// zobrazenÃ­
 	::StretchDIBits(dc, DLeft, DTop, DWidth, DHeight, 
 		(ILeft == 0) ? (ICONWIDTH - OLeft) : (KorWidth - OLeft),
 			0, DWidth, DHeight, buf + (KorHeight-OBottom)*width,
 			StdBitmapInfo, DIB_RGB_COLORS, SRCCOPY);
 
-// zrušení bufferu
+// zruÅ¡enÃ­ bufferu
 	MemFree(buf);
 }
 
 
-// ********************* obsluha posuvníkù **********************************
+// ********************* obsluha posuvnÃ­kÃ¹ **********************************
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun posuvníkù pøi zmìnì rozmìrù okna
+// pÃ¸esun posuvnÃ­kÃ¹ pÃ¸i zmÃ¬nÃ¬ rozmÃ¬rÃ¹ okna
 
 HDWP MoveScroll(HDWP hdwp)
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	int x, y, w, h;
 
-// pøepoèet zobrazení
+// pÃ¸epoÃ¨et zobrazenÃ­
 	ReCalc();
 
-// pøesun a zobrazení horizontálního posuvníku
+// pÃ¸esun a zobrazenÃ­ horizontÃ¡lnÃ­ho posuvnÃ­ku
 	x = EditX + 2;
 	y = EditY + EditHeight - 2 - TRACKSIRKA;
 	w = EditWidth - 4;
@@ -1009,7 +1009,7 @@ HDWP MoveScroll(HDWP hdwp)
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER |
 			((HScrollDisp && !PreviewPic) ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
 
-// pøesun a zobrazení vertikálního posuvníku
+// pÃ¸esun a zobrazenÃ­ vertikÃ¡lnÃ­ho posuvnÃ­ku
 	x = EditX + EditWidth - 2 - TRACKSIRKA;
 	y = EditY + 2;
 	w = TRACKSIRKA;
@@ -1019,115 +1019,115 @@ HDWP MoveScroll(HDWP hdwp)
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER |
 			((VScrollDisp && !PreviewPic) ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
 
-// nastavení posuvníkù
+// nastavenÃ­ posuvnÃ­kÃ¹
 	SetScroll();
 
-// nová hodnota HDWP
+// novÃ¡ hodnota HDWP
 	return hdwp;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace zobrazení posuvníkù
+// aktualizace zobrazenÃ­ posuvnÃ­kÃ¹
 
 void SetScroll()
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	SCROLLINFO si;
 	si.cbSize = sizeof(SCROLLINFO);
 
-// -------- horizontální posuvník -------------
+// -------- horizontÃ¡lnÃ­ posuvnÃ­k -------------
 
-// naètení stavu horizontálního posuvníku
+// naÃ¨tenÃ­ stavu horizontÃ¡lnÃ­ho posuvnÃ­ku
 	si.fMask = SIF_ALL;
-	::GetScrollInfo(HScroll, SB_CTL, &si);	// naètení stavu posuvníku
-	si.fMask = 0;							// pøednastavení - nic se nemìní
+	::GetScrollInfo(HScroll, SB_CTL, &si);	// naÃ¨tenÃ­ stavu posuvnÃ­ku
+	si.fMask = 0;							// pÃ¸ednastavenÃ­ - nic se nemÃ¬nÃ­
 
-// minimální pozice
+// minimÃ¡lnÃ­ pozice
 	if (si.nMin != 0)
 	{
 		si.nMin = 0;
 		si.fMask |= SIF_RANGE;
 	}
 
-// maximální pozice
+// maximÃ¡lnÃ­ pozice
 	if (si.nMax != MWidth)
 	{
 		si.nMax = MWidth;
 		si.fMask |= SIF_RANGE;
 	}
 
-// velikost stránky
+// velikost strÃ¡nky
 	if (si.nPage != (UINT)DWidth)
 	{
 		si.nPage = (UINT)DWidth;
 		si.fMask |= SIF_PAGE;
 	}
 
-// pozice posuvníku
+// pozice posuvnÃ­ku
 	if (si.nPos != TLeft)
 	{
 		si.nPos = TLeft;
 		si.fMask |= SIF_POS;
 	}
 
-// nastavení novıch parametrù posuvníku
+// nastavenÃ­ novÃ½ch parametrÃ¹ posuvnÃ­ku
 	if (si.fMask)
 	{
 		::SetScrollInfo(HScroll, SB_CTL, &si, TRUE);
 	}
 
-// zobrazení horizontálního posuvníku
+// zobrazenÃ­ horizontÃ¡lnÃ­ho posuvnÃ­ku
 	::ShowWindow(HScroll, (HScrollDisp && !PreviewPic) ? SW_SHOWNA : SW_HIDE);
 
 
-// -------- vertikální posuvník -------------
+// -------- vertikÃ¡lnÃ­ posuvnÃ­k -------------
 
-// naètení stavu vertikálního posuvníku
+// naÃ¨tenÃ­ stavu vertikÃ¡lnÃ­ho posuvnÃ­ku
 	si.fMask = SIF_ALL;
 	::GetScrollInfo(VScroll, SB_CTL, &si);
-	si.fMask = 0;							// pøednastavení - nic se nemìní
+	si.fMask = 0;							// pÃ¸ednastavenÃ­ - nic se nemÃ¬nÃ­
 
-// minimální pozice
+// minimÃ¡lnÃ­ pozice
 	if (si.nMin != 0)
 	{
 		si.nMin = 0;
 		si.fMask |= SIF_RANGE;
 	}
 
-// maximální pozice
+// maximÃ¡lnÃ­ pozice
 	if (si.nMax != MHeight)
 	{
 		si.nMax = MHeight;
 		si.fMask |= SIF_RANGE;
 	}
 
-// velikost stránky
+// velikost strÃ¡nky
 	if (si.nPage != (UINT)DHeight)
 	{
 		si.nPage = (UINT)DHeight;
 		si.fMask |= SIF_PAGE;
 	}
 
-// pozice posuvníku
+// pozice posuvnÃ­ku
 	if (si.nPos != TTop)
 	{
 		si.nPos = TTop;
 		si.fMask |= SIF_POS;
 	}
 
-// nastavení novıch parametrù posuvníku
+// nastavenÃ­ novÃ½ch parametrÃ¹ posuvnÃ­ku
 	if (si.fMask)
 	{
 		::SetScrollInfo(VScroll, SB_CTL, &si, TRUE);
 	}
 
-// zobrazení vertikálního posuvníku
+// zobrazenÃ­ vertikÃ¡lnÃ­ho posuvnÃ­ku
 	::ShowWindow(VScroll, (VScrollDisp && !PreviewPic) ? SW_SHOWNA : SW_HIDE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// horizontální posuvník
+// horizontÃ¡lnÃ­ posuvnÃ­k
 
 void OnHScroll(int code, int pos)
 {
@@ -1171,7 +1171,7 @@ void OnHScroll(int code, int pos)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vertikální posuvník
+// vertikÃ¡lnÃ­ posuvnÃ­k
 
 void OnVScroll(int code, int pos)
 {
@@ -1218,7 +1218,7 @@ void OnVScroll(int code, int pos)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 
 void EndDrag()
 {
@@ -1228,43 +1228,43 @@ void EndDrag()
 	{
 		MDraging = FALSE;
 
-// zastavení taení
+// zastavenÃ­ taÅ¾enÃ­
 		::ImageList_DragLeave(NULL);
 
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 		::ImageList_EndDrag();
 
-// zrušení seznamu obrázkù taení
+// zruÅ¡enÃ­ seznamu obrÃ¡zkÃ¹ taÅ¾enÃ­
 		::ImageList_Destroy(DragImageList);
 
-// uvolnìni zachytávání myši
+// uvolnÃ¬ni zachytÃ¡vÃ¡nÃ­ myÅ¡i
 		::ReleaseCapture();
 
-// nastavení bìného kurzoru myši
+// nastavenÃ­ bÃ¬Å¾nÃ©ho kurzoru myÅ¡i
 		::SetCursor(CurArrow);
 	}
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stisk tlaèítka myši (TRUE = obsloueno)
+// stisk tlaÃ¨Ã­tka myÅ¡i (TRUE = obslouÅ¾eno)
 
 BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 {
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 	if (MDraging)
 	{
 		EndDrag();
 		return TRUE;
 	}
 
-// kontrola, zda je platné editaèní pole
+// kontrola, zda je platnÃ© editaÃ¨nÃ­ pole
 	if ((MouseX == MOUSEINV) || (MouseY == MOUSEINV))
 	{
 		return FALSE;
 	}
 
-// úschova souøadnic pøed zahájením taení
+// Ãºschova souÃ¸adnic pÃ¸ed zahÃ¡jenÃ­m taÅ¾enÃ­
 	BegX = x;
 	BegY = y;
 	BegDrag = TRUE;
@@ -1272,7 +1272,7 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 	DragX = MouseX;
 	DragY = MouseY;
 
-// zahájení editace pøi dvojkliku
+// zahÃ¡jenÃ­ editace pÃ¸i dvojkliku
 	if (dclick)
 	{
 		IndexPic = MouseX + MouseY * Width;
@@ -1290,11 +1290,11 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// posun myši
+// posun myÅ¡i
 
 void OnMouseMove(UINT flags, int x, int y)
 {
-// korekce souøadnic pøi taení (na støed ikony)
+// korekce souÃ¸adnic pÃ¸i taÅ¾enÃ­ (na stÃ¸ed ikony)
 	if (MDraging)
 	{
 		x -= HotSpotX;	x += KorWidth/2;
@@ -1307,11 +1307,11 @@ void OnMouseMove(UINT flags, int x, int y)
 		y -= DragHotSpotY;	y += DragIconHeight/2;
 	}
 
-// pøíprava relativních souøadnic bodu v editaèním poli
+// pÃ¸Ã­prava relativnÃ­ch souÃ¸adnic bodu v editaÃ¨nÃ­m poli
 	int	sx = (x - DLeft - OLeft + KorWidth)/KorWidth + ILeft - 1;
 	int sy = (y - DTop - OTop + KorHeight)/KorHeight + ITop - 1;
 
-// souøadnice myši pro zobrazení
+// souÃ¸adnice myÅ¡i pro zobrazenÃ­
 	if ((x >= DLeft) && (y >= DTop) && 
 		((DWORD)sx < (DWORD)Width) && ((DWORD)sy < (DWORD)Height) &&
 		(x < DLeft + DWidth) && (y < DTop + DHeight))
@@ -1325,7 +1325,7 @@ void OnMouseMove(UINT flags, int x, int y)
 		MouseY = MOUSEINV;
 	}
 
-// zahájení taení
+// zahÃ¡jenÃ­ taÅ¾enÃ­
 	if ((flags & (MK_LBUTTON | MK_RBUTTON)) &&
 		!MDraging &&
 		BegDrag &&
@@ -1335,17 +1335,17 @@ void OnMouseMove(UINT flags, int x, int y)
 	{
 		MDraging = TRUE;
 
-// bod styku pro taení
+// bod styku pro taÅ¾enÃ­
 		HotSpotX = BegX - DLeft - OLeft - (DragX-ILeft)*KorWidth;
 		HotSpotY = BegY - DTop - OTop - (DragY-ITop)*KorHeight;
 
-// vygenerování taené ikony
+// vygenerovÃ¡nÃ­ taÅ¾enÃ© ikony
 		DragImageList = (Sprite[Index].DataData())[DragX + DragY*Width].GenerDrag(EmptyText);
 
-// zapnutí zobrazení obrázku taení (bez uzamykání okna)
+// zapnutÃ­ zobrazenÃ­ obrÃ¡zku taÅ¾enÃ­ (bez uzamykÃ¡nÃ­ okna)
 		::ImageList_DragShowNolock(TRUE);
 
-// zapnutí kurzoru pro taení
+// zapnutÃ­ kurzoru pro taÅ¾enÃ­
 		CopyMode = (flags & (MK_RBUTTON));
 		if (CopyMode)
 		{
@@ -1357,25 +1357,25 @@ void OnMouseMove(UINT flags, int x, int y)
 		}
 		::SetCursor(CurAkt);
 
-// vytvoøení nového obrázku taení
+// vytvoÃ¸enÃ­ novÃ©ho obrÃ¡zku taÅ¾enÃ­
 		::ImageList_SetDragCursorImage(DragImageList, 0, 0, 0);
 
-// zahájení operace taení
+// zahÃ¡jenÃ­ operace taÅ¾enÃ­
 		::ImageList_BeginDrag(DragImageList, 0, 0, 0);
 
-// zahájení operace taení, zákaz aktualizace okna
+// zahÃ¡jenÃ­ operace taÅ¾enÃ­, zÃ¡kaz aktualizace okna
 		::ImageList_DragEnter(NULL, MouseScreen.x - HotSpotX, MouseScreen.y - HotSpotY);
 
-// pøetaení obrázku na aktuální pozici myši
+// pÃ¸etaÅ¾enÃ­ obrÃ¡zku na aktuÃ¡lnÃ­ pozici myÅ¡i
 		::ImageList_DragMove(MouseScreen.x - HotSpotX, MouseScreen.y - HotSpotY);
 
-// zahájení zachytávání myši
+// zahÃ¡jenÃ­ zachytÃ¡vÃ¡nÃ­ myÅ¡i
 		::SetCapture(MainFrame);
 	}
 	else
 	{
 
-// ukonèení taení, pokud bylo tlaèítko uvolnìno mimo oblast
+// ukonÃ¨enÃ­ taÅ¾enÃ­, pokud bylo tlaÃ¨Ã­tko uvolnÃ¬no mimo oblast
 		if (MDraging && ((flags & (MK_LBUTTON | MK_RBUTTON)) == 0))
 		{
 			EndDrag();
@@ -1383,14 +1383,14 @@ void OnMouseMove(UINT flags, int x, int y)
 		else
 		{
 
-// pokraèování v taení
+// pokraÃ¨ovÃ¡nÃ­ v taÅ¾enÃ­
 			if (MDraging)
 			{
 
-// pøetaení obrázku na aktuální pozici myši
+// pÃ¸etaÅ¾enÃ­ obrÃ¡zku na aktuÃ¡lnÃ­ pozici myÅ¡i
 				::ImageList_DragMove(MouseScreen.x - HotSpotX, MouseScreen.y - HotSpotY);
 
-// nastavení kurzoru myši
+// nastavenÃ­ kurzoru myÅ¡i
 				HCURSOR curnew = CurAkt;
 
 				if ((MouseX == MOUSEINV) || (MouseY == MOUSEINV))
@@ -1425,12 +1425,12 @@ void OnMouseMove(UINT flags, int x, int y)
 		}
 	}
 
-// zobrazení souøadnic myši
+// zobrazenÃ­ souÃ¸adnic myÅ¡i
 	DispMouseXY();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní tlaèítka myši
+// uvolnÃ¬nÃ­ tlaÃ¨Ã­tka myÅ¡i
 
 void OnButtonUp(UINT keys, BOOL right)
 {
@@ -1472,11 +1472,11 @@ void OnButtonUp(UINT keys, BOOL right)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// poloení obrázku zvnìjšku
+// poloÅ¾enÃ­ obrÃ¡zku zvnÃ¬jÅ¡ku
 
 void DragDrop(int pic)
 {
-// ukonèení editace èíselného parametru
+// ukonÃ¨enÃ­ editace Ã¨Ã­selnÃ©ho parametru
 	if ((EditMode != BufSprID) ||
 		Sprite.IsNotValid(Index) ||
 		Picture.IsNotValid(pic) ||
@@ -1486,7 +1486,7 @@ void DragDrop(int pic)
 		return;
 	}
 
-// úschova pro UNDO
+// Ãºschova pro UNDO
 	PushUndo();
 
 	(Sprite[Index].DataData())[MouseX + MouseY*Width] = Picture[pic];
@@ -1505,7 +1505,7 @@ void TestPaint(HWND hWnd)
 {
 	int i, j;
 
-// vymazání bufferu ikonami pozadí
+// vymazÃ¡nÃ­ bufferu ikonami pozadÃ­
 	BYTE* src;
 	ASSERT(IconFnc.IsValid(0));
 	if (Icon.IsValid(0))
@@ -1530,7 +1530,7 @@ void TestPaint(HWND hWnd)
 
 	MemCopy(dst, TestBuff, TestWidth * (TestHeight - ICONHEIGHT));
 
-// pøíprava fáze sprajtu
+// pÃ¸Ã­prava fÃ¡ze sprajtu
 	int faze = TestFaze;
 
 	if (((TestX != TestEndX) || (TestY != TestEndY)) && 
@@ -1552,17 +1552,17 @@ void TestPaint(HWND hWnd)
 		}
 	}
 
-// souøadnice a rozmìry k zobrazení sprajtu
+// souÃ¸adnice a rozmÃ¬ry k zobrazenÃ­ sprajtu
 	int x = Round(TestX);
 	int y = Round(TestY);
 	int width = TestPicWidth;
 	int height = TestPicHeight;
 
-// zdrojová adresa sprajtu
+// zdrojovÃ¡ adresa sprajtu
 	Sprite[Index].At(faze, TestSmer).DeComp();
 	src = Sprite[Index].At(faze, TestSmer).DataData();
 
-// omezení souøadnic a rozmìrù
+// omezenÃ­ souÃ¸adnic a rozmÃ¬rÃ¹
 	if (x < 0)
 	{
 		width += x;
@@ -1581,10 +1581,10 @@ void TestPaint(HWND hWnd)
 
 	if (y + height > TestHeight) height = TestHeight - y;
 
-// cílová adresa k dekódování sprajtu
+// cÃ­lovÃ¡ adresa k dekÃ³dovÃ¡nÃ­ sprajtu
 	dst = TestBuff + x + y*TestWidth;
 
-// dekódování sprajtu
+// dekÃ³dovÃ¡nÃ­ sprajtu
 	if ((width > 0) && (height > 0))
 	{
 		for (i = height; i > 0; i--)
@@ -1615,31 +1615,31 @@ void TestPaint(HWND hWnd)
 		}
 	}
 
-// otevøení DC
+// otevÃ¸enÃ­ DC
 	HDC dc = ::GetDC(hWnd);
 
-// nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// vıbìr vlastních palet
+// nastavenÃ­ vlastnÃ­ch palet
+	HPALETTE OldPal;					// Ãºschova pÃ¹vodnÃ­ch palet
+	OldPal = ::SelectPalette(dc,		// vÃ½bÃ¬r vlastnÃ­ch palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
-// pøednastavení parametrù záhlaví bitmapy
+// pÃ¸ednastavenÃ­ parametrÃ¹ zÃ¡hlavÃ­ bitmapy
 	StdBitmapInfo->bmiHeader.biWidth = TestWidth;
 	StdBitmapInfo->bmiHeader.biHeight = TestHeight;
 
-// zobrazení obrázku
+// zobrazenÃ­ obrÃ¡zku
 	::StretchDIBits(dc, TestLeft, TestTop, TestWidth, TestHeight, 0,
 			0, TestWidth, TestHeight, TestBuff,
 			StdBitmapInfo, DIB_RGB_COLORS, SRCCOPY);
 
-// návrat pùvodních palet
+// nÃ¡vrat pÃ¹vodnÃ­ch palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní DC
+// uvolnÃ¬nÃ­ DC
 	::ReleaseDC(hWnd, dc);
 
-// posun souøadnic
+// posun souÃ¸adnic
 	TestNext--;
 	if (TestNext <= 0)
 	{
@@ -1759,7 +1759,7 @@ BOOL CALLBACK SpriteDialogProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lPara
 
 void OnTest()
 {
-// kontrola, zda je reim editace
+// kontrola, zda je reÅ¾im editace
 	if (!ProgMode ||
 		(EditMode != BufSprID) ||
 		Sprite.IsNotValid(Index) ||
@@ -1768,10 +1768,10 @@ void OnTest()
 		return;
 	}
 
-// vytvoøení bufferu
+// vytvoÃ¸enÃ­ bufferu
 	TestBuff = (BYTE*) MemGet(TestWidth * TestHeight);
 
-// zahájení testovacího módu
+// zahÃ¡jenÃ­ testovacÃ­ho mÃ³du
 	TestPicWidth = Sprite[Index].Width();
 	TestPicHeight = Sprite[Index].Height();
 	TestX = (TestWidth - TestPicWidth)/2;
@@ -1797,10 +1797,10 @@ void OnTest()
 			(DLGPROC)SpriteDialogProc,
 			(LPARAM)IDN_SPRITETEST);
 
-// ukonèení testovacího módu
+// ukonÃ¨enÃ­ testovacÃ­ho mÃ³du
 	TestMode = FALSE;
 
-// zrušení bufferu
+// zruÅ¡enÃ­ bufferu
 	MemFree(TestBuff);
 	TestBuff = NULL;
 }
@@ -1809,7 +1809,7 @@ void OnTest()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// úschova plochu pro UNDO
+// Ãºschova plochu pro UNDO
 
 void PushUndo()
 {

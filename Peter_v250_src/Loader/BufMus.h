@@ -7,21 +7,21 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky dat hudby (16 bajtù + data)
+// struktura poloÅ¾ky dat hudby (16 bajtÃ¹ + data)
 
 typedef struct MUSICDATA_
 {
-	long	Refer;					// (4) èítaè referencí
-	long	Size;					// (4) velikost dat (bajtù)
-	long	Res;					// (4) ... rezerva (pro zarovnání)
+	long	Refer;					// (4) Ã¨Ã­taÃ¨ referencÃ­
+	long	Size;					// (4) velikost dat (bajtÃ¹)
+	long	Res;					// (4) ... rezerva (pro zarovnÃ¡nÃ­)
 	BYTE*	Data;					// (4) ukazatel na data
 
 } MUSICDATA;
 
-// velikost poloky dat hudby (bez dat)
+// velikost poloÅ¾ky dat hudby (bez dat)
 #define SIZEOFMUSICDATA	(3*sizeof(long) + sizeof(BYTE*))
 
-extern MUSICDATA EmptyMusicData;			// data prázdné hudby
+extern MUSICDATA EmptyMusicData;			// data prÃ¡zdnÃ© hudby
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -30,14 +30,14 @@ extern MUSICDATA EmptyMusicData;			// data prázdné hudby
 class CMusic
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné - pouze ukazatel na data
-	MUSICDATA*		pData;					// ukazatel na záhlaví hudby
+// promÃ¬nnÃ© - pouze ukazatel na data
+	MUSICDATA*		pData;					// ukazatel na zÃ¡hlavÃ­ hudby
 
-// pøipojení dat
+// pÃ¸ipojenÃ­ dat
 	inline void Attach(MUSICDATA* data)
 	{
 		ASSERT(data);
@@ -45,7 +45,7 @@ private:
 		LongIncrement(&(data->Refer));
 	}
 
-// odpojení (a zrušení) dat
+// odpojenÃ­ (a zruÅ¡enÃ­) dat
 	inline void Detach()
 	{
 		ASSERT(pData);
@@ -62,67 +62,67 @@ private:
 		}
 	}
 
-// vytvoøení nového bufferu - starı buffer musí bıt odpojen!
+// vytvoÃ¸enÃ­ novÃ©ho bufferu - starÃ½ buffer musÃ­ bÃ½t odpojen!
 	inline void NewBuffer(int size)
 	{
 		ASSERT(size >= 0);
 		if (size < 0) size = 0;
 		MUSICDATA* data = (MUSICDATA*)MemGet(SIZEOFMUSICDATA);
 		pData = data;					// adresa dat
-		data->Refer = 1;				// poèet referencí
+		data->Refer = 1;				// poÃ¨et referencÃ­
 		data->Size = size;				// velikost dat
 		data->Res = 0;					// rezerva
 		data->Data = (BYTE*)MemGet(size);
 	}
 
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
 // konstruktor a destruktor
-	CMusic();								// standardní konstruktor
-	CMusic(const CMusic& src);				// kopírovací konstruktor
-	CMusic(int size);						// konstruktor s vytvoøením dat
-	~CMusic();								// standardní destruktor
+	CMusic();								// standardnÃ­ konstruktor
+	CMusic(const CMusic& src);				// kopÃ­rovacÃ­ konstruktor
+	CMusic(int size);						// konstruktor s vytvoÃ¸enÃ­m dat
+	~CMusic();								// standardnÃ­ destruktor
 
-// statickı konstruktor a destruktor
-	void Init();							// statickı konstruktor
-	void Init(MUSICDATA* data);				// statickı konstruktor se zadáním dat
-	void Init(int size);					// statickı konstruktor s vytvoøením dat
-	void Term();							// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();							// statickÃ½ konstruktor
+	void Init(MUSICDATA* data);				// statickÃ½ konstruktor se zadÃ¡nÃ­m dat
+	void Init(int size);					// statickÃ½ konstruktor s vytvoÃ¸enÃ­m dat
+	void Term();							// statickÃ½ destruktor
 
-// poskytnutí ukazatele na data
+// poskytnutÃ­ ukazatele na data
 	inline MUSICDATA* Data() const { return pData; };
 	inline BYTE* DataData() const { return pData->Data; };
 
-// poskytnutí velikosti dat hudby
+// poskytnutÃ­ velikosti dat hudby
 	inline int Size() const { return pData->Size; };
 
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastnÃ­ho bufferu pÃ¸ed modifikacÃ­
 	void CopyWrite();
 
-// vyprázdnìní hudby (uvolnìní dat)
+// vyprÃ¡zdnÃ¬nÃ­ hudby (uvolnÃ¬nÃ­ dat)
 	void Empty();
 
-// test, zda je hudba prázdná
+// test, zda je hudba prÃ¡zdnÃ¡
 	inline BOOL IsEmpty() { return ((DWORD)pData == (DWORD)&EmptyMusicData); };
 	inline BOOL IsNotEmpty() { return ((DWORD)pData != (DWORD)&EmptyMusicData); };
 
-// vytvoøení nové hudby (pøipraveno k zápisu, data jsou náhodná)
+// vytvoÃ¸enÃ­ novÃ© hudby (pÃ¸ipraveno k zÃ¡pisu, data jsou nÃ¡hodnÃ¡)
 	void New(int size);
 
-// naètení hudby ze souboru
+// naÃ¨tenÃ­ hudby ze souboru
 	void LoadFile();
 
-// uloení do souboru formátu MID (false=chyba)
+// uloÅ¾enÃ­ do souboru formÃ¡tu MID (false=chyba)
 //	bool SaveFile(CString jmeno) const;
 	void SaveFile() const;
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CMusic& operator= (const CMusic& src);
 
-// operátory porovnání
+// operÃ¡tory porovnÃ¡nÃ­
 	friend inline BOOL operator==(const CMusic& s1, const CMusic& s2)
 		{ return (DWORD)s1.pData == (DWORD)s2.pData; };
 
@@ -139,32 +139,32 @@ public:
 class CBufMusic
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	CMusic*		m_Data;		// ukazatel na data
-	int			m_Num;		// poèet platnıch poloek v bufferu
-	int			m_Max;		// velikost bufferu (poloek)
+	int			m_Num;		// poÃ¨et platnÃ½ch poloÅ¾ek v bufferu
+	int			m_Max;		// velikost bufferu (poloÅ¾ek)
 
-// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	inline int NewItem()
 	{
 		int i = m_Num;
 		if (i >= m_Max)
 		{
-			NewData();				// vytvoøení novıch dat
+			NewData();				// vytvoÃ¸enÃ­ novÃ½ch dat
 		}
 
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení novıch dat (oddìleno kvùli lepší optimalizaci)
+// vytvoÃ¸enÃ­ novÃ½ch dat (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -172,30 +172,30 @@ public:
 	CBufMusic();
 	~CBufMusic();
 
-// statickı konstruktor a destruktor
-	void Init();			// statickı konstruktor
-	void Term();			// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();			// statickÃ½ konstruktor
+	void Term();			// statickÃ½ destruktor
 
-// zrušení všech poloek v bufferu
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu
 	void DelAll();
 
-// poskytnutí bufferu dat
+// poskytnutÃ­ bufferu dat
 	inline CMusic* Data() const { return m_Data; };
 
-// poskytnutí poètu platnıch poloek v bufferu
+// poskytnutÃ­ poÃ¨tu platnÃ½ch poloÅ¾ek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu (vèetnì zrušenıch poloek)
+// poskytnutÃ­ velikosti bufferu (vÃ¨etnÃ¬ zruÅ¡enÃ½ch poloÅ¾ek)
 	inline int Max() const { return m_Max; };
 
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)m_Num); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline CMusic& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -208,31 +208,31 @@ public:
 	inline const CMusic& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// poskytnutí poloky (s kontrolou platnosti indexu)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	const CMusic& _fastcall Get(const int index) const;
 
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const CMusic& data);
 
-// vyprázdnìní poloky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprÃ¡zdnÃ¬nÃ­ poloÅ¾ky (bez jejÃ­ho zruÅ¡enÃ­ - jen pro uvolnÃ¬nÃ­ dat)
 	void _fastcall Empty(const int index);
 
-// zrušení poloek z konce bufferu
+// zruÅ¡enÃ­ poloÅ¾ek z konce bufferu
 	void _fastcall Del(int num);
 
-// vytvoøení prázdné poloky (vrací index poloky)
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int New();
 	int New(int size);
 
-// pøidání poloky (vrací index poloky)
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int _fastcall Add(const CMusic& data);
 	int _fastcall Add(MUSICDATA* data);
 
-// duplikace poloky (s kontrolou platnosti indexu, vrací index první poloky)
+// duplikace poloÅ¾ky (s kontrolou platnosti indexu, vracÃ­ index prvnÃ­ poloÅ¾ky)
 	int _fastcall Dup(const int index);
 	int _fastcall Dup(const int index, int num);
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CBufMusic& operator= (const CBufMusic& src);
 };
 

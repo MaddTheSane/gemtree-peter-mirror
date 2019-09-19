@@ -3,47 +3,47 @@
 
 /***************************************************************************\
 *																			*
-*					Kompilace programu - ËÌseln˝ v˝raz						*
+*					Kompilace programu - √®√≠seln√Ω v√Ωraz						*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minim·lnÌ velikost
+#pragma optimize("s", on)			// optimalizace na minim√°ln√≠ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯id·nÌ ËÌselnÈ konstanty do bufferu programu
+// p√∏id√°n√≠ √®√≠seln√© konstanty do bufferu programu
 
 void CompAddItemNum(double data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	int index = CompAddItem(FNumConst);
 
-// nastavenÌ dat
+// nastaven√≠ dat
 	ProgBuf[index].Double = data;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯id·nÌ kÛdu kl·vesy do bufferu programu
+// p√∏id√°n√≠ k√≥du kl√°vesy do bufferu programu
  
 void _fastcall CompAddItemNum(BYTE data)
 {
-// statick· promÏnn· pro p¯evod
+// statick√° prom√¨nn√° pro p√∏evod
 	static int tmp = 0;
 
-// p¯evod na ËÌslo INT
+// p√∏evod na √®√≠slo INT
 	*(BYTE*)&tmp = data;
 
-// vytvo¯enÌ poloûky a nastavenÌ dat
+// vytvo√∏en√≠ polo≈æky a nastaven√≠ dat
 	ProgBuf[CompAddItem(FNumConst)].Double = tmp;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// tabulka ¯ÌdicÌch kÛd˘ kl·ves (zajistit spojitost kÛd˘ kl·ves IDF !!!!)
+// tabulka √∏√≠dic√≠ch k√≥d√π kl√°ves (zajistit spojitost k√≥d√π kl√°ves IDF !!!!)
 
-#define CompTabVKBeg IDF_F1			// prvnÌ kÛd tabulky
-#define CompTabVKEnd IDF_VK_SPACE	// poslednÌ kÛd tabulky
+#define CompTabVKBeg IDF_F1			// prvn√≠ k√≥d tabulky
+#define CompTabVKEnd IDF_VK_SPACE	// posledn√≠ k√≥d tabulky
 
 BYTE CompTabVK[] = {
 	VK_F1,			// IDF_F1
@@ -150,12 +150,12 @@ BYTE CompTabVK[] = {
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad ËÌselnÈho v˝razu (vracÌ true = operace OK)
+// p√∏eklad √®√≠seln√©ho v√Ωrazu (vrac√≠ true = operace OK)
 
 bool _fastcall CompNum(int index)
 {
-// kontrola tabulky kÛd˘ kl·ves
-#pragma warning ( disable: 4127)				// hl·öenÌ - konstantnÌ podmÌnka
+// kontrola tabulky k√≥d√π kl√°ves
+#pragma warning ( disable: 4127)				// hl√°≈°en√≠ - konstantn√≠ podm√≠nka
 	ASSERT(CompTabVKEnd - CompTabVKBeg + 1 == sizeof(CompTabVK));
 	ASSERT(	(IDF_F1				+ 1 == IDF_F2			) && 
 			(IDF_F2				+ 1 == IDF_F3			) &&
@@ -256,76 +256,76 @@ bool _fastcall CompNum(int index)
 			(IDF_VK_SHIFT		+ 1 == IDF_VK_CTRL		) &&
 			(IDF_VK_CTRL		+ 1 == IDF_VK_ALT		) &&
 			(IDF_VK_ALT			+ 1 == IDF_VK_SPACE		));
-#pragma warning ( default: 4127)				// hl·öenÌ - konstantnÌ podmÌnka
+#pragma warning ( default: 4127)				// hl√°≈°en√≠ - konstantn√≠ podm√≠nka
 
-// adresa zdrojovÈho prvku
+// adresa zdrojov√©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 	PETPROG2*	prg2;
 
-// kontrola, zda je poloûka vypnuta
+// kontrola, zda je polo≈æka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vÏtvenÌ podle funkce
+// v√¨tven√≠ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_NUM:
-		CompAddItemNum(LoadNum(item, item2));	// ËÌseln· konstanta
+		CompAddItemNum(LoadNum(item, item2));	// √®√≠seln√° konstanta
 		return true;
 
 	case IDF_0:
-		CompAddItemNum((BYTE)0);				// ËÌslo 0
+		CompAddItemNum((BYTE)0);				// √®√≠slo 0
 		return true;
 
 	case IDF_1:
-		CompAddItemNum((BYTE)1);				// ËÌslo 1
+		CompAddItemNum((BYTE)1);				// √®√≠slo 1
 		return true;
 
 	case IDF_2:
-		CompAddItemNum((BYTE)2);				// ËÌslo 2
+		CompAddItemNum((BYTE)2);				// √®√≠slo 2
 		return true;
 
 	case IDF_3:
-		CompAddItemNum((BYTE)3);				// ËÌslo 3
+		CompAddItemNum((BYTE)3);				// √®√≠slo 3
 		return true;
 
 	case IDF_4:
-		CompAddItemNum((BYTE)4);				// ËÌslo 4
+		CompAddItemNum((BYTE)4);				// √®√≠slo 4
 		return true;
 
 	case IDF_5:
-		CompAddItemNum((BYTE)5);				// ËÌslo 5
+		CompAddItemNum((BYTE)5);				// √®√≠slo 5
 		return true;
 
 	case IDF_6:
-		CompAddItemNum((BYTE)6);				// ËÌslo 6
+		CompAddItemNum((BYTE)6);				// √®√≠slo 6
 		return true;
 
 	case IDF_7:
-		CompAddItemNum((BYTE)7);				// ËÌslo 7
+		CompAddItemNum((BYTE)7);				// √®√≠slo 7
 		return true;
 
 	case IDF_8:
-		CompAddItemNum((BYTE)8);				// ËÌslo 8
+		CompAddItemNum((BYTE)8);				// √®√≠slo 8
 		return true;
 
 	case IDF_9:
-		CompAddItemNum((BYTE)9);				// ËÌslo 9
+		CompAddItemNum((BYTE)9);				// √®√≠slo 9
 		return true;
 
 	case IDF_ADD:
-		return CompNumGrp(index, FAdd, FAdd);	// oper·tor ADD
+		return CompNumGrp(index, FAdd, FAdd);	// oper√°tor ADD
 
 	case IDF_SUB:
-		return CompNumGrp(index, FSub, FSub1);	// oper·tor SUB
+		return CompNumGrp(index, FSub, FSub1);	// oper√°tor SUB
 
 	case IDF_MUL:
-		return CompNumGrp(index, FMul, FMul);	// oper·tor MUL
+		return CompNumGrp(index, FMul, FMul);	// oper√°tor MUL
 
 	case IDF_DIV:
-		return CompNumGrp(index, FDiv, FDiv1);	// oper·tor DIV
+		return CompNumGrp(index, FDiv, FDiv1);	// oper√°tor DIV
 
 	case IDF_REAL:
 		if (item->RefBlok == BufObjID)
@@ -366,10 +366,10 @@ bool _fastcall CompNum(int index)
 		return false;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_REAL);		// funkce s n·vratem ËÌsla
+		return CompFunc(index, IDF_REAL);		// funkce s n√°vratem √®√≠sla
 
 	case IDF_SMER:
-		CompAddItem(FGetSmer);					// Petr - smÏr
+		CompAddItem(FGetSmer);					// Petr - sm√¨r
 		return true;
 
 	case IDF_POZICEX:
@@ -381,7 +381,7 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_PETRA_SMER:
-		CompAddItem(FGetSmer2);					// Petra - smÏr
+		CompAddItem(FGetSmer2);					// Petra - sm√¨r
 		return true;
 
 	case IDF_PETRA_POZICEX:
@@ -393,7 +393,7 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_MOD:
-		return CompNumGrp(index, FMod, FMod);	// oper·tor MOD
+		return CompNumGrp(index, FMod, FMod);	// oper√°tor MOD
 
 	case IDF_INC:
 		return CompNumPar(index, FInc);			// inkrementace
@@ -426,28 +426,28 @@ bool _fastcall CompNum(int index)
 		return CompNumPar(index, FArcCoTg);		// arccotangens
 
 	case IDF_PI:
-		CompAddItemNum(pi);						// Ludolfovo ËÌslo
+		CompAddItemNum(pi);						// Ludolfovo √®√≠slo
 		return true;
 
 	case IDF_INTEGER:
-		return CompNumPar(index, FNumInt);		// celÈ ËÌslo
+		return CompNumPar(index, FNumInt);		// cel√© √®√≠slo
 
 	case IDF_FRAC:
-		return CompNumPar(index, FFrac);		// desetinn· Ë·st ËÌsla
+		return CompNumPar(index, FFrac);		// desetinn√° √®√°st √®√≠sla
 
 	case IDF_ABS:
-		return CompNumPar(index, FAbs);			// absolutnÌ hodnota
+		return CompNumPar(index, FAbs);			// absolutn√≠ hodnota
 
 	case IDF_SQRT:
 		return CompNumPar(index, FSqrt);		// odmocnina
 
 	case IDF_FACT:
-		return CompNumPar(index, FFact);		// faktori·l
+		return CompNumPar(index, FFact);		// faktori√°l
 
 	case IDF_RAND:
-		if (!CompNumPar(index, FRand))			// n·hodnÈ ËÌslo s n·sobkem
+		if (!CompNumPar(index, FRand))			// n√°hodn√© √®√≠slo s n√°sobkem
 		{
-			CompAddItem(FRand0);				// n·hodnÈ ËÌslo bez n·sobku
+			CompAddItem(FRand0);				// n√°hodn√© √®√≠slo bez n√°sobku
 		}
 		return true;
 
@@ -456,65 +456,65 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_DEGRAD:
-		return CompNumPar(index, FDegRad);		// p¯evod stupÚ˘ na radi·ny
+		return CompNumPar(index, FDegRad);		// p√∏evod stup√≤√π na radi√°ny
 
 	case IDF_RADDEG:
-		return CompNumPar(index, FRadDeg);		// p¯evod radi·n˘ na stupnÏ
+		return CompNumPar(index, FRadDeg);		// p√∏evod radi√°n√π na stupn√¨
 
 	case IDF_LOG:
-		return CompNumPar(index, FLog);			// dekadick˝ logaritmus
+		return CompNumPar(index, FLog);			// dekadick√Ω logaritmus
 
 	case IDF_LN:
-		return CompNumPar(index, FLn);			// p¯irozen˝ logaritmus
+		return CompNumPar(index, FLn);			// p√∏irozen√Ω logaritmus
 
 	case IDF_PEXP:
-		return CompNumPar(index, FExp);			// p¯irozen˝ exponent
+		return CompNumPar(index, FExp);			// p√∏irozen√Ω exponent
 
 	case IDF_MOCN:
-		return CompNumGrp(index, FMocn, FMocn);	// oper·tor MOCNINA
+		return CompNumGrp(index, FMocn, FMocn);	// oper√°tor MOCNINA
 
 	case IDF_UHEL0:
-		CompAddItemNum((BYTE)0);				// ˙hel 0 stupÚ˘
+		CompAddItemNum((BYTE)0);				// √∫hel 0 stup√≤√π
 		return true;
 
 	case IDF_UHEL45:
-		CompAddItemNum(uhel45);					// ˙hel 45 stupÚ˘
+		CompAddItemNum(uhel45);					// √∫hel 45 stup√≤√π
 		return true;
 
 	case IDF_UHEL90:
-		CompAddItemNum(uhel90);					// ˙hel 90 stupÚ˘
+		CompAddItemNum(uhel90);					// √∫hel 90 stup√≤√π
 		return true;
 
 	case IDF_UHEL135:
-		CompAddItemNum(uhel135);				// ˙hel 135 stupÚ˘
+		CompAddItemNum(uhel135);				// √∫hel 135 stup√≤√π
 		return true;
 
 	case IDF_UHEL180:
-		CompAddItemNum(uhel180);				// ˙hel 180 stupÚ˘
+		CompAddItemNum(uhel180);				// √∫hel 180 stup√≤√π
 		return true;
 
 	case IDF_UHEL225:
-		CompAddItemNum(uhel225);				// ˙hel 225 stupÚ˘
+		CompAddItemNum(uhel225);				// √∫hel 225 stup√≤√π
 		return true;
 
 	case IDF_UHEL270:
-		CompAddItemNum(uhel270);				// ˙hel 270 stupÚ˘
+		CompAddItemNum(uhel270);				// √∫hel 270 stup√≤√π
 		return true;
 
 	case IDF_UHEL315:
-		CompAddItemNum(uhel315);				// ˙hel 315 stupÚ˘
+		CompAddItemNum(uhel315);				// √∫hel 315 stup√≤√π
 		return true;
 
 	case IDF_KLAV_VKEY:
-		CompAddItem(FVKey);						// naËtenÌ kl·vesy bez Ëek·nÌ
+		CompAddItem(FVKey);						// na√®ten√≠ kl√°vesy bez √®ek√°n√≠
 		return true;
 
 	case IDF_MOUSE_X:
-		CompAddItem(FMouseX);					// naËtenÌ sou¯adnice X myöi
+		CompAddItem(FMouseX);					// na√®ten√≠ sou√∏adnice X my≈°i
 		return true;
 
 	case IDF_MOUSE_Y:
-		CompAddItem(FMouseY);					// naËtenÌ sou¯adnice Y myöi
+		CompAddItem(FMouseY);					// na√®ten√≠ sou√∏adnice Y my≈°i
 		return true;
 
 	case IDF_SPRITE_X:
@@ -758,46 +758,46 @@ bool _fastcall CompNum(int index)
 		return false;
 
 	case IDF_PETER_SWCN1:
-		CompAddItem(FGetSwcN1);					// naËtenÌ ËÌsla 1 - Petr
+		CompAddItem(FGetSwcN1);					// na√®ten√≠ √®√≠sla 1 - Petr
 		return true;
 
 	case IDF_PETRA_SWCN1:
-		CompAddItem(FGetSwcN12);				// naËtenÌ ËÌsla 1 - Petra
+		CompAddItem(FGetSwcN12);				// na√®ten√≠ √®√≠sla 1 - Petra
 		return true;
 
 	case IDF_PETER_SWCN2:
-		CompAddItem(FGetSwcN2);					// naËtenÌ ËÌsla 2 - Petr
+		CompAddItem(FGetSwcN2);					// na√®ten√≠ √®√≠sla 2 - Petr
 		return true;
 
 	case IDF_PETRA_SWCN2:
-		CompAddItem(FGetSwcN22);				// naËtenÌ ËÌsla 2 - Petra
+		CompAddItem(FGetSwcN22);				// na√®ten√≠ √®√≠sla 2 - Petra
 		return true;
 
 	case IDF_PETER_SWCN3:
-		CompAddItem(FGetSwcN3);					// naËtenÌ ËÌsla 3 - Petr
+		CompAddItem(FGetSwcN3);					// na√®ten√≠ √®√≠sla 3 - Petr
 		return true;
 
 	case IDF_PETRA_SWCN3:
-		CompAddItem(FGetSwcN32);				// naËtenÌ ËÌsla 3 - Petra
+		CompAddItem(FGetSwcN32);				// na√®ten√≠ √®√≠sla 3 - Petra
 		return true;
 
 	case IDF_TEXT_LEN:
-		return CompTxtPar(index, FTextLen);	// dÈlka textu
+		return CompTxtPar(index, FTextLen);	// d√©lka textu
 
 	case IDF_TEXT_SCAN:
-		return CompTxtPar(index, FTextScan);// p¯evod textu na ËÌslo
+		return CompTxtPar(index, FTextScan);// p√∏evod textu na √®√≠slo
 
 	case IDF_TEXT_FIND:
-		CompAddItem(FTextFind);				// vyhled·nÌ textu
+		CompAddItem(FTextFind);				// vyhled√°n√≠ textu
 		CompTxtSubPar(index, IDF_TEXT_FIND_SUB);
 		CompTxtSubPar(index, IDF_TEXT_INPUT);
 		return true;
 
 	case IDF_ORD:
-		return CompTxtPar(index, FTextOrd);	// abecednÌ po¯adÌ znaku
+		return CompTxtPar(index, FTextOrd);	// abecedn√≠ po√∏ad√≠ znaku
 
 	case IDF_COLOR:
-		{									// barevn· konstanta
+		{									// barevn√° konstanta
 			int col = WhiteCol;
 
 			if (Icon.IsValid(item->Icon))
@@ -811,48 +811,48 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_COLOR_LEVEL:
-		CompAddItem(FColorLevel);			// nastavenÌ jasu barvy
+		CompAddItem(FColorLevel);			// nastaven√≠ jasu barvy
 		CompNumSubPar(index, IDF_GRAPH_COLOR, DEFCOLOR);
 		CompNumSubPar(index, IDF_COLOR_LEVEL_N, 1);
 		return true;
 
 	case IDF_KLAV_VKEY_WAIT:
-		CompAddItem(FVKeyWait);				// naËtenÌ kl·vesy s Ëek·nÌm
+		CompAddItem(FVKeyWait);				// na√®ten√≠ kl√°vesy s √®ek√°n√≠m
 		return true;
 
 	case IDF_VK_NOKEY:
-		CompAddItemNum((BYTE)0);			// kl·vesa 0
+		CompAddItemNum((BYTE)0);			// kl√°vesa 0
 		return true;
 
 	case IDF_VK_WINR:
-		CompAddItemNum((BYTE)VK_RWIN);		// kl·vesa WinR
+		CompAddItemNum((BYTE)VK_RWIN);		// kl√°vesa WinR
 		return true;
 
 	case IDF_VK_SHIFTR:
-		CompAddItemNum((BYTE)VK_RSHIFT);	// kl·vesa ShiftR
+		CompAddItemNum((BYTE)VK_RSHIFT);	// kl√°vesa ShiftR
 		return true;
 
 	case IDF_VK_CTRLR:
-		CompAddItemNum((BYTE)VK_RCONTROL);	// kl·vesa ControlR
+		CompAddItemNum((BYTE)VK_RCONTROL);	// kl√°vesa ControlR
 		return true;
 
 	case IDF_VK_ALTR:
-		CompAddItemNum((BYTE)VK_RMENU);		// kl·vesa AltR
+		CompAddItemNum((BYTE)VK_RMENU);		// kl√°vesa AltR
 		return true;
 
 	case IDF_TEXTLINE_NUM:
-		return CompTxtPar(index, FTextLineNum);	// poËet ¯·dk˘ textu
+		return CompTxtPar(index, FTextLineNum);	// po√®et √∏√°dk√π textu
 
 	case IDF_MUSIC_POS:
-		CompAddItem(FGetMusicPos);			// zjiötÏnÌ pozice hudby
+		CompAddItem(FGetMusicPos);			// zji≈°t√¨n√≠ pozice hudby
 		return true;
 
 	case IDF_MUSIC_LEN:
-		CompAddItem(FMusicLen);				// zjiötÏnÌ dÈlky hudby
+		CompAddItem(FMusicLen);				// zji≈°t√¨n√≠ d√©lky hudby
 		return true;
 
 	case IDF_COLOR_SYNTH:
-		CompAddItem(FColorSynth);			// syntÈza barvy
+		CompAddItem(FColorSynth);			// synt√©za barvy
 		CompNumSubPar(index, IDF_COLOR_SYNTH_RED, 0);
 		CompNumSubPar(index, IDF_COLOR_SYNTH_GREEN, 0);
 		CompNumSubPar(index, IDF_COLOR_SYNTH_BLUE, 0);
@@ -860,114 +860,114 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_GET_POINT:
-		CompAddItem(FGetPoint);				// zjiötÏnÌ barvy bodu
+		CompAddItem(FGetPoint);				// zji≈°t√¨n√≠ barvy bodu
 		CompNumSubPar(index, IDF_GET_POINT_X, 0);
 		CompNumSubPar(index, IDF_GET_POINT_Y, 0);
 		return true;
 
 	case IDF_SQR:
-		return CompNumPar(index, FNumSqr);	// druh· mocnina
+		return CompNumPar(index, FNumSqr);	// druh√° mocnina
 
 	case IDF_CD_LENGTH:
-		CompAddItem(FCDGetLength);			// zjiötÏnÌ dÈlky CD
+		CompAddItem(FCDGetLength);			// zji≈°t√¨n√≠ d√©lky CD
 		return true;
 
 	case IDF_CD_TRACKS:
-		CompAddItem(FCDGetTracks);			// zjiötÏnÌ poËtu stop CD
+		CompAddItem(FCDGetTracks);			// zji≈°t√¨n√≠ po√®tu stop CD
 		return true;
 
 	case IDF_CD_POS:
-		CompAddItem(FCDGetPos);				// zjiötÏnÌ aktivnÌ pozice CD
+		CompAddItem(FCDGetPos);				// zji≈°t√¨n√≠ aktivn√≠ pozice CD
 		return true;
 
 	case IDF_CD_TRACK:
-		CompAddItem(FCDGetTrack);			// zjiötÏnÌ aktivnÌ stopy CD
+		CompAddItem(FCDGetTrack);			// zji≈°t√¨n√≠ aktivn√≠ stopy CD
 		return true;
 
 	case IDF_CD_TRACK_LENGTH:
-		CompAddItem(FCDGetTrackLength);		// zjiötÏnÌ dÈlky stopy CD
+		CompAddItem(FCDGetTrackLength);		// zji≈°t√¨n√≠ d√©lky stopy CD
 		return true;
 
 	case IDF_CD_TRACK_POS:
-		CompAddItem(FCDGetTrackPos);		// zjiötÏnÌ pozice stopy CD
+		CompAddItem(FCDGetTrackPos);		// zji≈°t√¨n√≠ pozice stopy CD
 		return true;
 
 	case IDF_FILE_DISKSIZE:
-		CompAddItem(FGetDiskSize);			// zjiötÏnÌ celkovÈ velikosti disku
+		CompAddItem(FGetDiskSize);			// zji≈°t√¨n√≠ celkov√© velikosti disku
 		return true;
 
 	case IDF_FILE_DISKFREE:
-		CompAddItem(FGetDiskFree);			// zjiötÏnÌ volnÈho mÌsta disku
+		CompAddItem(FGetDiskFree);			// zji≈°t√¨n√≠ voln√©ho m√≠sta disku
 		return true;
 
 	case IDF_FILE_DISKSERIAL:
-		CompAddItem(FGetDiskSerial);		// zjiötÏnÌ sÈriovÈho ËÌsla disku
+		CompAddItem(FGetDiskSerial);		// zji≈°t√¨n√≠ s√©riov√©ho √®√≠sla disku
 		return true;
 
 	case IDF_FILE_CREATE:
-		CompAddItem(FGetFileCreate);		// zjiötÏnÌ Ëasu vytvo¯enÌ souboru
+		CompAddItem(FGetFileCreate);		// zji≈°t√¨n√≠ √®asu vytvo√∏en√≠ souboru
 		return true;
 
 	case IDF_FILE_OPEN:
-		CompAddItem(FGetFileOpen);			// zjiötÏnÌ Ëasu ËtenÌ ze souboru
+		CompAddItem(FGetFileOpen);			// zji≈°t√¨n√≠ √®asu √®ten√≠ ze souboru
 		return true;
 
 	case IDF_FILE_MODI:
-		CompAddItem(FGetFileModi);			// zjiötÏnÌ Ëasu modifikace souboru
+		CompAddItem(FGetFileModi);			// zji≈°t√¨n√≠ √®asu modifikace souboru
 		return true;
 
 	case IDF_FILE_BYTES:
-		CompAddItem(FGetFileByteS);			// naËtenÌ ËÌsla bajt se znamÈnkem
+		CompAddItem(FGetFileByteS);			// na√®ten√≠ √®√≠sla bajt se znam√©nkem
 		return true;
 
 	case IDF_FILE_BYTEU:
-		CompAddItem(FGetFileByteU);			// naËtenÌ ËÌsla bajt bez znamÈnka
+		CompAddItem(FGetFileByteU);			// na√®ten√≠ √®√≠sla bajt bez znam√©nka
 		return true;
 
 	case IDF_FILE_WORDS:
-		CompAddItem(FGetFileWordS);			// naËtenÌ ËÌsla slovo se znamÈnkem
+		CompAddItem(FGetFileWordS);			// na√®ten√≠ √®√≠sla slovo se znam√©nkem
 		return true;
 
 	case IDF_FILE_WORDU:
-		CompAddItem(FGetFileWordU);			// naËtenÌ ËÌsla slovo bez znamÈnka
+		CompAddItem(FGetFileWordU);			// na√®ten√≠ √®√≠sla slovo bez znam√©nka
 		return true;
 
 	case IDF_FILE_DWORDS:
-		CompAddItem(FGetFileDWordS);		// naËtenÌ ËÌsla dvojslovo se znamÈnkem
+		CompAddItem(FGetFileDWordS);		// na√®ten√≠ √®√≠sla dvojslovo se znam√©nkem
 		return true;
 
 	case IDF_FILE_DWORDU:
-		CompAddItem(FGetFileDWordU);		// naËtenÌ ËÌsla dvojslovo bez znamÈnka
+		CompAddItem(FGetFileDWordU);		// na√®ten√≠ √®√≠sla dvojslovo bez znam√©nka
 		return true;
 
 	case IDF_FILE_FLOAT:
-		CompAddItem(FGetFileFloat);			// naËtenÌ ËÌsla FLOAT
+		CompAddItem(FGetFileFloat);			// na√®ten√≠ √®√≠sla FLOAT
 		return true;
 
 	case IDF_FILE_DOUBLE:
-		CompAddItem(FGetFileDouble);		// naËtenÌ ËÌsla DOUBLE
+		CompAddItem(FGetFileDouble);		// na√®ten√≠ √®√≠sla DOUBLE
 		return true;
 
 	case IDF_FILE_READOFF:
-		CompAddItem(FGetFileReadOff);		// offset pro ËtenÌ ze souboru
+		CompAddItem(FGetFileReadOff);		// offset pro √®ten√≠ ze souboru
 		return true;
 
 	case IDF_FILE_WRITEOFF:
-		CompAddItem(FGetFileWriteOff);		// offset pro z·pis do souboru
+		CompAddItem(FGetFileWriteOff);		// offset pro z√°pis do souboru
 		return true;
 
 	case IDF_DATETIME_CURRENT:
-		CompAddItem(FGetTimeCurrent);		// naËtenÌ aktu·lnÌho Ëasu
+		CompAddItem(FGetTimeCurrent);		// na√®ten√≠ aktu√°ln√≠ho √®asu
 		return true;
 
 	case IDF_DATETIME_UTC:
-		return CompNumPar(index, FTimeUtc);	// p¯evod na svÏtov˝ Ëas
+		return CompNumPar(index, FTimeUtc);	// p√∏evod na sv√¨tov√Ω √®as
 
 	case IDF_DATETIME_LOCAL:
-		return CompNumPar(index, FTimeLocal); // p¯evod na mÌstnÌ Ëas
+		return CompNumPar(index, FTimeLocal); // p√∏evod na m√≠stn√≠ √®as
 
 	case IDF_DATETIME_COMP:
-		CompAddItem(FTimeComp);					// syntÈza Ëasu
+		CompAddItem(FTimeComp);					// synt√©za √®asu
 		CompNumSubPar(index, IDF_DATETIME_COMP_YEAR, 1601);
 		CompNumSubPar(index, IDF_DATETIME_COMP_MONTH, 1);
 		CompNumSubPar(index, IDF_DATETIME_COMP_DAY, 1);
@@ -978,51 +978,51 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_DATETIME_GET_YEAR:
-		return CompNumPar(index, FGetTimeYear);	// naËtenÌ roku
+		return CompNumPar(index, FGetTimeYear);	// na√®ten√≠ roku
 
 	case IDF_DATETIME_GET_MONTH:
-		return CompNumPar(index, FGetTimeMonth);// naËtenÌ mÏsÌce
+		return CompNumPar(index, FGetTimeMonth);// na√®ten√≠ m√¨s√≠ce
 
 	case IDF_DATETIME_GET_DAY:
-		return CompNumPar(index, FGetTimeDay);	// naËtenÌ dne
+		return CompNumPar(index, FGetTimeDay);	// na√®ten√≠ dne
 
 	case IDF_DATETIME_GET_WEEK:
-		return CompNumPar(index, FGetTimeWeek);	// naËtenÌ dne v t˝dnu
+		return CompNumPar(index, FGetTimeWeek);	// na√®ten√≠ dne v t√Ωdnu
 
 	case IDF_DATETIME_GET_HOUR:
-		return CompNumPar(index, FGetTimeHour);	// naËtenÌ hodiny
+		return CompNumPar(index, FGetTimeHour);	// na√®ten√≠ hodiny
 
 	case IDF_DATETIME_GET_MINUTE:
-		return CompNumPar(index, FGetTimeMin);	// naËtenÌ minuty
+		return CompNumPar(index, FGetTimeMin);	// na√®ten√≠ minuty
 
 	case IDF_DATETIME_GET_SECONDE:
-		return CompNumPar(index, FGetTimeSec);	// naËtenÌ sekundy
+		return CompNumPar(index, FGetTimeSec);	// na√®ten√≠ sekundy
 
 	case IDF_DATETIME_GET_MSECONDE:
-		return CompNumPar(index, FGetTimeMSec);	// naËtenÌ milisekundy
+		return CompNumPar(index, FGetTimeMSec);	// na√®ten√≠ milisekundy
 
 	case IDF_FILE_SIZE:
-		CompAddItem(FGetFileSize);				// zjiötÏnÌ dÈlky souboru
+		CompAddItem(FGetFileSize);				// zji≈°t√¨n√≠ d√©lky souboru
 		return true;
 
 	case IDF_FILE_TEXTN_LEN:
-		CompAddItem(FGetFileTextNLen);			// dÈlka textu s pevnou dÈlkou
+		CompAddItem(FGetFileTextNLen);			// d√©lka textu s pevnou d√©lkou
 		return true;
 
 	case IDF_FILE_DISK_TYPE:
-		CompAddItem(FFileDiskType);				// naËtenÌ typu disku
+		CompAddItem(FFileDiskType);				// na√®ten√≠ typu disku
 		return true;
 
 	case IDF_FILE_3BYTES:
-		CompAddItem(FGetFile3ByteS);			// naËtenÌ ËÌsla 3 bajty se znamÈnkem
+		CompAddItem(FGetFile3ByteS);			// na√®ten√≠ √®√≠sla 3 bajty se znam√©nkem
 		return true;
 
 	case IDF_FILE_3BYTEU:
-		CompAddItem(FGetFile3ByteU);			// naËtenÌ ËÌsla 3 bajty bez znamÈnka
+		CompAddItem(FGetFile3ByteU);			// na√®ten√≠ √®√≠sla 3 bajty bez znam√©nka
 		return true;
 
 	case IDF_DIALOG_BOX:
-		CompAddItem(FNumDialogBox);				// dialog box s n·vratem hodnoty
+		CompAddItem(FNumDialogBox);				// dialog box s n√°vratem hodnoty
 		CompTxtSubPar(index, IDF_DIALOG_BOX_CAPTION);
 		CompTxtSubPar(index, IDF_DIALOG_BOX_TEXT);
 		CompNumSubPar(index, IDF_DIALOG_BOX_ICON, 0);
@@ -1031,78 +1031,78 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_SOUND_BIT:
-		return CompSndPar(index, FGetSoundBit);	// poËet bit˘ na vzorek
+		return CompSndPar(index, FGetSoundBit);	// po√®et bit√π na vzorek
 
 	case IDF_SOUND_FREQ:
-		return CompSndPar(index, FGetSoundFreq);	// vzorkovacÌ kmitoËet
+		return CompSndPar(index, FGetSoundFreq);	// vzorkovac√≠ kmito√®et
 
 	case IDF_SOUND_LENGTH:
-		return CompSndPar(index, FGetSoundLength);	// dÈlka zvuku
+		return CompSndPar(index, FGetSoundLength);	// d√©lka zvuku
 
 	case IDF_SOUND_DISTINGUISH:
-		CompAddItem(FGetSoundDistinguish);			// zjiötÏnÌ rozliöovacÌho kÛdu zvuku
+		CompAddItem(FGetSoundDistinguish);			// zji≈°t√¨n√≠ rozli≈°ovac√≠ho k√≥du zvuku
 		return true;
 
 	case IDF_MAP_WIDTH:
-		if (!CompMapPar(index, FGetMapWidth))		// öÌ¯ka plochy
+		if (!CompMapPar(index, FGetMapWidth))		// ≈°√≠√∏ka plochy
 		{
 			CompAddItem(FGetMapWidth0);
 		}
 		return true;
 
 	case IDF_MAP_HEIGHT:
-		if (!CompMapPar(index, FGetMapHeight))		// v˝öka plochy
+		if (!CompMapPar(index, FGetMapHeight))		// v√Ω≈°ka plochy
 		{
 			CompAddItem(FGetMapHeight0);
 		}
 		return true;
 
 	case IDF_MAP_NUM1:
-		CompAddItem(FGetMapNum1);			// ËÌslo 1 z plochy
+		CompAddItem(FGetMapNum1);			// √®√≠slo 1 z plochy
 		CompMapSubPar(index, IDF_MAP_INPUT);
 		CompNumSubPar(index, IDF_MAP_X, 0);
 		CompNumSubPar(index, IDF_MAP_Y, 0);
 		return true;
 
 	case IDF_MAP_NUM2:
-		CompAddItem(FGetMapNum2);			// ËÌslo 2 z plochy
+		CompAddItem(FGetMapNum2);			// √®√≠slo 2 z plochy
 		CompMapSubPar(index, IDF_MAP_INPUT);
 		CompNumSubPar(index, IDF_MAP_X, 0);
 		CompNumSubPar(index, IDF_MAP_Y, 0);
 		return true;
 
 	case IDF_MAP_NUM3:
-		CompAddItem(FGetMapNum3);			// ËÌslo 3 z plochy
+		CompAddItem(FGetMapNum3);			// √®√≠slo 3 z plochy
 		CompMapSubPar(index, IDF_MAP_INPUT);
 		CompNumSubPar(index, IDF_MAP_X, 0);
 		CompNumSubPar(index, IDF_MAP_Y, 0);
 		return true;
 
-	case IDF_SPRITE_WIN_X1:					// lev˝ okraj okna sprajt˘
+	case IDF_SPRITE_WIN_X1:					// lev√Ω okraj okna sprajt√π
 		CompAddItem(FGetSpriteWinX1);
 		return true;
 
-	case IDF_SPRITE_WIN_Y1:					// dolnÌ okraj okna sprajt˘
+	case IDF_SPRITE_WIN_Y1:					// doln√≠ okraj okna sprajt√π
 		CompAddItem(FGetSpriteWinY1);
 		return true;
 
-	case IDF_SPRITE_WIN_X2:					// prav˝ okraj okna sprajt˘
+	case IDF_SPRITE_WIN_X2:					// prav√Ω okraj okna sprajt√π
 		CompAddItem(FGetSpriteWinX2);
 		return true;
 
-	case IDF_SPRITE_WIN_Y2:					// hornÌ okraj okna sprajt˘
+	case IDF_SPRITE_WIN_Y2:					// horn√≠ okraj okna sprajt√π
 		CompAddItem(FGetSpriteWinY2);
 		return true;
 
 	case IDF_RETURN_CODE:
-		CompAddItem(FGetReturnCode);		// n·vratov˝ kÛd
+		CompAddItem(FGetReturnCode);		// n√°vratov√Ω k√≥d
 		return true;
 
 	case IDF_EXEC_WAIT:
-		return CompTxtPar(index, FGetExecWait);	// spuötÏnÌ programu s Ëek·nÌm
+		return CompTxtPar(index, FGetExecWait);	// spu≈°t√¨n√≠ programu s √®ek√°n√≠m
 
 	case IDF_JOYSTICK_X:
-		if (!CompNumPar(index, FJoystickX))	// sou¯adnice X joysticku
+		if (!CompNumPar(index, FJoystickX))	// sou√∏adnice X joysticku
 		{
 			CompAddItem(FJoystickX);
 			CompAddItemNum((BYTE)0);
@@ -1110,7 +1110,7 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_JOYSTICK_Y:
-		if (!CompNumPar(index, FJoystickY))	// sou¯adnice Y joysticku
+		if (!CompNumPar(index, FJoystickY))	// sou√∏adnice Y joysticku
 		{
 			CompAddItem(FJoystickY);
 			CompAddItemNum((BYTE)0);
@@ -1118,7 +1118,7 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_JOYSTICK_Z:
-		if (!CompNumPar(index, FJoystickZ))	// sou¯adnice Z joysticku
+		if (!CompNumPar(index, FJoystickZ))	// sou√∏adnice Z joysticku
 		{
 			CompAddItem(FJoystickZ);
 			CompAddItemNum((BYTE)0);
@@ -1126,75 +1126,75 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_WINDOW_ID:
-		CompAddItem(FGetWindowID);			// aktivnÌ prvek okna
+		CompAddItem(FGetWindowID);			// aktivn√≠ prvek okna
 		return true;
 
 	case IDF_WINDOW_NEW:
-		CompAddItem(FWindowNew);			// vytvo¯enÌ okna
+		CompAddItem(FWindowNew);			// vytvo√∏en√≠ okna
 		return true;
 
 	case IDF_BUTTON_NEW:
-		CompAddItem(FButtonNew);			// vytvo¯enÌ tlaËÌtka
+		CompAddItem(FButtonNew);			// vytvo√∏en√≠ tla√®√≠tka
 		return true;
 
 	case IDF_BUTTON_ESC:
-		CompAddItem(FGetButtonEsc);			// tlaËÌtko pro Esc
+		CompAddItem(FGetButtonEsc);			// tla√®√≠tko pro Esc
 		return true;
 
 	case IDF_BUTTONCHECK_NEW:
-		CompAddItem(FButtonCheckNew);		// vytvo¯enÌ tlaËÌtka
+		CompAddItem(FButtonCheckNew);		// vytvo√∏en√≠ tla√®√≠tka
 		return true;
 
 	case IDF_BUTTONCHECK_NEW2:
-		CompAddItem(FButtonCheckNew2);		// vytvo¯enÌ tlaËÌtkovÈho p¯epÌnaËe
+		CompAddItem(FButtonCheckNew2);		// vytvo√∏en√≠ tla√®√≠tkov√©ho p√∏ep√≠na√®e
 		return true;
 
 	case IDF_EDIT_NEW:
-		CompAddItem(FEditNew);				// vytvo¯enÌ editaËnÌho ¯·dku
+		CompAddItem(FEditNew);				// vytvo√∏en√≠ edita√®n√≠ho √∏√°dku
 		return true;
 
 	case IDF_BUTTONRADIO_NEW:
-		CompAddItem(FButtonRadioNew);		// vytvo¯enÌ tlaËÌtka
+		CompAddItem(FButtonRadioNew);		// vytvo√∏en√≠ tla√®√≠tka
 		return true;
 
 	case IDF_BUTTONRADIO_NEW2:
-		CompAddItem(FButtonRadioNew2);		// vytvo¯enÌ tlaËÌtka
+		CompAddItem(FButtonRadioNew2);		// vytvo√∏en√≠ tla√®√≠tka
 		return true;
 
 	case IDF_WINDOW_X:
-		CompAddItem(FGetWindowX);			// sou¯adnice X okna
+		CompAddItem(FGetWindowX);			// sou√∏adnice X okna
 		return true;
 
 	case IDF_WINDOW_Y:
-		CompAddItem(FGetWindowY);			// sou¯adnice Y okna
+		CompAddItem(FGetWindowY);			// sou√∏adnice Y okna
 		return true;
 
 	case IDF_WINDOW_W:
-		CompAddItem(FGetWindowW);			// öÌ¯ka okna
+		CompAddItem(FGetWindowW);			// ≈°√≠√∏ka okna
 		return true;
 
 	case IDF_WINDOW_H:
-		CompAddItem(FGetWindowH);			// v˝öka okna
+		CompAddItem(FGetWindowH);			// v√Ω≈°ka okna
 		return true;
 
 	case IDF_WINDOW_W_INT:
-		CompAddItem(FGetWindowWInt);		// vnit¯nÌ öÌ¯ka okna
+		CompAddItem(FGetWindowWInt);		// vnit√∏n√≠ ≈°√≠√∏ka okna
 		return true;
 
 	case IDF_WINDOW_H_INT:
-		CompAddItem(FGetWindowHInt);		// vnit¯nÌ v˝öka okna
+		CompAddItem(FGetWindowHInt);		// vnit√∏n√≠ v√Ω≈°ka okna
 		return true;
 
 	case IDF_FONTHEIGHT:
-		CompAddItem(FGetFontHeight);		// v˝öka font˘
+		CompAddItem(FGetFontHeight);		// v√Ω≈°ka font√π
 		return true;
 
 	case IDF_FONTWIDTH:
-		CompAddItem(FGetFontWidth);			// öÌ¯ka font˘
+		CompAddItem(FGetFontWidth);			// ≈°√≠√∏ka font√π
 		return true;
 
 	case IDF_FONTANGLE:
-		CompAddItem(FGetFontAngle);			// ˙hel textu
+		CompAddItem(FGetFontAngle);			// √∫hel textu
 		return true;
 
 	case IDF_FONTCOL:
@@ -1202,15 +1202,15 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_FONTBACK:
-		CompAddItem(FGetFontBack);			// barva pozadÌ
+		CompAddItem(FGetFontBack);			// barva pozad√≠
 		return true;
 
 	case IDF_MEMO_NEW:
-		CompAddItem(FMemoNew);				// vytvo¯enÌ editaËnÌho pole
+		CompAddItem(FMemoNew);				// vytvo√∏en√≠ edita√®n√≠ho pole
 		return true;
 
 	case IDF_RICHEDIT_NEW:
-		CompAddItem(FRicheditNew);			// vytvo¯enÌ editoru Richedit
+		CompAddItem(FRicheditNew);			// vytvo√∏en√≠ editoru Richedit
 		return true;
 
 	case IDF_FOCUS:
@@ -1218,88 +1218,88 @@ bool _fastcall CompNum(int index)
 		return true;
 
 	case IDF_DEFBUTTON_NEW:
-		CompAddItem(FDefButtonNew);			// vytvo¯enÌ implicitnÌho tlaËÌtka
+		CompAddItem(FDefButtonNew);			// vytvo√∏en√≠ implicitn√≠ho tla√®√≠tka
 		return true;
 
 	case IDF_BUTTONICON_NEW:
-		CompAddItem(FButtonIconNew);		// vytvo¯enÌ tlaËÌtka s ikonou
+		CompAddItem(FButtonIconNew);		// vytvo√∏en√≠ tla√®√≠tka s ikonou
 		return true;
 
 	case IDF_GROUPBOX_NEW:
-		CompAddItem(FGroupBoxNew);			// vytvo¯enÌ skupiny
+		CompAddItem(FGroupBoxNew);			// vytvo√∏en√≠ skupiny
 		return true;
 
 	case IDF_LISTBOX_NEW:
-		CompAddItem(FListBoxNew);			// vytvo¯enÌ seznamu
+		CompAddItem(FListBoxNew);			// vytvo√∏en√≠ seznamu
 		return true;
 
 	case IDF_TABS_NEW:
-		CompAddItem(FTabsNew);				// vytvo¯enÌ z·loûek
+		CompAddItem(FTabsNew);				// vytvo√∏en√≠ z√°lo≈æek
 		return true;
 
 	case IDF_WINTEXT_NEW:
-		CompAddItem(FWinTextNew);			// vytvo¯enÌ textu
+		CompAddItem(FWinTextNew);			// vytvo√∏en√≠ textu
 		return true;
 
 	case IDF_WINTEXT_NEW_CENTER:
-		CompAddItem(FWinTextNewCenter);		// vytvo¯enÌ textu vyst¯edÏnÈho
+		CompAddItem(FWinTextNewCenter);		// vytvo√∏en√≠ textu vyst√∏ed√¨n√©ho
 		return true;
 
 	case IDF_WINTEXT_NEW_RIGHT:
-		CompAddItem(FWinTextNewRight);		// vytvo¯enÌ textu zarovnanÈho vpravo
+		CompAddItem(FWinTextNewRight);		// vytvo√∏en√≠ textu zarovnan√©ho vpravo
 		return true;
 
 	case IDF_COMBOBOX_NEW:
-		CompAddItem(FComboBoxNew);			// vytvo¯enÌ seznamu
+		CompAddItem(FComboBoxNew);			// vytvo√∏en√≠ seznamu
 		return true;
 
 	case IDF_COMBOEDIT_NEW:
-		CompAddItem(FComboEditNew);			// vytvo¯enÌ seznamu
+		CompAddItem(FComboEditNew);			// vytvo√∏en√≠ seznamu
 		return true;
 
 	case IDF_LISTEDIT_NEW:
-		CompAddItem(FListEditNew);			// vytvo¯enÌ seznamu
+		CompAddItem(FListEditNew);			// vytvo√∏en√≠ seznamu
 		return true;
 
 	case IDF_BUTTON3_NEW:
-		CompAddItem(FButton3New);			// vytvo¯enÌ tlaËÌtka
+		CompAddItem(FButton3New);			// vytvo√∏en√≠ tla√®√≠tka
 		return true;
 
 	case IDF_WINDOWRO_NEW:
-		CompAddItem(FWindowRONew);			// vytvo¯enÌ okna
+		CompAddItem(FWindowRONew);			// vytvo√∏en√≠ okna
 		return true;
 
 	case IDF_WINICON_NEW:
-		CompAddItem(FWinIconNew);			// vytvo¯enÌ ikony
+		CompAddItem(FWinIconNew);			// vytvo√∏en√≠ ikony
 		return true;
 
 	case IDF_WINPIC_NEW:
-		CompAddItem(FWinPicNew);			// vytvo¯enÌ obr·zku
+		CompAddItem(FWinPicNew);			// vytvo√∏en√≠ obr√°zku
 		return true;
 
 	case IDF_2PI:
-		CompAddItemNum(pi2);				// ˙hel 360 stupÚ˘
+		CompAddItemNum(pi2);				// √∫hel 360 stup√≤√π
 		return true;
 
 	case IDF_BOD32:
-		CompAddItemNum((double)1/32);		// vzd·lenost 1 bodu
+		CompAddItemNum((double)1/32);		// vzd√°lenost 1 bodu
 		return true;
 
 	case IDF_M1:
-		CompAddItemNum((double)-1);			// ˙hel 360 stupÚ˘
+		CompAddItemNum((double)-1);			// √∫hel 360 stup√≤√π
 		return true;
 
 	case IDF_SOUND_POS:
-		CompAddItem(FGetSoundPos);			// zjiötÏnÌ pozice zvuku
+		CompAddItem(FGetSoundPos);			// zji≈°t√¨n√≠ pozice zvuku
 		return true;
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-	case IDF_DLL_LOAD:						// naËtenÌ DLL knihovny
+	case IDF_DLL_LOAD:						// na√®ten√≠ DLL knihovny
 		return CompTxtPar(index, FDLLLoad);
 
-	case IDF_DLL_IMPORT:					// importov·nÌ funkce DLL knihovny
+	case IDF_DLL_IMPORT:					// importov√°n√≠ funkce DLL knihovny
 		CompAddItem(FDLLImport);
 		CompNumSubPar(index, IDF_DLL_IMPORT_LIB, 0);
 		CompTxtSubPar(index, IDF_DLL_IMPORT_NAME);
@@ -1307,77 +1307,77 @@ bool _fastcall CompNum(int index)
 		CompLogSubPar(index, IDF_DLL_IMPORT_C, false);
 		return true;
 
-	case IDF_DLL_EXEC:						// provedenÌ funkce DLL
+	case IDF_DLL_EXEC:						// proveden√≠ funkce DLL
 		return CompNumPar(index, FDLLExecNum);
 
-	case IDF_MEMORY_NEW:					// vytvo¯enÌ pamÏùovÈho bloku
+	case IDF_MEMORY_NEW:					// vytvo√∏en√≠ pam√¨¬ùov√©ho bloku
 		return CompNumPar(index, FMemoryNew);
 
-	case IDF_MEMORY_RESIZE:					// zmÏna velikosti pamÏùovÈho bloku
+	case IDF_MEMORY_RESIZE:					// zm√¨na velikosti pam√¨¬ùov√©ho bloku
 		CompAddItem(FMemoryResize);
 		CompNumSubPar(index, IDF_MEMORY_RESIZE_ADR, 0);
 		CompNumSubPar(index, IDF_MEMORY_RESIZE_NEW, 0);
 		return true;
 
-	case IDF_MEMORY_READ:					// ukazatel ËtenÌ z pamÏti
+	case IDF_MEMORY_READ:					// ukazatel √®ten√≠ z pam√¨ti
 		CompAddItem(FGetMemoryRead);
 		return true;
 
-	case IDF_MEMORY_WRITE:					// ukazatel z·pisu do pamÏti
+	case IDF_MEMORY_WRITE:					// ukazatel z√°pisu do pam√¨ti
 		CompAddItem(FGetMemoryWrite);
 		return true;
 
-	case IDF_MEMORY_COMPARE:				// porovn·nÌ dat
+	case IDF_MEMORY_COMPARE:				// porovn√°n√≠ dat
 		return CompNumPar(index, FMemoryCompare);
 
-	case IDF_MEMORY_BYTES:					// bajt se znamÈnkem
+	case IDF_MEMORY_BYTES:					// bajt se znam√©nkem
 		CompAddItem(FGetMemoryByteS);
 		return true;
 
-	case IDF_MEMORY_BYTEU:					// bajt bez znamÈnka
+	case IDF_MEMORY_BYTEU:					// bajt bez znam√©nka
 		CompAddItem(FGetMemoryByteU);
 		return true;
 
-	case IDF_MEMORY_WORDS:					// slovo se znamÈnkem
+	case IDF_MEMORY_WORDS:					// slovo se znam√©nkem
 		CompAddItem(FGetMemoryWordS);
 		return true;
 
-	case IDF_MEMORY_WORDU:					// slovo bez znamÈnka
+	case IDF_MEMORY_WORDU:					// slovo bez znam√©nka
 		CompAddItem(FGetMemoryWordU);
 		return true;
 
-	case IDF_MEMORY_3BYTES:					// 3-bajt se znamÈnkem
+	case IDF_MEMORY_3BYTES:					// 3-bajt se znam√©nkem
 		CompAddItem(FGetMemory3ByteS);
 		return true;
 
-	case IDF_MEMORY_3BYTEU:					// 3-bajt bez znamÈnka
+	case IDF_MEMORY_3BYTEU:					// 3-bajt bez znam√©nka
 		CompAddItem(FGetMemory3ByteU);
 		return true;
 
-	case IDF_MEMORY_DWORDS:					// dvouslovo se znamÈnkem
+	case IDF_MEMORY_DWORDS:					// dvouslovo se znam√©nkem
 		CompAddItem(FGetMemoryDWordS);
 		return true;
 
-	case IDF_MEMORY_DWORDU:					// dvouslovo bez znamÈnka
+	case IDF_MEMORY_DWORDU:					// dvouslovo bez znam√©nka
 		CompAddItem(FGetMemoryDWordU);
 		return true;
 
-	case IDF_MEMORY_FLOAT:					// re·lnÈ ËÌslo 4 bajty
+	case IDF_MEMORY_FLOAT:					// re√°ln√© √®√≠slo 4 bajty
 		CompAddItem(FGetMemoryFloat);
 		return true;
 
-	case IDF_MEMORY_DOUBLE:					// re·lnÈ ËÌslo 8 bajt˘
+	case IDF_MEMORY_DOUBLE:					// re√°ln√© √®√≠slo 8 bajt√π
 		CompAddItem(FGetMemoryDouble);
 		return true;
 
-	case IDF_MEMORY_TEXTN_LEN:				// dÈlka textu s pevnou dÈlkou
+	case IDF_MEMORY_TEXTN_LEN:				// d√©lka textu s pevnou d√©lkou
 		CompAddItem(FGetMemoryTextNLen);
 		return true;
 
-	case IDF_WINDOW_HANDLE:					// handle okennÌho prvku
+	case IDF_WINDOW_HANDLE:					// handle okenn√≠ho prvku
 		return CompNumPar(index, FWindowHandle);
 
-	case IDF_MEMORY_3D:						// vytvo¯enÌ objektu z bloku
+	case IDF_MEMORY_3D:						// vytvo√∏en√≠ objektu z bloku
 		CompAddItem(FMemory3D);
 		CompNumSubPar(index, IDF_MEMORY_3D_VN, 0);
 		CompNumSubPar(index, IDF_MEMORY_3D_VERT, 0);
@@ -1388,18 +1388,18 @@ bool _fastcall CompNum(int index)
 		CompNumSubPar(index, IDF_MEMORY_3D_FACE, 0);
 		return true;
 
-	case IDF_INI_NUM:						// ËtenÌ konfiguraËnÌho ËÌsla
+	case IDF_INI_NUM:						// √®ten√≠ konfigura√®n√≠ho √®√≠sla
 		if (!CompNumPar(index, FGetIniNum))
 		{
 			CompAddItem(FGetIniNum0);
 		}
 		return true;
 
-	case IDF_REG_KEY:						// skupina klÌË˘ registr˘
+	case IDF_REG_KEY:						// skupina kl√≠√®√π registr√π
 		CompAddItem(FGetRegKey);
 		return true;
 
-	case IDF_REG_NUM:						// ËtenÌ ËÌsla z registru
+	case IDF_REG_NUM:						// √®ten√≠ √®√≠sla z registru
 		if (!CompNumPar(index, FGetRegNum))
 		{
 			CompAddItem(FGetRegNum0);
@@ -1407,239 +1407,239 @@ bool _fastcall CompNum(int index)
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
 	case IDF_GAME_N1:
-		CompAddItem(FGetGameN1);			// naËtenÌ hernÌho ËÌsla 1
+		CompAddItem(FGetGameN1);			// na√®ten√≠ hern√≠ho √®√≠sla 1
 		return true;
 
 	case IDF_GAME_N2:
-		CompAddItem(FGetGameN2);			// naËtenÌ hernÌho ËÌsla 2
+		CompAddItem(FGetGameN2);			// na√®ten√≠ hern√≠ho √®√≠sla 2
 		return true;
 
 	case IDF_GAME_N3:
-		CompAddItem(FGetGameN3);			// naËtenÌ hernÌho ËÌsla 3
+		CompAddItem(FGetGameN3);			// na√®ten√≠ hern√≠ho √®√≠sla 3
 		return true;
 
 	case IDF_GAME_N4:
-		CompAddItem(FGetGameN4);			// naËtenÌ hernÌho ËÌsla 4
+		CompAddItem(FGetGameN4);			// na√®ten√≠ hern√≠ho √®√≠sla 4
 		return true;
 
 	case IDF_GAME_N5:
-		CompAddItem(FGetGameN5);			// naËtenÌ hernÌho ËÌsla 5
+		CompAddItem(FGetGameN5);			// na√®ten√≠ hern√≠ho √®√≠sla 5
 		return true;
 
 	case IDF_GAME_N6:
-		CompAddItem(FGetGameN6);			// naËtenÌ hernÌho ËÌsla 6
+		CompAddItem(FGetGameN6);			// na√®ten√≠ hern√≠ho √®√≠sla 6
 		return true;
 
 	case IDF_GAME_N7:
-		CompAddItem(FGetGameN7);			// naËtenÌ hernÌho ËÌsla 7
+		CompAddItem(FGetGameN7);			// na√®ten√≠ hern√≠ho √®√≠sla 7
 		return true;
 
 	case IDF_GAME_N8:
-		CompAddItem(FGetGameN8);			// naËtenÌ hernÌho ËÌsla 8
+		CompAddItem(FGetGameN8);			// na√®ten√≠ hern√≠ho √®√≠sla 8
 		return true;
 
 	case IDF_PLAYER_MAX:
-		CompAddItem(FGetPlayerMax);			// max. hr·Ë˘
+		CompAddItem(FGetPlayerMax);			// max. hr√°√®√π
 		return true;
 
 	case IDF_PLAYER_INX:
-		CompAddItem(FPlayerInx);			// index hr·Ëe
+		CompAddItem(FPlayerInx);			// index hr√°√®e
 		return true;
 
 	case IDF_GAME_PACKET:
-		CompAddItem(FGetGamePacket);		// p¯Ìjem paketu
+		CompAddItem(FGetGamePacket);		// p√∏√≠jem paketu
 		return true;
 
 	case IDF_GAME_DATAN:
-		CompAddItem(FGetGameDataN);			// naËtenÌ ËÌsla z paketu
+		CompAddItem(FGetGameDataN);			// na√®ten√≠ √®√≠sla z paketu
 		return true;
 
 	case IDF_GAME_DATAB:
-		CompAddItem(FGetGameDataB);			// naËtenÌ bajtu z paketu
+		CompAddItem(FGetGameDataB);			// na√®ten√≠ bajtu z paketu
 		return true;
 
 	case IDF_GRAPH_AREA_WIDTH:
-		CompAddItem(FGetGraphAreaWidth);	// öÌ¯ka k zobrazenÌ centrovanÈho textu
+		CompAddItem(FGetGraphAreaWidth);	// ≈°√≠√∏ka k zobrazen√≠ centrovan√©ho textu
 		return true;
 
 	case IDF_UDP_SEND_PORT:
-		CompAddItem(FGetUDPSendPort);		// zjiötÏnÌ vysÌlacÌho portu UDP
+		CompAddItem(FGetUDPSendPort);		// zji≈°t√¨n√≠ vys√≠lac√≠ho portu UDP
 		return true;
 
 	case IDF_UDP_REC_SIZE:
-		CompAddItem(FGetUDPRecSize);		// zjiötÏnÌ velikosti p¯ijÌmacÌho bufferu UDP
+		CompAddItem(FGetUDPRecSize);		// zji≈°t√¨n√≠ velikosti p√∏ij√≠mac√≠ho bufferu UDP
 		return true;
 
 	case IDF_UDP_REC_PORT:
-		CompAddItem(FGetUDPRecPort);		// zjiötÏnÌ p¯ijatÈho portu UDP
+		CompAddItem(FGetUDPRecPort);		// zji≈°t√¨n√≠ p√∏ijat√©ho portu UDP
 		return true;
 
 	case IDF_UDP_MEM:
-		CompAddItem(FGetUDPMem);			// p¯Ìjem datovÈho bloku UDP
+		CompAddItem(FGetUDPMem);			// p√∏√≠jem datov√©ho bloku UDP
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 
 	case IDF_PICTURE_WIDTH:
-		return CompPicPar(index, FGetPicWidth);		// öÌ¯ka obr·zku
+		return CompPicPar(index, FGetPicWidth);		// ≈°√≠√∏ka obr√°zku
 
 	case IDF_PICTURE_HEIGHT:
-		return CompPicPar(index, FGetPicHeight);	// v˝öka obr·zku
+		return CompPicPar(index, FGetPicHeight);	// v√Ω≈°ka obr√°zku
 
 	case IDF_BIT_AND:
-		return CompNumGrp(index, FBitAnd, FBitAnd);	// oper·tor BIT-AND
+		return CompNumGrp(index, FBitAnd, FBitAnd);	// oper√°tor BIT-AND
 
 	case IDF_BIT_OR:
-		return CompNumGrp(index, FBitOr, FBitOr);	// oper·tor BIT-OR
+		return CompNumGrp(index, FBitOr, FBitOr);	// oper√°tor BIT-OR
 
 	case IDF_BIT_XOR:
-		return CompNumGrp(index, FBitXor, FBitXor);	// oper·tor BIT-XOR
+		return CompNumGrp(index, FBitXor, FBitXor);	// oper√°tor BIT-XOR
 
 	case IDF_BIT_NOT:
-		return CompNumPar(index, FBitNot);			// bitov˝ doplnÏk
+		return CompNumPar(index, FBitNot);			// bitov√Ω dopln√¨k
 
 	case IDF_BIT_MAX:
-		CompAddItemNum((double)(DWORD)0xffffffff);	// max. bitovÈ ËÌslo
+		CompAddItemNum((double)(DWORD)0xffffffff);	// max. bitov√© √®√≠slo
 		return true;
 
 	case IDF_BIT_LEFT:
-		return CompNumPar(index, FBitLeft);			// bitov· rotace vlevo
+		return CompNumPar(index, FBitLeft);			// bitov√° rotace vlevo
 
 	case IDF_BIT_RIGHT:
-		return CompNumPar(index, FBitRight);		// bitov· rotace vpravo
+		return CompNumPar(index, FBitRight);		// bitov√° rotace vpravo
 
 	case IDF_CODEPAGE:
-		CompAddItem(FGetCodePage);					// zjiötÏnÌ znakovÈ sady
+		CompAddItem(FGetCodePage);					// zji≈°t√¨n√≠ znakov√© sady
 		return true;
 
 	case IDF_LANGUAGE:
-		CompAddItem(FGetLanguage);					// zjiötÏnÌ jazyku
+		CompAddItem(FGetLanguage);					// zji≈°t√¨n√≠ jazyku
 		return true;
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-	case IDF_COM_OPEN:								// otev¯enÌ portu
+	case IDF_COM_OPEN:								// otev√∏en√≠ portu
 		return CompTxtPar(index, FComOpen);
 
 	case IDF_COM_ID:
-		CompAddItem(FGetComID);						// aktivnÌ port
+		CompAddItem(FGetComID);						// aktivn√≠ port
 		return true;
 
 	case IDF_COM_BAUD:
-		CompAddItem(FGetComBaud);					// zjiötÏnÌ p¯enosovÈ rychlosti portu
+		CompAddItem(FGetComBaud);					// zji≈°t√¨n√≠ p√∏enosov√© rychlosti portu
 		return true;
 
 	case IDF_COM_BITS:
-		CompAddItem(FGetComBits);					// zjiötÏnÌ bit˘ portu
+		CompAddItem(FGetComBits);					// zji≈°t√¨n√≠ bit√π portu
 		return true;
 
 	case IDF_COM_PARIT:
-		CompAddItem(FGetComParit);					// zjiötÏnÌ parity
+		CompAddItem(FGetComParit);					// zji≈°t√¨n√≠ parity
 		return true;
 
 	case IDF_COM_NUM:
-		CompAddItem(FGetComNum);					// naËtenÌ ËÌsla
+		CompAddItem(FGetComNum);					// na√®ten√≠ √®√≠sla
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 	case IDF_RICHMEMO_NEW:
-		CompAddItem(FRichMemoNew);				// vytvo¯enÌ editaËnÌho pole bez zalamov·nÌ
+		CompAddItem(FRichMemoNew);				// vytvo√∏en√≠ edita√®n√≠ho pole bez zalamov√°n√≠
 		return true;
 
 	case IDF_PROGRESS_NEW:
-		CompAddItem(FProgressNew);				// vytvo¯enÌ indik·toru pr˘bÏhu
+		CompAddItem(FProgressNew);				// vytvo√∏en√≠ indik√°toru pr√πb√¨hu
 		return true;
 
 	case IDF_HTRACKBAR_NEW:
-		CompAddItem(FHTrackbarNew);				// vytvo¯enÌ horizont·lnÌho t·hla
+		CompAddItem(FHTrackbarNew);				// vytvo√∏en√≠ horizont√°ln√≠ho t√°hla
 		return true;
 
 	case IDF_VTRACKBAR_NEW:
-		CompAddItem(FVTrackbarNew);				// vytvo¯enÌ vertik·lnÌho t·hla
+		CompAddItem(FVTrackbarNew);				// vytvo√∏en√≠ vertik√°ln√≠ho t√°hla
 		return true;
 
 	case IDF_HSCROLLBAR_NEW:
-		CompAddItem(FHScrollbarNew);			// vytvo¯enÌ horizont·lnÌho posuvnÌku
+		CompAddItem(FHScrollbarNew);			// vytvo√∏en√≠ horizont√°ln√≠ho posuvn√≠ku
 		return true;
 
 	case IDF_VSCROLLBAR_NEW:
-		CompAddItem(FVScrollbarNew);			// vytvo¯enÌ vertik·lnÌho posuvnÌku
+		CompAddItem(FVScrollbarNew);			// vytvo√∏en√≠ vertik√°ln√≠ho posuvn√≠ku
 		return true;
 
 	case IDF_WINDOW_POS:
-		CompAddItem(FGetWindowPos);				// naËtenÌ pozice prvku
+		CompAddItem(FGetWindowPos);				// na√®ten√≠ pozice prvku
 		return true;
 
 	case IDF_WINDOW_POS2:
-		CompAddItem(FGetWindowPos2);				// naËtenÌ pozice 2 prvku
+		CompAddItem(FGetWindowPos2);				// na√®ten√≠ pozice 2 prvku
 		return true;
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-	case IDF_MIX_LINE_TYPE:						// zjiötÏnÌ typu sign·lu
+	case IDF_MIX_LINE_TYPE:						// zji≈°t√¨n√≠ typu sign√°lu
 		CompAddItem(FGetLineType);
 		return true;
 
-	case IDF_MIX_CONTROL_TYPE:					// zjiötÏnÌ typu ovl·dacÌho prvku
+	case IDF_MIX_CONTROL_TYPE:					// zji≈°t√¨n√≠ typu ovl√°dac√≠ho prvku
 		CompAddItem(FGetCtrlType);
 		return true;
 	
-	case IDF_MIX_CONTROL_VAL:					// zjiötÏnÌ hodnoty ovl·dacÌho prvku
+	case IDF_MIX_CONTROL_VAL:					// zji≈°t√¨n√≠ hodnoty ovl√°dac√≠ho prvku
 		CompAddItem(FGetCtrlVal);
 		return true;
 
-	case IDF_MIX_CHANNEL:						// zjiötÏnÌ poËtu kan·l˘ prvku
+	case IDF_MIX_CHANNEL:						// zji≈°t√¨n√≠ po√®tu kan√°l√π prvku
 		CompAddItem(FGetMixChannel);
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-	case IDF_DIRECT3D_OCULLING:					// test nastavenÌ odstraÚov·nÌ ploch objektu Direct3D
+	case IDF_DIRECT3D_OCULLING:					// test nastaven√≠ odstra√≤ov√°n√≠ ploch objektu Direct3D
 		CompAddItem(FGetD3DOCulling);
 		return true;
 
-	case IDF_DIRECT3D_WALL:						// vytvo¯enÌ zdi Direct3D
+	case IDF_DIRECT3D_WALL:						// vytvo√∏en√≠ zdi Direct3D
 		CompAddItem(FD3DWall);
 		return true;
 
-	case IDF_DIRECT3D_CUBE:						// vytvo¯enÌ krychle Direct3D
+	case IDF_DIRECT3D_CUBE:						// vytvo√∏en√≠ krychle Direct3D
 		CompAddItem(FD3DCube);
 		return true;
 
-	case IDF_DIRECT3D_SPHERE:					// vytvo¯enÌ koule Direct3D
+	case IDF_DIRECT3D_SPHERE:					// vytvo√∏en√≠ koule Direct3D
 		CompAddItem(FD3DSphere);
 		return true;
 
-	case IDF_DIRECT3D_CYLINDER:					// vytvo¯enÌ v·lce Direct3D
+	case IDF_DIRECT3D_CYLINDER:					// vytvo√∏en√≠ v√°lce Direct3D
 		CompAddItem(FD3DCylinder);
 		return true;
 
-	case IDF_DIRECT3D_CONE:						// vytvo¯enÌ kuûele Direct3D
+	case IDF_DIRECT3D_CONE:						// vytvo√∏en√≠ ku≈æele Direct3D
 		CompAddItem(FD3DCone);
 		return true;
 
-	case IDF_DIRECT3D_CONE2:					// vytvo¯enÌ komolÈho kuûele Direct3D
+	case IDF_DIRECT3D_CONE2:					// vytvo√∏en√≠ komol√©ho ku≈æele Direct3D
 		return CompNumPar(index, FD3DCone2);
 
-	case IDF_DIRECT3D_CLONE:					// klonov·nÌ objektu Direct3D
+	case IDF_DIRECT3D_CLONE:					// klonov√°n√≠ objektu Direct3D
 		return CompNumPar(index, FD3DClone);
 
 	case IDF_DIRECT3D_TEXT:						// objekt Direct3D z textu
@@ -1648,95 +1648,95 @@ bool _fastcall CompNum(int index)
 	case IDF_DIRECT3D_FILE:						// objekt Direct3D ze souboru
 		return CompTxtPar(index, FD3DFile);
 
-	case IDF_DIRECT3D_OBJECT_ID:				// zjiötÏnÌ ID aktivnÌho objektu Direct3D
+	case IDF_DIRECT3D_OBJECT_ID:				// zji≈°t√¨n√≠ ID aktivn√≠ho objektu Direct3D
 		CompAddItem(FGetD3DObjectID);
 		return true;
 
-	case IDF_DIRECT3D_SCALEX:					// zjiötÏnÌ mÏ¯Ìtka ve smÏru X
+	case IDF_DIRECT3D_SCALEX:					// zji≈°t√¨n√≠ m√¨√∏√≠tka ve sm√¨ru X
 		CompAddItem(FGetD3DScaleX);
 		return true;
 
-	case IDF_DIRECT3D_SCALEY:					// zjiötÏnÌ mÏ¯Ìtka ve smÏru Y
+	case IDF_DIRECT3D_SCALEY:					// zji≈°t√¨n√≠ m√¨√∏√≠tka ve sm√¨ru Y
 		CompAddItem(FGetD3DScaleY);
 		return true;
 
-	case IDF_DIRECT3D_SCALEZ:					// zjiötÏnÌ mÏ¯Ìtka ve smÏru Z
+	case IDF_DIRECT3D_SCALEZ:					// zji≈°t√¨n√≠ m√¨√∏√≠tka ve sm√¨ru Z
 		CompAddItem(FGetD3DScaleZ);
 		return true;
 
-	case IDF_DIRECT3D_ROTATEX:					// zjiötÏnÌ rotace podle osy X
+	case IDF_DIRECT3D_ROTATEX:					// zji≈°t√¨n√≠ rotace podle osy X
 		CompAddItem(FGetD3DRotateX);
 		return true;
 
-	case IDF_DIRECT3D_ROTATEY:					// zjiötÏnÌ rotace podle osy Y
+	case IDF_DIRECT3D_ROTATEY:					// zji≈°t√¨n√≠ rotace podle osy Y
 		CompAddItem(FGetD3DRotateY);
 		return true;
 
-	case IDF_DIRECT3D_ROTATEZ:					// zjiötÏnÌ rotace podle osy Z
+	case IDF_DIRECT3D_ROTATEZ:					// zji≈°t√¨n√≠ rotace podle osy Z
 		CompAddItem(FGetD3DRotateZ);
 		return true;
 
-	case IDF_DIRECT3D_TRANSX:					// zjiötÏnÌ posunu ve smÏru X
+	case IDF_DIRECT3D_TRANSX:					// zji≈°t√¨n√≠ posunu ve sm√¨ru X
 		CompAddItem(FGetD3DTransX);
 		return true;
 
-	case IDF_DIRECT3D_TRANSY:					// zjiötÏnÌ posunu ve smÏru Y
+	case IDF_DIRECT3D_TRANSY:					// zji≈°t√¨n√≠ posunu ve sm√¨ru Y
 		CompAddItem(FGetD3DTransY);
 		return true;
 
-	case IDF_DIRECT3D_TRANSZ:					// zjiötÏnÌ posunu ve smÏru Z
+	case IDF_DIRECT3D_TRANSZ:					// zji≈°t√¨n√≠ posunu ve sm√¨ru Z
 		CompAddItem(FGetD3DTransZ);
 		return true;
 
-	case IDF_DIRECT3D_COLOR:					// zjiötÏnÌ barvy objektu
+	case IDF_DIRECT3D_COLOR:					// zji≈°t√¨n√≠ barvy objektu
 		CompAddItem(FGetD3DColor);
 		return true;
 
-	case IDF_DIRECT3D_EMISSIVE:					// zjiötÏnÌ barvy svÌtivosti
+	case IDF_DIRECT3D_EMISSIVE:					// zji≈°t√¨n√≠ barvy sv√≠tivosti
 		CompAddItem(FGetD3DEmissive);
 		return true;
 
-	case IDF_DIRECT3D_POWER:					// zjiötÏnÌ matnosti objektu
+	case IDF_DIRECT3D_POWER:					// zji≈°t√¨n√≠ matnosti objektu
 		CompAddItem(FGetD3DPower);
 		return true;
 
-	case IDF_DIRECT3D_SPECULAR:					// zjiötÏnÌ barvy odlesku
+	case IDF_DIRECT3D_SPECULAR:					// zji≈°t√¨n√≠ barvy odlesku
 		CompAddItem(FGetD3DSpecular);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT:					// vytvo¯enÌ svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT:					// vytvo√∏en√≠ sv√¨tla Direct3D
 		CompAddItem(FD3DLight);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_COLOR:				// zjiötÏnÌ barvy svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_COLOR:				// zji≈°t√¨n√≠ barvy sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightColor);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_TYPE:				// zjiötÏnÌ typu svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_TYPE:				// zji≈°t√¨n√≠ typu sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightType);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_UMBRA:				// zjiötÏnÌ ˙hle stÌnu svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_UMBRA:				// zji≈°t√¨n√≠ √∫hle st√≠nu sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightUmbra);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_PENUMBRA:			// zjiötÏnÌ ˙hle polostÌnu svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_PENUMBRA:			// zji≈°t√¨n√≠ √∫hle polost√≠nu sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightPenumbra);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_RANGE:				// zjiötÏnÌ dosahu svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_RANGE:				// zji≈°t√¨n√≠ dosahu sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightRange);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_CATTEN:				// zjiötÏnÌ konstantnÌho ˙tlumu svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_CATTEN:				// zji≈°t√¨n√≠ konstantn√≠ho √∫tlumu sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightCatten);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_LATTEN:				// zjiötÏnÌ line·rnÌho ˙tlumu svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_LATTEN:				// zji≈°t√¨n√≠ line√°rn√≠ho √∫tlumu sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightLatten);
 		return true;
 
-	case IDF_DIRECT3D_LIGHT_QATTEN:				// zjiötÏnÌ kvadratickÈho ˙tlumu svÏtla Direct3D
+	case IDF_DIRECT3D_LIGHT_QATTEN:				// zji≈°t√¨n√≠ kvadratick√©ho √∫tlumu sv√¨tla Direct3D
 		CompAddItem(FGetD3DLightQatten);
 		return true;
 
@@ -1744,142 +1744,142 @@ bool _fastcall CompNum(int index)
 		CompAddItem(FGetD3DProjection);
 		return true;
 
-	case IDF_DIRECT3D_SCENE_COLOR:				// zjiötÏnÌ barvy pozadÌ scÈny
+	case IDF_DIRECT3D_SCENE_COLOR:				// zji≈°t√¨n√≠ barvy pozad√≠ sc√©ny
 		CompAddItem(FGetD3DSceneColor);
 		return true;
 
-	case IDF_DIRECT3D_FOG_COLOR:				// zjiötÏnÌ barvy mlhy
+	case IDF_DIRECT3D_FOG_COLOR:				// zji≈°t√¨n√≠ barvy mlhy
 		CompAddItem(FGetD3DFogColor);
 		return true;
 
-	case IDF_DIRECT3D_FOG_MODE:					// zjiötÏnÌ mÛdu mlhy
+	case IDF_DIRECT3D_FOG_MODE:					// zji≈°t√¨n√≠ m√≥du mlhy
 		CompAddItem(FGetD3DFogMode);
 		return true;
 
-	case IDF_DIRECT3D_FOG_START:				// zjiötÏnÌ zaË·tku mlhy
+	case IDF_DIRECT3D_FOG_START:				// zji≈°t√¨n√≠ za√®√°tku mlhy
 		CompAddItem(FGetD3DFogStart);
 		return true;
 
-	case IDF_DIRECT3D_FOG_END:					// zjiötÏnÌ konce mlhy
+	case IDF_DIRECT3D_FOG_END:					// zji≈°t√¨n√≠ konce mlhy
 		CompAddItem(FGetD3DFogEnd);
 		return true;
 
-	case IDF_DIRECT3D_FOG_DENSITY:				// zjiötÏnÌ hustoty mlhy
+	case IDF_DIRECT3D_FOG_DENSITY:				// zji≈°t√¨n√≠ hustoty mlhy
 		CompAddItem(FGetD3DFogDensity);
 		return true;
 
-	case IDF_DIRECT3D_VIEW_FRONT:				// zjiötÏnÌ promÌtacÌ roviny
+	case IDF_DIRECT3D_VIEW_FRONT:				// zji≈°t√¨n√≠ prom√≠tac√≠ roviny
 		CompAddItem(FGetD3DViewFront);
 		return true;
 
-	case IDF_DIRECT3D_VIEW_BACK:				// zjiötÏnÌ vzd·lenosti dohledu
+	case IDF_DIRECT3D_VIEW_BACK:				// zji≈°t√¨n√≠ vzd√°lenosti dohledu
 		CompAddItem(FGetD3DViewBack);
 		return true;
 
 //	case IDF_DIRECT3D_PICK:
-//		CompAddItem(FD3DPick);							// vyhled·nÌ objektu
+//		CompAddItem(FD3DPick);							// vyhled√°n√≠ objektu
 //		CompNumSubPar(index, IDF_DIRECT3D_PICK_X, 0x1000000);
 //		CompNumSubPar(index, IDF_DIRECT3D_PICK_Y, 0x1000000);
 //		return true;
 
 	case IDF_DIRECT3D_2DOBJECT:
-		return CompPicPar(index, FD3D2DObject);		// vytvo¯enÌ 2D objektu
+		return CompPicPar(index, FD3D2DObject);		// vytvo√∏en√≠ 2D objektu
 
 	case IDF_DIRECT3D_TERRAIN:
-		return CompPicPar(index, FD3D2DTerrain);	// vytvo¯enÌ terÈnu
+		return CompPicPar(index, FD3D2DTerrain);	// vytvo√∏en√≠ ter√©nu
 
 	case IDF_DIRECT3D_LEVEL:
-		CompAddItem(FD3DLevel);							// zjiötÏnÌ ˙rovnÏ terÈnu
+		CompAddItem(FD3DLevel);							// zji≈°t√¨n√≠ √∫rovn√¨ ter√©nu
 		CompNumSubPar(index, IDF_DIRECT3D_LEVEL_X, 0x1000000);
 		CompNumSubPar(index, IDF_DIRECT3D_LEVEL_Y, 0x1000000);
 		return true;
 
-	case IDF_DIRECT3D_EMPTY:						// vytvo¯enÌ pr·zdnÈho objektu Direct3D
+	case IDF_DIRECT3D_EMPTY:						// vytvo√∏en√≠ pr√°zdn√©ho objektu Direct3D
 		CompAddItem(FD3DEmpty);
 		return true;
 
-	case IDF_DIRECT3D_SPLITS:						// zjiötÏnÌ sloûitosti objekt˘
+	case IDF_DIRECT3D_SPLITS:						// zji≈°t√¨n√≠ slo≈æitosti objekt√π
 		CompAddItem(FGetD3DSplits);
 		return true;
 
-	case IDF_DIRECT3D_ORDER:						// zjiötÏnÌ po¯adÌ rotacÌ objektu
+	case IDF_DIRECT3D_ORDER:						// zji≈°t√¨n√≠ po√∏ad√≠ rotac√≠ objektu
 		CompAddItem(FGetD3DOrder);
 		return true;
 
-	case IDF_DIRECT3D_DRIVER:						// zjiötÏnÌ aktivnÌho ovladaËe
+	case IDF_DIRECT3D_DRIVER:						// zji≈°t√¨n√≠ aktivn√≠ho ovlada√®e
 		CompAddItem(FGetD3DDriver);
 		return true;
 
-	case IDF_DIRECT3D_INTERFACE:					// zjiötÏnÌ aktivnÌho rozhranÌ
+	case IDF_DIRECT3D_INTERFACE:					// zji≈°t√¨n√≠ aktivn√≠ho rozhran√≠
 		CompAddItem(FGetD3DInterface);
 		return true;
 
-	case IDF_DIRECT3D_ROTARY:						// vytvo¯enÌ rotaËnÌho objektu
+	case IDF_DIRECT3D_ROTARY:						// vytvo√∏en√≠ rota√®n√≠ho objektu
 		return CompTxtPar(index, FD3DRotary);
 
 	case IDF_DIRECT3D_TERRAIN_MAP:
-		return CompMapPar(index, FD3DTerrainMap);	// vytvo¯enÌ terÈnu z plochy
+		return CompMapPar(index, FD3DTerrainMap);	// vytvo√∏en√≠ ter√©nu z plochy
 
-	case IDF_DIRECT3D_SMOOTH:						// zjiötÏnÌ stupnÏ vyhlazenÌ textur
+	case IDF_DIRECT3D_SMOOTH:						// zji≈°t√¨n√≠ stupn√¨ vyhlazen√≠ textur
 		CompAddItem(FGetD3DSmooth);
 		return true;
 
-	case IDF_DIRECT3D_AMBIENT:						// zjiötÏnÌ ambient svÏtla
+	case IDF_DIRECT3D_AMBIENT:						// zji≈°t√¨n√≠ ambient sv√¨tla
 		CompAddItem(FGetD3DAmbient);
 		return true;
 
-	case IDF_DIRECT3D_CIRCLE:						// vytvo¯enÌ kruhu Direct3D
+	case IDF_DIRECT3D_CIRCLE:						// vytvo√∏en√≠ kruhu Direct3D
 		CompAddItem(FD3DCircle);
 		return true;
 
-	case IDF_DIRECT3D_TRIANGLE:						// vytvo¯enÌ troj˙helnÌku Direct3D
+	case IDF_DIRECT3D_TRIANGLE:						// vytvo√∏en√≠ troj√∫heln√≠ku Direct3D
 		CompAddItem(FD3DTriangle);
 		return true;
 
-	case IDF_DIRECT3D_TORUS:						// vytvo¯enÌ torusu Direct3D
+	case IDF_DIRECT3D_TORUS:						// vytvo√∏en√≠ torusu Direct3D
 		return CompNumPar(index, FD3DTorus);
 
 	case IDF_DIRECT3D_2DSTATIC:
-		return CompPicPar(index, FD3D2DStatic);		// vytvo¯enÌ statickÈho 2D objektu
+		return CompPicPar(index, FD3D2DStatic);		// vytvo√∏en√≠ statick√©ho 2D objektu
 
-	case IDF_DIRECT3D_HEMISPHERE:					// vytvo¯enÌ polokoule Direct3D
+	case IDF_DIRECT3D_HEMISPHERE:					// vytvo√∏en√≠ polokoule Direct3D
 		CompAddItem(FD3DHemisphere);
 		return true;
 
-	case IDF_DIRECT3D_TRANSPARENT:					// zjiötÏnÌ pr˘hlednosti textury
+	case IDF_DIRECT3D_TRANSPARENT:					// zji≈°t√¨n√≠ pr√πhlednosti textury
 		CompAddItem(FGetD3DTransparent);
 		return true;
 
-	case IDF_DIRECT3D_ALPHAREF:						// zjiötÏnÌ referenËnÌ ˙rovnÏ alfa kan·lu
+	case IDF_DIRECT3D_ALPHAREF:						// zji≈°t√¨n√≠ referen√®n√≠ √∫rovn√¨ alfa kan√°lu
 		CompAddItem(FGetD3DAlphaRef);
 		return true;
 
-	case IDF_DIRECT3D_AMBIREF:						// zjiötÏnÌ odrazivosti rozpt˝lenÈho svÏtla
+	case IDF_DIRECT3D_AMBIREF:						// zji≈°t√¨n√≠ odrazivosti rozpt√Ωlen√©ho sv√¨tla
 		CompAddItem(FGetD3DAmbiRef);
 		return true;
 
 	case IDF_DIRECT3D_ELAPSED:
-		if (!CompNumPar(index, FD3DElapsed))		// uplynul˝ Ëas s n·sobkem
+		if (!CompNumPar(index, FD3DElapsed))		// uplynul√Ω √®as s n√°sobkem
 		{
-			CompAddItem(FD3DElapsed0);				// uplynul˝ Ëas bez n·sobku
+			CompAddItem(FD3DElapsed0);				// uplynul√Ω √®as bez n√°sobku
 		}
 		return true;
 
-	case IDF_DIRECT3D_SPEED:						// mÏ¯enÌ rychlosti renderov·nÌ
+	case IDF_DIRECT3D_SPEED:						// m√¨√∏en√≠ rychlosti renderov√°n√≠
 		CompAddItem(FD3DSpeed);
 		return true;
 
-	case IDF_DIRECT3D_FREE:							// voln· videopamÏù
+	case IDF_DIRECT3D_FREE:							// voln√° videopam√¨¬ù
 		CompAddItem(FD3DFree);
 		return true;
 
 	case IDF_DIRECT3D_PICTURE:
-		return CompPicPar(index, FD3DPicture);		// vytvo¯enÌ 2D obr·zku
+		return CompPicPar(index, FD3DPicture);		// vytvo√∏en√≠ 2D obr√°zku
 
 	case IDF_DIRECT3D_LENSFLARE:
-		return CompPicPar(index, FD3DLensFlare);	// vytvo¯enÌ ËoËkovÈho odlesku
+		return CompPicPar(index, FD3DLensFlare);	// vytvo√∏en√≠ √®o√®kov√©ho odlesku
 
-	case IDF_DIRECT3D_STAGE:						// stupeÚ textur
+	case IDF_DIRECT3D_STAGE:						// stupe√≤ textur
 		CompAddItem(FGetD3DStage);
 		return true;
 
@@ -1907,19 +1907,19 @@ bool _fastcall CompNum(int index)
 		CompAddItem(FGetD3DAlphaArg2);
 		return true;
 
-	case IDF_DIRECT3D_ADDRESSU:						// horizont·lnÌ adresov·nÌ
+	case IDF_DIRECT3D_ADDRESSU:						// horizont√°ln√≠ adresov√°n√≠
 		CompAddItem(FGetD3DAddressU);
 		return true;
 
-	case IDF_DIRECT3D_ADDRESSV:						// vertik·lnÌ adresov·nÌ
+	case IDF_DIRECT3D_ADDRESSV:						// vertik√°ln√≠ adresov√°n√≠
 		CompAddItem(FGetD3DAddressV);
 		return true;
 
-//	case IDF_DIRECT3D_BORDER:						// barva okolÌ textur
+//	case IDF_DIRECT3D_BORDER:						// barva okol√≠ textur
 //		CompAddItem(FGetD3DBorder);
 //		return true;
 
-	case IDF_DIRECT3D_BIAS:							// zjemnÏnÌ vzd·len˝ch textur
+	case IDF_DIRECT3D_BIAS:							// zjemn√¨n√≠ vzd√°len√Ωch textur
 		CompAddItem(FGetD3DBias);
 		return true;
 
@@ -1927,19 +1927,19 @@ bool _fastcall CompNum(int index)
 		CompAddItem(FGetD3DTFactor);
 		return true;
 
-	case IDF_DIRECT3D_MIPMAPS:						// poËet ˙rovnÌ mipmaps
+	case IDF_DIRECT3D_MIPMAPS:						// po√®et √∫rovn√≠ mipmaps
 		CompAddItem(FGetD3DMipMaps);
 		return true;
 
-	case IDF_DIRECT3D_ZGROUP:						// renderovacÌ skupina
+	case IDF_DIRECT3D_ZGROUP:						// renderovac√≠ skupina
 		CompAddItem(FGetD3DZGroup);
 		return true;
 
-	case IDF_DIRECT3D_ZTEST:						// hloubkov˝ test
+	case IDF_DIRECT3D_ZTEST:						// hloubkov√Ω test
 		CompAddItem(FGetD3DZTest);
 		return true;
 
-	case IDF_SHADOW_RANGE:							// dosah stÌnu
+	case IDF_SHADOW_RANGE:							// dosah st√≠nu
 		CompAddItem(FGetD3DShadowRange);
 		return true;
 
@@ -1947,66 +1947,66 @@ bool _fastcall CompNum(int index)
 		CompAddItem(FGetD3DLODObject);
 		return true;
 
-	case IDF_DIRECT3D_LOD_DISTANCE:					// vzd·lenost pro LOD
+	case IDF_DIRECT3D_LOD_DISTANCE:					// vzd√°lenost pro LOD
 		CompAddItem(FGetD3DLODDistance);
 		return true;
 
-	case IDF_DIRECT3D_MORPH_MODEL:					// zjiötÏnÌ max. stupnÏ morfov·nÌ
+	case IDF_DIRECT3D_MORPH_MODEL:					// zji≈°t√¨n√≠ max. stupn√¨ morfov√°n√≠
 		CompAddItem(FGetD3DMorphModel);
 		return true;
 
-	case IDF_DIRECT3D_MORPH_LEVEL:					// zjiötÏnÌ stupnÏ morfov·nÌ
+	case IDF_DIRECT3D_MORPH_LEVEL:					// zji≈°t√¨n√≠ stupn√¨ morfov√°n√≠
 		CompAddItem(FGetD3DMorphLevel);
 		return true;
 
-	case IDF_DIRECT3D_MEMORY:						// pamÏùov˝ blok z 3D prvku
+	case IDF_DIRECT3D_MEMORY:						// pam√¨¬ùov√Ω blok z 3D prvku
 		return CompNumPar(index, FD3DMemory);
 
-	case IDF_DIRECT3D_CHILD:						// nalezenÌ potomka 3D objektu
-		if (!CompNumPar(index, FD3DChild))			// zadan˝ potomek
+	case IDF_DIRECT3D_CHILD:						// nalezen√≠ potomka 3D objektu
+		if (!CompNumPar(index, FD3DChild))			// zadan√Ω potomek
 		{
-			CompAddItem(FD3DChild0);				// prvnÌ potomek
+			CompAddItem(FD3DChild0);				// prvn√≠ potomek
 		}
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 	case IDF_POLAR_RADIUS:
-		CompAddItem(FPolarRadius);					// v˝poËet vzd·lenosti bodu
+		CompAddItem(FPolarRadius);					// v√Ωpo√®et vzd√°lenosti bodu
 		CompNumSubPar(index, IDF_POLAR_X, 0);
 		CompNumSubPar(index, IDF_POLAR_Y, 0);
 		return true;
 
 	case IDF_POLAR_ANGLE:
-		CompAddItem(FPolarAngle);					// v˝poËet ˙hlu bodu
+		CompAddItem(FPolarAngle);					// v√Ωpo√®et √∫hlu bodu
 		CompNumSubPar(index, IDF_POLAR_X, 0);
 		CompNumSubPar(index, IDF_POLAR_Y, 0);
 		return true;
 
-	case IDF_PRECISE_TIMER:							// p¯esn˝ ËÌtaË Ëasu
+	case IDF_PRECISE_TIMER:							// p√∏esn√Ω √®√≠ta√® √®asu
 		CompAddItem(FPreciseTimer);
 		return true;
 
 	case IDF_TABLE_NEW:
-		return CompTxtPar(index, FTableNew);		// vytvo¯enÌ tabulky
+		return CompTxtPar(index, FTableNew);		// vytvo√∏en√≠ tabulky
 
 	case IDF_TABLE_WIDTH:
-		CompAddItem(FGetTableWidth);				// zjiötÏnÌ öÌ¯ky sloupce tabulky
+		CompAddItem(FGetTableWidth);				// zji≈°t√¨n√≠ ≈°√≠√∏ky sloupce tabulky
 		return true;
 
 	case IDF_TABLE_ALIGN:
-		CompAddItem(FGetTableAlign);				// zjiötÏnÌ zarovn·nÌ sloupce tabulky
+		CompAddItem(FGetTableAlign);				// zji≈°t√¨n√≠ zarovn√°n√≠ sloupce tabulky
 		return true;
 
 	default:
 
-// p¯eklad kÛdu kl·vesy
+// p√∏eklad k√≥du kl√°vesy
 		{
 			int fn = item->Func + IDF - CompTabVKBeg;
 			if ((DWORD)fn < (DWORD)(CompTabVKEnd - CompTabVKBeg + 1))
 			{
-				CompAddItemNum(CompTabVK[fn]);	// kÛd kl·vesy
+				CompAddItemNum(CompTabVK[fn]);	// k√≥d kl√°vesy
 				return true;
 			}
 		}
@@ -2016,7 +2016,7 @@ bool _fastcall CompNum(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad p¯Ìkazu s ËÌseln˝m parametrem
+// p√∏eklad p√∏√≠kazu s √®√≠seln√Ωm parametrem
 
 bool CompNumPar(int index, PROCCOM func)
 {
@@ -2042,31 +2042,31 @@ bool CompNumPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad p¯Ìkazu s ËÌseln˝m podparametrem (hledan˝m podle identifikace)
+// p√∏eklad p√∏√≠kazu s √®√≠seln√Ωm podparametrem (hledan√Ωm podle identifikace)
 
 void CompNumSubPar(int index, int idf, double def)
 {
 // korekce identifikace funkce
 	idf -= IDF;
 
-// ukazatel v˝chozÌho prvku
+// ukazatel v√Ωchoz√≠ho prvku
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda m· poloûka nÏjakÈ potomky
+// kontrola, zda m√° polo≈æka n√¨jak√© potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus p¯es vöechny potomky
+// cyklus p√∏es v≈°echny potomky
 		do {
 
-// adresa dalöÌho potomka
+// adresa dal≈°√≠ho potomka
 			index += posun;
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledan˝ prvek - naËtenÌ prvku
+// test, zda to je hledan√Ω prvek - na√®ten√≠ prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompNum(index + 1))
@@ -2074,13 +2074,13 @@ void CompNumSubPar(int index, int idf, double def)
 				return;
 			}
 
-// posun pro p¯ÌötÌ prvek
+// posun pro p√∏√≠≈°t√≠ prvek
 			posun = item2->Items;
 
-// dokud je dalöÌ potomek
+// dokud je dal≈°√≠ potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// pouûije se implicitnÌ hodnota
+// pou≈æije se implicitn√≠ hodnota
 	CompAddItemNum(def);
 }

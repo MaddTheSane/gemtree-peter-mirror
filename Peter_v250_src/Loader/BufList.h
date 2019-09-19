@@ -1,18 +1,18 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer seznamù								*
+*								Buffer seznamÃ¹								*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura prvku seznamu (16 Bajtù)
+// struktura prvku seznamu (16 BajtÃ¹)
 
 typedef struct LISTDATA_
 {
-	long	Index;					// (4) aktuální index seznamu
-	long	Size;					// (4) velikost seznamu (poloek)
-	long	Auto;					// (4) automatická inkrementace indexu
+	long	Index;					// (4) aktuÃ¡lnÃ­ index seznamu
+	long	Size;					// (4) velikost seznamu (poloÅ¾ek)
+	long	Auto;					// (4) automatickÃ¡ inkrementace indexu
 	long	Res;					// (4) ... rezerva
 } LISTDATA;
 
@@ -20,32 +20,32 @@ typedef struct LISTDATA_
 class CBufList
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	LISTDATA*	m_Data;		// ukazatel na data
-	int			m_Num;		// poèet platnıch poloek v bufferu
-	int			m_Max;		// velikost bufferu (poloek)
+	int			m_Num;		// poÃ¨et platnÃ½ch poloÅ¾ek v bufferu
+	int			m_Max;		// velikost bufferu (poloÅ¾ek)
 
-// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	inline int NewItem()
 	{
-		int i = m_Num;				// poèet poloek
-		if (i >= m_Max)				// není další poloka?
+		int i = m_Num;				// poÃ¨et poloÅ¾ek
+		if (i >= m_Max)				// nenÃ­ dalÅ¡Ã­ poloÅ¾ka?
 		{
-			NewData();				// vytvoøení novıch dat
+			NewData();				// vytvoÃ¸enÃ­ novÃ½ch dat
 		}
 
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení novıch dat (oddìleno kvùli lepší optimalizaci)
+// vytvoÃ¸enÃ­ novÃ½ch dat (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -53,30 +53,30 @@ public:
 	CBufList();
 	~CBufList();
 
-// statickı konstruktor a destruktor
-	void Init();			// statickı konstruktor
-	void Term();			// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();			// statickÃ½ konstruktor
+	void Term();			// statickÃ½ destruktor
 
-// zrušení všech poloek v bufferu
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu
 	void DelAll();
 
-// poskytnutí bufferu dat
+// poskytnutÃ­ bufferu dat
 	inline LISTDATA* Data() const { return m_Data; };
 
-// poskytnutí poètu platnıch poloek v bufferu
+// poskytnutÃ­ poÃ¨tu platnÃ½ch poloÅ¾ek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu
+// poskytnutÃ­ velikosti bufferu
 	inline int Max() const { return m_Max; };
 
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)m_Num); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline LISTDATA& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -89,26 +89,26 @@ public:
 	inline const LISTDATA& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// zjištìní aktuálního indexu seznamu
+// zjiÅ¡tÃ¬nÃ­ aktuÃ¡lnÃ­ho indexu seznamu
 	inline const int _fastcall Inx(int index)
 	{
 		return m_Data[index].Index;
 	}
 
-// automatická inkrementace indexu
+// automatickÃ¡ inkrementace indexu
 	inline void _fastcall AutoInc(int index)
 	{
-	// adresa poloky seznamu
+	// adresa poloÅ¾ky seznamu
 		LISTDATA* list = m_Data + index;
 
 	// test, zda bude inkrementace
 		if (list->Auto != 0)
 		{
 
-	// novı index
+	// novÃ½ index
 			int newindex = list->Index + list->Auto;
 
-	// kontrola pøeteèení indexu
+	// kontrola pÃ¸eteÃ¨enÃ­ indexu
 			int size = list->Size;
 
 			if ((DWORD)newindex >= (DWORD)size)
@@ -117,28 +117,28 @@ public:
 				while (newindex >= size) newindex -= size;
 			}
 
-	// nastavení nového indexu
+	// nastavenÃ­ novÃ©ho indexu
 			list->Index = newindex;
 		}
 	}
 
-// automatická inkrementace indexu, vrací pùvodní index
+// automatickÃ¡ inkrementace indexu, vracÃ­ pÃ¹vodnÃ­ index
 	inline int _fastcall AutoIncInx(int index)
 	{
-	// adresa poloky seznamu
+	// adresa poloÅ¾ky seznamu
 		LISTDATA* list = m_Data + index;
 
-	// úschova pùvodního indexu
+	// Ãºschova pÃ¹vodnÃ­ho indexu
 		int result = list->Index;
 
 	// test, zda bude inkrementace
 		if (list->Auto != 0)
 		{
 
-	// novı index
+	// novÃ½ index
 			int newindex = result + list->Auto;
 
-	// kontrola pøeteèení indexu
+	// kontrola pÃ¸eteÃ¨enÃ­ indexu
 			int size = list->Size;
 
 			if ((DWORD)newindex >= (DWORD)size)
@@ -147,34 +147,34 @@ public:
 				while (newindex >= size) newindex -= size;
 			}
 
-	// nastavení nového indexu
+	// nastavenÃ­ novÃ©ho indexu
 			list->Index = newindex;
 		}
 
-	// návrat pùvodního indexu
+	// nÃ¡vrat pÃ¹vodnÃ­ho indexu
 		return result;
 	}
 
-// poskytnutí poloky (s kontrolou platnosti indexu)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	const LISTDATA& _fastcall Get(const int index) const;
 
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const LISTDATA& data);
 
-// zrušení poloek z konce bufferu
+// zruÅ¡enÃ­ poloÅ¾ek z konce bufferu
 	void _fastcall Del(int num);
 
-// vytvoøení prázdné poloky (vrací index poloky)
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int New();
 
-// pøidání poloky (vrací index poloky)
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int _fastcall Add(const LISTDATA& data);
 
-// duplikace poloky (s kontrolou platnosti indexu, vrací index první poloky)
+// duplikace poloÅ¾ky (s kontrolou platnosti indexu, vracÃ­ index prvnÃ­ poloÅ¾ky)
 	int _fastcall Dup(const int index);
 	int _fastcall Dup(const int index, int num);
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CBufList& operator= (const CBufList& src);
 };
 

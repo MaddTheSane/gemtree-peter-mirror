@@ -7,24 +7,24 @@
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minim·lnÌ velikost
+#pragma optimize("s", on)			// optimalizace na minim√°ln√≠ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad v˝razu s plochou (vracÌ true = operace OK)
+// p√∏eklad v√Ωrazu s plochou (vrac√≠ true = operace OK)
 
 bool _fastcall CompMap(int index)
 {
-// adresa zdrojovÈho prvku
+// adresa zdrojov√©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 
-// kontrola, zda je poloûka vypnuta
+// kontrola, zda je polo≈æka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vÏtvenÌ podle funkce
+// v√¨tven√≠ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_MAP:
@@ -66,7 +66,7 @@ bool _fastcall CompMap(int index)
 		return false;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_MAP);	// funkce s n·vratem plochy
+		return CompFunc(index, IDF_MAP);	// funkce s n√°vratem plochy
 
 	case IDF_MAP_COPY:
 		CompAddItem(FMapCopy);				// kopie plochy
@@ -81,7 +81,7 @@ bool _fastcall CompMap(int index)
 		return true;
 
 	case IDF_MAP_NEW:
-		CompAddItem(FMapNew);				// nov· plocha
+		CompAddItem(FMapNew);				// nov√° plocha
 		CompNumSubPar(index, IDF_MAP_NEW_W, 0);
 		CompNumSubPar(index, IDF_MAP_NEW_H, 0);
 		return true;
@@ -93,7 +93,7 @@ bool _fastcall CompMap(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad p¯Ìkazu s parametrem plochy
+// p√∏eklad p√∏√≠kazu s parametrem plochy
 
 bool CompMapPar(int index, PROCCOM func)
 {
@@ -119,31 +119,31 @@ bool CompMapPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad p¯Ìkazu s podparametrem plochy (hledan˝m podle identifikace)
+// p√∏eklad p√∏√≠kazu s podparametrem plochy (hledan√Ωm podle identifikace)
 
 void CompMapSubPar(int index, int idf)
 {
 // korekce identifikace funkce
 	idf -= IDF;
 
-// ukazatel v˝chozÌho prvku
+// ukazatel v√Ωchoz√≠ho prvku
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda m· poloûka nÏjakÈ potomky
+// kontrola, zda m√° polo≈æka n√¨jak√© potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus p¯es vöechny potomky
+// cyklus p√∏es v≈°echny potomky
 		do {
 
-// adresa dalöÌho potomka
+// adresa dal≈°√≠ho potomka
 			index += posun;
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledan˝ prvek - naËtenÌ prvku
+// test, zda to je hledan√Ω prvek - na√®ten√≠ prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompMap(index + 1))
@@ -151,13 +151,13 @@ void CompMapSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro p¯ÌötÌ prvek
+// posun pro p√∏√≠≈°t√≠ prvek
 			posun = item2->Items;
 
-// dokud je dalöÌ potomek
+// dokud je dal≈°√≠ potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// pouûije se implicitnÌ hodnota - hlavnÌ plocha
+// pou≈æije se implicitn√≠ hodnota - hlavn√≠ plocha
 	CompAddItem(FMapMain);
 }

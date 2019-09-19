@@ -7,47 +7,47 @@
 
 
 ////////////////////////////////////////////////////////////////////
-// definice z·hlavÌ souboru ICO
+// definice z√°hlav√≠ souboru ICO
 
 #pragma pack( push )
 #pragma pack( 2 )
 
 typedef struct ICONDIRENTRY_
 {
-	BYTE	Width;					// öÌ¯ka
-	BYTE	Height;					// v˝öka
-	BYTE	Colors;					// poËet barev (0 = 256 barev)
-	BYTE	Reserved;				// ... rezervov·no, musÌ b˝t vûdy 0
-	WORD	Planes;					// poËet barevn˝ch rovin (nastaveno na 0)
-	WORD	Bits;					// poËet bit˘ na bod (nastaveno na 0)
-	DWORD	Size;					// velikost obr·zku v bajtech
-	DWORD	Offset;					// offset obr·zku v souboru
+	BYTE	Width;					// ≈°√≠√∏ka
+	BYTE	Height;					// v√Ω≈°ka
+	BYTE	Colors;					// po√®et barev (0 = 256 barev)
+	BYTE	Reserved;				// ... rezervov√°no, mus√≠ b√Ωt v≈ædy 0
+	WORD	Planes;					// po√®et barevn√Ωch rovin (nastaveno na 0)
+	WORD	Bits;					// po√®et bit√π na bod (nastaveno na 0)
+	DWORD	Size;					// velikost obr√°zku v bajtech
+	DWORD	Offset;					// offset obr√°zku v souboru
 } ICONDIRENTRY;
 
-#define SIZEOFICONDIRENTRY (4*sizeof(BYTE) + 2*sizeof(WORD) + 2*sizeof(DWORD)) // 16 bajt˘
+#define SIZEOFICONDIRENTRY (4*sizeof(BYTE) + 2*sizeof(WORD) + 2*sizeof(DWORD)) // 16 bajt√π
 
 typedef struct ICONDIR_
 {
-	WORD			Reserved;		// ... rezervov·no, musÌ b˝t vûdy 0
+	WORD			Reserved;		// ... rezervov√°no, mus√≠ b√Ωt v≈ædy 0
 	WORD			Type;			// typ souboru (ikona = 1, kurzor = 2)
-	WORD			Count;			// poËet poloûek v adres·¯i
-	ICONDIRENTRY	Data[1];		// poloûky ikon
+	WORD			Count;			// po√®et polo≈æek v adres√°√∏i
+	ICONDIRENTRY	Data[1];		// polo≈æky ikon
 } ICONDIR;
 
-#define SIZEOFICONDIR (3*sizeof(WORD))	// 6 bajt˘
+#define SIZEOFICONDIR (3*sizeof(WORD))	// 6 bajt√π
 
-// Obr·zek ikony:
-//	BITMAPINFOHEADER	- z·hlavÌ BMP
-//			biSize aû biBitCount a biSizeImage = platnÈ poloûky, ostatnÌ = 0
+// Obr√°zek ikony:
+//	BITMAPINFOHEADER	- z√°hlav√≠ BMP
+//			biSize a≈æ biBitCount a biSizeImage = platn√© polo≈æky, ostatn√≠ = 0
 //	RGBQUAD				- palety
 //	BYTE Xor[]			- data barev
-//	BYTE And[]			- maska obr·zku
+//	BYTE And[]			- maska obr√°zku
 
 #pragma pack( pop )
 
 
 ////////////////////////////////////////////////////////////////////
-// test platnosti z·hlavÌ BMP (TRUE=je OK)
+// test platnosti z√°hlav√≠ BMP (TRUE=je OK)
 
 BOOL TestBMP(const BITMAPINFO* bitmap);
 
@@ -65,6 +65,6 @@ void DekompRLE4(BYTE* dst, int dstN, BYTE* src, int srcN);
 
 
 ////////////////////////////////////////////////////////////////////
-// komprese dat bitmapy BI_RLE8, vracÌ velikost dat
+// komprese dat bitmapy BI_RLE8, vrac√≠ velikost dat
 
 int KompRLE8(BYTE* dstbuf, BYTE* srcbuf, int width, int height);

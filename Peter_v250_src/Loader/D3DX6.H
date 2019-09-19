@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhranÌ - DirectX 6							*
+*							3D rozhran√≠ - DirectX 6							*
 *																			*
 \***************************************************************************/
 
@@ -9,71 +9,71 @@
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ DirectDraw 6 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ DirectDraw 6 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3DX6InitDD();
 void D3DX6TermDD();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ prim·rniho povrchu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ prim√°rniho povrchu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX6InitPrim();
 void D3DX6TermPrim();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ clipperu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ clipperu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX6InitClip();
 void D3DX6TermClip();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ palet, nejsou-li vytvo¯eny (vracÌ TRUE=OK)
+// vytvo√∏en√≠ palet, nejsou-li vytvo√∏eny (vrac√≠ TRUE=OK)
 
 bool D3DX6InitPal();
 void D3DX6TermPal();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ Direct3D 6 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ Direct3D 6 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3DX6InitD3();
 void D3DX6TermD3();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ renderovacÌho povrchu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ renderovac√≠ho povrchu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX6InitRend(bool hw);
 void D3DX6TermRend();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ Z-bufferu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ Z-bufferu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX6InitZBuf(bool hw, DDPIXELFORMAT* pf);
 void D3DX6TermZBuf();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ renderovacÌho za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// vytvo√∏en√≠ renderovac√≠ho za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX6InitDev(int type);
 void D3DX6TermDev();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace materi·lu pozadÌ scÈny
+// aktualizace materi√°lu pozad√≠ sc√©ny
 
 void D3DX6AktBackMat();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ materi·lu pozadÌ scÈny
+// vytvo√∏en√≠ materi√°lu pozad√≠ sc√©ny
 
 bool D3DX6InitBack();
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ materi·lu pozadÌ scÈny
+// zru≈°en√≠ materi√°lu pozad√≠ sc√©ny
 
 void D3DX6TermBack();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ viewportu (vracÌ TRUE=inicializace OK)
+// vytvo√∏en√≠ viewportu (vrac√≠ TRUE=inicializace OK)
 
 bool D3DX6InitView();
 void D3DX6SizeView();
@@ -81,134 +81,134 @@ void D3DX6MoveView();
 void D3DX6TermView();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ funkce za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zah√°jen√≠ funkce za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX6Start(int type);
 void D3DX6Stop();
 
 /////////////////////////////////////////////////////////////////////////////
-// vymaz·nÌ renderovacÌ plochy
+// vymaz√°n√≠ renderovac√≠ plochy
 
 void D3DX6Clear();
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ renderovacÌho bufferu
+// zobrazen√≠ renderovac√≠ho bufferu
 
 void D3DX6Disp();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekËnÌ matice
+// aktualizace projek√®n√≠ matice
 
 void D3DX6AktProj();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pohledovÈ matice
+// aktualizace pohledov√© matice
 
 void D3DX6AktView();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ renderov·nÌ scÈny
+// zah√°jen√≠ renderov√°n√≠ sc√©ny
 
 void D3DX6Begin();
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ renderov·nÌ scÈny
+// ukon√®en√≠ renderov√°n√≠ sc√©ny
 
 void D3DX6End();
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ jednoho objektu
+// vyrenderov√°n√≠ jednoho objektu
 
 void D3DX6Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX6Reset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ stÌnu objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ st√≠nu objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX6SReset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË vyplÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® vypl√≤ov√°n√≠ ploch
 
 void D3DX6AktWireframe();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË osvÏtlenÌ
+// aktualizovat p√∏ep√≠na√® osv√¨tlen√≠
 
 void D3DX6AktLightOn();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË plynulÈho stinov·nÌ
+// aktualizovat p√∏ep√≠na√® plynul√©ho stinov√°n√≠
 
 void D3DX6AktShades();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË odstraÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® odstra√≤ov√°n√≠ ploch
 
 void D3DX6AktCulling();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zvÏtöen˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zv√¨t≈°en√Ωch textur
 
 void D3DX6AktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zmenöen˝ch a vzd·len˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zmen≈°en√Ωch a vzd√°len√Ωch textur
 
 void D3DX6AktMinMipFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace poloûky svÏtla
+// aktualizace polo≈æky sv√¨tla
 
 void D3DX6AktLight(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ materi·lu
+// nastaven√≠ materi√°lu
 
 void D3DX6SetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky textury p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ polo≈æky textury p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX6TextureRes(D3DTITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ a zapnutÌ textury
+// nastaven√≠ a zapnut√≠ textury
 
 void D3DX6TextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ p˘vodnÌ textury
+// zapnut√≠ p√πvodn√≠ textury
 
 inline void D3DX6TextureOn(D3DTITEM* item, int stage) { D3DX6TextureSet(item, stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ textury
+// vypnut√≠ textury
 
 void D3DX6TextureOff(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky materi·lu
+// resetov√°n√≠ polo≈æky materi√°lu
 
 void D3DX6MatReset(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky svÏtla
+// resetov√°n√≠ polo≈æky sv√¨tla
 
 void D3DX6LightReset(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvÏtlenÌ
+// aktualizace ambient osv√¨tlen√≠
 
 void D3DX6AktAmbient();
 
 /////////////////////////////////////////////////////////////////////////////
-// voln· videopamÏù
+// voln√° videopam√¨¬ù
 
 int D3DX6Free();
 
@@ -218,7 +218,7 @@ int D3DX6Free();
 void D3DX6AktFog();
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ mlhy
+// zapnut√≠ mlhy
 
 void D3DX6FogOn(BOOL on);
 
@@ -228,37 +228,37 @@ void D3DX6FogOn(BOOL on);
 void D3DX6AktState();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace blending operacÌ objektu
+// aktualizace blending operac√≠ objektu
 
 void D3DX6AktBlend(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenËnÌ ˙rovnÏ alfa
+// aktualizace referen√®n√≠ √∫rovn√¨ alfa
 
 void D3DX6AktAlfa(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace barev
+// nastaven√≠ operace barev
 
 void D3DX6SetColorOp(int op, int arg1, int arg2, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace alfa
+// nastaven√≠ operace alfa
 
 void D3DX6SetAlphaOp(int op, int arg1, int arg2, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ adresov·nÌ textur
+// nastaven√≠ adresov√°n√≠ textur
 
 void D3DX6SetAddress(int adru, int adrv, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy okolÌ textur
+// nastaven√≠ barvy okol√≠ textur
 
 //void D3DX6SetBorder(D3DFITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ zjemnÏnÌ vzd·len˝ch textur
+// nastaven√≠ zjemn√¨n√≠ vzd√°len√Ωch textur
 
 void D3DX6SetBias(float bias, int stage);
 
@@ -268,50 +268,50 @@ void D3DX6SetBias(float bias, int stage);
 void D3DX6AktPalette(HWND wnd);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy faktoru textur
+// nastaven√≠ barvy faktoru textur
 
 void D3DX6SetTFactor(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z funkce (1 aû 8, v kÛdu DirectX, 0=vypnuto)
+// nastaven√≠ Z funkce (1 a≈æ 8, v k√≥du DirectX, 0=vypnuto)
 
 void D3DX6SetZFunc(int func);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z z·pisu
+// nastaven√≠ Z z√°pisu
 
 void D3DX6SetZWrite(BOOL write);
 
 /////////////////////////////////////////////////////////////////////////////
-// povolenÌ stencil operacÌ
+// povolen√≠ stencil operac√≠
 
 void D3DX6SEnable(BOOL enable);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil operacÌ
+// nastaven√≠ stencil operac√≠
 
 void D3DX6SetSOp(int fail, int zfail, int zpass);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil testu
+// nastaven√≠ stencil testu
 
 void D3DX6SetSFunc(int func, int ref, DWORD mask);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ z·pisovÈ masky do stencil bufferu
+// nastaven√≠ z√°pisov√© masky do stencil bufferu
 
 void D3DX6SetSMask(DWORD mask);
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ stÌnu jednoho objektu
+// vyrenderov√°n√≠ st√≠nu jednoho objektu
 
 void D3DX6Shadow(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ stÌn˘
+// vykreslen√≠ st√≠n√π
 
 void D3DX6Shadows();
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------

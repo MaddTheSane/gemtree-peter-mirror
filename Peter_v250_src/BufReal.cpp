@@ -3,13 +3,13 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer reálnıch èísel							*
+*							Buffer reÃ¡lnÃ½ch Ã¨Ã­sel							*
 *																			*
 \***************************************************************************/
 
 
 ////////////////////////////////////////////////////////////////////
-// pøidání záznamu o vloení poloky do UNDO bufferu
+// pÃ¸idÃ¡nÃ­ zÃ¡znamu o vloÅ¾enÃ­ poloÅ¾ky do UNDO bufferu
 
 template <> bool CBuffer<CReal>::UndoAddIns(int index)
 {
@@ -17,31 +17,31 @@ template <> bool CBuffer<CReal>::UndoAddIns(int index)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísla ze souboru (naèítá do promìnné, TRUE=operace OK)
+// naÃ¨tenÃ­ Ã¨Ã­sla ze souboru (naÃ¨Ã­tÃ¡ do promÃ¬nnÃ©, TRUE=operace OK)
 
 bool CBufReal::LoadFile(double& data, CText jmeno)
 {
-// naètení textového souboru
+// naÃ¨tenÃ­ textovÃ©ho souboru
 	CText txt;
 	if (!txt.LoadFile(jmeno)) return false;
 
-// odstranìní mezer a jinıch oddìlovaèù
+// odstranÃ¬nÃ­ mezer a jinÃ½ch oddÃ¬lovaÃ¨Ã¹
 	if (!txt.TrimLeft() || !txt.TrimRight()) return false;
 
-// naètení èísla
+// naÃ¨tenÃ­ Ã¨Ã­sla
 	data = Double(txt);
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení èísla do souboru formátu NUM (FALSE=chyba)
+// uloÅ¾enÃ­ Ã¨Ã­sla do souboru formÃ¡tu NUM (FALSE=chyba)
 
 bool CBufReal::SaveFile(double data, CText jmeno) const
 {
-// pøíprava èísla
+// pÃ¸Ã­prava Ã¨Ã­sla
 	CText txt;
 	if (!txt.Double(data)) return false;
 
-// uloení textu do souboru
+// uloÅ¾enÃ­ textu do souboru
 	return txt.SaveFile(jmeno);
 }

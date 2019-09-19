@@ -1,13 +1,13 @@
 
 /***************************************************************************\
 *																			*
-*						Kompilace programu - èíslo							*
+*						Kompilace programu - Ã¨Ã­slo							*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// pÃ¸idÃ¡nÃ­ jednoho prvku do bufferu programu (vracÃ­ index prvku)
 
 inline int CompAddItem(PROCNUM func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,19 +20,19 @@ inline int CompAddItem(PROCNUM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání èíselné konstanty do bufferu programu
+// pÃ¸idÃ¡nÃ­ Ã¨Ã­selnÃ© konstanty do bufferu programu
 
 void CompAddItemNum(double data);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad èíselného vırazu (vrací true = operace OK)
+// pÃ¸eklad Ã¨Ã­selnÃ©ho vÃ½razu (vracÃ­ true = operace OK)
 
 bool _fastcall CompNum(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s èíselnım parametrem
+// pÃ¸eklad pÃ¸Ã­kazu s Ã¨Ã­selnÃ½m parametrem
 
 bool CompNumPar(int index, PROCCOM func, int data);
 
@@ -125,13 +125,13 @@ inline bool CompNumPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s èíselnım podparametrem (hledanım podle identifikace)
+// pÃ¸eklad pÃ¸Ã­kazu s Ã¨Ã­selnÃ½m podparametrem (hledanÃ½m podle identifikace)
 
 void CompNumSubPar(int index, int idf, double def);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou èíselnıch vırazù (data = poèet vırazù - 1)
+// pÃ¸eklad pÃ¸Ã­kazu se skupinou Ã¨Ã­selnÃ½ch vÃ½razÃ¹ (data = poÃ¨et vÃ½razÃ¹ - 1)
 
 inline bool CompNumGrp(int index, PROCNUM func, PROCNUM func1)
 	{ return CompGroup(CompNum, index, (PROCCOM)func, (PROCCOM)func1); };

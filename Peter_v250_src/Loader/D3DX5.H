@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhranÌ - DirectX 5							*
+*							3D rozhran√≠ - DirectX 5							*
 *																			*
 \***************************************************************************/
 
@@ -9,56 +9,56 @@
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ DirectDraw 5 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ DirectDraw 5 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3DX5InitDD();
 void D3DX5TermDD();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ prim·rniho povrchu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ prim√°rniho povrchu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX5InitPrim();
 void D3DX5TermPrim();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ clipperu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ clipperu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX5InitClip();
 void D3DX5TermClip();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ palet, nejsou-li vytvo¯eny (vracÌ TRUE=OK)
+// vytvo√∏en√≠ palet, nejsou-li vytvo√∏eny (vrac√≠ TRUE=OK)
 
 bool D3DX5InitPal();
 void D3DX5TermPal();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ Direct3D 5 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ Direct3D 5 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3DX5InitD3();
 void D3DX5TermD3();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ renderovacÌho povrchu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ renderovac√≠ho povrchu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX5InitRend(bool hw);
 void D3DX5TermRend();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ Z-bufferu, nenÌ-li vytvo¯en (vracÌ TRUE=OK)
+// vytvo√∏en√≠ Z-bufferu, nen√≠-li vytvo√∏en (vrac√≠ TRUE=OK)
 
 bool D3DX5InitZBuf(bool hw, int depth);
 void D3DX5TermZBuf();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ renderovacÌho za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// vytvo√∏en√≠ renderovac√≠ho za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX5InitDev(int type);
 void D3DX5TermDev();
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ viewportu (vracÌ TRUE=inicializace OK)
+// vytvo√∏en√≠ viewportu (vrac√≠ TRUE=inicializace OK)
 
 bool D3DX5InitView();
 void D3DX5SizeView();
@@ -66,134 +66,134 @@ void D3DX5MoveView();
 void D3DX5TermView();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ funkce za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zah√°jen√≠ funkce za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX5Start(int type);
 void D3DX5Stop();
 
 /////////////////////////////////////////////////////////////////////////////
-// vymaz·nÌ renderovacÌ plochy
+// vymaz√°n√≠ renderovac√≠ plochy
 
 void D3DX5Clear();
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ renderovacÌho bufferu
+// zobrazen√≠ renderovac√≠ho bufferu
 
 void D3DX5Disp();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekËnÌ matice
+// aktualizace projek√®n√≠ matice
 
 void D3DX5AktProj();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pohledovÈ matice
+// aktualizace pohledov√© matice
 
 void D3DX5AktView();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ renderov·nÌ scÈny
+// zah√°jen√≠ renderov√°n√≠ sc√©ny
 
 void D3DX5Begin();
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ renderov·nÌ scÈny
+// ukon√®en√≠ renderov√°n√≠ sc√©ny
 
 void D3DX5End();
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ jednoho objektu
+// vyrenderov√°n√≠ jednoho objektu
 
 void D3DX5Render(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX5Reset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ stÌnu objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ st√≠nu objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX5SReset(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË vyplÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® vypl√≤ov√°n√≠ ploch
 
 void D3DX5AktWireframe();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË osvÏtlenÌ
+// aktualizovat p√∏ep√≠na√® osv√¨tlen√≠
 
 void D3DX5AktLightOn();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË plynulÈho stinov·nÌ
+// aktualizovat p√∏ep√≠na√® plynul√©ho stinov√°n√≠
 
 void D3DX5AktShades();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË odstraÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® odstra√≤ov√°n√≠ ploch
 
 void D3DX5AktCulling();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zvÏtöen˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zv√¨t≈°en√Ωch textur
 
 void D3DX5AktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zmenöen˝ch a vzd·len˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zmen≈°en√Ωch a vzd√°len√Ωch textur
 
 void D3DX5AktMinMipFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace poloûky svÏtla
+// aktualizace polo≈æky sv√¨tla
 
 void D3DX5AktLight(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ materi·lu
+// nastaven√≠ materi√°lu
 
 void D3DX5SetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky textury p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ polo≈æky textury p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3DX5TextureRes(D3DTITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ a zapnutÌ textury
+// nastaven√≠ a zapnut√≠ textury
 
 void D3DX5TextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ p˘vodnÌ textury
+// zapnut√≠ p√πvodn√≠ textury
 
 inline void D3DX5TextureOn(D3DTITEM* item, int stage) { D3DX5TextureSet(item, stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ textury
+// vypnut√≠ textury
 
 void D3DX5TextureOff(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky materi·lu
+// resetov√°n√≠ polo≈æky materi√°lu
 
 void D3DX5MatReset(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky svÏtla
+// resetov√°n√≠ polo≈æky sv√¨tla
 
 void D3DX5LightReset(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvÏtlenÌ
+// aktualizace ambient osv√¨tlen√≠
 
 void D3DX5AktAmbient();
 
 /////////////////////////////////////////////////////////////////////////////
-// voln· videopamÏù
+// voln√° videopam√¨¬ù
 
 int D3DX5Free();
 
@@ -203,7 +203,7 @@ int D3DX5Free();
 void D3DX5AktFog();
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ mlhy
+// zapnut√≠ mlhy
 
 void D3DX5FogOn(BOOL on);
 
@@ -213,32 +213,32 @@ void D3DX5FogOn(BOOL on);
 void D3DX5AktState();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace blending operacÌ objektu
+// aktualizace blending operac√≠ objektu
 
 void D3DX5AktBlend(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenËnÌ ˙rovnÏ alfa
+// aktualizace referen√®n√≠ √∫rovn√¨ alfa
 
 void D3DX5AktAlfa(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace barev
+// nastaven√≠ operace barev
 
 void D3DX5SetColorOp(int op, int arg1, int arg2, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ adresov·nÌ textur
+// nastaven√≠ adresov√°n√≠ textur
 
 void D3DX5SetAddress(int adru, int adrv, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy okolÌ textur
+// nastaven√≠ barvy okol√≠ textur
 
 //void D3DX5SetBorder(D3DFITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ zjemnÏnÌ vzd·len˝ch textur
+// nastaven√≠ zjemn√¨n√≠ vzd√°len√Ωch textur
 
 void D3DX5SetBias(float bias, int stage);
 
@@ -248,20 +248,20 @@ void D3DX5SetBias(float bias, int stage);
 void D3DX5AktPalette(HWND wnd);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z funkce (1 aû 8, v kÛdu DirectX, 0=vypnuto)
+// nastaven√≠ Z funkce (1 a≈æ 8, v k√≥du DirectX, 0=vypnuto)
 
 void D3DX5SetZFunc(int func);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z z·pisu
+// nastaven√≠ Z z√°pisu
 
 void D3DX5SetZWrite(BOOL write);
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ stÌnu jednoho objektu
+// vyrenderov√°n√≠ st√≠nu jednoho objektu
 
 void D3DX5Shadow(D3DFITEM* item);
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------

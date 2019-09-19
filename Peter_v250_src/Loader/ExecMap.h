@@ -1,13 +1,13 @@
 
 /***************************************************************************\
 *																			*
-*							Prov·dÏnÌ programu - plocha						*
+*							Prov√°d√¨n√≠ programu - plocha						*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inline vol·nÌ p¯Ìkazu - plocha
+// inline vol√°n√≠ p√∏√≠kazu - plocha
 
 inline void FMap(CMap& map)
 {
@@ -17,15 +17,15 @@ inline void FMap(CMap& map)
 
 
 // funkce
-void _fastcall FMapFunc(CMap& map);			// funkce s n·vratem plochy
+void _fastcall FMapFunc(CMap& map);			// funkce s n√°vratem plochy
 
-// promÏnnÈ
-void _fastcall FMapEmpty(CMap& map);		// pr·zdn· plocha
-void _fastcall FMapMain(CMap& map);			// hlavnÌ plocha
-void _fastcall FMapObj(CMap& map);			// glob·lnÌ plocha (Data = index)
-void _fastcall FMapObjList(CMap& map);		// globalnÌ plocha v seznamu (Data = index, List = seznam)
-void _fastcall FMapLoc(CMap& map);			// lok·lnÌ plocha (Data = index)
-void _fastcall FMapLocList(CMap& map);		// lok·lnÌ plocha v seznamu (Data = index, List = seznam)
+// prom√¨nn√©
+void _fastcall FMapEmpty(CMap& map);		// pr√°zdn√° plocha
+void _fastcall FMapMain(CMap& map);			// hlavn√≠ plocha
+void _fastcall FMapObj(CMap& map);			// glob√°ln√≠ plocha (Data = index)
+void _fastcall FMapObjList(CMap& map);		// globaln√≠ plocha v seznamu (Data = index, List = seznam)
+void _fastcall FMapLoc(CMap& map);			// lok√°ln√≠ plocha (Data = index)
+void _fastcall FMapLocList(CMap& map);		// lok√°ln√≠ plocha v seznamu (Data = index, List = seznam)
 
-void _fastcall FMapCopy(CMap& map);			// kopie v˝¯ezu plochy
-void _fastcall FMapNew(CMap& map);			// nov· plocha
+void _fastcall FMapCopy(CMap& map);			// kopie v√Ω√∏ezu plochy
+void _fastcall FMapNew(CMap& map);			// nov√° plocha

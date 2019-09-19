@@ -3,43 +3,43 @@
 
 /***************************************************************************\
 *																			*
-*						Provádìní programu - zvuk							*
+*						ProvÃ¡dÃ¬nÃ­ programu - zvuk							*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("t", on)			// optimalizace na maximální rychlost
+#pragma optimize("t", on)			// optimalizace na maximÃ¡lnÃ­ rychlost
 
-// obsluha pøehrávání zvuku
-HWAVEOUT	WaveOut = NULL;					// handle vıstupního zaøízení (NULL=není otevøeno)
-WAVEHDR		WaveHeader[SOUNDBUFFERU];		// popisovaèe dat
-BYTE*		SoundBuf[SOUNDBUFFERU];			// zvukové buffery
-int			SoundKanalu = 0;				// poèet aktivních zvukovıch kanálù
-SOUNDCHAN*	SoundChan;						// buffer zvukovıch kanálù
-int			SoundError = -1;				// povolení opakovaného otevøení zvuku (pøi < 0)
-bool		WaveFormatPCM = true;			// je pøehráván formát PCM (vlastní obsluha)
-char*		WaveData2 = NULL;				// ukazatel dat pro nestandardní formát
-int			WaveSize2 = 0;					// èítaè dat pro nestandardní formát
-int			WaveLoop = 1;					// èítaè opakování pro nestandardní formát
-CSound		Sound2;							// pøehrávanı nestandardní zvuk, naposledy zadanı zvuk
-double		WaveBeg2 = 0;					// posunutı offset pro nestandardní formát (sekund)
-bool		SoundPausing = false;			// pøíznak pauzy zvuku
-int			SoundBlokSize = 1024;			// zarovnávání velikosti bloku nestandardního formátu
-int			BytesPerSec = 22050;			// pøenosová rychlost pro nestandardní formát
-int			SoundBufSize = SOUNDBUFSIZE;	// velikost bufferu nestandardního formátu
-WORD		SoundID = 0;					// rozlišovací kód zvuku
+// obsluha pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku
+HWAVEOUT	WaveOut = NULL;					// handle vÃ½stupnÃ­ho zaÃ¸Ã­zenÃ­ (NULL=nenÃ­ otevÃ¸eno)
+WAVEHDR		WaveHeader[SOUNDBUFFERU];		// popisovaÃ¨e dat
+BYTE*		SoundBuf[SOUNDBUFFERU];			// zvukovÃ© buffery
+int			SoundKanalu = 0;				// poÃ¨et aktivnÃ­ch zvukovÃ½ch kanÃ¡lÃ¹
+SOUNDCHAN*	SoundChan;						// buffer zvukovÃ½ch kanÃ¡lÃ¹
+int			SoundError = -1;				// povolenÃ­ opakovanÃ©ho otevÃ¸enÃ­ zvuku (pÃ¸i < 0)
+bool		WaveFormatPCM = true;			// je pÃ¸ehrÃ¡vÃ¡n formÃ¡t PCM (vlastnÃ­ obsluha)
+char*		WaveData2 = NULL;				// ukazatel dat pro nestandardnÃ­ formÃ¡t
+int			WaveSize2 = 0;					// Ã¨Ã­taÃ¨ dat pro nestandardnÃ­ formÃ¡t
+int			WaveLoop = 1;					// Ã¨Ã­taÃ¨ opakovÃ¡nÃ­ pro nestandardnÃ­ formÃ¡t
+CSound		Sound2;							// pÃ¸ehrÃ¡vanÃ½ nestandardnÃ­ zvuk, naposledy zadanÃ½ zvuk
+double		WaveBeg2 = 0;					// posunutÃ½ offset pro nestandardnÃ­ formÃ¡t (sekund)
+bool		SoundPausing = false;			// pÃ¸Ã­znak pauzy zvuku
+int			SoundBlokSize = 1024;			// zarovnÃ¡vÃ¡nÃ­ velikosti bloku nestandardnÃ­ho formÃ¡tu
+int			BytesPerSec = 22050;			// pÃ¸enosovÃ¡ rychlost pro nestandardnÃ­ formÃ¡t
+int			SoundBufSize = SOUNDBUFSIZE;	// velikost bufferu nestandardnÃ­ho formÃ¡tu
+WORD		SoundID = 0;					// rozliÅ¡ovacÃ­ kÃ³d zvuku
 
 // obsluha DirectSound
-#define		DSSOUNDOUTRATE 22050			// vıstupní vzorkovací kmitoèet pro DirectSound
+#define		DSSOUNDOUTRATE 22050			// vÃ½stupnÃ­ vzorkovacÃ­ kmitoÃ¨et pro DirectSound
 
-// ----- pøi testování bez pouití DirectSound nastavit InitDSound na TRUE ----
+// ----- pÃ¸i testovÃ¡nÃ­ bez pouÅ¾itÃ­ DirectSound nastavit InitDSound na TRUE ----
 
-BOOL		InitDSound = FALSE;				// probéhla inicializace DirectSound
-BOOL		DSoundOK = FALSE;				// DirectSound úspìšné inicializováno
+BOOL		InitDSound = FALSE;				// probÃ©hla inicializace DirectSound
+BOOL		DSoundOK = FALSE;				// DirectSound ÃºspÃ¬Å¡nÃ© inicializovÃ¡no
 
-#define VOLUMESTEPS 1001					// poèet krokù tabulky hlasitosti
+#define VOLUMESTEPS 1001					// poÃ¨et krokÃ¹ tabulky hlasitosti
 short*		VolumeTab;						// tabulka hlasitosti (konverze na decibely)
 
-DIRECTSOUNDCREATE	pDirectSoundCreate = NULL;	// funkce DirectSoundCreate (NULL=není)
+DIRECTSOUNDCREATE	pDirectSoundCreate = NULL;	// funkce DirectSoundCreate (NULL=nenÃ­)
 HINSTANCE	DSoundDLL = NULL;				// knihovna DSOUND.DLL
 IDirectSound* DirectSound = NULL;			// DirectSound interface
 int			DSoundFlags = DSBCAPS_STICKYFOCUS |
@@ -61,66 +61,66 @@ int			DSoundFlags = DSBCAPS_STICKYFOCUS |
 void TermDirectSound()
 {
 
-// uvolnìní rozhraní DirectSound
+// uvolnÃ¬nÃ­ rozhranÃ­ DirectSound
 	if (DirectSound != NULL)
 	{
 		DirectSound->Release();
 		DirectSound = NULL;
 	}
 
-// uvolnìní knihovny DSOUND.DLL
+// uvolnÃ¬nÃ­ knihovny DSOUND.DLL
 	if (DSoundDLL != NULL)
 	{
 		::FreeLibrary(DSoundDLL);
 		DSoundDLL = NULL;
 	}
 
-// zrušení tabulky hlasitosti
+// zruÅ¡enÃ­ tabulky hlasitosti
 	if (VolumeTab != NULL)
 	{
 		MemFree(VolumeTab);
 		VolumeTab = NULL;
 	}
 
-// pøíznak neplatnosti DirectSound
+// pÃ¸Ã­znak neplatnosti DirectSound
 	DSoundOK = FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace DirectSound (vrací TRUE = DirectSound je OK)
+// inicializace DirectSound (vracÃ­ TRUE = DirectSound je OK)
 
 BOOL InitDirectSound()
 {
-// test, zda ji probíhala inicializce
+// test, zda jiÅ¾ probÃ­hala inicializce
 	if (!InitDSound)
 	{
 		InitDSound = TRUE;
 
-// naètení knihovny DSOUND.DLL
+// naÃ¨tenÃ­ knihovny DSOUND.DLL
 		DSoundDLL = ::LoadLibrary("DSOUND.DLL");
 		if (DSoundDLL != NULL)
 		{
 
-// importování funkce DirectSoundCreate
+// importovÃ¡nÃ­ funkce DirectSoundCreate
 			pDirectSoundCreate = (DIRECTSOUNDCREATE)::GetProcAddress(DSoundDLL, "DirectSoundCreate");
 			if (pDirectSoundCreate != NULL)
 			{
 
-// vytvoøení rozhraní DirectSound
+// vytvoÃ¸enÃ­ rozhranÃ­ DirectSound
 				if ((pDirectSoundCreate(NULL, &DirectSound, NULL) == DS_OK) && (DirectSound != NULL))
 				{
 
-// nastavení módu spolupráce DirectSound
+// nastavenÃ­ mÃ³du spoluprÃ¡ce DirectSound
 					if (DirectSound->SetCooperativeLevel(MainFrame, DSSCL_PRIORITY) == DS_OK)
 					{
 
-// popisovaè primárního bufferu
+// popisovaÃ¨ primÃ¡rnÃ­ho bufferu
 						DSBUFFERDESC dsbd;
 						MemFill(&dsbd, sizeof(DSBUFFERDESC), 0);
 						dsbd.dwSize = sizeof(DSBUFFERDESC);
 						dsbd.dwFlags = DSBCAPS_PRIMARYBUFFER | DSBCAPS_STICKYFOCUS;
 
-// vytvoøení primárního bufferu
+// vytvoÃ¸enÃ­ primÃ¡rnÃ­ho bufferu
 						IDirectSoundBuffer* prim = NULL;
 
 						HRESULT res = DirectSound->CreateSoundBuffer(&dsbd, &prim, NULL);
@@ -134,7 +134,7 @@ BOOL InitDirectSound()
 						if ((res == DS_OK) && (prim != NULL))
 						{
 
-// formát primárního bufferu
+// formÃ¡t primÃ¡rnÃ­ho bufferu
 							WAVEFORMATEX wfx;
 							wfx.wFormatTag = WAVE_FORMAT_PCM;
 							wfx.nChannels = 2;
@@ -144,14 +144,14 @@ BOOL InitDirectSound()
 							wfx.wBitsPerSample = 16;
 							wfx.cbSize = 0;
 
-// nastavení formátu primárního bufferu
+// nastavenÃ­ formÃ¡tu primÃ¡rnÃ­ho bufferu
 							res = prim->SetFormat(&wfx);
 							prim->Release();
 
 							if (res == DS_OK)
 							{
 
-// pokus o vytvoøení sekundárního bufferu
+// pokus o vytvoÃ¸enÃ­ sekundÃ¡rnÃ­ho bufferu
 								wfx.wFormatTag = WAVE_FORMAT_PCM;
 								wfx.nChannels = 2;
 								wfx.nSamplesPerSec = DSSOUNDOUTRATE;
@@ -162,7 +162,7 @@ BOOL InitDirectSound()
 
 								DSBUFFERDESC dsbd;
 								dsbd.dwSize = sizeof(DSBUFFERDESC);
-								// je to streaming buffer aby zùstal v pamìti kvùli monosti duplikování
+								// je to streaming buffer aby zÃ¹stal v pamÃ¬ti kvÃ¹li moÅ¾nosti duplikovÃ¡nÃ­
 								dsbd.dwFlags = DSoundFlags;
 								dsbd.dwBufferBytes = 65000;
 								dsbd.dwReserved = 0;
@@ -198,7 +198,7 @@ BOOL InitDirectSound()
 
 									buf->Release();
 
-// vygenerování tabulky hlasitosti
+// vygenerovÃ¡nÃ­ tabulky hlasitosti
 									if (res == DS_OK)
 									{
 										VolumeTab = (short*)MemGet(VOLUMESTEPS * sizeof(short));
@@ -220,7 +220,7 @@ BOOL InitDirectSound()
 				}				
 			}
 
-// pøi chybì uvolnìní DirectSound
+// pÃ¸i chybÃ¬ uvolnÃ¬nÃ­ DirectSound
 			TermDirectSound();
 		}
 	}
@@ -230,7 +230,7 @@ BOOL InitDirectSound()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// otevøení zvukového kanálu (balance: -1=vlevo, 0=støed, +1=vpravo)
+// otevÃ¸enÃ­ zvukovÃ©ho kanÃ¡lu (balance: -1=vlevo, 0=stÃ¸ed, +1=vpravo)
 
 void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double balance, double speed)
 {
@@ -240,48 +240,48 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 // kontrola velikosti dat
 	if (sound.Size() <= 0) return;
 
-// korekce poètu opakování
+// korekce poÃ¨tu opakovÃ¡nÃ­
 	if ((loop < 1) || (loop > 100000)) loop = BigInt;
 
-// zastavení pøehrávání, bude-li nebo byl-li jinı formát ne PCM
+// zastavenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­, bude-li nebo byl-li jinÃ½ formÃ¡t neÅ¾ PCM
 	if (!WaveFormatPCM || (sound.Format() != WAVE_FORMAT_PCM))
 	{
 		PlaySoundStop();
 	}
 
-// obsluha nestandardního formátu
+// obsluha nestandardnÃ­ho formÃ¡tu
 	if (sound.Format() != WAVE_FORMAT_PCM)
 	{
 
-// povolení otevøení zvuku
+// povolenÃ­ otevÃ¸enÃ­ zvuku
 		if (SoundError > 0) return;
 
-// pøíznak pøehrávání zvuku
+// pÃ¸Ã­znak pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku
 		WaveFormatPCM = false;
 		Sound2 = sound;
 
-// pøíprava zarovnávání dat a velikosti bufferu
-		BytesPerSec = sound.Samples() * sound.Channels() / 2;				// bajtù za sekundu pro ADPCM
-		SoundBlokSize = 1024;											// velikost bloku pro ADPCM (asi tak nìjak)
+// pÃ¸Ã­prava zarovnÃ¡vÃ¡nÃ­ dat a velikosti bufferu
+		BytesPerSec = sound.Samples() * sound.Channels() / 2;				// bajtÃ¹ za sekundu pro ADPCM
+		SoundBlokSize = 1024;											// velikost bloku pro ADPCM (asi tak nÃ¬jak)
 
 		if ((sound.Format() >= 0x50) && (sound.Format() < 0x60))				// je MPEG ?
 		{
 			WAVEFORMATEX* wfx = (WAVEFORMATEX*)(sound.DataData());
-			BytesPerSec = wfx->nAvgBytesPerSec;									// bajtù za sekundu pro MPEG
+			BytesPerSec = wfx->nAvgBytesPerSec;									// bajtÃ¹ za sekundu pro MPEG
 			SoundBlokSize = ((MPEGLAYER3WAVEFORMAT*)(sound.DataData()))->nBlockSize;	// velikost bloku pro MPEG
 		}
 		if (BytesPerSec <= 2) BytesPerSec = 2;
 		if (SoundBlokSize < 2) SoundBlokSize = 2;
 		SoundBufSize = (SOUNDBUFSIZE + SoundBlokSize-1) / SoundBlokSize * SoundBlokSize;
 
-// otevøení pøehrávacího zaøízení
+// otevÃ¸enÃ­ pÃ¸ehrÃ¡vacÃ­ho zaÃ¸Ã­zenÃ­
 		MMRESULT res = ::waveOutOpen(
-			&WaveOut,								// handle zaøízení
-			WAVE_MAPPER,							// vybrat nejvhodnìjší zaøízení
-			(WAVEFORMATEX*)(sound.DataData()),		// popisovaè formátu
-			NULL,									// není funkce CALLBACK
+			&WaveOut,								// handle zaÃ¸Ã­zenÃ­
+			WAVE_MAPPER,							// vybrat nejvhodnÃ¬jÅ¡Ã­ zaÃ¸Ã­zenÃ­
+			(WAVEFORMATEX*)(sound.DataData()),		// popisovaÃ¨ formÃ¡tu
+			NULL,									// nenÃ­ funkce CALLBACK
 			NULL,									// data CALLBACK
-			CALLBACK_NULL);							// není CALLBACK
+			CALLBACK_NULL);							// nenÃ­ CALLBACK
 
 		if (res != MMSYSERR_NOERROR)
 		{
@@ -290,7 +290,7 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 			return;
 		}
 
-// pøíprava ukazatelù dat
+// pÃ¸Ã­prava ukazatelÃ¹ dat
 		WaveBeg2 = 0;
 		WaveLoop = loop;
 		WaveData2 = (char*)sound.DataData() + sound.SizeHead();	// adresa dat
@@ -303,14 +303,14 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 		return;
 	}
 
-// bude formát PCM
+// bude formÃ¡t PCM
 	WaveFormatPCM = true;
 	Sound2 = sound;
 
-// odpauzování
+// odpauzovÃ¡nÃ­
 	SoundPause(false);
 
-// pøíprava balance
+// pÃ¸Ã­prava balance
 	if (balance < -1) balance = -1;
 	if (balance > 1) balance = 1;
 	
@@ -325,13 +325,13 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 		right = 1 + balance;
 	}
 
-// pøíprava hlasitosti
+// pÃ¸Ã­prava hlasitosti
 	volume = fabs(volume);
 	if (volume > 1) volume = 1;
 	left *= volume;
 	right *= volume;
 
-// rychlost pøehrávání v bajtech na vzorek
+// rychlost pÃ¸ehrÃ¡vÃ¡nÃ­ v bajtech na vzorek
 	speed = fabs(speed);
 	double speedB = speed * sound.DataRate() / SOUNDOUTRATE;
 	if (speedB >= sound.Size()) speedB = sound.Size();
@@ -358,14 +358,14 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 		}
 	}
 
-// pøíprava promìnnıch k prohledání tabulky kanálù
-	int i = MAXSOUNDKANALU;			// èítaè testovanıch kanálù
-	int cit = SoundKanalu;			// èítaè zbylıch aktivních kanálù
-	int min = BigInt;				// velikost dat volného kanálu
-	int index = 0;					// index nalezeného volného kanálu
-	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanálù
+// pÃ¸Ã­prava promÃ¬nnÃ½ch k prohledÃ¡nÃ­ tabulky kanÃ¡lÃ¹
+	int i = MAXSOUNDKANALU;			// Ã¨Ã­taÃ¨ testovanÃ½ch kanÃ¡lÃ¹
+	int cit = SoundKanalu;			// Ã¨Ã­taÃ¨ zbylÃ½ch aktivnÃ­ch kanÃ¡lÃ¹
+	int min = BigInt;				// velikost dat volnÃ©ho kanÃ¡lu
+	int index = 0;					// index nalezenÃ©ho volnÃ©ho kanÃ¡lu
+	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanÃ¡lÃ¹
 
-// nalezení zvuku, zda je ji pøehráván, nalezení nejstaršího zvuku
+// nalezenÃ­ zvuku, zda je jiÅ¾ pÃ¸ehrÃ¡vÃ¡n, nalezenÃ­ nejstarÅ¡Ã­ho zvuku
 	for (; (i > 0) && (cit > 0); i--)
 	{
 		if (sndchan->Num > 0)
@@ -377,14 +377,14 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 
 				IDirectSoundBuffer* buf = sndchan->DSBuffer;
 
-// pøi zastavení pøehrávání zvuku inicializace od zaèátku zvuku
+// pÃ¸i zastavenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku inicializace od zaÃ¨Ã¡tku zvuku
 				if (stop)
 				{
 					sndchan->Offset = 0;
 					if (buf != NULL) buf->SetCurrentPosition(0);
 				}
 
-// nastavení parametrù pro DirectSound
+// nastavenÃ­ parametrÃ¹ pro DirectSound
 				if (buf != NULL)
 				{
 					if (dsfreq != sndchan->DSFreq)
@@ -402,7 +402,7 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 						buf->SetPan(dsbalance);
 					}
 
-// zahájení pøehrávání, pokud neprobíhá
+// zahÃ¡jenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­, pokud neprobÃ­hÃ¡
 					DWORD stat = 0;
 					buf->GetStatus(&stat);
 
@@ -412,7 +412,7 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 					}
 				}
 
-// nastavení novıch parametrù zvuku
+// nastavenÃ­ novÃ½ch parametrÃ¹ zvuku
 				sndchan->Left = left;
 				sndchan->Right = right;
 				sndchan->SpeedB = speedB;
@@ -425,7 +425,7 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 			}
 		}
 
-// nalezení volného kanálu (s nejmenšími zbylımi daty)
+// nalezenÃ­ volnÃ©ho kanÃ¡lu (s nejmenÅ¡Ã­mi zbylÃ½mi daty)
 		if (sndchan->Num == 0)
 		{
 			if (min > 0)
@@ -445,25 +445,25 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 			}
 		}
 
-// zvıšení ukazatele v bufferu
+// zvÃ½Å¡enÃ­ ukazatele v bufferu
 		sndchan++;
 	}
 
-// korekce volného kanálu, je-li k dispozici nìjakı nepouitı kanál
+// korekce volnÃ©ho kanÃ¡lu, je-li k dispozici nÃ¬jakÃ½ nepouÅ¾itÃ½ kanÃ¡l
 	if ((i > 0) && (SoundChan[index].Num > 0)) index = MAXSOUNDKANALU-i;
 
-// zvıšení èítaèe kanálù, pokud byl kanál volnı
+// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e kanÃ¡lÃ¹, pokud byl kanÃ¡l volnÃ½
 	sndchan = SoundChan + index;
 	if (sndchan->Num == 0) SoundKanalu++;
 
-// zrušení bufferu DirectSound
+// zruÅ¡enÃ­ bufferu DirectSound
 	if (sndchan->DSBuffer != NULL)
 	{
 		sndchan->DSBuffer->Release();
 		sndchan->DSBuffer = NULL;
 	}
 
-// nastavení ukazatelù pro novı kanál
+// nastavenÃ­ ukazatelÃ¹ pro novÃ½ kanÃ¡l
 	sndchan->Num = sound.Size();
 	sndchan->Data = sound.DataData();
 	sndchan->Left = left;
@@ -477,11 +477,11 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 	sndchan->DSBalance = dsbalance;
 	sndchan->SoundID = SoundID;
 
-// vıstup pomocí DirectSound
+// vÃ½stup pomocÃ­ DirectSound
 	if (DSoundOK)
 	{
 
-// zrušení vzoru bufferu je-li ztracen
+// zruÅ¡enÃ­ vzoru bufferu je-li ztracen
 		SOUNDDATA* sd = sound.Data();
 		if (sd->DSBuffer != NULL)
 		{
@@ -499,14 +499,14 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 		if (sd->DSBuffer == NULL)
 		{
 
-// pøíprava standardního formátu zvuku
+// pÃ¸Ã­prava standardnÃ­ho formÃ¡tu zvuku
 			CSound snd = sound;
 			snd.DeComp();
 			snd.Conv16Bit();
 			snd.ConvStereo();
 			snd.ConvRate(DSSOUNDOUTRATE);
 
-// vytvoøení bufferu DirectSound
+// vytvoÃ¸enÃ­ bufferu DirectSound
 			WAVEFORMATEX wfx;
 			wfx.wFormatTag = WAVE_FORMAT_PCM;
 			wfx.nChannels = 2;
@@ -518,7 +518,7 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 
 			DSBUFFERDESC dsbd;
 			dsbd.dwSize = sizeof(DSBUFFERDESC);
-			// je to streaming buffer aby zùstal v pamìti kvùli monosti duplikování
+			// je to streaming buffer aby zÃ¹stal v pamÃ¬ti kvÃ¹li moÅ¾nosti duplikovÃ¡nÃ­
 			dsbd.dwFlags = DSoundFlags;
 			dsbd.dwBufferBytes = snd.Size();
 			dsbd.dwReserved = 0;
@@ -527,7 +527,7 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 			IDirectSoundBuffer* buf = NULL;
 			if (DirectSound->CreateSoundBuffer(&dsbd, &(buf), NULL) != DS_OK) buf = NULL;
 
-// pøenesení dat do bufferu
+// pÃ¸enesenÃ­ dat do bufferu
 			if (buf != NULL)
 			{
 				void* dst = NULL;
@@ -552,7 +552,7 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 			sd->DSBuffer = buf;
 		}
 
-// vytvoøení kopie bufferu (pøi neúspìchu se pouije originál, napø. je-li HW buffer)
+// vytvoÃ¸enÃ­ kopie bufferu (pÃ¸i neÃºspÃ¬chu se pouÅ¾ije originÃ¡l, napÃ¸. je-li HW buffer)
 		if (sd->DSBuffer != NULL)
 		{
 			if (DirectSound->DuplicateSoundBuffer(sd->DSBuffer, &(sndchan->DSBuffer)) != DS_OK)
@@ -561,51 +561,51 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 				sd->DSBuffer = NULL;
 			}
 
-// nastavení parametrù zvuku
+// nastavenÃ­ parametrÃ¹ zvuku
 			IDirectSoundBuffer* buf = sndchan->DSBuffer;
 
 			buf->SetFrequency(dsfreq);
 			buf->SetVolume(dsvolume);
 			buf->SetPan(dsbalance);
 
-// zahájení pøehrávání zvuku
+// zahÃ¡jenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku
 			buf->SetCurrentPosition(0);
 			buf->Play(0, 0, (loop == BigInt) ? DSBPLAY_LOOPING : 0);
 			return;
 		}
 	}
 
-// otevøení vıstupního zaøízení
+// otevÃ¸enÃ­ vÃ½stupnÃ­ho zaÃ¸Ã­zenÃ­
 	if (WaveOut == NULL)
 	{
 
-// povolení otevøení zvuku
+// povolenÃ­ otevÃ¸enÃ­ zvuku
 		if (SoundError > 0) return;
 
-// vynulování bufferù
+// vynulovÃ¡nÃ­ bufferÃ¹
 		for (i = SOUNDBUFFERU-1; i >= 0; i--)
 		{
 			WaveHeader[i].dwFlags = WHDR_DONE;
 		}
 
-// pøíprava struktury popisovaèe formátu
-		WAVEFORMATEX wf;							// popisovaè formátu
-		wf.wFormatTag = WAVE_FORMAT_PCM;			// formát dat
-		wf.nChannels = 2;							// poèet kanálù
-		wf.nSamplesPerSec = SOUNDOUTRATE;			// vzorkovací kmitoèet
-		wf.nAvgBytesPerSec = SOUNDOUTRATE*4;		// pøenosová rychlost dat
-		wf.nBlockAlign = 4;							// zarovnávání dat
-		wf.wBitsPerSample = 16;						// poèet bitù na vzorek
-		wf.cbSize = 0;								// doplòková data ve struktuøe
+// pÃ¸Ã­prava struktury popisovaÃ¨e formÃ¡tu
+		WAVEFORMATEX wf;							// popisovaÃ¨ formÃ¡tu
+		wf.wFormatTag = WAVE_FORMAT_PCM;			// formÃ¡t dat
+		wf.nChannels = 2;							// poÃ¨et kanÃ¡lÃ¹
+		wf.nSamplesPerSec = SOUNDOUTRATE;			// vzorkovacÃ­ kmitoÃ¨et
+		wf.nAvgBytesPerSec = SOUNDOUTRATE*4;		// pÃ¸enosovÃ¡ rychlost dat
+		wf.nBlockAlign = 4;							// zarovnÃ¡vÃ¡nÃ­ dat
+		wf.wBitsPerSample = 16;						// poÃ¨et bitÃ¹ na vzorek
+		wf.cbSize = 0;								// doplÃ²kovÃ¡ data ve struktuÃ¸e
 
-// otevøení pøehrávacího zaøízení
+// otevÃ¸enÃ­ pÃ¸ehrÃ¡vacÃ­ho zaÃ¸Ã­zenÃ­
 		MMRESULT res = ::waveOutOpen(
-			&WaveOut,								// handle zaøízení
-			WAVE_MAPPER,							// vybrat nejvhodnìjší zaøízení
-			&wf,									// popisovaè formátu
-			NULL,									// není funkce CALLBACK
+			&WaveOut,								// handle zaÃ¸Ã­zenÃ­
+			WAVE_MAPPER,							// vybrat nejvhodnÃ¬jÅ¡Ã­ zaÃ¸Ã­zenÃ­
+			&wf,									// popisovaÃ¨ formÃ¡tu
+			NULL,									// nenÃ­ funkce CALLBACK
 			NULL,									// data CALLBACK
-			CALLBACK_NULL);							// není CALLBACK
+			CALLBACK_NULL);							// nenÃ­ CALLBACK
 
 		if (res != MMSYSERR_NOERROR)
 		{
@@ -620,11 +620,11 @@ void PlaySoundOpen(CSound sound, int loop, bool stop, double volume, double bala
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uzavøení zvukového kanálu
+// uzavÃ¸enÃ­ zvukovÃ©ho kanÃ¡lu
 
 void PlaySoundClose(CSound sound)
 {
-// nestandardní zvuk
+// nestandardnÃ­ zvuk
 	if (!WaveFormatPCM)
 	{
 		if (Sound2 == sound)
@@ -634,12 +634,12 @@ void PlaySoundClose(CSound sound)
 		return;
 	}
 
-// pøíprava promìnnıch k prohledání tabulky kanálù
-	int i = MAXSOUNDKANALU;			// èítaè testovanıch kanálù
-	int cit = SoundKanalu;			// èítaè zbylıch aktivních kanálù
-	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanálù
+// pÃ¸Ã­prava promÃ¬nnÃ½ch k prohledÃ¡nÃ­ tabulky kanÃ¡lÃ¹
+	int i = MAXSOUNDKANALU;			// Ã¨Ã­taÃ¨ testovanÃ½ch kanÃ¡lÃ¹
+	int cit = SoundKanalu;			// Ã¨Ã­taÃ¨ zbylÃ½ch aktivnÃ­ch kanÃ¡lÃ¹
+	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanÃ¡lÃ¹
 
-// nalezení zvuku
+// nalezenÃ­ zvuku
 	for (; (i > 0) && (cit > 0); i--)
 	{
 		if (sndchan->Num > 0)
@@ -649,7 +649,7 @@ void PlaySoundClose(CSound sound)
 			if ((sndchan->Sound == sound) && (sndchan->SoundID == SoundID))
 			{
 
-// zrušení zvuku v kanálu
+// zruÅ¡enÃ­ zvuku v kanÃ¡lu
 				sndchan->Num = 0;
 				sndchan->Sound.Empty();
 				SoundKanalu--;
@@ -665,14 +665,14 @@ void PlaySoundClose(CSound sound)
 			}
 		}
 
-// zvıšení ukazatele v bufferu
+// zvÃ½Å¡enÃ­ ukazatele v bufferu
 		sndchan++;
 	}
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení pozice pøehrávání zvuku (v sekundách)
+// nastavenÃ­ pozice pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku (v sekundÃ¡ch)
 
 void SetSoundPos(double pos)
 {
@@ -682,27 +682,27 @@ void SetSoundPos(double pos)
 // korekce pozice
 	if (pos < 0) pos = 0;
 
-// pozice zvuku v nestandardním formátu
+// pozice zvuku v nestandardnÃ­m formÃ¡tu
 	if (!WaveFormatPCM)
 	{
 
-// zvuk není pøehráván
+// zvuk nenÃ­ pÃ¸ehrÃ¡vÃ¡n
 		if (WaveOut == NULL) return;
 
-// obsluhovány jen nìkteré formáty
+// obsluhovÃ¡ny jen nÃ¬kterÃ© formÃ¡ty
 		if ((Sound2.Format() == WAVE_FORMAT_ADPCM) ||
 			(Sound2.Format() == WAVE_FORMAT_MPEGLAYER3))
 		{
-			double len = (double)(Sound2.Size() - Sound2.SizeHead()) / BytesPerSec;		// délka zvuku celkem (v sekundách)
-			if (pos > len) pos = len;												// omezení maximální pozice
+			double len = (double)(Sound2.Size() - Sound2.SizeHead()) / BytesPerSec;		// dÃ©lka zvuku celkem (v sekundÃ¡ch)
+			if (pos > len) pos = len;												// omezenÃ­ maximÃ¡lnÃ­ pozice
 
-			int n = Round(BytesPerSec * pos + SoundBlokSize/2) / SoundBlokSize * SoundBlokSize;		// novı offset zarovnanı na blok
+			int n = Round(BytesPerSec * pos + SoundBlokSize/2) / SoundBlokSize * SoundBlokSize;		// novÃ½ offset zarovnanÃ½ na blok
 			if (n < 0) n = 0;
-			if (n > (Sound2.Size() - Sound2.SizeHead())) n = Sound2.Size() - Sound2.SizeHead();	// omezení offsetu
+			if (n > (Sound2.Size() - Sound2.SizeHead())) n = Sound2.Size() - Sound2.SizeHead();	// omezenÃ­ offsetu
 	
-			WaveData2 = (char*)Sound2.DataData() + Sound2.SizeHead() + n;			// nová adresa dat
-			WaveSize2 = Sound2.Size() - Sound2.SizeHead() - n;						// nová velikost dat
-			WaveBeg2 = (double)n / BytesPerSec;										// fiktivní offset zaèátku skladby
+			WaveData2 = (char*)Sound2.DataData() + Sound2.SizeHead() + n;			// novÃ¡ adresa dat
+			WaveSize2 = Sound2.Size() - Sound2.SizeHead() - n;						// novÃ¡ velikost dat
+			WaveBeg2 = (double)n / BytesPerSec;										// fiktivnÃ­ offset zaÃ¨Ã¡tku skladby
 
 			if (WaveSize2 < 0)
 			{
@@ -710,7 +710,7 @@ void SetSoundPos(double pos)
 				WaveLoop = 0;
 			}
 
-			::waveOutReset(WaveOut);												// zastavení pøehrávání
+			::waveOutReset(WaveOut);												// zastavenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­
 
 			for (int i = SOUNDBUFFERU-1; i >= 0; i--)
 			{
@@ -724,15 +724,15 @@ void SetSoundPos(double pos)
 				WaveHeader[i].dwFlags = WHDR_DONE;
 			}
 
-			::waveOutClose(WaveOut);										// uzavøení vıstupního zaøízení
+			::waveOutClose(WaveOut);										// uzavÃ¸enÃ­ vÃ½stupnÃ­ho zaÃ¸Ã­zenÃ­
 
 			if (::waveOutOpen(
-					&WaveOut,								// handle zaøízení
-					WAVE_MAPPER,							// vybrat nejvhodnìjší zaøízení
-					(WAVEFORMATEX*)(Sound2.DataData()),		// popisovaè formátu
-					NULL,									// není funkce CALLBACK
+					&WaveOut,								// handle zaÃ¸Ã­zenÃ­
+					WAVE_MAPPER,							// vybrat nejvhodnÃ¬jÅ¡Ã­ zaÃ¸Ã­zenÃ­
+					(WAVEFORMATEX*)(Sound2.DataData()),		// popisovaÃ¨ formÃ¡tu
+					NULL,									// nenÃ­ funkce CALLBACK
 					NULL,									// data CALLBACK
-					CALLBACK_NULL) != MMSYSERR_NOERROR)		// není CALLBACK
+					CALLBACK_NULL) != MMSYSERR_NOERROR)		// nenÃ­ CALLBACK
 			{
 				WaveOut = NULL;
 			}
@@ -740,10 +740,10 @@ void SetSoundPos(double pos)
 		return;
 	}
 
-// pozice zvuku ve standardním formátu
-	int i = MAXSOUNDKANALU;			// èítaè testovanıch kanálù
-	int cit = SoundKanalu;			// èítaè zbylıch aktivních kanálù
-	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanálù
+// pozice zvuku ve standardnÃ­m formÃ¡tu
+	int i = MAXSOUNDKANALU;			// Ã¨Ã­taÃ¨ testovanÃ½ch kanÃ¡lÃ¹
+	int cit = SoundKanalu;			// Ã¨Ã­taÃ¨ zbylÃ½ch aktivnÃ­ch kanÃ¡lÃ¹
+	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanÃ¡lÃ¹
 
 	for (; (i > 0) && (cit > 0); i--)
 	{
@@ -773,11 +773,11 @@ void SetSoundPos(double pos)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjištìní pozice pøehrávání zvuku
+// zjiÅ¡tÃ¬nÃ­ pozice pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku
 
 double GetSoundPos()
 {
-// pozice zvuku v nestandardním formátu
+// pozice zvuku v nestandardnÃ­m formÃ¡tu
 	if (!WaveFormatPCM)
 	{
 		if (WaveOut == NULL) return 0;
@@ -789,10 +789,10 @@ double GetSoundPos()
 		return ((double)tm.u.sample / Sound2.Samples() ) + WaveBeg2;
 	}
 
-// obsluha naposledy zadaného zvuku
-	int i = MAXSOUNDKANALU;			// èítaè testovanıch kanálù
-	int cit = SoundKanalu;			// èítaè zbylıch aktivních kanálù
-	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanálù
+// obsluha naposledy zadanÃ©ho zvuku
+	int i = MAXSOUNDKANALU;			// Ã¨Ã­taÃ¨ testovanÃ½ch kanÃ¡lÃ¹
+	int cit = SoundKanalu;			// Ã¨Ã­taÃ¨ zbylÃ½ch aktivnÃ­ch kanÃ¡lÃ¹
+	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanÃ¡lÃ¹
 
 	for (; (i > 0) && (cit > 0); i--)
 	{
@@ -821,18 +821,18 @@ double GetSoundPos()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zastavení pøehrávání zvukù
+// zastavenÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­ zvukÃ¹
 
 void PlaySoundStop()
 {
-// je vıstupní zaøizení otevøeno?
+// je vÃ½stupnÃ­ zaÃ¸izenÃ­ otevÃ¸eno?
 	if (WaveOut != NULL)
 	{
 
-// pøerušení probíhajícího pøehrávání
+// pÃ¸eruÅ¡enÃ­ probÃ­hajÃ­cÃ­ho pÃ¸ehrÃ¡vÃ¡nÃ­
 		::waveOutReset(WaveOut);
 
-// uvolnìní bufferù
+// uvolnÃ¬nÃ­ bufferÃ¹
 		for (int i = SOUNDBUFFERU-1; i >= 0; i--)
 		{
 			if (WaveHeader[i].dwFlags & WHDR_PREPARED)
@@ -845,13 +845,13 @@ void PlaySoundStop()
 			WaveHeader[i].dwFlags = WHDR_DONE;
 		}
 
-// uzavøení pøehrávacího zaøizení
+// uzavÃ¸enÃ­ pÃ¸ehrÃ¡vacÃ­ho zaÃ¸izenÃ­
 		::waveOutClose(WaveOut);
 		WaveOut = NULL;
 	}
 
-// uvolnìní všech kanálù
-	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanálù
+// uvolnÃ¬nÃ­ vÅ¡ech kanÃ¡lÃ¹
+	SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanÃ¡lÃ¹
 	for (int i = MAXSOUNDKANALU; i > 0; i--)
 	{
 		sndchan->Num = 0;
@@ -875,7 +875,7 @@ void PlaySoundStop()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pauza pøehrávání zvuku
+// pauza pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku
 
 void SoundPause(bool pause)
 {
@@ -896,13 +896,13 @@ void SoundPause(bool pause)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zápis zvuku do bufferu (vrací poèet zapsanıch vzorkù, tj. v násobcích 4 bajtù)
+// zÃ¡pis zvuku do bufferu (vracÃ­ poÃ¨et zapsanÃ½ch vzorkÃ¹, tj. v nÃ¡sobcÃ­ch 4 bajtÃ¹)
 
 int _fastcall SoundWriteBuf(SOUNDCHAN* snd, short* dst, int num)
 {
 #define MAXDATA 0x7fff
 
-// èítaè uloenıch vzorkù
+// Ã¨Ã­taÃ¨ uloÅ¾enÃ½ch vzorkÃ¹
 	int result = 0;
 
 // velikost bufferu
@@ -911,7 +911,7 @@ int _fastcall SoundWriteBuf(SOUNDCHAN* snd, short* dst, int num)
 // adresa bufferu
 	BYTE* src = snd->Data;
 
-// hlasitost kanálù
+// hlasitost kanÃ¡lÃ¹
 	double left = snd->Left;
 	double right = snd->Right;
 
@@ -921,7 +921,7 @@ int _fastcall SoundWriteBuf(SOUNDCHAN* snd, short* dst, int num)
 // rychlost dat
 	double speedB = snd->SpeedB;
 
-// pøíznak typu zvuku
+// pÃ¸Ã­znak typu zvuku
 	int typ = 0;
 
 #define SOUND8BIT	0
@@ -932,7 +932,7 @@ int _fastcall SoundWriteBuf(SOUNDCHAN* snd, short* dst, int num)
 #define SOUNDSTEREO	2
 	if (snd->Sound.Stereo()) typ |= SOUNDSTEREO;
 
-// rozlišení typu zvuku
+// rozliÅ¡enÃ­ typu zvuku
 	switch (typ)
 	{
 	case SOUND8BIT | SOUNDMONO:
@@ -1076,24 +1076,24 @@ int _fastcall SoundWriteBuf(SOUNDCHAN* snd, short* dst, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha pøehrávání zvuku na pozadí
+// obsluha pÃ¸ehrÃ¡vÃ¡nÃ­ zvuku na pozadÃ­
 
 void PlaySoundBack()
 {
-// èítaè povolení otevøení zvuku
+// Ã¨Ã­taÃ¨ povolenÃ­ otevÃ¸enÃ­ zvuku
 	SoundError--;
 
 	if (SoundPausing) return;
 
-// obsluha nestandardního formátu
+// obsluha nestandardnÃ­ho formÃ¡tu
 	if (!WaveFormatPCM)
 	{
 
-// test, zda probíhá zvukovı vıstup
+// test, zda probÃ­hÃ¡ zvukovÃ½ vÃ½stup
 		if (WaveOut != NULL)
 		{
 
-// test, zda je ukonèeno pøehrávání
+// test, zda je ukonÃ¨eno pÃ¸ehrÃ¡vÃ¡nÃ­
 			BOOL stop = ((WaveSize2 <= 0) && (WaveLoop <= 0));
 			int i;
 			for (i = SOUNDBUFFERU-1; i >= 0; i--)
@@ -1105,58 +1105,58 @@ void PlaySoundBack()
 				}
 			}
 
-// ukonèení pøehrávání
+// ukonÃ¨enÃ­ pÃ¸ehrÃ¡vÃ¡nÃ­
 			if (stop)
 			{
 				PlaySoundStop();
 				return;
 			}
 		
-// obsluha bufferù
+// obsluha bufferÃ¹
 			for (i = SOUNDBUFFERU-1; ((i >= 0) && ((WaveSize2 > 0) || (WaveLoop > 0))); i--)
 			{
 				WAVEHDR* wh = &WaveHeader[i];
 				if (wh->dwFlags & WHDR_DONE)
 				{
 
-// uvolnìní bufferu pro zápis
+// uvolnÃ¬nÃ­ bufferu pro zÃ¡pis
 					if (wh->dwFlags & WHDR_PREPARED)
 					{
 						::waveOutUnprepareHeader(WaveOut, wh, sizeof(WAVEHDR));
 					}
 
-// pøíprava popisovaèe dat
+// pÃ¸Ã­prava popisovaÃ¨e dat
 					wh->lpData = WaveData2;						// adresa dat
 					int size = WaveSize2;
 					if (size > SoundBufSize) size = SoundBufSize;
 					WaveSize2 -= size;
 					WaveData2 += size;
 					wh->dwBufferLength = size;				// velikost dat
-					wh->dwBytesRecorded = size;				// velikost dat nahranıch v bufferu
-					wh->dwUser = 0;							// uivatelská data
+					wh->dwBytesRecorded = size;				// velikost dat nahranÃ½ch v bufferu
+					wh->dwUser = 0;							// uÅ¾ivatelskÃ¡ data
 					wh->dwFlags = WHDR_BEGINLOOP | WHDR_ENDLOOP; // parametry
-					wh->dwLoops = 1;						// poèet opakování
-					wh->lpNext = NULL;						// není další buffer
+					wh->dwLoops = 1;						// poÃ¨et opakovÃ¡nÃ­
+					wh->lpNext = NULL;						// nenÃ­ dalÅ¡Ã­ buffer
 					wh->reserved = 0;
 
-// pøíprava bufferu k pøehrávání
+// pÃ¸Ã­prava bufferu k pÃ¸ehrÃ¡vÃ¡nÃ­
 					MMRESULT res = ::waveOutPrepareHeader(
-						WaveOut,									// handle zaøízení
-						wh,										// popisovaè dat
-						sizeof(WAVEHDR));							// velikost popisovaèe dat
+						WaveOut,									// handle zaÃ¸Ã­zenÃ­
+						wh,										// popisovaÃ¨ dat
+						sizeof(WAVEHDR));							// velikost popisovaÃ¨e dat
 
 					if (res != MMSYSERR_NOERROR)
 					{
-						wh->dwFlags |= WHDR_DONE;			// pøi velikosti zbytku dat < 512 B to neprojde!!!!
+						wh->dwFlags |= WHDR_DONE;			// pÃ¸i velikosti zbytku dat < 512 B to neprojde!!!!
 					}
 					else
 					{
 
-// pøedání bufferu pøehrávacímu zaøízení
+// pÃ¸edÃ¡nÃ­ bufferu pÃ¸ehrÃ¡vacÃ­mu zaÃ¸Ã­zenÃ­
 						res = ::waveOutWrite(
-							WaveOut,									// handle zaøízení
-							wh,								// popisovaè dat
-							sizeof(WAVEHDR));							// velikost popisovaèe dat
+							WaveOut,									// handle zaÃ¸Ã­zenÃ­
+							wh,								// popisovaÃ¨ dat
+							sizeof(WAVEHDR));							// velikost popisovaÃ¨e dat
 
 						if (res != MMSYSERR_NOERROR)
 						{
@@ -1164,15 +1164,15 @@ void PlaySoundBack()
 						}
 					}
 
-// obsluha opakování zvuku
+// obsluha opakovÃ¡nÃ­ zvuku
 					if (WaveSize2 <= 0)
 					{
 						WaveLoop--;
 						if (WaveLoop > 0)
 						{
-							WaveData2 = (char*)Sound2.DataData() + Sound2.SizeHead();			// nová adresa dat
-							WaveSize2 = Sound2.Size() - Sound2.SizeHead();						// nová velikost dat
-							WaveBeg2 = 0;										// fiktivní offset zaèátku skladby
+							WaveData2 = (char*)Sound2.DataData() + Sound2.SizeHead();			// novÃ¡ adresa dat
+							WaveSize2 = Sound2.Size() - Sound2.SizeHead();						// novÃ¡ velikost dat
+							WaveBeg2 = 0;										// fiktivnÃ­ offset zaÃ¨Ã¡tku skladby
 						}
 					}
 				}
@@ -1181,12 +1181,12 @@ void PlaySoundBack()
 		return;
 	}
 
-// obsluha pøehrávání DirectSound
+// obsluha pÃ¸ehrÃ¡vÃ¡nÃ­ DirectSound
 	if (DSoundOK)
 	{
-		int i = MAXSOUNDKANALU;			// èítaè testovanıch kanálù
-		int cit = SoundKanalu;			// èítaè zbylıch aktivních kanálù
-		SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanálù
+		int i = MAXSOUNDKANALU;			// Ã¨Ã­taÃ¨ testovanÃ½ch kanÃ¡lÃ¹
+		int cit = SoundKanalu;			// Ã¨Ã­taÃ¨ zbylÃ½ch aktivnÃ­ch kanÃ¡lÃ¹
+		SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanÃ¡lÃ¹
 
 		for (; (i > 0) && (cit > 0); i--)
 		{
@@ -1231,7 +1231,7 @@ void PlaySoundBack()
 		if (WaveOut == NULL) return;
 	}
 
-// test, zda jsou nìjaké aktivní kanály (a pøíp. uzavøení vıstupu)
+// test, zda jsou nÃ¬jakÃ© aktivnÃ­ kanÃ¡ly (a pÃ¸Ã­p. uzavÃ¸enÃ­ vÃ½stupu)
 	if (SoundKanalu <= 0)
 	{
 		if (WaveOut != NULL)
@@ -1245,14 +1245,14 @@ void PlaySoundBack()
 		return;
 	}
 
-// nalezení volného bufferu
+// nalezenÃ­ volnÃ©ho bufferu
 	WAVEHDR* wh = WaveHeader;
 	for (int b = SOUNDBUFFERU; (b > 0) && (SoundKanalu > 0); b--)
 	{
 		if (wh->dwFlags & WHDR_DONE)
 		{
 
-// uvolnìní bufferu pro zápis
+// uvolnÃ¬nÃ­ bufferu pro zÃ¡pis
 			if (wh->dwFlags & WHDR_PREPARED)
 			{
 				::waveOutUnprepareHeader(WaveOut, wh, sizeof(WAVEHDR));
@@ -1261,32 +1261,32 @@ void PlaySoundBack()
 // adresa dat bufferu
 			BYTE* buf = SoundBuf[SOUNDBUFFERU-b];
 
-// pøíprava struktury popisovaèe dat
+// pÃ¸Ã­prava struktury popisovaÃ¨e dat
 			wh->lpData = (char*)buf;			// adresa bufferu s daty
 			wh->dwBufferLength = SOUNDBUFSIZE;	// velikost dat v bufferu
-			wh->dwBytesRecorded = SOUNDBUFSIZE;	// poèet dat v bufferu
-			wh->dwUser = 0;						// uivatelská data
+			wh->dwBytesRecorded = SOUNDBUFSIZE;	// poÃ¨et dat v bufferu
+			wh->dwUser = 0;						// uÅ¾ivatelskÃ¡ data
 			wh->dwFlags = 0;					// parametry
-			wh->dwLoops = 0;					// poèet opakování
-			wh->lpNext = NULL;					// není další buffer
+			wh->dwLoops = 0;					// poÃ¨et opakovÃ¡nÃ­
+			wh->lpNext = NULL;					// nenÃ­ dalÅ¡Ã­ buffer
 			wh->reserved = 0;
 
-// vymazání bufferu
+// vymazÃ¡nÃ­ bufferu
 			MemFill(buf, SOUNDBUFSIZE, 0);
 
-// pøíprava promìnnıch k prohledání tabulky kanálù
-			int cit = SoundKanalu;			// èítaè zbylıch aktivních kanálù
-			int i = MAXSOUNDKANALU;			// èítaè testovanıch kanálù
-			SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanálù
+// pÃ¸Ã­prava promÃ¬nnÃ½ch k prohledÃ¡nÃ­ tabulky kanÃ¡lÃ¹
+			int cit = SoundKanalu;			// Ã¨Ã­taÃ¨ zbylÃ½ch aktivnÃ­ch kanÃ¡lÃ¹
+			int i = MAXSOUNDKANALU;			// Ã¨Ã­taÃ¨ testovanÃ½ch kanÃ¡lÃ¹
+			SOUNDCHAN* sndchan = SoundChan;	// ukazatel kanÃ¡lÃ¹
 
-// nalezení aktivního zvukového kanálu
+// nalezenÃ­ aktivnÃ­ho zvukovÃ©ho kanÃ¡lu
 			for (; (i > 0) && (cit > 0) && !Pause; i--)
 			{
 				if (sndchan->Num > 0)
 				{
 					cit--;
 
-// zápis dat do bufferu
+// zÃ¡pis dat do bufferu
 					int num = SOUNDBUFSIZE/4;
 					short* buf2 = (short*)buf;
 
@@ -1295,7 +1295,7 @@ void PlaySoundBack()
 					num -= n;
 					buf2 += n*2;
 
-// ukonèení zvuku
+// ukonÃ¨enÃ­ zvuku
 					while ((DWORD)Round(sndchan->Offset) >= (DWORD)sndchan->Num)
 					{
 						sndchan->Loop--;
@@ -1334,18 +1334,18 @@ void PlaySoundBack()
 					}
 				}
 
-// zvıšení ukazatele v bufferu kanálù
+// zvÃ½Å¡enÃ­ ukazatele v bufferu kanÃ¡lÃ¹
 				sndchan++;
 			}
 
-// pøíprava bufferu k pøehrávání
+// pÃ¸Ã­prava bufferu k pÃ¸ehrÃ¡vÃ¡nÃ­
 			waveOutPrepareHeader(WaveOut, wh, sizeof(WAVEHDR));
 
-// pøedání bufferu pøehrávacímu zaøízení
+// pÃ¸edÃ¡nÃ­ bufferu pÃ¸ehrÃ¡vacÃ­mu zaÃ¸Ã­zenÃ­
 			waveOutWrite(WaveOut, wh, sizeof(WAVEHDR));
 		}
 
-// adresa dalšího bufferu
+// adresa dalÅ¡Ã­ho bufferu
 		wh++;
 	}
 }
@@ -1358,76 +1358,76 @@ void PlaySoundBack()
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// funkce s návratem zvuku
+// funkce s nÃ¡vratem zvuku
 
 void _fastcall FSoundFunc(CSound& sound)
 {
-// úschova indexu volané funkce
+// Ãºschova indexu volanÃ© funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// Ãºschova indexu promÃ¬nnÃ© s nÃ¡vratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnnıch
+// inicializace lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 
-// úschova ukazatele programu
+// Ãºschova ukazatele programu
 	EXECITEM* oldexe = ExecItem;
 
-// nová adresa programu
+// novÃ¡ adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoÃ¸enÃ­
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
 
-// vyvolání funkce
+// vyvolÃ¡nÃ­ funkce
 		FCommand();
 	}
 	Hloubka++;
 
-// návrat adresy programu
+// nÃ¡vrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení poadavku o pøerušení
+// zruÅ¡enÃ­ poÅ¾adavku o pÃ¸eruÅ¡enÃ­
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
-// návrat vısledku operace
+// nÃ¡vrat vÃ½sledku operace
 	sound = Sound[Sound.Num() - res];
 
-// zrušení lokálních promìnnıch
+// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 }
 
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								promÃ¬nnÃ©									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// prázdnı zvuk
+// prÃ¡zdnÃ½ zvuk
 
 void _fastcall FSoundEmpty(CSound& sound) { sound.Empty(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globální zvuk (Data = index)
+// globÃ¡lnÃ­ zvuk (Data = index)
 
 void _fastcall FSoundObj(CSound& sound)
 {
 // index zvuku
 	int inx = ExecItem[-1].Data;
 
-// nastavení zvuku
+// nastavenÃ­ zvuku
 	sound = Sound[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globalní zvuk v seznamu (Data = index, List = seznam)
+// globalnÃ­ zvuk v seznamu (Data = index, List = seznam)
 
 void _fastcall FSoundObjList(CSound& sound)
 {
@@ -1438,26 +1438,26 @@ void _fastcall FSoundObjList(CSound& sound)
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavení zvuku
+// nastavenÃ­ zvuku
 	sound = Sound[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální zvuk (Data = index)
+// lokÃ¡lnÃ­ zvuk (Data = index)
 
 void _fastcall FSoundLoc(CSound& sound)
 {
 // index zvuku
 	int inx = Sound.Num() - ExecItem[-1].Data;
 
-// nastavení zvuku
+// nastavenÃ­ zvuku
 	sound = Sound[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální zvuk v seznamu (Data = index, List = seznam)
+// lokÃ¡lnÃ­ zvuk v seznamu (Data = index, List = seznam)
 
 void _fastcall FSoundLocList(CSound& sound)
 {
@@ -1468,7 +1468,7 @@ void _fastcall FSoundLocList(CSound& sound)
 	int inx = Sound.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavení zvuku
+// nastavenÃ­ zvuku
 	sound = Sound[inx];
 }
 
@@ -1480,27 +1480,27 @@ void _fastcall FSoundLocList(CSound& sound)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// konverze na 8 bitù
+// konverze na 8 bitÃ¹
 
 void _fastcall FSoundConv8Bit(CSound& sound)
 {
-// naètení zvuku ke konverzi
+// naÃ¨tenÃ­ zvuku ke konverzi
 	FSound(sound);
 
-// konverze na 8 bitù
+// konverze na 8 bitÃ¹
 	sound.Conv8Bit();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// konverze na 16 bitù
+// konverze na 16 bitÃ¹
 
 void _fastcall FSoundConv16Bit(CSound& sound)
 {
-// naètení zvuku ke konverzi
+// naÃ¨tenÃ­ zvuku ke konverzi
 	FSound(sound);
 
-// konverze na 16 bitù
+// konverze na 16 bitÃ¹
 	sound.Conv16Bit();
 }
 
@@ -1510,7 +1510,7 @@ void _fastcall FSoundConv16Bit(CSound& sound)
 
 void _fastcall FSoundConvStereo(CSound& sound)
 {
-// naètení zvuku ke konverzi
+// naÃ¨tenÃ­ zvuku ke konverzi
 	FSound(sound);
 
 // konverze na stereo
@@ -1523,7 +1523,7 @@ void _fastcall FSoundConvStereo(CSound& sound)
 
 void _fastcall FSoundConvMono(CSound& sound)
 {
-// naètení zvuku ke konverzi
+// naÃ¨tenÃ­ zvuku ke konverzi
 	FSound(sound);
 
 // konverze na mono
@@ -1536,7 +1536,7 @@ void _fastcall FSoundConvMono(CSound& sound)
 
 void _fastcall FSoundConv11025(CSound& sound)
 {
-// naètení zvuku ke konverzi
+// naÃ¨tenÃ­ zvuku ke konverzi
 	FSound(sound);
 
 // konverze na frekvenci 11025
@@ -1549,7 +1549,7 @@ void _fastcall FSoundConv11025(CSound& sound)
 
 void _fastcall FSoundConv22050(CSound& sound)
 {
-// naètení zvuku ke konverzi
+// naÃ¨tenÃ­ zvuku ke konverzi
 	FSound(sound);
 
 // konverze na frekvenci 22050
@@ -1562,7 +1562,7 @@ void _fastcall FSoundConv22050(CSound& sound)
 
 void _fastcall FSoundConv44100(CSound& sound)
 {
-// naètení zvuku ke konverzi
+// naÃ¨tenÃ­ zvuku ke konverzi
 	FSound(sound);
 
 // konverze na frekvenci 44100
@@ -1570,30 +1570,30 @@ void _fastcall FSoundConv44100(CSound& sound)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// souèet jednoho zvuku - ponechá se beze zmìny
+// souÃ¨et jednoho zvuku - ponechÃ¡ se beze zmÃ¬ny
 
 void _fastcall FSoundAdd1(CSound& sound) { FSound(sound); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souèet zvukù (Data = poèet zvukù - 1)
+// souÃ¨et zvukÃ¹ (Data = poÃ¨et zvukÃ¹ - 1)
 
 void _fastcall FSoundAdd(CSound& sound)
 {
-// pøíprava poètu prvkù
+// pÃ¸Ã­prava poÃ¨tu prvkÃ¹
 	int i = ExecItem[-1].Data;
 
-// naètení prvního zvuku
+// naÃ¨tenÃ­ prvnÃ­ho zvuku
 	if (i >= 0) FSound(sound);
 
-// pomocnı buffer zvuku
+// pomocnÃ½ buffer zvuku
 	CSound sound2;
 
-// cyklus pøes všechny zvuky
+// cyklus pÃ¸es vÅ¡echny zvuky
 	for (; i > 0; i--)
 	{
 
-// naètení dalšího zvuku
+// naÃ¨tenÃ­ dalÅ¡Ã­ho zvuku
 		FSound(sound2);
 		sound.Add(sound2);
 	}
@@ -1605,10 +1605,10 @@ void _fastcall FSoundAdd(CSound& sound)
 
 void _fastcall FSoundSpeed(CSound& sound)
 {
-// naètení vstupního zvuku
+// naÃ¨tenÃ­ vstupnÃ­ho zvuku
 	FSound(sound);
 
-// naètení koeficientu pøevodu
+// naÃ¨tenÃ­ koeficientu pÃ¸evodu
 	double koef = FNum();
 
 // konverze rychlosti zvuku
@@ -1617,22 +1617,22 @@ void _fastcall FSoundSpeed(CSound& sound)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// tónovı generátor
+// tÃ³novÃ½ generÃ¡tor
 
 void _fastcall FTonGen(CSound& sound)
 {
-// naètení frekvence
+// naÃ¨tenÃ­ frekvence
 	double freq = FNum();
 
-// naètení délky
+// naÃ¨tenÃ­ dÃ©lky
 	double len = FNum();
 
-// vygenerování tónu
+// vygenerovÃ¡nÃ­ tÃ³nu
 	sound.TonGen(freq, len);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení zvuku ze souboru
+// naÃ¨tenÃ­ zvuku ze souboru
 
 void _fastcall FGetFileSound(CSound& sound)
 {
@@ -1645,7 +1645,7 @@ void _fastcall FGetFileSound(CSound& sound)
 
 void _fastcall FSoundConvPCM(CSound& sound)
 {
-// naètení vstupního zvuku
+// naÃ¨tenÃ­ vstupnÃ­ho zvuku
 	FSound(sound);
 
 // dekomprese zvuku

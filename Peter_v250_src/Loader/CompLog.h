@@ -1,13 +1,13 @@
 
 /***************************************************************************\
 *																			*
-*					Kompilace programu - logický výraz						*
+*					Kompilace programu - logickÃ½ vÃ½raz						*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// pÃ¸idÃ¡nÃ­ jednoho prvku do bufferu programu (vracÃ­ index prvku)
 
 inline int CompAddItem(PROCLOG func)
 	{ return CompAddItem((PROCCOM)func); }
@@ -20,13 +20,13 @@ inline int CompAddItem(PROCLOG func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad logického výrazu (vrací true = operace OK)
+// pÃ¸eklad logickÃ©ho vÃ½razu (vracÃ­ true = operace OK)
 
 bool _fastcall CompLog(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s logickým parametrem
+// pÃ¸eklad pÃ¸Ã­kazu s logickÃ½m parametrem
 
 bool CompLogPar(int index, PROCCOM func, int data);
 
@@ -119,13 +119,13 @@ inline bool CompLogPar(int index, PROCMUS func)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou logických výrazù (data = poèet výrazù - 1)
+// pÃ¸eklad pÃ¸Ã­kazu se skupinou logickÃ½ch vÃ½razÃ¹ (data = poÃ¨et vÃ½razÃ¹ - 1)
 
 inline bool CompLogGrp(int index, PROCLOG func, PROCLOG func1)
 	{ return CompGroup(CompLog, index, (PROCCOM)func, (PROCCOM)func1); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s logickým podparametrem (hledaným podle identifikace)
+// pÃ¸eklad pÃ¸Ã­kazu s logickÃ½m podparametrem (hledanÃ½m podle identifikace)
 
 void CompLogSubPar(int index, int idf, bool def);

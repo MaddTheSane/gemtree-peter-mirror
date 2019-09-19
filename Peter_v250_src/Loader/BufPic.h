@@ -1,61 +1,61 @@
 
 /***************************************************************************\
 *																			*
-*									Obrázky									*
+*									ObrÃ¡zky									*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky dat obrázku - (64 bajtù + data) nebo (24 bajtù + data)
+// struktura poloÅ¾ky dat obrÃ¡zku - (64 bajtÃ¹ + data) nebo (24 bajtÃ¹ + data)
 
 typedef struct PICTUREDATA_
 {
-	long	Refer;					// (4) èítaè referencí na obrázek
-	long	Param;					// (4) parametry (prùhlednost, komprese)
-	long	Width;					// (4) šíøka obrázku v bodech
-	long	Height;					// (4) vıška obrázku v linkách
+	long	Refer;					// (4) Ã¨Ã­taÃ¨ referencÃ­ na obrÃ¡zek
+	long	Param;					// (4) parametry (prÃ¹hlednost, komprese)
+	long	Width;					// (4) Å¡Ã­Ã¸ka obrÃ¡zku v bodech
+	long	Height;					// (4) vÃ½Å¡ka obrÃ¡zku v linkÃ¡ch
 	BYTE*	Data;					// (4) ukazatel na data (velikost Width*Height)
 
 #ifndef _MINI
-	long	TextInx;				// (4) index textury v bufferu textur (-1 = není)
-	long	TextWidth;				// (4) šíøka textury, platné pokud TextData!=NULL
-	long	TextHeight;				// (4) vıška textury, platné pokud TextData!=NULL
-	long	TextIsMip;				// (4) vygenerováno s mipmaps
-	long	TextMipMaps;			// (4) poèet vygenerovanıch mipmaps, platné pokud TextData!=NULL
-									//	  (v datech uloeny sekvenènì za sebou a po rozmìr 1x1)
-	long	TextDevType;			// (4) typ pouitého zaøízení, platné pokud TextData!=NULL
+	long	TextInx;				// (4) index textury v bufferu textur (-1 = nenÃ­)
+	long	TextWidth;				// (4) Å¡Ã­Ã¸ka textury, platnÃ© pokud TextData!=NULL
+	long	TextHeight;				// (4) vÃ½Å¡ka textury, platnÃ© pokud TextData!=NULL
+	long	TextIsMip;				// (4) vygenerovÃ¡no s mipmaps
+	long	TextMipMaps;			// (4) poÃ¨et vygenerovanÃ½ch mipmaps, platnÃ© pokud TextData!=NULL
+									//	  (v datech uloÅ¾eny sekvenÃ¨nÃ¬ za sebou aÅ¾ po rozmÃ¬r 1x1)
+	long	TextDevType;			// (4) typ pouÅ¾itÃ©ho zaÃ¸Ã­zenÃ­, platnÃ© pokud TextData!=NULL
 									//			( = D3DIntAkt*100 + D3DDevAkt)
-	BOOL	TextTrans;				// (4) textura obsahuje prùhlednou barvu
+	BOOL	TextTrans;				// (4) textura obsahuje prÃ¹hlednou barvu
 
-	BYTE*	TextData;				// (4) data textury ve formátu D3DFMT_A8R8G8B8, 32 bitù (NULL=nejsou vytvoøena)
-	BYTE*	TextDataRGBA;			// (4) data textury ve formátu RGBA, 32 bitù (pro OpenGL)
-	BYTE*	TextDataR8G8B8;			// (4) data textury ve formátu D3DFMT_R8G8B8, 24 bitù
-	BYTE*	TextDataR5G6B5;			// (4) data textury ve formátu D3DFMT_R5G6B5, 16 bitù
-	BYTE*	TextDataA1R5G5B5;		// (4) data textury ve formátu D3DFMT_A1R5G5B5, 16 bitù
-	BYTE*	TextDataA4R4G4B4;		// (4) data textury ve formátu D3DFMT_A4R4G4B4, 16 bitù
-	double	TextSmooth;				// (8) aktuální zjemnìní textury (nastaveno pøi prvním pouití jako textura)
-									//     (0=data jsou ze souboru a nesmí se proto rušit)
+	BYTE*	TextData;				// (4) data textury ve formÃ¡tu D3DFMT_A8R8G8B8, 32 bitÃ¹ (NULL=nejsou vytvoÃ¸ena)
+	BYTE*	TextDataRGBA;			// (4) data textury ve formÃ¡tu RGBA, 32 bitÃ¹ (pro OpenGL)
+	BYTE*	TextDataR8G8B8;			// (4) data textury ve formÃ¡tu D3DFMT_R8G8B8, 24 bitÃ¹
+	BYTE*	TextDataR5G6B5;			// (4) data textury ve formÃ¡tu D3DFMT_R5G6B5, 16 bitÃ¹
+	BYTE*	TextDataA1R5G5B5;		// (4) data textury ve formÃ¡tu D3DFMT_A1R5G5B5, 16 bitÃ¹
+	BYTE*	TextDataA4R4G4B4;		// (4) data textury ve formÃ¡tu D3DFMT_A4R4G4B4, 16 bitÃ¹
+	double	TextSmooth;				// (8) aktuÃ¡lnÃ­ zjemnÃ¬nÃ­ textury (nastaveno pÃ¸i prvnÃ­m pouÅ¾itÃ­ jako textura)
+									//     (0=data jsou ze souboru a nesmÃ­ se proto ruÅ¡it)
 #else
-	long	res;					// (4) zarovnání dat
+	long	res;					// (4) zarovnÃ¡nÃ­ dat
 #endif // _MINI
 
 } PICTUREDATA;
 
-// Podporované formáty textur (pøíkazem CreateTexture):
-//	D3DFMT_A8R8G8B8	(32 bitù s alpha)
-//	D3DFMT_X8R8G8B8 (32 bitù)
-//	D3DFMT_R5G6B5 (16 bitù)
-//	D3DFMT_X1R5G5B5 (15 bitù)
-//	D3DFMT_A1R5G5B5 (15 bitù s alpha)
-//	D3DFMT_A4R4G4B4 (12 bitù s alpha)
+// PodporovanÃ© formÃ¡ty textur (pÃ¸Ã­kazem CreateTexture):
+//	D3DFMT_A8R8G8B8	(32 bitÃ¹ s alpha)
+//	D3DFMT_X8R8G8B8 (32 bitÃ¹)
+//	D3DFMT_R5G6B5 (16 bitÃ¹)
+//	D3DFMT_X1R5G5B5 (15 bitÃ¹)
+//	D3DFMT_A1R5G5B5 (15 bitÃ¹ s alpha)
+//	D3DFMT_A4R4G4B4 (12 bitÃ¹ s alpha)
 //	D3DFMT_DXT1 (komprese DXT1)
 //	D3DFMT_DXT2 (komprese DXT2)
 //	D3DFMT_DXT3 (komprese DXT3)
 //	D3DFMT_DXT4 (komprese DXT4)
 //	D3DFMT_DXT5 (komprese DXT5)
 
-// >>> !!!!! V souèasnosti Petr pouívá pouze formát D3DFMT_A8R8G8B8 !!!!! <<<
+// >>> !!!!! V souÃ¨asnosti Petr pouÅ¾Ã­vÃ¡ pouze formÃ¡t D3DFMT_A8R8G8B8 !!!!! <<<
 
 
 #ifndef _MINI
@@ -64,23 +64,23 @@ typedef struct PICTUREDATA_
 #define SIZEOFPICTUREDATA	(4*sizeof(long) + sizeof(BYTE*) + sizeof(long))
 #endif // _MINI
 
-extern PICTUREDATA EmptyPictureData;	// data prázdného obrázku
+extern PICTUREDATA EmptyPictureData;	// data prÃ¡zdnÃ©ho obrÃ¡zku
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obrázek
+// obrÃ¡zek
 
 class CPicture
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné - pouze ukazatel na data
-	PICTUREDATA*		pData;			// ukazatel na záhlaví obrázku
+// promÃ¬nnÃ© - pouze ukazatel na data
+	PICTUREDATA*		pData;			// ukazatel na zÃ¡hlavÃ­ obrÃ¡zku
 
-// pøipojení dat
+// pÃ¸ipojenÃ­ dat
 	inline void Attach(PICTUREDATA* data)
 	{
 		ASSERT(data);
@@ -88,20 +88,20 @@ private:
 		LongIncrement(&(data->Refer));
 	}
 
-// odpojení (a zrušení) dat
+// odpojenÃ­ (a zruÅ¡enÃ­) dat
 	void _fastcall Detach();
 
-// vytvoøení nového bufferu - starı buffer musí bıt odpojen!
+// vytvoÃ¸enÃ­ novÃ©ho bufferu - starÃ½ buffer musÃ­ bÃ½t odpojen!
 	inline void NewBuffer(int width, int height)
 	{
 		ASSERT((width > 0) && (height > 0));
 		if (width <= 0) width = 1;
 		if (height <= 0) height = 1;
 		PICTUREDATA* data = (PICTUREDATA*)MemGet(SIZEOFPICTUREDATA);
-		data->Refer = 1;				// poèet referencí
+		data->Refer = 1;				// poÃ¨et referencÃ­
 		data->Param = PicParamNone;		// parametry
-		data->Width = width;		// šíøka
-		data->Height = height;	// vıška
+		data->Width = width;		// Å¡Ã­Ã¸ka
+		data->Height = height;	// vÃ½Å¡ka
 		data->Data = (BYTE*)MemGet(width*height);
 #ifndef _MINI
 		data->TextInx = -1;
@@ -115,29 +115,29 @@ private:
 		pData = data;					// adresa dat
 	}
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
 // konstruktor a destruktor
-	CPicture();							// standardní konstruktor
-	CPicture(const CPicture& src);		// kopírovací konstruktor
-	CPicture(int width, int height);	// konstruktor s vytvoøením obrázku
-	~CPicture();						// standardní destruktor
+	CPicture();							// standardnÃ­ konstruktor
+	CPicture(const CPicture& src);		// kopÃ­rovacÃ­ konstruktor
+	CPicture(int width, int height);	// konstruktor s vytvoÃ¸enÃ­m obrÃ¡zku
+	~CPicture();						// standardnÃ­ destruktor
 
-// statickı konstruktor a destruktor
-	void Init();						// statickı konstruktor
-	void Init(PICTUREDATA* data);		// statickı konstruktor se zadáním dat
-	void Init(int width, int height);	// statickı konstruktor s vytvoøením obrázku
-	void Term();						// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();						// statickÃ½ konstruktor
+	void Init(PICTUREDATA* data);		// statickÃ½ konstruktor se zadÃ¡nÃ­m dat
+	void Init(int width, int height);	// statickÃ½ konstruktor s vytvoÃ¸enÃ­m obrÃ¡zku
+	void Term();						// statickÃ½ destruktor
 
 #ifndef _MINI
-// importování textury z True Color bufferu
-// ... Funkce vstupní buffer zruší!
-// ... Buffery pro texturu musí bıt zrušeny!
+// importovÃ¡nÃ­ textury z True Color bufferu
+// ... Funkce vstupnÃ­ buffer zruÅ¡Ã­!
+// ... Buffery pro texturu musÃ­ bÃ½t zruÅ¡eny!
 	void ImportTexture(BYTE* buf, int newwidth, int newheight);
 
-// vytvoøení dat textury, není-li vytvoøena
+// vytvoÃ¸enÃ­ dat textury, nenÃ­-li vytvoÃ¸ena
 	void InitTexture(int stage);
 
 // inicializace MipMap textury
@@ -145,55 +145,55 @@ public:
 
 #endif // _MINI
 
-// poskytnutí ukazatele na data
-	inline PICTUREDATA* Data() const { return pData; }; // poskytnutí adresy dat
-	inline BYTE* DataData() const { return pData->Data; }; // poskytnutí adresy dat
+// poskytnutÃ­ ukazatele na data
+	inline PICTUREDATA* Data() const { return pData; }; // poskytnutÃ­ adresy dat
+	inline BYTE* DataData() const { return pData->Data; }; // poskytnutÃ­ adresy dat
 
-// poskytnutí/nastavení parametru obrázku
+// poskytnutÃ­/nastavenÃ­ parametru obrÃ¡zku
 	inline int Param() const { return pData->Param; };
 	inline void Param(int param) { pData->Param = param; };
 
-// poskytnutí šíøky obrázky
+// poskytnutÃ­ Å¡Ã­Ã¸ky obrÃ¡zky
 	inline int Width() const { return pData->Width; };
 
-// poskytnutí vıšky obøázku
+// poskytnutÃ­ vÃ½Å¡ky obÃ¸Ã¡zku
 	inline int Height() const { return pData->Height; };
 
-// poskytnutí velikost dat obrázku (bez záhlaví)
+// poskytnutÃ­ velikost dat obrÃ¡zku (bez zÃ¡hlavÃ­)
 	inline int Size() const { return (Width()*Height()); };
 
-// vymazání obsahu obrázku (naplnìní prùhlednou barvou)
+// vymazÃ¡nÃ­ obsahu obrÃ¡zku (naplnÃ¬nÃ­ prÃ¹hlednou barvou)
 	inline void Clear() { MemFill(pData->Data, Size(), BackCol); };
 
-// kopie novıch dat obrázku (rozmìry zùstanou nezmìnìny) - zajistí odpojení dat
+// kopie novÃ½ch dat obrÃ¡zku (rozmÃ¬ry zÃ¹stanou nezmÃ¬nÃ¬ny) - zajistÃ­ odpojenÃ­ dat
 	void CopyData(BYTE* src);
 
-// kopie novıch dat obrázku s konverzí (rozmìry zùstanou nezmìnìny) - zajistí odpojení dat
+// kopie novÃ½ch dat obrÃ¡zku s konverzÃ­ (rozmÃ¬ry zÃ¹stanou nezmÃ¬nÃ¬ny) - zajistÃ­ odpojenÃ­ dat
 	void CopyKonvData(BYTE* src);
 
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastnÃ­ho bufferu pÃ¸ed modifikacÃ­
 	void CopyWrite();
 
-// vyprázdnìní obrázku (uvolnìní dat)
+// vyprÃ¡zdnÃ¬nÃ­ obrÃ¡zku (uvolnÃ¬nÃ­ dat)
 	void Empty();
 
-// test, zda je obrázek prázdnı
+// test, zda je obrÃ¡zek prÃ¡zdnÃ½
 	inline BOOL IsEmpty() { return ((DWORD)pData == (DWORD)&EmptyPictureData); };
 	inline BOOL IsNotEmpty() { return ((DWORD)pData != (DWORD)&EmptyPictureData); };
 
-// vytvoøení nového obrázku (pøipraveno k zápisu, data jsou náhodná)
+// vytvoÃ¸enÃ­ novÃ©ho obrÃ¡zku (pÃ¸ipraveno k zÃ¡pisu, data jsou nÃ¡hodnÃ¡)
 	void New(int width, int height);
 
-// nastavení novıch rozmìrù obrázku (nová data jsou vymazána)
+// nastavenÃ­ novÃ½ch rozmÃ¬rÃ¹ obrÃ¡zku (novÃ¡ data jsou vymazÃ¡na)
 	void Resize(int width, int height);
 
-// exportování obrázku do bufferu TRUECOLORALPHABETA (vrací buffer)
+// exportovÃ¡nÃ­ obrÃ¡zku do bufferu TRUECOLORALPHABETA (vracÃ­ buffer)
 	BYTE* ExportTrueAlphaBeta();
 
-// importování obrázku z bufferu TRUECOLORALPHABETA
+// importovÃ¡nÃ­ obrÃ¡zku z bufferu TRUECOLORALPHABETA
 	void ImportTrueAlphaBeta(BYTE* buf, BOOL dith);
 
-// zmìna velikosti obrázku (inter = interpolovat, dith = ditherovat)
+// zmÃ¬na velikosti obrÃ¡zku (inter = interpolovat, dith = ditherovat)
 	void Zoom(int width, int height, BOOL inter, BOOL dith);
 
 // kontrola platnosti offsetu bodu
@@ -210,7 +210,7 @@ public:
 	inline BOOL IsNotValid(const int x, const int y) const
 		{ return (((DWORD)x >= (DWORD)pData->Width) || ((DWORD)y >= (DWORD)pData->Height)); };
 
-// poskytnutí pøístupu k bodu (bez kontroly offsetu/indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k bodu (bez kontroly offsetu/indexu)
 	inline BYTE& operator[] (const int off) 
 		{ ASSERT(IsValid(off)); return pData->Data[off]; }
 
@@ -229,47 +229,47 @@ public:
 	inline const BYTE& At(const int x, const int y) const
 		{ ASSERT(IsValid(x, y)); return pData->Data[x + y*Width()]; }
 
-// poskytnutí bodu (s kontrolou platnosti offsetu/indexu)
+// poskytnutÃ­ bodu (s kontrolou platnosti offsetu/indexu)
 	BYTE _fastcall Get(const int off) const;
 	BYTE _fastcall Get(const int x, const int y) const;
 
-// nastavení bodu (s kontrolou platnosti offsetu/indexu)
+// nastavenÃ­ bodu (s kontrolou platnosti offsetu/indexu)
 	void _fastcall Set(const int off, const BYTE data);
 	void _fastcall Set(const int x, const int y, const BYTE data);
 
-// pøevrácení obrázku
+// pÃ¸evrÃ¡cenÃ­ obrÃ¡zku
 	void XFlip();
 	void YFlip();
 
-// zmìna jasu obrázku
+// zmÃ¬na jasu obrÃ¡zku
 	void Level(double koef, bool dith);
 
-// otoèení obrázku
+// otoÃ¨enÃ­ obrÃ¡zku
 	void Rotate(double angle, bool inter, bool dith);
 
-// naètení obrázku ze souboru (tex = importovat texturu)
+// naÃ¨tenÃ­ obrÃ¡zku ze souboru (tex = importovat texturu)
 	void LoadFile(bool tex);
 
-// uloení obrázku do souboru
+// uloÅ¾enÃ­ obrÃ¡zku do souboru
 	void SaveFile();
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CPicture& operator= (const CPicture& src);
 	const CPicture& operator= (PICTUREDATA* src);
 	const CPicture& operator= (CIcon& icon);
 	const CPicture& operator= (CMap& map);
 
-// dekomprimace dat obrázku (jsou-li komprimována)
+// dekomprimace dat obrÃ¡zku (jsou-li komprimovÃ¡na)
 	void DeComp();
 
-// maskování obrázku
+// maskovÃ¡nÃ­ obrÃ¡zku
 	void Mask(CPicture& mask);
 
-// zámìna/náhrada barvy v obrázku
+// zÃ¡mÃ¬na/nÃ¡hrada barvy v obrÃ¡zku
 	void XCol(BYTE col1, BYTE col2);
 	void SCol(BYTE oldcol, BYTE newcol);
 
-// operátory porovnání
+// operÃ¡tory porovnÃ¡nÃ­
 	friend inline BOOL operator==(const CPicture& s1, const CPicture& s2)
 		{ return (DWORD)s1.pData == (DWORD)s2.pData; };
 
@@ -278,46 +278,46 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// konverze obrázku v bufferu TrueColorAlphaBeta (vrací novı buffer)
+// konverze obrÃ¡zku v bufferu TrueColorAlphaBeta (vracÃ­ novÃ½ buffer)
 
 BYTE* ZoomTrueColor(BYTE* buf, int oldwidth, int oldheight, int newwidth, int newheight);
 
 
 /***************************************************************************\
 *																			*
-*								Buffer obrázkù								*
+*								Buffer obrÃ¡zkÃ¹								*
 *																			*
 \***************************************************************************/
 
 class CBufPic
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	CPicture*	m_Data;		// ukazatel na data
-	int			m_Num;		// poèet platnıch poloek v bufferu
-	int			m_Max;		// velikost bufferu (poloek)
+	int			m_Num;		// poÃ¨et platnÃ½ch poloÅ¾ek v bufferu
+	int			m_Max;		// velikost bufferu (poloÅ¾ek)
 
-// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	inline int NewItem()
 	{
 		int i = m_Num;
 		if (i >= m_Max)
 		{
-			NewData();				// vytvoøení novıch dat
+			NewData();				// vytvoÃ¸enÃ­ novÃ½ch dat
 		}
 
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení novıch dat (oddìleno kvùli lepší optimalizaci)
+// vytvoÃ¸enÃ­ novÃ½ch dat (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -325,30 +325,30 @@ public:
 	CBufPic();
 	~CBufPic();
 
-// statickı konstruktor a destruktor
+// statickÃ½ konstruktor a destruktor
 	void Init();
 	void Term();
 
-// zrušení všech poloek v bufferu
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu
 	void DelAll();
 
-// poskytnutí bufferu dat
+// poskytnutÃ­ bufferu dat
 	inline CPicture* Data() const { return m_Data; };
 
-// poskytnutí poètu platnıch poloek v bufferu
+// poskytnutÃ­ poÃ¨tu platnÃ½ch poloÅ¾ek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu
+// poskytnutÃ­ velikosti bufferu
 	inline int Max() const { return m_Max; };
 
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)m_Num); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline CPicture& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -361,31 +361,31 @@ public:
 	inline const CPicture& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// poskytnutí poloky (s kontrolou platnosti indexu)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	const CPicture& _fastcall Get(const int index) const;
 
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const CPicture& data);
 
-// vyprázdnìní poloky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprÃ¡zdnÃ¬nÃ­ poloÅ¾ky (bez jejÃ­ho zruÅ¡enÃ­ - jen pro uvolnÃ¬nÃ­ dat)
 	void _fastcall Empty(const int index);
 
-// zrušení poloek z konce bufferu
+// zruÅ¡enÃ­ poloÅ¾ek z konce bufferu
 	void _fastcall Del(int num);
 
-// vytvoøení prázdné poloky (vrací index poloky)
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int New();
-	int New(int width, int height);			// obrázek vymae prùhlednou barvou
+	int New(int width, int height);			// obrÃ¡zek vymaÅ¾e prÃ¹hlednou barvou
 
-// pøidání poloky (vrací index poloky)
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int _fastcall Add(const CPicture& data);
 	int _fastcall Add(PICTUREDATA* data);
 
-// duplikace poloky (s kontrolou platnosti indexu, vrací index první poloky)
+// duplikace poloÅ¾ky (s kontrolou platnosti indexu, vracÃ­ index prvnÃ­ poloÅ¾ky)
 	int _fastcall Dup(const int index);
 	int _fastcall Dup(const int index, int num);
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CBufPic& _fastcall operator= (const CBufPic& src);
 };
 

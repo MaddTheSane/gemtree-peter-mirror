@@ -3,12 +3,12 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer cel˝ch ËÌsel							*
+*								Buffer cel√Ωch √®√≠sel							*
 *																			*
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// p¯id·nÌ z·znamu o vloûenÌ poloûky do UNDO bufferu
+// p√∏id√°n√≠ z√°znamu o vlo≈æen√≠ polo≈æky do UNDO bufferu
 
 template <> bool CBuffer<CInt>::UndoAddIns(int index)
 {
@@ -17,28 +17,28 @@ template <> bool CBuffer<CInt>::UndoAddIns(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ logickÈ hodnoty ze souboru (naËÌt· do promÏnnÈ, vracÌ TRUE=operace OK)
+// na√®ten√≠ logick√© hodnoty ze souboru (na√®√≠t√° do prom√¨nn√©, vrac√≠ TRUE=operace OK)
 
 bool CBufBool::LoadFile(BOOL& data, CText jmeno)
 {
-// naËtenÌ textovÈho souboru
+// na√®ten√≠ textov√©ho souboru
 	CText txt;
 	if (!txt.LoadFile(jmeno)) return false;
 
-// odstranÏnÌ mezer a jin˝ch oddÏlovaË˘
+// odstran√¨n√≠ mezer a jin√Ωch odd√¨lova√®√π
 	if (!txt.TrimLeft() || !txt.TrimRight()) return false;
 
-// konverze na velk· pÌsmena
+// konverze na velk√° p√≠smena
 	if (!txt.UpperCase()) return false;
 
-// pr·zdn˝ text je jako FALSE
+// pr√°zdn√Ω text je jako FALSE
 	if (txt.IsEmpty())
 	{
 		data = FALSE;
 		return true;
 	}
 
-// nastavenÌ dat podle prvnÌho pÌsmene
+// nastaven√≠ dat podle prvn√≠ho p√≠smene
 	TCHAR znak = txt[0];
 	data = ((znak == 'T') ||
 			(znak == 'Y') ||
@@ -47,17 +47,17 @@ bool CBufBool::LoadFile(BOOL& data, CText jmeno)
 			(znak ==  1 ) ||
 			(znak == '1'));
 
-// p¯Ìznak operace OK
+// p√∏√≠znak operace OK
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uloûenÌ logickÈ hodnoty do souboru form·tu LOG (vracÌ TRUE=operace OK)
+// ulo≈æen√≠ logick√© hodnoty do souboru form√°tu LOG (vrac√≠ TRUE=operace OK)
 
 bool CBufBool::SaveFile(BOOL data, CText jmeno) const
 {
-// p¯Ìprava textu
+// p√∏√≠prava textu
 	CText txt;
 	if (data)
 	{
@@ -68,6 +68,6 @@ bool CBufBool::SaveFile(BOOL data, CText jmeno) const
 		txt = _T("FALSE");
 	}
 
-// uloûenÌ textu do souboru
+// ulo≈æen√≠ textu do souboru
 	return txt.SaveFile(jmeno);
 }

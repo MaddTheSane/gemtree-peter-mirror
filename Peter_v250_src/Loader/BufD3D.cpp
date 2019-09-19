@@ -15,9 +15,9 @@
 ////////////////////////////////////////////////////////////////////
 // Matice:
 // ------
-// Pøi poøadí rotací X-Y-Z se násobí maticemi v tomto poøadí:
+// PÃ¸i poÃ¸adÃ­ rotacÃ­ X-Y-Z se nÃ¡sobÃ­ maticemi v tomto poÃ¸adÃ­:
 //
-//   zmìna mìøítka:
+//   zmÃ¬na mÃ¬Ã¸Ã­tka:
 //  sx    0    0    0
 //   0   sy    0    0
 //   0    0	  sz    0
@@ -47,7 +47,7 @@
 //   0    0    1    0
 //  tx   ty   tz    1
 //
-// Po vynásobení matic v uvedeném poøadí je vısledná transformaèní matice:
+// Po vynÃ¡sobenÃ­ matic v uvedenÃ©m poÃ¸adÃ­ je vÃ½slednÃ¡ transformaÃ¨nÃ­ matice:
 // ---------------------------------------------------------------------------
 //        sx*cosy*cosz                  sx*cosy*sinz             -sx*siny    0
 // sy*(sinx*siny*cosz-cosx*sinz) sy*(sinx*siny*sinz+cosx*cosz) sy*sinx*cosy  0
@@ -55,13 +55,13 @@
 //              tx                           ty                     tz       1
 // ---------------------------------------------------------------------------
 //
-// Známe-li vıslednou transformaèní matici ve tvaru:
+// ZnÃ¡me-li vÃ½slednou transformaÃ¨nÃ­ matici ve tvaru:
 //  a11  a12  a13  a14
 //  a21  a22  a23  a24
 //  a31  a32  a33  a34
 //  a41  a42  a43  a44
 //
-// potom lze zpìtnì vypoèítat pùvodní transformace:
+// potom lze zpÃ¬tnÃ¬ vypoÃ¨Ã­tat pÃ¹vodnÃ­ transformace:
 //
 //  tx = a41
 //  ty = a42
@@ -93,13 +93,13 @@
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// Podporované formáty textur (pøíkazem CreateTexture):
-//	D3DFMT_A8R8G8B8	(32 bitù s alpha)
-//	D3DFMT_X8R8G8B8 (32 bitù)
-//	D3DFMT_R5G6B5 (16 bitù)
-//	D3DFMT_X1R5G5B5 (15 bitù)
-//	D3DFMT_A1R5G5B5 (15 bitù s alpha)
-//	D3DFMT_A4R4G4B4 (12 bitù s alpha)
+// PodporovanÃ© formÃ¡ty textur (pÃ¸Ã­kazem CreateTexture):
+//	D3DFMT_A8R8G8B8	(32 bitÃ¹ s alpha)
+//	D3DFMT_X8R8G8B8 (32 bitÃ¹)
+//	D3DFMT_R5G6B5 (16 bitÃ¹)
+//	D3DFMT_X1R5G5B5 (15 bitÃ¹)
+//	D3DFMT_A1R5G5B5 (15 bitÃ¹ s alpha)
+//	D3DFMT_A4R4G4B4 (12 bitÃ¹ s alpha)
 //	D3DFMT_DXT1 (komprese DXT1)
 //	D3DFMT_DXT2 (komprese DXT2)
 //	D3DFMT_DXT3 (komprese DXT3)
@@ -109,36 +109,36 @@
 ////////////////////////////////////////////////////////////////////
 // data bufferu textur
 
-int				D3DT_Num = 0;		// poèet poloek v bufferu textur
-int				D3DT_Max = 0;		// velikost bufferu textur (poloek)
+int				D3DT_Num = 0;		// poÃ¨et poloÅ¾ek v bufferu textur
+int				D3DT_Max = 0;		// velikost bufferu textur (poloÅ¾ek)
 D3DTITEM*		D3DT_Data = NULL;	// buffer textur
 
-int				D3DT_Active[MAX_STAGES]; // aktivnì nastavená textura (i je-li vypnutá)
+int				D3DT_Active[MAX_STAGES]; // aktivnÃ¬ nastavenÃ¡ textura (i je-li vypnutÃ¡)
 bool			D3DT_On[MAX_STAGES];	// textura je zapnuta
 
-//D3DFITEM_*		D3D_Rend[3*MAX_ZBIAS]; // poloky k renderování (bìné/blending/2D)
+//D3DFITEM_*		D3D_Rend[3*MAX_ZBIAS]; // poloÅ¾ky k renderovÃ¡nÃ­ (bÃ¬Å¾nÃ©/blending/2D)
 
 ////////////////////////////////////////////////////////////////////
-// pøidání textury do seznamu textur, vrací index textury
-// (nesmí to bıt prázdnı obrázek !!!!)
-// (!!!! v souèasnosti podporovanı pouze formát D3DFMT_A8R8G8B8 !!!!!);
+// pÃ¸idÃ¡nÃ­ textury do seznamu textur, vracÃ­ index textury
+// (nesmÃ­ to bÃ½t prÃ¡zdnÃ½ obrÃ¡zek !!!!)
+// (!!!! v souÃ¨asnosti podporovanÃ½ pouze formÃ¡t D3DFMT_A8R8G8B8 !!!!!);
 
 int D3DT_Add(CPicture pic)
 {
 	ASSERT(pic.IsNotEmpty());
 
-// test, zda obrázek je ji v bufferu uloen
-	PICTUREDATA* picdata = pic.Data();			// data obrázku
-	int inx = picdata->TextInx;					// monı index poloky
-	if (inx >= 0)								// je to platnı index?
+// test, zda obrÃ¡zek je jiÅ¾ v bufferu uloÅ¾en
+	PICTUREDATA* picdata = pic.Data();			// data obrÃ¡zku
+	int inx = picdata->TextInx;					// moÅ¾nÃ½ index poloÅ¾ky
+	if (inx >= 0)								// je to platnÃ½ index?
 	{
 		ASSERT(D3DT_IsValid(inx));
 		ASSERT(D3DT_Data[inx].Pic == pic);
-		D3DT_Data[inx].Ref++;					// zvıšení èítaèe referencí na poloku
+		D3DT_Data[inx].Ref++;					// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e referencÃ­ na poloÅ¾ku
 		return inx;
 	}
 			
-// nalezení volné poloky
+// nalezenÃ­ volnÃ© poloÅ¾ky
 	inx = 0;
 	D3DTITEM* item = D3DT_Data;
 
@@ -149,29 +149,29 @@ int D3DT_Add(CPicture pic)
 		inx++;
 	}
 
-// bude nová poloka - zvıšení velikosti bufferu
-	if (inx == D3DT_Num) D3DT_Num++;			// zvıšení poètu poloek do bufferu
+// bude novÃ¡ poloÅ¾ka - zvÃ½Å¡enÃ­ velikosti bufferu
+	if (inx == D3DT_Num) D3DT_Num++;			// zvÃ½Å¡enÃ­ poÃ¨tu poloÅ¾ek do bufferu
 
 	if (inx == D3DT_Max)
 	{
-		D3DT_Max = 2*inx;						// nová velikost bufferu
-		if (inx == 0) D3DT_Max = 64;			// minimální velikost bufferu
-		MemBuf(D3DT_Data, D3DT_Max);			// zvıšení velikosti bufferu
+		D3DT_Max = 2*inx;						// novÃ¡ velikost bufferu
+		if (inx == 0) D3DT_Max = 64;			// minimÃ¡lnÃ­ velikost bufferu
+		MemBuf(D3DT_Data, D3DT_Max);			// zvÃ½Å¡enÃ­ velikosti bufferu
 	}
 	item = D3DT_Data + inx;
 
-// inicializace nové poloky
-	item->Ref = 2;								// poèet referencí na poloku
-	item->Pic.Init(picdata);					// uloení obrázku do poloky
+// inicializace novÃ© poloÅ¾ky
+	item->Ref = 2;								// poÃ¨et referencÃ­ na poloÅ¾ku
+	item->Pic.Init(picdata);					// uloÅ¾enÃ­ obrÃ¡zku do poloÅ¾ky
 	item->Mips = FALSE;
-	item->Data1 = NULL;							// nulování dat textury
+	item->Data1 = NULL;							// nulovÃ¡nÃ­ dat textury
 	item->Data2 = NULL;
-	item->MipMaps = 0;							// poèet mipmaps neomezen
-	picdata->TextInx = inx;						// odkaz z obrázku do bufferu
+	item->MipMaps = 0;							// poÃ¨et mipmaps neomezen
+	picdata->TextInx = inx;						// odkaz z obrÃ¡zku do bufferu
 
 //	MemFill(item->Rend, 3*MAX_ZBIAS*sizeof(D3DFITEM_*), 0);
 
-// nastavení poadovaného zjemnìní (není-li to textura ze souboru)
+// nastavenÃ­ poÅ¾adovanÃ©ho zjemnÃ¬nÃ­ (nenÃ­-li to textura ze souboru)
 	if (picdata->TextData == NULL)
 	{
 		picdata->TextSmooth = D3DSmooth;
@@ -181,8 +181,8 @@ int D3DT_Add(CPicture pic)
 }
 
 ////////////////////////////////////////////////////////////////////
-// uvolnìní textury (kontroluje platnost indexu)
-// (obrázek textury pøi svém zrušení volá funkci pD3TextureRes(titem))
+// uvolnÃ¬nÃ­ textury (kontroluje platnost indexu)
+// (obrÃ¡zek textury pÃ¸i svÃ©m zruÅ¡enÃ­ volÃ¡ funkci pD3TextureRes(titem))
 
 void D3DT_Del(int index)
 {
@@ -201,7 +201,7 @@ void D3DT_Del(int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// resetování cachování bufferu (pøed ukonèením ovladaèe)
+// resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e)
 
 void D3DT_Reset()
 {
@@ -224,10 +224,10 @@ void D3DT_Reset()
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení aktivní textury (-1 = vypnuta)
+// nastavenÃ­ aktivnÃ­ textury (-1 = vypnuta)
 //
-// Pro starší verze DirectX se nastavením materiálu zruší aktivní textura,
-// bude nastaveno D3DT_Activ na -1, D3DT_On zùstane nezmìnìno
+// Pro starÅ¡Ã­ verze DirectX se nastavenÃ­m materiÃ¡lu zruÅ¡Ã­ aktivnÃ­ textura,
+// bude nastaveno D3DT_Activ na -1, D3DT_On zÃ¹stane nezmÃ¬nÃ¬no
 
 void D3DT_Akt(int index, int stage)
 {
@@ -242,13 +242,13 @@ void D3DT_Akt(int index, int stage)
 		return;
 	}
 
-// adresa poloky
+// adresa poloÅ¾ky
 	D3DTITEM* item = D3DT_Data + index;
 
-// adresa obrázku
+// adresa obrÃ¡zku
 	PICTUREDATA* picdata = item->Pic.Data();
 
-// zrušení textury, pokud byla vytvoøena bez mipmaps
+// zruÅ¡enÃ­ textury, pokud byla vytvoÃ¸ena bez mipmaps
 	if (D3DMipFilterAkt[stage])
 	{
 		bool akt = ((picdata->TextData != NULL) && !picdata->TextIsMip);
@@ -308,60 +308,60 @@ void D3DT_Akt(int index, int stage)
 
 /***************************************************************************\
 *																			*
-*								D3D buffer - materiál						*
+*								D3D buffer - materiÃ¡l						*
 *																			*
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// data bufferu materiálù (poloka 0 = implicitní materiál)
+// data bufferu materiÃ¡lÃ¹ (poloÅ¾ka 0 = implicitnÃ­ materiÃ¡l)
 
-int				D3DM_Num = 0;		// poèet poloek v bufferu materiálù
-int				D3DM_Max = 0;		// velikost bufferu materiálù (poloek)	
-int				D3DM_Akt = -1;		// aktivnì nastavenı materiál
-D3DMITEM*		D3DM_Data = NULL;	// buffer materiálù
+int				D3DM_Num = 0;		// poÃ¨et poloÅ¾ek v bufferu materiÃ¡lÃ¹
+int				D3DM_Max = 0;		// velikost bufferu materiÃ¡lÃ¹ (poloÅ¾ek)	
+int				D3DM_Akt = -1;		// aktivnÃ¬ nastavenÃ½ materiÃ¡l
+D3DMITEM*		D3DM_Data = NULL;	// buffer materiÃ¡lÃ¹
 
 ////////////////////////////////////////////////////////////////////
-// pøidání materiálu do bufferu materiálù (vrací index materiálu)
-// - pokud materiál ji existuje, vrací index existujícího materiálu
-// (POZOR - volá se bìhem inicializace, ještì pøed inicializací obsluhy 3D!)
+// pÃ¸idÃ¡nÃ­ materiÃ¡lu do bufferu materiÃ¡lÃ¹ (vracÃ­ index materiÃ¡lu)
+// - pokud materiÃ¡l jiÅ¾ existuje, vracÃ­ index existujÃ­cÃ­ho materiÃ¡lu
+// (POZOR - volÃ¡ se bÃ¬hem inicializace, jeÅ¡tÃ¬ pÃ¸ed inicializacÃ­ obsluhy 3D!)
 
 int D3DM_Add(D3DMATERIAL8* mat)
 {
-// velikost materiálu musí bıt násobek 4 !!!
-#pragma warning ( disable: 4127)				// hlášení - konstantní podmínka
+// velikost materiÃ¡lu musÃ­ bÃ½t nÃ¡sobek 4 !!!
+#pragma warning ( disable: 4127)				// hlÃ¡Å¡enÃ­ - konstantnÃ­ podmÃ­nka
 	ASSERT(sizeof(D3DMATERIAL8) == 0x44);
-#pragma warning ( default: 4127)				// hlášení - konstantní podmínka
+#pragma warning ( default: 4127)				// hlÃ¡Å¡enÃ­ - konstantnÃ­ podmÃ­nka
 
-// vyhledání ji existujícího materiálu v bufferu
-	int inx = 0;								// ukazatel indexu materiálu
-	D3DMITEM* mat2 = D3DM_Data;				// ukazatel poloek materiálu
+// vyhledÃ¡nÃ­ jiÅ¾ existujÃ­cÃ­ho materiÃ¡lu v bufferu
+	int inx = 0;								// ukazatel indexu materiÃ¡lu
+	D3DMITEM* mat2 = D3DM_Data;				// ukazatel poloÅ¾ek materiÃ¡lu
 
-	for (; inx < D3DM_Num; inx++)				// cyklus pøes všechny materiály
+	for (; inx < D3DM_Num; inx++)				// cyklus pÃ¸es vÅ¡echny materiÃ¡ly
 	{
-		int* src = (int*)mat;					// adresa hledané poloky
-		int* dst = (int*)(&mat2->Material);		// adresa poloky v bufferu
-		int j = sizeof(D3DMATERIAL8)/4;			// velikost poloky
+		int* src = (int*)mat;					// adresa hledanÃ© poloÅ¾ky
+		int* dst = (int*)(&mat2->Material);		// adresa poloÅ¾ky v bufferu
+		int j = sizeof(D3DMATERIAL8)/4;			// velikost poloÅ¾ky
 		for (; j > 0; j--)
 		{
 			if (*dst != *src) break;
 			src++;
 			dst++;
 		}
-		if (j == 0) return inx;					// nalezena shodná poloka
+		if (j == 0) return inx;					// nalezena shodnÃ¡ poloÅ¾ka
 
-		mat2++;									// zvıšení ukazatele adresy poloky
+		mat2++;									// zvÃ½Å¡enÃ­ ukazatele adresy poloÅ¾ky
 	}
 		
-// bude nová poloka - zvıšení velikosti bufferu (nyní inx == D3DM_MatNum)
+// bude novÃ¡ poloÅ¾ka - zvÃ½Å¡enÃ­ velikosti bufferu (nynÃ­ inx == D3DM_MatNum)
 	if (inx == D3DM_Max)
 	{
-		D3DM_Max = 2*inx;						// nová velikost bufferu
-		if (inx == 0) D3DM_Max = 64;			// minimální velikost bufferu
-		MemBuf(D3DM_Data, D3DM_Max);				// zvıšení velikosti bufferu
+		D3DM_Max = 2*inx;						// novÃ¡ velikost bufferu
+		if (inx == 0) D3DM_Max = 64;			// minimÃ¡lnÃ­ velikost bufferu
+		MemBuf(D3DM_Data, D3DM_Max);				// zvÃ½Å¡enÃ­ velikosti bufferu
 	}
-	D3DM_Num++;									// zvıšení poètu poloek do bufferu
+	D3DM_Num++;									// zvÃ½Å¡enÃ­ poÃ¨tu poloÅ¾ek do bufferu
 
-// uloení nové poloky do bufferu
+// uloÅ¾enÃ­ novÃ© poloÅ¾ky do bufferu
 	MemCopy(&(D3DM_Data[inx].Material), mat, sizeof(D3DMATERIAL8));
 	D3DM_Data[inx].Data1 = NULL;
 	D3DM_Data[inx].Data2 = NULL;
@@ -370,16 +370,16 @@ int D3DM_Add(D3DMATERIAL8* mat)
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení materiálu jako aktivní (bez kontroly indexu)
+// nastavenÃ­ materiÃ¡lu jako aktivnÃ­ (bez kontroly indexu)
 //
-// Pro starší verze DirectX se nastavením materiálu zruší aktivní textura,
-// bude nastaveno D3DT_Activ na -1, D3DT_On zùstane nezmìnìno
+// Pro starÅ¡Ã­ verze DirectX se nastavenÃ­m materiÃ¡lu zruÅ¡Ã­ aktivnÃ­ textura,
+// bude nastaveno D3DT_Activ na -1, D3DT_On zÃ¹stane nezmÃ¬nÃ¬no
 
 void D3DM_Set(const int index)
 {
 	ASSERT(D3DM_IsValid(index));
 
-// kontrola, zda je materiál ji nastaven
+// kontrola, zda je materiÃ¡l jiÅ¾ nastaven
 	if (index != D3DM_Akt)
 	{
 		D3DM_Akt = index;
@@ -388,7 +388,7 @@ void D3DM_Set(const int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// resetování cachování bufferu (pøed ukonèením ovladaèe)
+// resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e)
 
 void D3DM_Reset()
 {
@@ -404,32 +404,32 @@ void D3DM_Reset()
 
 /***************************************************************************\
 *																			*
-*								D3D buffer - svìtla							*
+*								D3D buffer - svÃ¬tla							*
 *																			*
 \***************************************************************************/
 
 ////////////////////////////////////////////////////////////////////
-// data bufferu svìtel
+// data bufferu svÃ¬tel
 
-int				D3DL_Num = 0;		// poèet poloek v bufferu svìtel (vèetnì volnıch)
-int				D3DL_Max = 0;		// velikost bufferu svìtel (poloek)	
-D3DLITEM*		D3DL_Data = NULL;	// buffer svìtel
+int				D3DL_Num = 0;		// poÃ¨et poloÅ¾ek v bufferu svÃ¬tel (vÃ¨etnÃ¬ volnÃ½ch)
+int				D3DL_Max = 0;		// velikost bufferu svÃ¬tel (poloÅ¾ek)	
+D3DLITEM*		D3DL_Data = NULL;	// buffer svÃ¬tel
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nového svìtla (vrací index svìtla)
-// (POZOR - volá se bìhem inicializace, ještì pøed inicializací obsluhy 3D!)
+// vytvoÃ¸enÃ­ novÃ©ho svÃ¬tla (vracÃ­ index svÃ¬tla)
+// (POZOR - volÃ¡ se bÃ¬hem inicializace, jeÅ¡tÃ¬ pÃ¸ed inicializacÃ­ obsluhy 3D!)
 
 int D3DL_New()
 {
 
-// nalezení volné poloky svìtla
+// nalezenÃ­ volnÃ© poloÅ¾ky svÃ¬tla
 	int index = 0;
 	for (; index < D3DL_Num; index++)
 	{
 		if (!D3DL_Data[index].IsUsed) break;
 	}
 
-// vytvoøení nového svìtla, pokud nebyla nalezena volná poloka
+// vytvoÃ¸enÃ­ novÃ©ho svÃ¬tla, pokud nebyla nalezena volnÃ¡ poloÅ¾ka
 	if (index == D3DL_Num)
 	{
 		D3DL_Num++;
@@ -441,7 +441,7 @@ int D3DL_New()
 		}
 	}
 
-// inicializace poloky svìtla
+// inicializace poloÅ¾ky svÃ¬tla
 	D3DLITEM* item = D3DL_Data + index;
 	item->IsUsed = true;
 
@@ -498,7 +498,7 @@ int D3DL_New()
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení svìtla (kontroluje platnost indexu)
+// zruÅ¡enÃ­ svÃ¬tla (kontroluje platnost indexu)
 
 void D3DL_Del(int index)
 {
@@ -515,30 +515,30 @@ void D3DL_Del(int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// aktualizace svìtel
+// aktualizace svÃ¬tel
 
 void D3DL_AktLight()
 {
-// cyklus pøes všechna svìtla
+// cyklus pÃ¸es vÅ¡echna svÃ¬tla
 	D3DLITEM* item = D3DL_Data;
 	for (int i = 0; i < D3DL_Num; i++)
 	{
 
-// pøíprava pozice a smìru
+// pÃ¸Ã­prava pozice a smÃ¬ru
 		D3DFITEM* frame = D3DF_Get(item->Frame);
 
 		D3DLIGHT8* light = &(item->Light);
-	// transformaèní matice se vynásobí vektorem poèátku, tj. (0, 0, 0)
+	// transformaÃ¨nÃ­ matice se vynÃ¡sobÃ­ vektorem poÃ¨Ã¡tku, tj. (0, 0, 0)
 		light->Position.x = frame->MatrixWorld._41;
 		light->Position.y = frame->MatrixWorld._42;
 		light->Position.z = frame->MatrixWorld._43;
-	// transformaèní matice se vynásobí vektorem smìru, tj. (0, 0, 1)
-	// (a odeète se vektor nového poèátku - pøíslušné èleny se vyruší)
+	// transformaÃ¨nÃ­ matice se vynÃ¡sobÃ­ vektorem smÃ¬ru, tj. (0, 0, 1)
+	// (a odeÃ¨te se vektor novÃ©ho poÃ¨Ã¡tku - pÃ¸Ã­sluÅ¡nÃ© Ã¨leny se vyruÅ¡Ã­)
 		light->Direction.x = frame->MatrixWorld._31;
 		light->Direction.y = frame->MatrixWorld._32;
 		light->Direction.z = frame->MatrixWorld._33;
 
-// aktualizace svìtla
+// aktualizace svÃ¬tla
 		pD3AktLight(i, item);
 		item->Akt = false;
 
@@ -547,7 +547,7 @@ void D3DL_AktLight()
 }
 
 ////////////////////////////////////////////////////////////////////
-// resetování bufferu svìtel
+// resetovÃ¡nÃ­ bufferu svÃ¬tel
 
 void D3DL_Reset()
 {
@@ -563,11 +563,11 @@ void D3DL_Reset()
 
 /***************************************************************************\
 *																			*
-*								D3D buffer - rámy							*
+*								D3D buffer - rÃ¡my							*
 *																			*
 \***************************************************************************/
 
-// vzor jednotkové matice
+// vzor jednotkovÃ© matice
 D3DMATRIX	Matrix1Vzor	=
 {
 	1,	0,	0,	0,
@@ -577,67 +577,67 @@ D3DMATRIX	Matrix1Vzor	=
 };
 
 ////////////////////////////////////////////////////////////////////
-// data bufferu rámù
+// data bufferu rÃ¡mÃ¹
 
 D3DFITEM*	D3DF_Data = NULL;	// ukazatel na data
-bool*		D3DF_Valid = NULL;	// pøíznaky platnosti poloek
-int			D3DF_Max = 0;		// velikost bufferu (poloek)
-int			D3DF_Next = -1;		// pøíští volná poloka (-1 = není)
+bool*		D3DF_Valid = NULL;	// pÃ¸Ã­znaky platnosti poloÅ¾ek
+int			D3DF_Max = 0;		// velikost bufferu (poloÅ¾ek)
+int			D3DF_Next = -1;		// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka (-1 = nenÃ­)
 
 ////////////////////////////////////////////////////////////////////
-// seznam objektù pro Blending
+// seznam objektÃ¹ pro Blending
 
 //BLENDITEM*	D3DB_Data = NULL;	// ukazatel na data
 //int			D3DB_Max = 0;		// velikost bufferu (velikost jako D3DF_Max)
-//int			D3DB_Num = 0;		// poèet poloek v bufferu
+//int			D3DB_Num = 0;		// poÃ¨et poloÅ¾ek v bufferu
 
-BLENDTYPE	D3DSrcBlend = BLEND_INVALID; // aktuální nastavení blending operace zdroje
-BLENDTYPE	D3DDstBlend = BLEND_INVALID; // aktuální nastavení blending operace cíle
-int			D3DAlphaRef = -1;			// aktuální nastavení alfa úrovnì
+BLENDTYPE	D3DSrcBlend = BLEND_INVALID; // aktuÃ¡lnÃ­ nastavenÃ­ blending operace zdroje
+BLENDTYPE	D3DDstBlend = BLEND_INVALID; // aktuÃ¡lnÃ­ nastavenÃ­ blending operace cÃ­le
+int			D3DAlphaRef = -1;			// aktuÃ¡lnÃ­ nastavenÃ­ alfa ÃºrovnÃ¬
 
-int			D3DColorOp[MAX_STAGES];		// aktuální nastavení operací barev
-int			D3DColorArg1[MAX_STAGES];	// aktuální nastavení argumentu 1 operací barev
-int			D3DColorArg2[MAX_STAGES];	// aktuální nastavení argumentu 2 operací barev
-int			D3DAlphaOp[MAX_STAGES];		// aktuální nastavení operací barev
-int			D3DAlphaArg1[MAX_STAGES];	// aktuální nastavení argumentu 1 operací barev
-int			D3DAlphaArg2[MAX_STAGES];	// aktuální nastavení argumentu 2 operací barev
-int			D3DAddressU[MAX_STAGES];	// aktuální adresování textur U
-int			D3DAddressV[MAX_STAGES];	// aktuální adresování textur V
-//int			D3DBorder[MAX_STAGES];		// barva okolí textur
-float		D3DBias[MAX_STAGES];		// zjemnìní vzdálenıch textur
-DWORD		D3DTFactor = MAXDWORD;		// aktuální nastavení faktoru textur
-BOOL		D3DZWrite = -1;				// aktuální hodnota hloubkového zápisu
-int			D3DZTest = -1;				// aktuální hodnota hloubkového testu
+int			D3DColorOp[MAX_STAGES];		// aktuÃ¡lnÃ­ nastavenÃ­ operacÃ­ barev
+int			D3DColorArg1[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 1 operacÃ­ barev
+int			D3DColorArg2[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 2 operacÃ­ barev
+int			D3DAlphaOp[MAX_STAGES];		// aktuÃ¡lnÃ­ nastavenÃ­ operacÃ­ barev
+int			D3DAlphaArg1[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 1 operacÃ­ barev
+int			D3DAlphaArg2[MAX_STAGES];	// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 2 operacÃ­ barev
+int			D3DAddressU[MAX_STAGES];	// aktuÃ¡lnÃ­ adresovÃ¡nÃ­ textur U
+int			D3DAddressV[MAX_STAGES];	// aktuÃ¡lnÃ­ adresovÃ¡nÃ­ textur V
+//int			D3DBorder[MAX_STAGES];		// barva okolÃ­ textur
+float		D3DBias[MAX_STAGES];		// zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
+DWORD		D3DTFactor = MAXDWORD;		// aktuÃ¡lnÃ­ nastavenÃ­ faktoru textur
+BOOL		D3DZWrite = -1;				// aktuÃ¡lnÃ­ hodnota hloubkovÃ©ho zÃ¡pisu
+int			D3DZTest = -1;				// aktuÃ¡lnÃ­ hodnota hloubkovÃ©ho testu
 
-BOOL		D3DStencilEnable = FALSE;	// aktuální hodnota povolení stencil operací
-bool		D3DStencilCleared = false;	// stencil buffer je v aktuálním snímku vymazán
-int			D3DStencilFunc = -1;		// aktuální hodnota testu stencil bufferu
-int			D3DStencilRef = -1;			// aktuální referenèní hodnota stencil testu
-int			D3DStencilMask = -1;		// aktuální hodnota masky stencil testu
-int			D3DStencilWriteMask = -1;	// aktuální hodnota zápisové masky do stencil bufferu
-int			D3DStencilFail = -1;		// aktuální hodnota operace pøi neúspìchu stencil testu
-int			D3DStencilZFail = -1;		// aktuální hodnota operace pøi úspìchu stencil testu a neúspìchu Z testu
-int			D3DStencilZPass = -1;		// aktuální hodnota operace pøi úspìchu stencil testu a úspìchu Z testu
+BOOL		D3DStencilEnable = FALSE;	// aktuÃ¡lnÃ­ hodnota povolenÃ­ stencil operacÃ­
+bool		D3DStencilCleared = false;	// stencil buffer je v aktuÃ¡lnÃ­m snÃ­mku vymazÃ¡n
+int			D3DStencilFunc = -1;		// aktuÃ¡lnÃ­ hodnota testu stencil bufferu
+int			D3DStencilRef = -1;			// aktuÃ¡lnÃ­ referenÃ¨nÃ­ hodnota stencil testu
+int			D3DStencilMask = -1;		// aktuÃ¡lnÃ­ hodnota masky stencil testu
+int			D3DStencilWriteMask = -1;	// aktuÃ¡lnÃ­ hodnota zÃ¡pisovÃ© masky do stencil bufferu
+int			D3DStencilFail = -1;		// aktuÃ¡lnÃ­ hodnota operace pÃ¸i neÃºspÃ¬chu stencil testu
+int			D3DStencilZFail = -1;		// aktuÃ¡lnÃ­ hodnota operace pÃ¸i ÃºspÃ¬chu stencil testu a neÃºspÃ¬chu Z testu
+int			D3DStencilZPass = -1;		// aktuÃ¡lnÃ­ hodnota operace pÃ¸i ÃºspÃ¬chu stencil testu a ÃºspÃ¬chu Z testu
 
-BOOL		RendSort[MAX_RENDGROUP];	// pøíznaky tøídìní skupin
-int			RendNum[MAX_RENDGROUP];		// poèty poloek v bufferech
-D3DFITEM**	RendItems[MAX_RENDGROUP];	// seznam poloek k renderování
-int			RendMax = 0;				// velikost bufferù poloek
+BOOL		RendSort[MAX_RENDGROUP];	// pÃ¸Ã­znaky tÃ¸Ã­dÃ¬nÃ­ skupin
+int			RendNum[MAX_RENDGROUP];		// poÃ¨ty poloÅ¾ek v bufferech
+D3DFITEM**	RendItems[MAX_RENDGROUP];	// seznam poloÅ¾ek k renderovÃ¡nÃ­
+int			RendMax = 0;				// velikost bufferÃ¹ poloÅ¾ek
 
-int			ShadowNum;					// poèet poloek v bufferu stínù
-D3DFITEM**	ShadowItems;				// seznam poloek k renderování stínù
+int			ShadowNum;					// poÃ¨et poloÅ¾ek v bufferu stÃ­nÃ¹
+D3DFITEM**	ShadowItems;				// seznam poloÅ¾ek k renderovÃ¡nÃ­ stÃ­nÃ¹
 
-int			D3DAktMat = -1;				// první poloka k aktualizaci matic (-1=není)
-
-////////////////////////////////////////////////////////////////////
-// seznam objektù 2D obrázkù
-
-D3DFITEM**	D3DP_Items = NULL;	// ukazatel na data seznamu obrázkù
-int			D3DP_Num = 0;		// poèet obrázkù v seznamu
-
+int			D3DAktMat = -1;				// prvnÃ­ poloÅ¾ka k aktualizaci matic (-1=nenÃ­)
 
 ////////////////////////////////////////////////////////////////////
-// transpozice matice (zdrojová a cílová matice mùe bıt stejná)
+// seznam objektÃ¹ 2D obrÃ¡zkÃ¹
+
+D3DFITEM**	D3DP_Items = NULL;	// ukazatel na data seznamu obrÃ¡zkÃ¹
+int			D3DP_Num = 0;		// poÃ¨et obrÃ¡zkÃ¹ v seznamu
+
+
+////////////////////////////////////////////////////////////////////
+// transpozice matice (zdrojovÃ¡ a cÃ­lovÃ¡ matice mÃ¹Å¾e bÃ½t stejnÃ¡)
 
 void _fastcall MatrixTrans(D3DMATRIX* dst, D3DMATRIX* src)
 {
@@ -674,12 +674,12 @@ void _fastcall MatrixTrans(D3DMATRIX* dst, D3DMATRIX* src)
 }
 
 ////////////////////////////////////////////////////////////////////
-// inverze matice (zdrojová a cílová matice mùe bıt stejná)
+// inverze matice (zdrojovÃ¡ a cÃ­lovÃ¡ matice mÃ¹Å¾e bÃ½t stejnÃ¡)
 
 void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 {
 
-// pomocná matice - 2 matice vedle sebe (4 øádky po 8 prvcích)
+// pomocnÃ¡ matice - 2 matice vedle sebe (4 Ã¸Ã¡dky po 8 prvcÃ­ch)
 	float r1[8], r2[8], r3[8], r4[8];
 	float* s[4];
 	
@@ -688,7 +688,7 @@ void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 	s[2] = &r3[0];
 	s[3] = &r4[0];
 
-// inicializace matice (1.matice = pùvodní, 2.matice = jednotková)
+// inicializace matice (1.matice = pÃ¹vodnÃ­, 2.matice = jednotkovÃ¡)
 	int i, j;
 
 	for(i=0; i<4; i++)
@@ -702,7 +702,7 @@ void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 		}
 	}
 
-// nalezení nejvìtšího prvku v kadém øádku
+// nalezenÃ­ nejvÃ¬tÅ¡Ã­ho prvku v kaÅ¾dÃ©m Ã¸Ã¡dku
 	float scp[4];
 	float scp_max;
 	float* s0 = &s[0][0];
@@ -715,7 +715,7 @@ void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 		s1 = (float)fabs(s0[0]); s0++; if (s1 > scp_max) scp_max = s1;
 		s1 = (float)fabs(s0[0]); s0++; if (s1 > scp_max) scp_max = s1;
 
-		if(scp_max == 0) return;	// je to singulární matice
+		if(scp_max == 0) return;	// je to singulÃ¡rnÃ­ matice
 
 		scp[i] = scp_max;
 	}
@@ -729,7 +729,7 @@ void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 	for(i=0; i<4; i++)
 	{
 
-// nalezení øádku s nejvìtší váhou ("osa" matice)
+// nalezenÃ­ Ã¸Ã¡dku s nejvÃ¬tÅ¡Ã­ vÃ¡hou ("osa" matice)
 		pivot_to = i;
 		scp_max = (float)fabs(s[i][i]/scp[i]);
 
@@ -771,9 +771,9 @@ void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 		}
 	}
 
-	if(s[3][3] == 0) return; // singulární matice
+	if(s[3][3] == 0) return; // singulÃ¡rnÃ­ matice
 
-// pøevod trojúhelníkové matice na jednotkovou (odeètením prvkù)
+// pÃ¸evod trojÃºhelnÃ­kovÃ© matice na jednotkovou (odeÃ¨tenÃ­m prvkÃ¹)
 	//  x x x x | y y y y
 	//  0 x x x | y y y y 
 	//  0 0 x x | y y y y
@@ -802,7 +802,7 @@ void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 		}
 	}
 	
-// uloení vısledné matice
+// uloÅ¾enÃ­ vÃ½slednÃ© matice
 	for(i=0; i<4; i++)
 	{
 		s1 = s[i][i];
@@ -815,8 +815,8 @@ void MatrixInv(D3DMATRIX* dst, D3DMATRIX* src)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vynásobení vektoru maticí (provádí se pøi sníené pøesnosti FPU)
-// (zdrojovı i cílovı vektor mohou bıt shodné)
+// vynÃ¡sobenÃ­ vektoru maticÃ­ (provÃ¡dÃ­ se pÃ¸i snÃ­Å¾enÃ© pÃ¸esnosti FPU)
+// (zdrojovÃ½ i cÃ­lovÃ½ vektor mohou bÃ½t shodnÃ©)
 
 void VecXMat(D3DVECTOR* dst, D3DVECTOR* src, D3DMATRIX* mat)
 {
@@ -830,7 +830,7 @@ void VecXMat(D3DVECTOR* dst, D3DVECTOR* src, D3DMATRIX* mat)
 }
 
 ////////////////////////////////////////////////////////////////////
-// inverzní rotace pohledové matice podle osy X (funkce SIN negovaná)
+// inverznÃ­ rotace pohledovÃ© matice podle osy X (funkce SIN negovanÃ¡)
 
 void _fastcall D3DF_ViewRotateX(D3DFITEM* item)
 {
@@ -854,7 +854,7 @@ void _fastcall D3DF_ViewRotateX(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// inverzní rotace pohledové matice podle osy Y (funkce SIN negovaná)
+// inverznÃ­ rotace pohledovÃ© matice podle osy Y (funkce SIN negovanÃ¡)
 
 void _fastcall D3DF_ViewRotateY(D3DFITEM* item)
 {
@@ -878,7 +878,7 @@ void _fastcall D3DF_ViewRotateY(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// inverzní rotace pohledové matice podle osy Z (funkce SIN negovaná)
+// inverznÃ­ rotace pohledovÃ© matice podle osy Z (funkce SIN negovanÃ¡)
 
 void _fastcall D3DF_ViewRotateZ(D3DFITEM* item)
 {
@@ -902,24 +902,24 @@ void _fastcall D3DF_ViewRotateZ(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// generování pohledové matice (inverznì v poøadí od root poloky)
+// generovÃ¡nÃ­ pohledovÃ© matice (inverznÃ¬ v poÃ¸adÃ­ od root poloÅ¾ky)
 
 void GenViewMat(int index)
 {
 
-// adresa poloky
+// adresa poloÅ¾ky
 	D3DFITEM* item = D3DF_Data + index;
 
-// je-li platnı rodiè (ne scéna), generování nejdøíve rodièe
+// je-li platnÃ½ rodiÃ¨ (ne scÃ©na), generovÃ¡nÃ­ nejdÃ¸Ã­ve rodiÃ¨e
 	int par = item->Parent;
 	if (par > 0) GenViewMat(par);
 
-// zpìtná transformace posunu
+// zpÃ¬tnÃ¡ transformace posunu
 	D3DViewMatrix._41 = (float)(D3DViewMatrix._41 - item->TransX);
 	D3DViewMatrix._42 = (float)(D3DViewMatrix._42 - item->TransY);
 	D3DViewMatrix._43 = (float)(D3DViewMatrix._43 - item->TransZ);
 
-// provedení rotací (v opaèném poøadí)
+// provedenÃ­ rotacÃ­ (v opaÃ¨nÃ©m poÃ¸adÃ­)
 	switch (item->Order)
 	{
 	case D3DFORDER_XYZ:
@@ -959,7 +959,7 @@ void GenViewMat(int index)
 		break;
 	}
 
-// zpìtná transformace mìøítka
+// zpÃ¬tnÃ¡ transformace mÃ¬Ã¸Ã­tka
 	if (item->ScaleX != 1)
 	{
 		double k = 1/item->ScaleX;
@@ -990,9 +990,9 @@ void GenViewMat(int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// rotace vlastní matice podle osy X (provádí se pøi sníené pøesnosti FPU!)
+// rotace vlastnÃ­ matice podle osy X (provÃ¡dÃ­ se pÃ¸i snÃ­Å¾enÃ© pÃ¸esnosti FPU!)
 //
-// Rotaèní matice:
+// RotaÃ¨nÃ­ matice:
 //		1	0	0	0		11, 12*c - 13*s, 12*s + 13*c, 14
 //		0	c	s	0		21, 22*c - 23*s, 22*s + 23*c, 24
 //		0	-s	c	0		31, 32*c - 33*s, 32*s + 33*c, 34
@@ -1020,9 +1020,9 @@ void _fastcall D3DF_RotateX(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// rotace vlastní matice podle osy Y (provádí se pøi sníené pøesnosti FPU!)
+// rotace vlastnÃ­ matice podle osy Y (provÃ¡dÃ­ se pÃ¸i snÃ­Å¾enÃ© pÃ¸esnosti FPU!)
 //
-// Rotaèní matice:
+// RotaÃ¨nÃ­ matice:
 //		c	0	-s	0		11*c + 13*s, 12, 13*c - 11*s, 14
 //		0	1	0	0		21*c + 23*s, 22, 23*c - 21*s, 24
 //		s	0	c	0		31*c + 33*s, 32, 33*c - 31*s, 34
@@ -1050,9 +1050,9 @@ void _fastcall D3DF_RotateY(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// rotace vlastní matice podle osy Z (provádí se pøi sníené pøesnosti FPU!)
+// rotace vlastnÃ­ matice podle osy Z (provÃ¡dÃ­ se pÃ¸i snÃ­Å¾enÃ© pÃ¸esnosti FPU!)
 //
-// Rotaèní matice:
+// RotaÃ¨nÃ­ matice:
 //		c	s	0	0		11*c - 12*s, 11*s + 12*c, 13, 14,
 //		-s	c	0	0		21*c - 22*s, 21*s + 22*c, 23, 24,
 //		0	0	1	0		31*c - 32*s, 31*s + 32*c, 33, 34,
@@ -1080,7 +1080,7 @@ void _fastcall D3DF_RotateZ(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vynásobení dvou matic (m = m1 * m2), vısledná matice nesmí bıt vstupní!
+// vynÃ¡sobenÃ­ dvou matic (m = m1 * m2), vÃ½slednÃ¡ matice nesmÃ­ bÃ½t vstupnÃ­!
 
 void _fastcall MatrixMul(D3DMATRIX* m, const D3DMATRIX* m1, const D3DMATRIX* m2)
 {
@@ -1100,7 +1100,7 @@ void _fastcall MatrixMul(D3DMATRIX* m, const D3DMATRIX* m1, const D3DMATRIX* m2)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace mìøítka pro hranici
+// aktualizace mÃ¬Ã¸Ã­tka pro hranici
 
 void AktScaleB(D3DFITEM* item)
 {
@@ -1113,25 +1113,25 @@ void AktScaleB(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// aktualizace sektorù objektu (kontroluje index)
+// aktualizace sektorÃ¹ objektu (kontroluje index)
 
 void D3DF_AktSector(int index)
 {
-// adresa poloky
+// adresa poloÅ¾ky
 	if (D3DF_IsValid(index))
 	{
 		D3DFITEM* item = D3DF_Data + index;
 		item->AktSector = FALSE;
 		item->UseSector = FALSE;
 
-// jiné objekty ne D3DFTYPE_OBJECT a D3DFTYPE_SECTOR nemají nikdy více vrcholù
+// jinÃ© objekty neÅ¾ D3DFTYPE_OBJECT a D3DFTYPE_SECTOR nemajÃ­ nikdy vÃ­ce vrcholÃ¹
 		if ((item->Type != D3DFTYPE_OBJECT) &&
 			(item->Type != D3DFTYPE_SECTOR))
 		{
 			return;
 		}
 	
-// zrušení starıch sektorù
+// zruÅ¡enÃ­ starÃ½ch sektorÃ¹
 		int index2 = item->Child;
 		while (index2 > 0)
 		{
@@ -1145,7 +1145,7 @@ void D3DF_AktSector(int index)
 			}
 		}
 
-// test, zda budou pouity sektory
+// test, zda budou pouÅ¾ity sektory
 		int vertN = item->VertNum;
 
 		BOOL usesector = (vertN > MaxVertexNum2);
@@ -1154,13 +1154,13 @@ void D3DF_AktSector(int index)
 			item->UseSector = TRUE;
 			int i;
 
-// pøíprava bufferù sektorù
-			double sumx[8];		// souèet souøadnic X
-			double sumy[8];		// souèet souøadnic Y
-			double sumz[8];		// souèet souøadnic Z
-			int fN[8];			// poèet plošek v sektoru
-			int vN[8];			// poèet vrcholù v sektoru
-			int* vmap[8];		// mapování vrcholù pro sektor
+// pÃ¸Ã­prava bufferÃ¹ sektorÃ¹
+			double sumx[8];		// souÃ¨et souÃ¸adnic X
+			double sumy[8];		// souÃ¨et souÃ¸adnic Y
+			double sumz[8];		// souÃ¨et souÃ¸adnic Z
+			int fN[8];			// poÃ¨et ploÅ¡ek v sektoru
+			int vN[8];			// poÃ¨et vrcholÃ¹ v sektoru
+			int* vmap[8];		// mapovÃ¡nÃ­ vrcholÃ¹ pro sektor
 
 			for (i = 0; i < 8; i++)
 			{
@@ -1173,15 +1173,15 @@ void D3DF_AktSector(int index)
 				MemFill(vmap[i], vertN * sizeof(int), -1);
 			}
 
-// rozdìlení plošek do sektorù
-			int faceN = item->FaceNum;	// poèet plošek celkem
-			int* sec = (int*)MemGet(faceN * sizeof(int)); // indexy sektorù plošek
-			int* face = item->Face;		// buffer plošek
-			D3DVECTOR* vert = item->Vertex;	// buffer vrcholù
+// rozdÃ¬lenÃ­ ploÅ¡ek do sektorÃ¹
+			int faceN = item->FaceNum;	// poÃ¨et ploÅ¡ek celkem
+			int* sec = (int*)MemGet(faceN * sizeof(int)); // indexy sektorÃ¹ ploÅ¡ek
+			int* face = item->Face;		// buffer ploÅ¡ek
+			D3DVECTOR* vert = item->Vertex;	// buffer vrcholÃ¹
 
 			for (i = 0; i < faceN; i++)
 			{
-			// zjištìní sektoru, do kterého ploška patøí
+			// zjiÅ¡tÃ¬nÃ­ sektoru, do kterÃ©ho ploÅ¡ka patÃ¸Ã­
 				D3DVECTOR* vv = vert + face[0];
 				double x = vv->x;
 				double y = vv->y;
@@ -1204,13 +1204,13 @@ void D3DF_AktSector(int index)
 
 				sec[i] = s;
 
-			// pøiètení vrcholù
+			// pÃ¸iÃ¨tenÃ­ vrcholÃ¹
 				fN[s]++;
 				sumx[s] += x;
 				sumy[s] += y;
 				sumz[s] += z;
 
-			// zmapování vrcholù plošky
+			// zmapovÃ¡nÃ­ vrcholÃ¹ ploÅ¡ky
 				int v = face[0];
 				if (vmap[s][v] < 0)
 				{
@@ -1235,20 +1235,20 @@ void D3DF_AktSector(int index)
 				face += 3;
 			}
 
-// vytvoøení novıch objektù
+// vytvoÃ¸enÃ­ novÃ½ch objektÃ¹
 			for (i = 0; i < 8; i++)
 			{
 				int fn = fN[i];
 
 				if (fn > 0)
 				{
-				// vytvoøení nové poloky
+				// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 					int index2 = D3DF_New();
 					D3DF_Link(index, index2);
 					D3DFITEM* item2 = D3DF_Data + index2;
 					item = D3DF_Data + index;
 
-				// kopie obsahu poloky
+				// kopie obsahu poloÅ¾ky
 					int parent = item2->Parent;
 					int child = item2->Child;
 					int prev = item2->Prev;
@@ -1269,7 +1269,7 @@ void D3DF_AktSector(int index)
 
 					DuplikData((void**)&(item2->AutoMap), sizeof(AUTOMAP));
 
-				// inicializace parametrù
+				// inicializace parametrÃ¹
 					item2->Type = D3DFTYPE_SECTOR;
 					item2->AktSector = TRUE;
 					item2->UseSector = FALSE;
@@ -1304,7 +1304,7 @@ void D3DF_AktSector(int index)
 					item2->IsRotY = false;
 					item2->IsRotZ = false;
 
-				// vytvoøení bufferù objektu
+				// vytvoÃ¸enÃ­ bufferÃ¹ objektu
 					int vn = vN[i];
 					item2->VertNum = vn;
 
@@ -1378,7 +1378,7 @@ void D3DF_AktSector(int index)
 					ty = -ty;
 					tz = -tz;
 
-				// pøenesení vrcholù
+				// pÃ¸enesenÃ­ vrcholÃ¹
 					int* vm = vmap[i];
 
 					for (j = 0; j < vertN; j++)
@@ -1418,7 +1418,7 @@ void D3DF_AktSector(int index)
 						}
 					}
 
-				// pøenesení plošek
+				// pÃ¸enesenÃ­ ploÅ¡ek
 					int ff = 0;
 
 					for (j = 0; j < faceN; j++)
@@ -1432,12 +1432,12 @@ void D3DF_AktSector(int index)
 						}
 					}	 
 
-				// aktualizace hranice objektu (rodièe není potøeba aktualizovat)
+				// aktualizace hranice objektu (rodiÃ¨e nenÃ­ potÃ¸eba aktualizovat)
 					D3DF_MapBound(index2);
 				}
 			}
 
-// zrušení bufferù sektorù
+// zruÅ¡enÃ­ bufferÃ¹ sektorÃ¹
 			for (i = 0; i < 8; i++)
 			{
 				MemFree(vmap[i]);
@@ -1448,7 +1448,7 @@ void D3DF_AktSector(int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøipojení do øetìzce aktualizace matic (kontroluje, zda je pøipojen)
+// pÃ¸ipojenÃ­ do Ã¸etÃ¬zce aktualizace matic (kontroluje, zda je pÃ¸ipojen)
 
 void _fastcall D3DF_AktMatLink(D3DFITEM* item)
 {
@@ -1470,7 +1470,7 @@ void _fastcall D3DF_AktMatLink(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// odpojení z øetìzce aktualizace matic (kontroluje, zda je pøipojen)
+// odpojenÃ­ z Ã¸etÃ¬zce aktualizace matic (kontroluje, zda je pÃ¸ipojen)
 
 void _fastcall D3DF_AktMatUnlink(D3DFITEM* item)
 {
@@ -1498,13 +1498,13 @@ void _fastcall D3DF_AktMatUnlink(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// aktualizace transformaèních matic všech objektù
-// (provádí se pøi sníené pøesnosti FPU!)
+// aktualizace transformaÃ¨nÃ­ch matic vÅ¡ech objektÃ¹
+// (provÃ¡dÃ­ se pÃ¸i snÃ­Å¾enÃ© pÃ¸esnosti FPU!)
 
 void D3DF_AktMatrix()
 {
 
-// další poloka k aktualizaci
+// dalÅ¡Ã­ poloÅ¾ka k aktualizaci
 	for (;;) 
 	{
 		int index = D3DAktMat;
@@ -1549,25 +1549,25 @@ void D3DF_AktMatrix()
 			}
 		}
 
-// aktualizace sektorù objektu
+// aktualizace sektorÃ¹ objektu
 		if (item->AktSector) // || ((item->VertNum > MaxVertexNum2) && !item->UseSector))
 		{
 			D3DF_AktSector(index);
 			item = D3DF_Data + index;
 		}
 
-// odpojení z aktualizací matic (AktSektor mùe zaøazovat do øetìzce)
+// odpojenÃ­ z aktualizacÃ­ matic (AktSektor mÃ¹Å¾e zaÃ¸azovat do Ã¸etÃ¬zce)
 		D3DF_AktMatUnlink(item);
 
 // test, zda je 2D objekt
 		if (item->Type == D3DFTYPE_DECAL)
 		{
 
-// naètení souøadnic relativnì ke kameøe (nevadí, e se pouijí staré souøadnice)
+// naÃ¨tenÃ­ souÃ¸adnic relativnÃ¬ ke kameÃ¸e (nevadÃ­, Å¾e se pouÅ¾ijÃ­ starÃ© souÃ¸adnice)
 			double x = item->MatrixWorld._41 - D3DF_Data[1].MatrixWorld._41;
 			double z = item->MatrixWorld._43 - D3DF_Data[1].MatrixWorld._43;
 
-// test, zda je dostateèná zmìna pro aktualizaci
+// test, zda je dostateÃ¨nÃ¡ zmÃ¬na pro aktualizaci
 			if ((fabs(x) < 1) ||
 				(fabs(z) < 1) ||
 				(fabs((item->RotateX2D - x)/x) >= 0.0625) ||
@@ -1576,7 +1576,7 @@ void D3DF_AktMatrix()
 				item->RotateX2D = x;
 				item->RotateZ2D = z;
 
-// úhel smìru ke kameøe
+// Ãºhel smÃ¬ru ke kameÃ¸e
 				double alpha;
 				if (item->Parent == 1)
 				{
@@ -1587,7 +1587,7 @@ void D3DF_AktMatrix()
 					alpha = uhel90 - atan2(z, x);
 				}
 
-// nastavení úhlu
+// nastavenÃ­ Ãºhlu
 				if (alpha != item->RotateY2D)
 				{
 					item->RotateY2D = alpha;
@@ -1600,21 +1600,21 @@ void D3DF_AktMatrix()
 			}
 		}
 
-// test, zda je potøeba aktualizovat vlastní matici
+// test, zda je potÃ¸eba aktualizovat vlastnÃ­ matici
 		if (item->AktOwn)
 		{
-			item->AktOwn = false;				// zrušení poadavku aktualizace
-			item->AktWorld = true;				// poadavek aktualizace vısledné matice
+			item->AktOwn = false;				// zruÅ¡enÃ­ poÅ¾adavku aktualizace
+			item->AktWorld = true;				// poÅ¾adavek aktualizace vÃ½slednÃ© matice
 
-// pøíprava matice mìøítka
+// pÃ¸Ã­prava matice mÃ¬Ã¸Ã­tka
 			D3DMATRIX* m = &(item->MatrixOwn);
-			Matrix0(m);							// vynulování matice
-			m->_11 = (float)item->ScaleX;		// mìøítko ve smìru X
-			m->_22 = (float)item->ScaleY;		// mìøítko ve smìru Y
-			m->_33 = (float)item->ScaleZ;		// mìøítko ve smìru Z
+			Matrix0(m);							// vynulovÃ¡nÃ­ matice
+			m->_11 = (float)item->ScaleX;		// mÃ¬Ã¸Ã­tko ve smÃ¬ru X
+			m->_22 = (float)item->ScaleY;		// mÃ¬Ã¸Ã­tko ve smÃ¬ru Y
+			m->_33 = (float)item->ScaleZ;		// mÃ¬Ã¸Ã­tko ve smÃ¬ru Z
 			m->_44 = 1;
 
-// aktualizace rotací
+// aktualizace rotacÃ­
 			switch (item->Order)
 			{
 			case D3DFORDER_XYZ:
@@ -1654,12 +1654,12 @@ void D3DF_AktMatrix()
 				break;
 			}
 			
-// pøidání posunu
+// pÃ¸idÃ¡nÃ­ posunu
 			m->_41 = (float)(m->_41 + item->TransX);
 			m->_42 = (float)(m->_42 + item->TransY);
 			m->_43 = (float)(m->_43 + item->TransZ);
 
-// je nutné aktualizovat polomìr hranice rodièe
+// je nutnÃ© aktualizovat polomÃ¬r hranice rodiÃ¨e
 			int par = item->Parent;
 			if (par > 0)
 			{
@@ -1668,28 +1668,28 @@ void D3DF_AktMatrix()
 			}
 		}
 
-// aktualizace vısledné transformaèní matice
+// aktualizace vÃ½slednÃ© transformaÃ¨nÃ­ matice
 		if (item->AktWorld)
 		{
-			item->AktWorld = false;				// zrušení poadavku aktualizace matice
+			item->AktWorld = false;				// zruÅ¡enÃ­ poÅ¾adavku aktualizace matice
 
-			item->ShadowPoint.x = 0;			// aktualizovat stín
+			item->ShadowPoint.x = 0;			// aktualizovat stÃ­n
 			item->ShadowPoint.y = 0;
 			item->ShadowPoint.z = 0;
 
-// poadavek k aktualizici svìtla
+// poÅ¾adavek k aktualizici svÃ¬tla
 			if (item->Type == D3DFTYPE_LIGHT)
 			{
 				D3DL_Get(item->Light)->Akt = true;
 			}
 
-// pøegenerování lensfalre
+// pÃ¸egenerovÃ¡nÃ­ lensfalre
 //			if (item->Type == D3DFTYPE_LENSFLARE)
 //			{
 //				pD3Reset(item);
 //			}
 
-// je-li rodièem scéna, matice se nekombinují
+// je-li rodiÃ¨em scÃ©na, matice se nekombinujÃ­
 			int index2 = item->Parent;
 
 			if (index2 == 0)
@@ -1697,28 +1697,28 @@ void D3DF_AktMatrix()
 				MemCopy(&(item->MatrixWorld), &(item->MatrixOwn), sizeof(D3DMATRIX));
 			}
 
-// pro jiné rodièe kombinace s jejich maticí
+// pro jinÃ© rodiÃ¨e kombinace s jejich maticÃ­
 			else
 			{
 				D3DMATRIX* m2 = &(D3DF_Data[index2].MatrixWorld);
 				MatrixMul(&(item->MatrixWorld), &(item->MatrixOwn), m2);
 			}
 
-// aktualizace pohledové matice, je-li to kamera
+// aktualizace pohledovÃ© matice, je-li to kamera
 			if (index == 1)
 			{
 
-// inicializace pohledové matice na jednotkovou matici
+// inicializace pohledovÃ© matice na jednotkovou matici
 				Matrix1(&D3DViewMatrix);
 
-// vygenerování matice
+// vygenerovÃ¡nÃ­ matice
 				GenViewMat(1);
 
-// poadavek aktualizace pohledové matice
+// poÅ¾adavek aktualizace pohledovÃ© matice
 				D3DViewAkt = true;
 			}
 
-// poadavek aktualizace matice všech potomkù
+// poÅ¾adavek aktualizace matice vÅ¡ech potomkÃ¹
 			int next = item->Child;
 
 			while (next > 0)
@@ -1736,7 +1736,7 @@ void D3DF_AktMatrix()
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení transformací podle transformaèní matice
+// nastavenÃ­ transformacÃ­ podle transformaÃ¨nÃ­ matice
 
 void D3DF_SetTransMatrix(int index, D3DMATRIX* m)
 {
@@ -1805,43 +1805,43 @@ void D3DF_SetTransMatrix(int index, D3DMATRIX* m)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nové poloky bufferu (vrací index poloky)
-// (POZOR - volá se bìhem inicializace, ještì pøed inicializací obsluhy 3D!)
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky bufferu (vracÃ­ index poloÅ¾ky)
+// (POZOR - volÃ¡ se bÃ¬hem inicializace, jeÅ¡tÃ¬ pÃ¸ed inicializacÃ­ obsluhy 3D!)
 
 int D3DF_New()
 {
-// bude zvıšení velikosti bufferu
-	if (D3DF_Next < 0)			// je další poloka?
+// bude zvÃ½Å¡enÃ­ velikosti bufferu
+	if (D3DF_Next < 0)			// je dalÅ¡Ã­ poloÅ¾ka?
 	{
-		int i = D3DF_Max;		// to bude poèet novıch poloek
-		if (i == 0) i = 64;		// implicitní poèet poloek
-		int next = D3DF_Max;	// pøíští poloka - 1
-		D3DF_Next = next;		// odkaz na první novou poloku
-		D3DF_Max = next + i;	// zvıšení poètu poloek v bufferu
+		int i = D3DF_Max;		// to bude poÃ¨et novÃ½ch poloÅ¾ek
+		if (i == 0) i = 64;		// implicitnÃ­ poÃ¨et poloÅ¾ek
+		int next = D3DF_Max;	// pÃ¸Ã­Å¡tÃ­ poloÅ¾ka - 1
+		D3DF_Next = next;		// odkaz na prvnÃ­ novou poloÅ¾ku
+		D3DF_Max = next + i;	// zvÃ½Å¡enÃ­ poÃ¨tu poloÅ¾ek v bufferu
 
-// zvıšení velikosti bufferù
-		MemBuf(D3DF_Data, D3DF_Max); // zvıšení velikosti bufferu dat
-		MemBuf(D3DF_Valid, D3DF_Max); // zvıšení velikosti bufferu platnosti
-		MemFill(D3DF_Valid + next, i*sizeof(bool), false); // nastavení pøíznakú na neplatné poloky
+// zvÃ½Å¡enÃ­ velikosti bufferÃ¹
+		MemBuf(D3DF_Data, D3DF_Max); // zvÃ½Å¡enÃ­ velikosti bufferu dat
+		MemBuf(D3DF_Valid, D3DF_Max); // zvÃ½Å¡enÃ­ velikosti bufferu platnosti
+		MemFill(D3DF_Valid + next, i*sizeof(bool), false); // nastavenÃ­ pÃ¸Ã­znakÃº na neplatnÃ© poloÅ¾ky
 
-// inicializace novıch odkazù
+// inicializace novÃ½ch odkazÃ¹
 		D3DFITEM* data = D3DF_Data + next - 1; // ukazatel dat - 1
 		for (; i > 0; i--)
 		{
-			data++;				// zvıšení ukazatele poloek
-			next++;				// zvıšení indexu pøíští poloky
-			*(int*)data = next;	// odkaz na pøíští poloku
+			data++;				// zvÃ½Å¡enÃ­ ukazatele poloÅ¾ek
+			next++;				// zvÃ½Å¡enÃ­ indexu pÃ¸Ã­Å¡tÃ­ poloÅ¾ky
+			*(int*)data = next;	// odkaz na pÃ¸Ã­Å¡tÃ­ poloÅ¾ku
 		}
-		*(int*)data = -1;		// není další poloka
+		*(int*)data = -1;		// nenÃ­ dalÅ¡Ã­ poloÅ¾ka
 	}
 
-// zplatnìní nové poloky
-	int i = D3DF_Next;			// pøíští volná poloka
-	D3DFITEM* item = D3DF_Data + i; // adresa poloky
-	D3DF_Next = *(int*)item;	// nová další poloka
-	D3DF_Valid[i] = true;		// nastavení pøíznaku platnosti poloky
+// zplatnÃ¬nÃ­ novÃ© poloÅ¾ky
+	int i = D3DF_Next;			// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka
+	D3DFITEM* item = D3DF_Data + i; // adresa poloÅ¾ky
+	D3DF_Next = *(int*)item;	// novÃ¡ dalÅ¡Ã­ poloÅ¾ka
+	D3DF_Valid[i] = true;		// nastavenÃ­ pÃ¸Ã­znaku platnosti poloÅ¾ky
 
-// inicializace poloky
+// inicializace poloÅ¾ky
 	MemFill(item, sizeof(D3DFITEM), 0);
 	item->Index = i;
 	item->Parent = -1;
@@ -1852,25 +1852,25 @@ int D3DF_New()
 	item->ClonePrev = i;
 	item->CloneNext = i;
 
-// pøipojení poloky jako potomek scény (není-li to scéna)
+// pÃ¸ipojenÃ­ poloÅ¾ky jako potomek scÃ©ny (nenÃ­-li to scÃ©na)
 	if (i != 0)
 	{
-		item->Parent = 0;	// rodièem bude scéna
+		item->Parent = 0;	// rodiÃ¨em bude scÃ©na
 
-		D3DFITEM* item2 = D3DF_Data + 0; // adresa poloky scény
+		D3DFITEM* item2 = D3DF_Data + 0; // adresa poloÅ¾ky scÃ©ny
 
-		int i2 = item2->Child;		// první potomek scény
-		item->Next = i2;			// ukazatel na dalšího potomka
-		item2->Child = i;			// poloka bude prvním potomkem scény
+		int i2 = item2->Child;		// prvnÃ­ potomek scÃ©ny
+		item->Next = i2;			// ukazatel na dalÅ¡Ã­ho potomka
+		item2->Child = i;			// poloÅ¾ka bude prvnÃ­m potomkem scÃ©ny
 
-		if (i2 >= 0)				// byl ji nìjakı jinı potomek?
+		if (i2 >= 0)				// byl jiÅ¾ nÃ¬jakÃ½ jinÃ½ potomek?
 		{
-			D3DFITEM* item3 = D3DF_Data + i2;	// adresa jiného potomka
-			item3->Prev = i;		// poloka bude jeho pøedcházejícím sousedem
+			D3DFITEM* item3 = D3DF_Data + i2;	// adresa jinÃ©ho potomka
+			item3->Prev = i;		// poloÅ¾ka bude jeho pÃ¸edchÃ¡zejÃ­cÃ­m sousedem
 		}
 	}
 
-// inicializace ostatních parametrù
+// inicializace ostatnÃ­ch parametrÃ¹
 	item->Visible = true;
 	item->ScaleX = 1;
 	item->ScaleY = 1;
@@ -1943,34 +1943,34 @@ int D3DF_New()
 }
 
 ////////////////////////////////////////////////////////////////////
-// pøíprava poloky k modifikaci (odpojení od klonù)
+// pÃ¸Ã­prava poloÅ¾ky k modifikaci (odpojenÃ­ od klonÃ¹)
 
 void D3DF_Modi(int index)
 {
-// kontrola poloky
+// kontrola poloÅ¾ky
 	if (!D3DF_IsValid(index)) return;
 
-// adresa poloky
+// adresa poloÅ¾ky
 	D3DFITEM* item = D3DF_Data + index;
 
-// test, zda je souèástí øetìzce klonù
+// test, zda je souÃ¨Ã¡stÃ­ Ã¸etÃ¬zce klonÃ¹
 	int cloneprev = item->ClonePrev;
 	int clonenext = item->CloneNext;
 	if (cloneprev == item->Index) return;
 
-// odpojení od klonù
+// odpojenÃ­ od klonÃ¹
 	D3DF_Data[cloneprev].CloneNext = clonenext;
 	D3DF_Data[clonenext].ClonePrev = cloneprev;
 	item->CloneNext = index;
 	item->ClonePrev = index;
 
-// duplikace terénu (kopie datového bufferu)
+// duplikace terÃ©nu (kopie datovÃ©ho bufferu)
 	if (item->IsTerrain)
 	{
 		DuplikData((void**)&(item->TerMap), (item->TerWidth+1)*(item->TerHeight+1)*sizeof(float));
 	}
 
-// duplikace objektu (kopie datovıch bufferù)
+// duplikace objektu (kopie datovÃ½ch bufferÃ¹)
 	int i = item->VertNum;
 	DuplikData((void**)&(item->Vertex), i * sizeof(D3DVECTOR));
 	DuplikData((void**)&(item->Normal), i * sizeof(D3DVECTOR));
@@ -1986,7 +1986,7 @@ void D3DF_Modi(int index)
 	DuplikData((void**)&(item->Face), item->FaceNum * 3 * sizeof(int));
 	item->FaceW = NULL;
 
-// duplikace stínù
+// duplikace stÃ­nÃ¹
 	if (item->ShadeVert != NULL)
 	{
 		DuplikData((void**)&(item->ShadeVert), item->ShadeVertN * sizeof(D3DVECTOR));
@@ -1999,27 +1999,27 @@ void D3DF_Modi(int index)
 		DuplikData((void**)&(item->ShadeLeft), i * 3 * sizeof(int));
 	}
 
-// buffery jsou neplatné
+// buffery jsou neplatnÃ©
 	item->Data1 = NULL;
 	item->Data2 = NULL;
 }
 
 ////////////////////////////////////////////////////////////////////
-// duplikace jedné poloky (bez potomkù) (nekontroluje platnost poloky)
+// duplikace jednÃ© poloÅ¾ky (bez potomkÃ¹) (nekontroluje platnost poloÅ¾ky)
 
 int D3DF_Copy1(int index)
 {
-// pro neplatnou poloku se vytvoøí pouze skupina
+// pro neplatnou poloÅ¾ku se vytvoÃ¸Ã­ pouze skupina
 	if (index <= 1) return D3DF_New();
 
-// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	int newindex = D3DF_New();
 
-// adresa staré i nové poloky
+// adresa starÃ© i novÃ© poloÅ¾ky
 	D3DFITEM* olditem = D3DF_Data + index;
 	D3DFITEM* newitem = D3DF_Data + newindex;
 
-// kopie obsahu poloky
+// kopie obsahu poloÅ¾ky
 	int parent = newitem->Parent;
 	int child = newitem->Child;
 	int prev = newitem->Prev;
@@ -2044,14 +2044,14 @@ int D3DF_Copy1(int index)
 
 	DuplikData((void**)&(newitem->AutoMap), sizeof(AUTOMAP));
 
-// zaèlenìní do øetìzce klonù
+// zaÃ¨lenÃ¬nÃ­ do Ã¸etÃ¬zce klonÃ¹
 	int clonenext = olditem->CloneNext;
 	olditem->CloneNext = newindex;
 	newitem->ClonePrev = index;
 	newitem->CloneNext = clonenext;
 	D3DF_Data[clonenext].ClonePrev = newindex;
 
-// duplikace svìtla (vytvoøení nového svìtla se stejnımi parametry)
+// duplikace svÃ¬tla (vytvoÃ¸enÃ­ novÃ©ho svÃ¬tla se stejnÃ½mi parametry)
 	int i = newitem->Light;
 	if (i >= 0)
 	{
@@ -2065,7 +2065,7 @@ int D3DF_Copy1(int index)
 		newlight->Frame = newindex;
 	}
 
-// aktualizovat matici (rodièem je scéna)
+// aktualizovat matici (rodiÃ¨em je scÃ©na)
 	newitem->AktWorld = true;
 	newitem->AktBound = true;
 
@@ -2080,7 +2080,7 @@ int D3DF_Copy1(int index)
 		}
 	}
 
-// buffery jsou neplatné
+// buffery jsou neplatnÃ©
 	newitem->ShadowPoint.x = 0;
 	newitem->ShadowPoint.y = 0;
 	newitem->ShadowPoint.z = 0;
@@ -2092,7 +2092,7 @@ int D3DF_Copy1(int index)
 
 	newitem->Data3 = NULL;
 
-// duplikace bufferù morfování
+// duplikace bufferÃ¹ morfovÃ¡nÃ­
 	int n = newitem->MorphMax;
 	if (n > 0)
 	{
@@ -2114,7 +2114,7 @@ int D3DF_Copy1(int index)
 		}
 	}
 
-// obrázek musí mít vlastní buffery souøadnic
+// obrÃ¡zek musÃ­ mÃ­t vlastnÃ­ buffery souÃ¸adnic
 	if ((newitem->Type == D3DFTYPE_PICTURE) ||
 		(newitem->Type == D3DFTYPE_LENSFLARE))
 	{
@@ -2125,20 +2125,20 @@ int D3DF_Copy1(int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// kopie poloky s potomky (vrací index nové poloky)
+// kopie poloÅ¾ky s potomky (vracÃ­ index novÃ© poloÅ¾ky)
 
 int D3DF_Copy(int oldindex)
 {
-// pro neplatnou poloku se vytvoøí pouze skupina
+// pro neplatnou poloÅ¾ku se vytvoÃ¸Ã­ pouze skupina
 	if ((oldindex <= 1) || !D3DF_IsValid(oldindex))
 	{
 		return D3DF_New();
 	}
 
-// duplikace vıchozí poloky
+// duplikace vÃ½chozÃ­ poloÅ¾ky
 	int newindex = D3DF_Copy1(oldindex);
 
-// duplikace všech potomkù
+// duplikace vÅ¡ech potomkÃ¹
 	int oldinx = oldindex;
 	int newinx = newindex;
 	int newpar = 0;
@@ -2149,49 +2149,49 @@ int D3DF_Copy(int oldindex)
 	for (;;)
 	{
 
-// adresa aktuální pùvodní poloky
+// adresa aktuÃ¡lnÃ­ pÃ¹vodnÃ­ poloÅ¾ky
 		olditem = D3DF_Data + oldinx;
 		newitem = D3DF_Data + newinx;
 
-// vnoøení do potomka
+// vnoÃ¸enÃ­ do potomka
 		int oldinx2 = olditem->Child;
 		if (oldinx2 >= 0)
 		{
 			oldinx = oldinx2;					// index potomka
-			newpar = newinx;					// novı rodiè vytváøené poloky
+			newpar = newinx;					// novÃ½ rodiÃ¨ vytvÃ¡Ã¸enÃ© poloÅ¾ky
 		}
 
-// jinak pøejítí k sousedu stejné úrovnì (pozn.: soused nemùe mít index=0, to je scéna)
+// jinak pÃ¸ejÃ­tÃ­ k sousedu stejnÃ© ÃºrovnÃ¬ (pozn.: soused nemÃ¹Å¾e mÃ­t index=0, to je scÃ©na)
 		else
 		{
-			if (oldinx == oldindex) break;		// je to vıchozí poloka - konec
-			oldinx = olditem->Next;				// následující soused
+			if (oldinx == oldindex) break;		// je to vÃ½chozÃ­ poloÅ¾ka - konec
+			oldinx = olditem->Next;				// nÃ¡sledujÃ­cÃ­ soused
 
-// není-li soused, pøejítí k rodièi a jeho následující poloce
-			while (oldinx < 0)					// není další soused?
+// nenÃ­-li soused, pÃ¸ejÃ­tÃ­ k rodiÃ¨i a jeho nÃ¡sledujÃ­cÃ­ poloÅ¾ce
+			while (oldinx < 0)					// nenÃ­ dalÅ¡Ã­ soused?
 			{
-				oldinx = olditem->Parent;		// návrat k dalšímu rodièi
+				oldinx = olditem->Parent;		// nÃ¡vrat k dalÅ¡Ã­mu rodiÃ¨i
 				newinx = newpar;
 
-				if (oldinx == oldindex) break;	// je ji opìt vıchozí poloka, konec
+				if (oldinx == oldindex) break;	// je jiÅ¾ opÃ¬t vÃ½chozÃ­ poloÅ¾ka, konec
 
-				olditem = D3DF_Data + oldinx;	// adresa rodièe
+				olditem = D3DF_Data + oldinx;	// adresa rodiÃ¨e
 				newitem = D3DF_Data + newinx;
 				newpar = newitem->Parent;
-				oldinx = olditem->Next;			// další soused rodièe
+				oldinx = olditem->Next;			// dalÅ¡Ã­ soused rodiÃ¨e
 			}
 
-			if (oldinx == oldindex) break;	// je ji opìt vıchozí poloka, konec
+			if (oldinx == oldindex) break;	// je jiÅ¾ opÃ¬t vÃ½chozÃ­ poloÅ¾ka, konec
 		}
 
-// kopie poloky
+// kopie poloÅ¾ky
 		newinx = D3DF_Copy1(oldinx);
 
-// pøipojení poloky k rodièi
+// pÃ¸ipojenÃ­ poloÅ¾ky k rodiÃ¨i
 		D3DF_Link(newpar, newinx);
 	}
 
-// kopie poloky LOD
+// kopie poloÅ¾ky LOD
 	olditem = D3DF_Data + oldindex;
 	int lod = olditem->LODNext;
 
@@ -2213,25 +2213,25 @@ int D3DF_Copy(int oldindex)
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení všech poloek v bufferu (ukládání zaène opìt po øadì)
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu (uklÃ¡dÃ¡nÃ­ zaÃ¨ne opÃ¬t po Ã¸adÃ¬)
 
 void D3DF_DelAll()
 {
-// zrušení poloek
+// zruÅ¡enÃ­ poloÅ¾ek
 	for (int i = D3DF_Max-1; i >= 0; i--)
 	{
 		D3DF_Del(i);
 	}
 
-// zrušení bufferu
-	MemBuf(D3DF_Data, 0);		// zrušení bufferu dat
-	MemBuf(D3DF_Valid, 0);		// zrušení bufferu platnosti
-	D3DF_Max = 0;				// není ádná poloka v bufferu
-	D3DF_Next = -1;				// není pøíští poloka
+// zruÅ¡enÃ­ bufferu
+	MemBuf(D3DF_Data, 0);		// zruÅ¡enÃ­ bufferu dat
+	MemBuf(D3DF_Valid, 0);		// zruÅ¡enÃ­ bufferu platnosti
+	D3DF_Max = 0;				// nenÃ­ Å¾Ã¡dnÃ¡ poloÅ¾ka v bufferu
+	D3DF_Next = -1;				// nenÃ­ pÃ¸Ã­Å¡tÃ­ poloÅ¾ka
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení bufferù morfování
+// zruÅ¡enÃ­ bufferÃ¹ morfovÃ¡nÃ­
 
 void D3DF_MorphReset(D3DFITEM* item)
 {
@@ -2259,20 +2259,20 @@ void D3DF_MorphReset(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení poloky (kontroluje platnost indexu)
+// zruÅ¡enÃ­ poloÅ¾ky (kontroluje platnost indexu)
 
 void _fastcall D3DF_Del(const int index)
 {
-	if (D3DF_IsValid(index))					// je index platnı?
+	if (D3DF_IsValid(index))					// je index platnÃ½?
 	{
 
-// adresa poloky
+// adresa poloÅ¾ky
 		D3DFITEM* item = D3DF_Data + index;
 
-// zrušení LOD objektù
+// zruÅ¡enÃ­ LOD objektÃ¹
 		D3DF_Del(item->LODNext);
 
-// odpojení od pøedcházejícího LOD
+// odpojenÃ­ od pÃ¸edchÃ¡zejÃ­cÃ­ho LOD
 		int lod = item->LODPrev;
 		if (lod >= 0)
 		{
@@ -2280,18 +2280,18 @@ void _fastcall D3DF_Del(const int index)
 			item->LODPrev = -1;
 		}
 
-// zrušení textury
+// zruÅ¡enÃ­ textury
 		for (int j = 0; j < MAX_STAGES; j++)
 		{
 			D3DT_Del(item->Texture[j]);
 			item->Texture[j] = -1;
 		}
 
-// zrušení svìtla
+// zruÅ¡enÃ­ svÃ¬tla
 		D3DL_Del(item->Light);
 		item->Light = -1;
 
-// odpojení z øetìzce klonù
+// odpojenÃ­ z Ã¸etÃ¬zce klonÃ¹
 		int cloneprev = item->ClonePrev;
 		int clonenext = item->CloneNext;
 
@@ -2308,13 +2308,13 @@ void _fastcall D3DF_Del(const int index)
 		else
 		{
 
-// zrušení bufferu terénu
+// zruÅ¡enÃ­ bufferu terÃ©nu
 			MemFree(item->TerMap);
 
-// resetování objektu
+// resetovÃ¡nÃ­ objektu
 			pD3Reset(item);
 
-// zrušení bufferù vzoru objektu
+// zruÅ¡enÃ­ bufferÃ¹ vzoru objektu
 			MemFree(item->Vertex);
 			MemFree(item->Normal);
 			MemFree(item->VertCol);
@@ -2328,7 +2328,7 @@ void _fastcall D3DF_Del(const int index)
 			MemFree(item->Face);
 			MemFree(item->FaceW);
 
-// zrušení bufferù stínù
+// zruÅ¡enÃ­ bufferÃ¹ stÃ­nÃ¹
 			MemFree(item->ShadeVert);
 			MemFree(item->ShadeFace);
 			MemFree(item->ShadeNorm);
@@ -2338,13 +2338,13 @@ void _fastcall D3DF_Del(const int index)
 			MemFree(item->ShadeLeft);
 		}
 
-// zrušení ostatních bufferù
+// zruÅ¡enÃ­ ostatnÃ­ch bufferÃ¹
 		MemFree(item->ShadeEdgeS);
 		MemFree(item->ShadowFan);
 		MemFree(item->ShadowVolume);
 		MemFree(item->AutoMap);
 
-// oznaèení bufferù jako zrušené
+// oznaÃ¨enÃ­ bufferÃ¹ jako zruÅ¡enÃ©
 		item->TerMap = NULL;
 
 		item->Vertex = NULL;
@@ -2372,10 +2372,10 @@ void _fastcall D3DF_Del(const int index)
 		item->ShadowVolume = NULL;
 		item->AutoMap = NULL;
 
-// zrušení bufferù morfování
+// zruÅ¡enÃ­ bufferÃ¹ morfovÃ¡nÃ­
 		D3DF_MorphReset(item);
 
-// zrušení všech potomkù poloky (kamera se jen odpojí)
+// zruÅ¡enÃ­ vÅ¡ech potomkÃ¹ poloÅ¾ky (kamera se jen odpojÃ­)
 		while (item->Child >= 0)
 		{
 			if (item->Child == 1)
@@ -2384,71 +2384,71 @@ void _fastcall D3DF_Del(const int index)
 			}
 			else
 			{
-				D3DF_Del(item->Child); // zrušení potomkù
+				D3DF_Del(item->Child); // zruÅ¡enÃ­ potomkÃ¹
 			}
 		}
 
-// odpojení od øetìzce aktualizací matic
+// odpojenÃ­ od Ã¸etÃ¬zce aktualizacÃ­ matic
 		D3DF_AktMatUnlink(item);
 
-// navázání na další poloku z pøedcházející poloky
-		int prev = item->Prev;						// pøedcházející poloka
-		int next = item->Next;						// následující poloka
+// navÃ¡zÃ¡nÃ­ na dalÅ¡Ã­ poloÅ¾ku z pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ky
+		int prev = item->Prev;						// pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ka
+		int next = item->Next;						// nÃ¡sledujÃ­cÃ­ poloÅ¾ka
 		if (prev >= 0)
 		{
-			D3DF_Data[prev].Next = next;			// napojení na další poloku
+			D3DF_Data[prev].Next = next;			// napojenÃ­ na dalÅ¡Ã­ poloÅ¾ku
 		}
 
-// navázání na pøedcházející poloku z další poloky
+// navÃ¡zÃ¡nÃ­ na pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ku z dalÅ¡Ã­ poloÅ¾ky
 		if (next >= 0)
 		{
-			D3DF_Data[next].Prev = prev;			// napojení na pøedcházející poloku
+			D3DF_Data[next].Prev = prev;			// napojenÃ­ na pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ku
 		}
 
-// navázání na nového potomka z rodièe
-		int par = item->Parent;						// rodiè
+// navÃ¡zÃ¡nÃ­ na novÃ©ho potomka z rodiÃ¨e
+		int par = item->Parent;						// rodiÃ¨
 		if (par >= 0)
 		{
-			D3DFITEM* itempar = D3DF_Data + par;	// adresa rodièe
+			D3DFITEM* itempar = D3DF_Data + par;	// adresa rodiÃ¨e
 			
 			if (itempar->Child == index)
 			{
-				itempar->Child = next;				// napojení na dalšího potomka
+				itempar->Child = next;				// napojenÃ­ na dalÅ¡Ã­ho potomka
 			}
 		}
 
-// zrušení platnosti poloky
-		*(int*)item = D3DF_Next;				// pøíští volná poloka
-		D3DF_Valid[index] = false;				// zrušení pøíznaku platnosti
-		D3DF_Next = index;						// odkaz na tuto poloku
+// zruÅ¡enÃ­ platnosti poloÅ¾ky
+		*(int*)item = D3DF_Next;				// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka
+		D3DF_Valid[index] = false;				// zruÅ¡enÃ­ pÃ¸Ã­znaku platnosti
+		D3DF_Next = index;						// odkaz na tuto poloÅ¾ku
 	}
 }
 
 ////////////////////////////////////////////////////////////////////
-// resetování cachování bufferu (pøed ukonèením ovladaèe)
+// resetovÃ¡nÃ­ cachovÃ¡nÃ­ bufferu (pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e)
 
 void D3DF_Reset()
 {
-	D3DSrcBlend = BLEND_INVALID; // aktuální nastavení blending operace zdroje
-	D3DDstBlend = BLEND_INVALID; // aktuální nastavení blending operace cíle
-	D3DAlphaRef = -1;			// aktuální nastavení alfa úrovnì
-	D3DTFactor = MAXDWORD;		// aktuální nastavení faktoru textur
-	D3DZWrite = -1;				// aktuální hodnota hloubkového zápisu
-	D3DZTest = -1;				// aktuální hodnota hloubkového testu
+	D3DSrcBlend = BLEND_INVALID; // aktuÃ¡lnÃ­ nastavenÃ­ blending operace zdroje
+	D3DDstBlend = BLEND_INVALID; // aktuÃ¡lnÃ­ nastavenÃ­ blending operace cÃ­le
+	D3DAlphaRef = -1;			// aktuÃ¡lnÃ­ nastavenÃ­ alfa ÃºrovnÃ¬
+	D3DTFactor = MAXDWORD;		// aktuÃ¡lnÃ­ nastavenÃ­ faktoru textur
+	D3DZWrite = -1;				// aktuÃ¡lnÃ­ hodnota hloubkovÃ©ho zÃ¡pisu
+	D3DZTest = -1;				// aktuÃ¡lnÃ­ hodnota hloubkovÃ©ho testu
 
 	int i;
 	for (i = 0; i < MAX_STAGES; i++)
 	{
-		D3DColorOp[i] = -1;				// aktuální nastavení operací barev
-		D3DColorArg1[i] = -1;			// aktuální nastavení argumentu 1 operací barev
-		D3DColorArg2[i] = -1;			// aktuální nastavení argumentu 2 operací barev
-		D3DAlphaOp[i] = -1;				// aktuální nastavení operací barev
-		D3DAlphaArg1[i] = -1;			// aktuální nastavení argumentu 1 operací barev
-		D3DAlphaArg2[i] = -1;			// aktuální nastavení argumentu 2 operací barev
-		D3DAddressU[i] = -1;			// aktuální adresování textur U
-		D3DAddressV[i] = -1;			// aktuální adresování textur V
-//		D3DBorder[i] = -1;				// aktuální barva okolí textur
-		D3DBias[i] = -123456;			// aktuální zjemnìní vzdálenıch textur
+		D3DColorOp[i] = -1;				// aktuÃ¡lnÃ­ nastavenÃ­ operacÃ­ barev
+		D3DColorArg1[i] = -1;			// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 1 operacÃ­ barev
+		D3DColorArg2[i] = -1;			// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 2 operacÃ­ barev
+		D3DAlphaOp[i] = -1;				// aktuÃ¡lnÃ­ nastavenÃ­ operacÃ­ barev
+		D3DAlphaArg1[i] = -1;			// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 1 operacÃ­ barev
+		D3DAlphaArg2[i] = -1;			// aktuÃ¡lnÃ­ nastavenÃ­ argumentu 2 operacÃ­ barev
+		D3DAddressU[i] = -1;			// aktuÃ¡lnÃ­ adresovÃ¡nÃ­ textur U
+		D3DAddressV[i] = -1;			// aktuÃ¡lnÃ­ adresovÃ¡nÃ­ textur V
+//		D3DBorder[i] = -1;				// aktuÃ¡lnÃ­ barva okolÃ­ textur
+		D3DBias[i] = -123456;			// aktuÃ¡lnÃ­ zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
 	}
 
 	for (i = D3DF_Max-1; i >= 0; i--)
@@ -2462,12 +2462,12 @@ void D3DF_Reset()
 }
 
 ////////////////////////////////////////////////////////////////////
-// inicializace manaeru vrcholù (index poloky musí bıt platnı!)
+// inicializace manaÅ¾eru vrcholÃ¹ (index poloÅ¾ky musÃ­ bÃ½t platnÃ½!)
 
-D3DFITEM*	UsedItem = NULL;		// adresa poloky
-int			UsedVert = 0;			// poèet aktuálních vrcholù
-int			UsedMax = 1;			// velikost bufferù vrcholù
-bool*		UsedMap = NULL;			// mapa pouitıch vrcholù
+D3DFITEM*	UsedItem = NULL;		// adresa poloÅ¾ky
+int			UsedVert = 0;			// poÃ¨et aktuÃ¡lnÃ­ch vrcholÃ¹
+int			UsedMax = 1;			// velikost bufferÃ¹ vrcholÃ¹
+bool*		UsedMap = NULL;			// mapa pouÅ¾itÃ½ch vrcholÃ¹
 
 void D3DF_UsedInit(int inx)
 {
@@ -2482,14 +2482,14 @@ void D3DF_UsedInit(int inx)
 }
 
 ////////////////////////////////////////////////////////////////////
-// duplikace vrcholu (parametr = index vrcholu plošky), vrací novı index
+// duplikace vrcholu (parametr = index vrcholu ploÅ¡ky), vracÃ­ novÃ½ index
 
 int D3DF_UsedDuplik(int faceinx)
 {
 
-// index duplikované poloky
+// index duplikovanÃ© poloÅ¾ky
 	int vert = UsedItem->Face[faceinx];
-	if (UsedItem->MorphMax > 0) return vert;	// pro morfovací buffery zákaz operace
+	if (UsedItem->MorphMax > 0) return vert;	// pro morfovacÃ­ buffery zÃ¡kaz operace
 	int newvert = UsedVert;
 	UsedVert++;
 	UsedItem->VertNum = UsedVert;
@@ -2497,7 +2497,7 @@ int D3DF_UsedDuplik(int faceinx)
 
 	UsedItem->AktSector = TRUE;
 
-// zvıšení velikosti bufferù
+// zvÃ½Å¡enÃ­ velikosti bufferÃ¹
 	if (UsedMax <= UsedVert)
 	{
 		while (UsedMax <= newvert) UsedMax = (UsedMax << 1);
@@ -2529,7 +2529,7 @@ int D3DF_UsedDuplik(int faceinx)
 		}
 	}
 
-// pøenesení dat starého vrcholu
+// pÃ¸enesenÃ­ dat starÃ©ho vrcholu
 	UsedItem->Vertex[newvert] = UsedItem->Vertex[vert];
 
 	if (UsedItem->Normal != NULL)
@@ -2562,18 +2562,18 @@ int D3DF_UsedDuplik(int faceinx)
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení normály vrcholu (pro danı index vrcholu plošky)
+// nastavenÃ­ normÃ¡ly vrcholu (pro danÃ½ index vrcholu ploÅ¡ky)
 
 void D3DF_UsedNormal(int faceinx, float nx, float ny, float nz)
 {
 // index vrcholu
 	int vert = UsedItem->Face[faceinx];
 
-// vrchol je pouitı
+// vrchol je pouÅ¾itÃ½
 	if (UsedMap[vert])
 	{
 
-// test, zda se data liší
+// test, zda se data liÅ¡Ã­
 		if (((nx != UsedItem->Normal[vert].x) ||
 			(ny != UsedItem->Normal[vert].y) ||
 			(nz != UsedItem->Normal[vert].z)) &&
@@ -2587,7 +2587,7 @@ void D3DF_UsedNormal(int faceinx, float nx, float ny, float nz)
 		}
 	}
 
-// vrchol není pouitı
+// vrchol nenÃ­ pouÅ¾itÃ½
 	else
 	{
 		UsedItem->Normal[vert].x = nx;
@@ -2598,7 +2598,7 @@ void D3DF_UsedNormal(int faceinx, float nx, float ny, float nz)
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení barvy vrcholu (pro danı index vrcholu plošky)
+// nastavenÃ­ barvy vrcholu (pro danÃ½ index vrcholu ploÅ¡ky)
 
 void D3DF_UsedColorB(int faceinx, BYTE r, BYTE g, BYTE b, BYTE a)
 {
@@ -2617,11 +2617,11 @@ void D3DF_UsedColor(int faceinx, DWORD col, float r, float g, float b, float a)
 // index vrcholu
 	int vert = UsedItem->Face[faceinx];
 
-// vrchol je pouitı
+// vrchol je pouÅ¾itÃ½
 	if (UsedMap[vert])
 	{
 
-// test, zda se data liší
+// test, zda se data liÅ¡Ã­
 		if (((col != UsedItem->VertCol[vert]) ||
 			(r != UsedItem->VertColF[vert].r) ||
 			(g != UsedItem->VertColF[vert].g) ||
@@ -2639,7 +2639,7 @@ void D3DF_UsedColor(int faceinx, DWORD col, float r, float g, float b, float a)
 		}
 	}
 
-// vrchol není pouitı
+// vrchol nenÃ­ pouÅ¾itÃ½
 	else
 	{
 		UsedItem->VertCol[vert] = col;
@@ -2653,18 +2653,18 @@ void D3DF_UsedColor(int faceinx, DWORD col, float r, float g, float b, float a)
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení adresy textury vrcholu (pro danı index vrcholu plošky)
+// nastavenÃ­ adresy textury vrcholu (pro danÃ½ index vrcholu ploÅ¡ky)
 
 void D3DF_UsedTextUV(int faceinx, float u, float v, int stage)
 {
 // index vrcholu
 	int vert = UsedItem->Face[faceinx];
 
-// vrchol je pouitı
+// vrchol je pouÅ¾itÃ½
 	if (UsedMap[vert])
 	{
 
-// test, zda se data liší
+// test, zda se data liÅ¡Ã­
 		if (((u != UsedItem->TextUV[stage][2*vert]) ||
 			(v != UsedItem->TextUV[stage][2*vert+1])) &&
 			(UsedVert < 0x10000))
@@ -2676,7 +2676,7 @@ void D3DF_UsedTextUV(int faceinx, float u, float v, int stage)
 		}
 	}
 
-// vrchol není pouitı
+// vrchol nenÃ­ pouÅ¾itÃ½
 	else
 	{
 		UsedItem->TextUV[stage][2*vert] = u;
@@ -2687,13 +2687,13 @@ void D3DF_UsedTextUV(int faceinx, float u, float v, int stage)
 }
 
 ////////////////////////////////////////////////////////////////////
-// napojení poloky na rodièe (s odpojením od pøedcházejícího rodièe)
-// kontroluje platnost obou indexù
+// napojenÃ­ poloÅ¾ky na rodiÃ¨e (s odpojenÃ­m od pÃ¸edchÃ¡zejÃ­cÃ­ho rodiÃ¨e)
+// kontroluje platnost obou indexÃ¹
 
 void _fastcall D3DF_Link(const int parent, const int child)
 {
 
-// kontrola platnosti poloek a zda není poloka ji pøipojena
+// kontrola platnosti poloÅ¾ek a zda nenÃ­ poloÅ¾ka jiÅ¾ pÃ¸ipojena
 	if (D3DF_IsValid(parent) && 
 		D3DF_IsValid(child) && 
 		(parent != child) &&
@@ -2701,7 +2701,7 @@ void _fastcall D3DF_Link(const int parent, const int child)
 		(D3DF_Data[child].Parent != parent))
 	{
 
-// kontrola, zda není cyklické propojení poloek
+// kontrola, zda nenÃ­ cyklickÃ© propojenÃ­ poloÅ¾ek
 		int i = child;
 
 		do 
@@ -2732,52 +2732,52 @@ void _fastcall D3DF_Link(const int parent, const int child)
 
 		} while (i != child);
 
-// odpojení potomka ze starého místa
+// odpojenÃ­ potomka ze starÃ©ho mÃ­sta
 		D3DFITEM* itemchild = D3DF_Data + child;	 // adresa potomka
 
-		int prev = itemchild->Prev;					// pøedcházející poloka
-		int next = itemchild->Next;					// následující poloka
+		int prev = itemchild->Prev;					// pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ka
+		int next = itemchild->Next;					// nÃ¡sledujÃ­cÃ­ poloÅ¾ka
 		if (prev >= 0)
 		{
-			D3DF_Data[prev].Next = next;			// napojení na další poloku
+			D3DF_Data[prev].Next = next;			// napojenÃ­ na dalÅ¡Ã­ poloÅ¾ku
 		}
 
 		if (next >= 0)
 		{
-			D3DF_Data[next].Prev = prev;			// napojení na pøedcházející poloku
+			D3DF_Data[next].Prev = prev;			// napojenÃ­ na pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ku
 		}
 
-		int par = itemchild->Parent;				// starı rodiè
+		int par = itemchild->Parent;				// starÃ½ rodiÃ¨
 		if (par >= 0)
 		{
-			D3DFITEM* itempar = D3DF_Data + par;	// adresa rodièe
+			D3DFITEM* itempar = D3DF_Data + par;	// adresa rodiÃ¨e
 			
 			if (itempar->Child == child)
 			{
-				itempar->Child = next;				// napojení na dalšího potomka
+				itempar->Child = next;				// napojenÃ­ na dalÅ¡Ã­ho potomka
 			}
 		}
 
-// napojení potomka do nového místa
-		D3DFITEM* itempar = D3DF_Data + parent;		// adresa nového rodièe
+// napojenÃ­ potomka do novÃ©ho mÃ­sta
+		D3DFITEM* itempar = D3DF_Data + parent;		// adresa novÃ©ho rodiÃ¨e
 
-		next = itempar->Child;						// pùvodní potomek rodièe
-		itempar->Child = child;						// pøipojení nového potomka
+		next = itempar->Child;						// pÃ¹vodnÃ­ potomek rodiÃ¨e
+		itempar->Child = child;						// pÃ¸ipojenÃ­ novÃ©ho potomka
 		itempar->AktBound = true;					// aktualizovat hranici s potomky
 		D3DF_AktMatLink(itempar);
-		itemchild->Parent = parent;					// novı rodiè poloky
-		itemchild->Next = next;						// další poloka
-		itemchild->Prev = -1;						// není pøedcházející poloka
+		itemchild->Parent = parent;					// novÃ½ rodiÃ¨ poloÅ¾ky
+		itemchild->Next = next;						// dalÅ¡Ã­ poloÅ¾ka
+		itemchild->Prev = -1;						// nenÃ­ pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ka
 
-		itemchild->AktWorld = true;					// je nutné aktualizovat transformace
+		itemchild->AktWorld = true;					// je nutnÃ© aktualizovat transformace
 		D3DF_AktMatLink(itemchild);
 
 		if (next >= 0)
 		{
-			D3DF_Data[next].Prev = child;			// je to pøedcházející poloka pùvodního potomka
+			D3DF_Data[next].Prev = child;			// je to pÃ¸edchÃ¡zejÃ­cÃ­ poloÅ¾ka pÃ¹vodnÃ­ho potomka
 		}
 
-// pøipojení sousedních stupòù LOD (tento je ji pøipojen = nebude zacyklení)
+// pÃ¸ipojenÃ­ sousednÃ­ch stupÃ²Ã¹ LOD (tento je jiÅ¾ pÃ¸ipojen = nebude zacyklenÃ­)
 		int lod = itemchild->LODPrev;
 		if (lod >= 0) D3DF_Link(parent, lod);
 		lod = itemchild->LODNext;
@@ -2786,16 +2786,16 @@ void _fastcall D3DF_Link(const int parent, const int child)
 }
 
 ////////////////////////////////////////////////////////////////////
-// zmapování vlastní hranice (index musí bıt platnı)
+// zmapovÃ¡nÃ­ vlastnÃ­ hranice (index musÃ­ bÃ½t platnÃ½)
 
 void D3DF_MapBound(int index)
 {
 	ASSERT(D3DF_IsValid(index));
 
-// adresa rámu
+// adresa rÃ¡mu
 	D3DFITEM* item = D3DF_Data + index;
 
-// cyklus pøes všechny vrcholy
+// cyklus pÃ¸es vÅ¡echny vrcholy
 	double r = 0;
 	double d;
 	double x;
@@ -2814,7 +2814,7 @@ void D3DF_MapBound(int index)
 		v++;
 	}
 
-// nastavení nového polomìru hranice
+// nastavenÃ­ novÃ©ho polomÃ¬ru hranice
 	item->BoundR0 = sqrt(r);
 	item->AktBound = true;
 
@@ -2823,28 +2823,28 @@ void D3DF_MapBound(int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení objektu (vrací index objektu, pro 0 vrcholù to bude skupina)
+// vytvoÃ¸enÃ­ objektu (vracÃ­ index objektu, pro 0 vrcholÃ¹ to bude skupina)
 
 int D3DF_CreateMesh(int vertN, D3DVECTOR* vert, int faceN, int* face)
 {
-// vytvoøení nového rámu
+// vytvoÃ¸enÃ­ novÃ©ho rÃ¡mu
 	int inx = D3DF_New();
 	D3DFITEM* item = D3DF_Data + inx;
 
-// kontrola poètu vrcholù a plošek (pøi chybì zùstane jako skupina)
+// kontrola poÃ¨tu vrcholÃ¹ a ploÅ¡ek (pÃ¸i chybÃ¬ zÃ¹stane jako skupina)
 	if ((vertN < 3) || (faceN < 1)) return inx;
 
-// vytvoøení bufferù pro vrcholy
+// vytvoÃ¸enÃ­ bufferÃ¹ pro vrcholy
 	item->VertNum = vertN;
 	item->Vertex = (D3DVECTOR*)MemGet(vertN * sizeof(D3DVECTOR));
 	MemCopy(item->Vertex, vert, vertN * sizeof(D3DVECTOR));
 
-// vytvoøení bufferù pro plošky
+// vytvoÃ¸enÃ­ bufferÃ¹ pro ploÅ¡ky
 	item->FaceNum = faceN;
 	item->Face = (int*)MemGet(faceN * 3 * sizeof(int));
 	MemCopy(item->Face, face, faceN * 3 * sizeof(int));
 
-// poadavek aktualizace objektu
+// poÅ¾adavek aktualizace objektu
 //	item->AktMat = true;
 	item->Type = D3DFTYPE_OBJECT;
 
@@ -2853,31 +2853,31 @@ int D3DF_CreateMesh(int vertN, D3DVECTOR* vert, int faceN, int* face)
 
 	D3DF_AktMatLink(item);
 
-// zmapování vlastní hranice
+// zmapovÃ¡nÃ­ vlastnÃ­ hranice
 	D3DF_MapBound(inx);
 
 	return inx;
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení normál objektu (poèet normál musí souhlasit s poètem vrcholù!)
+// nastavenÃ­ normÃ¡l objektu (poÃ¨et normÃ¡l musÃ­ souhlasit s poÃ¨tem vrcholÃ¹!)
 
 void D3DF_SetNormal(int index, D3DVECTOR* norm)
 {
 	ASSERT(D3DF_IsValid(index));
 
-// adresa rámu
+// adresa rÃ¡mu
 	D3DFITEM* item = D3DF_Data + index;
 	ASSERT(item->VertNum > 0);
 
-// vytvoøení bufferu pro vektory normál
+// vytvoÃ¸enÃ­ bufferu pro vektory normÃ¡l
 	int size = item->VertNum * sizeof(D3DVECTOR);
 	if (item->Normal == NULL)
 	{
 		item->Normal = (D3DVECTOR*)MemGet(size);
 	}
 
-// uloení bufferu normál (s normalizací normál)
+// uloÅ¾enÃ­ bufferu normÃ¡l (s normalizacÃ­ normÃ¡l)
 	D3DVECTOR* dst = item->Normal;
 	D3DVECTOR* src = norm;
 
@@ -2909,7 +2909,7 @@ void D3DF_SetNormal(int index, D3DVECTOR* norm)
 }
 
 ////////////////////////////////////////////////////////////////////
-// korekce novì vytvoøeného aktuálního objektu pro pravorukı souøadnı systém
+// korekce novÃ¬ vytvoÃ¸enÃ©ho aktuÃ¡lnÃ­ho objektu pro pravorukÃ½ souÃ¸adnÃ½ systÃ©m
 
 void D3DF_KorRightHand()
 {
@@ -2937,21 +2937,21 @@ void D3DF_KorRightHand()
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení barev vrcholù objektu (poèet musí souhlasit s poètem vrcholù!)
+// nastavenÃ­ barev vrcholÃ¹ objektu (poÃ¨et musÃ­ souhlasit s poÃ¨tem vrcholÃ¹!)
 
 void D3DF_SetVertCol(int index, D3DCOLORVALUE* col)
 {
 	ASSERT(D3DF_IsValid(index));
 
-// adresa rámu
+// adresa rÃ¡mu
 	D3DFITEM* item = D3DF_Data + index;
 	int n = item->VertNum;
 	ASSERT(n > 0);
 
-// zrušení bufferu vrcholù (musí se pøegenerovat)
+// zruÅ¡enÃ­ bufferu vrcholÃ¹ (musÃ­ se pÃ¸egenerovat)
 	pD3Reset(item);
 
-// vytvoøení bufferù pro barvy
+// vytvoÃ¸enÃ­ bufferÃ¹ pro barvy
 	DWORD* dst = item->VertCol;
 	if (dst == NULL)
 	{
@@ -2966,7 +2966,7 @@ void D3DF_SetVertCol(int index, D3DCOLORVALUE* col)
 		item->VertColF = dst2;
 	}
 
-// uloení bufferù barev
+// uloÅ¾enÃ­ bufferÃ¹ barev
 	for (; n > 0; n--)
 	{
 		double r = col->r;
@@ -2998,7 +2998,7 @@ void D3DF_SetVertCol(int index, D3DCOLORVALUE* col)
 		dst2++;
 	}
 
-// zrušení pøíznaku automatické barvy
+// zruÅ¡enÃ­ pÃ¸Ã­znaku automatickÃ© barvy
 	item->AutoCol = MAXDWORD;
 
 // aktualizovat sektory
@@ -3008,18 +3008,18 @@ void D3DF_SetVertCol(int index, D3DCOLORVALUE* col)
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení mapování textur (poèet musí souhlasit s poètem vrcholù!)
+// nastavenÃ­ mapovÃ¡nÃ­ textur (poÃ¨et musÃ­ souhlasit s poÃ¨tem vrcholÃ¹!)
 
 void D3DF_SetTextUV(int index, float* textuv, int stage)
 {
 	ASSERT(D3DF_IsValid(index));
 
-// adresa rámu
+// adresa rÃ¡mu
 	D3DFITEM* item = D3DF_Data + index;
 	int n = item->VertNum;
 	ASSERT(n > 0);
 
-// vytvoøení bufferù pro mapování textur
+// vytvoÃ¸enÃ­ bufferÃ¹ pro mapovÃ¡nÃ­ textur
 	float* dst = item->TextUV[stage];
 	int size = n * 2 * sizeof(float);
 	if (dst == NULL)
@@ -3028,7 +3028,7 @@ void D3DF_SetTextUV(int index, float* textuv, int stage)
 		item->TextUV[stage] = dst;
 	}
 
-// pøenesení mapování textur
+// pÃ¸enesenÃ­ mapovÃ¡nÃ­ textur
 	MemCopy(dst, textuv, size);
 
 // aktualizovat sektory
@@ -3036,12 +3036,12 @@ void D3DF_SetTextUV(int index, float* textuv, int stage)
 
 	D3DF_AktMatLink(item);
 
-// resetování objektu
+// resetovÃ¡nÃ­ objektu
 	pD3Reset(item);
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení adresování a zalamování textury
+// nastavenÃ­ adresovÃ¡nÃ­ a zalamovÃ¡nÃ­ textury
 
 void D3DF_SetAddress(int index, int adru, int adrv, int stage)
 {
@@ -3055,7 +3055,7 @@ void D3DF_SetAddress(int index, int adru, int adrv, int stage)
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení blending módu bìhem renderování
+// nastavenÃ­ blending mÃ³du bÃ¬hem renderovÃ¡nÃ­
 
 void D3DF_SetBlendMode(BLENDTYPE srcblend, BLENDTYPE dstblend)
 {
@@ -3082,7 +3082,7 @@ void D3DF_SetBlendMode(BLENDTYPE srcblend, BLENDTYPE dstblend)
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavení blending módu (1=normal, 11=oheò, 20=sklo, 54=pøekryv)
+// nastavenÃ­ blending mÃ³du (1=normal, 11=oheÃ², 20=sklo, 54=pÃ¸ekryv)
 
 void D3DF_SetBlend(int index, int blendmode)
 {
@@ -3104,14 +3104,14 @@ void D3DF_SetBlend(int index, int blendmode)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vygenerování normál (kontroluje index)
+// vygenerovÃ¡nÃ­ normÃ¡l (kontroluje index)
 
 void D3DF_AutoNormals(int index, double angle)
 {
 	if (D3DF_IsValid(index))
 	{
 
-// odpojení dat od klonù
+// odpojenÃ­ dat od klonÃ¹
 		D3DF_Modi(index);
 
 		D3DFITEM* item = D3DF_Data + index;
@@ -3119,7 +3119,7 @@ void D3DF_AutoNormals(int index, double angle)
 		if ((item->VertNum > 0) && (item->FaceNum > 0))
 		{
 
-// vytvoøení bufferu pro vektory normál
+// vytvoÃ¸enÃ­ bufferu pro vektory normÃ¡l
 			if (item->Normal == NULL)
 			{
 				item->Normal = (D3DVECTOR*)MemGet(item->VertNum * sizeof(D3DVECTOR));
@@ -3135,10 +3135,10 @@ void D3DF_AutoNormals(int index, double angle)
 				MemFill(&(item->AutoMap->m), sizeof(D3DMATRIX), 0);
 			}
 
-// pøíprava manaeru vrcholù
+// pÃ¸Ã­prava manaÅ¾eru vrcholÃ¹
 			D3DF_UsedInit(index);
 
-// vıpoèet normál plošek
+// vÃ½poÃ¨et normÃ¡l ploÅ¡ek
 			int i;
 			int fN = item->FaceNum * 3;
 
@@ -3184,12 +3184,12 @@ void D3DF_AutoNormals(int index, double angle)
 				i++;
 			}
 
-// normalizace referenèního úhlu
+// normalizace referenÃ¨nÃ­ho Ãºhlu
 			while (angle >= pi2) angle -= pi2;
 			while (angle < 0) angle += pi2;
 			if (angle >= pi) angle = pi2 - angle;
 
-// úschova normál
+// Ãºschova normÃ¡l
 			if (angle != 0)
 			{
 				double cosa = cos(angle);
@@ -3198,14 +3198,14 @@ void D3DF_AutoNormals(int index, double angle)
 				D3DVECTOR* norm0 = (D3DVECTOR*)MemGet(vN * sizeof(D3DVECTOR));
 				MemCopy(norm0, item->Normal, vN * sizeof(D3DVECTOR));
 
-// buffer pouitıch ploch
-// ... nebylo vidìt ádné zlepšení a vznikaly zlomy na málo odchılenıch plochách
+// buffer pouÅ¾itÃ½ch ploch
+// ... nebylo vidÃ¬t Å¾Ã¡dnÃ© zlepÅ¡enÃ­ a vznikaly zlomy na mÃ¡lo odchÃ½lenÃ½ch plochÃ¡ch
 //#define USEDMAX 100
 
 //				D3DVECTOR* used = (D3DVECTOR*)MemGet(USEDMAX * sizeof(D3DVECTOR));
 //				int usedN;
 
-// cyklus pøes všechny vrcholy
+// cyklus pÃ¸es vÅ¡echny vrcholy
 				for (i = 0; i < vN; i++)
 				{
 					D3DVECTOR* v = item->Vertex + i;
@@ -3218,7 +3218,7 @@ void D3DF_AutoNormals(int index, double angle)
 //					usedN = 1;
 //					used[0] = *n1;
 
-// vyhledání stejnıch vrcholù
+// vyhledÃ¡nÃ­ stejnÃ½ch vrcholÃ¹
 					D3DVECTOR* v2 = item->Vertex;
 
 					for (int i2 = 0; i2 < vN; i2++)
@@ -3230,7 +3230,7 @@ void D3DF_AutoNormals(int index, double angle)
 							(*(DWORD*)(&v->z) == *(DWORD*)(&v2->z)))
 						{
 
-// vıpoèet úhlu normál
+// vÃ½poÃ¨et Ãºhlu normÃ¡l
 							D3DVECTOR* n2 = norm0 + i2;
 
 //							double a = acos(n1->x*n2->x + n1->y*n2->y + n1->z*n2->z);
@@ -3240,7 +3240,7 @@ void D3DF_AutoNormals(int index, double angle)
 							if (a >= cosa)
 							{
 
-// kontrola, zda byla rovina ji pouita
+// kontrola, zda byla rovina jiÅ¾ pouÅ¾ita
 //								BOOL used0 = FALSE;
 
 //								for (int u = 0; u < usedN; u++)
@@ -3252,7 +3252,7 @@ void D3DF_AutoNormals(int index, double angle)
 //									}
 //								}
 
-// pøidání normály
+// pÃ¸idÃ¡nÃ­ normÃ¡ly
 //								if (!used0)
 //								{
 //									if (usedN < USEDMAX)
@@ -3272,7 +3272,7 @@ void D3DF_AutoNormals(int index, double angle)
 						v2++;
 					}
 
-// normalizace normály
+// normalizace normÃ¡ly
 					if (smooth)
 					{
 						double r = sqrt(nn.x*nn.x + nn.y*nn.y + nn.z*nn.z);
@@ -3291,14 +3291,14 @@ void D3DF_AutoNormals(int index, double angle)
 					}
 				}
 
-// zrušení bufferu úschovy normál
+// zruÅ¡enÃ­ bufferu Ãºschovy normÃ¡l
 				MemFree(norm0);
 //				MemFree(used);
 			}
 		}
 
 
-// obsluha potomkù
+// obsluha potomkÃ¹
 		int nxt = item->Child;
 
 		while (nxt >= 0)
@@ -3310,7 +3310,7 @@ void D3DF_AutoNormals(int index, double angle)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vygenerování automatické barvy, je-li vypnuto osvìtlení
+// vygenerovÃ¡nÃ­ automatickÃ© barvy, je-li vypnuto osvÃ¬tlenÃ­
 
 void D3DF_GenAutoCol(D3DFITEM* item)
 {
@@ -3320,10 +3320,10 @@ void D3DF_GenAutoCol(D3DFITEM* item)
 		int n = item->VertNum;
 		ASSERT(n > 0);
 
-// zrušení bufferu vrcholù (musí se pøegenerovat)
+// zruÅ¡enÃ­ bufferu vrcholÃ¹ (musÃ­ se pÃ¸egenerovat)
 		pD3Reset(item);
 
-// vytvoøení bufferù pro barvy
+// vytvoÃ¸enÃ­ bufferÃ¹ pro barvy
 		DWORD* dst = item->VertCol;
 		if (dst == NULL)
 		{
@@ -3338,7 +3338,7 @@ void D3DF_GenAutoCol(D3DFITEM* item)
 			item->VertColF = dst2;
 		}
 
-// pøíprava barvy
+// pÃ¸Ã­prava barvy
 		DWORD dif = item->Diffuse;
 		if (dif == MAXDWORD) dif--;
 		item->AutoCol = dif;
@@ -3346,7 +3346,7 @@ void D3DF_GenAutoCol(D3DFITEM* item)
 		D3DCOLORVALUE colf;
 		BGRFloat(dif, &colf);
 
-// uloení bufferù barev
+// uloÅ¾enÃ­ bufferÃ¹ barev
 		for (; n > 0; n--)
 		{
 			*dst = col;
@@ -3355,7 +3355,7 @@ void D3DF_GenAutoCol(D3DFITEM* item)
 			dst2++;
 		}
 
-// nastavení adres i pro klony
+// nastavenÃ­ adres i pro klony
 		dst = item->VertCol;
 		dst2 = item->VertColF;
 
@@ -3374,7 +3374,7 @@ void D3DF_GenAutoCol(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// tabulka blending operací pro Direct3D
+// tabulka blending operacÃ­ pro Direct3D
 
 int	BlendTabD3D[11] =
 {
@@ -3388,11 +3388,11 @@ int	BlendTabD3D[11] =
 	D3DBLEND_INVDESTCOLOR,	//	BLEND_INVDSTCOLOR	= 7,	// (1-Rd, 1-Gd, 1-Bd, 1-Ad)
 	D3DBLEND_DESTALPHA,		//	BLEND_DSTALPHA		= 8,	// (Ad, Ad, Ad, Ad)
 	D3DBLEND_INVDESTALPHA,	//	BLEND_INVDSTALPHA	= 9,	// (1-Ad, 1-Ad, 1-Ad, 1-Ad)
-	D3DBLEND_SRCALPHASAT	//	BLEND_SATURATE		= 10,	// menší ze sloek SRC/DST
+	D3DBLEND_SRCALPHASAT	//	BLEND_SATURATE		= 10,	// menÅ¡Ã­ ze sloÅ¾ek SRC/DST
 };
 
 ////////////////////////////////////////////////////////////////////
-// tabulka blending operací pro OpenGL
+// tabulka blending operacÃ­ pro OpenGL
 
 int	BlendTabOGL[11] =
 {
@@ -3406,11 +3406,11 @@ int	BlendTabOGL[11] =
 	GL_ONE_MINUS_DST_COLOR,	//	BLEND_INVDSTCOLOR	= 7,	// (1-Rd, 1-Gd, 1-Bd, 1-Ad)
 	GL_DST_ALPHA,			//	BLEND_DSTALPHA		= 8,	// (Ad, Ad, Ad, Ad)
 	GL_ONE_MINUS_DST_ALPHA,	//	BLEND_INVDSTALPHA	= 9,	// (1-Ad, 1-Ad, 1-Ad, 1-Ad)
-	GL_SRC_ALPHA_SATURATE	//	BLEND_SATURATE		= 10,	// menší ze sloek SRC/DST
+	GL_SRC_ALPHA_SATURATE	//	BLEND_SATURATE		= 10,	// menÅ¡Ã­ ze sloÅ¾ek SRC/DST
 };
 
 ////////////////////////////////////////////////////////////////////
-// pøíprava bodu dopadu stínu
+// pÃ¸Ã­prava bodu dopadu stÃ­nu
 
 void PrepShadowPoint(D3DFITEM* item, D3DVECTOR* posun)
 {
@@ -3450,15 +3450,15 @@ void PrepShadowPoint(D3DFITEM* item, D3DVECTOR* posun)
 }
 
 ////////////////////////////////////////////////////////////////////
-// renderování stínu (rodiè musí bıt ji obslouenı)
+// renderovÃ¡nÃ­ stÃ­nu (rodiÃ¨ musÃ­ bÃ½t jiÅ¾ obslouÅ¾enÃ½)
 
 void D3DF_RendShadow(D3DFITEM* item)
 {
-// pøíprava vektoru dopadu
+// pÃ¸Ã­prava vektoru dopadu
 	D3DVECTOR posun;
 	PrepShadowPoint(item, &posun);
 
-// test, zda je vektor dopadu zmìnìn
+// test, zda je vektor dopadu zmÃ¬nÃ¬n
 	if ((*(int*)(&posun.x) != *(int*)(&item->ShadowPoint.x)) ||
 		(*(int*)(&posun.y) != *(int*)(&item->ShadowPoint.y)) ||
 		(*(int*)(&posun.z) != *(int*)(&item->ShadowPoint.z)) ||
@@ -3469,7 +3469,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 		item->ShadowPoint.y = posun.y;
 		item->ShadowPoint.z = posun.z;
 
-// transformace vzdálenosti na souøadnice objektu
+// transformace vzdÃ¡lenosti na souÃ¸adnice objektu
 		posun.x = (float)(item->MatrixWorld._41 + posun.x);
 		posun.y = (float)(item->MatrixWorld._42 + posun.y);
 		posun.z = (float)(item->MatrixWorld._43 + posun.z);
@@ -3481,10 +3481,10 @@ void D3DF_RendShadow(D3DFITEM* item)
 
 		VecXMat(&posun, &posun, &m);
 
-// pøíprava vektoru svìtla
+// pÃ¸Ã­prava vektoru svÃ¬tla
 		D3DVECTOR smer;
 
-		if (item->Culling == 2)	// viditelná zadní strana plošky
+		if (item->Culling == 2)	// viditelnÃ¡ zadnÃ­ strana ploÅ¡ky
 		{
 			smer.x = posun.x;
 			smer.y = posun.y;
@@ -3509,20 +3509,20 @@ void D3DF_RendShadow(D3DFITEM* item)
 			smer.y = -1;
 		}
 
-// zrušení starıch bufferù
+// zruÅ¡enÃ­ starÃ½ch bufferÃ¹
 		MemFree(item->ShadowFan); item->ShadowFan = NULL;
 		MemFree(item->ShadowVolume); item->ShadowVolume = NULL;
 
-// zrušení bufferu stínu
+// zruÅ¡enÃ­ bufferu stÃ­nu
 		pD3SReset(item);
 
-// je pøegenerování objektu
+// je pÃ¸egenerovÃ¡nÃ­ objektu
 		int i;
 		if (item->ShadeVert == NULL)
 		{
 			if (item->FaceNum == 0) return;
 
-// zrušení starıch bufferù
+// zruÅ¡enÃ­ starÃ½ch bufferÃ¹
 			MemFree(item->ShadeFace);
 			MemFree(item->ShadeNorm);
 			MemFree(item->ShadeEdgeV);
@@ -3531,7 +3531,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 			MemFree(item->ShadeNext);
 			MemFree(item->ShadeLeft);
 
-// vytvoøení novıch bufferù
+// vytvoÃ¸enÃ­ novÃ½ch bufferÃ¹
 			i = item->FaceNum;
 			item->ShadeFace = (int*)MemGet(i*3 * sizeof(int));
 			item->ShadeNorm = (D3DVECTOR*)MemGet(i * sizeof(D3DVECTOR));
@@ -3541,7 +3541,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 			item->ShadeNext = (int*)MemGet(i*3 * sizeof(int));
 			item->ShadeLeft = (int*)MemGet(i*3 * sizeof(int));
 
-// inicializace bufferù vrcholù a plošek
+// inicializace bufferÃ¹ vrcholÃ¹ a ploÅ¡ek
 			D3DVECTOR* vert = (D3DVECTOR*)MemGet(item->VertNum * sizeof(D3DVECTOR));
 			int* face = item->ShadeFace;
 			int* facesrc = item->Face;
@@ -3588,7 +3588,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 			vert = (D3DVECTOR*)MemSize(vert, vertn * sizeof(D3DVECTOR));
 			item->ShadeVert = vert;
 
-// vıpoèet normál plošek
+// vÃ½poÃ¨et normÃ¡l ploÅ¡ek
 			D3DVECTOR* norm = item->ShadeNorm;
 			face = item->ShadeFace;
 
@@ -3650,7 +3650,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 				face += 3;
 			}
 
-// vyhledání protichùdnıch (paralelních) hran
+// vyhledÃ¡nÃ­ protichÃ¹dnÃ½ch (paralelnÃ­ch) hran
 			int n = item->FaceNum*3;
 			int* edgen = item->ShadeEdgeN;
 
@@ -3674,7 +3674,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 				{
 					if ((edgev[2*j] == v2) &&
 						(edgev[2*j+1] == v1) &&
-						((edgen[j] < 0) || (edgen[j] == i)))	// spoleènou hranu mohou mít jen 2 plošky
+						((edgen[j] < 0) || (edgen[j] == i)))	// spoleÃ¨nou hranu mohou mÃ­t jen 2 ploÅ¡ky
 					{
 						edgen[i] = j;
 						break;
@@ -3682,7 +3682,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 				}
 			}
 
-// vyhledání hrany smìrem doleva
+// vyhledÃ¡nÃ­ hrany smÃ¬rem doleva
 			edgen = item->ShadeEdgeN;
 			int* left = item->ShadeLeft;
 
@@ -3697,7 +3697,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 				{
 					k = i;
 
-					int ss = 100;		// ochrana proti zacyklení (povrch mùe bıt nespojitı)
+					int ss = 100;		// ochrana proti zacyklenÃ­ (povrch mÃ¹Å¾e bÃ½t nespojitÃ½)
 
 					while (edgen[k] >= 0)
 					{
@@ -3718,7 +3718,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 				left[i] = k;
 			}
 
-// vyhledání následující hrany (z 2. vrcholu vpravo)
+// vyhledÃ¡nÃ­ nÃ¡sledujÃ­cÃ­ hrany (z 2. vrcholu vpravo)
 			int* next = item->ShadeNext;
 			edgen = item->ShadeEdgeN;
 			left = item->ShadeLeft;
@@ -3734,7 +3734,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 
 					int p = k;
 
-					int ss = 100;		// ochrana proti zacyklení (povrch mùe bıt nespojitı)
+					int ss = 100;		// ochrana proti zacyklenÃ­ (povrch mÃ¹Å¾e bÃ½t nespojitÃ½)
 
 					while (edgen[k] >= 0)
 					{
@@ -3761,7 +3761,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 				next++;
 			}
 
-// aktualizace klonù
+// aktualizace klonÃ¹
 			D3DFITEM* item2 = item;
 
 			for (;;)
@@ -3787,7 +3787,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 			}
 		}
 
-// zjištìní osvícení plošek
+// zjiÅ¡tÃ¬nÃ­ osvÃ­cenÃ­ ploÅ¡ek
 		char* edges = item->ShadeEdgeS;
 
 		for (i=item->FaceNum*3; i>0; i--)
@@ -3825,7 +3825,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 			edgen += 3;
 		}
 
-// sestavení modelu stínu
+// sestavenÃ­ modelu stÃ­nu
 		int n = item->FaceNum;
 		int* fan = (int*)MemGet(n *sizeof(int*));
 		item->ShadowFan = fan;
@@ -3852,7 +3852,7 @@ void D3DF_RendShadow(D3DFITEM* item)
 				int k = i;
 				int p = k;
 
-				for (int s = 100; s > 0; s--)	// mùe zabloudit napø. v pøípadì duplikované plošky (nevrátí se na pùvodní hranu)
+				for (int s = 100; s > 0; s--)	// mÃ¹Å¾e zabloudit napÃ¸. v pÃ¸Ã­padÃ¬ duplikovanÃ© ploÅ¡ky (nevrÃ¡tÃ­ se na pÃ¹vodnÃ­ hranu)
 				{
 					if (edges[k] == 1)
 					{
@@ -3909,11 +3909,11 @@ void D3DF_RendShadow(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// renderování jednoho objektu
+// renderovÃ¡nÃ­ jednoho objektu
 
 void D3DF_Render1(D3DFITEM* item)
 {
-// kontrola pøeteèení vrcholù
+// kontrola pÃ¸eteÃ¨enÃ­ vrcholÃ¹
 	if (item->VertNum > MaxVertexNum)
 	{
 		item->AktSector = TRUE;
@@ -3921,7 +3921,7 @@ void D3DF_Render1(D3DFITEM* item)
 		return;
 	}
 
-// pøíprava poloky s parametry (pro sektor se pouije originál)
+// pÃ¸Ã­prava poloÅ¾ky s parametry (pro sektor se pouÅ¾ije originÃ¡l)
 	D3DFITEM* item2 = item;
 	while (item2->Type == D3DFTYPE_SECTOR)
 	{
@@ -3929,12 +3929,12 @@ void D3DF_Render1(D3DFITEM* item)
 		ASSERT(D3DF_IsValid(item2->Parent));
 	}
 
-// materiál a textura od rodièe
-	int parmat = item2->ParMat;			// návrat materiálu od rodièe
-	DWORD pardif = item2->ParDif;		// návrat difusní barvy od rodièe
-	int partext = item2->ParText;		// návrat textury od rodièe
+// materiÃ¡l a textura od rodiÃ¨e
+	int parmat = item2->ParMat;			// nÃ¡vrat materiÃ¡lu od rodiÃ¨e
+	DWORD pardif = item2->ParDif;		// nÃ¡vrat difusnÃ­ barvy od rodiÃ¨e
+	int partext = item2->ParText;		// nÃ¡vrat textury od rodiÃ¨e
 
-// nastavení materiálu objektu
+// nastavenÃ­ materiÃ¡lu objektu
 	if (item2->MatSource == MATSOURCE_PARENT)
 	{
 		D3DM_Set(parmat);
@@ -3944,24 +3944,24 @@ void D3DF_Render1(D3DFITEM* item)
 		D3DM_Set(item2->Material);
 	}
 
-// cyklus pøes stupnì textur
+// cyklus pÃ¸es stupnÃ¬ textur
 	int i;
 	for (i = 0; i < MaxTextureSimult; i++)
 	{
 
-// test, zda je stupeò povolen
+// test, zda je stupeÃ² povolen
 		int colorop = item2->ColorOp[i];
 		int texture = item2->Texture[i];
 
 		if (colorop != D3DTOP_DISABLE)
 		{
 
-// textura nebude vyuita
+// textura nebude vyuÅ¾ita
 			if (!item2->UseText[i])
 			{
 				texture = -1;
 			}
-// zdìdìní textury od rodièe
+// zdÃ¬dÃ¬nÃ­ textury od rodiÃ¨e
 			else
 			{
 				if ((i == 0) && (item2->MatSource == MATSOURCE_PARENT) && (texture < 0))
@@ -3970,7 +3970,7 @@ void D3DF_Render1(D3DFITEM* item)
 				}
 			}
 				
-// pøednastavení Mip filtru (je potøeba znát kvùli generování textur)
+// pÃ¸ednastavenÃ­ Mip filtru (je potÃ¸eba znÃ¡t kvÃ¹li generovÃ¡nÃ­ textur)
 			if (texture >= 0)
 			{
 				SetD3DMinMipFilter(item2->MinFilter[i], item2->MipFilter[i], i);
@@ -3981,16 +3981,16 @@ void D3DF_Render1(D3DFITEM* item)
 			}
 		}
 
-// vypnutí textury, je-li stupeò vypnut
+// vypnutÃ­ textury, je-li stupeÃ² vypnut
 		else
 		{
 			texture = -1;
 		}
 
-// nastavení textury (musí bıt za nastavením materiálu, starší verze DirectX ruší texturu)
+// nastavenÃ­ textury (musÃ­ bÃ½t za nastavenÃ­m materiÃ¡lu, starÅ¡Ã­ verze DirectX ruÅ¡Ã­ texturu)
 		D3DT_Akt(texture, i);
 
-// nastavení barevnıch operací
+// nastavenÃ­ barevnÃ½ch operacÃ­
 		int colorarg1 = item2->ColorArg1[i];
 		int colorarg2 = item2->ColorArg2[i];
 
@@ -4005,7 +4005,7 @@ void D3DF_Render1(D3DFITEM* item)
 			pD3SetColorOp(colorop, colorarg1, colorarg2, i);
 		}
 
-// vypnutí ostatních stupòù
+// vypnutÃ­ ostatnÃ­ch stupÃ²Ã¹
 		if (colorop == D3DTOP_DISABLE)
 		{
 			for (int j = i+1; j < MAX_STAGES; j++)
@@ -4037,7 +4037,7 @@ void D3DF_Render1(D3DFITEM* item)
 			break;
 		}
 
-// nastavení alfa operací
+// nastavenÃ­ alfa operacÃ­
 		int alphaop = item2->AlphaOp[i];
 		int alphaarg1 = item2->AlphaArg1[i];
 		int alphaarg2 = item2->AlphaArg2[i];
@@ -4053,7 +4053,7 @@ void D3DF_Render1(D3DFITEM* item)
 			pD3SetAlphaOp(alphaop, alphaarg1, alphaarg2, i);
 		}
 
-// nastavení adresování textur
+// nastavenÃ­ adresovÃ¡nÃ­ textur
 		int adru = item2->AddressU[i];
 		int adrv = item2->AddressV[i];
 
@@ -4065,7 +4065,7 @@ void D3DF_Render1(D3DFITEM* item)
 			pD3SetAddress(adru, adrv, i);
 		}
 
-// nastavení barvy okolí textur
+// nastavenÃ­ barvy okolÃ­ textur
 //			int border = item2->Border[i];
 
 //			if (border != D3DBorder[i])
@@ -4075,7 +4075,7 @@ void D3DF_Render1(D3DFITEM* item)
 //				pD3SetBorder(item2, i);
 //			}
 
-// nastavení zjemnìní vzdálenıch textur
+// nastavenÃ­ zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
 		float bias = item2->Bias[i];
 
 		if (bias != D3DBias[i])
@@ -4085,14 +4085,14 @@ void D3DF_Render1(D3DFITEM* item)
 		}
 	}
 
-// nastavení faktoru textur
+// nastavenÃ­ faktoru textur
 	if (item2->TFactor != D3DTFactor)
 	{
 		D3DTFactor = item2->TFactor;
 		pD3SetTFactor(item2);
 	}
 
-// nastavení Z zápisu
+// nastavenÃ­ Z zÃ¡pisu
 	BOOL zwrite = item2->ZWrite;
 	if (zwrite != D3DZWrite)
 	{
@@ -4100,7 +4100,7 @@ void D3DF_Render1(D3DFITEM* item)
 		pD3SetZWrite(zwrite);
 	}
 
-// nastavení Z funkce
+// nastavenÃ­ Z funkce
 	int ztest = item2->ZTest;
 	if ((ztest == D3DCMP_ALWAYS) && !zwrite) ztest = 0;
 
@@ -4110,7 +4110,7 @@ void D3DF_Render1(D3DFITEM* item)
 		pD3SetZFunc(ztest);
 	}
 
-// úschova poètu zjištìnıch stupòù
+// Ãºschova poÃ¨tu zjiÅ¡tÃ¬nÃ½ch stupÃ²Ã¹
 	if (item->Stages != i)
 	{
 		if (item->Stages > 0) D3DF_Modi(item->Index);
@@ -4124,12 +4124,12 @@ void D3DF_Render1(D3DFITEM* item)
 		} while (item2 != item);
 	}
 
-// pøepínaèe se musí nastavit a po aktivaci textury - tam mohou bıt modifikovány (viz glBlendTexture)
+// pÃ¸epÃ­naÃ¨e se musÃ­ nastavit aÅ¾ po aktivaci textury - tam mohou bÃ½t modifikovÃ¡ny (viz glBlendTexture)
 	if ((item2->Type == D3DFTYPE_PICTURE) || (item2->Type == D3DFTYPE_LENSFLARE))
 	{
 		bool oldfill = D3DWireframeGlobal;
 		D3DWireframeGlobal = true;
-		SetD3DWireframe(true);					// zapnutí módu vıplnì
+		SetD3DWireframe(true);					// zapnutÃ­ mÃ³du vÃ½plnÃ¬
 		D3DWireframeGlobal = oldfill;
 	}
 	else
@@ -4137,7 +4137,7 @@ void D3DF_Render1(D3DFITEM* item)
 		SetD3DWireframe(item2->Wireframe);
 	}
 
-	SetD3DFogOn((item2->Type != D3DFTYPE_PICTURE) && (item2->Type != D3DFTYPE_LENSFLARE));	// pro obrázek se mlha vypne
+	SetD3DFogOn((item2->Type != D3DFTYPE_PICTURE) && (item2->Type != D3DFTYPE_LENSFLARE));	// pro obrÃ¡zek se mlha vypne
 	SetD3DLightOn(item2->Lighton);
 	SetD3DShades(item2->Shades);
 
@@ -4150,7 +4150,7 @@ void D3DF_Render1(D3DFITEM* item)
 		SetD3DCulling(item2->Culling);
 	}
 
-// nastavení filtrù textur
+// nastavenÃ­ filtrÃ¹ textur
 	for (int j = 0; j < i; j++)
 	{
 		if ((item2->Texture[j] >= 0) || ((j == 0) && (item2->MatSource == MATSOURCE_PARENT) && (partext >= 0)))
@@ -4160,7 +4160,7 @@ void D3DF_Render1(D3DFITEM* item)
 		}
 	}
 
-// vygenerování automatické barvy, je-li vypnuto osvìtlení
+// vygenerovÃ¡nÃ­ automatickÃ© barvy, je-li vypnuto osvÃ¬tlenÃ­
 	if (!D3DLightOnAkt)
 	{
 		item->Diffuse = item2->Diffuse;
@@ -4177,7 +4177,7 @@ void D3DF_Render1(D3DFITEM* item)
 		}
 	}
 
-// aktualizace blending módu
+// aktualizace blending mÃ³du
 	if ((item2->SrcBlend != D3DSrcBlend) || (item2->DstBlend != D3DDstBlend))
 	{
 		D3DSrcBlend = item2->SrcBlend;
@@ -4185,20 +4185,20 @@ void D3DF_Render1(D3DFITEM* item)
 		pD3AktBlend(item2);
 	}
 
-// aktualizace referenèní úrovnì alfa
+// aktualizace referenÃ¨nÃ­ ÃºrovnÃ¬ alfa
 	if (item2->AlphaRef2 != D3DAlphaRef)
 	{
 		D3DAlphaRef = item2->AlphaRef2;
 		pD3AktAlfa(item2);
 	}
 
-// vyrenderování objektu (pro sektor pøechodnì mód materiálu od originálu)
+// vyrenderovÃ¡nÃ­ objektu (pro sektor pÃ¸echodnÃ¬ mÃ³d materiÃ¡lu od originÃ¡lu)
 	MATSOURCE oldmat = item->MatSource;
 	item->MatSource = item2->MatSource;
 	pD3Render(item);
 	item->MatSource = oldmat;
 
-// renderování stínu
+// renderovÃ¡nÃ­ stÃ­nu
 	if (item->IsShadow && D3DShadows && D3DL_IsValid(0))
 	{
 		ShadowItems[ShadowNum] = item;
@@ -4207,14 +4207,14 @@ void D3DF_Render1(D3DFITEM* item)
 }
 
 ////////////////////////////////////////////////////////////////////
-// renderování objektù (pro Direct3D musí bıt BeginScene a EndScene!)
+// renderovÃ¡nÃ­ objektÃ¹ (pro Direct3D musÃ­ bÃ½t BeginScene a EndScene!)
 
 void D3DF_Render()
 {
-// aktualizace posledních zmìn (pojistka aby se dodateènì nezmìnila adresa bufferu)
+// aktualizace poslednÃ­ch zmÃ¬n (pojistka aby se dodateÃ¨nÃ¬ nezmÃ¬nila adresa bufferu)
 	D3DF_AktMatrix();
 
-// inicializace bufferu seznamu poloek
+// inicializace bufferu seznamu poloÅ¾ek
 	for (int i = 0; i < MAX_RENDGROUP; i++)
 	{
 		RendNum[i] = 0;
@@ -4234,88 +4234,88 @@ void D3DF_Render()
 
 	RendMax = D3DF_Max;
 
-// vıchozí polokou bude scéna
-	int index = 0;								// vıchozí index = scéna
-	D3DFITEM* item = D3DF_Data;					// adresa poloky scény
-	int parmat = item->Material;				// implicitní materiál od rodièe
-	DWORD pardif = item->Diffuse;				// difusní barva od rodièe
-	int partext = item->Texture[0];				// implicitní textura od rodièe
-	double scale = 1;							// mìøítko hranice od rodièe
-	bool parclip = true;						// pøíznak nutnosti testovat viditelnost
-	bool aktclip = true;						// nutné testovat viditelnost poloky
-	bool visible = true;						// poloka je viditelná
-	BOOL parsector = false;						// pøíznak sektorù od rodièe
+// vÃ½chozÃ­ poloÅ¾kou bude scÃ©na
+	int index = 0;								// vÃ½chozÃ­ index = scÃ©na
+	D3DFITEM* item = D3DF_Data;					// adresa poloÅ¾ky scÃ©ny
+	int parmat = item->Material;				// implicitnÃ­ materiÃ¡l od rodiÃ¨e
+	DWORD pardif = item->Diffuse;				// difusnÃ­ barva od rodiÃ¨e
+	int partext = item->Texture[0];				// implicitnÃ­ textura od rodiÃ¨e
+	double scale = 1;							// mÃ¬Ã¸Ã­tko hranice od rodiÃ¨e
+	bool parclip = true;						// pÃ¸Ã­znak nutnosti testovat viditelnost
+	bool aktclip = true;						// nutnÃ© testovat viditelnost poloÅ¾ky
+	bool visible = true;						// poloÅ¾ka je viditelnÃ¡
+	BOOL parsector = false;						// pÃ¸Ã­znak sektorÃ¹ od rodiÃ¨e
 
-// cyklus pøes všechny objekty ve scénì (objekt scény se nerenderuje)
+// cyklus pÃ¸es vÅ¡echny objekty ve scÃ©nÃ¬ (objekt scÃ©ny se nerenderuje)
 	for (;;) 
 	{
 
-// vnoøení do potomka (pozn.: potomek nemùe mít index=0, to je scéna)
+// vnoÃ¸enÃ­ do potomka (pozn.: potomek nemÃ¹Å¾e mÃ­t index=0, to je scÃ©na)
 		int index2 = item->Child;
 
 		if ((index2 >= 0) && item->Visible && visible)
 		{
-			item->ParMat = parmat;				// úschova materiálu od rodièe
-			item->ParDif = pardif;				// úschova difusní barvy od rodièe
-			item->ParText = partext;			// úschova textury od rodièe
-			item->ParScale = scale;				// úschova mìøítka od rodièe
-			item->ParClip = parclip;			// úschova pøíznaku nutnosti testovat viditelnost
-			item->ParSector = parsector;		// úschova pøíznaku pouití sektorù
+			item->ParMat = parmat;				// Ãºschova materiÃ¡lu od rodiÃ¨e
+			item->ParDif = pardif;				// Ãºschova difusnÃ­ barvy od rodiÃ¨e
+			item->ParText = partext;			// Ãºschova textury od rodiÃ¨e
+			item->ParScale = scale;				// Ãºschova mÃ¬Ã¸Ã­tka od rodiÃ¨e
+			item->ParClip = parclip;			// Ãºschova pÃ¸Ã­znaku nutnosti testovat viditelnost
+			item->ParSector = parsector;		// Ãºschova pÃ¸Ã­znaku pouÅ¾itÃ­ sektorÃ¹
 
 			if (item->MatSource == MATSOURCE_FRAME)
 			{
-				parmat = item->Material;		// novı materiál od rodièe
-				pardif = item->Diffuse;			// nová difusní barva od rodièe
+				parmat = item->Material;		// novÃ½ materiÃ¡l od rodiÃ¨e
+				pardif = item->Diffuse;			// novÃ¡ difusnÃ­ barva od rodiÃ¨e
 			}
 
 			if ((item->MatSource != MATSOURCE_PARENT) || (item->Texture[0] >= 0))
 			{
-				partext = item->Texture[0];		// nová textura od rodièe
+				partext = item->Texture[0];		// novÃ¡ textura od rodiÃ¨e
 			}
 
-			scale *= item->ScaleB;				// nové mìøítko pro hranici
-			parclip = aktclip;					// potomek dìdí pøíznak oøezávání
-			parsector = item->UseSector;		// pøíznak pouívání sektorù
+			scale *= item->ScaleB;				// novÃ© mÃ¬Ã¸Ã­tko pro hranici
+			parclip = aktclip;					// potomek dÃ¬dÃ­ pÃ¸Ã­znak oÃ¸ezÃ¡vÃ¡nÃ­
+			parsector = item->UseSector;		// pÃ¸Ã­znak pouÅ¾Ã­vÃ¡nÃ­ sektorÃ¹
 
 			index = index2;						// index potomka
 		}
 
-// jinak pøejítí k sousedu stejné úrovnì (pozn.: soused nemùe mít index=0, to je scéna)
+// jinak pÃ¸ejÃ­tÃ­ k sousedu stejnÃ© ÃºrovnÃ¬ (pozn.: soused nemÃ¹Å¾e mÃ­t index=0, to je scÃ©na)
 		else
 		{
-			if (index == 0) break;				// scéna nemá následujícího souseda
-			index = item->Next;					// následující soused
+			if (index == 0) break;				// scÃ©na nemÃ¡ nÃ¡sledujÃ­cÃ­ho souseda
+			index = item->Next;					// nÃ¡sledujÃ­cÃ­ soused
 
-// není-li soused, pøejítí k rodièi a jeho následující poloce
-			while (index < 0)					// není další soused?
+// nenÃ­-li soused, pÃ¸ejÃ­tÃ­ k rodiÃ¨i a jeho nÃ¡sledujÃ­cÃ­ poloÅ¾ce
+			while (index < 0)					// nenÃ­ dalÅ¡Ã­ soused?
 			{
-				index = item->Parent;			// návrat k dalšímu rodièi
-				if (index == 0) break;			// je ji opìt scéna, mùeme skonèit
+				index = item->Parent;			// nÃ¡vrat k dalÅ¡Ã­mu rodiÃ¨i
+				if (index == 0) break;			// je jiÅ¾ opÃ¬t scÃ©na, mÃ¹Å¾eme skonÃ¨it
 
-				item = D3DF_Data + index;		// adresa rodièe
-				index = item->Next;				// další soused rodièe
+				item = D3DF_Data + index;		// adresa rodiÃ¨e
+				index = item->Next;				// dalÅ¡Ã­ soused rodiÃ¨e
 
-				parmat = item->ParMat;			// návrat materiálu od rodièe
-				pardif = item->ParDif;			// návrat difusní barvy od rodièe
-				partext = item->ParText;		// návrat textury od rodièe
-				scale = item->ParScale;			// návrat mìøítka od rodièe
-				parclip = item->ParClip;		// návrat pøíznaku nutnosti testovat viditelnost
-				parsector = item->ParSector;	// návrat pøíznaku pouívání sektorù
+				parmat = item->ParMat;			// nÃ¡vrat materiÃ¡lu od rodiÃ¨e
+				pardif = item->ParDif;			// nÃ¡vrat difusnÃ­ barvy od rodiÃ¨e
+				partext = item->ParText;		// nÃ¡vrat textury od rodiÃ¨e
+				scale = item->ParScale;			// nÃ¡vrat mÃ¬Ã¸Ã­tka od rodiÃ¨e
+				parclip = item->ParClip;		// nÃ¡vrat pÃ¸Ã­znaku nutnosti testovat viditelnost
+				parsector = item->ParSector;	// nÃ¡vrat pÃ¸Ã­znaku pouÅ¾Ã­vÃ¡nÃ­ sektorÃ¹
 			}
 
-			if (index == 0) break;				// je ji opìt scéna, mùeme skonèit
+			if (index == 0) break;				// je jiÅ¾ opÃ¬t scÃ©na, mÃ¹Å¾eme skonÃ¨it
 		}
 		aktclip = parclip;
 		visible = true;
 
-// adresa poloky
+// adresa poloÅ¾ky
 		item = D3DF_Data + index;
 
-// kontrola viditelnosti poloky
+// kontrola viditelnosti poloÅ¾ky
 		if (item->Visible)
 		{
 
-// kontrola vzdálenosti pro LOD
+// kontrola vzdÃ¡lenosti pro LOD
 			float sx = item->MatrixWorld._41 - D3DF_Data[1].MatrixWorld._41;
 			float sy = item->MatrixWorld._42 - D3DF_Data[1].MatrixWorld._42;
 			float sz = item->MatrixWorld._43 - D3DF_Data[1].MatrixWorld._43;
@@ -4333,7 +4333,7 @@ void D3DF_Render()
 					((item->Type == D3DFTYPE_SECTOR) && parsector))
 				{
 				
-// pøíprava transformovaného støedu a polomìru hranièní koule
+// pÃ¸Ã­prava transformovanÃ©ho stÃ¸edu a polomÃ¬ru hraniÃ¨nÃ­ koule
 					if (parclip)
 					{
 						sx = item->MatrixWorld._41;
@@ -4342,7 +4342,7 @@ void D3DF_Render()
 						r = (float)(item->BoundR * scale * item->ScaleB);
 						if (item->IsShadow && D3DShadows) r = (float)(r * 2);
 
-// test, zda je objekt v pohledovém kuelu
+// test, zda je objekt v pohledovÃ©m kuÅ¾elu
 						PLANE* p = D3DFrustum;
 						float d;
 
@@ -4369,21 +4369,21 @@ void D3DF_Render()
 					if (visible)
 					{
 
-// materiál a textura zdìdìné od rodièe
-						item->ParMat = parmat;				// úschova materiálu od rodièe
-						item->ParDif = pardif;				// úschova difusní barvy od rodièe
-						item->ParText = partext;			// úschova textury od rodièe
-						item->ParScale = scale;				// úschova mìøítka od rodièe
-						item->ParClip = parclip;			// úschova pøíznaku nutnosti testovat viditelnost
-						item->AktClip = aktclip;			// poloku je nutné testovat
+// materiÃ¡l a textura zdÃ¬dÃ¬nÃ© od rodiÃ¨e
+						item->ParMat = parmat;				// Ãºschova materiÃ¡lu od rodiÃ¨e
+						item->ParDif = pardif;				// Ãºschova difusnÃ­ barvy od rodiÃ¨e
+						item->ParText = partext;			// Ãºschova textury od rodiÃ¨e
+						item->ParScale = scale;				// Ãºschova mÃ¬Ã¸Ã­tka od rodiÃ¨e
+						item->ParClip = parclip;			// Ãºschova pÃ¸Ã­znaku nutnosti testovat viditelnost
+						item->AktClip = aktclip;			// poloÅ¾ku je nutnÃ© testovat
 
-// pro 2D objekt upøesnìní natoèení
+// pro 2D objekt upÃ¸esnÃ¬nÃ­ natoÃ¨enÃ­
 						if (item->Type == D3DFTYPE_DECAL)
 						{
 							D3DF_AktMatLink(item);
 						}
 
-// pro skupinu pøíprava vektoru dopadu
+// pro skupinu pÃ¸Ã­prava vektoru dopadu
 						if (item->Type == D3DFTYPE_GROUP)
 						{
 							PrepShadowPoint(item, &(item->ShadowPoint));
@@ -4391,21 +4391,21 @@ void D3DF_Render()
 						else
 						{
 
-// test platnosti poloky
+// test platnosti poloÅ¾ky
 							if ((item->Vertex != NULL) &&
 								(item->Normal != NULL) &&
 								(item->TextUV != NULL) &&
 								!item->UseSector)
 							{
 
-// automatické mapování textur (mapují se sektory namísto celıch objektù)
+// automatickÃ© mapovÃ¡nÃ­ textur (mapujÃ­ se sektory namÃ­sto celÃ½ch objektÃ¹)
 								if (item->AutoMap != NULL)
 								{
 									D3DTextMap(item);
-									D3DF_AktMatUnlink(item);	// nesmí zmìnit adresu bufferu sektorù
+									D3DF_AktMatUnlink(item);	// nesmÃ­ zmÃ¬nit adresu bufferu sektorÃ¹
 								}
 
-// uloení objektu do seznamu k renderování
+// uloÅ¾enÃ­ objektu do seznamu k renderovÃ¡nÃ­
 								if(item->Type == D3DFTYPE_LENSFLARE)
 								{
 									item->AktClip = true;
@@ -4420,7 +4420,7 @@ void D3DF_Render()
 				else
 				{
 
-// úschova 2D obrázku
+// Ãºschova 2D obrÃ¡zku
 					if(item->Type == D3DFTYPE_PICTURE)
 					{
 						item->AktClip = true;
@@ -4437,20 +4437,20 @@ void D3DF_Render()
 		}
 	}
 
-// aktualizace natoèení DECAL objektù (nesmí zmìnit adresu bufferu objektù!!!!)
+// aktualizace natoÃ¨enÃ­ DECAL objektÃ¹ (nesmÃ­ zmÃ¬nit adresu bufferu objektÃ¹!!!!)
 	D3DF_AktMatrix();
 
-// cyklus pøes skupiny k renderování
+// cyklus pÃ¸es skupiny k renderovÃ¡nÃ­
 	for (int group = 0; group < MAX_RENDGROUP; group++)
 	{
 		D3DFITEM** items;
 		int n = RendNum[group] - 1;
 
-// skupina bude tøídìná
+// skupina bude tÃ¸Ã­dÃ¬nÃ¡
 		if ((n > 0) && RendSort[group])
 		{
 
-// pøíprava vzdáleností objektù
+// pÃ¸Ã­prava vzdÃ¡lenostÃ­ objektÃ¹
 			items = RendItems[group];
 
 			for (i = n; i >= 0; i--)
@@ -4481,7 +4481,7 @@ void D3DF_Render()
 				items++;
 			}
 
-// tøídìní objektù v seznamu
+// tÃ¸Ã­dÃ¬nÃ­ objektÃ¹ v seznamu
 			items = RendItems[group];
 
 			for (i = 0; i < n;)
@@ -4514,7 +4514,7 @@ void D3DF_Render()
 			}
 		}
 
-// vyrenderování objektù
+// vyrenderovÃ¡nÃ­ objektÃ¹
 		items = RendItems[group];
 
 		for (i = n; i >= 0; i--)
@@ -4523,7 +4523,7 @@ void D3DF_Render()
 			items++;
 		}
 
-// vyrenderování stínù
+// vyrenderovÃ¡nÃ­ stÃ­nÃ¹
 		if ((group == RENDTRANS-1) && (ShadowNum > 0))
 		{
 			pD3SetColorOp(D3DTOP_MODULATE, D3DTA_TEXTURE, D3DTA_CURRENT, 0);
@@ -4537,8 +4537,8 @@ void D3DF_Render()
 			pD3SetZFunc(D3DCMP_LESSEQUAL);
 
 			SetD3DShades(false);
-			SetD3DLightOn(false);					// osvìtlení vypnuto
-			SetD3DFogOn(FALSE);						// vypnutí mlhy
+			SetD3DLightOn(false);					// osvÃ¬tlenÃ­ vypnuto
+			SetD3DFogOn(FALSE);						// vypnutÃ­ mlhy
 
 			if (D3DSBufferFormatOK)
 			{
@@ -4568,7 +4568,7 @@ void D3DF_Render()
 				pD3SetSFunc(D3DCMP_NOTEQUAL, 0, 0xffffffff);
 				pD3SetSOp(D3DSTENCILOP_KEEP, D3DSTENCILOP_KEEP, D3DSTENCILOP_KEEP);
 
-				SetD3DCullingKorig(1);						// zobrazena pouze pøední strana
+				SetD3DCullingKorig(1);						// zobrazena pouze pÃ¸ednÃ­ strana
 
 				D3DZTest = 0;
 				pD3SetZFunc(0);
@@ -4600,4 +4600,4 @@ void D3DF_Render()
 
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------

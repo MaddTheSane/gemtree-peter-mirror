@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhranÌ - nulovÈ							*
+*							3D rozhran√≠ - nulov√©							*
 *																			*
 \***************************************************************************/
 
@@ -11,157 +11,157 @@
 void D3No();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace obsluhy videomÛd˘ (vracÌ TRUE=OK)
+// inicializace obsluhy videom√≥d√π (vrac√≠ TRUE=OK)
 
 bool D3NoInitVideoModes();
 
 /////////////////////////////////////////////////////////////////////////////
-// start videomÛdu (vracÌ TRUE=OK)
+// start videom√≥du (vrac√≠ TRUE=OK)
 
 bool D3NoStartVMode(VIDEOMODEITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ videomÛdu
+// ukon√®en√≠ videom√≥du
 
 inline void D3NoStopVMode() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vymaz·nÌ renderovacÌ plochy
+// vymaz√°n√≠ renderovac√≠ plochy
 
 inline void D3NoClear() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ renderovacÌho bufferu
+// zobrazen√≠ renderovac√≠ho bufferu
 
 inline void D3NoDisp() { D3No(); }
 	
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po zmÏnÏ velikosti
+// aktualizace viewportu po zm√¨n√¨ velikosti
 
 inline void D3NoSizeView() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po p¯esunu
+// aktualizace viewportu po p√∏esunu
 
 inline void D3NoMoveView() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ funkce za¯ÌzenÌ
+// ukon√®en√≠ funkce za√∏√≠zen√≠
 
 inline void D3NoStop() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekËnÌ matice
+// aktualizace projek√®n√≠ matice
 
 inline void D3NoAktProj() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pohledovÈ matice
+// aktualizace pohledov√© matice
 
 inline void D3NoAktView() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ renderov·nÌ scÈny
+// zah√°jen√≠ renderov√°n√≠ sc√©ny
 
 inline void D3NoBegin() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ renderov·nÌ scÈny
+// ukon√®en√≠ renderov√°n√≠ sc√©ny
 
 inline void D3NoEnd() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ jednoho objektu
+// vyrenderov√°n√≠ jednoho objektu
 
 void D3NoRender(D3DFITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 inline void D3NoReset(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ stÌnu objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ st√≠nu objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 inline void D3NoSReset(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË vyplÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® vypl√≤ov√°n√≠ ploch
 
 inline void D3NoAktWireframe() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË osvÏtlenÌ
+// aktualizovat p√∏ep√≠na√® osv√¨tlen√≠
 
 inline void D3NoAktLightOn() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË plynulÈho stinov·nÌ
+// aktualizovat p√∏ep√≠na√® plynul√©ho stinov√°n√≠
 
 inline void D3NoAktShades() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË odstraÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® odstra√≤ov√°n√≠ ploch
 
 inline void D3NoAktCulling() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zvÏtöen˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zv√¨t≈°en√Ωch textur
 
 void D3NoAktMagFilter(int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zmenöen˝ch a vzd·len˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zmen≈°en√Ωch a vzd√°len√Ωch textur
 
 inline void D3NoAktMinMipFilter(int stage) { D3NoAktMagFilter(stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace poloûky svÏtla
+// aktualizace polo≈æky sv√¨tla
 
 void D3NoAktLight(int inx, D3DLITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ materi·lu
+// nastaven√≠ materi√°lu
 
 void D3NoSetMaterial(D3DMITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky textury p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ polo≈æky textury p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3NoTextureRes(D3DTITEM* item);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ a zapnutÌ textury
+// nastaven√≠ a zapnut√≠ textury
 
 void D3NoTextureSet(D3DTITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ p˘vodnÌ textury
+// zapnut√≠ p√πvodn√≠ textury
 
 inline void D3NoTextureOn(D3DTITEM* item, int stage) { D3NoTextureSet(item, stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ textury
+// vypnut√≠ textury
 
 inline void D3NoTextureOff(int stage) { D3NoAktMagFilter(stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky materi·lu
+// resetov√°n√≠ polo≈æky materi√°lu
 
 inline void D3NoMatReset(D3DMITEM* item) { D3NoSetMaterial(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky svÏtla
+// resetov√°n√≠ polo≈æky sv√¨tla
 
 inline void D3NoLightReset(int inx, D3DLITEM* item) { D3NoAktLight(inx, item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvÏtlenÌ
+// aktualizace ambient osv√¨tlen√≠
 
 inline void D3NoAktAmbient() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// voln· videopamÏù
+// voln√° videopam√¨¬ù
 
 int D3NoFree();
 
@@ -171,7 +171,7 @@ int D3NoFree();
 inline void D3NoAktFog() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ mlhy
+// zapnut√≠ mlhy
 
 inline void D3NoFogOn(BOOL on) { D3NoAktMagFilter(on); }
 
@@ -181,88 +181,88 @@ inline void D3NoFogOn(BOOL on) { D3NoAktMagFilter(on); }
 inline void D3NoAktState() { D3No(); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace blending operacÌ objektu
+// aktualizace blending operac√≠ objektu
 
 inline void D3NoAktBlend(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenËnÌ ˙rovnÏ alfa
+// aktualizace referen√®n√≠ √∫rovn√¨ alfa
 
 inline void D3NoAktAlfa(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace barev
+// nastaven√≠ operace barev
 
 void D3NoSetColorOp(int op, int arg1, int arg2, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace alfa
+// nastaven√≠ operace alfa
 
 inline void D3NoSetAlphaOp(int op, int arg1, int arg2, int stage) { D3NoSetColorOp(op, arg1, arg2, stage); }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ adresov·nÌ textur
+// nastaven√≠ adresov√°n√≠ textur
 
 void D3NoSetAddress(int adru, int adrv, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy okolÌ textur
+// nastaven√≠ barvy okol√≠ textur
 
 //void D3NoSetBorder(D3DFITEM* item, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ zjemnÏnÌ vzd·len˝ch textur
+// nastaven√≠ zjemn√¨n√≠ vzd√°len√Ωch textur
 
 void D3NoSetBias(float bias, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ barvy faktoru textur
+// nastaven√≠ barvy faktoru textur
 
 inline void D3NoSetTFactor(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z funkce (1 aû 8, v kÛdu DirectX, 0=vypnuto)
+// nastaven√≠ Z funkce (1 a≈æ 8, v k√≥du DirectX, 0=vypnuto)
 
 inline void D3NoSetZFunc(int func) { D3NoAktMagFilter(func); }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z z·pisu
+// nastaven√≠ Z z√°pisu
 
 inline void D3NoSetZWrite(BOOL write)  { D3NoAktMagFilter(write); }
 
 /////////////////////////////////////////////////////////////////////////////
-// povolenÌ stencil operacÌ
+// povolen√≠ stencil operac√≠
 
 inline void D3NoSEnable(BOOL enable) { D3NoAktMagFilter(enable); }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil operacÌ
+// nastaven√≠ stencil operac√≠
 
 inline void D3NoSetSOp(int fail, int zfail, int zpass) { D3NoSetAddress(fail, zfail, zpass); }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil testu
+// nastaven√≠ stencil testu
 
 inline void D3NoSetSFunc(int func, int ref, DWORD mask) { D3NoSetAddress(func, ref, mask); }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ z·pisovÈ masky do stencil bufferu
+// nastaven√≠ z√°pisov√© masky do stencil bufferu
 
 inline void D3NoSetSMask(DWORD mask) { D3NoAktMagFilter(mask); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ stÌnu jednoho objektu
+// vyrenderov√°n√≠ st√≠nu jednoho objektu
 
 inline void D3NoShadow(D3DFITEM* item) { D3NoRender(item); }
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ stÌn˘
+// vykreslen√≠ st√≠n√π
 
 inline void D3NoShadows() { D3No(); }
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 
 /////////////////////////////////////////////////////////////////////////////

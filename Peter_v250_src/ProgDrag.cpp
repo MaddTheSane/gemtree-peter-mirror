@@ -3,67 +3,67 @@
 
 /***************************************************************************\
 *																			*
-*							Obsluha taení ikon								*
+*							Obsluha taÅ¾enÃ­ ikon								*
 *																			*
 \***************************************************************************/
 
-// parametry taení
-BOOL		Draging = FALSE;			// pøíznak probíhajícího taení
-int			DragIconWidth;				// šíøka taené ikony
-int			DragIconHeight;				// vıška taené ikony
-int			DragHotSpotX;				// bod uchycení prvku X
-int			DragHotSpotY;				// bod uchycení prvku Y
-int			DragTestSpotX;				// testovací bod X (støed ikony)
-int			DragTestSpotY;				// testovací bod Y (støed ikony)
-HIMAGELIST	DragImageList;				// seznam obrázkù pro taení
-BOOL		DragRight;					// pøíznak pravého tlaèítka
-BOOL		DragLeftInt;				// pøíznak levého tlaèítka + interní prvek
-BOOL		DragCopy;					// pøíznak kopírování poloky
-BOOL		DragDelete;					// pøíznak rušení poloky
+// parametry taÅ¾enÃ­
+BOOL		Draging = FALSE;			// pÃ¸Ã­znak probÃ­hajÃ­cÃ­ho taÅ¾enÃ­
+int			DragIconWidth;				// Å¡Ã­Ã¸ka taÅ¾enÃ© ikony
+int			DragIconHeight;				// vÃ½Å¡ka taÅ¾enÃ© ikony
+int			DragHotSpotX;				// bod uchycenÃ­ prvku X
+int			DragHotSpotY;				// bod uchycenÃ­ prvku Y
+int			DragTestSpotX;				// testovacÃ­ bod X (stÃ¸ed ikony)
+int			DragTestSpotY;				// testovacÃ­ bod Y (stÃ¸ed ikony)
+HIMAGELIST	DragImageList;				// seznam obrÃ¡zkÃ¹ pro taÅ¾enÃ­
+BOOL		DragRight;					// pÃ¸Ã­znak pravÃ©ho tlaÃ¨Ã­tka
+BOOL		DragLeftInt;				// pÃ¸Ã­znak levÃ©ho tlaÃ¨Ã­tka + internÃ­ prvek
+BOOL		DragCopy;					// pÃ¸Ã­znak kopÃ­rovÃ¡nÃ­ poloÅ¾ky
+BOOL		DragDelete;					// pÃ¸Ã­znak ruÅ¡enÃ­ poloÅ¾ky
 
-// zdroj taení
-HWND		DragSrcTree;				// strom zdroje taení
-CBufProg*	DragSrcBuf;					// buffer zdroje taení
-int			DragSrcBufID;				// ID bufferu zdroje taení
-int			DragSrcParent;				// index rodièe zdroje taení (-1=root)
-HTREEITEM	DragSrcHItem;				// handle zdroje taení
-int			DragSrcIndex;				// index zdroje taení
-PROGITEM*	DragSrcItem;				// poloka zdroje taŸení
-int			DragSrcFunc;				// funkce zdroje taení
-int			DragSrcSrcMask;				// maska zdrojovıch vlastností zdroje taení
-int			DragSrcDstMask;				// maska cílovıch vlastností zdroje taení
-int			DragSrcParam;				// parametry poloky zdroje taení
+// zdroj taÅ¾enÃ­
+HWND		DragSrcTree;				// strom zdroje taÅ¾enÃ­
+CBufProg*	DragSrcBuf;					// buffer zdroje taÅ¾enÃ­
+int			DragSrcBufID;				// ID bufferu zdroje taÅ¾enÃ­
+int			DragSrcParent;				// index rodiÃ¨e zdroje taÅ¾enÃ­ (-1=root)
+HTREEITEM	DragSrcHItem;				// handle zdroje taÅ¾enÃ­
+int			DragSrcIndex;				// index zdroje taÅ¾enÃ­
+PROGITEM*	DragSrcItem;				// poloÅ¾ka zdroje taÅ¸enÃ­
+int			DragSrcFunc;				// funkce zdroje taÅ¾enÃ­
+int			DragSrcSrcMask;				// maska zdrojovÃ½ch vlastnostÃ­ zdroje taÅ¾enÃ­
+int			DragSrcDstMask;				// maska cÃ­lovÃ½ch vlastnostÃ­ zdroje taÅ¾enÃ­
+int			DragSrcParam;				// parametry poloÅ¾ky zdroje taÅ¾enÃ­
 
-// cíl taení
-HWND		DragDstTree;				// strom cíle taení
-CBufProg*	DragDstBuf;					// buffer cíle taení
-int			DragDstBufID;				// ID bufferu cíle taení
-int			DragDstParent;				// index rodièe cíle taení (-1=root)
-HTREEITEM	DragDstHParent;				// handle rodièe cíle taení
-int			DragDstPoz;					// index pozice cíle taení (-1=zaèátek, -2=konec)
-HTREEITEM	DragDstHPoz;				// handle pozice cíle taení (NULL=zaèátek nebo konec)
-int			DragDstFunc;				// funkce rodièe cíle taení
-int			DragDstSrcMask;				// maska zdrojovıch vlastností rodièe cíle taení
-int			DragDstDstMask;				// maska cílovıch vlastností rodièe cíle taení
-int			DragDstParam;				// parametry poloky rodièe cíle taení
+// cÃ­l taÅ¾enÃ­
+HWND		DragDstTree;				// strom cÃ­le taÅ¾enÃ­
+CBufProg*	DragDstBuf;					// buffer cÃ­le taÅ¾enÃ­
+int			DragDstBufID;				// ID bufferu cÃ­le taÅ¾enÃ­
+int			DragDstParent;				// index rodiÃ¨e cÃ­le taÅ¾enÃ­ (-1=root)
+HTREEITEM	DragDstHParent;				// handle rodiÃ¨e cÃ­le taÅ¾enÃ­
+int			DragDstPoz;					// index pozice cÃ­le taÅ¾enÃ­ (-1=zaÃ¨Ã¡tek, -2=konec)
+HTREEITEM	DragDstHPoz;				// handle pozice cÃ­le taÅ¾enÃ­ (NULL=zaÃ¨Ã¡tek nebo konec)
+int			DragDstFunc;				// funkce rodiÃ¨e cÃ­le taÅ¾enÃ­
+int			DragDstSrcMask;				// maska zdrojovÃ½ch vlastnostÃ­ rodiÃ¨e cÃ­le taÅ¾enÃ­
+int			DragDstDstMask;				// maska cÃ­lovÃ½ch vlastnostÃ­ rodiÃ¨e cÃ­le taÅ¾enÃ­
+int			DragDstParam;				// parametry poloÅ¾ky rodiÃ¨e cÃ­le taÅ¾enÃ­
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení taeni
+// zahÃ¡jenÃ­ taÅ¾eni
 
 void ProgOnBeginDrag(HWND hWnd, TV_ITEM* tvi, int x, int y, BOOL right)
 {
-// kontrola, zda neprobíhá taení
+// kontrola, zda neprobÃ­hÃ¡ taÅ¾enÃ­
 	ASSERT(!Draging);
 	if (Draging) return;
 
-// kontrola, zda je reim editace
+// kontrola, zda je reÅ¾im editace
 	ASSERT(ProgMode);
 	if (!ProgMode) return;
 
-// úschova pøíznaku pravého tlaèítka
+// Ãºschova pÃ¸Ã­znaku pravÃ©ho tlaÃ¨Ã­tka
 	DragRight = right;
 
-// pøíprava zdrojového okna a zdrojového bufferu
+// pÃ¸Ã­prava zdrojovÃ©ho okna a zdrojovÃ©ho bufferu
 	DragSrcTree = hWnd;
 	ASSERT(::IsWindow(hWnd));
 	DragSrcBufID = BufProgIDFromHandle(DragSrcTree);
@@ -71,11 +71,11 @@ void ProgOnBeginDrag(HWND hWnd, TV_ITEM* tvi, int x, int y, BOOL right)
 	if (DragSrcBufID < 0) return;
 	DragSrcBuf = &BufProg[DragSrcBufID];
 
-// úschova rozmìrù ikon
+// Ãºschova rozmÃ¬rÃ¹ ikon
 	DragIconWidth = DragSrcBuf->IconWidth();
 	DragIconHeight = DragSrcBuf->IconHeight();
 
-// nalezení poloky
+// nalezenÃ­ poloÅ¾ky
 	DragSrcHItem = tvi->hItem;
 	DragSrcIndex = DragSrcBuf->Find(DragSrcHItem);
 	ASSERT(DragSrcIndex >= 0);
@@ -84,7 +84,7 @@ void ProgOnBeginDrag(HWND hWnd, TV_ITEM* tvi, int x, int y, BOOL right)
 	DragSrcItem = &((*DragSrcBuf)[DragSrcIndex]);
 	DragSrcParent = DragSrcItem->Parent;
 
-// úschova vlastností zdrojové poloky
+// Ãºschova vlastnostÃ­ zdrojovÃ© poloÅ¾ky
 	DragSrcFunc = DragSrcItem->Func;
 	DragSrcSrcMask = DragSrcItem->SrcMask;
 	DragSrcDstMask = DragSrcItem->DstMask;
@@ -122,25 +122,25 @@ void ProgOnBeginDrag(HWND hWnd, TV_ITEM* tvi, int x, int y, BOOL right)
 		}
 	}
 
-// kontrola, jestli to není zakázanı prvek
+// kontrola, jestli to nenÃ­ zakÃ¡zanÃ½ prvek
 	if (DragSrcParam & PR_NOMOVE) return;
 
-// naètení souøadnic textu prvku
-	RECT	rc;							// souøadnice taŸeného prvku
+// naÃ¨tenÃ­ souÃ¸adnic textu prvku
+	RECT	rc;							// souÃ¸adnice taÅ¸enÃ©ho prvku
 	*(HTREEITEM*)(&rc) = DragSrcHItem;
 	BOOL result = ::SendMessage(DragSrcTree, TVM_GETITEMRECT, TRUE, (LPARAM)&rc);
 	ASSERT(result);
 	if (!result) return;
 
-// vıpoèet bodu uchycení taeného prvku
+// vÃ½poÃ¨et bodu uchycenÃ­ taÅ¾enÃ©ho prvku
 	DragHotSpotX = x - (rc.left - 3 - DragIconWidth);
 	DragHotSpotY = y - rc.top;
 
-// vıpoèet testovacího bodu
+// vÃ½poÃ¨et testovacÃ­ho bodu
 	DragTestSpotX = DragIconWidth/4*3;
 	DragTestSpotY = - DragIconHeight/4;
 
-// vygenerování taené ikony
+// vygenerovÃ¡nÃ­ taÅ¾enÃ© ikony
 //	DragImageList = (HIMAGELIST)::SendMessage(DragSrcTree, TVM_CREATEDRAGIMAGE, 0, (LPARAM)DragSrcHItem);
 //	if (DragImageList == NULL) return;
 
@@ -187,20 +187,20 @@ void ProgOnBeginDrag(HWND hWnd, TV_ITEM* tvi, int x, int y, BOOL right)
 	ASSERT(DragImageList != NULL);
 	if (DragImageList == NULL) return;
 
-// nastavení pøíznaku zahájení taení (odteï se ji nesmí pøerušit)
+// nastavenÃ­ pÃ¸Ã­znaku zahÃ¡jenÃ­ taÅ¾enÃ­ (odteÃ¯ se jiÅ¾ nesmÃ­ pÃ¸eruÅ¡it)
 	Draging = TRUE;
 
-// pøednastavení neplatného cíle
-	DragDstTree = NULL;					// neplatnı cílovı strom	
-	DragDstParent = -1;					// neplatná cílová poloka
+// pÃ¸ednastavenÃ­ neplatnÃ©ho cÃ­le
+	DragDstTree = NULL;					// neplatnÃ½ cÃ­lovÃ½ strom	
+	DragDstParent = -1;					// neplatnÃ¡ cÃ­lovÃ¡ poloÅ¾ka
 
-// vıbìr cílového prvku
+// vÃ½bÃ¬r cÃ­lovÃ©ho prvku
 	VERIFY(::SendMessage(DragSrcTree, TVM_SELECTITEM, TVGN_DROPHILITE, (LPARAM)DragSrcHItem));
 
-// zapnutí zobrazení obrázku taení (bez uzamykání okna)
+// zapnutÃ­ zobrazenÃ­ obrÃ¡zku taÅ¾enÃ­ (bez uzamykÃ¡nÃ­ okna)
 	::ImageList_DragShowNolock(TRUE);
 
-// pøi taení skupiny z okna tøíd se musí nejdøíve zjistit, zda obsahuje potomky
+// pÃ¸i taÅ¾enÃ­ skupiny z okna tÃ¸Ã­d se musÃ­ nejdÃ¸Ã­ve zjistit, zda obsahuje potomky
 	if ((DragSrcBufID == BufClsID) &&
 		(DragSrcParent >= 0) && 
 		(DragSrcFunc == IDF_GROUP) &&
@@ -210,22 +210,22 @@ void ProgOnBeginDrag(HWND hWnd, TV_ITEM* tvi, int x, int y, BOOL right)
 		DragSrcItem = &((*DragSrcBuf)[DragSrcIndex]);
 	}
 
-// korekce jen kopírovanıch prvkù
-	DragLeftInt = FALSE;			// není levé tlaèítko + interní prvek
+// korekce jen kopÃ­rovanÃ½ch prvkÃ¹
+	DragLeftInt = FALSE;			// nenÃ­ levÃ© tlaÃ¨Ã­tko + internÃ­ prvek
 	if (DragSrcParam & (PR_INTERN | PR_LOCK | PR_LOCK_DEP))
 	{
-		if (!DragRight)				// bylo levé tlaèítko?
+		if (!DragRight)				// bylo levÃ© tlaÃ¨Ã­tko?
 		{
-			DragLeftInt = TRUE;		// je levé tlaèítko + interní prvek
+			DragLeftInt = TRUE;		// je levÃ© tlaÃ¨Ã­tko + internÃ­ prvek
 		}
-		DragRight = TRUE;			// bude kopírování jako pravé tlaèítko
+		DragRight = TRUE;			// bude kopÃ­rovÃ¡nÃ­ jako pravÃ© tlaÃ¨Ã­tko
 	}
 
-// pøíprava pøíznaku kopírování
-	DragCopy = TRUE;				// bude kopírování
-	DragDelete = !DragRight;		// pro levé tlaèítko zrušení staré poloky
+// pÃ¸Ã­prava pÃ¸Ã­znaku kopÃ­rovÃ¡nÃ­
+	DragCopy = TRUE;				// bude kopÃ­rovÃ¡nÃ­
+	DragDelete = !DragRight;		// pro levÃ© tlaÃ¨Ã­tko zruÅ¡enÃ­ starÃ© poloÅ¾ky
 
-// zapnutí kurzoru pro taení
+// zapnutÃ­ kurzoru pro taÅ¾enÃ­
 	if (DragRight)
 	{
 		CurAkt = CurCopy;
@@ -236,43 +236,43 @@ void ProgOnBeginDrag(HWND hWnd, TV_ITEM* tvi, int x, int y, BOOL right)
 	}
 	::SetCursor(CurAkt);
 
-// vytvoøení nového obrázku taení
+// vytvoÃ¸enÃ­ novÃ©ho obrÃ¡zku taÅ¾enÃ­
 	::ImageList_SetDragCursorImage(DragImageList, 0, 0, 0);
 
-// zahájení operace taení
+// zahÃ¡jenÃ­ operace taÅ¾enÃ­
 	::ImageList_BeginDrag(DragImageList, 0, 0, 0);
 
-// zrušení vıbìru cíle
+// zruÅ¡enÃ­ vÃ½bÃ¬ru cÃ­le
 	::SendMessage(DragSrcTree, TVM_SELECTITEM, TVGN_DROPHILITE, (LPARAM)NULL);
 
-// zahájení operace taení, zákaz aktualizace okna
+// zahÃ¡jenÃ­ operace taÅ¾enÃ­, zÃ¡kaz aktualizace okna
 	::ImageList_DragEnter(NULL, MouseScreen.x - DragHotSpotX, MouseScreen.y - DragHotSpotY);
 
-// pøetaení obrázku na aktuální pozici myši
+// pÃ¸etaÅ¾enÃ­ obrÃ¡zku na aktuÃ¡lnÃ­ pozici myÅ¡i
 	::ImageList_DragMove(MouseScreen.x - DragHotSpotX, MouseScreen.y - DragHotSpotY);
 
-// zahájení zachytávání myši
+// zahÃ¡jenÃ­ zachytÃ¡vÃ¡nÃ­ myÅ¡i
 	::SetCapture(MainFrame);
 };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení cílového okna, nad kterım je taeno (vrací FALSE=nenalezeno)
+// nalezenÃ­ cÃ­lovÃ©ho okna, nad kterÃ½m je taÅ¾eno (vracÃ­ FALSE=nenalezeno)
 
 BOOL SrcDropWin(int x, int y)
 {
-// pøednastavení neplatného cíle
-	DragDstTree = NULL;					// neplatnı cílovı strom	
-	DragDstParent = -1;					// neplatná cílová poloka
+// pÃ¸ednastavenÃ­ neplatnÃ©ho cÃ­le
+	DragDstTree = NULL;					// neplatnÃ½ cÃ­lovÃ½ strom	
+	DragDstParent = -1;					// neplatnÃ¡ cÃ­lovÃ¡ poloÅ¾ka
 	
-// nalezení okna, nad kterım je taeno
+// nalezenÃ­ okna, nad kterÃ½m je taÅ¾eno
 	POINT pt;
 	pt.x = x;
 	pt.y = y;
 	HWND wnd = ::ChildWindowFromPointEx(MainFrame, pt, CWP_SKIPINVISIBLE | CWP_SKIPDISABLED);
 	if (wnd == NULL) return FALSE;
 
-// pøi taení interního prvku levım tlaèítkem zákaz stejného okna
+// pÃ¸i taÅ¾enÃ­ internÃ­ho prvku levÃ½m tlaÃ¨Ã­tkem zÃ¡kaz stejnÃ©ho okna
 	if (DragLeftInt)
 	{
 		if (wnd == DragSrcTree)
@@ -290,7 +290,7 @@ BOOL SrcDropWin(int x, int y)
 		return TRUE;
 	}
 
-// okno globálních objektù
+// okno globÃ¡lnÃ­ch objektÃ¹
 	if (wnd == TreeObj)
 	{
 		DragDstTree = TreeObj;
@@ -299,7 +299,7 @@ BOOL SrcDropWin(int x, int y)
 		return TRUE;
 	}
 
-// okno lokálních objektù
+// okno lokÃ¡lnÃ­ch objektÃ¹
 	if (wnd == TreeLoc)
 	{
 		DragDstTree = TreeLoc;
@@ -317,7 +317,7 @@ BOOL SrcDropWin(int x, int y)
 		return TRUE;
 	}
 
-// okno tøíd
+// okno tÃ¸Ã­d
 	if (wnd == TreeCls)
 	{
 		DragDstTree = TreeCls;
@@ -360,31 +360,31 @@ BOOL SrcDropWin(int x, int y)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení poloky pod kurzorem ve stromu (NULL=konec ROOT, -1=zaèátek ROOT)
+// nalezenÃ­ poloÅ¾ky pod kurzorem ve stromu (NULL=konec ROOT, -1=zaÃ¨Ã¡tek ROOT)
 
 HTREEITEM ItemTreePos(int x, int y, int height)
 {
-// lokální promìnné
-	HTREEITEM item;						// nalezená poloka
-	TV_HITTESTINFO hti;					// struktura pro nalezení poloky
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
+	HTREEITEM item;						// nalezenÃ¡ poloÅ¾ka
+	TV_HITTESTINFO hti;					// struktura pro nalezenÃ­ poloÅ¾ky
 
-// nalezení poloky na dané souøadnici
+// nalezenÃ­ poloÅ¾ky na danÃ© souÃ¸adnici
 	hti.pt.x = x;
 	hti.pt.y = y;
 	item = (HTREEITEM) ::SendMessage(DragDstTree, TVM_HITTEST, 0, (LPARAM)&hti);
 	if (item != NULL) return item;
 
-// novı pokus, je-li kurzor pøíliš vlevo èi pøíliš vpravo
+// novÃ½ pokus, je-li kurzor pÃ¸Ã­liÅ¡ vlevo Ã¨i pÃ¸Ã­liÅ¡ vpravo
 	if (hti.flags & (TVHT_TOLEFT | TVHT_TORIGHT))
 	{
 		x = 20;
-		hti.pt.x = 20;					// asi tak nìjak na zaèátek øádku
+		hti.pt.x = 20;					// asi tak nÃ¬jak na zaÃ¨Ã¡tek Ã¸Ã¡dku
 		hti.pt.y = y;
 		item = (HTREEITEM) ::SendMessage(DragDstTree, TVM_HITTEST, 0, (LPARAM)&hti);
 		if (item != NULL) return item;
 	}
 
-// je-li kurzor nad horním okrajem, musíme najít pøedcházející skrytou poloku
+// je-li kurzor nad hornÃ­m okrajem, musÃ­me najÃ­t pÃ¸edchÃ¡zejÃ­cÃ­ skrytou poloÅ¾ku
 	if (hti.flags & TVHT_ABOVE)
 	{
 		item = (HTREEITEM) ::SendMessage(DragDstTree, TVM_GETNEXTITEM, TVGN_FIRSTVISIBLE, 0);
@@ -394,7 +394,7 @@ HTREEITEM ItemTreePos(int x, int y, int height)
 		return item;
 	}
 
-// je-li kurzor pøíliš dole, zkusíme ještì jeden pokus o trochu vıš
+// je-li kurzor pÃ¸Ã­liÅ¡ dole, zkusÃ­me jeÅ¡tÃ¬ jeden pokus o trochu vÃ½Å¡
 	if (item == NULL)
 	{
 		y -= height/4*3;
@@ -403,39 +403,39 @@ HTREEITEM ItemTreePos(int x, int y, int height)
 		item = (HTREEITEM) ::SendMessage(DragDstTree, TVM_HITTEST, 0, (LPARAM)&hti);
 	}
 
-// návrat vısledku (a u je jakıkoliv)
+// nÃ¡vrat vÃ½sledku (aÅ¾ uÅ¾ je jakÃ½koliv)
 	return item;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test povolení cíle taení - operace pøidání k rodièi (FALSE=nepovoleno)
+// test povolenÃ­ cÃ­le taÅ¾enÃ­ - operace pÃ¸idÃ¡nÃ­ k rodiÃ¨i (FALSE=nepovoleno)
 
 BOOL TestDropItem()
 {
-// do zamknuté poloky nelze táhnout
+// do zamknutÃ© poloÅ¾ky nelze tÃ¡hnout
 	if (DragDstParam & (PR_LOCK | PR_LOCK_DEP)) return FALSE;
 
-// rozlišení podle cílového bufferu
+// rozliÅ¡enÃ­ podle cÃ­lovÃ©ho bufferu
 	switch (DragDstBufID)
 	{
 
-//-------------- globální a lokální objekty
+//-------------- globÃ¡lnÃ­ a lokÃ¡lnÃ­ objekty
 	case BufObjID:
 	case BufLocID:
 
-// z editoru nelze nikdy táhnout
+// z editoru nelze nikdy tÃ¡hnout
 		if (DragSrcBufID == BufEdiID) return FALSE;
 
-// z druhého okna objektù nelze táhnout
+// z druhÃ©ho okna objektÃ¹ nelze tÃ¡hnout
 		if (DragSrcBufID == (BufLocID ^ BufObjID ^ DragDstBufID)) return FALSE;
 
-// do velikosti seznamu lze pøetáhnout èíslice
+// do velikosti seznamu lze pÃ¸etÃ¡hnout Ã¨Ã­slice
 		if ((DragDstFunc == IDF_LIST_SIZE) &&
 			(DragSrcFunc >= IDF_0) &&
 			(DragSrcFunc <= IDF_9)) return TRUE;
 
-// komentáø lze poloit kamkoliv (kromì 1 parametru), do komentáøe nelze táhnout nic (kromì další komentáø)
+// komentÃ¡Ã¸ lze poloÅ¾it kamkoliv (kromÃ¬ 1 parametru), do komentÃ¡Ã¸e nelze tÃ¡hnout nic (kromÃ¬ dalÅ¡Ã­ komentÃ¡Ã¸)
 		if (DragSrcFunc == IDF_COMMENT)
 		{
 			return (((DragDstParam & PR_ONE) == 0) && 
@@ -447,7 +447,7 @@ BOOL TestDropItem()
 		}
 		if (DragDstFunc == IDF_COMMENT) return FALSE;
 
-// z okna struktur lze pøetáhnout jen skupinu a seznam (ne do seznamu ani parametrù)
+// z okna struktur lze pÃ¸etÃ¡hnout jen skupinu a seznam (ne do seznamu ani parametrÃ¹)
 		if (DragSrcBufID == BufStrID)
 		{
 			return (((DragSrcFunc == IDF_GROUP) ||
@@ -461,7 +461,7 @@ BOOL TestDropItem()
 					((DragDstParam & PR_ONE) == 0));
 		}
 
-// do seznamu lze pøetáhnout datové promìnné
+// do seznamu lze pÃ¸etÃ¡hnout datovÃ© promÃ¬nnÃ©
 		if (DragDstFunc == IDF_LIST)
 		{
 			switch (DragSrcFunc)
@@ -481,15 +481,15 @@ BOOL TestDropItem()
 			return FALSE;
 		}
 
-// skupinu, seznam ani funkci nelze umístit do vstupních/vıstupních promìnnıch
+// skupinu, seznam ani funkci nelze umÃ­stit do vstupnÃ­ch/vÃ½stupnÃ­ch promÃ¬nnÃ½ch
 		if (((DragSrcFunc == IDF_GROUP) || (DragSrcFunc == IDF_LIST) || (DragSrcFunc == IDF_FNC)) &&
 			((DragDstFunc == IDF_PAR) || (DragDstFunc == IDF_OUT))) return FALSE;
 
-// test, zda je povolen pouze jeden parametr (vıstupní promìnná)
+// test, zda je povolen pouze jeden parametr (vÃ½stupnÃ­ promÃ¬nnÃ¡)
 		if ((DragDstParam & PR_ONE) && (DragDstParent >= 0) &&
 			((*DragDstBuf)[DragDstParent].Child >= 0)) return FALSE;
 
-// do skupiny, ROOT (pøíp. parametrù) lze pøetáhnout promìnné, skupinu a seznam
+// do skupiny, ROOT (pÃ¸Ã­p. parametrÃ¹) lze pÃ¸etÃ¡hnout promÃ¬nnÃ©, skupinu a seznam
 		if ((DragDstFunc == IDF_GROUP) || (DragDstParent == -1) || 
 				(DragDstFunc == IDF_PAR) || (DragDstFunc == IDF_OUT))
 		{
@@ -518,61 +518,61 @@ BOOL TestDropItem()
 
 	case BufEdiID:
 
-// ze tøíd nelze nikdy táhnout
+// ze tÃ¸Ã­d nelze nikdy tÃ¡hnout
 		if (DragSrcBufID == BufClsID) return FALSE;
 		
-// komentáø lze poloit témìø kamkoliv
+// komentÃ¡Ã¸ lze poloÅ¾it tÃ©mÃ¬Ã¸ kamkoliv
 		if (DragSrcFunc == IDF_COMMENT)
 		{
 			return (((DragDstParam & PR_ONE) == 0) && 
 					(DragDstFunc != IDF_FNC));
 		}
 
-// do komentáøe lze táhnout cokoliv
+// do komentÃ¡Ã¸e lze tÃ¡hnout cokoliv
 		if ((DragDstFunc == IDF_COMMENT)) return TRUE;
 
-// z objektù nelze táhnout skupinu objektù a èíslice z velikosti seznamu
+// z objektÃ¹ nelze tÃ¡hnout skupinu objektÃ¹ a Ã¨Ã­slice z velikosti seznamu
 		if (((DragSrcBufID == BufObjID) || (DragSrcBufID == BufLocID)) &&
 			((DragSrcFunc == IDF_GROUP) || (DragSrcSrcMask & PR_DIGIT))) return FALSE;
 
-// seznam objektù není povolen nikdy
+// seznam objektÃ¹ nenÃ­ povolen nikdy
 		if (DragSrcFunc == IDF_LIST) return FALSE;
 
-// test, zda má cíl povolen pouze jeden parametr a zda u je obsazen
+// test, zda mÃ¡ cÃ­l povolen pouze jeden parametr a zda uÅ¾ je obsazen
 		if ((DragDstParam & PR_ONE) && (DragDstParent >= 0) &&
 			(DragDstBuf->At(DragDstParent).Child >= 0)) return FALSE;
 
-// pøetaení vìtve CASE
+// pÃ¸etaÅ¾enÃ­ vÃ¬tve CASE
 		if (DragSrcFunc == IDF_CASE_ON) return (DragDstFunc == IDF_CASE);
 		if (DragSrcFunc == IDF_CASE_EQU) return (DragDstFunc == IDF_CASE_ON);
 
-// porovnání masky zdroje a cíle taení
+// porovnÃ¡nÃ­ masky zdroje a cÃ­le taÅ¾enÃ­
 		if ((DragSrcSrcMask & DragDstDstMask) == 0) return FALSE;
 
-// zákaz pøetaení poloky s parametrem do parametru
-		if ((DragSrcBufID == BufEdiID) &&						// problém jen s pøetahováním uvnitø editoru
-			(DragSrcFunc != IDF_FNC) &&							// funkce je povolena, mùe mít vstupní parametry
-			((DragDstDstMask & PR_COMMAND) == 0) &&				// cílem nejsou pøíkazy
-			((DragSrcSrcMask & PR_COMMAND) != 0) &&				// zdroj mùe bıt jako pøíkaz
-			((DragSrcParam & PR_PARPAR) == 0) &&				// kromì pøípadu, kdy má povoleny parametry vdy
-			(DragSrcItem->Child >= 0)) return FALSE;			// poloka má nìjakého potomka
+// zÃ¡kaz pÃ¸etaÅ¾enÃ­ poloÅ¾ky s parametrem do parametru
+		if ((DragSrcBufID == BufEdiID) &&						// problÃ©m jen s pÃ¸etahovÃ¡nÃ­m uvnitÃ¸ editoru
+			(DragSrcFunc != IDF_FNC) &&							// funkce je povolena, mÃ¹Å¾e mÃ­t vstupnÃ­ parametry
+			((DragDstDstMask & PR_COMMAND) == 0) &&				// cÃ­lem nejsou pÃ¸Ã­kazy
+			((DragSrcSrcMask & PR_COMMAND) != 0) &&				// zdroj mÃ¹Å¾e bÃ½t jako pÃ¸Ã­kaz
+			((DragSrcParam & PR_PARPAR) == 0) &&				// kromÃ¬ pÃ¸Ã­padu, kdy mÃ¡ povoleny parametry vÅ¾dy
+			(DragSrcItem->Child >= 0)) return FALSE;			// poloÅ¾ka mÃ¡ nÃ¬jakÃ©ho potomka
 
-// zákaz pøetaení do poloky, která není pøíkazem
-		if ((DragDstParent >= 0) &&								// je nìjakı cíl
-			((DragDstSrcMask & PR_COMMAND) != 0) &&				// cíl mùe bıt jako pøíkaz
-			((DragDstParam & PR_PARPAR) == 0) &&				// kromì pøípadu, kdy má povoleny parametry vdy
-			(DragDstBuf->At(DragDstParent).Parent >= 0) &&		// cíl je nìèím potomkem
-			((DragDstBuf->At(DragDstBuf->At(DragDstParent).Parent).DstMask & PR_ALLDATA) != 0) &&  // rodiè cíle pøijímá data
-			((DragDstBuf->At(DragDstBuf->At(DragDstParent).Parent).DstMask & PR_COMMAND) == 0))		// pøitom rodiè cíle nepøijímá pøíkazy (=není jako pøíkaz)
+// zÃ¡kaz pÃ¸etaÅ¾enÃ­ do poloÅ¾ky, kterÃ¡ nenÃ­ pÃ¸Ã­kazem
+		if ((DragDstParent >= 0) &&								// je nÃ¬jakÃ½ cÃ­l
+			((DragDstSrcMask & PR_COMMAND) != 0) &&				// cÃ­l mÃ¹Å¾e bÃ½t jako pÃ¸Ã­kaz
+			((DragDstParam & PR_PARPAR) == 0) &&				// kromÃ¬ pÃ¸Ã­padu, kdy mÃ¡ povoleny parametry vÅ¾dy
+			(DragDstBuf->At(DragDstParent).Parent >= 0) &&		// cÃ­l je nÃ¬Ã¨Ã­m potomkem
+			((DragDstBuf->At(DragDstBuf->At(DragDstParent).Parent).DstMask & PR_ALLDATA) != 0) &&  // rodiÃ¨ cÃ­le pÃ¸ijÃ­mÃ¡ data
+			((DragDstBuf->At(DragDstBuf->At(DragDstParent).Parent).DstMask & PR_COMMAND) == 0))		// pÃ¸itom rodiÃ¨ cÃ­le nepÃ¸ijÃ­mÃ¡ pÃ¸Ã­kazy (=nenÃ­ jako pÃ¸Ã­kaz)
 			return FALSE;
 
 		return TRUE;
 
-//---------- okno tøíd
+//---------- okno tÃ¸Ã­d
 	
 	case BufClsID:
 
-// ze struktur lze táhnout jen skupinu
+// ze struktur lze tÃ¡hnout jen skupinu
 		if (DragSrcBufID == BufStrID)
 		{
 			if (DragSrcFunc != IDF_GROUP) return FALSE;
@@ -580,7 +580,7 @@ BOOL TestDropItem()
 						(DragDstBuf->At(DragDstParent).Parent < 0)));
 		}
 
-// z objektù lze táhnout objekt s daty (bez potomkù)
+// z objektÃ¹ lze tÃ¡hnout objekt s daty (bez potomkÃ¹)
 		if ((DragSrcBufID == BufObjID) || (DragSrcBufID == BufLocID))
 		{
 			if ((DragSrcItem->DatBlok >= 0) &&
@@ -588,7 +588,7 @@ BOOL TestDropItem()
 				((DragSrcItem->Child < 0) || (DragSrcItem->Func == IDF_SPRITE)) &&
 				(DragDstParent >= 0))
 			{
-// pøíprava cílové funkce vìtve
+// pÃ¸Ã­prava cÃ­lovÃ© funkce vÃ¬tve
 				PROGITEM* paritem = &DragDstBuf->At(DragDstParent);
 				while (paritem->Parent >= 0)
 				{
@@ -614,13 +614,13 @@ BOOL TestDropItem()
 			return FALSE;
 		}
 
-// pøetahování uvnitø okna tøíd - jen potomci
+// pÃ¸etahovÃ¡nÃ­ uvnitÃ¸ okna tÃ¸Ã­d - jen potomci
 		if ((DragSrcBufID == BufClsID) && 
 			(DragSrcItem->Parent >= 0) &&
 			(DragDstParent >= 0))
 		{
 
-// pøíprava cílové funkce vìtve
+// pÃ¸Ã­prava cÃ­lovÃ© funkce vÃ¬tve
 			PROGITEM* paritem = &DragDstBuf->At(DragDstParent);
 			while (paritem->Parent >= 0)
 			{
@@ -628,7 +628,7 @@ BOOL TestDropItem()
 			}
 			int dstfunc = paritem->Func;
 
-// pøíprava zdrojové funkce
+// pÃ¸Ã­prava zdrojovÃ© funkce
 			paritem = DragSrcItem;
 			while (paritem->Parent >= 0)
 			{
@@ -636,13 +636,13 @@ BOOL TestDropItem()
 			}
 			int srcfunc = paritem->Func;
 
-// zákaz taení do jiné vìtve
+// zÃ¡kaz taÅ¾enÃ­ do jinÃ© vÃ¬tve
 			if (srcfunc != dstfunc) return FALSE;
 
-// pøi pøesunu zákaz ponechání ve stejné vìtvi
+// pÃ¸i pÃ¸esunu zÃ¡kaz ponechÃ¡nÃ­ ve stejnÃ© vÃ¬tvi
 //			if (!DragRight && (DragDstParent == DragSrcParent)) return FALSE;
 
-// prvek nelze poloit na prvek (kromì do základní poloky)
+// prvek nelze poloÅ¾it na prvek (kromÃ¬ do zÃ¡kladnÃ­ poloÅ¾ky)
 			if (DragDstBuf->At(DragDstParent).Parent < 0) return TRUE;
 			if (DragDstBuf->At(DragDstParent).Func != IDF_GROUP) return FALSE;
 			return TRUE;
@@ -655,7 +655,7 @@ BOOL TestDropItem()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test cyklické operace (TRUE=je OK)
+// test cyklickÃ© operace (TRUE=je OK)
 
 BOOL TestCykl()
 {
@@ -674,44 +674,44 @@ BOOL TestCykl()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení platné cílové poloky v cílovém bufferu (z klientskıch souøadnic v oknì stromu, TRUE=nalezeno)
+// nalezenÃ­ platnÃ© cÃ­lovÃ© poloÅ¾ky v cÃ­lovÃ©m bufferu (z klientskÃ½ch souÃ¸adnic v oknÃ¬ stromu, TRUE=nalezeno)
 
 BOOL FindDragDst(int x, int y)
 {
-// nalezení poloky stromu na dané pozici
+// nalezenÃ­ poloÅ¾ky stromu na danÃ© pozici
 	DragDstHPoz = ItemTreePos(x, y, DragDstBuf->IconHeight());
 
-// poloka je na zaèátku ROOT
-	if (DragDstHPoz == (HTREEITEM)-1)			// zaèátek ROOT
+// poloÅ¾ka je na zaÃ¨Ã¡tku ROOT
+	if (DragDstHPoz == (HTREEITEM)-1)			// zaÃ¨Ã¡tek ROOT
 	{
 		DragDstHPoz = NULL;
-		DragDstPoz = -1;							// bude poloení na zaèátek ROOT
+		DragDstPoz = -1;							// bude poloÅ¾enÃ­ na zaÃ¨Ã¡tek ROOT
 	}
 
-// nalezení poloky v bufferu
+// nalezenÃ­ poloÅ¾ky v bufferu
 	else
 	{
 		DragDstPoz = DragDstBuf->Find(DragDstHPoz);
 
-// poloka je na konci ROOT
+// poloÅ¾ka je na konci ROOT
 		if (DragDstPoz < 0)							// konec ROOT
 		{
-			DragDstPoz = -2;						// bude poloení za konec poloek
+			DragDstPoz = -2;						// bude poloÅ¾enÃ­ za konec poloÅ¾ek
 			DragDstHPoz = NULL;
 		}
 	}
 
-// implicitní rodiè, není-li cíl nalezen
-	DragDstParent = DragDstBuf->Disp();			// implicitní rodiè pro poloení do ROOT
+// implicitnÃ­ rodiÃ¨, nenÃ­-li cÃ­l nalezen
+	DragDstParent = DragDstBuf->Disp();			// implicitnÃ­ rodiÃ¨ pro poloÅ¾enÃ­ do ROOT
 
-// pøíprava odsazování prvkù v cílovém stromu (jen je-li cílem platná poloka)
+// pÃ¸Ã­prava odsazovÃ¡nÃ­ prvkÃ¹ v cÃ­lovÃ©m stromu (jen je-li cÃ­lem platnÃ¡ poloÅ¾ka)
 	if (DragDstPoz >= 0)
 	{
 		int indent = ::SendMessage(DragDstTree, TVM_GETINDENT, 0, 0);
 		if (indent < 4) indent = 4;
 		if (indent > 128) indent = 128;
 
-// zjištìní souøadnice poloky pod kurzorem (ze souøadnice textu)
+// zjiÅ¡tÃ¬nÃ­ souÃ¸adnice poloÅ¾ky pod kurzorem (ze souÃ¸adnice textu)
 		RECT rc;
 		*(HTREEITEM*)(&rc) = DragDstHPoz;
 		if (!::SendMessage(DragDstTree, TVM_GETITEMRECT, TRUE, (LPARAM)&rc))
@@ -721,7 +721,7 @@ BOOL FindDragDst(int x, int y)
 		int pozx = rc.left - DragDstBuf->IconWidth() - 3;
 		if (pozx < 0) pozx = 0;
 
-// pokud je kurzor za polokou, bude poloka rodièem, uloení bude na zaèátek
+// pokud je kurzor za poloÅ¾kou, bude poloÅ¾ka rodiÃ¨em, uloÅ¾enÃ­ bude na zaÃ¨Ã¡tek
 		if (x > (pozx + DragDstBuf->IconWidth()))
 		{
 			DragDstParent = DragDstPoz;
@@ -730,7 +730,7 @@ BOOL FindDragDst(int x, int y)
 		}
 		else
 
-// jinak nalezení poloky na stejné pozici X
+// jinak nalezenÃ­ poloÅ¾ky na stejnÃ© pozici X
 		{
 			while ((x < pozx) && 
 					(DragDstBuf->At(DragDstPoz).Parent >= 0) &&
@@ -744,14 +744,14 @@ BOOL FindDragDst(int x, int y)
 		}
 	}
 
-// handle rodièe
+// handle rodiÃ¨e
 	DragDstHParent = NULL;
 	if (DragDstParent >= 0)
 	{
 		DragDstHParent = DragDstBuf->At(DragDstParent).HTree;
 	}
 
-// pøíprava parametrù cíle taení, je-li platnı rodiè
+// pÃ¸Ã­prava parametrÃ¹ cÃ­le taÅ¾enÃ­, je-li platnÃ½ rodiÃ¨
 	if ((DragDstParent >= 0) && (DragDstParent != DragDstBuf->Disp()))
 	{
 		DragDstFunc = DragDstBuf->At(DragDstParent).Func;
@@ -761,7 +761,7 @@ BOOL FindDragDst(int x, int y)
 	}
 	else
 
-// pøíprava parametrù cíle, je-li rodièem ROOT
+// pÃ¸Ã­prava parametrÃ¹ cÃ­le, je-li rodiÃ¨em ROOT
 	{
 		DragDstSrcMask = 0;
 		DragDstDstMask = 0;
@@ -781,56 +781,56 @@ BOOL FindDragDst(int x, int y)
 		}
 	}
 
-// test povolení operace
+// test povolenÃ­ operace
 	return (TestDropItem() && TestCykl());
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// posun myši pøi taení
+// posun myÅ¡i pÃ¸i taÅ¾enÃ­
 
 void ProgOnMoveDrag(UINT flags, int x, int y)
 {
-// lokální promìnné
-	HWND	oldtree;					// pùvodní cílovı strom
-	int		oldparent;					// pùvodní cílovı index
-	POINT	ptScreen;					// kurzor myši v souøadnicích displeje
-	POINT	ptTree;						// kurzor myši v souøadnicích okna stromu
-	HCURSOR	curnew = CurNoDrag;			// novı kurzor myši
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
+	HWND	oldtree;					// pÃ¹vodnÃ­ cÃ­lovÃ½ strom
+	int		oldparent;					// pÃ¹vodnÃ­ cÃ­lovÃ½ index
+	POINT	ptScreen;					// kurzor myÅ¡i v souÃ¸adnicÃ­ch displeje
+	POINT	ptTree;						// kurzor myÅ¡i v souÃ¸adnicÃ­ch okna stromu
+	HCURSOR	curnew = CurNoDrag;			// novÃ½ kurzor myÅ¡i
 
-// kontrola, zda probíhá obsluha taení
+// kontrola, zda probÃ­hÃ¡ obsluha taÅ¾enÃ­
 	if (!Draging) return;
 
-// úschova pùvodního cíle taení
-	oldtree = DragDstTree;				// pùvodní cílovı strom
-	oldparent = DragDstParent;			// pùvodní cílovı rodiè
+// Ãºschova pÃ¹vodnÃ­ho cÃ­le taÅ¾enÃ­
+	oldtree = DragDstTree;				// pÃ¹vodnÃ­ cÃ­lovÃ½ strom
+	oldparent = DragDstParent;			// pÃ¹vodnÃ­ cÃ­lovÃ½ rodiÃ¨
 
-// pøednastavení neplatného cíle operace
-	DragDstTree = NULL;					// není cílovı strom
-	DragDstBuf = NULL;					// není cílovı buffer
-	DragDstParent = -1;					// není cílovı rodiè
-	DragDstHParent = NULL;				// není cílovı rodiè
+// pÃ¸ednastavenÃ­ neplatnÃ©ho cÃ­le operace
+	DragDstTree = NULL;					// nenÃ­ cÃ­lovÃ½ strom
+	DragDstBuf = NULL;					// nenÃ­ cÃ­lovÃ½ buffer
+	DragDstParent = -1;					// nenÃ­ cÃ­lovÃ½ rodiÃ¨
+	DragDstHParent = NULL;				// nenÃ­ cÃ­lovÃ½ rodiÃ¨
 
-// pøíprava nové souøadnice obrázku
+// pÃ¸Ã­prava novÃ© souÃ¸adnice obrÃ¡zku
 	ptScreen.x = x - DragHotSpotX;
 	ptScreen.y = y - DragHotSpotY;
 	ptTree.x = ptScreen.x + DragTestSpotX;
 	ptTree.y = ptScreen.y + DragTestSpotY;
 	::ClientToScreen(MainFrame, &ptScreen);
 
-// pøetaení obrázku na novou pozici
+// pÃ¸etaÅ¾enÃ­ obrÃ¡zku na novou pozici
 	::ImageList_DragMove(ptScreen.x, ptScreen.y);
 
 	DragCopy = FALSE;
 	DragDelete = FALSE;
 
-// nalezení okna, nad kterım je taeno
+// nalezenÃ­ okna, nad kterÃ½m je taÅ¾eno
 	if ((SrcDropWin(ptTree.x, ptTree.y - DragTestSpotY + DragIconHeight/2)) || 
 		(SrcDropWin(ptTree.x, ptTree.y - DragTestSpotY + DragIconHeight)) || 
 		(SrcDropWin(ptTree.x, ptTree.y - DragTestSpotY)))
 	{
 
-// taeni do okna editoru plochy
+// taÅ¾eni do okna editoru plochy
 		if (DragDstBufID == BufMapID)
 		{
 			EditMap::OnMouseMove(flags, x, y);	
@@ -842,7 +842,7 @@ void ProgOnMoveDrag(UINT flags, int x, int y)
 		}
 		else
 
-// taeni do okna editoru sprajtu
+// taÅ¾eni do okna editoru sprajtu
 		{
 			if (DragDstBufID == BufSprID)
 			{
@@ -858,7 +858,7 @@ void ProgOnMoveDrag(UINT flags, int x, int y)
 			}
 			else
 
-// pøi taení do okna struktur bude odhození
+// pÃ¸i taÅ¾enÃ­ do okna struktur bude odhozenÃ­
 			{
 				if ((DragDstBufID == BufStrID) &&
 					(DragSrcBufID != BufStrID) &&
@@ -879,21 +879,21 @@ void ProgOnMoveDrag(UINT flags, int x, int y)
 					else
 					{
 
-// nastavení pøíznakù módu kopie nebo pøesunu
+// nastavenÃ­ pÃ¸Ã­znakÃ¹ mÃ³du kopie nebo pÃ¸esunu
 						DragCopy = TRUE;
 						DragDelete = (!DragRight && (DragSrcBufID == DragDstBufID)); 
 
-// pøíprava kurzoru pro kopírování nebo pøesun
+// pÃ¸Ã­prava kurzoru pro kopÃ­rovÃ¡nÃ­ nebo pÃ¸esun
 						if (DragDelete)
 						{
-							curnew = CurMove;						// bude pøesun
+							curnew = CurMove;						// bude pÃ¸esun
 						}
 						else
 						{
 							curnew = CurCopy;						// bude kopie
 						}
 
-// nalezení poloky pod kurzorem (=pozice cíle taení)
+// nalezenÃ­ poloÅ¾ky pod kurzorem (=pozice cÃ­le taÅ¾enÃ­)
 						::ClientToScreen(MainFrame, &ptTree);
 						::ScreenToClient(DragDstTree, &ptTree);
 						int dx = DragDstBuf->IconWidth()/2;
@@ -928,14 +928,14 @@ void ProgOnMoveDrag(UINT flags, int x, int y)
 		}
 	}
 
-// nastavení nového kurzoru myši
+// nastavenÃ­ novÃ©ho kurzoru myÅ¡i
 	if (curnew != CurAkt)
 	{
 		CurAkt = curnew;
 		::SetCursor(CurAkt);
 	}
 
-// zrušení vıbìru staré cílové poloky pøi zmìnì okna stromu
+// zruÅ¡enÃ­ vÃ½bÃ¬ru starÃ© cÃ­lovÃ© poloÅ¾ky pÃ¸i zmÃ¬nÃ¬ okna stromu
 	if ((oldtree != NULL) && (oldtree != DragDstTree))
 	{
 		::ImageList_DragLeave(NULL);
@@ -943,7 +943,7 @@ void ProgOnMoveDrag(UINT flags, int x, int y)
 		::ImageList_DragEnter(NULL, ptScreen.x, ptScreen.y);
 	}
 
-// vıbìr nové cílové poloky (zmìnil se strom nebo poloka)
+// vÃ½bÃ¬r novÃ© cÃ­lovÃ© poloÅ¾ky (zmÃ¬nil se strom nebo poloÅ¾ka)
 	if (((DragDstParent != oldparent) || (oldtree != DragDstTree))
 		&& (DragDstTree != NULL))
 	{
@@ -955,21 +955,21 @@ void ProgOnMoveDrag(UINT flags, int x, int y)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 
 void ProgOnEndDrag()
 {
-// kontrola, zda probíhá obsluha taení
+// kontrola, zda probÃ­hÃ¡ obsluha taÅ¾enÃ­
 	if (!Draging) return;
 
-// pøerušení taení
+// pÃ¸eruÅ¡enÃ­ taÅ¾enÃ­
 	BreakDrag();
 
-// test zrušení poloky s referencemi
+// test zruÅ¡enÃ­ poloÅ¾ky s referencemi
 	if (DragDelete && !DragCopy &&
 		!DragSrcBuf->TestRefer(DragSrcIndex)) return;
 
-// taení do editoru plochy nebo sprajtu
+// taÅ¾enÃ­ do editoru plochy nebo sprajtu
 	if (DragCopy)
 	{
 		if (DragDstBufID == BufMapID)
@@ -985,10 +985,10 @@ void ProgOnEndDrag()
 		}
 	}
 	
-// vypnutí pøekreslování cílového okna pøed operací
+// vypnutÃ­ pÃ¸ekreslovÃ¡nÃ­ cÃ­lovÃ©ho okna pÃ¸ed operacÃ­
 	if (DragDstTree != NULL) DragDstBuf->RedrawOff();
 
-// provedení operace
+// provedenÃ­ operace
 	if (DragCopy)
 	{
 		int dst = -1;
@@ -1025,10 +1025,10 @@ void ProgOnEndDrag()
 			}
 		}
 
-// aktualizace LOCK a OFF prvkù v buferech
+// aktualizace LOCK a OFF prvkÃ¹ v buferech
 		UpdateLock();
 
-// zajištìní viditelnosti pøenesené poloky
+// zajiÅ¡tÃ¬nÃ­ viditelnosti pÃ¸enesenÃ© poloÅ¾ky
 		if (dst >= 0)
 		{
 			::SendMessage(DragDstTree, TVM_ENSUREVISIBLE, 0, (LPARAM)DragDstBuf->At(dst).HTree);
@@ -1039,7 +1039,7 @@ void ProgOnEndDrag()
 		if (DragDelete)
 		{
 
-// rušení poloky v bufferu tøíd
+// ruÅ¡enÃ­ poloÅ¾ky v bufferu tÃ¸Ã­d
 			if (DragSrcBufID == BufClsID)
 			{
 				ProgLib::Delete(DragSrcIndex);
@@ -1053,48 +1053,48 @@ void ProgOnEndDrag()
 		}
 	}
 
-// zapnutí pøekreslování okna po operaci
+// zapnutÃ­ pÃ¸ekreslovÃ¡nÃ­ okna po operaci
 	if (DragDstTree != NULL) DragDstBuf->RedrawOn();
 
-// aktualizace informací o aktuální poloce
+// aktualizace informacÃ­ o aktuÃ¡lnÃ­ poloÅ¾ce
 	ProgAktItem();
 
-// ukonèení záznamu jedné UNDO operace
+// ukonÃ¨enÃ­ zÃ¡znamu jednÃ© UNDO operace
 	Undo.Stop();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøerušení taení
+// pÃ¸eruÅ¡enÃ­ taÅ¾enÃ­
 
 void BreakDrag()
 {
 
-// kontrola, zda probíhá obsluha taení
+// kontrola, zda probÃ­hÃ¡ obsluha taÅ¾enÃ­
 	if (Draging)
 	{
 
-// vypnutí pøíznaku taení
+// vypnutÃ­ pÃ¸Ã­znaku taÅ¾enÃ­
 		Draging = FALSE;
 
-// zastavení taení
+// zastavenÃ­ taÅ¾enÃ­
 		::ImageList_DragLeave(NULL);
 
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 		::ImageList_EndDrag();
 
-// zrušení seznamu obrázkù taení
+// zruÅ¡enÃ­ seznamu obrÃ¡zkÃ¹ taÅ¾enÃ­
 		::ImageList_Destroy(DragImageList);
 
-// zrušení vıbìru cíle operace u cílového okna
+// zruÅ¡enÃ­ vÃ½bÃ¬ru cÃ­le operace u cÃ­lovÃ©ho okna
 		if (DragDstTree)
 		{
 			::SendMessage(DragDstTree, TVM_SELECTITEM, TVGN_DROPHILITE, (LPARAM)NULL);
 		}
 
-// uvolnìni zachytávání myši
+// uvolnÃ¬ni zachytÃ¡vÃ¡nÃ­ myÅ¡i
 		::ReleaseCapture();
 
-// nastavení bìného kurzoru myši
+// nastavenÃ­ bÃ¬Å¾nÃ©ho kurzoru myÅ¡i
 		::SetCursor(CurArrow);
 	}
 }

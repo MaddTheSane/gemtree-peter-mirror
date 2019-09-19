@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Editor logických hodnot						*
+*								Editor logickÃ½ch hodnot						*
 *																			*
 \***************************************************************************/
 
@@ -13,31 +13,31 @@ namespace EditLog
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-int		Index = 0;						// editovaná položka
-int		DispLeft;						// souøadnice X editaèního pole
-int		DispTop;						// souøadnice Y editaèního pole
-int		DispWidth;						// šíøka editaèního pole
-int		DispHeight;						// výška editaèního pole
+int		Index = 0;						// editovanÃ¡ poloÅ¾ka
+int		DispLeft;						// souÃ¸adnice X editaÃ¨nÃ­ho pole
+int		DispTop;						// souÃ¸adnice Y editaÃ¨nÃ­ho pole
+int		DispWidth;						// Å¡Ã­Ã¸ka editaÃ¨nÃ­ho pole
+int		DispHeight;						// vÃ½Å¡ka editaÃ¨nÃ­ho pole
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace pÃ¸i startu programu
 
 void StartInit()
 {
 	CText txt;
 	txt.Load(IDN_ZAPNUTO);
 
-// vytvoøení okna pøepínaèe
+// vytvoÃ¸enÃ­ okna pÃ¸epÃ­naÃ¨e
 	EditLogWnd = ::CreateWindowEx(
-		0,								// rozšíøený styl
-		_T("BUTTON"),					// tøída
+		0,								// rozÅ¡Ã­Ã¸enÃ½ styl
+		_T("BUTTON"),					// tÃ¸Ã­da
 		txt,							// text
 		WS_CHILD | BS_CHECKBOX,			// styl
 		300,							// X
 		200,							// Y
-		150,							// šíøka
-		30,								// výška
-		MainFrame,						// rodiè
+		150,							// Å¡Ã­Ã¸ka
+		30,								// vÃ½Å¡ka
+		MainFrame,						// rodiÃ¨
 		(HMENU)EDITLOGID,				// ID
 		hInstance,						// instance
 		NULL);							// data
@@ -45,7 +45,7 @@ void StartInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace (musí být platný index!)
+// zahÃ¡jenÃ­ editace (musÃ­ bÃ½t platnÃ½ index!)
 
 void BegEdit(int index)
 {
@@ -53,19 +53,19 @@ void BegEdit(int index)
 	Index = index;
 	ASSERT(Bool.IsValid(index));
 
-// zobrazení okna
+// zobrazenÃ­ okna
 	::ShowWindow(EditLogWnd, SW_SHOW);
 
-// nastavení stavu tlaèítka
+// nastavenÃ­ stavu tlaÃ¨Ã­tka
 	::SendMessage(EditLogWnd, BM_SETCHECK, Bool[index] ? BST_CHECKED : BST_UNCHECKED, 0);
 
-// zobrazení
+// zobrazenÃ­
 	Disp();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun editaèního pole
+// pÃ¸esun editaÃ¨nÃ­ho pole
 
 HDWP MoveEdit(HDWP hdwp)
 {
@@ -89,17 +89,17 @@ HDWP MoveEdit(HDWP hdwp)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení podkladu kolem editoru
+// zobrazenÃ­ podkladu kolem editoru
 
 void Disp()
 {
-// otevøení kontextu displeje
+// otevÃ¸enÃ­ kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// pÃ¸Ã­prava Å¡tÃ¬tce k vymazÃ¡nÃ­ podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // Å¡tÃ¬tec k vymazÃ¡nÃ­ plochy
 
-// vymazání plochy nahoøe nad editorem
+// vymazÃ¡nÃ­ plochy nahoÃ¸e nad editorem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -110,7 +110,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy dole pod editorem (left a right je nastaveno)
+// vymazÃ¡nÃ­ plochy dole pod editorem (left a right je nastaveno)
 	rc.top = DispTop + DispHeight;
 	rc.bottom = EditY + EditHeight - 2;
 	if (rc.top < rc.bottom)
@@ -118,7 +118,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vlevo od editoru (left je nastaveno)
+// vymazÃ¡nÃ­ plochy vlevo od editoru (left je nastaveno)
 	rc.right = DispLeft;
 	rc.top = DispTop;
 	rc.bottom = DispTop + DispHeight;
@@ -127,7 +127,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vpravo od editoru (top a bottom je nastaveno)
+// vymazÃ¡nÃ­ plochy vpravo od editoru (top a bottom je nastaveno)
 	rc.left = DispLeft + DispWidth;
 	rc.right = EditX + EditWidth - 2;
 	if (rc.left < rc.right)
@@ -135,15 +135,15 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// zrušení štìtce podkladu (i když podle dokumentace rušení není nutné)
+// zruÅ¡enÃ­ Å¡tÃ¬tce podkladu (i kdyÅ¾ podle dokumentace ruÅ¡enÃ­ nenÃ­ nutnÃ©)
 	::DeleteObject(brush);
 
-// uvolnìní kontextu displeje
+// uvolnÃ¬nÃ­ kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepnutí pøepínaèe
+// pÃ¸epnutÃ­ pÃ¸epÃ­naÃ¨e
 
 void Switch()
 {

@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Obsluha soubor˘								*
+*								Obsluha soubor√π								*
 *																			*
 \***************************************************************************/
 
@@ -21,7 +21,7 @@ CFile::~CFile()
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 //void CFile::Init()
 //{
@@ -36,7 +36,7 @@ CFile::~CFile()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ souboru pro ËtenÌ i z·pis
+// otev√∏en√≠ souboru pro √®ten√≠ i z√°pis
 
 BOOL CFile::Open()
 {
@@ -48,7 +48,7 @@ BOOL CFile::Open()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ souboru pro ËtenÌ
+// otev√∏en√≠ souboru pro √®ten√≠
 
 BOOL CFile::OpenRead()
 {
@@ -60,7 +60,7 @@ BOOL CFile::OpenRead()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ souboru pro z·pis
+// otev√∏en√≠ souboru pro z√°pis
 
 BOOL CFile::OpenWrite()
 {
@@ -72,7 +72,7 @@ BOOL CFile::OpenWrite()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ souboru bez p¯Ìstupu (nastavenÌ vlastnostÌ)
+// otev√∏en√≠ souboru bez p√∏√≠stupu (nastaven√≠ vlastnost√≠)
 
 BOOL CFile::OpenNone()
 {
@@ -84,7 +84,7 @@ BOOL CFile::OpenNone()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ adres·¯e (pro nastavenÌ vlastnostÌ)
+// otev√∏en√≠ adres√°√∏e (pro nastaven√≠ vlastnost√≠)
 
 BOOL CFile::OpenDirectory()
 {
@@ -96,7 +96,7 @@ BOOL CFile::OpenDirectory()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ souboru
+// vytvo√∏en√≠ souboru
 
 BOOL CFile::Create()
 {
@@ -108,7 +108,7 @@ BOOL CFile::Create()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ pro standardnÌ vstup (neuzavÌrat!)
+// otev√∏en√≠ pro standardn√≠ vstup (neuzav√≠rat!)
 
 BOOL CFile::OpenInput()
 {
@@ -119,7 +119,7 @@ BOOL CFile::OpenInput()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ pro standardnÌ v˝stup (neuzavÌrat!)
+// otev√∏en√≠ pro standardn√≠ v√Ωstup (neuzav√≠rat!)
 
 BOOL CFile::OpenOutput()
 {
@@ -130,7 +130,7 @@ BOOL CFile::OpenOutput()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ pro chybov˝ v˝stup (neuzavÌrat!)
+// otev√∏en√≠ pro chybov√Ω v√Ωstup (neuzav√≠rat!)
 
 BOOL CFile::OpenError()
 {
@@ -141,7 +141,7 @@ BOOL CFile::OpenError()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzav¯enÌ souboru
+// uzav√∏en√≠ souboru
 
 BOOL CFile::Close()
 {
@@ -158,7 +158,7 @@ BOOL CFile::Close()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// ËtenÌ ze souboru
+// √®ten√≠ ze souboru
 
 BOOL CFile::Read(void* buf, int num)
 {
@@ -170,7 +170,7 @@ BOOL CFile::Read(void* buf, int num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// z·pis do souboru
+// z√°pis do souboru
 
 BOOL CFile::Write(void* buf, int num)
 {
@@ -182,7 +182,7 @@ BOOL CFile::Write(void* buf, int num)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// zruöenÌ souboru (musÌ b˝t uzav¯en)
+// zru≈°en√≠ souboru (mus√≠ b√Ωt uzav√∏en)
 
 BOOL CFile::Delete()
 {
@@ -192,7 +192,7 @@ BOOL CFile::Delete()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ velikosti souboru (musÌ b˝t otev¯en, -1 = chyba)
+// poskytnut√≠ velikosti souboru (mus√≠ b√Ωt otev√∏en, -1 = chyba)
 
 int CFile::Size()
 {
@@ -202,11 +202,11 @@ int CFile::Size()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ typu souboru (musÌ b˝t otev¯en)
-//		FILE_TYPE_UNKNOWN ... nezn·m˝
-//		FILE_TYPE_DISK ...... diskov˝ soubor
-//		FILE_TYPE_CHAR ...... znakovÈ za¯ÌzenÌ
-//		FILE_TYPE_PIPE ...... kan·l
+// poskytnut√≠ typu souboru (mus√≠ b√Ωt otev√∏en)
+//		FILE_TYPE_UNKNOWN ... nezn√°m√Ω
+//		FILE_TYPE_DISK ...... diskov√Ω soubor
+//		FILE_TYPE_CHAR ...... znakov√© za√∏√≠zen√≠
+//		FILE_TYPE_PIPE ...... kan√°l
 
 int CFile::Type()
 {
@@ -216,7 +216,7 @@ int CFile::Type()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ/nastavenÌ Ëasu vytvo¯enÌ (musÌ b˝t otev¯en)
+// poskytnut√≠/nastaven√≠ √®asu vytvo√∏en√≠ (mus√≠ b√Ωt otev√∏en)
 
 BOOL CFile::GetCreationTime(FILETIME* time)
 {
@@ -232,7 +232,7 @@ BOOL CFile::SetCreationTime(FILETIME* time)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ/nastavenÌ Ëasu poslednÌho ËtenÌ (musÌ b˝t otev¯en)
+// poskytnut√≠/nastaven√≠ √®asu posledn√≠ho √®ten√≠ (mus√≠ b√Ωt otev√∏en)
 
 BOOL CFile::GetLastRead(FILETIME* time)
 {
@@ -248,7 +248,7 @@ BOOL CFile::SetLastRead(FILETIME* time)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ/nastavenÌ Ëasu poslednÌho z·pisu (musÌ b˝t otev¯en)
+// poskytnut√≠/nastaven√≠ √®asu posledn√≠ho z√°pisu (mus√≠ b√Ωt otev√∏en)
 
 BOOL CFile::GetLastWrite(FILETIME* time)
 {
@@ -264,7 +264,7 @@ BOOL CFile::SetLastWrite(FILETIME* time)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ atribut˘ souboru (nemusÌ b˝t otev¯en, -1=chyba)
+// poskytnut√≠ atribut√π souboru (nemus√≠ b√Ωt otev√∏en, -1=chyba)
 
 int CFile::Attribute()
 {
@@ -273,7 +273,7 @@ int CFile::Attribute()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// nastavenÌ atribut˘ souboru (nemusÌ b˝t otev¯en)
+// nastaven√≠ atribut√π souboru (nemus√≠ b√Ωt otev√∏en)
 
 BOOL CFile::Attribute(int atr)
 {
@@ -286,7 +286,7 @@ BOOL CFile::Attribute(int atr)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ ukazatele v souboru
+// resetov√°n√≠ ukazatele v souboru
 
 BOOL CFile::Reset()
 {
@@ -296,7 +296,7 @@ BOOL CFile::Reset()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// poskytnutÌ ukazatele v souboru (-1 = chyba)
+// poskytnut√≠ ukazatele v souboru (-1 = chyba)
 
 int CFile::Seek()
 {
@@ -306,7 +306,7 @@ int CFile::Seek()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// nastavenÌ ukazatele v souboru
+// nastaven√≠ ukazatele v souboru
 
 BOOL CFile::Seek(int pos)
 {
@@ -316,7 +316,7 @@ BOOL CFile::Seek(int pos)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// relativnÌ nastavenÌ ukazatele v souboru
+// relativn√≠ nastaven√≠ ukazatele v souboru
 
 BOOL CFile::SeekRel(int pos)
 {
@@ -326,7 +326,7 @@ BOOL CFile::SeekRel(int pos)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// nastavenÌ ukazatele v souboru na konec
+// nastaven√≠ ukazatele v souboru na konec
 
 BOOL CFile::End()
 {
@@ -336,7 +336,7 @@ BOOL CFile::End()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CFile& _fastcall CFile::operator= (const CFile& file)
 {
@@ -349,7 +349,7 @@ const CFile& _fastcall CFile::operator= (const CFile& file)
 
 /***************************************************************************\
 *																			*
-*								Datov˝ buffer								*
+*								Datov√Ω buffer								*
 *																			*
 \***************************************************************************/
 
@@ -358,18 +358,18 @@ const CFile& _fastcall CFile::operator= (const CFile& file)
 
 CBuf::CBuf()
 {
-	m_Adr = NULL;				// adresa bufferu v pamÏti
+	m_Adr = NULL;				// adresa bufferu v pam√¨ti
 	m_End = NULL;				// adresa za koncem bufferu
 	m_Size = 0;					// velikost bufferu
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor
+// statick√Ω konstruktor
 
 //void CBuf::Init()
 //{
-//	m_Adr = NULL;				// adresa bufferu v pamÏti
+//	m_Adr = NULL;				// adresa bufferu v pam√¨ti
 //	m_End = NULL;				// adresa za koncem bufferu
 //	m_Size = 0;					// velikost bufferu
 //}
@@ -393,64 +393,64 @@ BOOL CBuf::IsNotValid(void* adr, int size)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// adresa NT z·hlavÌ souboru EXE (NULL=nenÌ)
+// adresa NT z√°hlav√≠ souboru EXE (NULL=nen√≠)
 
 IMAGE_NT_HEADERS* CBuf::NTHeader()
 {
-// kontrola DOS z·hlavÌ
-	IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)Adr();	// adresa DOS z·hlavÌ
-	if (IsNotValid(dos, sizeof(IMAGE_DOS_HEADER)) ||	// velikost pro DOS z·hlavÌ
-		(dos->e_magic != IMAGE_DOS_SIGNATURE))			// identifik·tor
+// kontrola DOS z√°hlav√≠
+	IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)Adr();	// adresa DOS z√°hlav√≠
+	if (IsNotValid(dos, sizeof(IMAGE_DOS_HEADER)) ||	// velikost pro DOS z√°hlav√≠
+		(dos->e_magic != IMAGE_DOS_SIGNATURE))			// identifik√°tor
 		return NULL;
 
-// adresa NT z·hlavÌ
-	int off = dos->e_lfanew;						// offset NT z·hlavÌ
-	IMAGE_NT_HEADERS* hdr = (IMAGE_NT_HEADERS*)(Adr() + off); // adresa NT z·hlavÌ
+// adresa NT z√°hlav√≠
+	int off = dos->e_lfanew;						// offset NT z√°hlav√≠
+	IMAGE_NT_HEADERS* hdr = (IMAGE_NT_HEADERS*)(Adr() + off); // adresa NT z√°hlav√≠
 
-// kontrola NT z·hlavÌ
-	if ((off < 0x60) ||								// min. offset NT z·hlavÌ
-		(off >= 0x1000) ||							// max. offset NT z·hlavÌ
+// kontrola NT z√°hlav√≠
+	if ((off < 0x60) ||								// min. offset NT z√°hlav√≠
+		(off >= 0x1000) ||							// max. offset NT z√°hlav√≠
 		(IsNotValid(hdr, sizeof(IMAGE_NT_HEADERS))) ||	// kontrola velikosti bufferu
-		(hdr->Signature != IMAGE_NT_SIGNATURE))		// identifik·tor
+		(hdr->Signature != IMAGE_NT_SIGNATURE))		// identifik√°tor
 		return NULL;
 
-// kontrola velikosti z·hlavÌ vËetnÏ sekcÌ
-	off = hdr->FileHeader.SizeOfOptionalHeader;		// velikost volitelnÈ sekce
-	int sekce = hdr->FileHeader.NumberOfSections;	// poËet sekcÌ
-	if ((sekce < 1) ||								// minim·lnÏ sekcÌ
-		(sekce > 1000) ||							// maxim·lnÏ sekcÌ
-		(off < 50) ||								// minim·lnÌ velikost z·hlavÌ
-		(off > 10000) ||							// maxim·lnÌ velikost z·hlavÌ
+// kontrola velikosti z√°hlav√≠ v√®etn√¨ sekc√≠
+	off = hdr->FileHeader.SizeOfOptionalHeader;		// velikost voliteln√© sekce
+	int sekce = hdr->FileHeader.NumberOfSections;	// po√®et sekc√≠
+	if ((sekce < 1) ||								// minim√°ln√¨ sekc√≠
+		(sekce > 1000) ||							// maxim√°ln√¨ sekc√≠
+		(off < 50) ||								// minim√°ln√≠ velikost z√°hlav√≠
+		(off > 10000) ||							// maxim√°ln√≠ velikost z√°hlav√≠
 		(IsNotValid(hdr, sizeof(DWORD) + 
 			sizeof(IMAGE_FILE_HEADER) + off + 
-			sekce*IMAGE_SIZEOF_SECTION_HEADER)))	// kontrola velikosti sekcÌ
+			sekce*IMAGE_SIZEOF_SECTION_HEADER)))	// kontrola velikosti sekc√≠
 		return NULL;
 
-// adresa NT z·hlavÌ
+// adresa NT z√°hlav√≠
 	return hdr;
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// nalezenÌ NT sekce souboru EXE (NULL=nenÌ)
+// nalezen√≠ NT sekce souboru EXE (NULL=nen√≠)
 
 IMAGE_SECTION_HEADER* CBuf::NTSection(IMAGE_NT_HEADERS* hdr, char* name)
 {
-// poËet sekcÌ
+// po√®et sekc√≠
 	int num = hdr->FileHeader.NumberOfSections;
 
-// adresa prvnÌ sekce
+// adresa prvn√≠ sekce
 	IMAGE_SECTION_HEADER* sec = (IMAGE_SECTION_HEADER*)
 		((BYTE*)(&hdr->OptionalHeader) + hdr->FileHeader.SizeOfOptionalHeader);
 
-// cyklus p¯es vöechny sekce
+// cyklus p√∏es v≈°echny sekce
 	for (; num > 0; num--)
 	{
 // adresa jmen
 		char* src = name;
 		char* dst = (char*)sec->Name;
 
-// porovn·nÌ jmÈna sekce
+// porovn√°n√≠ jm√©na sekce
 		int i = 0;
 		while (*src == *dst)
 		{
@@ -467,7 +467,7 @@ IMAGE_SECTION_HEADER* CBuf::NTSection(IMAGE_NT_HEADERS* hdr, char* name)
 			}
 		}
 
-// adresa dalöÌ sekce
+// adresa dal≈°√≠ sekce
 		sec++;
 	}
 
@@ -478,15 +478,15 @@ IMAGE_SECTION_HEADER* CBuf::NTSection(IMAGE_NT_HEADERS* hdr, char* name)
 
 /*
 //////////////////////////////////////////////////////////////////////////////
-// nalezenÌ resource dat souboru EXE (NULL=nenÌ)
+// nalezen√≠ resource dat souboru EXE (NULL=nen√≠)
 
 BYTE* CBuf::NTResource()
 {
-// p¯Ìprava NT z·hlavÌ
+// p√∏√≠prava NT z√°hlav√≠
 	IMAGE_NT_HEADERS* hdr = NTHeader();
 	if (hdr == NULL) return NULL;
 
-// p¯Ìprava sekce resource
+// p√∏√≠prava sekce resource
 	IMAGE_SECTION_HEADER* sec = NTSection(hdr, ".rsrc");
 	if (sec == NULL) return NULL;
 
@@ -502,7 +502,7 @@ BYTE* CBuf::NTResource()
 
 /***************************************************************************\
 *																			*
-*					PamÏùovÏ mapovan˝ soubor (jen pro ËtenÌ)				*
+*					Pam√¨¬ùov√¨ mapovan√Ω soubor (jen pro √®ten√≠)				*
 *																			*
 \***************************************************************************/
 
@@ -511,7 +511,7 @@ BYTE* CBuf::NTResource()
 
 CFileMap::CFileMap()
 {
-	m_Map = NULL;				// nenÌ mapov·nÌ
+	m_Map = NULL;				// nen√≠ mapov√°n√≠
 }
 
 CFileMap::~CFileMap()
@@ -521,13 +521,13 @@ CFileMap::~CFileMap()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 //void CFileMap::Init()
 //{
 //	CBuf::Init();				// inicializace bufferu
 //	CFile::Init();				// inicializace souboru
-//	m_Map = NULL;				// nenÌ mapov·nÌ
+//	m_Map = NULL;				// nen√≠ mapov√°n√≠
 //}
 //
 //void CFileMap::Term()
@@ -538,28 +538,28 @@ CFileMap::~CFileMap()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ
+// otev√∏en√≠
 
 BOOL CFileMap::Open(const CString& name)
 {
-// otev¯enÌ mapovanÈho souboru
+// otev√∏en√≠ mapovan√©ho souboru
 	CFile::Name(name);
 	if (CFile::OpenRead())
 	{
 
-// zjiötÏnÌ velikosti souboru
+// zji≈°t√¨n√≠ velikosti souboru
 		ASSERT(Size() == 0);
 		Size(CFile::Size());
 		if (Size() != -1)
 		{
 
-// vytvo¯enÌ mapov·nÌ
+// vytvo√∏en√≠ mapov√°n√≠
 			ASSERT(m_Map == NULL);
 			m_Map = ::CreateFileMapping(CFile::File(), NULL, PAGE_READONLY, 0, Size(), NULL);
 			if (m_Map != NULL)
 			{
 
-// namapov·nÌ do okna v pamÏti
+// namapov√°n√≠ do okna v pam√¨ti
 				ASSERT(Adr() == NULL);
 				Adr((BYTE*)::MapViewOfFile(m_Map, FILE_MAP_READ, 0, 0, Size()));
 				if (Adr() != NULL)
@@ -569,28 +569,28 @@ BOOL CFileMap::Open(const CString& name)
 					return TRUE;
 				}
 
-// uzav¯enÌ mapov·nÌ p¯i chybÏ
+// uzav√∏en√≠ mapov√°n√≠ p√∏i chyb√¨
 				::CloseHandle(m_Map);
 				m_Map = NULL;
 			}
 		}
 
-// uzav¯enÌ souboru p¯i chybÏ
+// uzav√∏en√≠ souboru p√∏i chyb√¨
 		Size(0);
 		CFile::Close();
 	}
 
-// chybov˝ n·vrat
+// chybov√Ω n√°vrat
 	return FALSE;
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzav¯enÌ
+// uzav√∏en√≠
 
 void CFileMap::Close()
 {
-// uvolnÏnÌ okna v pamÏti
+// uvoln√¨n√≠ okna v pam√¨ti
 	ASSERT(Adr() != NULL);
 	if (Adr() != NULL)
 	{
@@ -598,7 +598,7 @@ void CFileMap::Close()
 		Adr(NULL);
 	}
 
-// uzav¯enÌ mapov·nÌ
+// uzav√∏en√≠ mapov√°n√≠
 	ASSERT(m_Map != NULL);
 	if (m_Map != NULL)
 	{
@@ -606,7 +606,7 @@ void CFileMap::Close()
 		m_Map = NULL;
 	}
 
-// uzav¯enÌ souboru
+// uzav√∏en√≠ souboru
 	Size(0);
 	CFile::Close();
 }
@@ -623,34 +623,34 @@ void CFileMap::Close()
 
 CResource::CResource()
 {
-	m_Instance = NULL;			// implicitnÌ instance
+	m_Instance = NULL;			// implicitn√≠ instance
 }
 
 CResource::~CResource()
 {
-	CloseFile();				// uzav¯enÌ souboru
-	Close();					// uzav¯enÌ resource
+	CloseFile();				// uzav√∏en√≠ souboru
+	Close();					// uzav√∏en√≠ resource
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 //void CResource::Init()
 //{
 //	CBuf::Init();				// inicializace bufferu
-//	m_Instance = NULL;			// implicitnÌ instance
+//	m_Instance = NULL;			// implicitn√≠ instance
 //}
 //
 //void CResource::Term()
 //{
-//	CloseFile();				// uzav¯enÌ souboru
-//	Close();					// uzav¯enÌ resource
+//	CloseFile();				// uzav√∏en√≠ souboru
+//	Close();					// uzav√∏en√≠ resource
 //}
 
 
 //////////////////////////////////////////////////////////////////////////////
-// naËtenÌ souboru s resource
+// na√®ten√≠ souboru s resource
 
 BOOL CResource::OpenFile(LPCTSTR name)
 {
@@ -661,7 +661,7 @@ BOOL CResource::OpenFile(LPCTSTR name)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzav¯enÌ souboru s resource
+// uzav√∏en√≠ souboru s resource
 
 void CResource::CloseFile()
 {
@@ -674,27 +674,27 @@ void CResource::CloseFile()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ resource
+// otev√∏en√≠ resource
 
 BOOL CResource::Open(int id, LPCTSTR typ)
 {
-// nalezenÌ resource
+// nalezen√≠ resource
 	HRSRC res = ::FindResource(m_Instance, MAKEINTRESOURCE(id), typ);
 	if (res)
 	{
 
-// zjiötÏnÌ velikosti dat
+// zji≈°t√¨n√≠ velikosti dat
 		ASSERT(Size() == 0);
 		Size(::SizeofResource(m_Instance, res));
 		if (Size() > 0)
 		{
 
-// naËtenÌ dat do pamÏti
+// na√®ten√≠ dat do pam√¨ti
 			HGLOBAL glob = ::LoadResource(m_Instance, res);
 			if (glob)
 			{
 
-// uzamknutÌ dat
+// uzamknut√≠ dat
 				ASSERT(Adr() == NULL);
 				Adr((BYTE*)::LockResource(glob));
 				if (Adr())
@@ -708,13 +708,13 @@ BOOL CResource::Open(int id, LPCTSTR typ)
 		Size(0);
 	}
 
-// chybov˝ n·vrat
+// chybov√Ω n√°vrat
 	return FALSE;
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
-// otev¯enÌ kopie dat (pro moûnost z·pisu, buffer je nutno po pouûitÌ zruöit)
+// otev√∏en√≠ kopie dat (pro mo≈ænost z√°pisu, buffer je nutno po pou≈æit√≠ zru≈°it)
 
 BOOL CResource::OpenCopy(int id, LPCTSTR typ)
 {
@@ -728,7 +728,7 @@ BOOL CResource::OpenCopy(int id, LPCTSTR typ)
 
 
 //////////////////////////////////////////////////////////////////////////////
-// zruöenÌ bufferu s kopiÌ resource dat
+// zru≈°en√≠ bufferu s kopi√≠ resource dat
 
 void CResource::CloseCopy()
 {
@@ -738,7 +738,7 @@ void CResource::CloseCopy()
 
 
 //////////////////////////////////////////////////////////////////////////////
-// uzav¯enÌ (rezervov·no - zatÌm nenÌ nutnÈ prov·dÏt)
+// uzav√∏en√≠ (rezervov√°no - zat√≠m nen√≠ nutn√© prov√°d√¨t)
 
 void CResource::Close()
 {

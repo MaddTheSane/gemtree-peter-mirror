@@ -1,13 +1,13 @@
 
 /***************************************************************************\
 *																			*
-*						Kompilace programu - pøíkaz							*
+*						Kompilace programu - pÃ¸Ã­kaz							*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání jednoho prvku do bufferu programu (vrací index prvku)
+// pÃ¸idÃ¡nÃ­ jednoho prvku do bufferu programu (vracÃ­ index prvku)
 
 int CompAddItem(PROCCOM func);
 int CompAddItem(PROCCOM func, int data);
@@ -15,19 +15,19 @@ int CompAddItem(PROCCOM func, int data, int list);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu (vrací true = operace OK)
+// pÃ¸eklad pÃ¸Ã­kazu (vracÃ­ true = operace OK)
 
 bool _fastcall CompCom(int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu se skupinou pøíkazù (data = poèet pøíkazù - 1)
+// pÃ¸eklad pÃ¸Ã­kazu se skupinou pÃ¸Ã­kazÃ¹ (data = poÃ¨et pÃ¸Ã­kazÃ¹ - 1)
 
 inline bool CompComGrp(int index, PROCCOM func, PROCCOM func1)
 	{ return CompGroup(CompCom, index, (PROCCOM)func, (PROCCOM)func1); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s podparametrem pøíkazù (hledanım podle identifikace), Jump = pøeskoèení skupiny
+// pÃ¸eklad pÃ¸Ã­kazu s podparametrem pÃ¸Ã­kazÃ¹ (hledanÃ½m podle identifikace), Jump = pÃ¸eskoÃ¨enÃ­ skupiny
 
 void CompComSubPar(int index, int idf);

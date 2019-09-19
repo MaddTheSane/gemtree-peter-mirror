@@ -1,48 +1,48 @@
 
 /***************************************************************************\
 *																			*
-*								Editor èísel								*
+*								Editor Ã¨Ã­sel								*
 *																			*
 \***************************************************************************/
 
 namespace EditNum
 {
-// inicializace pøi startu
+// inicializace pÃ¸i startu
 	void StartInit();
 
-// zahájení editace
+// zahÃ¡jenÃ­ editace
 	void BegEdit(int index);
 
-// pøesun editaèního pole
+// pÃ¸esun editaÃ¨nÃ­ho pole
 	HDWP MoveEdit(HDWP hdwp);
 
-// zobrazení
+// zobrazenÃ­
 	void Disp();
 
-// vstup znaku z klávesnice (TRUE=zrušit)
+// vstup znaku z klÃ¡vesnice (TRUE=zruÅ¡it)
 	BOOL OnChar(TCHAR znak);
 
-// vıbìr všeho
+// vÃ½bÃ¬r vÅ¡eho
 	void SelectAll();
 
-// zrušení bloku
+// zruÅ¡enÃ­ bloku
 	void Delete();
 
 // kopie bloku
 	void Copy();
 
-// vystøíení bloku
+// vystÃ¸Ã­Å¾enÃ­ bloku
 	void Cut();
 
-// navrácení bloku
+// navrÃ¡cenÃ­ bloku
 	void Paste();
 
 // aktualizace voleb bloku
 	void UpdateClipboard();
 
-// zmìna textu
+// zmÃ¬na textu
 	void OnChange();
 
-// znovunaètení èísla
+// znovunaÃ¨tenÃ­ Ã¨Ã­sla
 	void ReLoad();
 }

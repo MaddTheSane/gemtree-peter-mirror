@@ -7,28 +7,28 @@
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minimální velikost
+#pragma optimize("s", on)			// optimalizace na minimÃ¡lnÃ­ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad výrazu s hudbou (vrací true = operace OK)
+// pÃ¸eklad vÃ½razu s hudbou (vracÃ­ true = operace OK)
 
 bool _fastcall CompMus(int index)
 {
-// adresa zdrojového prvku
+// adresa zdrojovÃ©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 
-// kontrola, zda je položka vypnuta
+// kontrola, zda je poloÅ¾ka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// vÃ¬tvenÃ­ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_FNC:
-		return CompFunc(index, IDF_MUS);	// funkce s návratem hudby
+		return CompFunc(index, IDF_MUS);	// funkce s nÃ¡vratem hudby
 
 	case IDF_MUS:
 		if (item->RefBlok == BufObjID)
@@ -69,7 +69,7 @@ bool _fastcall CompMus(int index)
 		return false;
 
 	case IDF_FILE_MUSIC:
-		CompAddItem(FGetFileMusic);			// naètení hudby
+		CompAddItem(FGetFileMusic);			// naÃ¨tenÃ­ hudby
 		return true;
 
 	default:
@@ -79,7 +79,7 @@ bool _fastcall CompMus(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s parametrem hudby
+// pÃ¸eklad pÃ¸Ã­kazu s parametrem hudby
 
 bool CompMusPar(int index, PROCCOM func)
 {

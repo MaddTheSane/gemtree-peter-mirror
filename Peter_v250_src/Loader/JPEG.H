@@ -9,6 +9,6 @@
 namespace JPEG
 {
 
-// dekomprese dat JPEG (vrací TRUE=operace OK)
+// dekomprese dat JPEG (vracÃ­ TRUE=operace OK)
 	BOOL Decomp(CBuf* outbuf);
 }

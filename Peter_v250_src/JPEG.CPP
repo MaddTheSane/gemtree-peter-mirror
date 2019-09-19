@@ -10,17 +10,17 @@
 namespace JPEG
 {
 
-// v˝stupnÌ buffer
+// v√Ωstupn√≠ buffer
 BYTE* m_OutBuf = NULL;
 BYTE* m_OutEnd = NULL;
 BYTE* m_Dst = NULL;
 
-// vstupnÌ buffer
+// vstupn√≠ buffer
 BYTE* m_InBuf = NULL;
 BYTE* m_InEnd = NULL;
 BYTE* m_Src = NULL;
 
-// p¯Ìznak chyby operace
+// p√∏√≠znak chyby operace
 BOOL m_Error = FALSE;
 
 #define JPEG_INTERNALS
@@ -41,7 +41,7 @@ typedef short INT16;
 #define JDCT_FASTEST  JDCT_FLOAT
 #define DEFAULT_MAX_MEM		1000000000L
 
-// naËtenÌ bloku dat
+// na√®ten√≠ bloku dat
 inline DWORD JFREAD(FILE* file,void* buf,int sizeofbuf)
 {
 	int n = m_InEnd - m_Src;
@@ -51,7 +51,7 @@ inline DWORD JFREAD(FILE* file,void* buf,int sizeofbuf)
 	return n;
 }
 
-// z·pis bloku dat
+// z√°pis bloku dat
 inline DWORD JFWRITE(FILE* file,void* buf,int sizeofbuf)
 {
 	int n = m_OutEnd - m_Dst;
@@ -61,7 +61,7 @@ inline DWORD JFWRITE(FILE* file,void* buf,int sizeofbuf)
 	return n;
 }
 
-// z·pis 1 bajtu
+// z√°pis 1 bajtu
 inline int putc(int c, FILE* file)
 {
 	if (m_Dst < m_OutEnd)
@@ -79,8 +79,8 @@ inline FILE* tmpfile() { return NULL; }
 inline int fflush(FILE* file) { return 0; }
 inline int ferror(FILE* file) { return 0; }
 
-#pragma warning ( disable: 4127)				// hl·öenÌ - konstantnÌ podmÌnka
-#pragma warning ( disable: 4244)				// hl·öenÌ - konverze int na WORD
+#pragma warning ( disable: 4127)				// hl√°≈°en√≠ - konstantn√≠ podm√≠nka
+#pragma warning ( disable: 4244)				// hl√°≈°en√≠ - konverze int na WORD
 
 #include "JPEG\\jconfig.h"
 #include "JPEG\\jmorecfg.h"
@@ -135,11 +135,11 @@ inline int ferror(FILE* file) { return 0; }
 #include "JPEG\\jidctred.c"
 #include "JPEG\\jdapistd.c"
 
-#pragma warning ( default: 4244)				// hl·öenÌ - konverze int na WORD
-#pragma warning ( default: 4127)				// hl·öenÌ - konstantnÌ podmÌnka
+#pragma warning ( default: 4244)				// hl√°≈°en√≠ - konverze int na WORD
+#pragma warning ( default: 4127)				// hl√°≈°en√≠ - konstantn√≠ podm√≠nka
 
 /////////////////////////////////////////////////////////////////////////////
-// dekomprese dat JPEG (vracÌ TRUE=operace OK)
+// dekomprese dat JPEG (vrac√≠ TRUE=operace OK)
 
 static const char * const cdjpeg_message_table[] = {
   NULL
@@ -147,12 +147,12 @@ static const char * const cdjpeg_message_table[] = {
 
 BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 {
-// p¯Ìprava vstupnÌho bufferu
+// p√∏√≠prava vstupn√≠ho bufferu
 	m_InBuf = inbuf->Adr();
 	m_InEnd = inbuf->End();
 	m_Src = m_InBuf;
 
-// kontrola velikosti a zaË·tku souboru (musÌ b˝t znaËka M_SOI)
+// kontrola velikosti a za√®√°tku souboru (mus√≠ b√Ωt zna√®ka M_SOI)
 	if ((inbuf->Size() < 50) ||
 		(m_InBuf[0] != 0xff) ||
 		(m_InBuf[1] != M_SOI) ||
@@ -163,13 +163,13 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 
 	m_Error = FALSE;
 
-// lok·lnÌ promÏnnÈ
+// lok√°ln√≠ prom√¨nn√©
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
 	djpeg_dest_ptr dest_mgr = NULL;
 	JDIMENSION num_scanlines;
 
-// p¯Ìprava v˝stupnÌho bufferu pro z·hlavÌ obr·zku
+// p√∏√≠prava v√Ωstupn√≠ho bufferu pro z√°hlav√≠ obr√°zku
 #define INIT_BUF_SIZE 1024
 
 	MemFree(m_OutBuf);
@@ -178,7 +178,7 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 	m_OutEnd = m_OutBuf + INIT_BUF_SIZE;
 	m_Dst = m_OutBuf;
 
-// vytvo¯enÌ objektu dekomprese
+// vytvo√∏en√≠ objektu dekomprese
 	cinfo.err = jpeg_std_error(&jerr);
 	jpeg_create_decompress(&cinfo);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
@@ -187,7 +187,7 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 	jerr.first_addon_message = 0;
 	jerr.last_addon_message = 0;
 
-// nastavenÌ parametr˘ dekomprese
+// nastaven√≠ parametr√π dekomprese
 	cinfo.err->trace_level = 0;
 	cinfo.dct_method = JDCT_FLOAT;
 	cinfo.dither_mode = JDITHER_NONE;
@@ -196,11 +196,11 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 	jpeg_stdio_src(&cinfo, NULL);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// naËtenÌ z·hlavÌ obr·zku
+// na√®ten√≠ z√°hlav√≠ obr√°zku
 	jpeg_read_header(&cinfo, TRUE);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// nastavenÌ novÈ velikosti v˝stupnÌho bufferu
+// nastaven√≠ nov√© velikosti v√Ωstupn√≠ho bufferu
 	int s = m_Dst - m_OutBuf;
 	int n = INIT_BUF_SIZE + cinfo.image_width*cinfo.image_height*4;
 	BYTE* bf = (BYTE*)MemSize(m_OutBuf, n);
@@ -209,18 +209,18 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 	m_OutEnd = m_OutBuf + n;
 	m_Dst = m_OutBuf + s;
 
-// z·pis z·hlavÌ obr·zku
+// z√°pis z√°hlav√≠ obr√°zku
 	dest_mgr = jinit_write_bmp(&cinfo, FALSE);
 	dest_mgr->output_file = NULL;
 
-// zah·jenÌ dekomprese
+// zah√°jen√≠ dekomprese
 	jpeg_start_decompress(&cinfo);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// zah·jenÌ v˝stupu
+// zah√°jen√≠ v√Ωstupu
 	(*dest_mgr->start_output) (&cinfo, dest_mgr);
 
-// dekomprese dat obr·zku
+// dekomprese dat obr√°zku
 	while (cinfo.output_scanline < cinfo.output_height) 
 	{
 		num_scanlines = jpeg_read_scanlines(&cinfo, dest_mgr->buffer,
@@ -231,19 +231,19 @@ BOOL Decomp(CFileMap* inbuf, CBuf* outbuf)
 		if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 	}
 
-// ukonËenÌ v˝stupu
+// ukon√®en√≠ v√Ωstupu
 	(*dest_mgr->finish_output) (&cinfo, dest_mgr);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// ukonËenÌ dekomprese
+// ukon√®en√≠ dekomprese
 	(void) jpeg_finish_decompress(&cinfo);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// zruöenÌ objektu dekomprese
+// zru≈°en√≠ objektu dekomprese
 	jpeg_destroy_decompress(&cinfo);
 	if (m_Error) { MemFree(m_OutBuf); m_OutBuf = NULL; return FALSE; }
 
-// nastavenÌ v˝stupnÌho bufferu
+// nastaven√≠ v√Ωstupn√≠ho bufferu
 	outbuf->AdrSize(m_OutBuf, m_Dst - m_OutBuf);
 	m_OutBuf = NULL;
 

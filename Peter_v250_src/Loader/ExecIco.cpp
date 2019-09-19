@@ -3,28 +3,28 @@
 
 /***************************************************************************\
 *																			*
-*						Provádìní programu - ikona							*
+*						ProvÃ¡dÃ¬nÃ­ programu - ikona							*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("t", on)			// optimalizace na maximální rychlost
+#pragma optimize("t", on)			// optimalizace na maximÃ¡lnÃ­ rychlost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ikony z plochy
+// naÃ¨tenÃ­ ikony z plochy
 
 void _fastcall FIconGet(CIcon& icon)
 {
-// vyprázdnìní ikony
+// vyprÃ¡zdnÃ¬nÃ­ ikony
 	icon.Empty();
 
-// naètení parametrù výøezu
-	int x = FIntX();				// poèátek výøezu X
-	int y = FIntY();				// poèátek výøezu Y
-	int width = ICONWIDTH;			// šíøka výøezu
-	int height = ICONHEIGHT;		// výška výøezu
+// naÃ¨tenÃ­ parametrÃ¹ vÃ½Ã¸ezu
+	int x = FIntX();				// poÃ¨Ã¡tek vÃ½Ã¸ezu X
+	int y = FIntY();				// poÃ¨Ã¡tek vÃ½Ã¸ezu Y
+	int width = ICONWIDTH;			// Å¡Ã­Ã¸ka vÃ½Ã¸ezu
+	int height = ICONHEIGHT;		// vÃ½Å¡ka vÃ½Ã¸ezu
 
-// omezení parametrù
+// omezenÃ­ parametrÃ¹
 	if (x < 0) { width += x; x = 0; }
 	if (x > Width) x = Width;
 	if (width < 0) width = 0;
@@ -37,17 +37,17 @@ void _fastcall FIconGet(CIcon& icon)
 	if (height > Height) height = Height;
 	if (y + height > Height) height = Height - y;
 
-// kontrola platnosti parametrù
+// kontrola platnosti parametrÃ¹
 	if ((width <= 0) || (height <= 0)) return;
 
-// vytvoøení ikony
+// vytvoÃ¸enÃ­ ikony
 	icon.New();
 	if ((width < ICONWIDTH) || (height < ICONHEIGHT))
 	{
 		MemFill(icon.DataData(), ICONSIZE, BackCol);
 	}
 
-// pøenesení dat obrázku
+// pÃ¸enesenÃ­ dat obrÃ¡zku
 	BYTE* dst = icon.DataData() + (ICONWIDTH - width)/2 + (ICONHEIGHT - height)/2*ICONWIDTH;
 	BYTE* src = BackBuf + x + y*WidthByte;
 	for (; height > 0; height--)
@@ -66,76 +66,76 @@ void _fastcall FIconGet(CIcon& icon)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// funkce s návratem ikony
+// funkce s nÃ¡vratem ikony
 
 void _fastcall FIconFunc(CIcon& icon)
 {
-// úschova indexu volané funkce
+// Ãºschova indexu volanÃ© funkce
 	int data = ExecItem[-1].Data;
 
-// úschova indexu promìnné s návratovou hodnotou
+// Ãºschova indexu promÃ¬nnÃ© s nÃ¡vratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lokálních promìnných
+// inicializace lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 
-// úschova ukazatele programu
+// Ãºschova ukazatele programu
 	EXECITEM* oldexe = ExecItem;
 
-// nová adresa programu
+// novÃ¡ adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vnoøení
+// kontrola hloubky vnoÃ¸enÃ­
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
 
-// vyvolání funkce
+// vyvolÃ¡nÃ­ funkce
 		FCommand();
 	}
 	Hloubka++;
 
-// návrat adresy programu
+// nÃ¡vrat adresy programu
 	ExecItem = oldexe;
 
-// zrušení požadavku o pøerušení
+// zruÅ¡enÃ­ poÅ¾adavku o pÃ¸eruÅ¡enÃ­
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
-// návrat výsledku operace
+// nÃ¡vrat vÃ½sledku operace
 	icon = Icon[Icon.Num() - res];
 
-// zrušení lokálních promìnných
+// zruÅ¡enÃ­ lokÃ¡lnÃ­ch promÃ¬nnÃ½ch
 	FCommand();
 }
 
 
 /***************************************************************************\
 *																			*
-*								promìnné									*
+*								promÃ¬nnÃ©									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// prázdná ikona
+// prÃ¡zdnÃ¡ ikona
 
 void _fastcall FIconEmpty(CIcon& icon) { icon.Empty(); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globální ikona (Data = index)
+// globÃ¡lnÃ­ ikona (Data = index)
 
 void _fastcall FIconObj(CIcon& icon)
 {
 // index ikony
 	int inx = ExecItem[-1].Data;
 
-// nastavení ikony
+// nastavenÃ­ ikony
 	icon = Icon[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globalní ikona v seznamu (Data = index, List = seznam)
+// globalnÃ­ ikona v seznamu (Data = index, List = seznam)
 
 void _fastcall FIconObjList(CIcon& icon)
 {
@@ -146,26 +146,26 @@ void _fastcall FIconObjList(CIcon& icon)
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavení ikony
+// nastavenÃ­ ikony
 	icon = Icon[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální ikona (Data = index)
+// lokÃ¡lnÃ­ ikona (Data = index)
 
 void _fastcall FIconLoc(CIcon& icon)
 {
 // index ikony
 	int inx = Icon.Num() - ExecItem[-1].Data;
 
-// nastavení ikony
+// nastavenÃ­ ikony
 	icon = Icon[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální ikona v seznamu (Data = index, List = seznam)
+// lokÃ¡lnÃ­ ikona v seznamu (Data = index, List = seznam)
 
 void _fastcall FIconLocList(CIcon& icon)
 {
@@ -176,7 +176,7 @@ void _fastcall FIconLocList(CIcon& icon)
 	int inx = Icon.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavení ikony
+// nastavenÃ­ ikony
 	icon = Icon[inx];
 }
 
@@ -188,7 +188,7 @@ void _fastcall FIconLocList(CIcon& icon)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøedmìtu pøed Petrem
+// naÃ¨tenÃ­ pÃ¸edmÃ¬tu pÃ¸ed Petrem
 
 void _fastcall FPredmet(CIcon& icon)
 {
@@ -206,7 +206,7 @@ void _fastcall FPredmet(CIcon& icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøedmìtu pøed Petrou
+// naÃ¨tenÃ­ pÃ¸edmÃ¬tu pÃ¸ed Petrou
 
 void _fastcall FPredmet2(CIcon& icon)
 {
@@ -224,7 +224,7 @@ void _fastcall FPredmet2(CIcon& icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøedmìtu pod Petrem
+// naÃ¨tenÃ­ pÃ¸edmÃ¬tu pod Petrem
 
 void _fastcall FPredmetPoz(CIcon& icon)
 {
@@ -242,7 +242,7 @@ void _fastcall FPredmetPoz(CIcon& icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøedmìtu pod Petrou
+// naÃ¨tenÃ­ pÃ¸edmÃ¬tu pod Petrou
 
 void _fastcall FPredmet2Poz(CIcon& icon)
 {
@@ -260,15 +260,15 @@ void _fastcall FPredmet2Poz(CIcon& icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení pøedmìtu z plochy
+// naÃ¨tenÃ­ pÃ¸edmÃ¬tu z plochy
 
 void _fastcall FGetMapIcon(CIcon& icon)
 {
-// naètení plochy
+// naÃ¨tenÃ­ plochy
 	CMap map;
 	FMap(map);
 
-// naètení souøadnic
+// naÃ¨tenÃ­ souÃ¸adnic
 	int x = FIntR();
 	int y = FIntR();
 
@@ -285,7 +285,7 @@ void _fastcall FGetMapIcon(CIcon& icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ikony okna
+// naÃ¨tenÃ­ ikony okna
 
 void _fastcall FGetWindowIcon(CIcon& icon)
 {
@@ -300,7 +300,7 @@ void _fastcall FGetWindowIcon(CIcon& icon)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ikony ze souboru
+// naÃ¨tenÃ­ ikony ze souboru
 
 void _fastcall FGetFileIcon(CIcon& icon)
 {

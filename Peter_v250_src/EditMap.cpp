@@ -13,82 +13,82 @@ namespace EditMap
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-// parametry editované plochy
-int		Index = 0;						// editovaná plocha
-int		Width;							// šíøka plochy v políèkách
-int		Height;							// vıška plochy v políèkách
-int		MWidth;							// šíøka plochy v bodech
-int		MHeight;						// vıška plochy v bodech
+// parametry editovanÃ© plochy
+int		Index = 0;						// editovanÃ¡ plocha
+int		Width;							// Å¡Ã­Ã¸ka plochy v polÃ­Ã¨kÃ¡ch
+int		Height;							// vÃ½Å¡ka plochy v polÃ­Ã¨kÃ¡ch
+int		MWidth;							// Å¡Ã­Ã¸ka plochy v bodech
+int		MHeight;						// vÃ½Å¡ka plochy v bodech
 
-// zobrazená èást plochy
-int		TLeft;							// poèáteèní bod plochy vlevo
-int		TBottom;						// poèáteèní bod plochy dole
+// zobrazenÃ¡ Ã¨Ã¡st plochy
+int		TLeft;							// poÃ¨Ã¡teÃ¨nÃ­ bod plochy vlevo
+int		TBottom;						// poÃ¨Ã¡teÃ¨nÃ­ bod plochy dole
 
-// zobrazení plochy na displeji (v bodech displeje)
-int		DLeft;							// poèátek zobrazení vlevo
-int		DTop;							// poèátek zobrazení nahoøe
-int		DWidth;							// zobrazená šíøka èásti plochy na displeji
-int		DHeight;						// zobrazená vıška èásti plochy na displeji
+// zobrazenÃ­ plochy na displeji (v bodech displeje)
+int		DLeft;							// poÃ¨Ã¡tek zobrazenÃ­ vlevo
+int		DTop;							// poÃ¨Ã¡tek zobrazenÃ­ nahoÃ¸e
+int		DWidth;							// zobrazenÃ¡ Å¡Ã­Ã¸ka Ã¨Ã¡sti plochy na displeji
+int		DHeight;						// zobrazenÃ¡ vÃ½Å¡ka Ã¨Ã¡sti plochy na displeji
 
 int		ILeft;							// index ikony vlevo
 int		IRight;							// index ikony vpravo
-int		ITop;							// index ikony nahoøe
+int		ITop;							// index ikony nahoÃ¸e
 int		IBottom;						// index ikony dole
 
-int		OLeft;							// zobrazená èást ikony vlevo
-int		ORight;							// zobrazená èást ikony vpravo
-int		OTop;							// zobrazená èást ikony nahoøe
-int		OBottom;						// zobrazená èást ikony dole
+int		OLeft;							// zobrazenÃ¡ Ã¨Ã¡st ikony vlevo
+int		ORight;							// zobrazenÃ¡ Ã¨Ã¡st ikony vpravo
+int		OTop;							// zobrazenÃ¡ Ã¨Ã¡st ikony nahoÃ¸e
+int		OBottom;						// zobrazenÃ¡ Ã¨Ã¡st ikony dole
 
-// nastavení novıch rozmìrù
-int		NewDimWidth;					// nová šíøka
-int		NewDimHeight;					// nová vıška
-BOOL	NewDimFill = FALSE;				// probíhá plnìní textù
+// nastavenÃ­ novÃ½ch rozmÃ¬rÃ¹
+int		NewDimWidth;					// novÃ¡ Å¡Ã­Ã¸ka
+int		NewDimHeight;					// novÃ¡ vÃ½Å¡ka
+BOOL	NewDimFill = FALSE;				// probÃ­hÃ¡ plnÃ¬nÃ­ textÃ¹
 
-// editaèní mód
-int		Mode = IDN_MAP;					// editaèní mód
-BOOL	Rastr = TRUE;					// pøíznak zobrazení rastru
-BOOL	EditMap = FALSE;				// editaèní mód
-BOOL	FillMap = FALSE;				// mód vıplnì
-BOOL	MFilling = FALSE;				// oznaèování bloku pro vıplò
-int		FillX;							// poèáteèní ikona vıplnì X
-int		FillY;							// poèáteèní ikona vıplnì Y
+// editaÃ¨nÃ­ mÃ³d
+int		Mode = IDN_MAP;					// editaÃ¨nÃ­ mÃ³d
+BOOL	Rastr = TRUE;					// pÃ¸Ã­znak zobrazenÃ­ rastru
+BOOL	EditMap = FALSE;				// editaÃ¨nÃ­ mÃ³d
+BOOL	FillMap = FALSE;				// mÃ³d vÃ½plnÃ¬
+BOOL	MFilling = FALSE;				// oznaÃ¨ovÃ¡nÃ­ bloku pro vÃ½plÃ²
+int		FillX;							// poÃ¨Ã¡teÃ¨nÃ­ ikona vÃ½plnÃ¬ X
+int		FillY;							// poÃ¨Ã¡teÃ¨nÃ­ ikona vÃ½plnÃ¬ Y
 
-// obsluha taení
-BOOL	BegDrag = FALSE;				// pøíznak zahájení taení
-BOOL	MDraging = FALSE;				// pøíznak taení ikony editoru plochy
-int		BegX;							// souøadnice myši X pøed zahájením taení
-int		BegY;							// souøadnice myši Y pøed zahájením taení
-BOOL	CopyMode = FALSE;				// pøíznak módu kopírování
-int		DragX = MOUSEINV;				// souøadnice X taené ikony (MOUSEINV = není)
-int		DragY = MOUSEINV;				// souøadnice Y taené ikony (MOUSEINV = není)
-HIMAGELIST DragImageList;				// obrázek taení
+// obsluha taÅ¾enÃ­
+BOOL	BegDrag = FALSE;				// pÃ¸Ã­znak zahÃ¡jenÃ­ taÅ¾enÃ­
+BOOL	MDraging = FALSE;				// pÃ¸Ã­znak taÅ¾enÃ­ ikony editoru plochy
+int		BegX;							// souÃ¸adnice myÅ¡i X pÃ¸ed zahÃ¡jenÃ­m taÅ¾enÃ­
+int		BegY;							// souÃ¸adnice myÅ¡i Y pÃ¸ed zahÃ¡jenÃ­m taÅ¾enÃ­
+BOOL	CopyMode = FALSE;				// pÃ¸Ã­znak mÃ³du kopÃ­rovÃ¡nÃ­
+int		DragX = MOUSEINV;				// souÃ¸adnice X taÅ¾enÃ© ikony (MOUSEINV = nenÃ­)
+int		DragY = MOUSEINV;				// souÃ¸adnice Y taÅ¾enÃ© ikony (MOUSEINV = nenÃ­)
+HIMAGELIST DragImageList;				// obrÃ¡zek taÅ¾enÃ­
 int		HotSpotX;						// bod dotyku X
 int		HotSpotY;						// bod dotyku Y
 
-// ikony pøepínaèù
-CBufIcon	MapSwc;						// ikony pøepínaèù
-CBufIcon	MapSwcNum;					// ikony èísel
+// ikony pÃ¸epÃ­naÃ¨Ã¹
+CBufIcon	MapSwc;						// ikony pÃ¸epÃ­naÃ¨Ã¹
+CBufIcon	MapSwcNum;					// ikony Ã¨Ã­sel
 
-// editace èíselné poloky
-int		EditNumX;						// souøadnice X editované ikony
-int		EditNumY;						// souøadnice Y editované ikony
-BOOL	EditNumFill = FALSE;			// probíhá plnìní èíselné poloky
-#define	EDITNUMHEIGHT 16				// vıška editaèního pole
+// editace Ã¨Ã­selnÃ© poloÅ¾ky
+int		EditNumX;						// souÃ¸adnice X editovanÃ© ikony
+int		EditNumY;						// souÃ¸adnice Y editovanÃ© ikony
+BOOL	EditNumFill = FALSE;			// probÃ­hÃ¡ plnÃ¬nÃ­ Ã¨Ã­selnÃ© poloÅ¾ky
+#define	EDITNUMHEIGHT 16				// vÃ½Å¡ka editaÃ¨nÃ­ho pole
 
 // ************************** obsluha volby editace *************************
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace pÃ¸i startu programu
 
 void StartInit()
 {
-// naètení ikon pøepínaèù
+// naÃ¨tenÃ­ ikon pÃ¸epÃ­naÃ¨Ã¹
 	MapSwc.IconSize(12, 12);
 	MapSwc.Load(IDN_MAPSWC, 10);
 	ASSERT(MapSwc.Num() == 10);
 
-// naètení ikon èísel
+// naÃ¨tenÃ­ ikon Ã¨Ã­sel
 	MapSwcNum.IconSize(8, 12);
 	MapSwcNum.Load(IDN_MAPSWCNUM, 10);
 	ASSERT(MapSwcNum.Num() == 10);
@@ -96,25 +96,25 @@ void StartInit()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace (musí bıt platnı index!)
+// zahÃ¡jenÃ­ editace (musÃ­ bÃ½t platnÃ½ index!)
 
 void BegEdit(int index)
 {
-// ukonèení editace èíselného parametru
+// ukonÃ¨enÃ­ editace Ã¨Ã­selnÃ©ho parametru
 	EndEditSwcNum();
 
-// úschova indexu plochy
-	Index = index;						// index ikony/obrázku
+// Ãºschova indexu plochy
+	Index = index;						// index ikony/obrÃ¡zku
 	ASSERT(Map.IsValid(index));
-	Map[index].CopyWrite();				// kopie pøed zápisem
+	Map[index].CopyWrite();				// kopie pÃ¸ed zÃ¡pisem
 
-// úschova parametrù plochy
-	Width = Map[index].Width();			// šíøka plochy v políèkách
-	Height = Map[index].Height();		// vıška plochy v políèkách
+// Ãºschova parametrÃ¹ plochy
+	Width = Map[index].Width();			// Å¡Ã­Ã¸ka plochy v polÃ­Ã¨kÃ¡ch
+	Height = Map[index].Height();		// vÃ½Å¡ka plochy v polÃ­Ã¨kÃ¡ch
 
-	MDraging = FALSE;					// není taení
+	MDraging = FALSE;					// nenÃ­ taÅ¾enÃ­
 
-// pøepoèet rozloení a zobrazení obrázku
+// pÃ¸epoÃ¨et rozloÅ¾enÃ­ a zobrazenÃ­ obrÃ¡zku
 	Disp();
 
 // aktualizace voleb bloku
@@ -122,9 +122,9 @@ void BegEdit(int index)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha dialogu pro zadání rozmìrù
+// obsluha dialogu pro zadÃ¡nÃ­ rozmÃ¬rÃ¹
 
-// nastavení textu šíøky
+// nastavenÃ­ textu Å¡Ã­Ã¸ky
 void DimenDialSetWidth(HWND wnd)
 {
 	CText txt;
@@ -134,7 +134,7 @@ void DimenDialSetWidth(HWND wnd)
 	NewDimFill = FALSE;
 }
 
-// naètení šíøky
+// naÃ¨tenÃ­ Å¡Ã­Ã¸ky
 void DimenDialGetWidth(HWND wnd)
 {
 	if (!NewDimFill)
@@ -147,7 +147,7 @@ void DimenDialGetWidth(HWND wnd)
 	}
 }
 
-// nastavení textu vıšky
+// nastavenÃ­ textu vÃ½Å¡ky
 void DimenDialSetHeight(HWND wnd)
 {
 	CText txt;
@@ -157,7 +157,7 @@ void DimenDialSetHeight(HWND wnd)
 	NewDimFill = FALSE;
 }
 
-// naètení vıšky
+// naÃ¨tenÃ­ vÃ½Å¡ky
 void DimenDialGetHeight(HWND wnd)
 {
 	if (!NewDimFill)
@@ -234,18 +234,18 @@ BOOL CALLBACK DimenDialogProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení rozmìrù plochy
+// nastavenÃ­ rozmÃ¬rÃ¹ plochy
 
 void OnDimen()
 {
-// pøíprava vıchozích rozmìrù
+// pÃ¸Ã­prava vÃ½chozÃ­ch rozmÃ¬rÃ¹
 	NewDimWidth = Width;
 	NewDimHeight = Height;
 
-// ukonèení editace èíselného parametru
+// ukonÃ¨enÃ­ editace Ã¨Ã­selnÃ©ho parametru
 	EndEditSwcNum();
 
-// zadání novıch rozmìrù plochy
+// zadÃ¡nÃ­ novÃ½ch rozmÃ¬rÃ¹ plochy
 	if (::DialogBoxParam(
 			hInstance,
 			MAKEINTRESOURCE(IDN_MAPDIMEN),
@@ -253,86 +253,86 @@ void OnDimen()
 			(DLGPROC)DimenDialogProc,
 			(LPARAM)IDN_MAPDIMEN) != IDOK) return;
 
-// kontrola, zda byly rozmìry zmìnìny
+// kontrola, zda byly rozmÃ¬ry zmÃ¬nÃ¬ny
 	if ((NewDimWidth == Width) && (NewDimHeight == Height))
 	{
 		return;
 	}
 
-// zapnutí kurzoru èekání
+// zapnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	BeginWaitCursor();
 
-// úschova plochy pro UNDO
+// Ãºschova plochy pro UNDO
 	PushUndo();
 
-// odpojení referencí plochy
+// odpojenÃ­ referencÃ­ plochy
 	Map[Index].RefDec();
 
-// nastavení novıch rozmìrù obrázku
+// nastavenÃ­ novÃ½ch rozmÃ¬rÃ¹ obrÃ¡zku
 	ASSERT(Map.IsValid(Index));
 	Width = NewDimWidth;
 	Height = NewDimHeight;
 	Map[Index].Resize(Width, Height);
 
-// napojení referencí plochy
+// napojenÃ­ referencÃ­ plochy
 	Map[Index].RefInc();
 
-// aktualizace aktivní poloky (zobrazení referencí)
+// aktualizace aktivnÃ­ poloÅ¾ky (zobrazenÃ­ referencÃ­)
 	ProgAktItem();
 
-// pøekreslení displeje
+// pÃ¸ekreslenÃ­ displeje
 	Disp();
 
-// pøíznak modifikace
+// pÃ¸Ã­znak modifikace
 	SetModi();
 
 // aktualizace voleb bloku
 	UpdateClipboard();
 
-// vypnutí kurzoru èekání
+// vypnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	EndWaitCursor();
 }
 
 
 
-// ***************************** obsluha zobrazení **************************
+// ***************************** obsluha zobrazenÃ­ **************************
 
 /////////////////////////////////////////////////////////////////////////////
-// pøepoèet rozmìrù
+// pÃ¸epoÃ¨et rozmÃ¬rÃ¹
 
 void ReCalc()
 {
-// šíøka a vıška plochy v bodech
+// Å¡Ã­Ã¸ka a vÃ½Å¡ka plochy v bodech
 	MWidth = Width * ICONWIDTH;
 	MHeight = Height * ICONHEIGHT;
 
-// pøíprava zobrazené vıšky (korekce, je-li horizontální posuvník)
-	DHeight = EditHeight - 2 - 1;				// vıška k zobrazení
+// pÃ¸Ã­prava zobrazenÃ© vÃ½Å¡ky (korekce, je-li horizontÃ¡lnÃ­ posuvnÃ­k)
+	DHeight = EditHeight - 2 - 1;				// vÃ½Å¡ka k zobrazenÃ­
 	if (EditWidth - 4 - TRACKSIRKA < MWidth)
 	{
-		DHeight -= TRACKSIRKA;					// sníenı vıšky o horizontální posuvník
-		if (DHeight < 1) DHeight = 1;			// minimální šíøka
+		DHeight -= TRACKSIRKA;					// snÃ­Å¾enÃ½ vÃ½Å¡ky o horizontÃ¡lnÃ­ posuvnÃ­k
+		if (DHeight < 1) DHeight = 1;			// minimÃ¡lnÃ­ Å¡Ã­Ã¸ka
 	}
 
-// pøíprava zobrazené šíøky (korekce, je-li vertikální posuvník)
-	DWidth = EditWidth - 4 - 1;					//	šíøka k zobrazení
+// pÃ¸Ã­prava zobrazenÃ© Å¡Ã­Ã¸ky (korekce, je-li vertikÃ¡lnÃ­ posuvnÃ­k)
+	DWidth = EditWidth - 4 - 1;					//	Å¡Ã­Ã¸ka k zobrazenÃ­
 	if (DHeight < MHeight)
 	{
-		DWidth -= TRACKSIRKA;					// sníení šíøky o vertikální posuvník
-		if (DWidth < 1) DWidth = 1;				// minimální šíøka
+		DWidth -= TRACKSIRKA;					// snÃ­Å¾enÃ­ Å¡Ã­Ã¸ky o vertikÃ¡lnÃ­ posuvnÃ­k
+		if (DWidth < 1) DWidth = 1;				// minimÃ¡lnÃ­ Å¡Ã­Ã¸ka
 	}
 
-// zobrazenı poèátek
+// zobrazenÃ½ poÃ¨Ã¡tek
 	DLeft = EditX + 2 + (DWidth - MWidth)/2;
 	if (DWidth < MWidth) DLeft = EditX + 2;
 	DTop = EditY + 2 + (DHeight - MHeight)/2;
 	if (DHeight < MHeight) DTop = EditY + 2;
 
-// omezení na skuteènou vıšku a šíøku
-	if (DHeight > MHeight) DHeight = MHeight;	// omezení na skuteèné rozmìry
-	if (DWidth > MWidth) DWidth = MWidth;		// omezení na skuteèné rozmìry
+// omezenÃ­ na skuteÃ¨nou vÃ½Å¡ku a Å¡Ã­Ã¸ku
+	if (DHeight > MHeight) DHeight = MHeight;	// omezenÃ­ na skuteÃ¨nÃ© rozmÃ¬ry
+	if (DWidth > MWidth) DWidth = MWidth;		// omezenÃ­ na skuteÃ¨nÃ© rozmÃ¬ry
 
-// omezení poèátku pøi zobrazení editaèního pole
+// omezenÃ­ poÃ¨Ã¡tku pÃ¸i zobrazenÃ­ editaÃ¨nÃ­ho pole
 	if (EditMapNumWnd)
 	{
 		int i = (EditNumX+1)*ICONWIDTH - DWidth;
@@ -346,19 +346,19 @@ void ReCalc()
 		if (TBottom < i) TBottom = i;
 	}
 
-// omezení poèáteèního bodu
+// omezenÃ­ poÃ¨Ã¡teÃ¨nÃ­ho bodu
 	if (TLeft < 0) TLeft = 0;
 	if (TLeft > MWidth - DWidth) TLeft = MWidth - DWidth;
 	if (TBottom < 0) TBottom = 0;
 	if (TBottom > MHeight - DHeight) TBottom = MHeight - DHeight;
 
-// pøepoèet zobrazeného poèátku na ikony a body
+// pÃ¸epoÃ¨et zobrazenÃ©ho poÃ¨Ã¡tku na ikony a body
 	ILeft = TLeft / ICONWIDTH;					// index ikony vlevo
-	OLeft = ICONWIDTH - (TLeft % ICONWIDTH);	// zobrazená èást ikony vlevo
+	OLeft = ICONWIDTH - (TLeft % ICONWIDTH);	// zobrazenÃ¡ Ã¨Ã¡st ikony vlevo
 	IBottom = TBottom / ICONHEIGHT;				// index ikony dole
-	OBottom = ICONHEIGHT - (TBottom % ICONHEIGHT); // zobrazená èást ikony dole
+	OBottom = ICONHEIGHT - (TBottom % ICONHEIGHT); // zobrazenÃ¡ Ã¨Ã¡st ikony dole
 
-// zobrazená èást ikon vpravo a nahoøe
+// zobrazenÃ¡ Ã¨Ã¡st ikon vpravo a nahoÃ¸e
 	ORight = ICONWIDTH - ((MWidth - TLeft - DWidth) % ICONWIDTH);
 	OTop = ICONHEIGHT - ((MHeight - TBottom - DHeight) % ICONHEIGHT);
 
@@ -366,36 +366,36 @@ void ReCalc()
 	IRight = ILeft + (DWidth - OLeft + ICONWIDTH - 1) / ICONWIDTH;
 	ITop = IBottom + (DHeight - OBottom + ICONHEIGHT - 1) / ICONHEIGHT;
 
-// pøíznak zapnutí posuvníkù
+// pÃ¸Ã­znak zapnutÃ­ posuvnÃ­kÃ¹
 	HScrollDisp = (DWidth < MWidth);
 	VScrollDisp = (DHeight < MHeight);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení celého okna editoru
+// zobrazenÃ­ celÃ©ho okna editoru
 
 void Disp()
 {
-// pøepoèet zobrazení
+// pÃ¸epoÃ¨et zobrazenÃ­
 	ReCalc();
 
-// nastavení posuvníkù
+// nastavenÃ­ posuvnÃ­kÃ¹
 	SetScroll();
 
-// otevøení kontextu displeje
+// otevÃ¸enÃ­ kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// vıbìr vlastních palet
+// nastavenÃ­ vlastnÃ­ch palet
+	HPALETTE OldPal;					// Ãºschova pÃ¹vodnÃ­ch palet
+	OldPal = ::SelectPalette(dc,		// vÃ½bÃ¬r vlastnÃ­ch palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
-// pøíprava štìtce k vymazání podkladu
-	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // štìtec k vymazání plochy
+// pÃ¸Ã­prava Å¡tÃ¬tce k vymazÃ¡nÃ­ podkladu
+	HBRUSH brush = (HBRUSH)::GetStockObject(LTGRAY_BRUSH); // Å¡tÃ¬tec k vymazÃ¡nÃ­ plochy
 
-// vymazání plochy nahoøe nad obrázkem
+// vymazÃ¡nÃ­ plochy nahoÃ¸e nad obrÃ¡zkem
 	RECT rc;
 	rc.left = EditX + 2;
 	rc.right = EditX + EditWidth - 2;
@@ -406,7 +406,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy dole pod obrázkem (left a right je nastaveno)
+// vymazÃ¡nÃ­ plochy dole pod obrÃ¡zkem (left a right je nastaveno)
 	rc.top = DTop + DHeight;
 	rc.bottom = EditY + EditHeight - 2;
 	if (rc.top < rc.bottom)
@@ -414,7 +414,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vlevo od obrázku (left je nastaveno)
+// vymazÃ¡nÃ­ plochy vlevo od obrÃ¡zku (left je nastaveno)
 	rc.right = DLeft;
 	rc.top = DTop;
 	rc.bottom = DTop + DHeight;
@@ -423,7 +423,7 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vymazání plochy vpravo od obrázku (top a bottom je nastaveno)
+// vymazÃ¡nÃ­ plochy vpravo od obrÃ¡zku (top a bottom je nastaveno)
 	rc.left = DLeft + DWidth;
 	rc.right = EditX + EditWidth - 2;
 	if (rc.left < rc.right)
@@ -431,57 +431,57 @@ void Disp()
 		::FillRect(dc, &rc, brush);
 	}
 
-// vykreslení obrázku
+// vykreslenÃ­ obrÃ¡zku
 	DispAkt(dc);
 
-// zrušení štìtce podkladu (i kdy podle dokumentace rušení není nutné)
+// zruÅ¡enÃ­ Å¡tÃ¬tce podkladu (i kdyÅ¾ podle dokumentace ruÅ¡enÃ­ nenÃ­ nutnÃ©)
 	::DeleteObject(brush);
 
-// návrat pùvodních palet
+// nÃ¡vrat pÃ¹vodnÃ­ch palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnÃ¬nÃ­ kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizaèní pøekreslení obrázku (s pøepoètem rozmìrù)
+// aktualizaÃ¨nÃ­ pÃ¸ekreslenÃ­ obrÃ¡zku (s pÃ¸epoÃ¨tem rozmÃ¬rÃ¹)
 
 void ReDisp()
 {
-// pøepoèet zobrazení
+// pÃ¸epoÃ¨et zobrazenÃ­
 	ReCalc();
 
-// nastavení posuvníkù
+// nastavenÃ­ posuvnÃ­kÃ¹
 	SetScroll();
 
-// otevøení kontextu displeje
+// otevÃ¸enÃ­ kontextu displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// nastavení vlastních palet
-	HPALETTE OldPal;					// úschova pùvodních palet
-	OldPal = ::SelectPalette(dc,		// vıbìr vlastních palet
+// nastavenÃ­ vlastnÃ­ch palet
+	HPALETTE OldPal;					// Ãºschova pÃ¹vodnÃ­ch palet
+	OldPal = ::SelectPalette(dc,		// vÃ½bÃ¬r vlastnÃ­ch palet
 		StdPalette, FALSE);
 	::RealizePalette(dc);				// realizace palet
 
-// vykreslení obrázku
+// vykreslenÃ­ obrÃ¡zku
 	DispAkt(dc);
 
-// návrat pùvodních palet
+// nÃ¡vrat pÃ¹vodnÃ­ch palet
 	::SelectPalette(dc,OldPal,FALSE);
 
-// uvolnìní kontextu displeje
+// uvolnÃ¬nÃ­ kontextu displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizaèní pøekreslení obrázku
+// aktualizaÃ¨nÃ­ pÃ¸ekreslenÃ­ obrÃ¡zku
 
 void DispAkt(HDC dc)
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	int i,j, k, l;
 	int width = (IRight - ILeft + 1)*ICONWIDTH;
 	int height = (ITop - IBottom + 1)*ICONHEIGHT;
@@ -490,10 +490,10 @@ void DispAkt(HDC dc)
 	MAPITEM* data = Map[Index].DataData();
 	int cislic;
 
-// vytvoøení bufferu k zobrazení
+// vytvoÃ¸enÃ­ bufferu k zobrazenÃ­
 	BYTE* buf = (BYTE*)MemGet(width*height);
 
-// zobrazení ikon
+// zobrazenÃ­ ikon
 	for (i = ILeft; i <= IRight; i++)
 	{
 		for (j = IBottom; j <= ITop; j++)
@@ -510,7 +510,7 @@ void DispAkt(HDC dc)
 			}
 			dst -= width * ICONHEIGHT;
 
-// zobrazení pøepínaèe
+// zobrazenÃ­ pÃ¸epÃ­naÃ¨e
 			k = -1;
 			switch (Mode)
 			{
@@ -538,7 +538,7 @@ void DispAkt(HDC dc)
 				}
 				break;
 
-// zobrazení èíselné hodnoty
+// zobrazenÃ­ Ã¨Ã­selnÃ© hodnoty
 			case IDN_SWCN1:	k = ((data[i + j*Width].Param & MAP_VALUE1_MASK) >> MAP_VALUE1_ROT);
 							goto DISPAKTSWCNUM;
 
@@ -548,7 +548,7 @@ void DispAkt(HDC dc)
 			case IDN_SWCN3:	k = ((data[i + j*Width].Param & MAP_VALUE3_MASK) >> MAP_VALUE3_ROT);
 
 		DISPAKTSWCNUM:
-				cislic = 1;				// poèet èíslic
+				cislic = 1;				// poÃ¨et Ã¨Ã­slic
 				if (k >= 10) cislic++;
 				if (k >= 100) cislic++;
 				if (k >= 1000) cislic++;
@@ -573,7 +573,7 @@ void DispAkt(HDC dc)
 		}
 	}
 
-// zobrazení rastru
+// zobrazenÃ­ rastru
 	if (Rastr)
 	{
 		BYTE col = BlueCol;
@@ -596,22 +596,22 @@ void DispAkt(HDC dc)
 		}
 	}
 
-// pøednastavení parametrù záhlaví bitmapy
+// pÃ¸ednastavenÃ­ parametrÃ¹ zÃ¡hlavÃ­ bitmapy
 	StdBitmapInfo->bmiHeader.biWidth = width;
 	StdBitmapInfo->bmiHeader.biHeight = DHeight;
 
-// zobrazení
+// zobrazenÃ­
 	::StretchDIBits(dc, DLeft, DTop, DWidth, DHeight, ICONWIDTH - OLeft,
 			0, DWidth, DHeight, buf + (ICONHEIGHT-OBottom)*width,
 			StdBitmapInfo, DIB_RGB_COLORS, SRCCOPY);
 
-// zrušení bufferu
+// zruÅ¡enÃ­ bufferu
 	MemFree(buf);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutí/vypnutí rastru
+// zapnutÃ­/vypnutÃ­ rastru
 
 void OnRastr()
 {
@@ -622,11 +622,11 @@ void OnRastr()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zobrazení kurzoru myši (TRUE=obsloueno)
+// obsluha zobrazenÃ­ kurzoru myÅ¡i (TRUE=obslouÅ¾eno)
 
 BOOL OnSetCursor(int x, int y)
 {
-// pole obrázku
+// pole obrÃ¡zku
 	if (((x >= DLeft) &&
 		(x < DLeft + DWidth) &&
 		(y >= DTop) &&
@@ -679,26 +679,26 @@ BOOL OnSetCursor(int x, int y)
 		return TRUE;
 	}
 
-// implicitní obsluha
+// implicitnÃ­ obsluha
 	return FALSE;
 }
 
 
-// ********************* obsluha posuvníkù **********************************
+// ********************* obsluha posuvnÃ­kÃ¹ **********************************
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun posuvníkù a editaèního pole pøi zmìnì rozmìrù okna
+// pÃ¸esun posuvnÃ­kÃ¹ a editaÃ¨nÃ­ho pole pÃ¸i zmÃ¬nÃ¬ rozmÃ¬rÃ¹ okna
 
 HDWP MoveScroll(HDWP hdwp)
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	int x, y, w, h;
 
-// pøepoèet zobrazení
+// pÃ¸epoÃ¨et zobrazenÃ­
 	ReCalc();
 
-// pøesun a zobrazení horizontálního posuvníku
+// pÃ¸esun a zobrazenÃ­ horizontÃ¡lnÃ­ho posuvnÃ­ku
 	x = EditX + 2;
 	y = EditY + EditHeight - 2 - TRACKSIRKA;
 	w = EditWidth - 4;
@@ -708,7 +708,7 @@ HDWP MoveScroll(HDWP hdwp)
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER |
 			((HScrollDisp && !PreviewPic) ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
 
-// pøesun a zobrazení vertikálního posuvníku
+// pÃ¸esun a zobrazenÃ­ vertikÃ¡lnÃ­ho posuvnÃ­ku
 	x = EditX + EditWidth - 2 - TRACKSIRKA;
 	y = EditY + 2;
 	w = TRACKSIRKA;
@@ -718,7 +718,7 @@ HDWP MoveScroll(HDWP hdwp)
 			SWP_DRAWFRAME | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOZORDER |
 			((VScrollDisp && !PreviewPic) ? SWP_SHOWWINDOW : SWP_HIDEWINDOW));
 
-// pøesun editaèního pole
+// pÃ¸esun editaÃ¨nÃ­ho pole
 	if (EditMapNumWnd)
 	{
 		x = DLeft + (EditNumX - ILeft)*ICONWIDTH - (ICONWIDTH - OLeft);
@@ -731,115 +731,115 @@ HDWP MoveScroll(HDWP hdwp)
 			SWP_NOOWNERZORDER | SWP_NOZORDER);
 	}
 
-// nastavení posuvníkù
+// nastavenÃ­ posuvnÃ­kÃ¹
 	SetScroll();
 
-// nová hodnota HDWP
+// novÃ¡ hodnota HDWP
 	return hdwp;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace zobrazení posuvníkù
+// aktualizace zobrazenÃ­ posuvnÃ­kÃ¹
 
 void SetScroll()
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	SCROLLINFO si;
 	si.cbSize = sizeof(SCROLLINFO);
 
-// -------- horizontální posuvník -------------
+// -------- horizontÃ¡lnÃ­ posuvnÃ­k -------------
 
-// naètení stavu horizontálního posuvníku
+// naÃ¨tenÃ­ stavu horizontÃ¡lnÃ­ho posuvnÃ­ku
 	si.fMask = SIF_ALL;
-	::GetScrollInfo(HScroll, SB_CTL, &si);	// naètení stavu posuvníku
-	si.fMask = 0;							// pøednastavení - nic se nemìní
+	::GetScrollInfo(HScroll, SB_CTL, &si);	// naÃ¨tenÃ­ stavu posuvnÃ­ku
+	si.fMask = 0;							// pÃ¸ednastavenÃ­ - nic se nemÃ¬nÃ­
 
-// minimální pozice
+// minimÃ¡lnÃ­ pozice
 	if (si.nMin != 0)
 	{
 		si.nMin = 0;
 		si.fMask |= SIF_RANGE;
 	}
 
-// maximální pozice
+// maximÃ¡lnÃ­ pozice
 	if (si.nMax != MWidth)
 	{
 		si.nMax = MWidth;
 		si.fMask |= SIF_RANGE;
 	}
 
-// velikost stránky
+// velikost strÃ¡nky
 	if (si.nPage != (UINT)DWidth)
 	{
 		si.nPage = (UINT)DWidth;
 		si.fMask |= SIF_PAGE;
 	}
 
-// pozice posuvníku
+// pozice posuvnÃ­ku
 	if (si.nPos != TLeft)
 	{
 		si.nPos = TLeft;
 		si.fMask |= SIF_POS;
 	}
 
-// nastavení novıch parametrù posuvníku
+// nastavenÃ­ novÃ½ch parametrÃ¹ posuvnÃ­ku
 	if (si.fMask)
 	{
 		::SetScrollInfo(HScroll, SB_CTL, &si, TRUE);
 	}
 
-// zobrazení horizontálního posuvníku
+// zobrazenÃ­ horizontÃ¡lnÃ­ho posuvnÃ­ku
 	::ShowWindow(HScroll, (HScrollDisp && !PreviewPic) ? SW_SHOWNA : SW_HIDE);
 
 
-// -------- vertikální posuvník -------------
+// -------- vertikÃ¡lnÃ­ posuvnÃ­k -------------
 
-// naètení stavu vertikálního posuvníku
+// naÃ¨tenÃ­ stavu vertikÃ¡lnÃ­ho posuvnÃ­ku
 	si.fMask = SIF_ALL;
 	::GetScrollInfo(VScroll, SB_CTL, &si);
-	si.fMask = 0;							// pøednastavení - nic se nemìní
+	si.fMask = 0;							// pÃ¸ednastavenÃ­ - nic se nemÃ¬nÃ­
 
-// minimální pozice
+// minimÃ¡lnÃ­ pozice
 	if (si.nMin != 0)
 	{
 		si.nMin = 0;
 		si.fMask |= SIF_RANGE;
 	}
 
-// maximální pozice
+// maximÃ¡lnÃ­ pozice
 	if (si.nMax != MHeight)
 	{
 		si.nMax = MHeight;
 		si.fMask |= SIF_RANGE;
 	}
 
-// velikost stránky
+// velikost strÃ¡nky
 	if (si.nPage != (UINT)DHeight)
 	{
 		si.nPage = (UINT)DHeight;
 		si.fMask |= SIF_PAGE;
 	}
 
-// pozice posuvníku
+// pozice posuvnÃ­ku
 	if (si.nPos != MHeight - DHeight - TBottom)
 	{
 		si.nPos = MHeight - DHeight - TBottom;
 		si.fMask |= SIF_POS;
 	}
 
-// nastavení novıch parametrù posuvníku
+// nastavenÃ­ novÃ½ch parametrÃ¹ posuvnÃ­ku
 	if (si.fMask)
 	{
 		::SetScrollInfo(VScroll, SB_CTL, &si, TRUE);
 	}
 
-// zobrazení vertikálního posuvníku
+// zobrazenÃ­ vertikÃ¡lnÃ­ho posuvnÃ­ku
 	::ShowWindow(VScroll, (VScrollDisp && !PreviewPic) ? SW_SHOWNA : SW_HIDE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pozice editaèního pole
+// aktualizace pozice editaÃ¨nÃ­ho pole
 
 void SetEditMapNum()
 {
@@ -859,7 +859,7 @@ void SetEditMapNum()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// horizontální posuvník
+// horizontÃ¡lnÃ­ posuvnÃ­k
 
 void OnHScroll(int code, int pos)
 {
@@ -904,7 +904,7 @@ void OnHScroll(int code, int pos)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vertikální posuvník
+// vertikÃ¡lnÃ­ posuvnÃ­k
 
 void OnVScroll(int code, int pos)
 {
@@ -952,44 +952,44 @@ void OnVScroll(int code, int pos)
 // **************************** obsluha editace *****************************
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace èíselného parametru
+// zahÃ¡jenÃ­ editace Ã¨Ã­selnÃ©ho parametru
 
 void BegEditSwcNum(int x, int y)
 {
-// kontrola poloky
+// kontrola poloÅ¾ky
 	if (((DWORD)x >= (DWORD)Width) || ((DWORD)y >= (DWORD)Height))
 	{
 		return;
 	}
 
-// ukonèení editace èíselného parametru
+// ukonÃ¨enÃ­ editace Ã¨Ã­selnÃ©ho parametru
 	EndEditSwcNum();
 
-// úschova parametrù
+// Ãºschova parametrÃ¹
 	EditNumX = x;
 	EditNumY = y;
 	EditNumFill = TRUE;
 
-// pøíprava souøadnic poloky
+// pÃ¸Ã­prava souÃ¸adnic poloÅ¾ky
 	int left = DLeft + (EditNumX - ILeft)*ICONWIDTH - (ICONWIDTH - OLeft);
 	int top = DTop + (ITop - EditNumY - 1)*ICONHEIGHT + OTop;
 
-// vytvoøení editaèního okna
+// vytvoÃ¸enÃ­ editaÃ¨nÃ­ho okna
 	EditMapNumWnd = ::CreateWindowEx(
-		0,								// rozšíøenı styl
-		_T("EDIT"),						// tøída
+		0,								// rozÅ¡Ã­Ã¸enÃ½ styl
+		_T("EDIT"),						// tÃ¸Ã­da
 		NULL,							// text
 		WS_CHILD | ES_AUTOHSCROLL | ES_NUMBER,	// styl
 		left,							// X
 		top,							// Y
-		ICONWIDTH,						// šíøka
-		EDITNUMHEIGHT,					// vıška
-		MainFrame,						// rodiè
+		ICONWIDTH,						// Å¡Ã­Ã¸ka
+		EDITNUMHEIGHT,					// vÃ½Å¡ka
+		MainFrame,						// rodiÃ¨
 		NULL,							// ID
 		hInstance,						// instance
 		NULL);							// data
 
-// pøíprava èísla
+// pÃ¸Ã­prava Ã¨Ã­sla
 	int cislo = (Map[Index].DataData())[EditNumX + EditNumY*Width].Param;
 	switch (Mode)
 	{
@@ -1006,12 +1006,12 @@ void BegEditSwcNum(int x, int y)
 					break;
 	}
 
-// nastavení èísla
+// nastavenÃ­ Ã¨Ã­sla
 	CText txt;
 	txt.Int(cislo);
 	txt.SetWindowText(EditMapNumWnd);
 
-// zobrazení okna
+// zobrazenÃ­ okna
 	::ShowWindow(EditMapNumWnd, SW_SHOW);
 	::SetFocus(EditMapNumWnd);
 	::SendMessage(EditMapNumWnd, EM_SETSEL, 0, (LPARAM)-1);
@@ -1024,7 +1024,7 @@ void BegEditSwcNum(int x, int y)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna editovaného èísla
+// zmÃ¬na editovanÃ©ho Ã¨Ã­sla
 
 void OnChangeEditSwcNum()
 {
@@ -1032,16 +1032,16 @@ void OnChangeEditSwcNum()
 	if (ProgMode && EditMapNumWnd && !EditNumFill && (EditMode == BufMapID))
 	{
 
-// naètení zadaného èísla
+// naÃ¨tenÃ­ zadanÃ©ho Ã¨Ã­sla
 		CText txt;
 		txt.GetWindowText(EditMapNumWnd);
 		int cislo = Int(txt);
 		if (cislo < 0) cislo = 0;
 
-// adresa poloky
+// adresa poloÅ¾ky
 		MAPITEM* item = Map[Index].DataData() + (EditNumX + EditNumY * Width);
 
-// nastavení èísla
+// nastavenÃ­ Ã¨Ã­sla
 		int max = 0;
 		DWORD mask = 0;
 		int rot = 0;
@@ -1085,7 +1085,7 @@ void OnChangeEditSwcNum()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení editace èísla
+// ukonÃ¨enÃ­ editace Ã¨Ã­sla
 
 void EndEditSwcNum()
 {
@@ -1102,7 +1102,7 @@ void EndEditSwcNum()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 
 void EndDrag()
 {
@@ -1112,38 +1112,38 @@ void EndDrag()
 	{
 		MDraging = FALSE;
 
-// zastavení taení
+// zastavenÃ­ taÅ¾enÃ­
 		::ImageList_DragLeave(NULL);
 
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 		::ImageList_EndDrag();
 
-// zrušení seznamu obrázkù taení
+// zruÅ¡enÃ­ seznamu obrÃ¡zkÃ¹ taÅ¾enÃ­
 		::ImageList_Destroy(DragImageList);
 
-// uvolnìni zachytávání myši
+// uvolnÃ¬ni zachytÃ¡vÃ¡nÃ­ myÅ¡i
 		::ReleaseCapture();
 
-// nastavení bìného kurzoru myši
+// nastavenÃ­ bÃ¬Å¾nÃ©ho kurzoru myÅ¡i
 		::SetCursor(CurArrow);
 	}
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení vıbìru vıplnì
+// zobrazenÃ­ vÃ½bÃ¬ru vÃ½plnÃ¬
 
 void DispFill()
 {
 	if ((DragX == MOUSEINV) || (DragY == MOUSEINV)) return;
 
-// pøíprava DC displeje
+// pÃ¸Ã­prava DC displeje
 	HDC dc = ::GetDC(MainFrame);
 
-// vıbìr štìtce
+// vÃ½bÃ¬r Å¡tÃ¬tce
 	HBRUSH oldBrush = (HBRUSH)::SelectObject(dc, HalfToneBrush);
 
-// pøíprava souøadnic
+// pÃ¸Ã­prava souÃ¸adnic
 	int x1 = (FillX - ILeft)*ICONWIDTH + DLeft + OLeft - ICONWIDTH;
 	int y1 = (ITop - FillY)*ICONHEIGHT + DTop + OTop - ICONHEIGHT;
 	int x2 = (DragX - FillX)*ICONWIDTH + x1;
@@ -1173,16 +1173,16 @@ void DispFill()
 
 	::PatBlt(dc, x1, y1, x2 - x1, y2 - y1, PATINVERT);
 
-// navrácení pùvodního štìtce
+// navrÃ¡cenÃ­ pÃ¹vodnÃ­ho Å¡tÃ¬tce
 	::SelectObject(dc, oldBrush);
 
-// uvolnìní DC displeje
+// uvolnÃ¬nÃ­ DC displeje
 	::ReleaseDC(MainFrame, dc);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení taení vıplnì
+// ukonÃ¨enÃ­ taÅ¾enÃ­ vÃ½plnÃ¬
 
 void EndFill()
 {
@@ -1240,14 +1240,14 @@ void EndFill()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stisk tlaèítka myši (TRUE = obsloueno)
+// stisk tlaÃ¨Ã­tka myÅ¡i (TRUE = obslouÅ¾eno)
 
 BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 {
-// ukonèení editace èíselného parametru
+// ukonÃ¨enÃ­ editace Ã¨Ã­selnÃ©ho parametru
 	EndEditSwcNum();
 
-// ukonèení taení
+// ukonÃ¨enÃ­ taÅ¾enÃ­
 	if (MFilling)
 	{
 		EndFill();
@@ -1260,19 +1260,19 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 		return TRUE;
 	}
 
-// kontrola, zda je platné editaèní pole
+// kontrola, zda je platnÃ© editaÃ¨nÃ­ pole
 	if ((MouseX == MOUSEINV) || (MouseY == MOUSEINV))
 	{
 		return FALSE;
 	}
 
-// úschova souøadnic pøed zahájením taení
+// Ãºschova souÃ¸adnic pÃ¸ed zahÃ¡jenÃ­m taÅ¾enÃ­
 	BegX = x;
 	BegY = y;
 	DragX = MouseX;
 	DragY = MouseY;
 
-// vıplò plochy
+// vÃ½plÃ² plochy
 	if (FillMap)
 	{
 		FillX = MouseX;
@@ -1285,19 +1285,19 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 	BegDrag = TRUE;
 	CopyMode = FALSE;
 
-// úschova plochy pro UNDO
+// Ãºschova plochy pro UNDO
 	if (EditMap && (Mode != IDN_MAP))
 	{
 		PushUndo();
 	}
 
-// adresa poloky
+// adresa poloÅ¾ky
 	MAPITEM* data = Map[Index].DataData() + (MouseX + MouseY*Width);
 
 // index ikony
 	int icon = data->Icon;
 
-// zahájení editace
+// zahÃ¡jenÃ­ editace
 	int k = -1;
 
 	if (EditMap)
@@ -1350,11 +1350,11 @@ BOOL OnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// posun myši
+// posun myÅ¡i
 
 void OnMouseMove(UINT flags, int x, int y)
 {
-// korekce souøadnic pøi taení (na støed ikony)
+// korekce souÃ¸adnic pÃ¸i taÅ¾enÃ­ (na stÃ¸ed ikony)
 	if (MDraging)
 	{
 		x -= HotSpotX;	x += ICONWIDTH/2;
@@ -1367,11 +1367,11 @@ void OnMouseMove(UINT flags, int x, int y)
 		y -= DragHotSpotY;	y += DragIconHeight/2;
 	}
 
-// pøíprava relativních souøadnic bodu v editaèním poli
+// pÃ¸Ã­prava relativnÃ­ch souÃ¸adnic bodu v editaÃ¨nÃ­m poli
 	int sx = (x - DLeft - OLeft + ICONWIDTH)/ICONWIDTH + ILeft;
 	int sy = ITop - (y - DTop - OTop + ICONHEIGHT)/ICONHEIGHT;
 
-// souøadnice myši pro zobrazení
+// souÃ¸adnice myÅ¡i pro zobrazenÃ­
 	if ((x >= DLeft) && (y >= DTop) &&
 		(x < DLeft + DWidth) && (y < DTop + DHeight))
 	{
@@ -1384,7 +1384,7 @@ void OnMouseMove(UINT flags, int x, int y)
 		MouseY = MOUSEINV;
 	}
 
-// taení vıplnì
+// taÅ¾enÃ­ vÃ½plnÃ¬
 	if (MFilling)
 	{
 		MouseX = sx;
@@ -1405,7 +1405,7 @@ void OnMouseMove(UINT flags, int x, int y)
 		return;
 	}
 
-// zahájení taení
+// zahÃ¡jenÃ­ taÅ¾enÃ­
 	if ((flags & (MK_LBUTTON | MK_RBUTTON)) &&
 		!MDraging &&
 		!EditMap &&
@@ -1416,19 +1416,19 @@ void OnMouseMove(UINT flags, int x, int y)
 	{
 		MDraging = TRUE;
 
-// bod styku pro taení
+// bod styku pro taÅ¾enÃ­
 		HotSpotX = BegX - (DLeft + (DragX*ICONWIDTH - TLeft));
 		HotSpotY = BegY - (DTop + DHeight - ((DragY+1)*ICONHEIGHT - TBottom));
 
-// vygenerování taené ikony
+// vygenerovÃ¡nÃ­ taÅ¾enÃ© ikony
 		CBufIcon dragicon;
 		dragicon.Add(Icon.Get((Map[Index].DataData())[DragX + DragY*Width].Icon));
 		DragImageList = dragicon.GenerList(TRUE, SI_BIG, NULL);
 
-// zapnutí zobrazení obrázku taení (bez uzamykání okna)
+// zapnutÃ­ zobrazenÃ­ obrÃ¡zku taÅ¾enÃ­ (bez uzamykÃ¡nÃ­ okna)
 		::ImageList_DragShowNolock(TRUE);
 
-// zapnutí kurzoru pro taení
+// zapnutÃ­ kurzoru pro taÅ¾enÃ­
 		CopyMode = (flags & (MK_RBUTTON));
 		if (CopyMode)
 		{
@@ -1440,29 +1440,29 @@ void OnMouseMove(UINT flags, int x, int y)
 		}
 		::SetCursor(CurAkt);
 
-// vytvoøení nového obrázku taení
+// vytvoÃ¸enÃ­ novÃ©ho obrÃ¡zku taÅ¾enÃ­
 		::ImageList_SetDragCursorImage(DragImageList, 0, 0, 0);
 
-// zahájení operace taení
+// zahÃ¡jenÃ­ operace taÅ¾enÃ­
 		::ImageList_BeginDrag(DragImageList, 0, 0, 0);
 
-// naètení souøadnice kurzoru myši
+// naÃ¨tenÃ­ souÃ¸adnice kurzoru myÅ¡i
 //		POINT pt;
 //		::GetCursorPos(&pt);
 
-// zahájení operace taení, zákaz aktualizace okna
+// zahÃ¡jenÃ­ operace taÅ¾enÃ­, zÃ¡kaz aktualizace okna
 		::ImageList_DragEnter(NULL, MouseScreen.x - HotSpotX, MouseScreen.y - HotSpotY);
 
-// pøetaení obrázku na aktuální pozici myši
+// pÃ¸etaÅ¾enÃ­ obrÃ¡zku na aktuÃ¡lnÃ­ pozici myÅ¡i
 		::ImageList_DragMove(MouseScreen.x - HotSpotX, MouseScreen.y - HotSpotY);
 
-// zahájení zachytávání myši
+// zahÃ¡jenÃ­ zachytÃ¡vÃ¡nÃ­ myÅ¡i
 		::SetCapture(MainFrame);
 	}
 	else
 	{
 
-// ukonèení taení, pokud bylo tlaèítko uvolnìno mimo oblast
+// ukonÃ¨enÃ­ taÅ¾enÃ­, pokud bylo tlaÃ¨Ã­tko uvolnÃ¬no mimo oblast
 		if (MDraging && ((flags & (MK_LBUTTON | MK_RBUTTON)) == 0))
 		{
 			EndDrag();
@@ -1470,18 +1470,18 @@ void OnMouseMove(UINT flags, int x, int y)
 		else
 		{
 
-// pokraèování v taení
+// pokraÃ¨ovÃ¡nÃ­ v taÅ¾enÃ­
 			if (MDraging)
 			{
 
-// naètení souøadnice kurzoru myši
+// naÃ¨tenÃ­ souÃ¸adnice kurzoru myÅ¡i
 //				POINT pt;
 //				::GetCursorPos(&pt);
 
-// pøetaení obrázku na aktuální pozici myši
+// pÃ¸etaÅ¾enÃ­ obrÃ¡zku na aktuÃ¡lnÃ­ pozici myÅ¡i
 				::ImageList_DragMove(MouseScreen.x - HotSpotX, MouseScreen.y - HotSpotY);
 
-// nastavení kurzoru myši
+// nastavenÃ­ kurzoru myÅ¡i
 				HCURSOR curnew = CurAkt;
 
 				if ((MouseX == MOUSEINV) || (MouseY == MOUSEINV))
@@ -1516,12 +1516,12 @@ void OnMouseMove(UINT flags, int x, int y)
 		}
 	}
 
-// zobrazení souøadnic myši
+// zobrazenÃ­ souÃ¸adnic myÅ¡i
 	DispMouseXY();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnìní tlaèítka myši
+// uvolnÃ¬nÃ­ tlaÃ¨Ã­tka myÅ¡i
 
 void OnButtonUp(UINT keys, BOOL right)
 {
@@ -1603,7 +1603,7 @@ void OnButtonUp(UINT keys, BOOL right)
 	}
 	else
 
-// navigace ikony (není-li taení a není-li pøerušení druhım tlaèítkem)
+// navigace ikony (nenÃ­-li taÅ¾enÃ­ a nenÃ­-li pÃ¸eruÅ¡enÃ­ druhÃ½m tlaÃ¨Ã­tkem)
 	{
 		if (!EditMap && BegDrag && (MouseX != MOUSEINV) && (MouseY != MOUSEINV))
 		{
@@ -1617,11 +1617,11 @@ void OnButtonUp(UINT keys, BOOL right)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// poloení ikony zvnìjšku
+// poloÅ¾enÃ­ ikony zvnÃ¬jÅ¡ku
 
 void DragDrop(int icon)
 {
-// ukonèení editace èíselného parametru
+// ukonÃ¨enÃ­ editace Ã¨Ã­selnÃ©ho parametru
 	EndEditSwcNum();
 
 	int inx = MouseX + MouseY*Width;
@@ -1653,11 +1653,11 @@ void DragDrop(int icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vstup klávesy z klávesnice (TRUE=obsloueno)
+// vstup klÃ¡vesy z klÃ¡vesnice (TRUE=obslouÅ¾eno)
 
 BOOL OnKeyDown(int key)
 {
-// obsluha editaèního pole èíselného parametru
+// obsluha editaÃ¨nÃ­ho pole Ã¨Ã­selnÃ©ho parametru
 	if (EditMapNumWnd)
 	{
 		switch (key)
@@ -1690,23 +1690,23 @@ BOOL OnKeyDown(int key)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení editaèního módu
+// nastavenÃ­ editaÃ¨nÃ­ho mÃ³du
 
 void SetMode(int mode)
 {
-// kontrola, zda je reim editace
+// kontrola, zda je reÅ¾im editace
 	if (!ProgMode) return;
 
-// ukonèení editace èíselného parametru
+// ukonÃ¨enÃ­ editace Ã¨Ã­selnÃ©ho parametru
 	EndEditSwcNum();
 
-// kontrola, zda je mód ji nastaven
+// kontrola, zda je mÃ³d jiÅ¾ nastaven
 	if (Mode == mode) return;
 
-// nastavení módu
+// nastavenÃ­ mÃ³du
 	Mode = mode;
 
-// pøekreslení displeje
+// pÃ¸ekreslenÃ­ displeje
 	ReDisp();
 
 // aktualizace voleb
@@ -1718,7 +1718,7 @@ void SetMode(int mode)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace voleb vıbìru módu
+// aktualizace voleb vÃ½bÃ¬ru mÃ³du
 
 void UpdateMenu()
 {
@@ -1730,7 +1730,7 @@ void UpdateMenu()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// mód vıplnì
+// mÃ³d vÃ½plnÃ¬
 
 void OnFillMap()
 {
@@ -1743,7 +1743,7 @@ void OnFillMap()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// editaèní mód
+// editaÃ¨nÃ­ mÃ³d
 
 void OnEditMap()
 {
@@ -1758,11 +1758,11 @@ void OnEditMap()
 // ****************************** obsluha bloku ******************************
 
 /////////////////////////////////////////////////////////////////////////////
-// vıbìr všeho
+// vÃ½bÃ¬r vÅ¡eho
 
 void SelectAll()
 {
-// vıbìr všeho
+// vÃ½bÃ¬r vÅ¡eho
 	if (EditMapNumWnd)
 	{
 		::SendMessage(EditMapNumWnd, EM_SETSEL, 0, (LPARAM)-1);
@@ -1773,7 +1773,7 @@ void SelectAll()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení bloku
+// zruÅ¡enÃ­ bloku
 
 void Delete()
 {
@@ -1803,7 +1803,7 @@ void Copy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøíení bloku
+// vystÃ¸Ã­Å¾enÃ­ bloku
 
 void Cut()
 {
@@ -1818,7 +1818,7 @@ void Cut()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// navrácení bloku
+// navrÃ¡cenÃ­ bloku
 
 void Paste()
 {
@@ -1867,7 +1867,7 @@ void UpdateClipboard()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// úschova plochu pro UNDO
+// Ãºschova plochu pro UNDO
 
 void PushUndo()
 {

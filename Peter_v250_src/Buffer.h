@@ -1,41 +1,41 @@
 
 /***************************************************************************\
 *																			*
-*								Šablona bufferù								*
+*								Å ablona bufferÃ¹								*
 *																			*
 \***************************************************************************/
 
-// Minimální velikost objektu musí bıt 4 Bajty!!!!!
+// MinimÃ¡lnÃ­ velikost objektu musÃ­ bÃ½t 4 Bajty!!!!!
 
 template <class OBJECT> class CBuffer
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 protected:
 
-// promìnné
+// promÃ¬nnÃ©
 	OBJECT*		m_Data;			// buffer dat
-	bool*		m_Valid;		// buffer platnosti poloek
-	int			m_Num;			// poèet platnıch poloek v bufferu
-	int			m_Max;			// velikost bufferu (poloek)
-	int			m_Next;			// pøíští volná poloka (-1=není)
-	bool		m_Undo;			// poadavek registrace zmìn pro UNDO
-	OBJECT		m_EmptyItem;	// prázdnı objekt
+	bool*		m_Valid;		// buffer platnosti poloÅ¾ek
+	int			m_Num;			// poÃ¨et platnÃ½ch poloÅ¾ek v bufferu
+	int			m_Max;			// velikost bufferu (poloÅ¾ek)
+	int			m_Next;			// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka (-1=nenÃ­)
+	bool		m_Undo;			// poÅ¾adavek registrace zmÃ¬n pro UNDO
+	OBJECT		m_EmptyItem;	// prÃ¡zdnÃ½ objekt
 
-// vytvoøení novıch dat (vrací TRUE=operace OK)
+// vytvoÃ¸enÃ­ novÃ½ch dat (vracÃ­ TRUE=operace OK)
 	bool NewData();
 
-// vytvoøení nové poloky (vrací index poloky, pøi chybì vrací < 0)
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky, pÃ¸i chybÃ¬ vracÃ­ < 0)
 	int NewItem();
 
-// zrušení poloky - zaøazení do volnıch poloek (nekontroluje index)
+// zruÅ¡enÃ­ poloÅ¾ky - zaÃ¸azenÃ­ do volnÃ½ch poloÅ¾ek (nekontroluje index)
 	void _fastcall DelItem(const int index);
 		
-// pøidání záznamu o vloení poloky do UNDO bufferu
+// pÃ¸idÃ¡nÃ­ zÃ¡znamu o vloÅ¾enÃ­ poloÅ¾ky do UNDO bufferu
 	bool UndoAddIns(int index);
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -43,43 +43,43 @@ public:
 	CBuffer();
 	~CBuffer();
 
-// statickı konstruktor a destruktor
+// statickÃ½ konstruktor a destruktor
 	void Init();
 	void Term();
 
-// zrušení všech poloek v bufferu (ukládání zaène opìt po øadì od zaèátku)
-// provádí záznam do UNDO bufferu, pøi chybì pamìti vynuluje UNDO
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu (uklÃ¡dÃ¡nÃ­ zaÃ¨ne opÃ¬t po Ã¸adÃ¬ od zaÃ¨Ã¡tku)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu, pÃ¸i chybÃ¬ pamÃ¬ti vynuluje UNDO
 	void DelAll();
 
-// poskytnutí prázdného objektu
+// poskytnutÃ­ prÃ¡zdnÃ©ho objektu
 	inline OBJECT& EmptyItem() { return m_EmptyItem; };
 	inline const OBJECT& EmptyItem() const { return m_EmptyItem; };
 
-// poskytnutí bufferu dat
+// poskytnutÃ­ bufferu dat
 	inline OBJECT* Data() const { return m_Data; };
 
-// poskytnutí bufferu platnosti poloek
+// poskytnutÃ­ bufferu platnosti poloÅ¾ek
 	inline bool* Valid() const { return m_Valid; };
 
-// poskytnutí poètu platnıch poloek v bufferu
+// poskytnutÃ­ poÃ¨tu platnÃ½ch poloÅ¾ek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu (vèetnì zrušenıch poloek)
+// poskytnutÃ­ velikosti bufferu (vÃ¨etnÃ¬ zruÅ¡enÃ½ch poloÅ¾ek)
 	inline int Max() const { return m_Max; };
 
-// nastavení poadavku registrace zmìn pro UNDO
+// nastavenÃ­ poÅ¾adavku registrace zmÃ¬n pro UNDO
 	inline void UndoOn() { m_Undo = true; };
 	inline void UndoOff() { m_Undo = false; };
 	inline void UndoSet(const bool undo) { m_Undo = undo; };
 
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 	inline BOOL IsValid(const int index) const
 		{ return (((DWORD)index < (DWORD)m_Max) && m_Valid[index]); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return (((DWORD)index >= (DWORD)m_Max) || !m_Valid[index]); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline OBJECT& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; };
 
@@ -92,111 +92,111 @@ public:
 	inline const OBJECT& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; };
 
-// poskytnutí poloky (s kontrolou platnosti indexu - pro neplatnou vrátí prázdnou poloku)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu - pro neplatnou vrÃ¡tÃ­ prÃ¡zdnou poloÅ¾ku)
 	const OBJECT& _fastcall Get(const int index) const;
 
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const OBJECT& data);
 
-// zrušení poloky (s kontrolou platnosti indexu) (vrací FALSE=chyba pamìti)
-// provádí záznam do UNDO bufferu
+// zruÅ¡enÃ­ poloÅ¾ky (s kontrolou platnosti indexu) (vracÃ­ FALSE=chyba pamÃ¬ti)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	bool _fastcall Del(const int index);
 
-// navrácení poloky v UNDO operaci (vrací TRUE=operace OK)
-// provádí záznam do UNDO bufferu
+// navrÃ¡cenÃ­ poloÅ¾ky v UNDO operaci (vracÃ­ TRUE=operace OK)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	bool UndoIns(const OBJECT& data, const int index);
 
-// operátor pøiøazení (neobsluhuje chybu pamìti!)
+// operÃ¡tor pÃ¸iÃ¸azenÃ­ (neobsluhuje chybu pamÃ¬ti!)
 	const CBuffer& _fastcall operator= (const CBuffer& src);
 
-// vytvoøení nové prázdné poloky (vrací index poloky, <0 = chyba)
-// provádí záznam do UNDO bufferu
+// vytvoÃ¸enÃ­ novÃ© prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky, <0 = chyba)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	int New();
 
-// pøidání poloky (vrací index poloky, <0 = chyba)
-// provádí záznam do UNDO bufferu
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky, <0 = chyba)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	int _fastcall Add(const OBJECT& data);
 
-// duplikace poloky (neplatná poloka se duplikuje na prázdnou, vrací index poloky, <0 = chyba pamìti)
-// provádí záznam do UNDO bufferu
+// duplikace poloÅ¾ky (neplatnÃ¡ poloÅ¾ka se duplikuje na prÃ¡zdnou, vracÃ­ index poloÅ¾ky, <0 = chyba pamÃ¬ti)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	int _fastcall Dup(const int index);
 };
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení novıch dat (vrací TRUE=operace OK)
+// vytvoÃ¸enÃ­ novÃ½ch dat (vracÃ­ TRUE=operace OK)
 
-#define NEWDATANUM 256				// poèet novì vytvoøenıch poloek (typicky 1 KB)
+#define NEWDATANUM 256				// poÃ¨et novÃ¬ vytvoÃ¸enÃ½ch poloÅ¾ek (typicky 1 KB)
 
 template <class OBJECT> bool CBuffer<OBJECT>::NewData()
 {
-// novı poèet poloek
-	int next = m_Max;				// pøíští poloka - 1
-	int max = next + NEWDATANUM;	// novı poèet poloek
+// novÃ½ poÃ¨et poloÅ¾ek
+	int next = m_Max;				// pÃ¸Ã­Å¡tÃ­ poloÅ¾ka - 1
+	int max = next + NEWDATANUM;	// novÃ½ poÃ¨et poloÅ¾ek
 
-// zvìtšení bufferu dat
+// zvÃ¬tÅ¡enÃ­ bufferu dat
 	OBJECT* newdata = (OBJECT*)MemSize(m_Data, max*sizeof(OBJECT));
 	if (newdata == NULL) return false;
 	m_Data = newdata;
 
-// zvìtšení bufferu platnosti
+// zvÃ¬tÅ¡enÃ­ bufferu platnosti
 	bool* newvalid = (bool*)MemSize(m_Valid, max*sizeof(bool));
 	if (newvalid == NULL) return false;
 	m_Valid = newvalid;
 
-// novı maximální poèet poloek v bufferu
+// novÃ½ maximÃ¡lnÃ­ poÃ¨et poloÅ¾ek v bufferu
 	m_Max = max;
 
-// vymazání pøíznakù platnosti poloek (nastavení na pøíznak neplatnosti)
+// vymazÃ¡nÃ­ pÃ¸Ã­znakÃ¹ platnosti poloÅ¾ek (nastavenÃ­ na pÃ¸Ã­znak neplatnosti)
 	int i;
 	newvalid += next;
 	for (i = NEWDATANUM; i > 0; i--) { *newvalid = false; newvalid++; }
 
-// zaèlenìní do øetìzce volnıch poloek
+// zaÃ¨lenÃ¬nÃ­ do Ã¸etÃ¬zce volnÃ½ch poloÅ¾ek
 	newdata += next - 1;			// ukazatel dat - 1
 	for (i = NEWDATANUM; i > 0; i--)
 	{
-		newdata++;					// zvıšení ukazatele poloek
-		next++;						// zvıšení indexu pøíští poloky
-		*(int*)newdata = next;		// odkaz na pøíští poloku
+		newdata++;					// zvÃ½Å¡enÃ­ ukazatele poloÅ¾ek
+		next++;						// zvÃ½Å¡enÃ­ indexu pÃ¸Ã­Å¡tÃ­ poloÅ¾ky
+		*(int*)newdata = next;		// odkaz na pÃ¸Ã­Å¡tÃ­ poloÅ¾ku
 	}
-	*(int*)newdata = m_Next;		// navázání na další poloku
-	m_Next = m_Max-NEWDATANUM;		// odkaz na první novou poloku
+	*(int*)newdata = m_Next;		// navÃ¡zÃ¡nÃ­ na dalÅ¡Ã­ poloÅ¾ku
+	m_Next = m_Max-NEWDATANUM;		// odkaz na prvnÃ­ novou poloÅ¾ku
 
-// pøíznak operace OK
+// pÃ¸Ã­znak operace OK
 	return true;
 };
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nové poloky (vrací index poloky, pøi chybì vrací < 0)
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky, pÃ¸i chybÃ¬ vracÃ­ < 0)
 
 template <class OBJECT> int CBuffer<OBJECT>::NewItem()
 {
-// vytvoøení novıch dat, není-li volná další poloka
-	if (m_Next < 0)				// není další poloka?
+// vytvoÃ¸enÃ­ novÃ½ch dat, nenÃ­-li volnÃ¡ dalÅ¡Ã­ poloÅ¾ka
+	if (m_Next < 0)				// nenÃ­ dalÅ¡Ã­ poloÅ¾ka?
 	{
-		if (!NewData()) return -1;	// vytvoøení novıch dat
+		if (!NewData()) return -1;	// vytvoÃ¸enÃ­ novÃ½ch dat
 	}
 
-// vyjmutí poloky z øetìzce volnıch poloek
-	int i = m_Next;				// pøíští volná poloka
-	m_Next = *(int*)(m_Data + i); // další poloka
-	m_Valid[i] = true;			// nastavení pøíznaku platnosti poloky
-	m_Num++;					// zvıšení èítaèe platnıch poloek
+// vyjmutÃ­ poloÅ¾ky z Ã¸etÃ¬zce volnÃ½ch poloÅ¾ek
+	int i = m_Next;				// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka
+	m_Next = *(int*)(m_Data + i); // dalÅ¡Ã­ poloÅ¾ka
+	m_Valid[i] = true;			// nastavenÃ­ pÃ¸Ã­znaku platnosti poloÅ¾ky
+	m_Num++;					// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e platnÃ½ch poloÅ¾ek
 
-// novì vytvoøená poloka
+// novÃ¬ vytvoÃ¸enÃ¡ poloÅ¾ka
 	return i;
 };
 
 ////////////////////////////////////////////////////////////////////
-// zrušení poloky - zaøazení do volnıch poloek (nekontroluje index a neruší objekt)
+// zruÅ¡enÃ­ poloÅ¾ky - zaÃ¸azenÃ­ do volnÃ½ch poloÅ¾ek (nekontroluje index a neruÅ¡Ã­ objekt)
 
 template <class OBJECT> void _fastcall CBuffer<OBJECT>::DelItem(const int index)
 {
-	*(int*)(m_Data + index) = m_Next;	// pøíští volná poloka
-	m_Valid[index] = false;				// zrušení pøíznaku platnosti
-	m_Num--;							// sníení èítaèe platnıch poloek
-	m_Next = index;						// odkaz na tuto poloku
+	*(int*)(m_Data + index) = m_Next;	// pÃ¸Ã­Å¡tÃ­ volnÃ¡ poloÅ¾ka
+	m_Valid[index] = false;				// zruÅ¡enÃ­ pÃ¸Ã­znaku platnosti
+	m_Num--;							// snÃ­Å¾enÃ­ Ã¨Ã­taÃ¨e platnÃ½ch poloÅ¾ek
+	m_Next = index;						// odkaz na tuto poloÅ¾ku
 }
 
 ////////////////////////////////////////////////////////////////////
@@ -204,47 +204,47 @@ template <class OBJECT> void _fastcall CBuffer<OBJECT>::DelItem(const int index)
 
 template <class OBJECT> CBuffer<OBJECT>::CBuffer()
 {
-	m_Data = NULL;						// není buffer dat
-	m_Valid = NULL;						// není buffer platnosti
-	m_Num = 0;							// není ádná platná poloka
-	m_Max = 0;							// není buffer poloek
-	m_Next = -1;						// pøiští volná poloka (-1=není)
-	m_Undo = false;						// neregistrovat zmìny pro UNDO
+	m_Data = NULL;						// nenÃ­ buffer dat
+	m_Valid = NULL;						// nenÃ­ buffer platnosti
+	m_Num = 0;							// nenÃ­ Å¾Ã¡dnÃ¡ platnÃ¡ poloÅ¾ka
+	m_Max = 0;							// nenÃ­ buffer poloÅ¾ek
+	m_Next = -1;						// pÃ¸iÅ¡tÃ­ volnÃ¡ poloÅ¾ka (-1=nenÃ­)
+	m_Undo = false;						// neregistrovat zmÃ¬ny pro UNDO
 	m_EmptyItem.Empty();
 }
 
 template <class OBJECT> CBuffer<OBJECT>::~CBuffer()
 {
-	DelAll();							// zrušení všech poloek
+	DelAll();							// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// statickı konstruktor a destruktor
+// statickÃ½ konstruktor a destruktor
 
 template <class OBJECT> void CBuffer<OBJECT>::Init()
 {
-	m_Data = NULL;						// není buffer dat
-	m_Valid = NULL;						// není buffer platnosti
-	m_Num = 0;							// není ádná platná poloka
-	m_Max = 0;							// není buffer poloek
-	m_Next = -1;						// pøiští volná poloka (-1=není)
-	m_Undo = false;						// neregistrovat zmìny pro UNDO
+	m_Data = NULL;						// nenÃ­ buffer dat
+	m_Valid = NULL;						// nenÃ­ buffer platnosti
+	m_Num = 0;							// nenÃ­ Å¾Ã¡dnÃ¡ platnÃ¡ poloÅ¾ka
+	m_Max = 0;							// nenÃ­ buffer poloÅ¾ek
+	m_Next = -1;						// pÃ¸iÅ¡tÃ­ volnÃ¡ poloÅ¾ka (-1=nenÃ­)
+	m_Undo = false;						// neregistrovat zmÃ¬ny pro UNDO
 	m_EmptyItem.Init();
 }
 
 template <class OBJECT> void CBuffer<OBJECT>::Term()
 {
-	DelAll();							// zrušení všech poloek
+	DelAll();							// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek
 	m_EmptyItem.Term();
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení všech poloek v bufferu (ukládání zaène opìt po øadì od zaèátku)
-// provádí záznam do UNDO bufferu, pøi chybì pamìti vynuluje UNDO
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu (uklÃ¡dÃ¡nÃ­ zaÃ¨ne opÃ¬t po Ã¸adÃ¬ od zaÃ¨Ã¡tku)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu, pÃ¸i chybÃ¬ pamÃ¬ti vynuluje UNDO
 
 template <class OBJECT> void CBuffer<OBJECT>::DelAll()
 {
-// zrušení všech poloek
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek
 	if (m_Num > 0)
 	{
 		for (int i = m_Max-1; i >= 0; i--)
@@ -256,50 +256,50 @@ template <class OBJECT> void CBuffer<OBJECT>::DelAll()
 		}
 	}
 
-// zrušení bufferù
-	MemFree(m_Data);			// zrušení bufferu dat
-	m_Data = NULL;				// není buffer dat
-	MemFree(m_Valid);			// zrušení bufferu platnosti
-	m_Valid = NULL;				// není bufferu platnosti
-	m_Num = 0;					// není ádná platná poloka
-	m_Max = 0;					// není ádná poloka v bufferu
-	m_Next = -1;				// není pøíští poloka
+// zruÅ¡enÃ­ bufferÃ¹
+	MemFree(m_Data);			// zruÅ¡enÃ­ bufferu dat
+	m_Data = NULL;				// nenÃ­ buffer dat
+	MemFree(m_Valid);			// zruÅ¡enÃ­ bufferu platnosti
+	m_Valid = NULL;				// nenÃ­ bufferu platnosti
+	m_Num = 0;					// nenÃ­ Å¾Ã¡dnÃ¡ platnÃ¡ poloÅ¾ka
+	m_Max = 0;					// nenÃ­ Å¾Ã¡dnÃ¡ poloÅ¾ka v bufferu
+	m_Next = -1;				// nenÃ­ pÃ¸Ã­Å¡tÃ­ poloÅ¾ka
 }
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutí poloky (s kontrolou platnosti indexu - pro neplatnou vrátí prázdnou poloku)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu - pro neplatnou vrÃ¡tÃ­ prÃ¡zdnou poloÅ¾ku)
 
 template <class OBJECT> const OBJECT& _fastcall CBuffer<OBJECT>::Get(const int index) const
 {
-	if (IsValid(index))			// je index platnı?
+	if (IsValid(index))			// je index platnÃ½?
 	{
-		return m_Data[index];	// poloka na daném indexu
+		return m_Data[index];	// poloÅ¾ka na danÃ©m indexu
 	}
-	return m_EmptyItem;			// pro neplatnı index vrátí prázdnı objekt
+	return m_EmptyItem;			// pro neplatnÃ½ index vrÃ¡tÃ­ prÃ¡zdnÃ½ objekt
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 
 template <class OBJECT> void _fastcall CBuffer<OBJECT>::Set(const int index, const OBJECT& data)
 {
-	if (IsValid(index))					// je index platnı?
+	if (IsValid(index))					// je index platnÃ½?
 	{
 		m_Data[index] = data;
 	}
 }
 
 ////////////////////////////////////////////////////////////////////
-// zrušení poloky (s kontrolou platnosti indexu, vrací FALSE=chyba pamìti)
-// provádí záznam do UNDO bufferu
+// zruÅ¡enÃ­ poloÅ¾ky (s kontrolou platnosti indexu, vracÃ­ FALSE=chyba pamÃ¬ti)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 
 template <class OBJECT> bool _fastcall CBuffer<OBJECT>::Del(const int index)
 {
-// kontrola platnosti poloky
-	if (IsValid(index))						// je index platnı?
+// kontrola platnosti poloÅ¾ky
+	if (IsValid(index))						// je index platnÃ½?
 	{
 
-// záznam o zrušení do UNDO bufferu
+// zÃ¡znam o zruÅ¡enÃ­ do UNDO bufferu
 		if (m_Undo)
 		{
 			if (!Undo.AddDel(index, m_Data[index]))
@@ -308,53 +308,53 @@ template <class OBJECT> bool _fastcall CBuffer<OBJECT>::Del(const int index)
 			}
 		}
 
-// zrušení poloky
-		m_Data[index].Term();				// ukonèení objektu
-		DelItem(index);						// zrušení poloky
+// zruÅ¡enÃ­ poloÅ¾ky
+		m_Data[index].Term();				// ukonÃ¨enÃ­ objektu
+		DelItem(index);						// zruÅ¡enÃ­ poloÅ¾ky
 	}
 	return true;
 }
 
 ////////////////////////////////////////////////////////////////////
-// navrácení poloky v UNDO operaci (vrací TRUE=operace OK)
-// provádí záznam do UNDO bufferu
+// navrÃ¡cenÃ­ poloÅ¾ky v UNDO operaci (vracÃ­ TRUE=operace OK)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 
 template <class OBJECT> bool CBuffer<OBJECT>::UndoIns(const OBJECT& data, const int index)
 {
-// vytvoøení novıch dat (zajištìní existence poloky)
+// vytvoÃ¸enÃ­ novÃ½ch dat (zajiÅ¡tÃ¬nÃ­ existence poloÅ¾ky)
 	ASSERT(index >= 0);
 	while (index >= m_Max)
 	{
 		if (!NewData()) return false;
 	}
 
-// adresa vkládané poloky
-	ASSERT(IsNotValid(index));					// poloka musí bıt neplatná
-	OBJECT* item = m_Data + index;				// adresa nové poloky
+// adresa vklÃ¡danÃ© poloÅ¾ky
+	ASSERT(IsNotValid(index));					// poloÅ¾ka musÃ­ bÃ½t neplatnÃ¡
+	OBJECT* item = m_Data + index;				// adresa novÃ© poloÅ¾ky
 
-// záznam operace pro UNDO
+// zÃ¡znam operace pro UNDO
 	if (m_Undo)
 	{
 		if (!UndoAddIns(index)) return false;
 	}
 
-// vyjmutí poloky z volnıch poloek
-	int i = m_Next;								// ukazatel øetìzce volnıch poloek
+// vyjmutÃ­ poloÅ¾ky z volnÃ½ch poloÅ¾ek
+	int i = m_Next;								// ukazatel Ã¸etÃ¬zce volnÃ½ch poloÅ¾ek
 
-// navrácena hned první poloka z øetìzce volnıch poloek
-	if (i == index)								// je to hned první poloka?
+// navrÃ¡cena hned prvnÃ­ poloÅ¾ka z Ã¸etÃ¬zce volnÃ½ch poloÅ¾ek
+	if (i == index)								// je to hned prvnÃ­ poloÅ¾ka?
 	{
-		m_Next = *(int*)item;					// odkaz na další poloku
+		m_Next = *(int*)item;					// odkaz na dalÅ¡Ã­ poloÅ¾ku
 	}
 	else
 	{
 
-// nalezení poloky v øetìzci volnıch poloek
+// nalezenÃ­ poloÅ¾ky v Ã¸etÃ¬zci volnÃ½ch poloÅ¾ek
 		while (*(int*)(m_Data + i) != index)
 		{
 			i = *(int*)(m_Data + i);
 
-// tento pøípad nesmí nikdy nastat - poloka nebyla nalezena!!!
+// tento pÃ¸Ã­pad nesmÃ­ nikdy nastat - poloÅ¾ka nebyla nalezena!!!
 			ASSERT(i >= 0);
 			if (i < 0)								// to je chyba!!!!!!!
 			{
@@ -363,59 +363,59 @@ template <class OBJECT> bool CBuffer<OBJECT>::UndoIns(const OBJECT& data, const 
 			}
 		}
 
-// pøeskoèení odkazu na další poloku
+// pÃ¸eskoÃ¨enÃ­ odkazu na dalÅ¡Ã­ poloÅ¾ku
 		*(int*)(m_Data + i) = *(int*)item;
 	}
 
-// nastavení pøíznaku platnosti poloky
-	m_Num++;									// zvıšení èítaèe poloek
-	m_Valid[index] = true;						// pøíznak platnosti poloky
+// nastavenÃ­ pÃ¸Ã­znaku platnosti poloÅ¾ky
+	m_Num++;									// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e poloÅ¾ek
+	m_Valid[index] = true;						// pÃ¸Ã­znak platnosti poloÅ¾ky
 
-// inicializace poloky
+// inicializace poloÅ¾ky
 	item->Init(data);
 
-// pøíznak operace OK
+// pÃ¸Ã­znak operace OK
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// operátor pøiøazení (neobsluhuje chybu pamìti!)
+// operÃ¡tor pÃ¸iÃ¸azenÃ­ (neobsluhuje chybu pamÃ¬ti!)
 
 template <class OBJECT> const CBuffer<OBJECT>& _fastcall CBuffer<OBJECT>::operator= (const CBuffer<OBJECT>& src)
 {
-// zrušení všech starıch dat
-	DelAll();					// zrušení starıch dat
+// zruÅ¡enÃ­ vÅ¡ech starÃ½ch dat
+	DelAll();					// zruÅ¡enÃ­ starÃ½ch dat
 
-// cyklus pøes všechny poloky
-	int index = 0;				// index naèítané poloky
-	for (int i = src.Max(); i > 0; i--) // pro všechny poloky v bufferu
+// cyklus pÃ¸es vÅ¡echny poloÅ¾ky
+	int index = 0;				// index naÃ¨Ã­tanÃ© poloÅ¾ky
+	for (int i = src.Max(); i > 0; i--) // pro vÅ¡echny poloÅ¾ky v bufferu
 	{
 
-// pøidání poloky do bufferu
-		if (src.m_Valid[index])	// je to platná poloka?
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky do bufferu
+		if (src.m_Valid[index])	// je to platnÃ¡ poloÅ¾ka?
 		{
-			Add(src[index]);	// kopie poloky
+			Add(src[index]);	// kopie poloÅ¾ky
 		}
-		index++;				// inkrementace ètecího indexu
+		index++;				// inkrementace Ã¨tecÃ­ho indexu
 	}
 
-// souhlasí poèet poloek?
+// souhlasÃ­ poÃ¨et poloÅ¾ek?
 	ASSERT(m_Num == src.Num());
 	return *this;
 }
 
 ////////////////////////////////////////////////////////////////////
-// vytvoøení nové prázdné poloky (vrací index poloky, <0 = chyba)
-// provádí záznam do UNDO bufferu
+// vytvoÃ¸enÃ­ novÃ© prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky, <0 = chyba)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 
 template <class OBJECT> int CBuffer<OBJECT>::New()
 {
-// vytvoøení nové poloky
-	int result = NewItem();				// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
+	int result = NewItem();				// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	if (result >= 0)
 	{
 
-// záznam UNDO
+// zÃ¡znam UNDO
 		if (m_Undo)
 		{
 			if (!UndoAddIns(result))
@@ -429,23 +429,23 @@ template <class OBJECT> int CBuffer<OBJECT>::New()
 		m_Data[result].Init(m_EmptyItem);
 	}
 
-// index nové poloky (nebo <0 = chyba)
+// index novÃ© poloÅ¾ky (nebo <0 = chyba)
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// pøidání poloky (vrací index poloky, <0 = chyba pamìti)
-// provádí záznam do UNDO bufferu
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky, <0 = chyba pamÃ¬ti)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 
 template <class OBJECT> int _fastcall CBuffer<OBJECT>::Add(const OBJECT& data)
 {
-// vytvoøení nové poloky
-	int result = NewItem();		// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
+	int result = NewItem();		// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	if (result >= 0)
 	{
 
-// záznam UNDO
+// zÃ¡znam UNDO
 		if (m_Undo)
 		{
 			if (!UndoAddIns(result))
@@ -456,25 +456,25 @@ template <class OBJECT> int _fastcall CBuffer<OBJECT>::Add(const OBJECT& data)
 		}
 
 // inicializace objektu
-		m_Data[result].Init(data);	// inicializace poloky
+		m_Data[result].Init(data);	// inicializace poloÅ¾ky
 	}
 
-// index nové poloky (nebo <0 = chyba)
+// index novÃ© poloÅ¾ky (nebo <0 = chyba)
 	return result;
 }
 
 ////////////////////////////////////////////////////////////////////
-// duplikace poloky (neplatná poloka se duplikuje na prázdnou, vrací index poloky, <0 = chyba pamìti)
-// provádí záznam do UNDO bufferu
+// duplikace poloÅ¾ky (neplatnÃ¡ poloÅ¾ka se duplikuje na prÃ¡zdnou, vracÃ­ index poloÅ¾ky, <0 = chyba pamÃ¬ti)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 
 template <class OBJECT> int _fastcall CBuffer<OBJECT>::Dup(const int index)
 {
-// vytvoøení nové poloky
-	int result = NewItem();		// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
+	int result = NewItem();		// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	if (result >= 0)
 	{
 
-// záznam UNDO
+// zÃ¡znam UNDO
 		if (m_Undo)
 		{
 			if (!UndoAddIns(result))
@@ -484,17 +484,17 @@ template <class OBJECT> int _fastcall CBuffer<OBJECT>::Dup(const int index)
 			}
 		}
 
-// kopie poloky nebo vytvoøení nové
-		if (IsValid(index))					// je index platnı?
+// kopie poloÅ¾ky nebo vytvoÃ¸enÃ­ novÃ©
+		if (IsValid(index))					// je index platnÃ½?
 		{
-			m_Data[result].Init(m_Data[index]);	// kopie poloky
+			m_Data[result].Init(m_Data[index]);	// kopie poloÅ¾ky
 		}
 		else
 		{
-			m_Data[result].Init(m_EmptyItem); 	// inicializace neplatné poloky
+			m_Data[result].Init(m_EmptyItem); 	// inicializace neplatnÃ© poloÅ¾ky
 		}
 	}
 
-// index nové poloky (nebo <0 = chyba)
+// index novÃ© poloÅ¾ky (nebo <0 = chyba)
 	return result;
 }

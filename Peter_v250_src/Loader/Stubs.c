@@ -1,12 +1,12 @@
 
 /***************************************************************************\
 *																			*
-*								Doplòky jádra								*
+*								DoplÃ²ky jÃ¡dra								*
 *																			*
 \***************************************************************************/
 
-// Zde jsou doplòky vyadované pøekladaèem z jádra C++
-// POZOR - tento soubor musí zachovat jméno STUB.C !!!!
+// Zde jsou doplÃ²ky vyÅ¾adovanÃ© pÃ¸ekladaÃ¨em z jÃ¡dra C++
+// POZOR - tento soubor musÃ­ zachovat jmÃ©no STUB.C !!!!
 
 int _fltused = 0x9875;
 //int _ldused = 0x9873;
@@ -21,9 +21,9 @@ int* _errno() { return &errno; };
 //int __CxxFrameHandler = 0;
 
 // korekce chyb procesoru Pentuim
-int _adjust_fdiv = 0;		// 1 = korigovat chyby instrukcí Pentia
+int _adjust_fdiv = 0;		// 1 = korigovat chyby instrukcÃ­ Pentia
 
-// nevolat funkci pøi inicializaci programu - je to destruktor 
+// nevolat funkci pÃ¸i inicializaci programu - je to destruktor 
 //int atexit(void(*fnc())){ /*fnc();*/ fnc; return 0; };
 
 int atexit(void*(__cdecl *fnc)())
@@ -46,20 +46,20 @@ int atexit(void*(__cdecl *fnc)())
 
 __int64 _ftol() 
 {
-	unsigned short	oldstat;		// starı stav øídicího slova
-	unsigned short	newstat;		// novı stav øídicího slova
-	__int64			result;			// vısledek operace
+	unsigned short	oldstat;		// starÃ½ stav Ã¸Ã­dicÃ­ho slova
+	unsigned short	newstat;		// novÃ½ stav Ã¸Ã­dicÃ­ho slova
+	__int64			result;			// vÃ½sledek operace
 
 	_asm {
 		wait						// synchronizace
-		fnstcw		oldstat			// uloeni øídicího slova
+		fnstcw		oldstat			// uloÅ¾eni Ã¸Ã­dicÃ­ho slova
 		wait						// synchronizace
-		mov			ax,oldstat		// starı stav øídicího slova
-		or			ah,0xc			// mód zaokrouhlení smìrem k nule
-		mov			newstat,ax		// novı stav øídicího slova
-		fldcw		newstat			// nastavení nového øídicího slova
-		fistp		result			// pøevod èísla na celé èíslo
-		fldcw		oldstat			// navrácení pùvodního øídicího slova
+		mov			ax,oldstat		// starÃ½ stav Ã¸Ã­dicÃ­ho slova
+		or			ah,0xc			// mÃ³d zaokrouhlenÃ­ smÃ¬rem k nule
+		mov			newstat,ax		// novÃ½ stav Ã¸Ã­dicÃ­ho slova
+		fldcw		newstat			// nastavenÃ­ novÃ©ho Ã¸Ã­dicÃ­ho slova
+		fistp		result			// pÃ¸evod Ã¨Ã­sla na celÃ© Ã¨Ã­slo
+		fldcw		oldstat			// navrÃ¡cenÃ­ pÃ¹vodnÃ­ho Ã¸Ã­dicÃ­ho slova
 	}
 	return result;
 };
@@ -87,7 +87,7 @@ char __decimal_point = '.';
 
 int __mb_cur_max = 2;
 
-// urèení typu znaku:
+// urÃ¨enÃ­ typu znaku:
 // -----------------
 //	_UPPER	0x01
 //	_LOWER	0x02
@@ -116,7 +116,7 @@ int __cdecl _isctype(int c, int mask)
 
 // Importy z knihoven:
 // -------------------
-// "..\lib\tran.lib" (obsadí 12 KB):
+// "..\lib\tran.lib" (obsadÃ­ 12 KB):
 // __int64 _ftol(double n) { n; return 0; };
 // double _CIfmod(double n) { return n; };
 // double _CIasin(double n) { return n; };
@@ -138,12 +138,12 @@ int __cdecl _isctype(int c, int mask)
 // __imp__SetStretchBltMode
 
 // "user32.lib":
-// uivatelskı interface (okna, kurzor, klávesnice)
+// uÅ¾ivatelskÃ½ interface (okna, kurzor, klÃ¡vesnice)
 
 // "kernel32.lib"
-// systémová obsluha (soubory, texty, pamì, systém)
+// systÃ©movÃ¡ obsluha (soubory, texty, pamÃ¬Â, systÃ©m)
 
-// zrušené knihovny:
+// zruÅ¡enÃ© knihovny:
 // ----------------
 // "uuid.lib"
 // "shell32.lib"

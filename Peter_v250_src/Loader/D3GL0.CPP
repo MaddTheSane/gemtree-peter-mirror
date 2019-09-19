@@ -6,7 +6,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhranÌ - OpenGL 1.0						*
+*							3D rozhran√≠ - OpenGL 1.0						*
 *																			*
 \***************************************************************************/
 
@@ -69,22 +69,22 @@ GLSTENCILFUNC		pglStencilFunc		= NULL;
 GLSTENCILMASK		pglStencilMask		= NULL;
 
 // OpenGL 1.0
-bool				D3GL0D3Test			= false;	// probÏhl test rozhranÌ OpenGL 1.0
+bool				D3GL0D3Test			= false;	// prob√¨hl test rozhran√≠ OpenGL 1.0
 HINSTANCE			D3GL0Lib			= NULL;		// handle modulu OPENGL32.DLL
-bool				D3GL0OK				= false;	// rozhranÌ OpenGL 1.0 vytvo¯eno OK
+bool				D3GL0OK				= false;	// rozhran√≠ OpenGL 1.0 vytvo√∏eno OK
 
-// renderovacÌ povrch
-HGLRC				D3GL0Cont			= NULL;		// renderovacÌ povrch
+// renderovac√≠ povrch
+HGLRC				D3GL0Cont			= NULL;		// renderovac√≠ povrch
 HPALETTE			D3GL0Pal			= NULL;		// palety OpenGL
 
-HWND				D3GL0Win			= NULL;		// renderovacÌ okno
+HWND				D3GL0Win			= NULL;		// renderovac√≠ okno
 
-int					D3GL0AktScreenBits	= -1;		// aktivnÌ poËet bit˘
+int					D3GL0AktScreenBits	= -1;		// aktivn√≠ po√®et bit√π
 
-TCHAR		OpenGLClass[] = _T("OpenGLWindowClass");	// n·zev t¯Ìdy hlavnÌho okna
+TCHAR		OpenGLClass[] = _T("OpenGLWindowClass");	// n√°zev t√∏√≠dy hlavn√≠ho okna
 
 ////////////////////////////////////////////////////////////////////
-// tabulka stencil operacÌ
+// tabulka stencil operac√≠
 
 int	StencilTabOGL[9] =
 {
@@ -100,16 +100,16 @@ int	StencilTabOGL[9] =
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhranÌ OpenGL 1.0 (vracÌ TRUE=rozhranÌ je vytvo¯eno)
+// inicializace rozhran√≠ OpenGL 1.0 (vrac√≠ TRUE=rozhran√≠ je vytvo√∏eno)
 
 bool D3GL0InitD3()
 {
-// test, zda inicializace jiû probÏhla
+// test, zda inicializace ji≈æ prob√¨hla
 	if (!D3GL0D3Test)
 	{
 		D3GL0D3Test = true;
 
-// naËtenÌ knihovny OpenGL32.DLL
+// na√®ten√≠ knihovny OpenGL32.DLL
 		if (D3GL0Lib == NULL)
 		{
 			D3GL0Lib = ::LoadLibrary(_T("OPENGL32.DLL"));
@@ -120,7 +120,7 @@ bool D3GL0InitD3()
 		if (D3GL0Lib != NULL)
 		{
 
-// vyhled·nÌ funkcÌ OpenGL 1.0
+// vyhled√°n√≠ funkc√≠ OpenGL 1.0
 			pwglCreateContext = (WGLCREATECONTEXT)::GetProcAddress(D3GL0Lib, "wglCreateContext");
 			pwglDeleteContext = (WGLDELETECONTEXT)::GetProcAddress(D3GL0Lib, "wglDeleteContext");
 			pwglGetCurrentDC = (WGLGETCURRENTDC)::GetProcAddress(D3GL0Lib, "wglGetCurrentDC");
@@ -175,7 +175,7 @@ bool D3GL0InitD3()
 			pglStencilFunc = (GLSTENCILFUNC)::GetProcAddress(D3GL0Lib, "glStencilFunc");
 			pglStencilMask = (GLSTENCILMASK)::GetProcAddress(D3GL0Lib, "glStencilMask");
 
-// kontrola funkcÌ
+// kontrola funkc√≠
 			if (
 				(pwglCreateContext != NULL) &&
 				(pwglDeleteContext != NULL) &&
@@ -237,33 +237,33 @@ bool D3GL0InitD3()
 		}
 	}
 
-// test, zda je rozhranÌ OpenGL 1.0 funkËnÌ
+// test, zda je rozhran√≠ OpenGL 1.0 funk√®n√≠
 	return D3GL0OK;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ rozhranÌ OpenGL 1.0
+// ukon√®en√≠ rozhran√≠ OpenGL 1.0
 
 void D3GL0TermD3()
 {
-// zruöenÌ z·vislÈho rozhranÌ
+// zru≈°en√≠ z√°visl√©ho rozhran√≠
 	D3GL1TermD3();
 
-// zruöenÌ renderovacÌho okna
+// zru≈°en√≠ renderovac√≠ho okna
 	if (D3GL0Win != NULL)
 	{
 		::DestroyWindow(D3GL0Win);
 		D3GL0Win = NULL;
 	}
 
-// uvolnÏnÌ knihovny OpenGL32.dll
+// uvoln√¨n√≠ knihovny OpenGL32.dll
 	if (D3GL0Lib != NULL)
 	{
 		::FreeLibrary(D3GL0Lib);
 		D3GL0Lib = NULL;
 	}
 
-// zruöenÌ funkcÌ
+// zru≈°en√≠ funkc√≠
 /*
 	pwglCreateContext = NULL;
 	pwglDeleteContext = NULL;
@@ -320,7 +320,7 @@ void D3GL0TermD3()
 	pglStencilMask = NULL;
 */
 
-// zruöenÌ p¯Ìznaku, ûe byla inicializace
+// zru≈°en√≠ p√∏√≠znaku, ≈æe byla inicializace
 	D3GL0D3Test = false;
 	D3GL0OK = false;
 
@@ -330,7 +330,7 @@ void D3GL0TermD3()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ viewportu
+// nastaven√≠ viewportu
 
 void D3GL0SetView()
 {
@@ -348,7 +348,7 @@ void D3GL0SetView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po zmÏnÏ velikosti
+// aktualizace viewportu po zm√¨n√¨ velikosti
 
 void D3GL0SizeView()
 {
@@ -356,7 +356,7 @@ void D3GL0SizeView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po p¯esunu
+// aktualizace viewportu po p√∏esunu
 
 void D3GL0MoveView() { }
 
@@ -366,10 +366,10 @@ void D3GL0MoveView() { }
 void D3GL0InitPal(HDC dc)
 {
 
-// zruöenÌ star˝ch palet
+// zru≈°en√≠ star√Ωch palet
 	D3GL0TermPal();
 
-// zjiötÏnÌ aktu·lnÌho form·tu
+// zji≈°t√¨n√≠ aktu√°ln√≠ho form√°tu
 	int pixelFormat = ::GetPixelFormat(dc);
 	PIXELFORMATDESCRIPTOR pfd;
 	LOGPALETTE* pPal;
@@ -378,18 +378,18 @@ void D3GL0InitPal(HDC dc)
 	int redMask, greenMask, blueMask;
 	int i;
 
-// test, zda je pot¯eba vytv·¯et palety
+// test, zda je pot√∏eba vytv√°√∏et palety
 	::DescribePixelFormat(dc, pixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
 	if ((pfd.dwFlags & PFD_NEED_PALETTE) == 0) return;
 
-// p¯Ìprava bufferu pro palety
+// p√∏√≠prava bufferu pro palety
 	paletteSize = 1 << pfd.cColorBits;
 
 	pPal = (LOGPALETTE*)MemGet(sizeof(LOGPALETTE) + paletteSize * sizeof(PALETTEENTRY));
 	pPal->palVersion = 0x300;
 	pPal->palNumEntries = (short)paletteSize;
 
-// vygenerov·nÌ palet
+// vygenerov√°n√≠ palet
 	redMask = (1 << pfd.cRedBits) - 1;
 	greenMask = (1 << pfd.cGreenBits) - 1;
 	blueMask = (1 << pfd.cBlueBits) - 1;
@@ -405,7 +405,7 @@ void D3GL0InitPal(HDC dc)
 		pPal->palPalEntry[i].peFlags = 0;
 	}
 
-// nastavenÌ palet
+// nastaven√≠ palet
 	D3GL0Pal = ::CreatePalette(pPal);
 	MemFree(pPal);
 
@@ -417,7 +417,7 @@ void D3GL0InitPal(HDC dc)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ palet
+// zru≈°en√≠ palet
 
 void D3GL0TermPal()
 {
@@ -430,11 +430,11 @@ void D3GL0TermPal()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// pokusnÈ nastavenÌ kontextu OpenGL (vracÌ TRUE=inicializace OK)
+// pokusn√© nastaven√≠ kontextu OpenGL (vrac√≠ TRUE=inicializace OK)
 
 bool D3GL0TestGL(HDC dc, BYTE cColorBits, BYTE cDepthBits, BYTE cStencBits, DWORD flags)
 {
-// p¯Ìprava popisovaËe form·tu
+// p√∏√≠prava popisova√®e form√°tu
 	PIXELFORMATDESCRIPTOR pfd;
 	MemFill(&pfd, sizeof(pfd), 0);
 	pfd.nSize = sizeof(pfd);
@@ -446,11 +446,11 @@ bool D3GL0TestGL(HDC dc, BYTE cColorBits, BYTE cDepthBits, BYTE cStencBits, DWOR
 	pfd.cStencilBits = cStencBits;
 	pfd.iLayerType = PFD_MAIN_PLANE;
 
-// pozor - funkce nefunguje, nenÌ-li naËtena knihovna OpenGL
-// Funkce modifikuje p¯esnost koprocesoru!
+// pozor - funkce nefunguje, nen√≠-li na√®tena knihovna OpenGL
+// Funkce modifikuje p√∏esnost koprocesoru!
 	DWORD pf = ::ChoosePixelFormat(dc, &pfd);
 
-// vytvo¯enÌ kontextu za¯ÌzenÌ
+// vytvo√∏en√≠ kontextu za√∏√≠zen√≠
 	if (pf > 0)
 	{
 		if (::SetPixelFormat(dc, pf, &pfd) != FALSE)
@@ -502,20 +502,20 @@ bool D3GL0TestGL2(HDC dc, BYTE cColorBits)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ kontextu za¯ÌzenÌ (vracÌ TRUE=OK)
+// vytvo√∏en√≠ kontextu za√∏√≠zen√≠ (vrac√≠ TRUE=OK)
 
 bool D3GL0InitCont()
 {
-// zruöenÌ starÈho kontextu
+// zru≈°en√≠ star√©ho kontextu
 	D3GL0TermCont();
 
-// inicializace rozhranÌ
+// inicializace rozhran√≠
 	if (!D3GL0InitD3()) return false;
 
 // DC okna
 	HDC dc = ::GetDC(D3GL0Win);
 
-// vytvo¯enÌ novÈho kontextu
+// vytvo√∏en√≠ nov√©ho kontextu
 	bool res;
 	
 	switch (ScreenBits)
@@ -561,7 +561,7 @@ bool D3GL0InitCont()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ renderovacÌho povrchu
+// zru≈°en√≠ renderovac√≠ho povrchu
 
 void D3GL0TermCont()
 {
@@ -576,7 +576,7 @@ void D3GL0TermCont()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zpr·v okna
+// obsluha zpr√°v okna
 
 LRESULT CALLBACK OpenGLWindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -593,8 +593,8 @@ LRESULT CALLBACK OpenGLWindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lP
 	case WM_SETCURSOR:
 		{
 			POINT pt;
-			::GetCursorPos(&pt);	// naËtenÌ sou¯adnic myöi
-			::ScreenToClient(MainFrame, &pt); // p¯evod na klientskÈ sou¯adnice
+			::GetCursorPos(&pt);	// na√®ten√≠ sou√∏adnic my≈°i
+			::ScreenToClient(MainFrame, &pt); // p√∏evod na klientsk√© sou√∏adnice
 			if (OnSetCursor(pt.x, pt.y))
 			{
 				return TRUE;
@@ -607,15 +607,15 @@ LRESULT CALLBACK OpenGLWindowProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lP
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ funkce za¯ÌzenÌ (vracÌ TRUE=inicializace OK)
-// typ za¯ÌzenÌ: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zah√°jen√≠ funkce za√∏√≠zen√≠ (vrac√≠ TRUE=inicializace OK)
+// typ za√∏√≠zen√≠: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3GL0Start(int type)
 {
-// kontrola typu za¯ÌzenÌ
+// kontrola typu za√∏√≠zen√≠
 	if (type != NHALDev) return false;
 
-// test, zda nenÌ zmÏna poËtu bit˘ obrazovky (po naËtenÌ jiû nelze mÏnit)
+// test, zda nen√≠ zm√¨na po√®tu bit√π obrazovky (po na√®ten√≠ ji≈æ nelze m√¨nit)
 	int bits = ScreenBits;
 
 	HDC dc = ::GetDC(MainFrame);
@@ -631,10 +631,10 @@ bool D3GL0Start(int type)
 	}
 	D3GL0AktScreenBits = bits;
 
-// inicializace rozhranÌ
+// inicializace rozhran√≠
 	if (!D3GL0InitD3()) return false;
 
-// vytvo¯enÌ renderovacÌho okna
+// vytvo√∏en√≠ renderovac√≠ho okna
 	if (D3GL0Win != NULL)
 	{
 		::ShowWindow(D3GL0Win, SW_SHOW);
@@ -656,15 +656,15 @@ bool D3GL0Start(int type)
 
 
 		D3GL0Win = ::CreateWindowEx(
-			0,												// rozöÌ¯en˝ styl
-			OpenGLClass,									// jmÈno t¯Ìdy okna
+			0,												// roz≈°√≠√∏en√Ω styl
+			OpenGLClass,									// jm√©no t√∏√≠dy okna
 			NULL,											// titulek okna
 			WS_CHILD | WS_VISIBLE,							// styl okna
 			D3DLeft,										// X
 			D3DTop,											// Y
-			D3DWidth,										// öÌ¯ka
-			D3DHeight,										// v˝öka
-			MainFrame,										// rodiË
+			D3DWidth,										// ≈°√≠√∏ka
+			D3DHeight,										// v√Ω≈°ka
+			MainFrame,										// rodi√®
 			NULL,											// menu
 			hInstance,										// instance
 			NULL);											// parametry
@@ -672,28 +672,28 @@ bool D3GL0Start(int type)
 		if (D3GL0Win == NULL) return false;
 	}
 
-// inicializace ovladaËe OpenGL
+// inicializace ovlada√®e OpenGL
 	if (!D3GL0InitCont())
 	{
 		D3GL0Stop();
 		return false;
 	}
 
-// nastavenÌ viewportu
+// nastaven√≠ viewportu
 	D3GL0SetView();
 
-// inicializace adres funkcÌ za¯ÌzenÌ
-	pD3Stop = D3GL0Stop;			// ukonËenÌ funkce za¯ÌzenÌ
-	pD3SizeView = D3GL0SizeView;	// aktualizace viewportu po zmÏnÏ velikosti
-	pD3MoveView = D3GL0MoveView;	// aktualizace viewportu po p¯esunu
-	pD3Disp = D3GL0Disp;			// zobrazenÌ renderovacÌho bufferu
-	pD3Clear = D3GL0Clear;			// vymaz·nÌ renderovacÌ plochy
-	pD3AktProj = D3GL0AktProj;		// aktualizace projekËnÌ matice
-	pD3AktView = D3GL0AktView;		// aktualizace pohledovÈ matice
-	pD3Begin = D3GL0Begin;			// zah·jenÌ renderov·nÌ scÈny
-	pD3End = D3GL0End;				// ukonËenÌ renderov·nÌ scÈny
-	pD3Render = D3GL0Render;		// vyrenderov·nÌ jednoho objektu
-	pD3Reset = D3GL0Reset;			// resetov·nÌ objektu p¯ed ukonËenÌm ovladaËe
+// inicializace adres funkc√≠ za√∏√≠zen√≠
+	pD3Stop = D3GL0Stop;			// ukon√®en√≠ funkce za√∏√≠zen√≠
+	pD3SizeView = D3GL0SizeView;	// aktualizace viewportu po zm√¨n√¨ velikosti
+	pD3MoveView = D3GL0MoveView;	// aktualizace viewportu po p√∏esunu
+	pD3Disp = D3GL0Disp;			// zobrazen√≠ renderovac√≠ho bufferu
+	pD3Clear = D3GL0Clear;			// vymaz√°n√≠ renderovac√≠ plochy
+	pD3AktProj = D3GL0AktProj;		// aktualizace projek√®n√≠ matice
+	pD3AktView = D3GL0AktView;		// aktualizace pohledov√© matice
+	pD3Begin = D3GL0Begin;			// zah√°jen√≠ renderov√°n√≠ sc√©ny
+	pD3End = D3GL0End;				// ukon√®en√≠ renderov√°n√≠ sc√©ny
+	pD3Render = D3GL0Render;		// vyrenderov√°n√≠ jednoho objektu
+	pD3Reset = D3GL0Reset;			// resetov√°n√≠ objektu p√∏ed ukon√®en√≠m ovlada√®e
 	pD3AktWireframe = D3GL0AktWireframe;
 	pD3AktLightOn = D3GL0AktLightOn;
 	pD3AktShades = D3GL0AktShades;
@@ -725,7 +725,7 @@ bool D3GL0Start(int type)
 	pD3Shadow = D3GL0Shadow;
 	pD3Shadows = D3GL0Shadows;
 
-// inicializace informacÌ o za¯ÌzenÌ
+// inicializace informac√≠ o za√∏√≠zen√≠
 	pglGetIntegerv(GL_MAX_TEXTURE_SIZE, &MaxTextureWidth);
 	MaxTextureHeight = MaxTextureWidth;
 	MaxTextureRepeat = 0x8000;
@@ -754,11 +754,11 @@ bool D3GL0Start(int type)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ funkce za¯ÌzenÌ
+// ukon√®en√≠ funkce za√∏√≠zen√≠
 
 void D3GL0Stop()
 {
-	// s oknem se musÌ nejd¯Ìve pohnout, jinak se m˘ûe ve FullScreen zaseknout zobrazov·nÌ na displej
+	// s oknem se mus√≠ nejd√∏√≠ve pohnout, jinak se m√π≈æe ve FullScreen zaseknout zobrazov√°n√≠ na displej
 	if (D3GL0Win != NULL)
 	{
 		::MoveWindow(D3GL0Win, 32, 32, 32, 32, FALSE);
@@ -767,22 +767,22 @@ void D3GL0Stop()
 	D3GL0TermCont();
 	D3GL0TermPal();
 
-	FPUDouble();			// n·vrat p¯esnosti koprocesoru
+	FPUDouble();			// n√°vrat p√∏esnosti koprocesoru
 
 	if (D3GL0Win != NULL)
 	{
 		::ShowWindow(D3GL0Win, SW_HIDE);
 	}
 
-	FPUDouble();			// n·vrat p¯esnosti koprocesoru
+	FPUDouble();			// n√°vrat p√∏esnosti koprocesoru
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vymaz·nÌ renderovacÌ plochy
+// vymaz√°n√≠ renderovac√≠ plochy
 
 void D3GL0Clear()
 {
-// aktualizace nastavenÌ barvy pozadÌ scÈny
+// aktualizace nastaven√≠ barvy pozad√≠ sc√©ny
 	if (D3DBackColAkt)
 	{
 		pglClearColor(D3DBackColF.r, D3DBackColF.g, D3DBackColF.b, D3DBackColF.a);
@@ -793,7 +793,7 @@ void D3GL0Clear()
 	if (D3DBackText >= 0)
 	{
 
-// zobrazenÌ textury
+// zobrazen√≠ textury
 		pglColor4f(1, 1, 1, 1);
 
 		pglMatrixMode(GL_MODELVIEW);
@@ -820,13 +820,13 @@ void D3GL0Clear()
 
 		pglPopMatrix();
 
-// z·vÏreËnÈ vymaz·nÌ Z bufferu
+// z√°v√¨re√®n√© vymaz√°n√≠ Z bufferu
 		pglClear(GL_DEPTH_BUFFER_BIT | (D3DSBufferClear ? GL_STENCIL_BUFFER_BIT : 0));
 	}
 	else
 	{
 
-// pozadÌ se neinicializuje
+// pozad√≠ se neinicializuje
 		if (D3DBackCol == (MAXDWORD-1))
 		{
 			if (D3DSBufferClear)
@@ -836,14 +836,14 @@ void D3GL0Clear()
 			return;
 		}
 
-// nenÌ textura, je barva - vymaz·nÌ barvy i Z bufferu
+// nen√≠ textura, je barva - vymaz√°n√≠ barvy i Z bufferu
 		if (D3DBackCol != MAXDWORD)
 		{
 			pglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | (D3DSBufferClear ? GL_STENCIL_BUFFER_BIT : 0));
 		}
 		else
 
-// jinak pouze vymaz·nÌ Z bufferu
+// jinak pouze vymaz√°n√≠ Z bufferu
 		{
 			pglClear(GL_DEPTH_BUFFER_BIT | (D3DSBufferClear ? GL_STENCIL_BUFFER_BIT : 0));
 		}
@@ -851,7 +851,7 @@ void D3GL0Clear()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ renderovacÌho bufferu
+// zobrazen√≠ renderovac√≠ho bufferu
 
 void D3GL0Disp()
 {
@@ -863,7 +863,7 @@ void D3GL0Disp()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekËnÌ matice
+// aktualizace projek√®n√≠ matice
 
 void D3GL0AktProj()
 {
@@ -873,30 +873,30 @@ void D3GL0AktProj()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pohledovÈ matice (v OpenGL se prov·dÌ u kaûdÈho objektu zvl·öù)
+// aktualizace pohledov√© matice (v OpenGL se prov√°d√≠ u ka≈æd√©ho objektu zvl√°≈°¬ù)
 
 void D3GL0AktView() { }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ renderov·nÌ scÈny
+// zah√°jen√≠ renderov√°n√≠ sc√©ny
 
 void D3GL0Begin()
 { 
-// p¯Ìprava transformaËnÌ matice pro aktualizaci svÏtel
+// p√∏√≠prava transforma√®n√≠ matice pro aktualizaci sv√¨tel
 	pglMatrixMode(GL_MODELVIEW);
 	pglLoadMatrixf((float*)&D3DViewMatrix);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ renderov·nÌ scÈny
+// ukon√®en√≠ renderov√°n√≠ sc√©ny
 
 void D3GL0End() { }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ jednoho objektu
+// vyrenderov√°n√≠ jednoho objektu
 
 void D3GL0Render(D3DFITEM* item)
 {
@@ -997,7 +997,7 @@ void D3GL0Render(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderov·nÌ stÌnu
+// vyrenderov√°n√≠ st√≠nu
 
 void D3GL0Shadow(D3DFITEM* item)
 {
@@ -1038,7 +1038,7 @@ void D3GL0Shadow(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ objektu p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ objektu p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3GL0Reset(D3DFITEM* item)
 {
@@ -1046,7 +1046,7 @@ void D3GL0Reset(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË vyplÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® vypl√≤ov√°n√≠ ploch
 
 void D3GL0AktWireframe()
 {
@@ -1055,7 +1055,7 @@ void D3GL0AktWireframe()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË osvÏtlenÌ
+// aktualizovat p√∏ep√≠na√® osv√¨tlen√≠
 
 void D3GL0AktLightOn()
 {
@@ -1071,7 +1071,7 @@ void D3GL0AktLightOn()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË plynulÈho stinov·nÌ
+// aktualizovat p√∏ep√≠na√® plynul√©ho stinov√°n√≠
 
 void D3GL0AktShades()
 {
@@ -1080,7 +1080,7 @@ void D3GL0AktShades()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË odstraÚov·nÌ ploch
+// aktualizovat p√∏ep√≠na√® odstra√≤ov√°n√≠ ploch
 
 void D3GL0AktCulling()
 {
@@ -1098,7 +1098,7 @@ void D3GL0AktCulling()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zvÏtöen˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zv√¨t≈°en√Ωch textur
 
 void D3GL0AktMagFilter(int stage)
 {
@@ -1108,7 +1108,7 @@ void D3GL0AktMagFilter(int stage)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat p¯epÌnaË filtrace zmenöen˝ch a vzd·len˝ch textur
+// aktualizovat p√∏ep√≠na√® filtrace zmen≈°en√Ωch a vzd√°len√Ωch textur
 
 void D3GL0AktMinMipFilter(int stage)
 {
@@ -1140,7 +1140,7 @@ void D3GL0AktMinMipFilter(int stage)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace poloûky svÏtla
+// aktualizace polo≈æky sv√¨tla
 
 void D3GL0AktLight(int inx, D3DLITEM* item)
 {
@@ -1148,7 +1148,7 @@ void D3GL0AktLight(int inx, D3DLITEM* item)
 	D3DLIGHT8* light = &(item->Light);
 	D3DLIGHTTYPE type = light->Type;
 
-// oprava pozice a smÏru
+// oprava pozice a sm√¨ru
 	if (item->Enable)
 	{
 		float v[4];
@@ -1173,7 +1173,7 @@ void D3GL0AktLight(int inx, D3DLITEM* item)
 		pglLightfv(n, GL_SPOT_DIRECTION, (float*)&light->Direction);
 	}
 
-// oprava svÏteln˝ch parametr˘
+// oprava sv√¨teln√Ωch parametr√π
 	if (item->Akt)
 	{
 		if (item->Enable)
@@ -1203,7 +1203,7 @@ void D3GL0AktLight(int inx, D3DLITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ materi·lu
+// nastaven√≠ materi√°lu
 
 void D3GL0SetMaterial(D3DMITEM* mat)
 {
@@ -1220,12 +1220,12 @@ void D3GL0SetMaterial(D3DMITEM* mat)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ poloûky textury p¯ed ukonËenÌm ovladaËe
+// resetov√°n√≠ polo≈æky textury p√∏ed ukon√®en√≠m ovlada√®e
 
 void D3GL0TextureRes(D3DTITEM* item) { }
 
 ////////////////////////////////////////////////////////////////////
-// zobrazenÌ textury OpenGL
+// zobrazen√≠ textury OpenGL
 
 void GLTexture(PICTUREDATA* picdata, BOOL mips)
 {
@@ -1279,7 +1279,7 @@ void GLTexture(PICTUREDATA* picdata, BOOL mips)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ a zapnutÌ textury
+// nastaven√≠ a zapnut√≠ textury
 
 void D3GL0TextureSet(D3DTITEM* item, int stage)
 {
@@ -1292,7 +1292,7 @@ void D3GL0TextureSet(D3DTITEM* item, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ textury
+// vypnut√≠ textury
 
 void D3GL0TextureOff(int stage)
 {
@@ -1301,7 +1301,7 @@ void D3GL0TextureOff(int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ textury
+// zapnut√≠ textury
 
 void D3GL0TextureOn(D3DTITEM* item, int stage)
 {
@@ -1310,7 +1310,7 @@ void D3GL0TextureOn(D3DTITEM* item, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvÏtlenÌ
+// aktualizace ambient osv√¨tlen√≠
 
 void D3GL0AktAmbient()
 {
@@ -1318,7 +1318,7 @@ void D3GL0AktAmbient()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// voln· videopamÏù
+// voln√° videopam√¨¬ù
 
 int D3GL0Free()
 {
@@ -1362,7 +1362,7 @@ void D3GL0AktFog()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ mlhy
+// zapnut√≠ mlhy
 
 void D3GL0FogOn(BOOL on)
 {
@@ -1419,7 +1419,7 @@ void D3GL0AktState()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace blending operacÌ objektu
+// aktualizace blending operac√≠ objektu
 
 void D3GL0AktBlend(D3DFITEM* item)
 {
@@ -1447,7 +1447,7 @@ void D3GL0AktBlend(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenËnÌ ˙rovnÏ alfa
+// aktualizace referen√®n√≠ √∫rovn√¨ alfa
 
 void D3GL0AktAlfa(D3DFITEM* item)
 {
@@ -1463,7 +1463,7 @@ void D3GL0AktAlfa(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ operace barev
+// nastaven√≠ operace barev
 
 void D3GL0SetColorOp(int op, int arg1, int arg2, int stage)
 {
@@ -1511,7 +1511,7 @@ void D3GL0SetColorOp(int op, int arg1, int arg2, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ adresov·nÌ textur
+// nastaven√≠ adresov√°n√≠ textur
 
 void D3GL0SetAddress(int adru, int adrv, int stage)
 {
@@ -1574,7 +1574,7 @@ void D3GL0AktPalette(HWND wnd)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z funkce (1 aû 8, v kÛdu DirectX, 0=vypnuto)
+// nastaven√≠ Z funkce (1 a≈æ 8, v k√≥du DirectX, 0=vypnuto)
 
 void D3GL0SetZFunc(int func)
 {
@@ -1591,7 +1591,7 @@ void D3GL0SetZFunc(int func)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ Z z·pisu
+// nastaven√≠ Z z√°pisu
 
 void D3GL0SetZWrite(BOOL write)
 {
@@ -1599,7 +1599,7 @@ void D3GL0SetZWrite(BOOL write)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// povolenÌ stencil operacÌ
+// povolen√≠ stencil operac√≠
 
 void D3GL0SEnable(BOOL enable)
 {
@@ -1614,7 +1614,7 @@ void D3GL0SEnable(BOOL enable)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil operacÌ
+// nastaven√≠ stencil operac√≠
 
 void D3GL0SetSOp(int fail, int zfail, int zpass)
 {
@@ -1622,7 +1622,7 @@ void D3GL0SetSOp(int fail, int zfail, int zpass)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stencil testu
+// nastaven√≠ stencil testu
 
 void D3GL0SetSFunc(int func, int ref, DWORD mask)
 {
@@ -1630,7 +1630,7 @@ void D3GL0SetSFunc(int func, int ref, DWORD mask)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ z·pisovÈ masky do stencil bufferu
+// nastaven√≠ z√°pisov√© masky do stencil bufferu
 
 void D3GL0SetSMask(DWORD mask)
 {
@@ -1638,7 +1638,7 @@ void D3GL0SetSMask(DWORD mask)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ stÌn˘
+// vykreslen√≠ st√≠n√π
 
 void D3GL0Shadows()
 {
@@ -1664,5 +1664,5 @@ void D3GL0Shadows()
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 

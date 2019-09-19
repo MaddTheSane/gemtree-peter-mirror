@@ -1,35 +1,35 @@
 
 /***************************************************************************\
 *																			*
-*							HlavnÌ okno aplikace							*
+*							Hlavn√≠ okno aplikace							*
 *																			*
 \***************************************************************************/
 
-//#define OPENGL11								// povoleno pouûÌvat rozhranÌ OpenGl 1.1
+//#define OPENGL11								// povoleno pou≈æ√≠vat rozhran√≠ OpenGl 1.1
 
 
-// obsluha DirectDraw (inicializace pouze jednou, p¯i prvnÌm pouûitÌ)
-//extern bool					IsInitDirectDraw;	// probÏhla inicializace DirectDraw
-//extern LPDIRECTDRAW			DirectDraw;			// objekt DirectDraw (NULL=nenÌ)
-//extern LPDIRECTDRAWSURFACE	DirectSurface;		// povrch pro DirectDraw (NULL=nenÌ)
+// obsluha DirectDraw (inicializace pouze jednou, p√∏i prvn√≠m pou≈æit√≠)
+//extern bool					IsInitDirectDraw;	// prob√¨hla inicializace DirectDraw
+//extern LPDIRECTDRAW			DirectDraw;			// objekt DirectDraw (NULL=nen√≠)
+//extern LPDIRECTDRAWSURFACE	DirectSurface;		// povrch pro DirectDraw (NULL=nen√≠)
 //extern LPDIRECTDRAWPALETTE	DirectPalette;		// palety pro DirectDraw (NULL=nejsou)
-extern	bool				Resizing;			// probÌh· programov· zmÏna okna
+extern	bool				Resizing;			// prob√≠h√° programov√° zm√¨na okna
 
-extern	bool				AppActive;			// aplikace je aktivnÌ
-extern	bool				AppMinim;			// aplikace minimalizovan·
+extern	bool				AppActive;			// aplikace je aktivn√≠
+extern	bool				AppMinim;			// aplikace minimalizovan√°
 
-#define MAX_STAGES	8				// max. poËet stupÚ˘ operacÌ textur
-#define MAX_RENDGROUP	16			// poËet renderovacÌch skupin
-#define	RENDNORM	4				// skupina norm·lnÌch objekt˘ k renderov·nÌ
-#define	RENDTRANS	10				// skupina pr˘hledn˝ch objekt˘ k renderov·nÌ
-#define	RENDPIC		14				// skupina obr·zk˘ k renderov·nÌ
+#define MAX_STAGES	8				// max. po√®et stup√≤√π operac√≠ textur
+#define MAX_RENDGROUP	16			// po√®et renderovac√≠ch skupin
+#define	RENDNORM	4				// skupina norm√°ln√≠ch objekt√π k renderov√°n√≠
+#define	RENDTRANS	10				// skupina pr√πhledn√Ωch objekt√π k renderov√°n√≠
+#define	RENDPIC		14				// skupina obr√°zk√π k renderov√°n√≠
 
-//#define MAX_ZBIAS	16				// maxim·lnÌ poËet BIAS odsazenÌ (je to o 1 mÈnÏ, neû je povoleno)
-//#define MID_ZBIAS	8				// st¯ednÌ (implicitnÌ) odsazenÌ (bude -8 aû +7)
+//#define MAX_ZBIAS	16				// maxim√°ln√≠ po√®et BIAS odsazen√≠ (je to o 1 m√©n√¨, ne≈æ je povoleno)
+//#define MID_ZBIAS	8				// st√∏edn√≠ (implicitn√≠) odsazen√≠ (bude -8 a≈æ +7)
 
 // funkce DirectDrawCreate
 //typedef	HRESULT (WINAPI *DIRECTDRAWCREATE) (GUID FAR *lpGUID, LPDIRECTDRAW FAR *lplpDD, IUnknown FAR *pUnkOuter);
-//extern DIRECTDRAWCREATE	pDirectDrawCreate; // funkce DirectDrawCreate (NULL=nenÌ)
+//extern DIRECTDRAWCREATE	pDirectDrawCreate; // funkce DirectDrawCreate (NULL=nen√≠)
 
 #if (DIRECT3D_VERSION < 0x0800)
 typedef enum _D3DFORMAT
@@ -119,61 +119,61 @@ typedef struct _D3DLIGHT8 {
 // definice roviny
 typedef struct PLANE_
 {
-	float		A;								// sloûka X norm·ly
-	float		B;								// sloûka Y norm·ly
-	float		C;								// sloûka Z norm·ly
-	float		D;								// posun od 0 proti smÏru norm·ly
+	float		A;								// slo≈æka X norm√°ly
+	float		B;								// slo≈æka Y norm√°ly
+	float		C;								// slo≈æka Z norm√°ly
+	float		D;								// posun od 0 proti sm√¨ru norm√°ly
 } PLANE;
 
-// videomÛd DirectDraw
+// videom√≥d DirectDraw
 typedef struct VIDEOMODEITEM_
 {
-	int			Width;							// öÌ¯ka
-	int			Height;							// v˝öka
-	int			Bits;							// poËet bit˘ na bod (8, 16, 24 nebo 32)
-	int			res;							// rezervov·no
-//	D3DFORMAT	Format;							// format videomÛdu Direct3D
+	int			Width;							// ≈°√≠√∏ka
+	int			Height;							// v√Ω≈°ka
+	int			Bits;							// po√®et bit√π na bod (8, 16, 24 nebo 32)
+	int			res;							// rezervov√°no
+//	D3DFORMAT	Format;							// format videom√≥du Direct3D
 } VIDEOMODEITEM;
 
 #define MAXVIDEOMODES 64
 
-extern	bool				FullScreen;			// je celoobrazovkov˝ reûim s DirectDraw
-extern	BOOL				OldMaximized;		// uschovan˝ p¯Ìznak maximalizace
-extern	int					NumVideoModes;		// poËet videomÛd˘ v tabulce
-extern	VIDEOMODEITEM*		TabVideoModes;		// tabulka videomÛd˘
+extern	bool				FullScreen;			// je celoobrazovkov√Ω re≈æim s DirectDraw
+extern	BOOL				OldMaximized;		// uschovan√Ω p√∏√≠znak maximalizace
+extern	int					NumVideoModes;		// po√®et videom√≥d√π v tabulce
+extern	VIDEOMODEITEM*		TabVideoModes;		// tabulka videom√≥d√π
 
-// poûadovan˝ uûivatelsk˝ videomÛd
-extern	int					UserScreenWidth;	// uûivatelsk· öÌ¯ka videomÛdu (0=implicitnÌ)
-extern	int					UserScreenHeight;	// uûivatelsk· v˝öka videomÛdu (0=implicitnÌ)
-//extern	bool				UserFullScreen;		// uûivatelem poûadov·n celoobrazovkov˝ mÛd 3D
-extern	int					UserScreenBits;		// uûivatelsk˝ poËet bit˘ (0=implicitnÌ)
+// po≈æadovan√Ω u≈æivatelsk√Ω videom√≥d
+extern	int					UserScreenWidth;	// u≈æivatelsk√° ≈°√≠√∏ka videom√≥du (0=implicitn√≠)
+extern	int					UserScreenHeight;	// u≈æivatelsk√° v√Ω≈°ka videom√≥du (0=implicitn√≠)
+//extern	bool				UserFullScreen;		// u≈æivatelem po≈æadov√°n celoobrazovkov√Ω m√≥d 3D
+extern	int					UserScreenBits;		// u≈æivatelsk√Ω po√®et bit√π (0=implicitn√≠)
 
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 	  
-// zvolenÈ rozhranÌ a ovladaË
-extern	int					D3DIntUser;			// uûivatelem zadanÈ rozhranÌ 0 aû D3INTERFACES-1 (0=automatick˝)
-extern	int					D3DIntAkt;			// typ aktivnÌho rozhranÌ (0=nenÌ,1=GL0,2=GL1,3=GL2,4=DX3,5=DX5,6=DX6,7=DX7,8=DX8)
-extern	int					D3DDevUser;			// uûivatelem zadan˝ typ ovladaËe 0 aû D3DEVICES-1 (0=automatick˝)
-extern	int					D3DDevAkt;			// typ aktivnÌho ovladaËe (0=nenÌ,1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
+// zvolen√© rozhran√≠ a ovlada√®
+extern	int					D3DIntUser;			// u≈æivatelem zadan√© rozhran√≠ 0 a≈æ D3INTERFACES-1 (0=automatick√Ω)
+extern	int					D3DIntAkt;			// typ aktivn√≠ho rozhran√≠ (0=nen√≠,1=GL0,2=GL1,3=GL2,4=DX3,5=DX5,6=DX6,7=DX7,8=DX8)
+extern	int					D3DDevUser;			// u≈æivatelem zadan√Ω typ ovlada√®e 0 a≈æ D3DEVICES-1 (0=automatick√Ω)
+extern	int					D3DDevAkt;			// typ aktivn√≠ho ovlada√®e (0=nen√≠,1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
 
 
 
-// ovladaËe a rozhranÌ 3D
+// ovlada√®e a rozhran√≠ 3D
 enum D3DEVICE {
-	NDefDev = 0,			// implicitnÌ ovladaË
+	NDefDev = 0,			// implicitn√≠ ovlada√®
 	NHALDev = 1,			// HAL
 	NTnLHalDev = 2,			// TnLHal
 	NRefDev = 3,			// REF
 	NRGBDev = 4,			// RGB
 	NMMXDev = 5,			// MMX
 	NRampDev = 6,			// Ramp
-	D3DEVICES = 7,			// poËet typ˘ ovladaË˘
+	D3DEVICES = 7,			// po√®et typ√π ovlada√®√π
 };
 
 enum D3INTERFACE {
-	NDefInt = 0,			// implicitnÌ rozhranÌ
+	NDefInt = 0,			// implicitn√≠ rozhran√≠
 	NGL0Int = 1,			// OpenGL 1.0
 	NGL1Int = 2,			// OpenGL 1.1
 	NGL2Int = 3,			// OpenGL 2.0
@@ -182,576 +182,576 @@ enum D3INTERFACE {
 	NDX6Int = 6,			// DirectX 6
 	NDX7Int = 7,			// DirectX 7
 	NDX8Int = 8,			// DirectX 8
-	D3INTERFACES = 9,		// poËet typ˘ rozhranÌ
+	D3INTERFACES = 9,		// po√®et typ√π rozhran√≠
 };
 
-// tabulka ID kÛd˘ ovladaË˘ Direct3D 
+// tabulka ID k√≥d√π ovlada√®√π Direct3D 
 extern	const GUID* Dev3DTab[D3DEVICES];
 
-// videomÛd Direct3D
-extern	bool				D3DFullScreen;		// je celoobrazovkov˝ reûim s Direct3D
-extern	int					D3DNumVideoModes;	// poËet videomÛd˘ v tabulce
-extern	VIDEOMODEITEM*		D3DTabVideoModes;	// tabulka videomÛd˘
-//extern	CString				D3DListVideoModes;	// textov˝ seznam videomÛd˘
+// videom√≥d Direct3D
+extern	bool				D3DFullScreen;		// je celoobrazovkov√Ω re≈æim s Direct3D
+extern	int					D3DNumVideoModes;	// po√®et videom√≥d√π v tabulce
+extern	VIDEOMODEITEM*		D3DTabVideoModes;	// tabulka videom√≥d√π
+//extern	CString				D3DListVideoModes;	// textov√Ω seznam videom√≥d√π
 
-// vlastnosti za¯ÌzenÌ
-//extern	D3DCAPS8*			D3DCaps8;			// buffer vlastnostÌ za¯ÌzenÌ Direct3D
-extern	int					MaxTextureWidth;	// maxim·lnÌ öÌ¯ka textury
-extern	int					MaxTextureHeight;	// maxim·lnÌ v˝öka textury
-extern	int					MaxTextureRepeat;	// maxim·lnÌ poËet opakov·nÌ textury
-extern	bool				SquareTexture;		// textury musÌ b˝t ËtvercovÈ
-extern	bool				TexturePow2;		// rozmÏr textur musÌ b˝t mocnina 2
+// vlastnosti za√∏√≠zen√≠
+//extern	D3DCAPS8*			D3DCaps8;			// buffer vlastnost√≠ za√∏√≠zen√≠ Direct3D
+extern	int					MaxTextureWidth;	// maxim√°ln√≠ ≈°√≠√∏ka textury
+extern	int					MaxTextureHeight;	// maxim√°ln√≠ v√Ω≈°ka textury
+extern	int					MaxTextureRepeat;	// maxim√°ln√≠ po√®et opakov√°n√≠ textury
+extern	bool				SquareTexture;		// textury mus√≠ b√Ωt √®tvercov√©
+extern	bool				TexturePow2;		// rozm√¨r textur mus√≠ b√Ωt mocnina 2
 extern	bool				IsHWRaster;			// je HW rasterizace
-extern	bool				IsHWTransLight;		// je HW transformace a osvÏtlenÌ
+extern	bool				IsHWTransLight;		// je HW transformace a osv√¨tlen√≠
 extern	bool				IsPureDevice;		// pouze HW obsluha
 extern	bool				IsBlending;			// jsou blending operace
-extern	bool				IsMagFilter;		// podporuje filtr p¯i zvÏtöenÌ
-extern	bool				IsMinFilter;		// podporuje filtr p¯i zmenöenÌ
+extern	bool				IsMagFilter;		// podporuje filtr p√∏i zv√¨t≈°en√≠
+extern	bool				IsMinFilter;		// podporuje filtr p√∏i zmen≈°en√≠
 extern	bool				IsMipMap;			// podporuje mipmap textury
-extern	bool				AlphaGreaterEqual;	// lze porovn·vat Alpha	>=
-extern	bool				AlphaGreater;		// lze porovn·vat Alpha >
-extern	int					MaxVertexNum;		// maxim·lnÌ poËet vrchol˘ skuteËn˝
-extern	int					MaxVertexNum2;		// maxim·lnÌ poËet vrchol˘ pro renderov·nÌ
-extern	int					MaxTextureStages;	// maxim·lnÌ poËet stupÚ˘ textur
-extern	int					MaxTextureSimult;	// maxim·lnÌ poËet textur pro jeden pr˘chod
-extern	bool				IsTableFog;			// podporov·na tabulkov· mlha
-extern	bool				IsVertexFog;		// podporov·na vrcholov· mlha
-extern	bool				IsRangeFog;			// podporov·na vzd·lenostnÌ mlha
+extern	bool				AlphaGreaterEqual;	// lze porovn√°vat Alpha	>=
+extern	bool				AlphaGreater;		// lze porovn√°vat Alpha >
+extern	int					MaxVertexNum;		// maxim√°ln√≠ po√®et vrchol√π skute√®n√Ω
+extern	int					MaxVertexNum2;		// maxim√°ln√≠ po√®et vrchol√π pro renderov√°n√≠
+extern	int					MaxTextureStages;	// maxim√°ln√≠ po√®et stup√≤√π textur
+extern	int					MaxTextureSimult;	// maxim√°ln√≠ po√®et textur pro jeden pr√πchod
+extern	bool				IsTableFog;			// podporov√°na tabulkov√° mlha
+extern	bool				IsVertexFog;		// podporov√°na vrcholov√° mlha
+extern	bool				IsRangeFog;			// podporov√°na vzd√°lenostn√≠ mlha
 
-// p¯epÌnaËe nastavenÌ
-extern	bool				D3DWireframeAkt;	// vyplÚov·nÌ ploch aktu·lnÏ zapnut
-extern	bool				D3DWireframeGlobal;	// vyplÚov·nÌ ploch glob·lnÏ povoleno
-extern	bool				D3DLightOnAkt;		// osvÏtlenÌ aktu·lnÏ zapnuto
-extern	bool				D3DLightOnGlobal;	// osvÏtlenÌ glob·lnÏ povoleno
-extern	bool				D3DShadesAkt;		// plynulÈ stÌnov·nÌ aktu·lnÏ zapnuto
-extern	bool				D3DShadesGlobal;	// plynulÈ stÌnov·nÌ glob·lnÏ povoleno
-extern	bool				D3DMinFilterAkt[MAX_STAGES];	// filtrace zmenöen˝ch textur zapnuta
-extern	bool				D3DMinFilterGlobal;	// filtrace zmenöen˝ch textur glob·lnÏ povolena
-extern	bool				D3DMagFilterAkt[MAX_STAGES];	// filtrace zvÏtöen˝ch textur zapnuta
-extern	bool				D3DMagFilterGlobal;	// filtrace zvÏtöen˝ch textur glob·lnÏ povolena
-extern	bool				D3DMipFilterAkt[MAX_STAGES];	// filtrace vzd·len˝ch textur zapnuta
-extern	bool				D3DMipFilterGlobal;	// filtrace vzd·len˝ch textur glob·lnÏ povolena
+// p√∏ep√≠na√®e nastaven√≠
+extern	bool				D3DWireframeAkt;	// vypl√≤ov√°n√≠ ploch aktu√°ln√¨ zapnut
+extern	bool				D3DWireframeGlobal;	// vypl√≤ov√°n√≠ ploch glob√°ln√¨ povoleno
+extern	bool				D3DLightOnAkt;		// osv√¨tlen√≠ aktu√°ln√¨ zapnuto
+extern	bool				D3DLightOnGlobal;	// osv√¨tlen√≠ glob√°ln√¨ povoleno
+extern	bool				D3DShadesAkt;		// plynul√© st√≠nov√°n√≠ aktu√°ln√¨ zapnuto
+extern	bool				D3DShadesGlobal;	// plynul√© st√≠nov√°n√≠ glob√°ln√¨ povoleno
+extern	bool				D3DMinFilterAkt[MAX_STAGES];	// filtrace zmen≈°en√Ωch textur zapnuta
+extern	bool				D3DMinFilterGlobal;	// filtrace zmen≈°en√Ωch textur glob√°ln√¨ povolena
+extern	bool				D3DMagFilterAkt[MAX_STAGES];	// filtrace zv√¨t≈°en√Ωch textur zapnuta
+extern	bool				D3DMagFilterGlobal;	// filtrace zv√¨t≈°en√Ωch textur glob√°ln√¨ povolena
+extern	bool				D3DMipFilterAkt[MAX_STAGES];	// filtrace vzd√°len√Ωch textur zapnuta
+extern	bool				D3DMipFilterGlobal;	// filtrace vzd√°len√Ωch textur glob√°ln√¨ povolena
 
 
-extern	int					D3DAktStage;		// aktivnÌ stupeÚ textur
+extern	int					D3DAktStage;		// aktivn√≠ stupe√≤ textur
 
-extern	bool				D3DRamp;			// je ovladaË Ramp
+extern	bool				D3DRamp;			// je ovlada√® Ramp
 
 extern	bool				D3DVSync;			// synchronizovat s VSYN
 
-extern	bool				D3DVertFog;			// pouze vektorov· mlha (SW driver)
+extern	bool				D3DVertFog;			// pouze vektorov√° mlha (SW driver)
 
 
 extern	int ReSet3DCount;
 extern	int ReSet3DCountN;
 
 
-extern	bool				D3DCullingUnknown;	// stav p¯epÌnaËe odstraÚov·nÌ ploch nezn·m˝
-extern	short				D3DCullingAkt;		// volba zobrazen˝ch ploch
-extern	bool				D3DCameraInvert;	// je inverznÌ kamera, invertovat ploöky
-//extern	bool				D3DCullingGlobal;	// odstraÚov·nÌ ploch glob·lnÏ povoleno
+extern	bool				D3DCullingUnknown;	// stav p√∏ep√≠na√®e odstra√≤ov√°n√≠ ploch nezn√°m√Ω
+extern	short				D3DCullingAkt;		// volba zobrazen√Ωch ploch
+extern	bool				D3DCameraInvert;	// je inverzn√≠ kamera, invertovat plo≈°ky
+//extern	bool				D3DCullingGlobal;	// odstra√≤ov√°n√≠ ploch glob√°ln√¨ povoleno
 
 // funkce Direct3DCreate8
 //typedef	IDirect3D8* (WINAPI *DIRECT3DCREATE8) (UINT SDKVersion);
-//extern DIRECT3DCREATE8	pDirect3DCreate8;		// funkce Direct3DCreate8 (NULL=nenÌ)
+//extern DIRECT3DCREATE8	pDirect3DCreate8;		// funkce Direct3DCreate8 (NULL=nen√≠)
 
-// ovladaËe Direct3D8
-extern	bool				IsDirect3D;			// probÏhla inicializace Direct3D
-//extern	IDirect3D8*			Direct3D;			// objekt Direct3D verze 8 (NULL=nenÌ)
-//extern  IDirect3DDevice8*	Direct3DDev;		// za¯ÌzenÌ Direct3D (NULL=nenÌ)
-//extern	int					D3DDevUser;			// uûivatelem zadan˝ typ za¯ÌzenÌ (0=automatick˝)
-//extern	int					D3DDevAkt;			// typ aktivnÌho za¯ÌzenÌ (0=nenÌ,1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
-//extern	int					D3DIntUser;			// uûivatelem zadan˝ interface (0=automatick˝)
-//extern	int					D3DIntAkt;			// typ aktivnÌho rozhranÌ (0=nenÌ,1=GL0,2=GL1,3=GL2,4=DX4,5=DX5,6=DX6,7=DX7,8=DX8)
+// ovlada√®e Direct3D8
+extern	bool				IsDirect3D;			// prob√¨hla inicializace Direct3D
+//extern	IDirect3D8*			Direct3D;			// objekt Direct3D verze 8 (NULL=nen√≠)
+//extern  IDirect3DDevice8*	Direct3DDev;		// za√∏√≠zen√≠ Direct3D (NULL=nen√≠)
+//extern	int					D3DDevUser;			// u≈æivatelem zadan√Ω typ za√∏√≠zen√≠ (0=automatick√Ω)
+//extern	int					D3DDevAkt;			// typ aktivn√≠ho za√∏√≠zen√≠ (0=nen√≠,1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp)
+//extern	int					D3DIntUser;			// u≈æivatelem zadan√Ω interface (0=automatick√Ω)
+//extern	int					D3DIntAkt;			// typ aktivn√≠ho rozhran√≠ (0=nen√≠,1=GL0,2=GL1,3=GL2,4=DX4,5=DX5,6=DX6,7=DX7,8=DX8)
 
 // okno Direct3D
 extern	bool				D3D;				// je okno Direct3D
-//extern	bool				D3DDX;				// je okno 3D - ovladaË DirectX
-//extern	bool				D3DGL;				// je okno 3D - ovladaË OpenGL
+//extern	bool				D3DDX;				// je okno 3D - ovlada√® DirectX
+//extern	bool				D3DGL;				// je okno 3D - ovlada√® OpenGL
 extern	bool				D3D2D;				// je kombinace 3D s 2D grafikou
-extern	bool				D3DFull;			// okno 3D vyuûÌv· celou plochu hlavnÌho okna
+extern	bool				D3DFull;			// okno 3D vyu≈æ√≠v√° celou plochu hlavn√≠ho okna
 
-extern	bool				D3DReturn;			// blokov·nÌ Alt+Enter p¯i D3D mÛdu
+extern	bool				D3DReturn;			// blokov√°n√≠ Alt+Enter p√∏i D3D m√≥du
 
-// form·ty textur (dwRGBBitCount=0 pro neplatn˝ form·t)
-extern	DDPIXELFORMAT		D3DTextFormatA8R8G8B8;			// form·t textury D3DFMT_A8R8G8B8
-extern	DDPIXELFORMAT		D3DTextFormatA4R4G4B4;			// form·t textury D3DFMT_A4R4G4B4
-extern	DDPIXELFORMAT		D3DTextFormatA1R5G5B5;			// form·t textury D3DFMT_A1R5G5B5
-extern	DDPIXELFORMAT		D3DTextFormatR8G8B8;			// form·t textury D3DFMT_R8G8B8
-extern	DDPIXELFORMAT		D3DTextFormatR5G6B5;			// form·t textury D3DFMT_R5G6B5
-extern	DDPIXELFORMAT		D3DTextFormatX1R5G5B5;			// form·t textury D3DFMT_X1R5G5B5
-extern	DDPIXELFORMAT		D3DTextFormatX8R8G8B8;			// form·t textury D3DFMT_X8R8G8B8
-extern	DDPIXELFORMAT		D3DTextFormatX4R4G4B4;			// form·t textury D3DFMT_X4R4G4B4
-extern	bool				D3DLowText;			// pouûÌvat niûöÌ kvalitu textur
-extern	bool				D3DTextFormatOK;	// nalezen platn˝ form·t textur
+// form√°ty textur (dwRGBBitCount=0 pro neplatn√Ω form√°t)
+extern	DDPIXELFORMAT		D3DTextFormatA8R8G8B8;			// form√°t textury D3DFMT_A8R8G8B8
+extern	DDPIXELFORMAT		D3DTextFormatA4R4G4B4;			// form√°t textury D3DFMT_A4R4G4B4
+extern	DDPIXELFORMAT		D3DTextFormatA1R5G5B5;			// form√°t textury D3DFMT_A1R5G5B5
+extern	DDPIXELFORMAT		D3DTextFormatR8G8B8;			// form√°t textury D3DFMT_R8G8B8
+extern	DDPIXELFORMAT		D3DTextFormatR5G6B5;			// form√°t textury D3DFMT_R5G6B5
+extern	DDPIXELFORMAT		D3DTextFormatX1R5G5B5;			// form√°t textury D3DFMT_X1R5G5B5
+extern	DDPIXELFORMAT		D3DTextFormatX8R8G8B8;			// form√°t textury D3DFMT_X8R8G8B8
+extern	DDPIXELFORMAT		D3DTextFormatX4R4G4B4;			// form√°t textury D3DFMT_X4R4G4B4
+extern	bool				D3DLowText;			// pou≈æ√≠vat ni≈æ≈°√≠ kvalitu textur
+extern	bool				D3DTextFormatOK;	// nalezen platn√Ω form√°t textur
 
-// form·ty Z-buffer˘ (dwZBufferBitDepth=0 pro neplatn˝ form·t) - jen pro hled·nÌ form·tu Z bufferu
-extern	DDPIXELFORMAT		D3DZBufferFormat24S8;			// form·t bufferu 24 bit˘, stencil 8 bit˘
-extern	DDPIXELFORMAT		D3DZBufferFormat24S4;			// form·t bufferu 24 bit˘, stencil 4 bity
-extern	DDPIXELFORMAT		D3DZBufferFormat15S1;			// form·t bufferu 15 bit˘, stencil 1 bit
-extern	DDPIXELFORMAT		D3DZBufferFormat32S0;			// form·t bufferu 32 bit˘, stencil 0 bit˘
-extern	DDPIXELFORMAT		D3DZBufferFormat24S0;			// form·t bufferu 24 bit˘, stencil 0 bit˘
-extern	DDPIXELFORMAT		D3DZBufferFormat16S0;			// form·t bufferu 16 bit˘, stencil 0 bit˘
-extern	DDPIXELFORMAT		D3DZBufferFormat8S0;			// form·t bufferu 8 bit˘, stencil 0 bit˘
-extern	bool				D3DZBufferFormatOK;				// nalezen platn˝ form·t Z-bufferu
+// form√°ty Z-buffer√π (dwZBufferBitDepth=0 pro neplatn√Ω form√°t) - jen pro hled√°n√≠ form√°tu Z bufferu
+extern	DDPIXELFORMAT		D3DZBufferFormat24S8;			// form√°t bufferu 24 bit√π, stencil 8 bit√π
+extern	DDPIXELFORMAT		D3DZBufferFormat24S4;			// form√°t bufferu 24 bit√π, stencil 4 bity
+extern	DDPIXELFORMAT		D3DZBufferFormat15S1;			// form√°t bufferu 15 bit√π, stencil 1 bit
+extern	DDPIXELFORMAT		D3DZBufferFormat32S0;			// form√°t bufferu 32 bit√π, stencil 0 bit√π
+extern	DDPIXELFORMAT		D3DZBufferFormat24S0;			// form√°t bufferu 24 bit√π, stencil 0 bit√π
+extern	DDPIXELFORMAT		D3DZBufferFormat16S0;			// form√°t bufferu 16 bit√π, stencil 0 bit√π
+extern	DDPIXELFORMAT		D3DZBufferFormat8S0;			// form√°t bufferu 8 bit√π, stencil 0 bit√π
+extern	bool				D3DZBufferFormatOK;				// nalezen platn√Ω form√°t Z-bufferu
 
 // stencil buffer
 extern	bool				D3DSBufferFormatOK;				// nalezen Stencil buffer
-extern	int					D3DSBufferDepth;				// hloubka Stencil bufferu (bit˘)
-extern	int					D3DSBufferMax;					// maxim·lnÌ hodnota Stencil bufferu
-extern	bool				D3DSBufferClear;				// poûadavek k vymaz·nÌ Stencil bufferu
-extern	bool				D3DShadows;						// povoleno pouûÌv·nÌ stÌn˘
+extern	int					D3DSBufferDepth;				// hloubka Stencil bufferu (bit√π)
+extern	int					D3DSBufferMax;					// maxim√°ln√≠ hodnota Stencil bufferu
+extern	bool				D3DSBufferClear;				// po≈æadavek k vymaz√°n√≠ Stencil bufferu
+extern	bool				D3DShadows;						// povoleno pou≈æ√≠v√°n√≠ st√≠n√π
 
-// projekËnÌ matice (pozor, Ëlen _34 matice nesmÌ b˝t < 0 !!!)
-extern	bool				D3DProjAkt;			// poûadavek aktualizace projekËnÌ matice
-//extern	double				D3DHalfHeight;		// v˝öka horizontu
-//extern	double				D3DAspectRatio;		// pomÏr v˝öka/öÌ¯ka
-extern	double				D3DFrontClip;		// vzd·lenost p¯ednÌ omezujÌcÌ roviny
-extern	double				D3DBackClip;		// vzd·lenost zadnÌ omezujÌcÌ roviny
-//extern	double				D3DViewAngle;		// ˙hel öÌ¯ky pohledu
-extern	D3DMATRIX			D3DProjMatrix;		// projekËnÌ matice (nepouûitÈ Ëleny jsou = 0)
+// projek√®n√≠ matice (pozor, √®len _34 matice nesm√≠ b√Ωt < 0 !!!)
+extern	bool				D3DProjAkt;			// po≈æadavek aktualizace projek√®n√≠ matice
+//extern	double				D3DHalfHeight;		// v√Ω≈°ka horizontu
+//extern	double				D3DAspectRatio;		// pom√¨r v√Ω≈°ka/≈°√≠√∏ka
+extern	double				D3DFrontClip;		// vzd√°lenost p√∏edn√≠ omezuj√≠c√≠ roviny
+extern	double				D3DBackClip;		// vzd√°lenost zadn√≠ omezuj√≠c√≠ roviny
+//extern	double				D3DViewAngle;		// √∫hel ≈°√≠√∏ky pohledu
+extern	D3DMATRIX			D3DProjMatrix;		// projek√®n√≠ matice (nepou≈æit√© √®leny jsou = 0)
 extern	int					D3DProjection;		// typ projekce (0=persp, 1=orto, 2=r-persp, 3=r-orto)
-extern	bool				D3DRightHand;		// pravoruk· projekce (typ projekce 2 a 3)
+extern	bool				D3DRightHand;		// pravoruk√° projekce (typ projekce 2 a 3)
 
-// pohledov· matice (odvozen· z kamery)
-extern	bool				D3DViewAkt;			// poûadavek aktualizace pohledovÈ matice
-extern	D3DMATRIX			D3DViewMatrix;		// pohledov· matice (vytvo¯en· z objektu kamery)
+// pohledov√° matice (odvozen√° z kamery)
+extern	bool				D3DViewAkt;			// po≈æadavek aktualizace pohledov√© matice
+extern	D3DMATRIX			D3DViewMatrix;		// pohledov√° matice (vytvo√∏en√° z objektu kamery)
 
-// kombinovan· matice projekËnÌ*pohledov· (pro p¯epoËet 2D objekt˘)
-//extern	bool				D3DViewProjAkt;		// aktualizovat v˝poËet kombinovanÈ matice
-//extern	D3DMATRIX			D3DViewProjMatrix;	// kombinovan· matice
+// kombinovan√° matice projek√®n√≠*pohledov√° (pro p√∏epo√®et 2D objekt√π)
+//extern	bool				D3DViewProjAkt;		// aktualizovat v√Ωpo√®et kombinovan√© matice
+//extern	D3DMATRIX			D3DViewProjMatrix;	// kombinovan√° matice
 
-// rozhranÌ OpenGL
-//extern	bool				IsOpenGL;			// probÏhla inicializace OpenGL
+// rozhran√≠ OpenGL
+//extern	bool				IsOpenGL;			// prob√¨hla inicializace OpenGL
 
-//extern	bool				OKOpenGL;			// inicializace OpenGL je ˙spÏön·
+//extern	bool				OKOpenGL;			// inicializace OpenGL je √∫sp√¨≈°n√°
 
 //#ifdef OPENGL11
-//extern	bool				OKOpenGL11;			// inicializace OpenGL 1.1 je ˙spÏön·
+//extern	bool				OKOpenGL11;			// inicializace OpenGL 1.1 je √∫sp√¨≈°n√°
 //#endif // OPENGL11
 
 //extern	HINSTANCE			OpenGLLib;			// knihovna OPENGL32.DLL
-//extern	HGLRC				GLContext;			// renderovacÌ plocha OpenGL
+//extern	HGLRC				GLContext;			// renderovac√≠ plocha OpenGL
 //extern	HPALETTE			GLPalette;			// palety pro OpenGL
 
-// pohledov· matice (odvozen· z kamery)
-extern	bool				D3DViewAkt;			// poûadavek aktualizace pohledovÈ matice
-extern	D3DMATRIX			D3DViewMatrix;		// pohledov· matice (vytvo¯en· z objektu kamery)
+// pohledov√° matice (odvozen√° z kamery)
+extern	bool				D3DViewAkt;			// po≈æadavek aktualizace pohledov√© matice
+extern	D3DMATRIX			D3DViewMatrix;		// pohledov√° matice (vytvo√∏en√° z objektu kamery)
 
-// frustum (odvozeno z pohledovÈ a projekËnÌ matice)
+// frustum (odvozeno z pohledov√© a projek√®n√≠ matice)
 extern	bool				D3DFrustumAkt;		// aktualizovat frustum
-extern	PLANE				D3DFrustum[6];		// 6 rovin projekËnÌho jehlanu
+extern	PLANE				D3DFrustum[6];		// 6 rovin projek√®n√≠ho jehlanu
 
-// rozmÏry okna Direct3D zadanÈ uûivatelem, bez omezenÌ rozsahu
-extern	int					D3DX0;				// poË·tek X okna Direct3D (zleva) zadan˝ uûivatelem
-extern	int					D3DY0;				// poË·tek Y okna Direct3D (zdola) zadan˝ uûivatelem
-extern	int					D3DW0;				// öÌ¯ka okna Direct3D zadan· uûivatelem
-extern	int					D3DH0;				// v˝öka okna Direct3D zadan· uûivatelem
+// rozm√¨ry okna Direct3D zadan√© u≈æivatelem, bez omezen√≠ rozsahu
+extern	int					D3DX0;				// po√®√°tek X okna Direct3D (zleva) zadan√Ω u≈æivatelem
+extern	int					D3DY0;				// po√®√°tek Y okna Direct3D (zdola) zadan√Ω u≈æivatelem
+extern	int					D3DW0;				// ≈°√≠√∏ka okna Direct3D zadan√° u≈æivatelem
+extern	int					D3DH0;				// v√Ω≈°ka okna Direct3D zadan√° u≈æivatelem
 
-// rozmÏry okna Direct3D zadanÈ uûivatelem, s omezenÌm na plochu (pro zobrazenÌ grafiky)
-extern	int					D3DX;				// poË·tek X okna Direct3D (zleva)
-extern	int					D3DY;				// poË·tek Y okna Direct3D (zdola)
-extern	int					D3DW;				// öÌ¯ka okna Direct3D
-extern	int					D3DH;				// v˝öka okna Direct3D
+// rozm√¨ry okna Direct3D zadan√© u≈æivatelem, s omezen√≠m na plochu (pro zobrazen√≠ grafiky)
+extern	int					D3DX;				// po√®√°tek X okna Direct3D (zleva)
+extern	int					D3DY;				// po√®√°tek Y okna Direct3D (zdola)
+extern	int					D3DW;				// ≈°√≠√∏ka okna Direct3D
+extern	int					D3DH;				// v√Ω≈°ka okna Direct3D
 
-// skuteËnÈ rozmÏry okna Direct3D na obrazovce (omezenÌ na klientskÈ sou¯adnice okna)
-extern	int					D3DLeft;			// skuteËn˝ poË·tek X okna Direct3D
-extern	int					D3DTop;				// skuteËn˝ poË·tek Y okna Direct3D (shora)
-extern	int					D3DWidth;			// skuteËn· öÌ¯ka okna Direct3D
-extern	int					D3DHeight;			// skuteËn· v˝öka okna Direct3D
-extern	double				D3DWidthHeight2;	// odmocnina s pomÏru D3DWidth/D3DHeight
+// skute√®n√© rozm√¨ry okna Direct3D na obrazovce (omezen√≠ na klientsk√© sou√∏adnice okna)
+extern	int					D3DLeft;			// skute√®n√Ω po√®√°tek X okna Direct3D
+extern	int					D3DTop;				// skute√®n√Ω po√®√°tek Y okna Direct3D (shora)
+extern	int					D3DWidth;			// skute√®n√° ≈°√≠√∏ka okna Direct3D
+extern	int					D3DHeight;			// skute√®n√° v√Ω≈°ka okna Direct3D
+extern	double				D3DWidthHeight2;	// odmocnina s pom√¨ru D3DWidth/D3DHeight
 
-// uûivatelskÈ nastavenÌ
-//extern	bool				D3DDither;			// pouûÌt dithering Direct3D
-//extern	bool				D3DRendReq;			// poûadavek p¯erenderov·nÌ Direct3D
-//extern	int					D3DQuality;			// kvalita renderov·nÌ
+// u≈æivatelsk√© nastaven√≠
+//extern	bool				D3DDither;			// pou≈æ√≠t dithering Direct3D
+//extern	bool				D3DRendReq;			// po≈æadavek p√∏erenderov√°n√≠ Direct3D
+//extern	int					D3DQuality;			// kvalita renderov√°n√≠
 
 // objekty Direct3D
-//extern	LPDIRECTDRAWSURFACE D3Surface;			// povrch pro Direct 3D (NULL=nenÌ)
-//extern	LPDIRECTDRAWSURFACE D3ZBuffer;			// povrch pro Direct 3D Z-buffer (NULL=nenÌ)
+//extern	LPDIRECTDRAWSURFACE D3Surface;			// povrch pro Direct 3D (NULL=nen√≠)
+//extern	LPDIRECTDRAWSURFACE D3ZBuffer;			// povrch pro Direct 3D Z-buffer (NULL=nen√≠)
 //extern	LPDIRECT3DVIEWPORT	D3DViewport;		// viewport pro Direct 3D
-//extern	LPDIRECT3DMATERIAL	D3DBackMaterial;	// materi·l pozadÌ scÈny
-//extern	D3DMATERIALHANDLE	hD3DBackMaterial;	// handle materi·lu pozadÌ scÈny
+//extern	LPDIRECT3DMATERIAL	D3DBackMaterial;	// materi√°l pozad√≠ sc√©ny
+//extern	D3DMATERIALHANDLE	hD3DBackMaterial;	// handle materi√°lu pozad√≠ sc√©ny
 
 // objekty Direct3DRM
 //extern	LPDIRECT3DRM		Direct3DRM;			// objekt Direct3D RM
 //extern	LPDIRECT3DRM2		Direct3DRM2;		// objekt Direct3D RM 2
-//extern	LPDIRECT3DRMDEVICE	Direct3DRMDev;		// za¯ÌzenÌ Direct3D RM
-//extern	LPDIRECT3DRMDEVICE2	Direct3DRMDev2;		// za¯ÌzenÌ Direct3D RM 2
-//extern	LPDIRECT3DRMFRAME2	D3Scene;			// r·m scÈny
-//extern	LPDIRECT3DRMFRAME2	D3Camera;			// r·m kamery
+//extern	LPDIRECT3DRMDEVICE	Direct3DRMDev;		// za√∏√≠zen√≠ Direct3D RM
+//extern	LPDIRECT3DRMDEVICE2	Direct3DRMDev2;		// za√∏√≠zen√≠ Direct3D RM 2
+//extern	LPDIRECT3DRMFRAME2	D3Scene;			// r√°m sc√©ny
+//extern	LPDIRECT3DRMFRAME2	D3Camera;			// r√°m kamery
 //extern	LPDIRECT3DRMVIEWPORT D3View;			// okno pohledu
 
 
-// pozadÌ scÈny
-extern	DWORD				D3DBackCol;			// barva pozadÌ scÈny (MAXDWORD = nemazat)
-extern	DWORD				D3DBackColRGB;		// barva pozadÌ scÈny ve form·tu RGB
-extern	D3DCOLORVALUE		D3DBackColF;		// barva pozadÌ scÈny ve form·tu float
-extern	bool				D3DBackColAkt;		// barva pozadÌ zmÏnÏna
-extern	int					D3DBackText;		// textura pozadÌ scÈny (-1 = nenÌ)
-extern	bool				D3DBackTextAkt;		// textura pozadÌ zmÏnÏna
-extern	int					D3DBackMat;			// materi·l pozadÌ scÈny
-extern	D3DMATERIAL8		D3DBackMatMat;		// buffer materi·lu pozadÌ scÈny
+// pozad√≠ sc√©ny
+extern	DWORD				D3DBackCol;			// barva pozad√≠ sc√©ny (MAXDWORD = nemazat)
+extern	DWORD				D3DBackColRGB;		// barva pozad√≠ sc√©ny ve form√°tu RGB
+extern	D3DCOLORVALUE		D3DBackColF;		// barva pozad√≠ sc√©ny ve form√°tu float
+extern	bool				D3DBackColAkt;		// barva pozad√≠ zm√¨n√¨na
+extern	int					D3DBackText;		// textura pozad√≠ sc√©ny (-1 = nen√≠)
+extern	bool				D3DBackTextAkt;		// textura pozad√≠ zm√¨n√¨na
+extern	int					D3DBackMat;			// materi√°l pozad√≠ sc√©ny
+extern	D3DMATERIAL8		D3DBackMatMat;		// buffer materi√°lu pozad√≠ sc√©ny
 //extern	IDirect3DVertexBuffer8*	D3DBackBuf;		// buffer textury Direct3D
 
-// nastavenÌ mlhy
-extern	BOOL				D3DFogOn;			// mlha je aktu·lnÏ zapnuta (-1 = nezn·mÈ)
+// nastaven√≠ mlhy
+extern	BOOL				D3DFogOn;			// mlha je aktu√°ln√¨ zapnuta (-1 = nezn√°m√©)
 extern	bool				FogAkt;				// mlhu je nutno aktualizovat
-extern	bool				FogKorig;			// korigovan· mlha (p¯iËÌt· se +4 k typu mlhy)
+extern	bool				FogKorig;			// korigovan√° mlha (p√∏i√®√≠t√° se +4 k typu mlhy)
 extern	bool				FogOn;				// mlha je zapnuta
-extern	DWORD				FogColor;			// barva mlhy ve form·tu Petra BGR (MAXDWORD=vypnuto)
-extern	DWORD				FogColorRGB;		// barva mlhy ve form·ty RGB
-extern	D3DCOLORVALUE		FogColorF;			// barva mlhy ve form·tu float
-extern	int					FogType;			// typ mlhy (0=line·rnÌ, 1=exponenci·lnÌ, 2=kvadratick·)
-extern	double				FogStart;			// zaË·tek line·rnÌ mlhy
-extern	double				FogEnd;				// konec line·rnÌ mlhy
-extern	double				FogDens;			// hustota exponenci·lnÌ a kvadratickÈ mlhy (0 aû 1)
+extern	DWORD				FogColor;			// barva mlhy ve form√°tu Petra BGR (MAXDWORD=vypnuto)
+extern	DWORD				FogColorRGB;		// barva mlhy ve form√°ty RGB
+extern	D3DCOLORVALUE		FogColorF;			// barva mlhy ve form√°tu float
+extern	int					FogType;			// typ mlhy (0=line√°rn√≠, 1=exponenci√°ln√≠, 2=kvadratick√°)
+extern	double				FogStart;			// za√®√°tek line√°rn√≠ mlhy
+extern	double				FogEnd;				// konec line√°rn√≠ mlhy
+extern	double				FogDens;			// hustota exponenci√°ln√≠ a kvadratick√© mlhy (0 a≈æ 1)
 
-// ambient osvÏtlenÌ
-extern	DWORD				D3DAmbientCol;		// ambient osvÏtlenÌ ve form·tu Petra BGR
-extern	DWORD				D3DAmbientColRGB;	// ambient osvÏtlenÌ ve form·tu RGB
-extern	D3DCOLORVALUE		D3DAmbientColF;		// ambient osvÏtlenÌ ve form·tu float
-extern	bool				D3DAmbientColAkt;	// ambient osvÏtlenÌ zmÏnÏno
+// ambient osv√¨tlen√≠
+extern	DWORD				D3DAmbientCol;		// ambient osv√¨tlen√≠ ve form√°tu Petra BGR
+extern	DWORD				D3DAmbientColRGB;	// ambient osv√¨tlen√≠ ve form√°tu RGB
+extern	D3DCOLORVALUE		D3DAmbientColF;		// ambient osv√¨tlen√≠ ve form√°tu float
+extern	bool				D3DAmbientColAkt;	// ambient osv√¨tlen√≠ zm√¨n√¨no
 
 
 
-//extern	CPicture			D3ScenePic;			// textura pozadÌ scÈny
-//extern	bool				D3SceneBack;		// je pozadÌ scÈny
+//extern	CPicture			D3ScenePic;			// textura pozad√≠ sc√©ny
+//extern	bool				D3SceneBack;		// je pozad√≠ sc√©ny
 
-extern	int					D3DLevel;			// sloûitost objekt˘ (2 a vÌce)
-extern	bool				D3DCreateUpper;		// vytv·¯et hornÌ podstavu objekt˘
-extern	bool				D3DCreateLower;		// vytv·¯et dolnÌ podstavu objekt˘
-extern	int					D3D_ID;				// aktivnÌ objekt (r·m) Direct3D
-extern	int					TerenID;			// naposledy zvolen˝ objekt terÈnu (-1=nenÌ)
+extern	int					D3DLevel;			// slo≈æitost objekt√π (2 a v√≠ce)
+extern	bool				D3DCreateUpper;		// vytv√°√∏et horn√≠ podstavu objekt√π
+extern	bool				D3DCreateLower;		// vytv√°√∏et doln√≠ podstavu objekt√π
+extern	int					D3D_ID;				// aktivn√≠ objekt (r√°m) Direct3D
+extern	int					TerenID;			// naposledy zvolen√Ω objekt ter√©nu (-1=nen√≠)
 
-//extern	int					D3DFilter0;			// filtrace textur zadan· uûivatelem (-1=implicitnÌ)
-//extern	int					D3DFilter;			// aktu·lnÌ filtrace textur
-//extern	bool				D3DMipmaps;			// pouûÌvajÌ se mipmap
-extern	double				D3DSmooth;			// vyhlazenÌ ditheringu textur (1=ne)
+//extern	int					D3DFilter0;			// filtrace textur zadan√° u≈æivatelem (-1=implicitn√≠)
+//extern	int					D3DFilter;			// aktu√°ln√≠ filtrace textur
+//extern	bool				D3DMipmaps;			// pou≈æ√≠vaj√≠ se mipmap
+extern	double				D3DSmooth;			// vyhlazen√≠ ditheringu textur (1=ne)
 
-// zrychlenÈ renderov·nÌ
-//extern	bool				OpenGLQMat;			// pouûÌvat zkr·cenÈ v˝poËty matic
-													// - pohledov· matice se n·sobÌ
-													//   s projekËnÌ maticÌ, pro objekty
-													//   se nastavÌ pouze modelov· matice
-													// - v jinÈm p¯ÌpadÏ se pohledov·
-													//   matice n·sobÌ s kaûdou modelovou
-													//   maticÌ
-													//   (musÌ b˝t vypnuto v p¯ÌpadÏ mlhy)
+// zrychlen√© renderov√°n√≠
+//extern	bool				OpenGLQMat;			// pou≈æ√≠vat zkr√°cen√© v√Ωpo√®ty matic
+													// - pohledov√° matice se n√°sob√≠
+													//   s projek√®n√≠ matic√≠, pro objekty
+													//   se nastav√≠ pouze modelov√° matice
+													// - v jin√©m p√∏√≠pad√¨ se pohledov√°
+													//   matice n√°sob√≠ s ka≈ædou modelovou
+													//   matic√≠
+													//   (mus√≠ b√Ωt vypnuto v p√∏√≠pad√¨ mlhy)
 
-// nastavenÌ kamery a mlhy
-//extern	D3DVALUE			FogStart;			// zaË·tek mlhy
+// nastaven√≠ kamery a mlhy
+//extern	D3DVALUE			FogStart;			// za√®√°tek mlhy
 //extern	D3DVALUE			FogEnd;				// konec mlhy
 //extern	D3DVALUE			FogDens;			// hustota mlhy
 //extern	D3DRMPROJECTIONTYPE D3DProj;			// typ projekce
 
 
-// mÏ¯enÌ uplynulÈho Ëasu
-extern	double D3DLastTime;							// poslednÌ Ëas renderov·nÌ
-extern	double D3DElapsedTime;						// uplynul˝ Ëas od poslednÌho renderov·nÌ
-extern	double D3DAverageTime;						// st¯adaË st¯ednÌho Ëasu
-extern	double D3DAverageFreq;						// st¯ednÌ frekvence
+// m√¨√∏en√≠ uplynul√©ho √®asu
+extern	double D3DLastTime;							// posledn√≠ √®as renderov√°n√≠
+extern	double D3DElapsedTime;						// uplynul√Ω √®as od posledn√≠ho renderov√°n√≠
+extern	double D3DAverageTime;						// st√∏ada√® st√∏edn√≠ho √®asu
+extern	double D3DAverageFreq;						// st√∏edn√≠ frekvence
 extern	int D3DAverageFreqI;						// frekvence Integer
 
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 /////////////////////////////////////////////////////////////////////////////
-// glob·lnÌ promÏnnÈ
+// glob√°ln√≠ prom√¨nn√©
 
-extern	HWND		MainFrame;				// hlavnÌ okno aplikace
-extern	TCHAR		MainFrameClass[];		// n·zev t¯Ìdy hlavnÌho okna
+extern	HWND		MainFrame;				// hlavn√≠ okno aplikace
+extern	TCHAR		MainFrameClass[];		// n√°zev t√∏√≠dy hlavn√≠ho okna
 
-extern	int			MainFrameStyleEx;		// rozöÌ¯en˝ styl
+extern	int			MainFrameStyleEx;		// roz≈°√≠√∏en√Ω styl
 extern	int			MainFrameStyle;			// styl okna
 
-//extern	TCHAR		MainFrameSubClass[];	// n·zev t¯Ìdy podokna
-extern	bool		MainFrameVisible;		// hlavnÌ okno zobrazeno
-extern	HWND		StatusBar;				// stavov· liöta
+//extern	TCHAR		MainFrameSubClass[];	// n√°zev t√∏√≠dy podokna
+extern	bool		MainFrameVisible;		// hlavn√≠ okno zobrazeno
+extern	HWND		StatusBar;				// stavov√° li≈°ta
 
-extern	int			MainFrameX;				// sou¯adnice X st¯edu hlavnÌho okna
-extern	int			MainFrameY;				// sou¯adnice Y st¯edu hlavnÌho okna
+extern	int			MainFrameX;				// sou√∏adnice X st√∏edu hlavn√≠ho okna
+extern	int			MainFrameY;				// sou√∏adnice Y st√∏edu hlavn√≠ho okna
 
-extern	bool		ReqClose;				// poûadavek uzav¯enÌ okna od uûivatele
+extern	bool		ReqClose;				// po≈æadavek uzav√∏en√≠ okna od u≈æivatele
 
-extern	bool		StatusVisible;			// p¯Ìznak viditelnosti stavovÈho ¯·dku
+extern	bool		StatusVisible;			// p√∏√≠znak viditelnosti stavov√©ho √∏√°dku
 
-extern	RECT		ClientRect;				// klientsk· oblast hlavnÌho okna
-extern	int			ClientWidth;			// öÌ¯ka klientskÈ oblasti
-extern	int			ClientHeight;			// v˝öka klientskÈ oblasti
+extern	RECT		ClientRect;				// klientsk√° oblast hlavn√≠ho okna
+extern	int			ClientWidth;			// ≈°√≠√∏ka klientsk√© oblasti
+extern	int			ClientHeight;			// v√Ω≈°ka klientsk√© oblasti
 
-//extern	HCURSOR		CurAkt;					// aktivnÌ kurzor
-extern	HCURSOR		CurArrow;				// (standardnÌ) öipka
-extern	HCURSOR		CurArrow2;				// (standardnÌ) öipka pro DirectX
-//extern	HCURSOR		CurWait;				// Ëek·nÌ
+//extern	HCURSOR		CurAkt;					// aktivn√≠ kurzor
+extern	HCURSOR		CurArrow;				// (standardn√≠) ≈°ipka
+extern	HCURSOR		CurArrow2;				// (standardn√≠) ≈°ipka pro DirectX
+//extern	HCURSOR		CurWait;				// √®ek√°n√≠
 
-extern	CString		AktCaptionText;			// text titulku hlavnÌho okna
-extern	CString		AktStatusText;			// zobrazen˝ text stavovÈ liöty
+extern	CString		AktCaptionText;			// text titulku hlavn√≠ho okna
+extern	CString		AktStatusText;			// zobrazen√Ω text stavov√© li≈°ty
 
-// stav myöi (aktualizov·no v PreTranslateMessage)
-extern	bool		LMouseDown;				// levÈ tlaËÌtko stisknuto
-extern	bool		LMouseClick;			// klik levÈho tlaËÌtka
-extern	bool		LMouseDClick;			// dvojklik levÈho tlaËÌtka
+// stav my≈°i (aktualizov√°no v PreTranslateMessage)
+extern	bool		LMouseDown;				// lev√© tla√®√≠tko stisknuto
+extern	bool		LMouseClick;			// klik lev√©ho tla√®√≠tka
+extern	bool		LMouseDClick;			// dvojklik lev√©ho tla√®√≠tka
 
-extern	bool		RMouseDown;				// pravÈ tlaËÌtko stisknuto
-extern	bool		RMouseClick;			// klik pravÈho tlaËÌtka
-extern	bool		RMouseDClick;			// dvojklik pravÈho tlaËÌtka
+extern	bool		RMouseDown;				// prav√© tla√®√≠tko stisknuto
+extern	bool		RMouseClick;			// klik prav√©ho tla√®√≠tka
+extern	bool		RMouseDClick;			// dvojklik prav√©ho tla√®√≠tka
 
-extern	POINT		MouseScreen;			// sou¯adnice myöi na displeji
-extern	POINT		MouseMain;				// sou¯adnice myöi v hlavnÌm oknÏ
-extern	bool		MouseValid;				// p¯Ìznak aktualizace sou¯adnice myöi
+extern	POINT		MouseScreen;			// sou√∏adnice my≈°i na displeji
+extern	POINT		MouseMain;				// sou√∏adnice my≈°i v hlavn√≠m okn√¨
+extern	bool		MouseValid;				// p√∏√≠znak aktualizace sou√∏adnice my≈°i
 
-extern	bool		ProgramFill;			// plnÏnÌ prvku okna programem
+extern	bool		ProgramFill;			// pln√¨n√≠ prvku okna programem
 
-// buffer hledanÈho textu v oknÏ RichEdit
-extern	LPTSTR		FindBuff;				// buffer hledanÈho textu (v oknÏ RichEdit)
-extern	bool		FindMatchCase;			// p¯i hled·nÌ rozliöena velk· a mal· pÌsmena
-extern	bool		FindWholeWord;			// hledat jen cel· slova
-extern	HWND		FindDialogBox;			// handle na dialog hled·nÌ (NULL=nenÌ)
-extern	UINT		FindMsgString;			// identifik·tor zpr·vy hled·nÌ
+// buffer hledan√©ho textu v okn√¨ RichEdit
+extern	LPTSTR		FindBuff;				// buffer hledan√©ho textu (v okn√¨ RichEdit)
+extern	bool		FindMatchCase;			// p√∏i hled√°n√≠ rozli≈°ena velk√° a mal√° p√≠smena
+extern	bool		FindWholeWord;			// hledat jen cel√° slova
+extern	HWND		FindDialogBox;			// handle na dialog hled√°n√≠ (NULL=nen√≠)
+extern	UINT		FindMsgString;			// identifik√°tor zpr√°vy hled√°n√≠
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯Ìprava poûadovan˝ch rozmÏr˘ okna
+// p√∏√≠prava po≈æadovan√Ωch rozm√¨r√π okna
 
 void AdjustMainFrame(RECT* wrc);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// prvnÌ zobrazenÌ hlavnÌho okna
+// prvn√≠ zobrazen√≠ hlavn√≠ho okna
 
 void MainFrameShow();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ hlavnÌho okna aplikace
+// vytvo√∏en√≠ hlavn√≠ho okna aplikace
 
 bool MainFrameCreate();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯epoËet rozmÏr˘ okna Direct3D (podle ˙daj˘ zadan˝ch uûivatelem)
-// vracÌ TRUE=m· b˝t okno 3D
+// p√∏epo√®et rozm√¨r√π okna Direct3D (podle √∫daj√π zadan√Ωch u≈æivatelem)
+// vrac√≠ TRUE=m√° b√Ωt okno 3D
 
 bool RecalcD3D();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace obsluhy DirectDraw (vracÌ TRUE=je DirectDraw)
+// inicializace obsluhy DirectDraw (vrac√≠ TRUE=je DirectDraw)
 
 bool InitDirectDraw();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace seznamu videomÛd˘ (vol· se p¯i prvnÌm pouûitÌ)
+// inicializace seznamu videom√≥d√π (vol√° se p√∏i prvn√≠m pou≈æit√≠)
 
 void InitVideoModes();
 
 /////////////////////////////////////////////////////////////////////////////
-// set¯ÌdÏnÌ videomÛd˘ displeje (na zaË·tku je nejmenöÌ rozliöenÌ a nejniûöÌ poËet bit˘)
+// set√∏√≠d√¨n√≠ videom√≥d√π displeje (na za√®√°tku je nejmen≈°√≠ rozli≈°en√≠ a nejni≈æ≈°√≠ po√®et bit√π)
 
 void SortDisplayModes(VIDEOMODEITEM* tab, int num);
 
 /////////////////////////////////////////////////////////////////////////////
-// start videomÛdu (vracÌ TRUE=OK)
+// start videom√≥du (vrac√≠ TRUE=OK)
 
 bool StartVideoMode();
 
 /////////////////////////////////////////////////////////////////////////////
-// stop aktivnÌho videomÛdu
+// stop aktivn√≠ho videom√≥du
 
 void StopVideoMode();
 
 /////////////////////////////////////////////////////////////////////////////
-// konverze barvy z form·tu Petra na form·t D3DCOLORVALUE (float)
+// konverze barvy z form√°tu Petra na form√°t D3DCOLORVALUE (float)
 
 void BGRFloat(DWORD src, D3DCOLORVALUE* dst);
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace objekt˘ scÈny (vol· se jeötÏ p¯ed inicializacÌ 3D!)
+// inicializace objekt√π sc√©ny (vol√° se je≈°t√¨ p√∏ed inicializac√≠ 3D!)
 
 void Init3D();
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezenÌ nejbliûöÌho videomÛdu v tabulce (vracÌ -1=nenalezeno)
+// nalezen√≠ nejbli≈æ≈°√≠ho videom√≥du v tabulce (vrac√≠ -1=nenalezeno)
 
 int FindVideoMode(VIDEOMODEITEM* tab, int tabn, int width, int height, int bits);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktivace videomÛdu DirectX (vracÌ TRUE=OK)
+// aktivace videom√≥du DirectX (vrac√≠ TRUE=OK)
 
 //bool InitDXVideoMode(int width, int height, int bits);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ obsluhy DirectDraw
+// ukon√®en√≠ obsluhy DirectDraw
 
 //void TermDirectDraw();
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace obsluhy Direct3D (vracÌ TRUE=je Direct3D)
+// inicializace obsluhy Direct3D (vrac√≠ TRUE=je Direct3D)
 
 //bool InitDirect3D();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯id·nÌ form·tu textur
+// p√∏id√°n√≠ form√°tu textur
 
 void D3DEnumPixelFormat(DDPIXELFORMAT* pf);
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯id·nÌ form·tu Z-bufferu
+// p√∏id√°n√≠ form√°tu Z-bufferu
 
 void D3DEnumZBufferFormat(DDPIXELFORMAT* pf);
 
 /////////////////////////////////////////////////////////////////////////////
-// v˝bÏr uûivatelskÈho ovladaËe Direct3D
+// v√Ωb√¨r u≈æivatelsk√©ho ovlada√®e Direct3D
 
 bool UserD3DDevice();
 
-// p¯enastavenÌ filtrace textur
+// p√∏enastaven√≠ filtrace textur
 //void ReSetFilter();
 
-// p¯enastavenÌ kvality renderov·nÌ
+// p√∏enastaven√≠ kvality renderov√°n√≠
 //void ReSetD3DQuality();
 
-// p¯enastavenÌ p¯epÌnaËe Dithering
+// p√∏enastaven√≠ p√∏ep√≠na√®e Dithering
 //void ReSetD3DDither();
 	
-// z·mÏna modrÈ a ËervenÈ barvy v RGB
+// z√°m√¨na modr√© a √®erven√© barvy v RGB
 DWORD XRGB(DWORD col);
 	
-// zjiötÏnÌ parametr˘ mlhy
+// zji≈°t√¨n√≠ parametr√π mlhy
 //void GetFogPar();
 
-// nastavenÌ parametr˘ mlhy
+// nastaven√≠ parametr√π mlhy
 //void SetFogPar();
 	
-// zobrazenÌ animace
+// zobrazen√≠ animace
 //void DispAnimate();
 		  
-// vyrenderov·nÌ scÈny
+// vyrenderov√°n√≠ sc√©ny
 void D3Render(bool disp);
 
 // animace
 //void Animate();
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ stavu Direct3D (nekontroluje rozsahy a platnosti!)
+// nastaven√≠ stavu Direct3D (nekontroluje rozsahy a platnosti!)
 
 void _fastcall SetD3DRenderState(D3DRENDERSTATETYPE state, DWORD value);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ mÛdu vyplÚov·nÌ ploch
+// nastaven√≠ m√≥du vypl√≤ov√°n√≠ ploch
 
 void SetD3DWireframe(bool on);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ mÛdu zapnutÌ osvÏtlenÌ
+// nastaven√≠ m√≥du zapnut√≠ osv√¨tlen√≠
 
 void SetD3DLightOn(bool on);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ mÛdu plynulÈho stÌnov·nÌ
+// nastaven√≠ m√≥du plynul√©ho st√≠nov√°n√≠
 
 void SetD3DShades(bool on);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ mÛdu filtrace textur p¯i zvÏtöenÌ
+// nastaven√≠ m√≥du filtrace textur p√∏i zv√¨t≈°en√≠
 
 void SetD3DMagFilter(bool on, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ mÛdu filtrace zmenöen˝ch a vzd·len˝ch textur
+// nastaven√≠ m√≥du filtrace zmen≈°en√Ωch a vzd√°len√Ωch textur
 
 void SetD3DMinMipFilter(bool min, bool mip, int stage);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ odstraÚov·nÌ ploch
+// nastaven√≠ odstra√≤ov√°n√≠ ploch
 
 void SetD3DCullingKorig(short val);
 void SetD3DCulling(short val);
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ mlhy
+// zapnut√≠ mlhy
 
 void D3DCheckFogOn();
 
 void SetD3DFogOn(BOOL on);
 
 /////////////////////////////////////////////////////////////////////////////
-// resetov·nÌ p¯epÌnaË˘ nastavenÌ 
+// resetov√°n√≠ p√∏ep√≠na√®√π nastaven√≠ 
 
 void ResetD3DSwitch();
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnÏnÌ ovladaËe Direct3D
+// uvoln√¨n√≠ ovlada√®e Direct3D
 
 void DeSelectD3DDev();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu (nap¯. po zmÏnÏ velikosti okna)
+// aktualizace viewportu (nap√∏. po zm√¨n√¨ velikosti okna)
 
 bool UpdateViewport();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ/vypnutÌ celoobrazovkovÈho mÛdu
+// zapnut√≠/vypnut√≠ celoobrazovkov√©ho m√≥du
 
 void SetFullScreen(bool full);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// znovunastavenÌ videomÛdu v celoobrazovkovÈm mÛdu
+// znovunastaven√≠ videom√≥du v celoobrazovkov√©m m√≥du
 
 void ReSetDisplayMode();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace klientsk˝ch sou¯adnic
+// aktualizace klientsk√Ωch sou√∏adnic
 
 void InitClientRect(WINITEM* item);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ kurzoru Ëek·nÌ (zah·jenÌ a ukonËenÌ musÌ b˝t do p·ru!)
+// zobrazen√≠ kurzoru √®ek√°n√≠ (zah√°jen√≠ a ukon√®en√≠ mus√≠ b√Ωt do p√°ru!)
 
 //void BeginWaitCursor();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ kurzoru Ëek·nÌ (zah·jenÌ a ukonËenÌ musÌ b˝t do p·ru!)
+// vypnut√≠ kurzoru √®ek√°n√≠ (zah√°jen√≠ a ukon√®en√≠ mus√≠ b√Ωt do p√°ru!)
 
 //void EndWaitCursor();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ textu stavovÈ liöty
+// nastaven√≠ textu stavov√© li≈°ty
 
 void SetStatusText(CString& text);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ stavovÈho ¯·dku
+// zobrazen√≠ stavov√©ho √∏√°dku
 
 void SetStatusVisible(bool show);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ titulku pro konzolu
+// nastaven√≠ titulku pro konzolu
 
 void SetConsoleText();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ jmÈna v titulku okna
+// zobrazen√≠ jm√©na v titulku okna
 
 void SetCaptionText(CString& text);
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zpr·vy p¯ed rozesl·nÌm do oken
+// obsluha zpr√°vy p√∏ed rozesl√°n√≠m do oken
 
 BOOL PreTranslateMessage(MSG* msg);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace p¯edeölÈho okna
+// aktualizace p√∏ede≈°l√©ho okna
 
 void AktPrevWindow();

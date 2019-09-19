@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer re·ln˝ch ËÌsel							*
+*							Buffer re√°ln√Ωch √®√≠sel							*
 *																			*
 \***************************************************************************/
 
@@ -22,13 +22,13 @@ public:
 class CBufReal : public CBuffer<CReal>
 {
 
-// ---------------------------- ve¯ejnÈ funkce ------------------------------
+// ---------------------------- ve√∏ejn√© funkce ------------------------------
 
 public:
 
-// naËtenÌ ËÌsla ze souboru (naËÌt· do promÏnnÈ, TRUE=operace OK)
+// na√®ten√≠ √®√≠sla ze souboru (na√®√≠t√° do prom√¨nn√©, TRUE=operace OK)
 	bool LoadFile(double& data, CText jmeno);
 
-// uloûenÌ ËÌsla do souboru form·tu NUM (FALSE=chyba)
+// ulo≈æen√≠ √®√≠sla do souboru form√°tu NUM (FALSE=chyba)
 	bool SaveFile(double data, CText jmeno) const;
 };

@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer cel˝ch ËÌsel							*
+*								Buffer cel√Ωch √®√≠sel							*
 *																			*
 \***************************************************************************/
 
@@ -26,19 +26,19 @@ class CBufInt : public CBuffer<CInt>
 
 /***************************************************************************\
 *																			*
-*							Buffer logick˝ch promÏnn˝ch						*
+*							Buffer logick√Ωch prom√¨nn√Ωch						*
 *																			*
 \***************************************************************************/
-// pracuje s hodnotami 0 = FALSE, nenulov· hodnota = TRUE
+// pracuje s hodnotami 0 = FALSE, nenulov√° hodnota = TRUE
 
 class CBufBool : public CBufInt 
 { 
 
 public:
 
-// naËtenÌ logickÈ hodnoty ze souboru (naËÌt· do promÏnnÈ, vracÌ TRUE=operace OK)
+// na√®ten√≠ logick√© hodnoty ze souboru (na√®√≠t√° do prom√¨nn√©, vrac√≠ TRUE=operace OK)
 	bool LoadFile(BOOL& data, CText jmeno);
 
-// uloûenÌ logickÈ hodnoty do souboru form·tu LOG (vracÌ TRUE=operace OK)
+// ulo≈æen√≠ logick√© hodnoty do souboru form√°tu LOG (vrac√≠ TRUE=operace OK)
 	bool SaveFile(BOOL data, CText jmeno) const;
 };

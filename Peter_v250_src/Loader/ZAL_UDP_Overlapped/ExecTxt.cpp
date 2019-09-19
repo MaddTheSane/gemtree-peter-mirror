@@ -3,15 +3,15 @@
 
 /***************************************************************************\
 *																			*
-*						Prov·dÏnÌ programu - text							*
+*						Prov√°d√¨n√≠ programu - text							*
 *																			*
 \***************************************************************************/
 
-#pragma optimize("t", on)			// optimalizace na maxim·lnÌ rychlost
+#pragma optimize("t", on)			// optimalizace na maxim√°ln√≠ rychlost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ jmÈna souboru
+// na√®ten√≠ jm√©na souboru
 
 void _fastcall FFileName(CString& text)
 {
@@ -22,13 +22,13 @@ void _fastcall FFileName(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ textu stavovÈho ¯·dku
+// zji≈°t√¨n√≠ textu stavov√©ho √∏√°dku
 
 void _fastcall FGetStatus(CString& text) { text = StatusText; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ textu nadpisu okna
+// zji≈°t√¨n√≠ textu nadpisu okna
 
 void _fastcall FGetCaption(CString& text) { text = CaptionText; }
 
@@ -40,57 +40,57 @@ void _fastcall FGetCaption(CString& text) { text = CaptionText; }
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// funkce s n·vratem textu
+// funkce s n√°vratem textu
 
 void _fastcall FTextFunc(CString& text)
 {
-// ˙schova indexu volanÈ funkce
+// √∫schova indexu volan√© funkce
 	int data = ExecItem[-1].Data;
 
-// ˙schova indexu promÏnnÈ s n·vratovou hodnotou
+// √∫schova indexu prom√¨nn√© s n√°vratovou hodnotou
 	int res = ExecItem[-1].List;
 
-// inicializace lok·lnÌch promÏnn˝ch
+// inicializace lok√°ln√≠ch prom√¨nn√Ωch
 	FCommand();
 
-// ˙schova ukazatele programu
+// √∫schova ukazatele programu
 	EXECITEM* oldexe = ExecItem;
 
-// nov· adresa programu
+// nov√° adresa programu
 	ExecItem = ProgBuf + data;
 
-// kontrola hloubky vno¯enÌ
+// kontrola hloubky vno√∏en√≠
 	Hloubka--;
 	if (Hloubka >= 0)
 	{
 
-// vyvol·nÌ funkce
+// vyvol√°n√≠ funkce
 		FCommand();
 	}
 	Hloubka++;
 
-// n·vrat adresy programu
+// n√°vrat adresy programu
 	ExecItem = oldexe;
 
-// zruöenÌ poûadavku o p¯eruöenÌ
+// zru≈°en√≠ po≈æadavku o p√∏eru≈°en√≠
 	Break &= ~(BREAKFUNC | BREAKWHILE);
 
-// n·vrat v˝sledku operace
+// n√°vrat v√Ωsledku operace
 	text = Text[Text.Num() - res];
 
-// zruöenÌ lok·lnÌch promÏnn˝ch
+// zru≈°en√≠ lok√°ln√≠ch prom√¨nn√Ωch
 	FCommand();
 }
 
 
 /***************************************************************************\
 *																			*
-*								promÏnnÈ									*
+*								prom√¨nn√©									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// pr·zdn˝ text
+// pr√°zdn√Ω text
 
 void _fastcall FTextEmpty(CString& text) { text.Empty(); };
 
@@ -105,20 +105,20 @@ void _fastcall FTextCRLF(CString& text) { text = TextCRLF; };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// glob·lnÌ text (Data = index)
+// glob√°ln√≠ text (Data = index)
 
 void _fastcall FTextObj(CString& text)
 {
 // index textu
 	int inx = ExecItem[-1].Data;
 
-// nastavenÌ textu
+// nastaven√≠ textu
 	text = Text[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// globalnÌ text v seznamu (Data = index, List = seznam)
+// globaln√≠ text v seznamu (Data = index, List = seznam)
 
 void _fastcall FTextObjList(CString& text)
 {
@@ -129,26 +129,26 @@ void _fastcall FTextObjList(CString& text)
 	int inx = ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavenÌ textu
+// nastaven√≠ textu
 	text = Text[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lok·lnÌ text (Data = index)
+// lok√°ln√≠ text (Data = index)
 
 void _fastcall FTextLoc(CString& text)
 {
 // index textu
 	int inx = Text.Num() - ExecItem[-1].Data;
 
-// nastavenÌ textu
+// nastaven√≠ textu
 	text = Text[inx];
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lok·lnÌ text v seznamu (Data = index, List = seznam)
+// lok√°ln√≠ text v seznamu (Data = index, List = seznam)
 
 void _fastcall FTextLocList(CString& text)
 {
@@ -159,7 +159,7 @@ void _fastcall FTextLocList(CString& text)
 	int inx = Text.Num() - ExecItem[-1].Data;
 	inx += List.AutoIncInx(list);
 
-// nastavenÌ textu
+// nastaven√≠ textu
 	text = Text[inx];
 }
 
@@ -171,13 +171,13 @@ void _fastcall FTextLocList(CString& text)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod ËÌsla na text
+// p√∏evod √®√≠sla na text
 
 void _fastcall FTextFormat(CString& text) { text.Double(FNum()); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod ËÌsla na text - 2 ËÌslice
+// p√∏evod √®√≠sla na text - 2 √®√≠slice
 
 void _fastcall FTextFormat2(CString& text)
 {
@@ -190,19 +190,19 @@ void _fastcall FTextFormat2(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod ËÌsla na text - 8 ËÌslic HEX
+// p√∏evod √®√≠sla na text - 8 √®√≠slic HEX
 
 void _fastcall FTextFormatH(CString& text) { text.Hex(FIntRN()); };
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod ËÌsla na znak
+// p√∏evod √®√≠sla na znak
 
 void _fastcall FTextChar(CString& text) { text = (TCHAR)FIntR(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod na mal· pÌsmena
+// p√∏evod na mal√° p√≠smena
 
 void _fastcall FTextLower(CString& text)
 {
@@ -212,7 +212,7 @@ void _fastcall FTextLower(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod na velk· pÌsmena
+// p√∏evod na velk√° p√≠smena
 
 void _fastcall FTextUpper(CString& text)
 {
@@ -223,19 +223,19 @@ void _fastcall FTextUpper(CString& text)
 
 /***************************************************************************\
 *																			*
-*							obsluha Ëasu									*
+*							obsluha √®asu									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod data na evropsk˝ form·t
+// p√∏evod data na evropsk√Ω form√°t
 
 void _fastcall FTimeDateEur(CString& text)
 {
-// naËtenÌ Ëasu
+// na√®ten√≠ √®asu
 	FNumSysTime();
 
-// dekÛdov·nÌ data
+// dek√≥dov√°n√≠ data
 	text.Empty();
 	text.Add2DigSpc((char)SystemTime.wDay);
 	text += _T('.');
@@ -246,14 +246,14 @@ void _fastcall FTimeDateEur(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod data na americk˝ form·t
+// p√∏evod data na americk√Ω form√°t
 
 void _fastcall FTimeDateUsa(CString& text)
 {
-// naËtenÌ Ëasu
+// na√®ten√≠ √®asu
 	FNumSysTime();
 
-// dekÛdov·nÌ data
+// dek√≥dov√°n√≠ data
 	text.Empty();
 	text.Add2DigSpc((char)SystemTime.wMonth);
 	text += _T('/');
@@ -264,14 +264,14 @@ void _fastcall FTimeDateUsa(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod data na japonsk˝ form·t
+// p√∏evod data na japonsk√Ω form√°t
 
 void _fastcall FTimeDateJap(CString& text)
 {
-// naËtenÌ Ëasu
+// na√®ten√≠ √®asu
 	FNumSysTime();
 
-// dekÛdov·nÌ data
+// dek√≥dov√°n√≠ data
 	text.Empty();
 	text.Add4Dig(SystemTime.wYear);
 	text += _T('-');
@@ -282,14 +282,14 @@ void _fastcall FTimeDateJap(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod Ëasu na form·t 24
+// p√∏evod √®asu na form√°t 24
 
 void _fastcall FTimeTime24(CString& text)
 {
-// naËtenÌ Ëasu
+// na√®ten√≠ √®asu
 	FNumSysTime();
 
-// dekÛdov·nÌ Ëasu
+// dek√≥dov√°n√≠ √®asu
 	text.Empty();
 	text.Add2DigSpc((char)SystemTime.wHour);
 	text += _T(':');
@@ -300,19 +300,19 @@ void _fastcall FTimeTime24(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evod Ëasu na form·t 12
+// p√∏evod √®asu na form√°t 12
 
 void _fastcall FTimeTime12(CString& text)
 {
-// naËtenÌ Ëasu
+// na√®ten√≠ √®asu
 	FNumSysTime();
 
-// p¯Ìprava hodiny
+// p√∏√≠prava hodiny
 	char h = (char)SystemTime.wHour;
 	if (h >= 12) h -= 12;
 	if (h == 0) h = 12;
 
-// dekÛdov·nÌ Ëasu
+// dek√≥dov√°n√≠ √®asu
 	text.Empty();
 	text.Add2DigSpc(h);
 	text += _T(':');
@@ -320,7 +320,7 @@ void _fastcall FTimeTime12(CString& text)
 	text += _T(':');
 	text.Add2Dig((char)SystemTime.wSecond);
 
-// oznaËenÌ a/p
+// ozna√®en√≠ a/p
 	if (SystemTime.wHour >= 12)
 	{
 		text += _T('p');
@@ -334,62 +334,62 @@ void _fastcall FTimeTime12(CString& text)
 
 /***************************************************************************\
 *																			*
-*							obsluha soubor˘									*
+*							obsluha soubor√π									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ aktivnÌho adres·¯e
+// na√®ten√≠ aktivn√≠ho adres√°√∏e
 
 void _fastcall FGetFileAct(CString& text) { text.GetAktDir(); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ jmenovky disku
+// na√®ten√≠ jmenovky disku
 
 void _fastcall FGetDiskLabel(CString& text)
 {
-// p¯Ìprava bufferu
+// p√∏√≠prava bufferu
 	TCHAR buf[261];
 	buf[0] = 0;
 
-// naËtenÌ jmÈna disku
+// na√®ten√≠ jm√©na disku
 	::GetVolumeInformation(NULL, buf, 260, NULL, NULL, NULL, NULL, 0);
 
-// nastavenÌ do promÏnnÈ
+// nastaven√≠ do prom√¨nn√©
 	text = buf;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// soubor pro ËtenÌ
+// soubor pro √®ten√≠
 
 void _fastcall FGetFileRead(CString& text) { text = FileRead; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// soubor pro z·pis
+// soubor pro z√°pis
 
 void _fastcall FGetFileWrite(CString& text) { text = FileWrite; }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ textu zakonËenÈho nulou
+// na√®ten√≠ textu zakon√®en√©ho nulou
 
 void _fastcall FGetFileText0(CString& text)
 {
-// vypr·zdnÏnÌ textu
+// vypr√°zdn√¨n√≠ textu
 	text.Empty();
 
-// naËtenÌ textu v kÛdu UNICODE
+// na√®ten√≠ textu v k√≥du UNICODE
 	if (FileTextUnicode)
 	{
 
-// buffer k naËtenÌ Ë·sti textu
+// buffer k na√®ten√≠ √®√°sti textu
 		WCHAR buf[256];
 		int index = 0;
 
-// cyklus aû po bajt 0
+// cyklus a≈æ po bajt 0
 		WCHAR znak = FileReadWord();
 		while (znak != 0)
 		{
@@ -403,19 +403,19 @@ void _fastcall FGetFileText0(CString& text)
 			znak = FileReadWord();
 		}
 
-// z·pis zbytku textu
+// z√°pis zbytku textu
 		text.Add(buf, index);
 	}
 
-// naËtenÌ textu v kÛdu Windows
+// na√®ten√≠ textu v k√≥du Windows
 	else
 	{
 
-// buffer k naËtenÌ Ë·sti textu
+// buffer k na√®ten√≠ √®√°sti textu
 		char buf[256];
 		int index = 0;
 
-// cyklus aû po bajt 0
+// cyklus a≈æ po bajt 0
 		BYTE znak = FileReadByte();
 		while (znak != 0)
 		{
@@ -429,29 +429,29 @@ void _fastcall FGetFileText0(CString& text)
 			znak = FileReadByte();
 		}
 
-// z·pis zbytku textu
+// z√°pis zbytku textu
 		text.Add(buf, index);
 	}
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ textu zakonËenÈho CR
+// na√®ten√≠ textu zakon√®en√©ho CR
 
 void _fastcall FGetFileTextCR(CString& text)
 {
-// vypr·zdnÏnÌ textu
+// vypr√°zdn√¨n√≠ textu
 	text.Empty();
 
-// naËtenÌ textu v kÛdu UNICODE
+// na√®ten√≠ textu v k√≥du UNICODE
 	if (FileTextUnicode)
 	{
 
-// buffer k naËtenÌ Ë·sti textu
+// buffer k na√®ten√≠ √®√°sti textu
 		WCHAR buf[256];
 		int index = 0;
 
-// cyklus aû po bajt 0, CR nebo LF
+// cyklus a≈æ po bajt 0, CR nebo LF
 		WCHAR znak = FileReadWord();
 		while ((znak != 0) && (znak != 13) && (znak != 10))
 		{
@@ -465,10 +465,10 @@ void _fastcall FGetFileTextCR(CString& text)
 			znak = FileReadWord();
 		}
 
-// z·pis zbytku textu
+// z√°pis zbytku textu
 		text.Add(buf, index);
 
-// pro znak CR nebo LF se ruöÌ p·rov˝ LF nebo CR
+// pro znak CR nebo LF se ru≈°√≠ p√°rov√Ω LF nebo CR
 		if (znak == 13)
 		{
 			znak = FileReadWord();
@@ -484,15 +484,15 @@ void _fastcall FGetFileTextCR(CString& text)
 		}
 	}
 
-// naËtenÌ textu v kÛdu Windows
+// na√®ten√≠ textu v k√≥du Windows
 	else
 	{
 
-// buffer k naËtenÌ Ë·sti textu
+// buffer k na√®ten√≠ √®√°sti textu
 		char buf[256];
 		int index = 0;
 
-// cyklus aû po bajt 0, CR nebo LF
+// cyklus a≈æ po bajt 0, CR nebo LF
 		BYTE znak = FileReadByte();
 		while ((znak != 0) && (znak != 13) && (znak != 10))
 		{
@@ -506,10 +506,10 @@ void _fastcall FGetFileTextCR(CString& text)
 			znak = FileReadByte();
 		}
 
-// z·pis zbytku textu
+// z√°pis zbytku textu
 		text.Add(buf, index);
 
-// pro znak CR nebo LF se ruöÌ p·rov˝ LF nebo CR
+// pro znak CR nebo LF se ru≈°√≠ p√°rov√Ω LF nebo CR
 		if (znak == 13)
 		{
 			znak = FileReadByte();
@@ -528,23 +528,23 @@ void _fastcall FGetFileTextCR(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ textu s pevnou dÈlkou
+// na√®ten√≠ textu s pevnou d√©lkou
 
 void _fastcall FGetFileTextN(CString& text)
 {
 // ukazatel indexu znaku
 	int index = 0;
 
-// naËtenÌ textu v kÛdu UNICODE
+// na√®ten√≠ textu v k√≥du UNICODE
 	if (FileTextUnicode)
 	{
 
 #ifdef _UNICODE
 
-// nastavenÌ dÈlky textu
+// nastaven√≠ d√©lky textu
 		text.Length(FileTextNLen);
 
-// naËtenÌ textu
+// na√®ten√≠ textu
 		for (int i = FileTextNLen; i > 0; i--)
 		{
 			WCHAR znak = FileReadWord();
@@ -557,7 +557,7 @@ void _fastcall FGetFileTextN(CString& text)
 
 		WCHAR* buf = (WCHAR*)MemGet(2*FileTextNLen);
 
-// naËtenÌ textu
+// na√®ten√≠ textu
 		for (int i = FileTextNLen; i > 0; i--)
 		{
 			WCHAR znak = FileReadWord();
@@ -574,7 +574,7 @@ void _fastcall FGetFileTextN(CString& text)
 
 	}
 
-// naËtenÌ textu v kÛdu Windows
+// na√®ten√≠ textu v k√≥du Windows
 	else
 	{
 
@@ -582,7 +582,7 @@ void _fastcall FGetFileTextN(CString& text)
 
 		char* buf = (char*)MemGet(FileTextNLen);
 
-// naËtenÌ textu
+// na√®ten√≠ textu
 		for (int i = FileTextNLen; i > 0; i--)
 		{
 			BYTE znak = FileReadByte();
@@ -597,10 +597,10 @@ void _fastcall FGetFileTextN(CString& text)
 
 #else
 
-// nastavenÌ dÈlky textu
+// nastaven√≠ d√©lky textu
 		text.Length(FileTextNLen);
 
-// naËtenÌ textu
+// na√®ten√≠ textu
 		for (int i = FileTextNLen; i > 0; i--)
 		{
 			BYTE znak = FileReadByte();
@@ -613,7 +613,7 @@ void _fastcall FGetFileTextN(CString& text)
 
 	}
 
-// odstranÏnÌ mezer z konce textu
+// odstran√¨n√≠ mezer z konce textu
 	while ((index > 0) && (text[index-1] == ' '))
 	{
 		index--;
@@ -623,23 +623,23 @@ void _fastcall FGetFileTextN(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// seznam soubor˘
+// seznam soubor√π
 
 void FileList(CString& text)
 {
-// p¯Ìprava masky soubor˘
+// p√∏√≠prava masky soubor√π
 	CString maska = text;
 	maska.TrimLeft();
 	maska.TrimRight();
-	if (maska.IsEmpty()) maska = _T("*.*");		// implicitnÌ maska
-	text.Empty();								// vypr·zdnÏnÌ seznamu soubor˘
+	if (maska.IsEmpty()) maska = _T("*.*");		// implicitn√≠ maska
+	text.Empty();								// vypr√°zdn√¨n√≠ seznamu soubor√π
 	CString maska0;								// jedna maska
 
-// cyklus p¯es vöechny masky
+// cyklus p√∏es v≈°echny masky
 	do
 	{
 
-// p¯Ìprava jednÈ masky
+// p√∏√≠prava jedn√© masky
 		int pos = maska.Find(';');
 		if (pos < 0) pos = maska.Length();
 		maska0 = maska.Left(pos);
@@ -648,11 +648,11 @@ void FileList(CString& text)
 		if (maska0.IsNotEmpty())
 		{
 
-// zah·jenÌ vyhled·v·nÌ soubor˘
-			WIN32_FIND_DATA wfd;			// struktura pro hled·nÌ soubor˘
+// zah√°jen√≠ vyhled√°v√°n√≠ soubor√π
+			WIN32_FIND_DATA wfd;			// struktura pro hled√°n√≠ soubor√π
 			HANDLE handle = ::FindFirstFile(maska0, &wfd);
 
-// vyhled·nÌ soubor˘
+// vyhled√°n√≠ soubor√π
 			if (handle != INVALID_HANDLE_VALUE)
 			{
 				do
@@ -666,10 +666,10 @@ void FileList(CString& text)
 			}
 		}
 
-// vypuötÏnÌ zpracovanÈ masky
+// vypu≈°t√¨n√≠ zpracovan√© masky
 		maska = maska.Mid(pos+1);
 
-// dokud je nÏjak· dalöÌ maska
+// dokud je n√¨jak√° dal≈°√≠ maska
 	} while (maska.IsNotEmpty());
 }
 
@@ -686,14 +686,14 @@ void _fastcall FFileList(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ alias pro jeden jazyk (vracÌ FALSE=nenÌ alias, text se nezmÏnÌ)
+// na√®ten√≠ alias pro jeden jazyk (vrac√≠ FALSE=nen√≠ alias, text se nezm√¨n√≠)
 
 bool _fastcall ReadAlias(CString& text, int lan)
 {
-// p¯Ìprava jmÈna skupiny
+// p√∏√≠prava jm√©na skupiny
 	InitAliasGroup(lan);
 
-// naËtenÌ alias
+// na√®ten√≠ alias
 	TCHAR buf[1024];
 	buf[0] = 0;
 	int len = ::GetPrivateProfileString(AliasGroup, AliasKey, EmptyString, buf, 1023, AliasName);
@@ -709,24 +709,24 @@ bool _fastcall ReadAlias(CString& text, int lan)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ alias souboru
+// na√®ten√≠ alias souboru
 
 void _fastcall FGetAlias(CString& text)
 {
-// text implicitnÏ pr·zdn˝
+// text implicitn√¨ pr√°zdn√Ω
 	text.Empty();
 
-// test, zda je soubor zadan˝
+// test, zda je soubor zadan√Ω
 	if (FileRead.IsEmpty())
 	{
 		FileError = true;
 		return;
 	}
 
-// p¯Ìprava aliases
+// p√∏√≠prava aliases
 	InitAlias(FileRead);
 
-// implicitnÌ aliases
+// implicitn√≠ aliases
 	text = AliasKey;
 	int pos = text.RevFind(_T('.'));
 	if (pos >= 0) text.Delete(pos);
@@ -754,19 +754,19 @@ void _fastcall FGetAlias(CString& text)
 
 /***************************************************************************\
 *																			*
-*								obsluha kl·vesnice							*
+*								obsluha kl√°vesnice							*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// Ëek·nÌ na znak z kl·vesnice
+// √®ek√°n√≠ na znak z kl√°vesnice
 
 void _fastcall FKeyCharWait(CString& text)
 {
-// vypr·zdnÏnÌ textu
+// vypr√°zdn√¨n√≠ textu
 	text.Empty();
 
-// Ëek·nÌ na vstup znaku z kl·vesnice (nebo na p¯eruöenÌ)
+// √®ek√°n√≠ na vstup znaku z kl√°vesnice (nebo na p√∏eru≈°en√≠)
 	while ((Break == 0) && 
 			(CharBufRead == CharBufWrite) && 
 			(!ConsoleOn))
@@ -777,14 +777,14 @@ void _fastcall FKeyCharWait(CString& text)
 		TimeWait(1);
 	}
 
-// kontrola, zda byla p¯ijata kl·vesa (zda to nebylo jen p¯eruöenÌ)
+// kontrola, zda byla p√∏ijata kl√°vesa (zda to nebylo jen p√∏eru≈°en√≠)
 	if (CharBufRead != CharBufWrite)
 	{
 
-// naËtenÌ kl·vesy
+// na√®ten√≠ kl√°vesy
 		text = (TCHAR)CharBuf[CharBufRead];
 
-// zv˝öenÌ ËtecÌ adresy
+// zv√Ω≈°en√≠ √®tec√≠ adresy
 		CharBufRead++;
 		if (CharBufRead >= KEYBUFSIZE) CharBufRead = 0;
 	}
@@ -792,25 +792,25 @@ void _fastcall FKeyCharWait(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vstup znaku z kl·vesnice
+// vstup znaku z kl√°vesnice
 
 void _fastcall FKeyChar(CString& text)
 {
-// test, zda byla p¯ijata kl·vesa
+// test, zda byla p√∏ijata kl√°vesa
 	if (CharBufRead != CharBufWrite)
 	{
 
-// naËtenÌ kl·vesy
+// na√®ten√≠ kl√°vesy
 		text = (TCHAR)CharBuf[CharBufRead];
 
-// zv˝öenÌ ËtecÌ adresy
+// zv√Ω≈°en√≠ √®tec√≠ adresy
 		CharBufRead++;
 		if (CharBufRead >= KEYBUFSIZE) CharBufRead = 0;
 	}
 	else
 	{
 
-// jinak vypr·zdnÏnÌ textu
+// jinak vypr√°zdn√¨n√≠ textu
 		text.Empty();
 	}
 }
@@ -818,7 +818,7 @@ void _fastcall FKeyChar(CString& text)
 
 /***************************************************************************\
 *																			*
-*							obsluha dialog˘									*
+*							obsluha dialog√π									*
 *																			*
 \***************************************************************************/
 
@@ -829,7 +829,7 @@ CString DialogText3;
 CString DialogTextPar;
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha dialogu zad·nÌ textu
+// obsluha dialogu zad√°n√≠ textu
 
 BOOL CALLBACK DialogTextProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -876,28 +876,28 @@ BOOL CALLBACK DialogTextProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog box s n·vratem textu
+// dialog box s n√°vratem textu
 
 void _fastcall FDialogText(CString& text)
 {
-// naËtenÌ text˘
+// na√®ten√≠ text√π
 	FText(DialogTextNadpis);
 	FText(DialogText1);
 	FText(DialogText2);
 	FText(DialogText3);
 	FText(DialogTextPar);
 
-// vypnutÌ celoobrazovkovÈho mÛdu
+// vypnut√≠ celoobrazovkov√©ho m√≥du
 //	SetFullScreen(false);
 
 #ifndef _MINI
 	D3Render(true);
 #endif // _MINI
 
-// p¯ekreslenÌ displeje p¯ed vyvol·nÌm dialogu
+// p√∏ekreslen√≠ displeje p√∏ed vyvol√°n√≠m dialogu
 	ReDisp();
 
-// vyvol·nÌ dialogu
+// vyvol√°n√≠ dialogu
 	IsOverlay = true;
 
 	::DialogBoxParam(
@@ -910,59 +910,59 @@ void _fastcall FDialogText(CString& text)
 	IsOverlay = false;
 	if (FullScreen) RePaint(&Win[0]);
 
-// navr·cen· hodnota
+// navr√°cen√° hodnota
 	text = DialogTextPar;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog otev¯enÌ/uloûenÌ souboru
+// dialog otev√∏en√≠/ulo≈æen√≠ souboru
 
 void _fastcall FDialogOpenSave(CString& text, bool save)
 {
-// naËtenÌ titulku okna
+// na√®ten√≠ titulku okna
 	CString title;
 	FText(title);
 
-// naËtenÌ jmen soubor˘
+// na√®ten√≠ jmen soubor√π
 	CString jmena;
 	FText(jmena);
 
-// naËtenÌ masky soubor˘
+// na√®ten√≠ masky soubor√π
 	CString masky;
 	FText(masky);
 
-// naËtenÌ p¯ednastavenÈho jmÈna souboru
+// na√®ten√≠ p√∏ednastaven√©ho jm√©na souboru
 	CString name;
 	FText(name);
 	name.TrimLeft();
 	name.TrimRight();
 	name.PathName(0);
 
-// vypnutÌ celoobrazovkovÈho mÛdu
+// vypnut√≠ celoobrazovkov√©ho m√≥du
 //	SetFullScreen(false);
 
-// p¯ekreslenÌ displeje p¯ed vyvol·nÌm dialogu
+// p√∏ekreslen√≠ displeje p√∏ed vyvol√°n√≠m dialogu
 	ReDisp();
 
-// p¯Ìprava struktury k zad·nÌ jmÈna souboru
+// p√∏√≠prava struktury k zad√°n√≠ jm√©na souboru
 	OPENFILENAME ofn;
 	MemFill(&ofn, sizeof(ofn), 0);
 	ofn.lStructSize = sizeof(OPENFILENAME);
 	ofn.hwndOwner = Win[DialogParent].Wnd;
 
-// v˝chozÌ adres·¯
+// v√Ωchoz√≠ adres√°√∏
 	CString aktdir;
-	int namepos = name.RevFind(_T('\\'));					// nalezenÌ konce cesty
+	int namepos = name.RevFind(_T('\\'));					// nalezen√≠ konce cesty
 	if (namepos < 0)
 	{
-		namepos = name.Find(_T(':'));						// nalezenÌ alespoÚ disku
+		namepos = name.Find(_T(':'));						// nalezen√≠ alespo√≤ disku
 		if (namepos < 0)
 		{
-			aktdir.GetAktDir();								// pouûije se aktu·lnÌ adres·¯
+			aktdir.GetAktDir();								// pou≈æije se aktu√°ln√≠ adres√°√∏
 		}
 		else
 		{
-			aktdir = name.Left(namepos + 1);				// oznaËenÌ disku
+			aktdir = name.Left(namepos + 1);				// ozna√®en√≠ disku
 		}
 	}
 	else
@@ -970,20 +970,20 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 		if ((namepos == 0) || 
 			((namepos == 2) && (name.Get(1) == _T(':'))))	// je to ROOT disku?
 		{
-			aktdir = name.Left(namepos + 1);				// adres·¯ bude s koncov˝m lomÌtkem
+			aktdir = name.Left(namepos + 1);				// adres√°√∏ bude s koncov√Ωm lom√≠tkem
 		}
 		else
 		{
-			aktdir = name.Left(namepos);					// adres·¯ po koncovÈ lomÌtko
+			aktdir = name.Left(namepos);					// adres√°√∏ po koncov√© lom√≠tko
 		}
 	}
 
-	ofn.lpstrInitialDir = aktdir;							// v˝chozÌ adres·¯
+	ofn.lpstrInitialDir = aktdir;							// v√Ωchoz√≠ adres√°√∏
 
-// odstranÏnÌ cesty ze jmÈna souboru
+// odstran√¨n√≠ cesty ze jm√©na souboru
 	name.Delete(0, namepos + 1);
 
-// rozdÏlenÌ jmÈna souboru na jmÈno a p¯Ìponu
+// rozd√¨len√≠ jm√©na souboru na jm√©no a p√∏√≠ponu
 	CString defext;
 	int extpos = name.Find(_T('.'));
 	if (extpos >= 0)
@@ -993,10 +993,10 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 		defext.Delete(0, extpos + 1);
 		if (defext.Find(_T('*')) >= 0) defext.Empty();
 	}
-	CString defext2;			// alternativnÌ implicitnÌ p¯Ìpona
-	int filterindex2 = 0;		// alternativnÌ index filtru
+	CString defext2;			// alternativn√≠ implicitn√≠ p√∏√≠pona
+	int filterindex2 = 0;		// alternativn√≠ index filtru
 
-// p¯Ìprava p¯Ìpony pro hled·nÌ v seznamu masek
+// p√∏√≠prava p√∏√≠pony pro hled√°n√≠ v seznamu masek
 	CString defextup;
 	if (defext.IsNotEmpty())
 	{
@@ -1006,47 +1006,47 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 		defextup.UpperCase();
 	}
 
-// buffer pro masku soubor˘
+// buffer pro masku soubor√π
 	TCHAR* maskbuf = NULL;
 	int masksize = 0;
 
-// poËet ¯·dk˘ zadanÈho seznamu masek
+// po√®et √∏√°dk√π zadan√©ho seznamu masek
 	int l = masky.LineNum();
 	int l2 = jmena.LineNum();
 	if (l < l2) l = l2;
 	if (l <= 0) l = 1;
 
-// naËtenÌ seznamu masek
+// na√®ten√≠ seznamu masek
 	for (int n = 0; n < l;)
 	{
 
-// n·zev masky
+// n√°zev masky
 		CString radek = jmena.GetLine(n);
 
-// o¯ez·nÌ oddÏlovaË˘ ze zaË·tku a konce n·zvu masky
+// o√∏ez√°n√≠ odd√¨lova√®√π ze za√®√°tku a konce n√°zvu masky
 		radek.TrimLeft();
 		radek.TrimRight();
 
-// implicitnÌ n·zev masky
+// implicitn√≠ n√°zev masky
 		if (radek.IsEmpty())
 		{
 			radek = JazykInfo[Jazyk].AllFilesTxt;
 			radek += _T(" (*.*)");
 		}
 
-// maska soubor˘
+// maska soubor√π
 		CString maska = masky.GetLine(n);
 		n++;
 
-// o¯ez·nÌ oddÏlovaË˘ ze zaË·tku a konce masky
+// o√∏ez√°n√≠ odd√¨lova√®√π ze za√®√°tku a konce masky
 		maska.TrimLeft();
 		maska.TrimRight();
 
-// o¯ez·nÌ st¯ednÌku ze zaË·tku a konce masky
+// o√∏ez√°n√≠ st√∏edn√≠ku ze za√®√°tku a konce masky
 		while (maska.Get(0) == _T(';')) maska.Delete(0,1);
 		while (maska.LastChar() == _T(';')) maska.Delete(maska.Length()-1, 1);
 
-// vypuötÏnÌ mezer z masky
+// vypu≈°t√¨n√≠ mezer z masky
 		for (;;)
 		{
 			int p = maska.Find(_T(' '));
@@ -1054,16 +1054,16 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 			maska.Delete(p, 1);
 		}
 
-// implicitnÌ maska
+// implicitn√≠ maska
 		if (maska.IsEmpty()) maska = _T("*.*");
 
-// implicitnÌ p¯Ìpona
+// implicitn√≠ p√∏√≠pona
 		if (defext2.IsEmpty())
 		{
 			defext2 = maska;
-			defext2.Delete(0, defext2.Find(_T('.')) + 1);	// zruöenÌ Ë·sti p¯ed a s teËkou
-			int pos = defext2.Find(_T(';'));				// zaË·tek dalöÌ masky
-			if (pos >= 0) defext2.Delete(pos);				// zruöenÌ dalöÌ masky
+			defext2.Delete(0, defext2.Find(_T('.')) + 1);	// zru≈°en√≠ √®√°sti p√∏ed a s te√®kou
+			int pos = defext2.Find(_T(';'));				// za√®√°tek dal≈°√≠ masky
+			if (pos >= 0) defext2.Delete(pos);				// zru≈°en√≠ dal≈°√≠ masky
 
 			if (defext2.Find(_T('*')) >= 0)
 			{
@@ -1073,7 +1073,7 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 			{
 				filterindex2 = n;
 
-				if (ofn.lpstrDefExt == NULL)				// p¯Ìpona nebyla zad·na
+				if (ofn.lpstrDefExt == NULL)				// p√∏√≠pona nebyla zad√°na
 				{
 					defext = defext2;
 					ofn.lpstrDefExt = defext;
@@ -1084,7 +1084,7 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 			}
 		}
 
-// vyhled·nÌ p¯Ìpony
+// vyhled√°n√≠ p√∏√≠pony
 		if (defextup.IsNotEmpty())
 		{
 			CString maska2 = maska + _T(';');
@@ -1095,28 +1095,28 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 			}
 		}
 
-// zv˝öenÌ velikosti bufferu masek
+// zv√Ω≈°en√≠ velikosti bufferu masek
 		int newsize = masksize + (radek.Length() + maska.Length() + 2)*sizeof(TCHAR);
 		maskbuf = (TCHAR*)MemSize(maskbuf, newsize + sizeof(TCHAR));
 
-// p¯id·nÌ n·zvu masky
+// p√∏id√°n√≠ n√°zvu masky
 		radek.Write(maskbuf + masksize/sizeof(TCHAR));
 		masksize += (radek.Length() + 1)*sizeof(TCHAR);
 		maskbuf[(masksize-1)/sizeof(TCHAR)] = 0;
 
-// p¯id·nÌ masky soubor˘
+// p√∏id√°n√≠ masky soubor√π
 		maska.Write(maskbuf + masksize/sizeof(TCHAR));
 		masksize = newsize;
 		maskbuf[(masksize-1)/sizeof(TCHAR)] = 0;
 	}
 
-// koncov· nula oznaËujÌcÌ konec seznamu masek
+// koncov√° nula ozna√®uj√≠c√≠ konec seznamu masek
 	maskbuf[masksize/sizeof(TCHAR)] = 0;
 
 // buffer seznamu masek
 	ofn.lpstrFilter = maskbuf;
 
-// nenÌ-li nalezena odpovÌdajÌcÌ maska, nebude ani implicitnÌ p¯Ìpona
+// nen√≠-li nalezena odpov√≠daj√≠c√≠ maska, nebude ani implicitn√≠ p√∏√≠pona
 	if (ofn.nFilterIndex == 0)
 	{
 		if (defext2.IsNotEmpty())
@@ -1130,7 +1130,7 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 		}
 	}
 
-// p¯ednastavenÈ jmÈno souboru
+// p√∏ednastaven√© jm√©no souboru
 	n = name.Length() + 1;
 	if (n < 1024) n = 1024;
 	TCHAR* file = (TCHAR*)MemGet(n*sizeof(TCHAR));
@@ -1149,11 +1149,11 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 		ofn.lpstrTitle = title;
 	}
 
-// p¯Ìznaky
+// p√∏√≠znaky
 	ofn.Flags = OFN_ENABLESIZING | OFN_EXPLORER | OFN_HIDEREADONLY | OFN_LONGNAMES |
 			OFN_NOCHANGEDIR | OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST | OFN_SHAREAWARE;
 
-// zad·nÌ jmÈna souboru
+// zad√°n√≠ jm√©na souboru
 	BOOL res;
 	IsOverlay = true;
 	if (save)
@@ -1167,7 +1167,7 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 	IsOverlay = false;
 	if (FullScreen) RePaint(&Win[0]);
 
-// naËtenÌ jmÈna zadanÈho souboru (p¯i chybÏ nebo p¯eruöenÌ bude pr·zdn˝ text)
+// na√®ten√≠ jm√©na zadan√©ho souboru (p√∏i chyb√¨ nebo p√∏eru≈°en√≠ bude pr√°zdn√Ω text)
 	if (res)
 	{
 		text = file;
@@ -1177,13 +1177,13 @@ void _fastcall FDialogOpenSave(CString& text, bool save)
 		text.Empty();
 	}
 
-// zruöenÌ buffer˘
+// zru≈°en√≠ buffer√π
 	MemFree(file);
 	MemFree(maskbuf);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog otev¯enÌ souboru
+// dialog otev√∏en√≠ souboru
 
 void _fastcall FDialogOpen(CString& text)
 {
@@ -1191,7 +1191,7 @@ void _fastcall FDialogOpen(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog uloûenÌ souboru
+// dialog ulo≈æen√≠ souboru
 
 void _fastcall FDialogSave(CString& text)
 {
@@ -1199,7 +1199,7 @@ void _fastcall FDialogSave(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog vyhled·nÌ textu
+// dialog vyhled√°n√≠ textu
 
 void _fastcall FDialogFind(CString& text)
 {
@@ -1207,7 +1207,7 @@ void _fastcall FDialogFind(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// dialog v˝bÏru barvy
+// dialog v√Ωb√¨ru barvy
 
 void _fastcall FDialogColor(CString& text)
 {
@@ -1217,12 +1217,12 @@ void _fastcall FDialogColor(CString& text)
 
 /***************************************************************************\
 *																			*
-*								obsluha text˘								*
+*								obsluha text√π								*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// lev· Ë·st textu
+// lev√° √®√°st textu
 
 void _fastcall FTextLeft(CString& text)
 {
@@ -1233,7 +1233,7 @@ void _fastcall FTextLeft(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// prav· Ë·st textu
+// prav√° √®√°st textu
 
 void _fastcall FTextRight(CString& text)
 {
@@ -1245,7 +1245,7 @@ void _fastcall FTextRight(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// st¯ednÌ Ë·st textu
+// st√∏edn√≠ √®√°st textu
 
 void _fastcall FTextMid(CString& text)
 {
@@ -1258,7 +1258,7 @@ void _fastcall FTextMid(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ¯·dek textu
+// √∏√°dek textu
 
 void _fastcall FTextlineGet(CString& text)
 {
@@ -1287,28 +1287,28 @@ void _fastcall FTextBlock(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// souËet jednoho textu - ponech· se beze zmÏny
+// sou√®et jednoho textu - ponech√° se beze zm√¨ny
 
 void _fastcall FTextAdd1(CString& text) { FText(text); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// souËet text˘ (Data = poËet text˘ - 1)
+// sou√®et text√π (Data = po√®et text√π - 1)
 
 void _fastcall FTextAdd(CString& text)
 {
-// p¯Ìprava poËtu prvk˘
+// p√∏√≠prava po√®tu prvk√π
 	int i = ExecItem[-1].Data;
 
-// pomocn˝ buffer textu
+// pomocn√Ω buffer textu
 	text.Empty();
 	CString text2;
 
-// cyklus p¯es vöechny texty
+// cyklus p√∏es v≈°echny texty
 	for (; i >= 0; i--)
 	{
 
-// naËtenÌ dalöÌho textu
+// na√®ten√≠ dal≈°√≠ho textu
 		FText(text2);
 		text += text2;
 	}
@@ -1328,7 +1328,7 @@ void _fastcall FConsoleIn(CString& text) { ConsoleIn(text); }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯Ìkazov˝ ¯·dek
+// p√∏√≠kazov√Ω √∏√°dek
 
 void _fastcall FGetCommandLine(CString& text) { text = CommandLine; }
 
@@ -1342,11 +1342,11 @@ void _fastcall FCommandPar(CString& text)
 	int beg = 0;
 	int len = CommandLine.Length();
 
-// nalezenÌ parametru
+// nalezen√≠ parametru
 	for (; i >= 0; i--)
 	{
 
-// nalezenÌ zaË·tku parametru
+// nalezen√≠ za√®√°tku parametru
 		while (	(pos < len) && 
 				(CommandLine[pos] <= _T(' ')) && 
 				(CommandLine[pos] > 0)) 
@@ -1355,7 +1355,7 @@ void _fastcall FCommandPar(CString& text)
 		}
 		beg = pos;
 
-// nalezenÌ konce parametru
+// nalezen√≠ konce parametru
 		bool uvoz = false;
 		while (	(pos < len) &&
 				(	(CommandLine[pos] < 0) ||
@@ -1368,10 +1368,10 @@ void _fastcall FCommandPar(CString& text)
 		}
 	}
 
-// p¯enesenÌ parametru
+// p√∏enesen√≠ parametru
 	text = CommandLine.Mid(beg, pos-beg);
 
-// zruöenÌ uvozovek
+// zru≈°en√≠ uvozovek
 	pos = 0;
 	len = text.Length();
 	while (pos < len)
@@ -1388,7 +1388,7 @@ void _fastcall FCommandPar(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// jmÈno programu
+// jm√©no programu
 
 void _fastcall FExecName(CString& text) { text = ExeFileName; }
 
@@ -1527,7 +1527,7 @@ void _fastcall FGetWindowText(CString& text)
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// seznam spojenÌ
+// seznam spojen√≠
 
 void _fastcall FConnectList(CString& text)
 {
@@ -1536,7 +1536,7 @@ void _fastcall FConnectList(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktivnÌ spojenÌ
+// aktivn√≠ spojen√≠
 
 void _fastcall FGetConnectAct(CString& text)
 {
@@ -1554,7 +1554,7 @@ void _fastcall FGameList(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktivnÌ hra
+// aktivn√≠ hra
 
 void _fastcall FGetGameAct(CString& text)
 {
@@ -1562,7 +1562,7 @@ void _fastcall FGetGameAct(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// seznam hr·Ë˘
+// seznam hr√°√®√π
 
 void _fastcall FPlayerList(CString& text)
 {
@@ -1572,7 +1572,7 @@ void _fastcall FPlayerList(CString& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktivnÌ hr·Ë
+// aktivn√≠ hr√°√®
 
 void _fastcall FGetPlayerAct(CString& text)
 {
@@ -1580,21 +1580,21 @@ void _fastcall FGetPlayerAct(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ textu z paketu
+// na√®ten√≠ textu z paketu
 
 void _fastcall FGetGameDataT(CString& text)
 {
-// nenÌ nic v bufferu
+// nen√≠ nic v bufferu
 	if (DirectPlayDataInO >= DirectPlayDataInN)
 	{
 		text.Empty();
 		return;
 	}
 
-// naËtenÌ textu z bufferu
+// na√®ten√≠ textu z bufferu
 	text = (char*)(DirectPlayDataIn + DirectPlayDataInO);
 
-// posun ukazatel˘
+// posun ukazatel√π
 	DirectPlayDataInO += text.Length() + 1;
 	if (DirectPlayDataInO > DirectPlayDataInN)
 	{
@@ -1603,7 +1603,7 @@ void _fastcall FGetGameDataT(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ IP adresy poËÌtaËe
+// zji≈°t√¨n√≠ IP adresy po√®√≠ta√®e
 
 void _fastcall FGetGameIP(CString& text)
 {
@@ -1616,22 +1616,22 @@ void _fastcall FGetGameIP(CString& text)
 		if (WSAInitialize1())
 		{
 
-// p¯Ìprava bufferu k naËtenÌ lok·lnÌho jmÈna
+// p√∏√≠prava bufferu k na√®ten√≠ lok√°ln√≠ho jm√©na
 			char* buf = (char*)MemGet(512);
 
-// naËtenÌ lok·lnÌho jmÈna
+// na√®ten√≠ lok√°ln√≠ho jm√©na
 			if (pWSAGetHostName(buf, 511) == 0)
 			{
 				struct hostent* hst = pWSAGetHostByName(buf);
 				if (hst != NULL)
 				{
 
-// test, zda je platn· IP adresa
+// test, zda je platn√° IP adresa
 					char** list = hst->h_addr_list;
 					if ((list != NULL) && (*list != NULL))
 					{
 
-// dekÛdov·nÌ IP adresy
+// dek√≥dov√°n√≠ IP adresy
 						char FAR* adr = pWSAInetNtoa(**(struct in_addr**)list);
 						if (adr != NULL)
 						{
@@ -1641,12 +1641,12 @@ void _fastcall FGetGameIP(CString& text)
 				}
 			}
 
-// uvolnÏnÌ bufferu lok·lnÌho jmÈna
+// uvoln√¨n√≠ bufferu lok√°ln√≠ho jm√©na
 			MemFree(buf);
 		}
 	}
 
-// IP adresa poËÌtaËe
+// IP adresa po√®√≠ta√®e
 	text = HostIP;
 }
 
@@ -1657,7 +1657,7 @@ void _fastcall FGetGameIP(CString& text)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ vysÌlacÌ IP adresy UDP
+// zji≈°t√¨n√≠ vys√≠lac√≠ IP adresy UDP
 
 void _fastcall FGetUDPSendIP(CString& text)
 {
@@ -1671,7 +1671,7 @@ void _fastcall FGetUDPSendIP(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ p¯ijatÈ IP adresy UDP
+// zji≈°t√¨n√≠ p√∏ijat√© IP adresy UDP
 
 void _fastcall FGetUDPRecIP(CString& text)
 {
@@ -1685,7 +1685,7 @@ void _fastcall FGetUDPRecIP(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯Ìjem textu UDP
+// p√∏√≠jem textu UDP
 
 void _fastcall FGetUDPText(CString& text)
 {
@@ -1703,12 +1703,12 @@ void _fastcall FGetUDPText(CString& text)
 }
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ uûivatelskÈho fontu
+// zji≈°t√¨n√≠ u≈æivatelsk√©ho fontu
 
 void _fastcall FGetUserFont(CString& text)
 {
@@ -1716,7 +1716,7 @@ void _fastcall FGetUserFont(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu font˘
+// zji≈°t√¨n√≠ seznamu font√π
 
 int CALLBACK EnumFontFamProc(const LOGFONT* lpelf, const TEXTMETRIC* lpntm, DWORD FontType, LPARAM lParam)
 {
@@ -1743,7 +1743,7 @@ void _fastcall FEnumFonts(CString& text)
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ znaku z portu
+// na√®ten√≠ znaku z portu
 
 void _fastcall FGetComText(CString& text)
 {
@@ -1767,7 +1767,7 @@ void _fastcall FGetComText(CString& text)
 }
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 
 
@@ -1781,7 +1781,7 @@ void _fastcall FGetComText(CString& text)
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ mix·ûnÌch za¯ÌzenÌ
+// zji≈°t√¨n√≠ mix√°≈æn√≠ch za√∏√≠zen√≠
 
 void _fastcall FGetMixDevice(CString& text)
 {
@@ -1790,7 +1790,7 @@ void _fastcall FGetMixDevice(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu cÌlov˝ch sign·l˘
+// zji≈°t√¨n√≠ seznamu c√≠lov√Ωch sign√°l√π
 
 void _fastcall FGetMixLineDst(CString& text)
 {
@@ -1799,7 +1799,7 @@ void _fastcall FGetMixLineDst(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu zdrojov˝ch sign·l˘
+// zji≈°t√¨n√≠ seznamu zdrojov√Ωch sign√°l√π
 
 void _fastcall FGetMixLineSrc(CString& text)
 {
@@ -1808,7 +1808,7 @@ void _fastcall FGetMixLineSrc(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu ovl·dacÌch prvk˘
+// zji≈°t√¨n√≠ seznamu ovl√°dac√≠ch prvk√π
 
 void _fastcall FGetMixControl(CString& text)
 {
@@ -1817,7 +1817,7 @@ void _fastcall FGetMixControl(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu hodnot ovl·dacÌch prvk˘
+// zji≈°t√¨n√≠ seznamu hodnot ovl√°dac√≠ch prvk√π
 
 void _fastcall FGetMixCtrlList(CString& text)
 {
@@ -1832,14 +1832,14 @@ void _fastcall FGetMixCtrlList(CString& text)
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu server˘
+// zji≈°t√¨n√≠ seznamu server√π
 
 void _fastcall FGetDDEApp(CString& text)
 {
-// naËtenÌ seznamu aplikacÌ DDE
+// na√®ten√≠ seznamu aplikac√≠ DDE
 	DDEAppListLoad();
 
-// sestavenÌ seznamu server˘ DDE
+// sestaven√≠ seznamu server√π DDE
 	text.Empty();
 
 	for (int i = 0; i < DDEServNum; i++)
@@ -1853,11 +1853,11 @@ void _fastcall FGetDDEApp(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu tÈmat
+// zji≈°t√¨n√≠ seznamu t√©mat
 
 void _fastcall FGetDDETopic(CString& text)
 {
-// p¯Ìprava poloûky serveru
+// p√∏√≠prava polo≈æky serveru
 	int i = DDEServAkt;
 	if (i < 0)
 	{
@@ -1868,11 +1868,11 @@ void _fastcall FGetDDETopic(CString& text)
 		}
 	}
 
-// nenÌ platn˝ server
+// nen√≠ platn√Ω server
 	text.Empty();
 	if (i < 0) return;
 
-// sestavenÌ seznamu tÈmat
+// sestaven√≠ seznamu t√©mat
 	i = DDEServList[i].TopicFirst;
 
 	while (i >= 0)
@@ -1892,14 +1892,14 @@ void _fastcall FGetDDETopic(CString& text)
 \***************************************************************************/
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ seznamu videomÛd˘
+// zji≈°t√¨n√≠ seznamu videom√≥d√π
 
 void _fastcall FGet3DMode(CString& text)
 {
-// inicializace seznamu videomÛd˘
+// inicializace seznamu videom√≥d√π
 	InitVideoModes();
 
 	text.Empty();
@@ -1943,7 +1943,7 @@ void _fastcall FGet3DMode(CString& text)
 #ifndef _MINI
 
 /////////////////////////////////////////////////////////////////////////////
-// text zakonËen˝ nulou
+// text zakon√®en√Ω nulou
 
 void _fastcall FGetMemoryText0(CString& text)
 {
@@ -1954,7 +1954,7 @@ void _fastcall FGetMemoryText0(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukazatel na text zakonËen˝ nulou
+// ukazatel na text zakon√®en√Ω nulou
 
 void _fastcall FGetMemoryText0P(CString& text)
 {
@@ -1965,7 +1965,7 @@ void _fastcall FGetMemoryText0P(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// text s pevnou dÈlkou
+// text s pevnou d√©lkou
 
 void _fastcall FGetMemoryTextN(CString& text)
 {
@@ -1985,19 +1985,19 @@ void _fastcall FGetMemoryTextN(CString& text)
 #define MAXPROFILELEN 0x0FFF
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ textu z INI (v textu je uloûena implicitnÌ hodnota)
+// na√®ten√≠ textu z INI (v textu je ulo≈æena implicitn√≠ hodnota)
 
 void _fastcall GetIniProfileString(CString& text)
 {
-// jmÈno sekce
+// jm√©no sekce
 	LPCTSTR section = NULL;
 	if (INISection.IsNotEmpty()) section = INISection;
 
-// jmÈno hodnoty
+// jm√©no hodnoty
 	LPCTSTR key = NULL;
 	if (INIKey.IsNotEmpty()) key = INIKey;
 
-// p¯Ìprava implicitnÌho textu (varov·nÌ - ve Win95 m˘ûe b˝t buffer modifikov·n)
+// p√∏√≠prava implicitn√≠ho textu (varov√°n√≠ - ve Win95 m√π≈æe b√Ωt buffer modifikov√°n)
 	text.TrimLeft();
 	text.TrimRight();
 	if (text.Length() > MAXPROFILELEN) text.Delete(MAXPROFILELEN);
@@ -2005,13 +2005,13 @@ void _fastcall GetIniProfileString(CString& text)
 	text.Write(vzor);
 	vzor[text.Length()] = 0;
 
-// p¯Ìprava cÌlovÈho bufferu
+// p√∏√≠prava c√≠lov√©ho bufferu
 	LPTSTR buf = (LPTSTR)MemGet((MAXPROFILELEN + 1) * sizeof(TCHAR));
 
-// naËtenÌ poloûky
+// na√®ten√≠ polo≈æky
 	int len = ::GetPrivateProfileString(section, key, vzor, buf, MAXPROFILELEN, INIFile);
 
-// uloûenÌ seznamu
+// ulo≈æen√≠ seznamu
 	if ((section == NULL) || (key == NULL))
 	{
 		text.Empty();
@@ -2026,7 +2026,7 @@ void _fastcall GetIniProfileString(CString& text)
 		}
 	}
 
-// uloûenÌ poloûky, nenÌ-li seznam
+// ulo≈æen√≠ polo≈æky, nen√≠-li seznam
 	else
 	{
 		text.Term();
@@ -2038,7 +2038,7 @@ void _fastcall GetIniProfileString(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// jmÈno konfiguraËnÌho souboru
+// jm√©no konfigura√®n√≠ho souboru
 
 void _fastcall FGetIniFile(CString& text)
 {
@@ -2046,7 +2046,7 @@ void _fastcall FGetIniFile(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// jmÈno konfiguraËnÌ sekce
+// jm√©no konfigura√®n√≠ sekce
 
 void _fastcall FGetIniSection(CString& text)
 {
@@ -2054,7 +2054,7 @@ void _fastcall FGetIniSection(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// jmÈno konfiguraËnÌho parametru
+// jm√©no konfigura√®n√≠ho parametru
 
 void _fastcall FGetIniValue(CString& text)
 {
@@ -2062,7 +2062,7 @@ void _fastcall FGetIniValue(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ËtenÌ konfiguraËnÌho textu
+// √®ten√≠ konfigura√®n√≠ho textu
 
 void _fastcall FGetIniString(CString& text)
 {
@@ -2077,7 +2077,7 @@ void _fastcall FGetIniString0(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// klÌË registr˘
+// kl√≠√® registr√π
 
 void _fastcall FGetRegSubkey(CString& text)
 {
@@ -2085,7 +2085,7 @@ void _fastcall FGetRegSubkey(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// jmÈno poloûky registr˘
+// jm√©no polo≈æky registr√π
 
 void _fastcall FGetRegValue(CString& text)
 {
@@ -2093,11 +2093,11 @@ void _fastcall FGetRegValue(CString& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ËtenÌ textu z registru
+// √®ten√≠ textu z registru
 
 void _fastcall GetRegString(CString& text)
 {
-// otev¯enÌ klÌËe
+// otev√∏en√≠ kl√≠√®e
 	HKEY hkey;
 
 	if (::RegOpenKeyEx(
@@ -2108,7 +2108,7 @@ void _fastcall GetRegString(CString& text)
 		&hkey) == ERROR_SUCCESS)
 	{
 
-// naËtenÌ hodnoty klÌËe
+// na√®ten√≠ hodnoty kl√≠√®e
 		int bufsize = (MAXPROFILELEN + 1) * sizeof(TCHAR);
 
 		LPTSTR buf = (LPTSTR)MemGet((MAXPROFILELEN + 1) * sizeof(TCHAR));
@@ -2133,7 +2133,7 @@ void _fastcall GetRegString(CString& text)
 
 		MemFree(buf);
 
-// uzav¯enÌ klÌËe
+// uzav√∏en√≠ kl√≠√®e
 		::RegCloseKey(hkey);
 	}
 }
@@ -2151,4 +2151,4 @@ void _fastcall FGetRegString0(CString& text)
 }
 
 #endif // _MINI
-// --------------------- konec vypnutÌ pro MINI verzi -------------------
+// --------------------- konec vypnut√≠ pro MINI verzi -------------------

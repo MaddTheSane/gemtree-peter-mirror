@@ -40,7 +40,7 @@ CBufUndo::~CBufUndo()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CBufUndo::Init()
 { 
@@ -93,7 +93,7 @@ void CBufUndo::Term()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ vöech poloûek v bufferu
+// zru≈°en√≠ v≈°ech polo≈æek v bufferu
 
 void CBufUndo::DelAll()
 {
@@ -126,7 +126,7 @@ void CBufUndo::DelAll()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypr·zdnÏnÌ bufferu REDO (nenÌ-li p¯ehr·v·nÌ)
+// vypr√°zdn√¨n√≠ bufferu REDO (nen√≠-li p√∏ehr√°v√°n√≠)
 
 void CBufUndo::NulRedo()
 {
@@ -142,23 +142,23 @@ void CBufUndo::NulRedo()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ novÈ poloûky (vracÌ NULL=chyba pamÏti)
+// vytvo√∏en√≠ nov√© polo≈æky (vrac√≠ NULL=chyba pam√¨ti)
 
 UNDOITEM* CBufUndo::New()
 {
 	UNDOITEM* item;
 
-// z·znam probÌh· do UNDO bufferu
+// z√°znam prob√≠h√° do UNDO bufferu
 	if (m_Undo)
 	{
 
-// vypr·zdnÏnÌ REDO bufferu
+// vypr√°zdn√¨n√≠ REDO bufferu
 		NulRedo();
 
-// index novÈ poloûky
+// index nov√© polo≈æky
 		int index = m_UndoNum;
 
-// zvÏtöenÌ bufferu (o 4 KB)
+// zv√¨t≈°en√≠ bufferu (o 4 KB)
 		if (index >= m_UndoMax)
 		{
 			int undomax = m_UndoMax + 128;
@@ -168,19 +168,19 @@ UNDOITEM* CBufUndo::New()
 			m_UndoData = undodata;
 		}
 
-// adresa novÈ poloûky
+// adresa nov√© polo≈æky
 		m_UndoNum++;
 		item = m_UndoData + index;
 	}
 
-// z·znam probÌh· do UNDO bufferu
+// z√°znam prob√≠h√° do UNDO bufferu
 	else
 	{
 
-// index novÈ poloûky
+// index nov√© polo≈æky
 		int index = m_RedoNum;
 
-// zvÏtöenÌ bufferu (o 4 KB)
+// zv√¨t≈°en√≠ bufferu (o 4 KB)
 		if (index >= m_RedoMax)
 		{
 			int redomax = m_RedoMax + 128;
@@ -190,12 +190,12 @@ UNDOITEM* CBufUndo::New()
 			m_RedoData = redodata;
 		}
 
-// adresa novÈ poloûky
+// adresa nov√© polo≈æky
 		m_RedoNum++;
 		item = m_RedoData + index;
 	}
 
-// vymaz·nÌ novÈ poloûky
+// vymaz√°n√≠ nov√© polo≈æky
 	MemFill(item, SIZEOFUNDOITEM, -1);
 	item->Stop = FALSE;
 
@@ -204,7 +204,7 @@ UNDOITEM* CBufUndo::New()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ p¯ibliûnÈ velikosti datovÈ poloûky (jen kv˘li kontrole p¯eteËenÌ)
+// zji≈°t√¨n√≠ p√∏ibli≈æn√© velikosti datov√© polo≈æky (jen kv√πli kontrole p√∏ete√®en√≠)
 
 int _fastcall CBufUndo::GetSize(int bufID, int index)
 {
@@ -253,7 +253,7 @@ int _fastcall CBufUndo::GetSize(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯iËtenÌ velikosti poloûky (jen pokud je z·znam do UNDO)
+// p√∏i√®ten√≠ velikosti polo≈æky (jen pokud je z√°znam do UNDO)
 
 void _fastcall CBufUndo::AddSize(UNDOITEM* item)
 {
@@ -265,7 +265,7 @@ void _fastcall CBufUndo::AddSize(UNDOITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ datovÈ poloûky z buffer˘
+// zru≈°en√≠ datov√© polo≈æky z buffer√π
 
 void _fastcall CBufUndo::DelData(int bufID, int index)
 {
@@ -320,7 +320,7 @@ void _fastcall CBufUndo::DelData(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ poslednÌ poloûky z undo/redo
+// zru≈°en√≠ posledn√≠ polo≈æky z undo/redo
 
 void CBufUndo::DelUndo()
 {
@@ -382,11 +382,11 @@ void CBufUndo::Reduct()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ z·znamu operacÌ (nastavÌ p¯Ìznak konce posloupnosti)
+// ukon√®en√≠ z√°znamu operac√≠ (nastav√≠ p√∏√≠znak konce posloupnosti)
 
 void CBufUndo::Stop()
 {
-// zastavenÌ nahr·v·nÌ UNDO z·znamu
+// zastaven√≠ nahr√°v√°n√≠ UNDO z√°znamu
 	if (m_Undo)
 	{
 		int inx = m_UndoNum - 1;
@@ -398,7 +398,7 @@ void CBufUndo::Stop()
 	}
 	else
 
-// zastavenÌ nahr·v·nÌ REDO z·znamu
+// zastaven√≠ nahr√°v√°n√≠ REDO z√°znamu
 	{
 		int inx = m_RedoNum - 1;
 		if ((inx >= 0) && !m_RedoData[inx].Stop)
@@ -408,7 +408,7 @@ void CBufUndo::Stop()
 		}
 	}
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 
 // aktualizace voleb undo/redo
@@ -430,7 +430,7 @@ void CBufUndo::UpdateUndoRedo()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ p¯Ìznak˘ p¯ekreslenÌ okna
+// vypnut√≠ p√∏√≠znak√π p√∏ekreslen√≠ okna
 
 void CBufUndo::NulRedraw()
 {
@@ -442,7 +442,7 @@ void CBufUndo::NulRedraw()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ/zapnutÌ p¯ekreslov·nÌ okna
+// vypnut√≠/zapnut√≠ p√∏ekreslov√°n√≠ okna
 
 void CBufUndo::SetRedraw(int bufID, BOOL redraw)
 {
@@ -455,7 +455,7 @@ void CBufUndo::SetRedraw(int bufID, BOOL redraw)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oznaËenÌ editovanÈ poloûky
+// ozna√®en√≠ editovan√© polo≈æky
 
 void CBufUndo::SelectEdit(int bufID, int index)
 {
@@ -484,26 +484,26 @@ void CBufUndo::SelectEdit(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// provedenÌ operace UNDO
+// proveden√≠ operace UNDO
 
 void CBufUndo::Undo()
 {
-// kontrola povolenÌ poûadavku
+// kontrola povolen√≠ po≈æadavku
 	if ((m_UndoRecs <= 0) || !ProgMode || m_Play) return;
 
-// zapnutÌ p¯Ìznaku p¯ehr·v·nÌ UNDO, nahr·v·nÌ REDO
+// zapnut√≠ p√∏√≠znaku p√∏ehr√°v√°n√≠ UNDO, nahr√°v√°n√≠ REDO
 	m_Undo = FALSE;
 	m_Play = TRUE;
 
-// p¯ednastavenÌ - nenÌ nastavenÌ editaËnÌho mÛdu
+// p√∏ednastaven√≠ - nen√≠ nastaven√≠ edita√®n√≠ho m√≥du
 	m_EditMode = -1;
 	m_SelectMode = -1;
 	m_MapMode = -1;
 
-// vypnutÌ p¯Ìznak˘ p¯ekreslov·nÌ oken
+// vypnut√≠ p√∏√≠znak√π p√∏ekreslov√°n√≠ oken
 	NulRedraw();
 
-// p¯ehr·tÌ z·znamu UNDO
+// p√∏ehr√°t√≠ z√°znamu UNDO
 	if (m_UndoNum > 0)
 	{
 		do {
@@ -512,16 +512,16 @@ void CBufUndo::Undo()
 		} while ((m_UndoNum > 0) && (!m_UndoData[m_UndoNum-1].Stop));
 	}
 
-// ukonËenÌ z·znamu pro REDO
+// ukon√®en√≠ z√°znamu pro REDO
 	Stop();
 
-// zapnutÌ p¯ekreslov·nÌ oken
+// zapnut√≠ p√∏ekreslov√°n√≠ oken
 	for (int i = 0; i < PROGBUFNUM; i++)
 	{
 		SetRedraw(i, TRUE);
 	}
 
-// nastavenÌ editaËnÌho mÛdu
+// nastaven√≠ edita√®n√≠ho m√≥du
 	if (m_EditMode >= 0)
 	{
 		if (!SetEditMode(m_EditMode, m_EditIndex))
@@ -540,41 +540,41 @@ void CBufUndo::Undo()
 		EditMap::SetMode(m_MapMode);
 	}
 
-// vypnutÌ p¯Ìznaku p¯ehr·v·nÌ UNDO
+// vypnut√≠ p√∏√≠znaku p√∏ehr√°v√°n√≠ UNDO
 	m_Play = FALSE;
 	m_Undo = TRUE;
 
-// p¯Ìznak modifikace souboru
+// p√∏√≠znak modifikace souboru
 	SetModi();
 
 // aktualizace voleb undo/redo
 	UpdateUndoRedo();
 
-// aktualizace zobrazenÌ informacÌ o poloûce
+// aktualizace zobrazen√≠ informac√≠ o polo≈æce
 	ProgAktItem();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// provedenÌ operace REDO
+// proveden√≠ operace REDO
 
 void CBufUndo::Redo()
 {
-// kontrola povolenÌ poûadavku
+// kontrola povolen√≠ po≈æadavku
 	if ((m_RedoRecs <= 0) || !ProgMode || m_Play) return;
 
-// zapnutÌ p¯Ìznaku p¯ehr·v·nÌ REDO, nahr·v·nÌ UNDO (=implicitnÏ)
+// zapnut√≠ p√∏√≠znaku p√∏ehr√°v√°n√≠ REDO, nahr√°v√°n√≠ UNDO (=implicitn√¨)
 	m_Play = TRUE;
 
-// p¯ednastavenÌ - nenÌ nastavenÌ editaËnÌho mÛdu
+// p√∏ednastaven√≠ - nen√≠ nastaven√≠ edita√®n√≠ho m√≥du
 	m_EditMode = -1;
 	m_SelectMode = -1;
 	m_MapMode = -1;
 
-// vypnutÌ p¯Ìznak˘ p¯ekreslov·nÌ oken
+// vypnut√≠ p√∏√≠znak√π p√∏ekreslov√°n√≠ oken
 	NulRedraw();
 
-// p¯ehr·tÌ z·znamu REDO
+// p√∏ehr√°t√≠ z√°znamu REDO
 	if (m_RedoNum > 0)
 	{
 		do {
@@ -583,16 +583,16 @@ void CBufUndo::Redo()
 		} while ((m_RedoNum > 0) && (!m_RedoData[m_RedoNum-1].Stop));
 	}
 
-// ukonËenÌ z·znamu pro UNDO
+// ukon√®en√≠ z√°znamu pro UNDO
 	Stop();
 
-// zapnutÌ p¯ekreslov·nÌ oken
+// zapnut√≠ p√∏ekreslov√°n√≠ oken
 	for (int i = 0; i < PROGBUFNUM; i++)
 	{
 		SetRedraw(i, TRUE);
 	}
 
-// nastavenÌ editaËnÌho mÛdu
+// nastaven√≠ edita√®n√≠ho m√≥du
 	if (m_EditMode >= 0)
 	{
 		SetEditMode(m_EditMode, m_EditIndex);
@@ -608,172 +608,172 @@ void CBufUndo::Redo()
 		EditMap::SetMode(m_MapMode);
 	}
 
-// vypnutÌ p¯Ìznaku p¯ehr·v·nÌ REDO
+// vypnut√≠ p√∏√≠znaku p√∏ehr√°v√°n√≠ REDO
 	m_Play = FALSE;
 
-// p¯Ìznak modifikace souboru
+// p√∏√≠znak modifikace souboru
 	SetModi();
 
 // aktualizace voleb undo/redo
 	UpdateUndoRedo();
 
-// aktualizace zobrazenÌ informacÌ o poloûce
+// aktualizace zobrazen√≠ informac√≠ o polo≈æce
 	ProgAktItem();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do programovÈho bufferu (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do programov√©ho bufferu (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgIns(int bufID, int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = bufID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z programovÈho bufferu (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z programov√©ho bufferu (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgDel(int bufID, int index, PROGITEM* data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = bufID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufEdiID;
 	item->DatIndex = m_Prog.Insert0(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯esunu poloûky v programovÈm bufferu (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏esunu polo≈æky v programov√©m bufferu (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgMove(int bufID, int index, int oldparent, int oldprev)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_MOVE;
 	item->BufID = bufID;
 	item->Index = index;
 	item->Param1 = oldparent;
 	item->Param2 = oldprev;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ p¯Ìznaku LOCK prvku (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ p√∏√≠znaku LOCK prvku (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgLock(int bufID, int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_LOCK;
 	item->BufID = bufID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ p¯Ìznaku OFF prvku (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ p√∏√≠znaku OFF prvku (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgOff(int bufID, int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_OFF;
 	item->BufID = bufID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ jmÈna prvku (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ jm√©na prvku (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgName(int bufID, int index, int name)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_NAME;
 	item->BufID = bufID;
 	item->Index = index;
 	item->Param1 = name;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o nastavenÌ jmÈna prvku (vracÌ FALSE=chyba pamÏti)
+// z√°znam o nastaven√≠ jm√©na prvku (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgNameSet(int bufID, int index, const CMultiText& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_NAMESET;
 	item->BufID = bufID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufTxtID;
 	item->DatIndex = m_Text.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
@@ -787,145 +787,145 @@ bool CBufUndo::AddProgNameSet(int bufID, int index, const CText& data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ ikony prvku (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ ikony prvku (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddProgIcon(int bufID, int index, int icon)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_ICON;
 	item->BufID = bufID;
 	item->Index = index;
 	item->Param1 = icon;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu ËÌsel (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu √®√≠sel (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddRealIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufNumID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu ËÌsel (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu √®√≠sel (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddRealDel(int index, double data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufNumID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufNumID;
 	item->DatIndex = m_Real.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu ËÌsel (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu √®√≠sel (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddRealSet(int index, double data)
 {
-// ËÌslo se ukl·d· jen jednou
+// √®√≠slo se ukl√°d√° jen jednou
 	if (TestSet(BufNumID, index)) return true;
 
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufNumID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufNumID;
 	item->DatIndex = m_Real.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu text˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu text√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddTextIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufTxtID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu text˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu text√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddTextDel(int index, const CMultiText& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufTxtID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufTxtID;
 	item->DatIndex = m_Text.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
@@ -939,30 +939,30 @@ bool CBufUndo::AddTextDel(int index, const CText& data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu text˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu text√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddTextSet(int index, const CMultiText& data)
 {
-// text se ukl·d· jen jednou
+// text se ukl√°d√° jen jednou
 	if (TestSet(BufTxtID, index)) return true;
 
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufTxtID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufTxtID;
 	item->DatIndex = m_Text.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
@@ -976,579 +976,579 @@ bool CBufUndo::AddTextSet(int index, const CText& data)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu logick˝ch hodnot (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu logick√Ωch hodnot (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddBoolIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufLogID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu logick˝ch hodnot (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu logick√Ωch hodnot (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddBoolDel(int index, BOOL data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufLogID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufLogID;
 	item->DatIndex = m_Bool.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu logick˝ch hodnot (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu logick√Ωch hodnot (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddBoolSet(int index, BOOL data)
 {
-// logick· hodnota se ukl·d· jen jednou
+// logick√° hodnota se ukl√°d√° jen jednou
 	if (TestSet(BufLogID, index)) return true;
 
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufLogID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufLogID;
 	item->DatIndex = m_Bool.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu ikon (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu ikon (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddIconIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufIcoID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu ikon (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu ikon (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddIconDel(int index, const CIcon& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufIcoID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufIcoID;
 	item->DatIndex = m_Icon.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu ikon (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu ikon (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddIconSet(int index, const CIcon& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufIcoID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufIcoID;
 	item->DatIndex = m_Icon.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu ploch (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu ploch (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddMapIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufMapID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu ploch (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu ploch (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddMapDel(int index, const CMap& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufMapID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufMapID;
 	item->DatIndex = m_Map.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu ploch (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu ploch (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddMapSet(int index, const CMap& data, int mode)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufMapID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufMapID;
 	item->DatIndex = m_Map.Add(data);
 	item->Param1 = mode;
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ dat - ikona plochy (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ dat - ikona plochy (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddMapIcoSet(int index, int offs, int icon)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SETICON;
 	item->BufID = BufMapID;
 	item->Index = index;
 	item->Param1 = offs;
 	item->Param2 = icon;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu obr·zk˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu obr√°zk√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddPicIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufPicID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu obr·zk˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu obr√°zk√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddPicDel(int index, const CPicture& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufPicID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufPicID;
 	item->DatIndex = m_Picture.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu obr·zk˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu obr√°zk√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddPicSet(int index, const CPicture& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufPicID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufPicID;
 	item->DatIndex = m_Picture.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu sprajt˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu sprajt√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddSprIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufSprID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu sprajt˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu sprajt√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddSprDel(int index, const CSprite& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufSprID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufSprID;
 	item->DatIndex = m_Sprite.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu sprajt˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu sprajt√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddSprSet(int index, const CSprite& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufSprID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufSprID;
 	item->DatIndex = m_Sprite.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ dat - obr·zek sprajtu (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ dat - obr√°zek sprajtu (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddSprPicSet(int index, int pic, CPicture& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SETPIC;
 	item->BufID = BufSprID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufPicID;
 	item->DatIndex = m_Picture.Add(data);
 	item->Param1 = pic;
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu zvuk˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu zvuk√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddSndIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufSndID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu zvuk˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu zvuk√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddSndDel(int index, const CSound& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufSndID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufSndID;
 	item->DatIndex = m_Sound.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu zvuk˘ (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu zvuk√π (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddSndSet(int index, const CSound& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufSndID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufSndID;
 	item->DatIndex = m_Sound.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o p¯id·nÌ poloûky do bufferu hudby (vracÌ FALSE=chyba pamÏti)
+// z√°znam o p√∏id√°n√≠ polo≈æky do bufferu hudby (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddMusIns(int index)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_INSERT;
 	item->BufID = BufMusID;
 	item->Index = index;
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zruöenÌ poloûky z bufferu hudby (vracÌ FALSE=chyba pamÏti)
+// z√°znam o zru≈°en√≠ polo≈æky z bufferu hudby (vrac√≠ FALSE=chyba pam√¨ti)
 
 bool CBufUndo::AddMusDel(int index, const CMusic& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_DELETE;
 	item->BufID = BufMusID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufMusID;
 	item->DatIndex = m_Music.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// z·znam o zmÏnÏ poloûky v bufferu hudby
+// z√°znam o zm√¨n√¨ polo≈æky v bufferu hudby
 
 bool CBufUndo::AddMusSet(int index, const CMusic& data)
 {
-// vytvo¯enÌ poloûky
+// vytvo√∏en√≠ polo≈æky
 	UNDOITEM* item = New();
 	if (item == NULL) return false;
 
-// naplnÏnÌ z·znamu
+// napln√¨n√≠ z√°znamu
 	item->Oper = UNDO_SET;
 	item->BufID = BufMusID;
 	item->Index = index;
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	item->DatBufID = BufMusID;
 	item->DatIndex = m_Music.Add(data);
 
-// zmÏna ËÌtaËe velikosti
+// zm√¨na √®√≠ta√®e velikosti
 	AddSize(item);
 
-// provedenÌ redukce
+// proveden√≠ redukce
 	Reduct();
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// test, zda je poloûka pro zmÏnu dat jiû v bufferu
+// test, zda je polo≈æka pro zm√¨nu dat ji≈æ v bufferu
 
 bool CBufUndo::TestSet(int bufID, int index)
 {
@@ -1568,7 +1568,7 @@ bool CBufUndo::TestSet(int bufID, int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zafixov·nÌ poslednÌho z·znamu o zmÏnÏ
+// zafixov√°n√≠ posledn√≠ho z√°znamu o zm√¨n√¨
 
 void CBufUndo::Fixup()
 {
@@ -1584,7 +1584,7 @@ void CBufUndo::Fixup()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯ehr·tÌ jednÈ poloûky
+// p√∏ehr√°t√≠ jedn√© polo≈æky
 
 void CBufUndo::Play(UNDOITEM* item)
 {

@@ -1,7 +1,7 @@
 
 /***************************************************************************\
 *																			*
-*								Editor zvukù								*
+*								Editor zvukÃ¹								*
 *																			*
 \***************************************************************************/
 
@@ -9,40 +9,40 @@ namespace EditSound
 {
 	extern HWND DispWnd;				// okno displeje
 
-// inicializace pøi startu
+// inicializace pÃ¸i startu
 	void StartInit();
 
-// zahájení editace
+// zahÃ¡jenÃ­ editace
 	void BegEdit(int index);
 
-// pøesun okna displeje
+// pÃ¸esun okna displeje
 	HDWP MoveDisp(HDWP hdwp);
 
-// nastavení èasového údaje (v sekundách)
+// nastavenÃ­ Ã¨asovÃ©ho Ãºdaje (v sekundÃ¡ch)
 	void DispSet(int time);
 
-// zobrazení délky zvuku
+// zobrazenÃ­ dÃ©lky zvuku
 	void DispLength();
 
-// zobrazení
+// zobrazenÃ­
 	void Disp();
 
-// obsluha èasovaèe (TRUE=obsloueno)
+// obsluha Ã¨asovaÃ¨e (TRUE=obslouÅ¾eno)
 	BOOL OnTimer(UINT timerID);
 
-// start pøehrávání
+// start pÃ¸ehrÃ¡vÃ¡nÃ­
 	void OnPlay();
 
-// pozastavení nahrávání, pøehrávání
+// pozastavenÃ­ nahrÃ¡vÃ¡nÃ­, pÃ¸ehrÃ¡vÃ¡nÃ­
 	void OnPause();
 
-// zastavení nahrávání i pøehrávání
+// zastavenÃ­ nahrÃ¡vÃ¡nÃ­ i pÃ¸ehrÃ¡vÃ¡nÃ­
 	void OnStop();
 
-// pøepnutí pøíznaku opakování
+// pÃ¸epnutÃ­ pÃ¸Ã­znaku opakovÃ¡nÃ­
 	void OnLoop();
 
-// start nahrávání
+// start nahrÃ¡vÃ¡nÃ­
 	void OnRecord();
 
 // aktualizace voleb
@@ -51,7 +51,7 @@ namespace EditSound
 // kopie bloku
 	void Copy();
 
-// navrácení bloku
+// navrÃ¡cenÃ­ bloku
 	void Paste();
 
 // aktualizace voleb bloku

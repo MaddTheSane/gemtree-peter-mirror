@@ -12,35 +12,35 @@ namespace HistEdit
 {
 
 /////////////////////////////////////////////////////////////////////////////
-// poloûka historie editace
+// polo≈æka historie editace
 
 typedef struct HISTITEM_ {
-	int		BufID;						// editovan˝ buffer
-	int		Index;						// editovan· poloûka (-2 = obr·zek sprajtu)
-	int		Select;						// aktivnÌ poloûka editoru programu
-	int		First;						// hornÌ ¯·dek v programu
-	int		Left;						// lev˝ poË·tek obr·zku
-	int		Bottom;						// spodnÌ poË·tek obr·zku
-	int		Sprite;						// index sprajtu editovanÈho obr·zku
-	int		Picture;					// editovan˝ obr·zek sprajtu (relativnÏ)
+	int		BufID;						// editovan√Ω buffer
+	int		Index;						// editovan√° polo≈æka (-2 = obr√°zek sprajtu)
+	int		Select;						// aktivn√≠ polo≈æka editoru programu
+	int		First;						// horn√≠ √∏√°dek v programu
+	int		Left;						// lev√Ω po√®√°tek obr√°zku
+	int		Bottom;						// spodn√≠ po√®√°tek obr√°zku
+	int		Sprite;						// index sprajtu editovan√©ho obr√°zku
+	int		Picture;					// editovan√Ω obr√°zek sprajtu (relativn√¨)
 } HISTITEM;
 
-#define SIZEOFHISTITEM (8*sizeof(int))	// velikost poloûky
+#define SIZEOFHISTITEM (8*sizeof(int))	// velikost polo≈æky
 
-#define MAXHISTITEM 128					// maxim·lnÌ poËet poloûek v bufferu
+#define MAXHISTITEM 128					// maxim√°ln√≠ po√®et polo≈æek v bufferu
 
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-HISTITEM*	m_Buf = NULL;				// buffer poloûek historie
-int			m_Num = 0;					// poËet poloûek v bufferu historie
+HISTITEM*	m_Buf = NULL;				// buffer polo≈æek historie
+int			m_Num = 0;					// po√®et polo≈æek v bufferu historie
 int			m_Max = 0;					// velikost bufferu historie
-int			m_Akt = 0;					// aktivnÌ poloûka v bufferu
-int			m_Fill = FALSE;				// probÌh· navracenÌ historie
+int			m_Akt = 0;					// aktivn√≠ polo≈æka v bufferu
+int			m_Fill = FALSE;				// prob√≠h√° navracen√≠ historie
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vynulov·nÌ bufferu historie
+// vynulov√°n√≠ bufferu historie
 
 void DelAll()
 {
@@ -55,7 +55,7 @@ void DelAll()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ jednÈ poloûky z bufferu
+// zru≈°en√≠ jedn√© polo≈æky z bufferu
 
 void Del(int index)
 {
@@ -74,24 +74,24 @@ void Del(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûek v bufferu (vËetnÏ editovanÈ) podle dat (pro sprajt pic=-1 vöechny obr·zky)
-// p¯i chybÏ pamÏti vracÌ FALSE
+// zru≈°en√≠ polo≈æek v bufferu (v√®etn√¨ editovan√©) podle dat (pro sprajt pic=-1 v≈°echny obr√°zky)
+// p√∏i chyb√¨ pam√¨ti vrac√≠ FALSE
 
 bool Del(int bufID, int index, int sprite, int pic)
 {
-// kontrola, zda je reûim editace a zda je to platn˝ buffer
+// kontrola, zda je re≈æim editace a zda je to platn√Ω buffer
 	if (!ProgMode || (bufID < 0)) return true;
 
-// p¯Ìprava ukazatele poloûek
+// p√∏√≠prava ukazatele polo≈æek
 	BOOL update = FALSE;
 	int i = m_Num - 1;
 	HISTITEM* item = m_Buf + i;
 
-// cyklus p¯es vöechny poloûky dol˘
+// cyklus p√∏es v≈°echny polo≈æky dol√π
 	for (; i >= 0; i--)
 	{
 
-// kontrola, zda je to hledan· poloûka
+// kontrola, zda je to hledan√° polo≈æka
 		if	(
 				(item->Index == index) &&
 				(item->BufID == bufID) &&
@@ -108,7 +108,7 @@ bool Del(int bufID, int index, int sprite, int pic)
 				)
 			)
 
-// vypuötÏnÌ poloûky z bufferu
+// vypu≈°t√¨n√≠ polo≈æky z bufferu
 		{
 			Del(i);
 			item = m_Buf + i;
@@ -117,7 +117,7 @@ bool Del(int bufID, int index, int sprite, int pic)
 		item--;
 	}
 
-// redukce duplikovan˝ch poloûek
+// redukce duplikovan√Ωch polo≈æek
 	if (update)
 	{
 		i = m_Num - 1;
@@ -144,7 +144,7 @@ bool Del(int bufID, int index, int sprite, int pic)
 		}
 	}
 
-// kontrola, zda to je editovan· poloûka
+// kontrola, zda to je editovan√° polo≈æka
 	if	(
 			(EditItem == index) &&
 			(EditBuf == bufID) &&
@@ -162,7 +162,7 @@ bool Del(int bufID, int index, int sprite, int pic)
 		)
 	{
 
-// nenÌ-li v bufferu û·dn· poloûka, navr·cenÌ hlavnÌho editoru
+// nen√≠-li v bufferu ≈æ√°dn√° polo≈æka, navr√°cen√≠ hlavn√≠ho editoru
 		if (m_Num == 0)
 		{
 			m_Fill = TRUE;
@@ -173,7 +173,7 @@ bool Del(int bufID, int index, int sprite, int pic)
 		}
 		else
 
-// jinak navr·cenÌ z aktivnÌho ukazatele
+// jinak navr√°cen√≠ z aktivn√≠ho ukazatele
 		{
 			if (m_Akt >= m_Num)
 			{
@@ -195,7 +195,7 @@ bool Del(int bufID, int index, int sprite, int pic)
 
 void Update()
 {
-// kontrola, zda je reûim editace
+// kontrola, zda je re≈æim editace
 	if (!ProgMode) return;
 
 // update voleb
@@ -205,24 +205,24 @@ void Update()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uloûenÌ editovanÈho prvku do bufferu historie
+// ulo≈æen√≠ editovan√©ho prvku do bufferu historie
 
 void Push()
 {
-// kontrola, zda je reûim editace
+// kontrola, zda je re≈æim editace
 	if (!ProgMode) return;
 
-// kontrola, zda nenÌ ukl·d·nÌ p¯Ìp. zda to nenÌ prvnÌ editace
+// kontrola, zda nen√≠ ukl√°d√°n√≠ p√∏√≠p. zda to nen√≠ prvn√≠ editace
 	if (m_Fill || (EditBuf < 0)) return;
 
-// omezenÌ poËtu poloûek v bufferu
+// omezen√≠ po√®tu polo≈æek v bufferu
 	if (m_Num >= MAXHISTITEM)
 	{
 		Del(0);
 		Update();
 	}
 
-// kontrola, zda to nenÌ stejn· poloûka
+// kontrola, zda to nen√≠ stejn√° polo≈æka
 	if (m_Akt > 0)
 	{
 		HISTITEM* item = m_Buf + m_Akt - 1;
@@ -246,10 +246,10 @@ void Push()
 		}
 	}
 
-// zruöenÌ poloûek za aktivnÌm ukazatelem
+// zru≈°en√≠ polo≈æek za aktivn√≠m ukazatelem
 	m_Num = m_Akt + 1;
 
-// zvÏtöenÌ bufferu
+// zv√¨t≈°en√≠ bufferu
 	if (m_Num > m_Max)
 	{
 		m_Max += 128;
@@ -265,7 +265,7 @@ void Push()
 		m_Buf = buf;
 	}
 
-// ˙schova poloûky do bufferu
+// √∫schova polo≈æky do bufferu
 	HISTITEM* item = m_Buf + m_Akt;
 	item->BufID = EditBuf;
 	item->Index = EditItem;
@@ -277,7 +277,7 @@ void Push()
 		item->Select = BufEdi.Select();
 	}
 
-// zv˝öenÌ ukazatele poloûek
+// zv√Ω≈°en√≠ ukazatele polo≈æek
 	m_Akt++;
 
 // aktualizace voleb
@@ -286,20 +286,20 @@ void Push()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// n·vrat editovanÈho prvku z bufferu historie (z aktivnÌho ukazatele)
+// n√°vrat editovan√©ho prvku z bufferu historie (z aktivn√≠ho ukazatele)
 
 void Pop()
 {
-// kontrola, zda je reûim editace
+// kontrola, zda je re≈æim editace
 	if (!ProgMode) return;
 
-// kontrola povolenÌ operace
+// kontrola povolen√≠ operace
 	if (m_Fill || (m_Akt >= m_Num)) return;
 
-// p¯Ìznak probÌhajÌcÌ zmÏny
+// p√∏√≠znak prob√≠haj√≠c√≠ zm√¨ny
 	m_Fill = TRUE;
 
-// nastavenÌ editovanÈ poloûky
+// nastaven√≠ editovan√© polo≈æky
 	HISTITEM* item = m_Buf + m_Akt;
 	if ((item->BufID == BufPicID) && (item->Index == -2))
 	{
@@ -317,7 +317,7 @@ void Pop()
 // aktualizace fokusu
 	ProgSetFocus();
 
-// p¯Ìznak ukonËenÌ zmÏny
+// p√∏√≠znak ukon√®en√≠ zm√¨ny
 	m_Fill = FALSE;
 
 // aktualizace voleb
@@ -326,24 +326,24 @@ void Pop()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯edeöl· historie
+// p√∏ede≈°l√° historie
 
 void OnPrev() 
 {
-// kontrola, zda je reûim editace
+// kontrola, zda je re≈æim editace
 	if (!ProgMode) return;
 
 // kontrola, zda je co navracet
 	if (m_Akt == 0) return;
 
-// ˙schova aktu·lnÌho stavu, je-li na konci
+// √∫schova aktu√°ln√≠ho stavu, je-li na konci
 	if (m_Akt == m_Num)
 	{
 		Push();
 		m_Akt = m_Num-1;
 	}
 
-// ˙schova kurzoru v bufferu
+// √∫schova kurzoru v bufferu
 	if ((m_Akt < m_Num) &&
 		(EditMode == BufEdiID) &&
 		(m_Buf[m_Akt].BufID < PROGBUFNUM))
@@ -356,23 +356,23 @@ void OnPrev()
 	m_Akt--;
 	if (m_Akt < 0) m_Akt = 0;
 
-// obnovenÌ poloûky
+// obnoven√≠ polo≈æky
 	Pop();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// n·sledujÌcÌ historie
+// n√°sleduj√≠c√≠ historie
 
 void OnNext() 
 {
-// kontrola, zda je reûim editace
+// kontrola, zda je re≈æim editace
 	if (!ProgMode) return;
 
 // kontrola, zda je co navracet
 	if (m_Akt >= m_Num - 1) return;
 
-// ˙schova kurzoru v bufferu
+// √∫schova kurzoru v bufferu
 	if ((m_Akt < m_Num) &&
 		(EditMode == BufEdiID) &&
 		(m_Buf[m_Akt].BufID < PROGBUFNUM))
@@ -384,7 +384,7 @@ void OnNext()
 // posun ukazatele
 	m_Akt++;
 
-// obnovenÌ poloûky
+// obnoven√≠ polo≈æky
 	Pop();
 }
 

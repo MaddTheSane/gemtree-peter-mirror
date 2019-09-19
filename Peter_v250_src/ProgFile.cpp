@@ -10,27 +10,27 @@
 char DATAsize[] = "DATAsize";					// identifikace adresy a velikosti dat v Loaderu
 
 IMAGE_SECTION_HEADER	PetProgHeader = {
-	'.', 'p', 'e', 't', 'p', 'r', 'g', 0,		// jméno sekce
-	0,											// virtuální velikost
-	0,											// virtuální adresa
+	'.', 'p', 'e', 't', 'p', 'r', 'g', 0,		// jmÃ©no sekce
+	0,											// virtuÃ¡lnÃ­ velikost
+	0,											// virtuÃ¡lnÃ­ adresa
 	0,											// velikost dat v souboru
 	0,											// offset dat v souboru
-	0,											// ... (offset relokací)
-	0,											// ... (offset èísel øádkù)
-	0,											// ... (poèet relokací)
-	0,											// ... (poèet èísel øádkù)
+	0,											// ... (offset relokacÃ­)
+	0,											// ... (offset Ã¨Ã­sel Ã¸Ã¡dkÃ¹)
+	0,											// ... (poÃ¨et relokacÃ­)
+	0,											// ... (poÃ¨et Ã¨Ã­sel Ã¸Ã¡dkÃ¹)
 	IMAGE_SCN_MEM_READ |						// vlastnosti
 	IMAGE_SCN_MEM_DISCARDABLE |
 	IMAGE_SCN_CNT_INITIALIZED_DATA
 };
 
-// velikost stránky zarovnávání pamìti
+// velikost strÃ¡nky zarovnÃ¡vÃ¡nÃ­ pamÃ¬ti
 #ifndef _M_ALPHA
-#define	PAGESIZE		0x1000			// velikost alokaèní stránky pro ostatní procesory (4096)
-#define PAGEFILE		0x1000			// velikost stránky v souboru
+#define	PAGESIZE		0x1000			// velikost alokaÃ¨nÃ­ strÃ¡nky pro ostatnÃ­ procesory (4096)
+#define PAGEFILE		0x1000			// velikost strÃ¡nky v souboru
 #else
-#define	PAGESIZE		0x2000			// velikost alokaèní stránky pro procesor Alpha (8192)
-#define PAGEFILE		0x2000			// velikost stránky v souboru
+#define	PAGESIZE		0x2000			// velikost alokaÃ¨nÃ­ strÃ¡nky pro procesor Alpha (8192)
+#define PAGEFILE		0x2000			// velikost strÃ¡nky v souboru
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
@@ -59,8 +59,8 @@ void CPetProg::DelAll()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// buffer programu - pøidání poloky na konec bufferu (vrací index poloky)
-// pøi chybì pamìti vrací -1
+// buffer programu - pÃ¸idÃ¡nÃ­ poloÅ¾ky na konec bufferu (vracÃ­ index poloÅ¾ky)
+// pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ -1
 
 int _fastcall CPetProg::Add(const PETPROG* item)
 {
@@ -83,7 +83,7 @@ int _fastcall CPetProg::Add(const PETPROG* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// buffer textù importu - konstruktor a destruktor
+// buffer textÃ¹ importu - konstruktor a destruktor
 
 CBufChar::CBufChar()
 {
@@ -110,8 +110,8 @@ void CBufChar::DelAll()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// buffer textù importu - pøidání poloky na konec bufferu (vrací index)
-// pøi chybì pamìti vrací -1
+// buffer textÃ¹ importu - pÃ¸idÃ¡nÃ­ poloÅ¾ky na konec bufferu (vracÃ­ index)
+// pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ -1
 
 int _fastcall CBufChar::Add(const char* text, int len)
 {
@@ -160,7 +160,7 @@ int _fastcall CBufChar::Add(const CText& text)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// buffer textù - konstruktor a destruktor
+// buffer textÃ¹ - konstruktor a destruktor
 
 CBufChar2::CBufChar2()
 {
@@ -189,8 +189,8 @@ void CBufChar2::DelAll()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// buffer textù - pøidání poloky na konec bufferu (vrací index)
-// pøi chybì pamìti vrací -1
+// buffer textÃ¹ - pÃ¸idÃ¡nÃ­ poloÅ¾ky na konec bufferu (vracÃ­ index)
+// pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ -1
 
 int _fastcall CBufChar2::Add(const char* text, int len)
 {
@@ -237,99 +237,99 @@ int _fastcall CBufChar2::Add(const CText& text)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha souborù
+// obsluha souborÃ¹
 
 namespace ProgFile
 {
 
 /////////////////////////////////////////////////////////////////////////////
-// lokální a globální promìnné
+// lokÃ¡lnÃ­ a globÃ¡lnÃ­ promÃ¬nnÃ©
 
-CText	FileName;				// jméno souboru
-int		FileOffset;				// offset záhlaví v souboru
+CText	FileName;				// jmÃ©no souboru
+int		FileOffset;				// offset zÃ¡hlavÃ­ v souboru
 int		FileVer;				// verze souboru
 HANDLE	hFile;					// handle souboru
-PETHEAD* FileHead = NULL;		// buffer s naètenım záhlavím souboru
-BOOL	Release = FALSE;		// uloit distribuèní verzi programu
-int		MainFnc = 0;			// index hlavní globální funkce
+PETHEAD* FileHead = NULL;		// buffer s naÃ¨tenÃ½m zÃ¡hlavÃ­m souboru
+BOOL	Release = FALSE;		// uloÅ¾it distribuÃ¨nÃ­ verzi programu
+int		MainFnc = 0;			// index hlavnÃ­ globÃ¡lnÃ­ funkce
 
-// údaje pro uloení
+// Ãºdaje pro uloÅ¾enÃ­
 int		SaveFileSize;			// offset velikosti dat v souboru
-int		SaveVirtSize;			// offset virtuální velikosti v souboru
-int		SaveVirtSize2;			// offset virtuální velikosti v souboru 2 (pro program)
-int		SaveDataOff;			// offset zaèátku dat v souboru
-int		SaveDataVirt;			// virtuální adresa dat
+int		SaveVirtSize;			// offset virtuÃ¡lnÃ­ velikosti v souboru
+int		SaveVirtSize2;			// offset virtuÃ¡lnÃ­ velikosti v souboru 2 (pro program)
+int		SaveDataOff;			// offset zaÃ¨Ã¡tku dat v souboru
+int		SaveDataVirt;			// virtuÃ¡lnÃ­ adresa dat
 int		SaveImageSize;			// offset velikosti obrazu v souboru
 
-// chyba pøi naèítání
-BOOL	LoadError = FALSE;		// pøíznak chyby pøi naèítání (nekompatibilní soubor)
+// chyba pÃ¸i naÃ¨Ã­tÃ¡nÃ­
+BOOL	LoadError = FALSE;		// pÃ¸Ã­znak chyby pÃ¸i naÃ¨Ã­tÃ¡nÃ­ (nekompatibilnÃ­ soubor)
 
-// mapování interních funkcí na okno struktur a tøíd
-int*	ImportBlok = NULL;		// tabulka blokù pro import funkcí
-int*	ImportIndex = NULL;		// tabulka indexù pro import funkcí
+// mapovÃ¡nÃ­ internÃ­ch funkcÃ­ na okno struktur a tÃ¸Ã­d
+int*	ImportBlok = NULL;		// tabulka blokÃ¹ pro import funkcÃ­
+int*	ImportIndex = NULL;		// tabulka indexÃ¹ pro import funkcÃ­
 
-// pøemapování blokù a indexù
-int		RemapBlokNum = 0;		// poèet pøemapovávanıch bufferù
-int*	RemapBlok = NULL;		// tabulka pro pøemapování blokù (-1=není blok)
-int*	RemapIndexNum = NULL;	// poèty pøemapovávanıch indexù
-int**	RemapIndex = NULL;		// tabulky pro pøemapování indexù
+// pÃ¸emapovÃ¡nÃ­ blokÃ¹ a indexÃ¹
+int		RemapBlokNum = 0;		// poÃ¨et pÃ¸emapovÃ¡vanÃ½ch bufferÃ¹
+int*	RemapBlok = NULL;		// tabulka pro pÃ¸emapovÃ¡nÃ­ blokÃ¹ (-1=nenÃ­ blok)
+int*	RemapIndexNum = NULL;	// poÃ¨ty pÃ¸emapovÃ¡vanÃ½ch indexÃ¹
+int**	RemapIndex = NULL;		// tabulky pro pÃ¸emapovÃ¡nÃ­ indexÃ¹
 
-int		IconInx;				// index bufferu s ikonami (-1 = není)
-int		TextInx;				// index bufferu s texty (-1 = není)
+int		IconInx;				// index bufferu s ikonami (-1 = nenÃ­)
+int		TextInx;				// index bufferu s texty (-1 = nenÃ­)
 
-// buffer s naètenımi daty
-BYTE*	DatBuf = NULL;			// datovı buffer
+// buffer s naÃ¨tenÃ½mi daty
+BYTE*	DatBuf = NULL;			// datovÃ½ buffer
 BYTE*	DatEnd = NULL;			// adresa konce dat v bufferu
-int		DatNum = 0;				// délka dat v bufferu
-int		DatVerze = 0;			// verze dat (napø. 1 = komprimace, pro texty kódová stránka)
+int		DatNum = 0;				// dÃ©lka dat v bufferu
+int		DatVerze = 0;			// verze dat (napÃ¸. 1 = komprimace, pro texty kÃ³dovÃ¡ strÃ¡nka)
 
-// ukládání souboru
-// Bìhem obsluhy ukládání se nesmí dekomprimovat ikony ani obrázky!
-BOOL	Saving = FALSE;			// probíhá ukládání nebo naèítání
-BOOL	SaveOK = TRUE;			// pøíznak ukládání OK
+// uklÃ¡dÃ¡nÃ­ souboru
+// BÃ¬hem obsluhy uklÃ¡dÃ¡nÃ­ se nesmÃ­ dekomprimovat ikony ani obrÃ¡zky!
+BOOL	Saving = FALSE;			// probÃ­hÃ¡ uklÃ¡dÃ¡nÃ­ nebo naÃ¨Ã­tÃ¡nÃ­
+BOOL	SaveOK = TRUE;			// pÃ¸Ã­znak uklÃ¡dÃ¡nÃ­ OK
 
-CBufIndex	SaveRemapInt;		// buffer mapování interních funkcí
-CBufChar	SaveInt;			// buffer textù interních funkcí
+CBufIndex	SaveRemapInt;		// buffer mapovÃ¡nÃ­ internÃ­ch funkcÃ­
+CBufChar	SaveInt;			// buffer textÃ¹ internÃ­ch funkcÃ­
 
-CBufIndex	SaveRemapObj;		// buffer mapování globálních objektù
-CPetProg	SaveObj;			// buffer globálních objektù
+CBufIndex	SaveRemapObj;		// buffer mapovÃ¡nÃ­ globÃ¡lnÃ­ch objektÃ¹
+CPetProg	SaveObj;			// buffer globÃ¡lnÃ­ch objektÃ¹
 
-CBufIndex	SaveRemapLoc;		// buffer mapování lokálních objektù
-CPetProg	SaveLoc;			// buffer lokálních objektù
+CBufIndex	SaveRemapLoc;		// buffer mapovÃ¡nÃ­ lokÃ¡lnÃ­ch objektÃ¹
+CPetProg	SaveLoc;			// buffer lokÃ¡lnÃ­ch objektÃ¹
 
-CBufIndex	SaveRemapEdi;		// buffer mapování programu
+CBufIndex	SaveRemapEdi;		// buffer mapovÃ¡nÃ­ programu
 CPetProg	SaveEdi;			// buffer programu
 
-CBufIndex	SaveRemapReal;		// buffer mapování èísel
-CBufReal	SaveReal;			// buffer èísel
+CBufIndex	SaveRemapReal;		// buffer mapovÃ¡nÃ­ Ã¨Ã­sel
+CBufReal	SaveReal;			// buffer Ã¨Ã­sel
 
-CBufIndex	SaveRemapText;		// buffer mapování textù
-CBufChar2	SaveText[JAZYKNUM];	// buffer textù
+CBufIndex	SaveRemapText;		// buffer mapovÃ¡nÃ­ textÃ¹
+CBufChar2	SaveText[JAZYKNUM];	// buffer textÃ¹
 
-CBufIndex	SaveRemapBool;		// buffer mapování logickıch promìnnıch
-CBufBool	SaveBool;			// buffer logickıch promìnnıch
+CBufIndex	SaveRemapBool;		// buffer mapovÃ¡nÃ­ logickÃ½ch promÃ¬nnÃ½ch
+CBufBool	SaveBool;			// buffer logickÃ½ch promÃ¬nnÃ½ch
 
-CBufIndex	SaveRemapIcon;		// buffer mapování ikon
+CBufIndex	SaveRemapIcon;		// buffer mapovÃ¡nÃ­ ikon
 CBufIcon	SaveIcon;			// buffer ikon
 int			SaveIconSize;		// velikost bloku ikon
 
-CBufIndex	SaveRemapMap;		// buffer mapování ploch
+CBufIndex	SaveRemapMap;		// buffer mapovÃ¡nÃ­ ploch
 CBufMap		SaveMap;			// buffer ploch
 int			SaveMapSize;		// velikost bloku ploch
 
-CBufIndex	SaveRemapSprite;	// buffer mapování sprajtù
-CBufSprite	SaveSprite;			// buffer sprajtù
-int			SaveSpriteSize;		// velikost bloku sprajtù
+CBufIndex	SaveRemapSprite;	// buffer mapovÃ¡nÃ­ sprajtÃ¹
+CBufSprite	SaveSprite;			// buffer sprajtÃ¹
+int			SaveSpriteSize;		// velikost bloku sprajtÃ¹
 
-CBufIndex	SaveRemapSound;		// buffer mapování zvukù
-CBufSound	SaveSound;			// buffer zvukù
-int			SaveSoundSize;		// velikost bloku zvukù
+CBufIndex	SaveRemapSound;		// buffer mapovÃ¡nÃ­ zvukÃ¹
+CBufSound	SaveSound;			// buffer zvukÃ¹
+int			SaveSoundSize;		// velikost bloku zvukÃ¹
 
-CBufIndex	SaveRemapPicture;	// buffer mapování obrázkù
-CBufPic		SavePicture;		// buffer obrázkù
-int			SavePictureSize;	// velikost bloku obrázkù
+CBufIndex	SaveRemapPicture;	// buffer mapovÃ¡nÃ­ obrÃ¡zkÃ¹
+CBufPic		SavePicture;		// buffer obrÃ¡zkÃ¹
+int			SavePictureSize;	// velikost bloku obrÃ¡zkÃ¹
 
-CBufIndex	SaveRemapMusic;		// buffer mapování hudby
+CBufIndex	SaveRemapMusic;		// buffer mapovÃ¡nÃ­ hudby
 CBufMusic	SaveMusic;			// buffer hudby
 int			SaveMusicSize;		// velikost bloku hudby
 
@@ -337,21 +337,21 @@ int			SaveMusicSize;		// velikost bloku hudby
 
 /***************************************************************************\
 *																			*
-*									uloení									*
+*									uloÅ¾enÃ­									*
 *																			*
 \***************************************************************************/
 
 
 /////////////////////////////////////////////////////////////////////////////
-// záhlaví pro uloení (poèet poloek NUMOFINDEX), pouívá se i pro naèítání!
+// zÃ¡hlavÃ­ pro uloÅ¾enÃ­ (poÃ¨et poloÅ¾ek NUMOFINDEX), pouÅ¾Ã­vÃ¡ se i pro naÃ¨Ã­tÃ¡nÃ­!
 
 const PETHEAD SaveHead = {
 	'P','E','T',									// identifikace
 	1,												// verze souboru
 	VerzeCom + VerzeRel*10 + VerzeMin*100 + VerzeMaj*1000, // verze editoru
 	0,												// parametry
-	SIZEOFPETHEAD + NUMOFINDEX*SIZEOFPETINDEX,		// offset zaèátku dat
-	NUMOFINDEX,										// poèet datovıch blokù
+	SIZEOFPETHEAD + NUMOFINDEX*SIZEOFPETINDEX,		// offset zaÃ¨Ã¡tku dat
+	NUMOFINDEX,										// poÃ¨et datovÃ½ch blokÃ¹
 	0,0,'I','M','P','O','R','T',' ',' ',0,0,0,0,	//  0: blok IMPORT
 	0,0,'C','L','A','S','S',' ',' ',' ',0,0,0,0,	//  1: blok CLASS
 	0,0,'G','L','O','B','A','L',' ',' ',0,0,0,0,	//  2: blok GLOBAL
@@ -371,7 +371,7 @@ const PETHEAD SaveHead = {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// zápis dat do vıstupního souboru
+// zÃ¡pis dat do vÃ½stupnÃ­ho souboru
 
 void SaveWriteFile(void* buf, int len)
 {
@@ -385,14 +385,14 @@ void SaveWriteFile(void* buf, int len)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zápis zavadìèe programu
+// zÃ¡pis zavadÃ¬Ã¨e programu
 
 void SaveLoader(BOOL mini)
 {
-// pøi chybì konec
+// pÃ¸i chybÃ¬ konec
 	if (!SaveOK) return;
 
-// detekce, zda lze pouít minimalizovanou verzi zavadìèe (bez ukládání a naèítání obrázkù, zvukù, hudby, ikon, bez sítì a portù a bez Direct3D)
+// detekce, zda lze pouÅ¾Ã­t minimalizovanou verzi zavadÃ¬Ã¨e (bez uklÃ¡dÃ¡nÃ­ a naÃ¨Ã­tÃ¡nÃ­ obrÃ¡zkÃ¹, zvukÃ¹, hudby, ikon, bez sÃ­tÃ¬ a portÃ¹ a bez Direct3D)
 	int loadid = IDN_LOADERM;
 
 	if (!mini)
@@ -471,7 +471,7 @@ void SaveLoader(BOOL mini)
 			case IDF_FILE_MUSIC:
 			case IDF_FILE_ICON:
 
-		// sériové porty
+		// sÃ©riovÃ© porty
 			case IDF_COM_GROUP:
 			case IDF_COM_OPEN:
 			case IDF_COM_CLOSE:
@@ -673,7 +673,7 @@ void SaveLoader(BOOL mini)
 		}
 	}
 
-// naètení zavadìèe
+// naÃ¨tenÃ­ zavadÃ¬Ã¨e
 	CResource loader;
 	if (!loader.OpenCopy(loadid, _T("LOADER")))
 	{
@@ -691,21 +691,21 @@ CHYBA:
 		return;
 	}
 
-// uloení palet (barva 0 bude èerná)
+// uloÅ¾enÃ­ palet (barva 0 bude Ã¨ernÃ¡)
 	MemCopy(bmp->bmiColors, StdBitmapInfo->bmiColors, 4*256);
 	*(DWORD*)bmp->bmiColors = 0;
 
-// pøenesení dat ikony
+// pÃ¸enesenÃ­ dat ikony
 	CIcon ico = Icon.Get(BufObj.GetIcon(MainFnc));
 	if (!ico.CopyWrite() || !ico.DeComp()) goto CHYBA;
 	MemCopy(bmp->bmiColors + 256, ico.DataData(), ICONSIZE);
 
-// pøíprava ke korekci pozadí ikony
+// pÃ¸Ã­prava ke korekci pozadÃ­ ikony
 	BYTE stradac;
 	BYTE* src = (BYTE*)(bmp->bmiColors + 256);
 	BYTE* dst = src + ICONSIZE;
 
-// korekce pozadí ikony
+// korekce pozadÃ­ ikony
 	int i;
 	for (i = ICONSIZE/8; i > 0; i--)
 	{
@@ -725,26 +725,26 @@ CHYBA:
 		dst++;
 	}
 
-// adresa záhlaví NT
+// adresa zÃ¡hlavÃ­ NT
 	IMAGE_NT_HEADERS* hdr = loader.NTHeader();
 	if (hdr == NULL) goto CHYBA;
 
-// pøíprava offsetu zaèátku dat v souboru
+// pÃ¸Ã­prava offsetu zaÃ¨Ã¡tku dat v souboru
 	SaveDataOff = (loader.Size() + (PAGEFILE-1)) & ~(PAGEFILE-1);
 
-// pøíprava virtuální adresy dat, úschova offsetu dat
+// pÃ¸Ã­prava virtuÃ¡lnÃ­ adresy dat, Ãºschova offsetu dat
 	SaveDataVirt = (hdr->OptionalHeader.SizeOfImage + PAGESIZE-1) & ~(PAGESIZE-1);
 	SaveImageSize = (BYTE*)&hdr->OptionalHeader.SizeOfImage - loader.Adr();
 
-// adresa vkládané sekce
+// adresa vklÃ¡danÃ© sekce
 	IMAGE_SECTION_HEADER* sec = (IMAGE_SECTION_HEADER*)((BYTE*)(&hdr->OptionalHeader) 
 		+ hdr->FileHeader.SizeOfOptionalHeader + hdr->FileHeader.NumberOfSections 
 		* sizeof(IMAGE_SECTION_HEADER));
 
-// zvıšení èítaèe sekcí
+// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e sekcÃ­
 	hdr->FileHeader.NumberOfSections++;
 
-// nastavení sekce
+// nastavenÃ­ sekce
 	MemCopy(sec, &PetProgHeader, IMAGE_SIZEOF_SECTION_HEADER);
 	if (Release)
 	{
@@ -756,17 +756,17 @@ CHYBA:
 		sec->Name[6] = _T('s');
 	}
 
-// nastavení offsetu zaèátku dat v souboru
+// nastavenÃ­ offsetu zaÃ¨Ã¡tku dat v souboru
 	sec->PointerToRawData = SaveDataOff;
 	sec->VirtualAddress = SaveDataVirt;
 	SaveFileSize = (BYTE*)&sec->SizeOfRawData - loader.Adr();
 	SaveVirtSize = (BYTE*)&sec->Misc.VirtualSize - loader.Adr();
 
-// nalezení datové sekce
+// nalezenÃ­ datovÃ© sekce
 	sec = loader.NTSection(hdr, ".data");
 	if (sec == NULL) goto CHYBA;
 
-// nalezení identifikátoru adresy dat
+// nalezenÃ­ identifikÃ¡toru adresy dat
 	dst = loader.Adr() + sec->PointerToRawData;
 	i = sec->SizeOfRawData;
 	if (loader.IsNotValid(dst, i)) goto CHYBA;
@@ -785,12 +785,12 @@ CHYBA:
 		dst++;
 	}
 
-// nastavení virtuální adresy
+// nastavenÃ­ virtuÃ¡lnÃ­ adresy
 	if (!MemCompare(dst, DATAsize, 8)) goto CHYBA;
 	*(DWORD*)dst = SaveDataVirt;
 	SaveVirtSize2 = dst - loader.Adr() + 4;
 
-// nastavení konzolového módu
+// nastavenÃ­ konzolovÃ©ho mÃ³du
 	if (!mini)
 	{
 		ASSERT(hdr->OptionalHeader.Subsystem == IMAGE_SUBSYSTEM_WINDOWS_GUI);
@@ -807,10 +807,10 @@ CHYBA:
 		}
 	}
 
-// zápis zavadìèe
+// zÃ¡pis zavadÃ¬Ã¨e
 	SaveWriteFile(loader.Adr(), loader.Size());
 
-// zarovnání délky zavadìèe
+// zarovnÃ¡nÃ­ dÃ©lky zavadÃ¬Ã¨e
 	i = SaveDataOff - loader.Size();
 	if (i > 0)
 	{
@@ -821,14 +821,14 @@ CHYBA:
 		MemFree(dst);
 	}
 
-// zrušení bufferu zavadìèe
+// zruÅ¡enÃ­ bufferu zavadÃ¬Ã¨e
 	loader.CloseCopy();
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání ikony k seznamu pro uloení (pøi chybì pamìti vrací FALSE)
-// (pro neplatnou ikonu dosadí prázdnou ikonu)
+// pÃ¸idÃ¡nÃ­ ikony k seznamu pro uloÅ¾enÃ­ (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE)
+// (pro neplatnou ikonu dosadÃ­ prÃ¡zdnou ikonu)
 
 bool SaveAddIcon(int icon)
 {
@@ -839,11 +839,11 @@ bool SaveAddIcon(int icon)
 		return false;
 	}
 
-// test, zda ikona ještì není uloena
+// test, zda ikona jeÅ¡tÃ¬ nenÃ­ uloÅ¾ena
 	if (SaveRemapIcon[icon] < 0)
 	{
 
-// pøidání ikony k seznamu
+// pÃ¸idÃ¡nÃ­ ikony k seznamu
 		int i = SaveIcon.Add(Icon.Get(icon));
 		if (i < 0)
 		{
@@ -860,7 +860,7 @@ bool SaveAddIcon(int icon)
 			return false;
 		}
 
-// zvıšení èítaèe velikosti dat ikon
+// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e velikosti dat ikon
 		SaveIconSize += n + 4;
 	}
 	return true;
@@ -868,8 +868,8 @@ bool SaveAddIcon(int icon)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání plochy k seznamu pro uloení (pøi chybì pamìti vrací FALSE)
-// (pro neplatnou plochu dosadí prázdnou plochu)
+// pÃ¸idÃ¡nÃ­ plochy k seznamu pro uloÅ¾enÃ­ (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE)
+// (pro neplatnou plochu dosadÃ­ prÃ¡zdnou plochu)
 
 bool SaveAddMap(int map)
 {
@@ -880,11 +880,11 @@ bool SaveAddMap(int map)
 		return false;
 	}
 
-// test, zda plocha ještì není uloena
+// test, zda plocha jeÅ¡tÃ¬ nenÃ­ uloÅ¾ena
 	if (SaveRemapMap[map] < 0)
 	{
 
-// pøidání plochy k seznamu
+// pÃ¸idÃ¡nÃ­ plochy k seznamu
 		int i = SaveMap.Add(Map.Get(map));
 		if (i < 0)
 		{
@@ -893,11 +893,11 @@ bool SaveAddMap(int map)
 		}
 		SaveRemapMap[map] = i;
 
-// zvıšení èítaèe velikosti dat
+// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e velikosti dat
 		int ii = SaveMap[i].Width() * SaveMap[i].Height();
 		SaveMapSize += ii * SIZEOFMAPITEM + SIZEOFMAPPROG;
 
-// pøíprava k uloení ikon (budou se modifikovat indexy ikon)
+// pÃ¸Ã­prava k uloÅ¾enÃ­ ikon (budou se modifikovat indexy ikon)
 		if (!SaveMap[i].CopyWrite())
 		{
 			SaveOK = FALSE;
@@ -905,19 +905,19 @@ bool SaveAddMap(int map)
 		}
 		MAPITEM* mapitem = SaveMap[i].DataData();
 
-// cyklus pøes všechny ikony
+// cyklus pÃ¸es vÅ¡echny ikony
 		for (; ii > 0; ii--)
 		{
 
-// ikona k uloení
+// ikona k uloÅ¾enÃ­
 			long icon = mapitem->Icon;
 			ASSERT(Icon.IsValid(icon));
 
-// uloení ikony
+// uloÅ¾enÃ­ ikony
 			if (!SaveAddIcon(icon)) return false;
 			mapitem->Icon = SaveRemapIcon[icon];
 
-// zvıšení ukazatele ikon
+// zvÃ½Å¡enÃ­ ukazatele ikon
 			mapitem++;
 		}
 	}
@@ -926,7 +926,7 @@ bool SaveAddMap(int map)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání textu k seznamu pro uloení (pøi chybì pamìti vrací FALSE)
+// pÃ¸idÃ¡nÃ­ textu k seznamu pro uloÅ¾enÃ­ (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE)
 
 bool SaveAddText(int txt)
 {
@@ -937,15 +937,15 @@ bool SaveAddText(int txt)
 		return false;
 	}
 
-// test, zda text ještì není uloen
+// test, zda text jeÅ¡tÃ¬ nenÃ­ uloÅ¾en
 	if (SaveRemapText[txt] < 0)
 	{
 
-// cyklus pøes všechny jazyky
+// cyklus pÃ¸es vÅ¡echny jazyky
 		for (int jaz = 0; jaz < JAZYKNUM; jaz++)
 		{
 
-// pøidání textu k seznamu
+// pÃ¸idÃ¡nÃ­ textu k seznamu
 			int j = SaveText[jaz].Size();
 
 			int i = SaveText[jaz].Add(Text.Get(txt).MultiText(jaz));
@@ -957,7 +957,7 @@ bool SaveAddText(int txt)
 			}
 			SaveRemapText[txt] = i;
 
-// zakódování textu pro distribuèní verzi
+// zakÃ³dovÃ¡nÃ­ textu pro distribuÃ¨nÃ­ verzi
 			if (Release)
 			{
 				for (j = j + 4; j < SaveText[jaz].Size(); j++)
@@ -972,8 +972,8 @@ bool SaveAddText(int txt)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøidání sprajtu k seznamu pro uloení (pøi chybì pamìti vrací FALSE)
-// (pro neplatnı sprajt dosadí prázdnı sprajt)
+// pÃ¸idÃ¡nÃ­ sprajtu k seznamu pro uloÅ¾enÃ­ (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE)
+// (pro neplatnÃ½ sprajt dosadÃ­ prÃ¡zdnÃ½ sprajt)
 
 bool SaveAddSprite(int spr)
 {
@@ -984,11 +984,11 @@ bool SaveAddSprite(int spr)
 		return false;
 	}
 
-// test, zda sprajt ještì není uloen
+// test, zda sprajt jeÅ¡tÃ¬ nenÃ­ uloÅ¾en
 	if (SaveRemapSprite[spr] < 0)
 	{
 
-// pøidání sprajtu k seznamu
+// pÃ¸idÃ¡nÃ­ sprajtu k seznamu
 		int i = SaveSprite.Add(Sprite.Get(spr));
 		if (i < 0)
 		{
@@ -997,15 +997,15 @@ bool SaveAddSprite(int spr)
 		}
 		SaveRemapSprite[spr] = i;
 
-// pøíprava k uloení obrázkù sprajtu
+// pÃ¸Ã­prava k uloÅ¾enÃ­ obrÃ¡zkÃ¹ sprajtu
 		int n = SaveSprite[i].Faze() * SaveSprite[i].Smer();
 		SaveSpriteSize += SIZEOFSPRITEPROG;
 
-// cyklus pøes všechny obrázky sprajtu
+// cyklus pÃ¸es vÅ¡echny obrÃ¡zky sprajtu
 		for (int ii = 0; ii < n; ii++)
 		{
 
-// komprese obrázku sprajtu
+// komprese obrÃ¡zku sprajtu
 			int j = SaveSprite[i][ii].Comp();
 			if (j < 0)
 			{
@@ -1013,7 +1013,7 @@ bool SaveAddSprite(int spr)
 				return false;
 			}
 
-// zvıšení èítaèe velikosti
+// zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e velikosti
 			SaveSpriteSize += j + 4;
 		}
 	}
@@ -1022,30 +1022,30 @@ bool SaveAddSprite(int spr)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vygenerování programu
+// vygenerovÃ¡nÃ­ programu
 
 void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 {
-// pøi chybì konec
+// pÃ¸i chybÃ¬ konec
 	if (!SaveOK) return;
 
-// lokální promìnné
-	int			index;				// index zdrojové poloky
-	PROGITEM*	src;				// adresa zdrojové poloky
-	PETPROG		dst;				// cílová poloka
-	int			inx;				// index datové poloky
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
+	int			index;				// index zdrojovÃ© poloÅ¾ky
+	PROGITEM*	src;				// adresa zdrojovÃ© poloÅ¾ky
+	PETPROG		dst;				// cÃ­lovÃ¡ poloÅ¾ka
+	int			inx;				// index datovÃ© poloÅ¾ky
 
-// vıchozí index poloky
+// vÃ½chozÃ­ index poloÅ¾ky
 	index = buf->First();
 
-// cyklus pøes všechny platné poloky
+// cyklus pÃ¸es vÅ¡echny platnÃ© poloÅ¾ky
 	while (buf->IsValid(index))
 	{
 
-// adresa zdrojové poloky
+// adresa zdrojovÃ© poloÅ¾ky
 		src = &buf->At(index);
 
-// základní inicializace ukazatelù
+// zÃ¡kladnÃ­ inicializace ukazatelÃ¹
 		dst.Param = 0;
 		dst.RefBlok = src->RefBlok;
 		dst.RefIndex = src->RefIndex;
@@ -1066,35 +1066,35 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 		if (src->Param & PR_INTERN)		dst.Param |= PETPROG_INTERN;
 		if (src->Param & PR_OFF_DEP)	dst.Param |= PETPROG_OFF_DEP;
 
-// zachovat poøadí pøemapování bufferù!
+// zachovat poÃ¸adÃ­ pÃ¸emapovÃ¡nÃ­ bufferÃ¹!
 
-// pøemapování reference do bufferu globálních objektù
+// pÃ¸emapovÃ¡nÃ­ reference do bufferu globÃ¡lnÃ­ch objektÃ¹
 		if (dst.RefBlok == BufObjID)
 		{
 			dst.RefIndex = SaveRemapObj[dst.RefIndex];
 		}
 
-// pøemapování reference do bufferu lokálních objektù
+// pÃ¸emapovÃ¡nÃ­ reference do bufferu lokÃ¡lnÃ­ch objektÃ¹
 		if (dst.RefBlok == BufLocID)
 		{
 			dst.RefIndex = SaveRemapLoc[dst.RefIndex];
 		}
 
-// pøi odkazu reference na buffer struktur zmìna na interní prvek
+// pÃ¸i odkazu reference na buffer struktur zmÃ¬na na internÃ­ prvek
 		if (dst.RefBlok == BufStrID)
 		{
 			dst.RefBlok = BufStr[dst.RefIndex].RefBlok;
 			dst.RefIndex = BufStr[dst.RefIndex].RefIndex;
 		}
 
-// pøi odkazu reference na buffer tøíd zmìna na interní prvek
+// pÃ¸i odkazu reference na buffer tÃ¸Ã­d zmÃ¬na na internÃ­ prvek
 		if (dst.RefBlok == BufClsID)
 		{
 			dst.RefBlok = BufCls[dst.RefIndex].RefBlok;
 			dst.RefIndex = BufCls[dst.RefIndex].RefIndex;
 		}
 
-// pøi odkazu reference na interní prvek doplnìní textu importu funkce
+// pÃ¸i odkazu reference na internÃ­ prvek doplnÃ¬nÃ­ textu importu funkce
 		if (dst.RefBlok == BufIntID)
 		{
 			int i = SaveRemapInt[dst.RefIndex];
@@ -1111,7 +1111,7 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 			dst.RefIndex = i;
 		}
 
-// pøi odkazu ikony na ikonu doplnìní ikony
+// pÃ¸i odkazu ikony na ikonu doplnÃ¬nÃ­ ikony
 		if (dst.Icon >= 0)
 		{
 			if (!Release ||
@@ -1129,7 +1129,7 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 			}
 		}
 
-// pøi odkazu jména na text doplnìní textu
+// pÃ¸i odkazu jmÃ©na na text doplnÃ¬nÃ­ textu
 		if (dst.Name >= 0)
 		{
 			if (!Release ||
@@ -1255,7 +1255,7 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 		}
 		dst.DatIndex = inx;
 
-// pøidání cílové poloky
+// pÃ¸idÃ¡nÃ­ cÃ­lovÃ© poloÅ¾ky
 		remap->At(index) = prg->Add(&dst);
 		if (remap->At(index) < 0)
 		{
@@ -1263,7 +1263,7 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 			return;
 		}
 
-// pøemapování z lokálních objektù do editoru
+// pÃ¸emapovÃ¡nÃ­ z lokÃ¡lnÃ­ch objektÃ¹ do editoru
 		if ((buf->BufID() == BufEdiID) && (src->Parent < 0))
 		{
 			int inx = BufLoc.SrcDat(BufEdiID, index);
@@ -1286,7 +1286,7 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 			}
 		}
 
-// pøemapování z globálních objektù do lokálních objektù
+// pÃ¸emapovÃ¡nÃ­ z globÃ¡lnÃ­ch objektÃ¹ do lokÃ¡lnÃ­ch objektÃ¹
 		if ((buf->BufID() == BufLocID) && (src->Parent < 0))
 		{
 			int inx = BufObj.SrcDat(BufLocID, index);
@@ -1309,20 +1309,20 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 			}
 		}
 
-// pokus o vnoøení do potomkù
-		index = src->Child;				// vnoøení na potomka
-		if (index < 0)					// není ádnı potomek?
+// pokus o vnoÃ¸enÃ­ do potomkÃ¹
+		index = src->Child;				// vnoÃ¸enÃ­ na potomka
+		if (index < 0)					// nenÃ­ Å¾Ã¡dnÃ½ potomek?
 		{
 
-// nejsou-li potomci, zkusí se následující poloka
-			index = src->Next;			// pokraèování další polokou
+// nejsou-li potomci, zkusÃ­ se nÃ¡sledujÃ­cÃ­ poloÅ¾ka
+			index = src->Next;			// pokraÃ¨ovÃ¡nÃ­ dalÅ¡Ã­ poloÅ¾kou
 
-// není-li ani další poloka, vrátí se k rodièi
+// nenÃ­-li ani dalÅ¡Ã­ poloÅ¾ka, vrÃ¡tÃ­ se k rodiÃ¨i
 			while ((index < 0) && (src->Parent >= 0))
 			{
-				index = src->Parent;	// návrat k rodièi
-				src = &(buf->At(index)); // adresa rodièe
-				index = src->Next;		// další poloka za rodièem
+				index = src->Parent;	// nÃ¡vrat k rodiÃ¨i
+				src = &(buf->At(index)); // adresa rodiÃ¨e
+				index = src->Next;		// dalÅ¡Ã­ poloÅ¾ka za rodiÃ¨em
 			}
 		}
 	}
@@ -1330,29 +1330,29 @@ void SavePrg(CPetProg* prg, CBufProg* buf, CBufIndex* remap)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení programu (prázdné jméno = implicitní, rel = uloit distribuèní verzi)
+// uloÅ¾enÃ­ programu (prÃ¡zdnÃ© jmÃ©no = implicitnÃ­, rel = uloÅ¾it distribuÃ¨nÃ­ verzi)
 
 void Save(BOOL mini, CText name, BOOL rel)
 {
-// kontrola, zda je reim editace
+// kontrola, zda je reÅ¾im editace
 	if (!ProgMode || Saving) return;
 
-// zafixování zmìn UNDO
+// zafixovÃ¡nÃ­ zmÃ¬n UNDO
 	Undo.Fixup();
 
-// zapnutí pøíznaku ukládání
+// zapnutÃ­ pÃ¸Ã­znaku uklÃ¡dÃ¡nÃ­
 	Saving = TRUE;
 	SaveOK = TRUE;
 	hFile = NULL;
 	Release = rel;
 
-// zapnutí kurzoru èekání
+// zapnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	BeginWaitCursor();
 
-// index hlavní funkce
+// index hlavnÃ­ funkce
 	MainFnc = BufObj.SrcDat(BufLocID, 0);
 
-// inicializace statickıch objektù
+// inicializace statickÃ½ch objektÃ¹
 	if (!SaveRemapInt.NumClear(BufInt.Max())) SaveOK = FALSE;
 	SaveInt.DelAll();
 
@@ -1380,18 +1380,18 @@ void Save(BOOL mini, CText name, BOOL rel)
 	if (!SaveRemapIcon.NumClear(Icon.Max())) SaveOK = FALSE;
 	SaveIcon.DelAll();
 	SaveIconSize = 0;
-	SaveAddIcon(0);			// ikona pozadí (index 0)
+	SaveAddIcon(0);			// ikona pozadÃ­ (index 0)
 
 	if (!SaveRemapMap.NumClear(Map.Max())) SaveOK = FALSE;
 	SaveMap.DelAll();
 	SaveMapSize = 0;
-	SaveAddMap(0);			// implicitní plocha (index 0)
+	SaveAddMap(0);			// implicitnÃ­ plocha (index 0)
 
 	if (!SaveRemapSprite.NumClear(Sprite.Max())) SaveOK = FALSE;
 	SaveSprite.DelAll();
 	SaveSpriteSize = 0;
-	SaveAddSprite(0);		// implicitní sprajt - Petøík (index 0)
-	SaveAddSprite(1);		// implicitní sprajt - Lucinka (index 1)
+	SaveAddSprite(0);		// implicitnÃ­ sprajt - PetÃ¸Ã­k (index 0)
+	SaveAddSprite(1);		// implicitnÃ­ sprajt - Lucinka (index 1)
 
 	if (!SaveRemapSound.NumClear(Sound.Max())) SaveOK = FALSE;
 	SaveSound.DelAll();
@@ -1405,7 +1405,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 	SaveMusic.DelAll();
 	SaveMusicSize = 0;
 
-// pøíprava jména souboru
+// pÃ¸Ã­prava jmÃ©na souboru
 	if (name.IsEmpty())
 	{
 		CreatePath(ProgramPath + Cesta);
@@ -1416,7 +1416,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		FileName = name;
 	}
 
-// pøíprava bufferu záhlaví souboru
+// pÃ¸Ã­prava bufferu zÃ¡hlavÃ­ souboru
 	FileHead = (PETHEAD*)MemSize(FileHead, sizeof(SaveHead));
 	*FileHead = SaveHead;
 	if (Release)
@@ -1434,7 +1434,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// jméno pøechodného souboru
+// jmÃ©no pÃ¸echodnÃ©ho souboru
 	if (name.IsEmpty())
 	{
 		CreatePath(BackupPath + Cesta);
@@ -1444,14 +1444,14 @@ void Save(BOOL mini, CText name, BOOL rel)
 	txt0 = Jmeno.MultiText((int)JAZYK000);
 	CText BackName = BackupPath + Cesta + txt0;
 
-// kontrola, zda vıstupní soubor není chránìn proti zápisu
+// kontrola, zda vÃ½stupnÃ­ soubor nenÃ­ chrÃ¡nÃ¬n proti zÃ¡pisu
 	if (SaveOK)
 	{
 		int attrib = (int)::GetFileAttributes(FileName);
 		SaveOK = ((attrib == -1) || ((attrib & FILE_ATTRIBUTE_READONLY) == 0));
 	}
 
-// zálohování starého souboru
+// zÃ¡lohovÃ¡nÃ­ starÃ©ho souboru
 	BOOL backup = FALSE;
 	if (SaveOK && name.IsEmpty())
 	{
@@ -1460,7 +1460,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		backup = TRUE;
 	}
 
-// vytvoøení vıstupního souboru
+// vytvoÃ¸enÃ­ vÃ½stupnÃ­ho souboru
 	hFile = INVALID_HANDLE_VALUE;
 	if (SaveOK)
 	{
@@ -1469,15 +1469,15 @@ void Save(BOOL mini, CText name, BOOL rel)
 		SaveOK = (hFile != INVALID_HANDLE_VALUE);
 	}
 
-// zápis zavadìèe programu
+// zÃ¡pis zavadÃ¬Ã¨e programu
 	SaveLoader(mini);
 
-// vygenerování bufferù programu
+// vygenerovÃ¡nÃ­ bufferÃ¹ programu
 	SavePrg(&SaveObj, &BufObj, &SaveRemapObj);
 	SavePrg(&SaveLoc, &BufLoc, &SaveRemapLoc);
 	SavePrg(&SaveEdi, &BufEdi, &SaveRemapEdi);
 
-// pøíprava a uloení záhlaví souboru
+// pÃ¸Ã­prava a uloÅ¾enÃ­ zÃ¡hlavÃ­ souboru
 	if (Release) SaveInt.DelAll();
 	FileHead->piImport.Pocet = SaveInt.Num();
 	FileHead->piImport.Delka = SaveInt.Size();
@@ -1538,29 +1538,29 @@ void Save(BOOL mini, CText name, BOOL rel)
 	FileHead->piPalette.Pocet = StdColors;
 	FileHead->piPalette.Delka = StdColors * sizeof(RGBQUAD);
 
-// zápis záhlaví souboru
+// zÃ¡pis zÃ¡hlavÃ­ souboru
 	SaveWriteFile(FileHead, sizeof(SaveHead));
 
-// zápis bufferu textù interních funkcí
+// zÃ¡pis bufferu textÃ¹ internÃ­ch funkcÃ­
 	SaveWriteFile(SaveInt.Data(), SaveInt.Size());
 
-// zápis bufferu globálních objektù
+// zÃ¡pis bufferu globÃ¡lnÃ­ch objektÃ¹
 	SaveWriteFile(SaveObj.Data(), SaveObj.Num() * SIZEOFPETPROG);
 
-// zápis bufferu lokálních objektù
+// zÃ¡pis bufferu lokÃ¡lnÃ­ch objektÃ¹
 	SaveWriteFile(SaveLoc.Data(), SaveLoc.Num() * SIZEOFPETPROG);
 
-// zápis bufferu editoru
+// zÃ¡pis bufferu editoru
 	SaveWriteFile(SaveEdi.Data(), SaveEdi.Num() * SIZEOFPETPROG);
 
-// zápis bufferu èísel
+// zÃ¡pis bufferu Ã¨Ã­sel
 	SaveWriteFile(SaveReal.Data(), SaveReal.Num() * sizeof(double));
 
-// zápis bufferu textù
+// zÃ¡pis bufferu textÃ¹
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// Na pøechodnou dobu (pro zabránìní havárií u starších verzí) bude
-// jako 1. text ukládán fiktivní jazyk s prázdnımi texty a LangID = -1
+// Na pÃ¸echodnou dobu (pro zabrÃ¡nÃ¬nÃ­ havÃ¡riÃ­ u starÅ¡Ã­ch verzÃ­) bude
+// jako 1. text uklÃ¡dÃ¡n fiktivnÃ­ jazyk s prÃ¡zdnÃ½mi texty a LangID = -1
 //	char* bb = (char*)MemGet(ii);
 //	MemFill(bb, ii, 0);
 //	SaveWriteFile(bb, ii);
@@ -1586,7 +1586,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis bufferu logickıch hodnot
+// zÃ¡pis bufferu logickÃ½ch hodnot
 	if (SaveOK)
 	{
 		int i = SaveBool.Num();
@@ -1603,7 +1603,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis bufferu ikon
+// zÃ¡pis bufferu ikon
 	if (SaveOK)
 	{
 		char* data = (char*)MemGet(SaveIconSize);
@@ -1626,7 +1626,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis bufferu ploch
+// zÃ¡pis bufferu ploch
 	if (SaveOK)
 	{
 		char* data = (char*)MemGet(SaveMapSize);
@@ -1652,7 +1652,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis bufferu obrázkù
+// zÃ¡pis bufferu obrÃ¡zkÃ¹
 	if (SaveOK)
 	{
 		char* data = (char*)MemGet(SavePictureSize);
@@ -1679,7 +1679,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis bufferu sprajtù
+// zÃ¡pis bufferu sprajtÃ¹
 	if (SaveOK)
 	{
 		char* data = (char*)MemGet(SaveSpriteSize);
@@ -1718,7 +1718,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis bufferu zvukù
+// zÃ¡pis bufferu zvukÃ¹
 	if (SaveOK)
 	{
 		char* data = (char*)MemGet(SaveSoundSize);
@@ -1749,7 +1749,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis bufferu hudby
+// zÃ¡pis bufferu hudby
 	if (SaveOK)
 	{
 		char* data = (char*)MemGet(SaveMusicSize);
@@ -1774,15 +1774,15 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis palet
+// zÃ¡pis palet
 	SaveWriteFile(StdBitmapInfo->bmiColors, StdColors*sizeof(RGBQUAD));
 
-// zjištìní velikosti dat
+// zjiÅ¡tÃ¬nÃ­ velikosti dat
 	int oldsize = ::SetFilePointer(hFile, 0, NULL, FILE_CURRENT);
 	if (oldsize < 0) oldsize = 0;
 	int newsize = (oldsize + 0x1ff) & ~0x1ff;
 
-// zarovnání na sektor
+// zarovnÃ¡nÃ­ na sektor
 	long n = newsize - oldsize;
 	if (n > 0)
 	{
@@ -1795,7 +1795,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		}
 	}
 
-// zápis virtuální velikosti
+// zÃ¡pis virtuÃ¡lnÃ­ velikosti
 	if (SaveOK)
 	{
 		n = oldsize - SaveDataOff;
@@ -1805,7 +1805,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		SaveWriteFile(&n, 4);
 	}
 
-// zápis velikosti dat
+// zÃ¡pis velikosti dat
 	if (SaveOK)
 	{
 		n = newsize - SaveDataOff;
@@ -1813,7 +1813,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 		SaveWriteFile(&n, 4);
 	}
 
-// zápis velikosti obrazu
+// zÃ¡pis velikosti obrazu
 	if (SaveOK)
 	{
 		n = (SaveDataVirt + (oldsize - SaveDataOff) + PAGESIZE-1) & ~(PAGESIZE-1);
@@ -1821,33 +1821,33 @@ void Save(BOOL mini, CText name, BOOL rel)
 		SaveWriteFile(&n, 4);
 	}
 
-// uzavøení souboru
+// uzavÃ¸enÃ­ souboru
 	if (hFile != NULL)
 	{
 		::CloseHandle(hFile);
 	}
 
-// pøi chybì navrácení starého souboru
+// pÃ¸i chybÃ¬ navrÃ¡cenÃ­ starÃ©ho souboru
 	if (!SaveOK && backup)
 	{
 		::DeleteFile(FileName);
 		::MoveFile(BackName, FileName);
 	}
 
-// pøi úspìšné operaci resetování pøíznaku modifikace
+// pÃ¸i ÃºspÃ¬Å¡nÃ© operaci resetovÃ¡nÃ­ pÃ¸Ã­znaku modifikace
 	if (SaveOK && !Release)
 	{
 		ResModi();
 		JmenoLoad = JmenoSave;
 	}
 
-// vypnutí kurzoru èekání
+// vypnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	EndWaitCursor();
 
-// pøíznak konce ukládání
+// pÃ¸Ã­znak konce uklÃ¡dÃ¡nÃ­
 	Saving = FALSE;
 
-// chybové hlášení
+// chybovÃ© hlÃ¡Å¡enÃ­
 	if (!SaveOK && !MemoryError)
 	{
 		::DialogBoxParam(
@@ -1858,7 +1858,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 			(LPARAM)IDN_WRITEERR);
 	}
 
-// vyprázdnìní bufferù
+// vyprÃ¡zdnÃ¬nÃ­ bufferÃ¹
 	SaveRemapInt.DelAll();
 	SaveInt.DelAll();
 	SaveRemapObj.DelAll();
@@ -1891,7 +1891,7 @@ void Save(BOOL mini, CText name, BOOL rel)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení nespustitelnì (miniverze)
+// uloÅ¾enÃ­ nespustitelnÃ¬ (miniverze)
 
 void SaveMini()
 {
@@ -1899,15 +1899,15 @@ void SaveMini()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení spustitelnì (maxiverze)
+// uloÅ¾enÃ­ spustitelnÃ¬ (maxiverze)
 
 void SaveMaxi()
 {
 	Save(FALSE, EmptyText, FALSE);
 }
 
-// pøíprava masky souborù
-// øetìzec _T("Programy (*.exe)\0*.EXE\0Všechny soubory (*.*)\0*.*\0\0")
+// pÃ¸Ã­prava masky souborÃ¹
+// Ã¸etÃ¬zec _T("Programy (*.exe)\0*.EXE\0VÅ¡echny soubory (*.*)\0*.*\0\0")
 void InitFiltr(TCHAR* filtr)
 {
 	CText txt;
@@ -1945,16 +1945,16 @@ void InitFiltr(TCHAR* filtr)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení do jiného jména
+// uloÅ¾enÃ­ do jinÃ©ho jmÃ©na
 
 void SaveAs()
 {
-// pøíprava filtru
+// pÃ¸Ã­prava filtru
 	TCHAR* filtr = (TCHAR*)MemGet(1024);
 	if (filtr == NULL) return;
 	InitFiltr(filtr);
 
-// pøíprava struktury k zadání jména souboru
+// pÃ¸Ã­prava struktury k zadÃ¡nÃ­ jmÃ©na souboru
 	OPENFILENAME ofn;
 	MemFill(&ofn, sizeof(ofn), 0);
 	ofn.lStructSize = sizeof(ofn);
@@ -1962,23 +1962,23 @@ void SaveAs()
 	ofn.lpstrFilter = filtr;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_NOCHANGEDIR | OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST;
 
-// pøíprava titulku okna
+// pÃ¸Ã­prava titulku okna
 	CText txt;
 	txt.Load(IDN_SAVE_AS1);
 	ofn.lpstrTitle = txt;
 
-// aktuální adresáø
+// aktuÃ¡lnÃ­ adresÃ¡Ã¸
 	CText path = ProgramPath + Cesta;
 	ofn.lpstrInitialDir = path;
 
-// pøednastavené jméno souboru
+// pÃ¸ednastavenÃ© jmÃ©no souboru
 	CText name;
 	name = Jmeno.MultiText();
 	name.FileName(0);
 	int n = name.Length() + 1;
 	if (n < 1024) n = 1024;
 
-// buffer k zadání jména souboru
+// buffer k zadÃ¡nÃ­ jmÃ©na souboru
 	TCHAR* file = (TCHAR*)MemGet(n*sizeof(TCHAR));
 	if (file == NULL)
 	{
@@ -1990,7 +1990,7 @@ void SaveAs()
 	ofn.lpstrFile = file;
 	ofn.nMaxFile = n;
 
-// zadání jména souboru
+// zadÃ¡nÃ­ jmÃ©na souboru
 	if (!::GetSaveFileName(&ofn))
 	{
 		MemFree(filtr);
@@ -1998,7 +1998,7 @@ void SaveAs()
 		return;
 	}
 
-// korekce jména souboru
+// korekce jmÃ©na souboru
 	MemFree(filtr);
 	name = file;
 	MemFree(file);
@@ -2010,22 +2010,22 @@ void SaveAs()
 		name += TextExe;
 	}
 
-// uloení souboru
+// uloÅ¾enÃ­ souboru
 	Save(FALSE, name, FALSE);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uloení distribuèní verze
+// uloÅ¾enÃ­ distribuÃ¨nÃ­ verze
 
 void SaveRel()
 {
-// pøíprava filtru
+// pÃ¸Ã­prava filtru
 	TCHAR* filtr = (TCHAR*)MemGet(1024);
 	if (filtr == NULL) return;
 	InitFiltr(filtr);
 
-// pøíprava struktury k zadání jména souboru
+// pÃ¸Ã­prava struktury k zadÃ¡nÃ­ jmÃ©na souboru
 	OPENFILENAME ofn;
 	MemFill(&ofn, sizeof(ofn), 0);
 	ofn.lStructSize = sizeof(ofn);
@@ -2033,19 +2033,19 @@ void SaveRel()
 	ofn.lpstrFilter = filtr;
 	ofn.Flags = OFN_HIDEREADONLY | OFN_NOCHANGEDIR | OFN_OVERWRITEPROMPT | OFN_PATHMUSTEXIST;
 
-// pøíprava titulku okna
+// pÃ¸Ã­prava titulku okna
 	CText txt;
 	txt.Load(IDN_SAVE_DISTR1);
 	ofn.lpstrTitle = txt;
 
-// pøednastavené jméno souboru
+// pÃ¸ednastavenÃ© jmÃ©no souboru
 	CText name;
 	name = Jmeno.MultiText();
 	name.FileName(0);
 	int n = name.Length() + 1;
 	if (n < 1024) n = 1024;
 
-// buffer k zadání jména souboru
+// buffer k zadÃ¡nÃ­ jmÃ©na souboru
 	TCHAR* file = (TCHAR*)MemGet(n*sizeof(TCHAR));
 	if (file == NULL)
 	{
@@ -2057,7 +2057,7 @@ void SaveRel()
 	ofn.lpstrFile = file;
 	ofn.nMaxFile = n;
 
-// zadání jména souboru
+// zadÃ¡nÃ­ jmÃ©na souboru
 	if (!::GetSaveFileName(&ofn))
 	{
 		MemFree(filtr);
@@ -2065,7 +2065,7 @@ void SaveRel()
 		return;
 	}
 
-// korekce jména souboru
+// korekce jmÃ©na souboru
 	MemFree(filtr);
 	name = file;
 	MemFree(file);
@@ -2077,7 +2077,7 @@ void SaveRel()
 		name += TextExe;
 	}
 
-// test, zda soubor ji existuje
+// test, zda soubor jiÅ¾ existuje
 	if ((int)::GetFileAttributes(name) != -1)
 	{
 		CText txt1;
@@ -2088,33 +2088,33 @@ void SaveRel()
 		if (::MessageBox(MainFrame, txt2, txt1, MB_OKCANCEL | MB_ICONWARNING) != IDOK) return;
 	}
 
-// uloení souboru
+// uloÅ¾enÃ­ souboru
 	Save(FALSE, name, TRUE);
 }
 
 /***************************************************************************\
 *																			*
-*									naètení									*
+*									naÃ¨tenÃ­									*
 *																			*
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace konverzní tabulky importu funkcí (vrací FALSE=chyba pamìti)
-// - voláno i z obsluhy clipboardu (funkce Paste)
+// inicializace konverznÃ­ tabulky importu funkcÃ­ (vracÃ­ FALSE=chyba pamÃ¬ti)
+// - volÃ¡no i z obsluhy clipboardu (funkce Paste)
 
 BOOL InitImportTab()
 {
-// vytvoøení bufferu blokù pro import funkcí
+// vytvoÃ¸enÃ­ bufferu blokÃ¹ pro import funkcÃ­
 	int* buf = (int*)MemSize(ImportBlok, FncNum * sizeof(int));
 	if (buf == NULL) return FALSE;
 	ImportBlok = buf;
 
-// vytvoøení bufferu indexù pro import funkcí
+// vytvoÃ¸enÃ­ bufferu indexÃ¹ pro import funkcÃ­
 	buf = (int*)MemSize(ImportIndex, FncNum * sizeof(int));
 	if (buf == NULL) return FALSE;
 	ImportIndex = buf;
 
-// nasmìrování poloek bufferù importu na interní buffer
+// nasmÃ¬rovÃ¡nÃ­ poloÅ¾ek bufferÃ¹ importu na internÃ­ buffer
 	int i;
 	for (i = FncNum-1; i >= 0; i--)
 	{
@@ -2122,7 +2122,7 @@ BOOL InitImportTab()
 		ImportIndex[i] = i;
 	}
 
-// nasmìrování funkcí na buffer struktur (hledat od konce - pouije se tak první vıskyt)
+// nasmÃ¬rovÃ¡nÃ­ funkcÃ­ na buffer struktur (hledat od konce - pouÅ¾ije se tak prvnÃ­ vÃ½skyt)
 	for (i = BufStr.Max()-1; i >= 0; i--)
 	{
 		if (BufStr.IsValid(i) && ((BufStr[i].Param & PR_NOREFER) == 0))
@@ -2134,7 +2134,7 @@ BOOL InitImportTab()
 		}
 	}
 
-// nasmìrování funkcí na buffer tøíd (hledat od konce - pouije se tak vıchozí poloka tøídy objektu)
+// nasmÃ¬rovÃ¡nÃ­ funkcÃ­ na buffer tÃ¸Ã­d (hledat od konce - pouÅ¾ije se tak vÃ½chozÃ­ poloÅ¾ka tÃ¸Ã­dy objektu)
 	for (i = BufCls.Max()-1; i >= 0; i--)
 	{
 		if (BufCls.IsValid(i))
@@ -2153,7 +2153,7 @@ BOOL InitImportTab()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení dat ze souboru (vrací TRUE=operace OK)
+// naÃ¨tenÃ­ dat ze souboru (vracÃ­ TRUE=operace OK)
 
 BOOL FileLoadRead(void* buf, int len)
 {
@@ -2170,7 +2170,7 @@ BOOL FileLoadRead(void* buf, int len)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení ukazatele v souboru
+// nastavenÃ­ ukazatele v souboru
 
 void FilePointer(int off)
 {
@@ -2179,15 +2179,15 @@ void FilePointer(int off)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení záhlaví souboru (vrací TRUE=operace OK)
+// naÃ¨tenÃ­ zÃ¡hlavÃ­ souboru (vracÃ­ TRUE=operace OK)
 
 BOOL FileLoadHead()
 {
-// buffer k naètení DOS záhlaví souboru
+// buffer k naÃ¨tenÃ­ DOS zÃ¡hlavÃ­ souboru
 	IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)MemGet(sizeof(IMAGE_DOS_HEADER));
 	if (dos == NULL) return FALSE;
 
-// naètení a kontrola DOS záhlaví souboru
+// naÃ¨tenÃ­ a kontrola DOS zÃ¡hlavÃ­ souboru
 	FilePointer(0);
 	if (!FileLoadRead(dos, sizeof(IMAGE_DOS_HEADER)) ||
 		(dos->e_magic != IMAGE_DOS_SIGNATURE) ||
@@ -2198,15 +2198,15 @@ BOOL FileLoadHead()
 		return FALSE;
 	}
 
-// uvolnìní DOS záhlaví souboru
-	int off = dos->e_lfanew;						// offset NT záhlaví
+// uvolnÃ¬nÃ­ DOS zÃ¡hlavÃ­ souboru
+	int off = dos->e_lfanew;						// offset NT zÃ¡hlavÃ­
 	MemFree(dos);
 
-// buffer k naètení NT záhlaví souboru
+// buffer k naÃ¨tenÃ­ NT zÃ¡hlavÃ­ souboru
 	IMAGE_NT_HEADERS* hdr = (IMAGE_NT_HEADERS*)MemGet(sizeof(IMAGE_NT_HEADERS));
 	if (hdr == NULL) return FALSE;
 
-// naètení a kontrola NT záhlaví souboru
+// naÃ¨tenÃ­ a kontrola NT zÃ¡hlavÃ­ souboru
 	FilePointer(off);
 	if (!FileLoadRead(hdr, sizeof(IMAGE_NT_HEADERS)) ||
 		(hdr->Signature != IMAGE_NT_SIGNATURE))
@@ -2215,26 +2215,26 @@ BOOL FileLoadHead()
 		return FALSE;
 	}
 
-// uvolnìní NT záhlaví
-	int opt = hdr->FileHeader.SizeOfOptionalHeader; // velikost volitelné sekce
-	int sekce = hdr->FileHeader.NumberOfSections;	// poèet sekcí
+// uvolnÃ¬nÃ­ NT zÃ¡hlavÃ­
+	int opt = hdr->FileHeader.SizeOfOptionalHeader; // velikost volitelnÃ© sekce
+	int sekce = hdr->FileHeader.NumberOfSections;	// poÃ¨et sekcÃ­
 	off += ((DWORD)(&hdr->OptionalHeader) - (DWORD)hdr + opt);
 	MemFree(hdr);
 
-// kontrola velikosti záhlaví vèetnì sekcí
-	if ((sekce < 1) ||								// minimálnì sekcí
-		(sekce > 1000) ||							// maximálnì sekcí
-		(opt < 50) ||								// minimální velikost záhlaví
-		(opt > 10000))								// maximální velikost záhlaví
+// kontrola velikosti zÃ¡hlavÃ­ vÃ¨etnÃ¬ sekcÃ­
+	if ((sekce < 1) ||								// minimÃ¡lnÃ¬ sekcÃ­
+		(sekce > 1000) ||							// maximÃ¡lnÃ¬ sekcÃ­
+		(opt < 50) ||								// minimÃ¡lnÃ­ velikost zÃ¡hlavÃ­
+		(opt > 10000))								// maximÃ¡lnÃ­ velikost zÃ¡hlavÃ­
 	{
 		return FALSE;
 	}
 
-// buffer k naètení popisovaèù sekcí
+// buffer k naÃ¨tenÃ­ popisovaÃ¨Ã¹ sekcÃ­
 	IMAGE_SECTION_HEADER* sec = (IMAGE_SECTION_HEADER*)MemGet(sekce * IMAGE_SIZEOF_SECTION_HEADER);
 	if (sec == NULL) return FALSE;
 
-// naètení popisovaèù sekcí
+// naÃ¨tenÃ­ popisovaÃ¨Ã¹ sekcÃ­
 	FilePointer(off);
 	if (!FileLoadRead(sec, sekce * IMAGE_SIZEOF_SECTION_HEADER))
 	{
@@ -2242,34 +2242,34 @@ BOOL FileLoadHead()
 		return FALSE;
 	}
 
-// nalezení sekce Petøíka
+// nalezenÃ­ sekce PetÃ¸Ã­ka
 	for (int i = 0; i < sekce; i++)
 	{
 		if (MemCompare(sec[i].Name, PetProgHeader.Name, 8)) break;
 	}
 
-// kontrola, zda byla nalezena sekce Petøíka
+// kontrola, zda byla nalezena sekce PetÃ¸Ã­ka
 	if (i >= sekce)
 	{
 		MemFree(sec);
 		return FALSE;
 	}
 
-// uvolnìní bufferu sekcí
+// uvolnÃ¬nÃ­ bufferu sekcÃ­
 	FileOffset = sec[i].PointerToRawData;
 	MemFree(sec);
 
-// pøíprava bufferu k naètení záhlaví Petøíka
+// pÃ¸Ã­prava bufferu k naÃ¨tenÃ­ zÃ¡hlavÃ­ PetÃ¸Ã­ka
 	MemFree(FileHead);
 	FileHead = (PETHEAD*)MemGet(SIZEOFPETHEAD);
 	if (FileHead == NULL) return FALSE;
 
-// naètení záhlaví Petøíka
+// naÃ¨tenÃ­ zÃ¡hlavÃ­ PetÃ¸Ã­ka
 	FilePointer(FileOffset);
 	if (!FileLoadRead(FileHead, SIZEOFPETHEAD)) return FALSE;
 	RemapBlokNum = FileHead->Pocet;
 
-// kontrola záhlaví PET
+// kontrola zÃ¡hlavÃ­ PET
 	if ((FileHead->Ident[0] != 'P') ||
 		(FileHead->Ident[1] != 'E') ||
 		(FileHead->Ident[2] != 'T') ||
@@ -2277,28 +2277,28 @@ BOOL FileLoadHead()
 		(FileHead->Data < (long)(RemapBlokNum * SIZEOFPETINDEX + SIZEOFPETHEAD)) ||
 		((DWORD)RemapBlokNum > 100)) return FALSE;
 
-// úschova verze souboru
+// Ãºschova verze souboru
 	FileVer = FileHead->Verze;
 
-// nastavení velikosti bufferu a naètení zbytku záhlaví
+// nastavenÃ­ velikosti bufferu a naÃ¨tenÃ­ zbytku zÃ¡hlavÃ­
 	PETHEAD* filehead = (PETHEAD*)MemSize(FileHead, FileHead->Data);
 	if (filehead == NULL) return FALSE;
 	FileHead = filehead;
 	if (!FileLoadRead(FileHead->pi, FileHead->Data - SIZEOFPETHEAD)) return FALSE;
 
-// inicializace bufferu pro pøemapování blokù
+// inicializace bufferu pro pÃ¸emapovÃ¡nÃ­ blokÃ¹
 	int* remapblok = (int*)MemSize(RemapBlok, RemapBlokNum * sizeof(int));
 	if (remapblok == NULL) return FALSE;
 	RemapBlok = remapblok;
 	MemFill(remapblok, RemapBlokNum * sizeof(int), -1);
 
-// inicializace bufferu poètù pro pøemapování indexù
+// inicializace bufferu poÃ¨tÃ¹ pro pÃ¸emapovÃ¡nÃ­ indexÃ¹
 	int* remapindexnum = (int*)MemSize(RemapIndexNum, RemapBlokNum * sizeof(int));
 	if (remapindexnum == NULL) return FALSE;
 	RemapIndexNum = remapindexnum;
 	MemFill(remapindexnum, RemapBlokNum * sizeof(int), 0);
 
-// inicializace bufferu bufferù pro pøemapování indexù
+// inicializace bufferu bufferÃ¹ pro pÃ¸emapovÃ¡nÃ­ indexÃ¹
 	int** remapindex = (int**)MemSize(RemapIndex, RemapBlokNum * sizeof(int*));
 	if (remapindex == NULL) return FALSE;
 	RemapIndex = remapindex;
@@ -2309,41 +2309,41 @@ BOOL FileLoadHead()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nalezení datového bloku (vrací index bloku v záhlaví, -1=nenalezeno)
-// (bufID = index bufferu, itemsize = velikost poloky; 0=promìnlivá)
+// nalezenÃ­ datovÃ©ho bloku (vracÃ­ index bloku v zÃ¡hlavÃ­, -1=nenalezeno)
+// (bufID = index bufferu, itemsize = velikost poloÅ¾ky; 0=promÃ¬nlivÃ¡)
 
 int FileLoadIndex(const char* jmeno, int bufID, int itemsize)
 {
-// lokální promìnné
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
 	int i;										// ukazatel indexu bloku
-	long off = FileHead->Data + FileOffset;		// offset zaèátku bloku
+	long off = FileHead->Data + FileOffset;		// offset zaÃ¨Ã¡tku bloku
 
-// prohledání tabulky popisovaèù datovıch blokù
+// prohledÃ¡nÃ­ tabulky popisovaÃ¨Ã¹ datovÃ½ch blokÃ¹
 	for (i = 0; i < FileHead->Pocet; i++)
 	{
 
-// porovnání identifikátoru jedné poloky
+// porovnÃ¡nÃ­ identifikÃ¡toru jednÃ© poloÅ¾ky
 		if (MemCompare(FileHead->pi[i].Jmeno, jmeno, 8))
 		{
 
-// nastavení ukazatele v souboru na zaèátek dat bloku
+// nastavenÃ­ ukazatele v souboru na zaÃ¨Ã¡tek dat bloku
 			FilePointer(off);
 
-// nastavení mapování bufferu
+// nastavenÃ­ mapovÃ¡nÃ­ bufferu
 			RemapBlok[i] = bufID;
 
-// pøíprava délky dat k naètení
+// pÃ¸Ã­prava dÃ©lky dat k naÃ¨tenÃ­
 			DatNum = FileHead->pi[i].Delka;
 			if (DatNum < 0) DatNum = 0;
 
-// pøíprava poètu poloek
+// pÃ¸Ã­prava poÃ¨tu poloÅ¾ek
 			RemapIndexNum[i] = FileHead->pi[i].Pocet;
 			if (RemapIndexNum[i] < 0) RemapIndexNum[i] = 0;
 
 // verze dat
 			DatVerze = FileHead->pi[i].Verze;
 
-// korekce poètu poloek, je-li známá velikost poloky
+// korekce poÃ¨tu poloÅ¾ek, je-li znÃ¡mÃ¡ velikost poloÅ¾ky
 			if (itemsize > 0)
 			{
 				if ((RemapIndexNum[i]*itemsize) > DatNum)
@@ -2353,7 +2353,7 @@ int FileLoadIndex(const char* jmeno, int bufID, int itemsize)
 				}
 			}
 
-// pøíprava bufferu pro mapování poloek
+// pÃ¸Ã­prava bufferu pro mapovÃ¡nÃ­ poloÅ¾ek
 			int* remapindex = (int*)MemSize(RemapIndex[i], RemapIndexNum[i] * sizeof(int));
 			if (remapindex == NULL)
 			{
@@ -2366,7 +2366,7 @@ int FileLoadIndex(const char* jmeno, int bufID, int itemsize)
 				MemFill(remapindex, RemapIndexNum[i]*sizeof(int), -1);
 			}
 
-// vytvoøení buffer k naètení dat (na konci pojistná rezerva kvùli textùm atd.)
+// vytvoÃ¸enÃ­ buffer k naÃ¨tenÃ­ dat (na konci pojistnÃ¡ rezerva kvÃ¹li textÃ¹m atd.)
 			MemFree(DatBuf);
 			DatBuf = (BYTE*)MemGet(DatNum + 2*RemapIndexNum[i] + 64);
 			if (DatBuf == NULL)
@@ -2379,7 +2379,7 @@ int FileLoadIndex(const char* jmeno, int bufID, int itemsize)
 				MemFill(DatBuf + DatNum, 2*RemapIndexNum[i] + 64, 0);
 			}
 
-// naètení dat do bufferu
+// naÃ¨tenÃ­ dat do bufferu
 			if (!FileLoadRead(DatBuf, DatNum))
 			{
 				RemapIndexNum[i] = 0;
@@ -2389,11 +2389,11 @@ int FileLoadIndex(const char* jmeno, int bufID, int itemsize)
 // adresa konce dat
 			DatEnd = DatBuf + DatNum;
 
-// navrácení indexu bufferu
+// navrÃ¡cenÃ­ indexu bufferu
 			return i;
 		}
 
-// posun offsetu zaèátku bloku
+// posun offsetu zaÃ¨Ã¡tku bloku
 		off += FileHead->pi[i].Delka;
 	}
 
@@ -2403,11 +2403,11 @@ int FileLoadIndex(const char* jmeno, int bufID, int itemsize)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení palet
+// naÃ¨tenÃ­ palet
 
 void FileLoadPalet()
 {
-// nalezení bufferu palet (pøi chybì pouije standardní palety)
+// nalezenÃ­ bufferu palet (pÃ¸i chybÃ¬ pouÅ¾ije standardnÃ­ palety)
 	int inx = FileLoadIndex(SaveHead.piPalette.Jmeno, BufPalID, sizeof(RGBQUAD));
 	if (inx < 0) 
 	{
@@ -2415,23 +2415,23 @@ void FileLoadPalet()
 		return;
 	}
 
-// pøíprava poètu palet
+// pÃ¸Ã­prava poÃ¨tu palet
 	int pocet = RemapIndexNum[inx];
 	if (pocet > 255) pocet = 255;
 
-// pøíprava bufferu k naètení palet
+// pÃ¸Ã­prava bufferu k naÃ¨tenÃ­ palet
 	BITMAPINFO* bmp;
 	bmp = (BITMAPINFO*)MemGet(sizeof(BITMAPINFO) + sizeof(RGBQUAD)*pocet);
 	if (bmp == NULL) return;
 
-// naplnìní bufferu palet
+// naplnÃ¬nÃ­ bufferu palet
 	MemCopy(bmp, StdBitmapInfo, sizeof(BITMAPINFO));
 	MemCopy(bmp->bmiColors, DatBuf, pocet * sizeof(RGBQUAD));
 
-// barva 0 je vdy pouita jako pozadí
+// barva 0 je vÅ¾dy pouÅ¾ita jako pozadÃ­
 	bmp->bmiColors[0] = StdBitmapInfo->bmiColors[0];
 
-// barva 1 bude jako stín (kromì importu ze starší verze)
+// barva 1 bude jako stÃ­n (kromÃ¬ importu ze starÅ¡Ã­ verze)
 // !!!!!!!!!!!!!!!! IMPORT !!!!!!!!!!!!!!!!!!!
 	if (pocet >= StdColors)
 	{
@@ -2443,26 +2443,26 @@ void FileLoadPalet()
 	bmp->bmiHeader.biClrImportant = pocet;
 	GenKonvPal(bmp);
 
-// zrušení bufferu
+// zruÅ¡enÃ­ bufferu
 	MemFree(bmp);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení èísel
+// naÃ¨tenÃ­ Ã¨Ã­sel
 
 void FileLoadReal()
 {
-// nalezení bufferu èísel
+// nalezenÃ­ bufferu Ã¨Ã­sel
 	int inx = FileLoadIndex(SaveHead.piReal.Jmeno, BufNumID, sizeof(double));
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	double* data = (double*)DatBuf;			// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	double* data = (double*)DatBuf;			// ukazatel dat k naÃ¨tenÃ­
 
-// naètení èísel z bufferu
+// naÃ¨tenÃ­ Ã¨Ã­sel z bufferu
 	for (; num > 0; num--)
 	{
 		*index = Real.Add(*data);
@@ -2474,28 +2474,28 @@ void FileLoadReal()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textù
+// naÃ¨tenÃ­ textÃ¹
 
 void FileLoadText()
 {
-// nalezení bufferu textù
+// nalezenÃ­ bufferu textÃ¹
 	int inx = FileLoadIndex(SaveHead.piText.Jmeno, BufTxtID, 0);
 	TextInx = inx;
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num0 = RemapIndexNum[inx];		// poèet poloek k naètení
-	int jazyku = FileHead->pi[inx].Extra2; // poèet jazykù
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num0 = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int jazyku = FileHead->pi[inx].Extra2; // poÃ¨et jazykÃ¹
 	if (DatVerze != 1) jazyku = 1;
-	int* index0 = RemapIndex[inx];		// tabulka indexù poloek
+	int* index0 = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
 	char* data = (char*)DatBuf;
-	bool first = true;					// je první jazyk
+	bool first = true;					// je prvnÃ­ jazyk
 
-// naètení textù z bufferu pro všechny jazyky
+// naÃ¨tenÃ­ textÃ¹ z bufferu pro vÅ¡echny jazyky
 	for (; jazyku > 0; jazyku--)
 	{
 
-// pøíprava kódu jazyku
+// pÃ¸Ã­prava kÃ³du jazyku
 		int jazyk;
 		int codepage;
 		int num = num0;
@@ -2519,7 +2519,7 @@ void FileLoadText()
 			codepage = 0;
 		}
 
-// pøeskoèení pro neplatnı text
+// pÃ¸eskoÃ¨enÃ­ pro neplatnÃ½ text
 		if ((DWORD)jazyk >= (DWORD)JAZYKNUM)
 		{
 			int nnn = 1;
@@ -2534,15 +2534,15 @@ void FileLoadText()
 			}
 		}
 
-// naètení textù
+// naÃ¨tenÃ­ textÃ¹
 		else
 		{
 			for (; num > 0; num--)
 			{
 				if ((BYTE*)(data + 4) > DatEnd) break;
-				int len = *(long*)data;				// délka textu (znakù)
+				int len = *(long*)data;				// dÃ©lka textu (znakÃ¹)
 				if (len < 0) len = 0;
-				data = data + 4;					// pøeskoèení délky
+				data = data + 4;					// pÃ¸eskoÃ¨enÃ­ dÃ©lky
 
 				CText txt;
 
@@ -2579,20 +2579,20 @@ void FileLoadText()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení logickıch hodnot
+// naÃ¨tenÃ­ logickÃ½ch hodnot
 
 void FileLoadBool()
 {
-// nalezení bufferu logickıch hodnot
+// nalezenÃ­ bufferu logickÃ½ch hodnot
 	int inx = FileLoadIndex(SaveHead.piBool.Jmeno, BufLogID, sizeof(char));
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	char* data = (char*)DatBuf;			// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	char* data = (char*)DatBuf;			// ukazatel dat k naÃ¨tenÃ­
 
-// naètení hodnot z bufferu
+// naÃ¨tenÃ­ hodnot z bufferu
 	for (; num > 0; num--)
 	{
 		*index = Bool.Add(*data);
@@ -2604,24 +2604,24 @@ void FileLoadBool()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ikon
+// naÃ¨tenÃ­ ikon
 
 void FileLoadIcon()
 {
-// nalezení bufferu ikon
+// nalezenÃ­ bufferu ikon
 	int inx = FileLoadIndex(SaveHead.piIcon.Jmeno, BufIcoID, 0);
 	IconInx = inx;					// index bufferu ikon
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	MemFill(index, num * sizeof(int), 0); // pro pøípad chyby - ikony 0
-	BYTE* data = DatBuf;					// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	MemFill(index, num * sizeof(int), 0); // pro pÃ¸Ã­pad chyby - ikony 0
+	BYTE* data = DatBuf;					// ukazatel dat k naÃ¨tenÃ­
 	ASSERT(Icon.IconSize() == ICONSIZE);
-	BYTE* data0 = (BYTE*)MemGet(ICONSIZE);	// pomocnı bufferu pro dekompresi
+	BYTE* data0 = (BYTE*)MemGet(ICONSIZE);	// pomocnÃ½ bufferu pro dekompresi
 
-// pøenesení dat pro ikonu 0 (= ikona podkladu)
+// pÃ¸enesenÃ­ dat pro ikonu 0 (= ikona podkladu)
 	if (num > 0)
 	{
 		ASSERT(Icon.IsValid(0));
@@ -2638,7 +2638,7 @@ void FileLoadIcon()
 			DeCompress(data1, data + 4, ICONSIZE, ICONWIDTH);
 		}
 
-		KonvCopy(Icon[0].DataData(), data1, ICONSIZE); // kopie dat s konverzí
+		KonvCopy(Icon[0].DataData(), data1, ICONSIZE); // kopie dat s konverzÃ­
 		Icon[0].Comp();				// komprese dat ikony
 
 		data += size;
@@ -2646,19 +2646,19 @@ void FileLoadIcon()
 		num--;
 	}
 
-// naètení hodnot z bufferu
+// naÃ¨tenÃ­ hodnot z bufferu
 	for (; ((num > 0) && (data < DatEnd)); num--)
 	{
 		int size = ICONSIZE;
 
-		int i = Icon.New();					// nová ikona
+		int i = Icon.New();					// novÃ¡ ikona
 		if (i < 0) return;
 		*index = i;
-		Icon[i].CopyWrite();			// pøipravena k zápisu
+		Icon[i].CopyWrite();			// pÃ¸ipravena k zÃ¡pisu
 
-		if (DatVerze == 1)					// jsou komprimovaná data
+		if (DatVerze == 1)					// jsou komprimovanÃ¡ data
 		{
-			size = *(long*)data + 4;		// velikost komprimovanıch dat
+			size = *(long*)data + 4;		// velikost komprimovanÃ½ch dat
 
 			if (KonvPalOK)
 			{
@@ -2667,12 +2667,12 @@ void FileLoadIcon()
 			else
 			{
 				DeCompress(data0, data + 4, ICONSIZE, ICONWIDTH); // dekomprese dat
-				KonvCopy(Icon[i].DataData(), data0, ICONSIZE); // kopie s konverzí
+				KonvCopy(Icon[i].DataData(), data0, ICONSIZE); // kopie s konverzÃ­
 			}
 		}
 		else
 		{
-			KonvCopy(Icon[i].DataData(), data, ICONSIZE);	// kopie nezkomprimovanıch dat
+			KonvCopy(Icon[i].DataData(), data, ICONSIZE);	// kopie nezkomprimovanÃ½ch dat
 		}
 
 		Icon[i].Comp();						// komprese ikony
@@ -2680,7 +2680,7 @@ void FileLoadIcon()
 		index++;
 	}
 
-// uvolnìní pomocného bufferu
+// uvolnÃ¬nÃ­ pomocnÃ©ho bufferu
 	MemFree(data0);
 
 	if (data != DatEnd) LoadError = TRUE;
@@ -2688,20 +2688,20 @@ void FileLoadIcon()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení ploch
+// naÃ¨tenÃ­ ploch
 
 void FileLoadMap()
 {
-// nalezení bufferu ploch
+// nalezenÃ­ bufferu ploch
 	int inx = FileLoadIndex(SaveHead.piMap.Jmeno, BufMapID, 0);
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	BYTE* data = DatBuf;					// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	BYTE* data = DatBuf;					// ukazatel dat k naÃ¨tenÃ­
 
-// pøíprava bufferu pro pøemapování ikon
+// pÃ¸Ã­prava bufferu pro pÃ¸emapovÃ¡nÃ­ ikon
 	int iconnum = 0;
 	int* iconindex = NULL;
 	if (IconInx >= 0)
@@ -2710,7 +2710,7 @@ void FileLoadMap()
 		iconindex = RemapIndex[IconInx];
 	}
 
-// naètení hodnot z bufferu
+// naÃ¨tenÃ­ hodnot z bufferu
 	for (; num > 0; num--)
 	{
 
@@ -2721,11 +2721,11 @@ void FileLoadMap()
 			return;
 		}
 
-// pøíprava šíøky plochy
+// pÃ¸Ã­prava Å¡Ã­Ã¸ky plochy
 		int width = ((MAPPROG*)data)->Width;
 		if (width < 1) width = 1;
 
-// pøíprava vıšky plochy
+// pÃ¸Ã­prava vÃ½Å¡ky plochy
 		int height = ((MAPPROG*)data)->Height;
 		if (height < 1) height = 1;
 
@@ -2737,12 +2737,12 @@ void FileLoadMap()
 			return;
 		}
 
-// vytvoøení nové plochy
+// vytvoÃ¸enÃ­ novÃ© plochy
 		*index = Map.New(width, height);
 		if (*index < 0) return;
 		if (!Map[*index].CopyWrite()) return;
 
-// pøenesení dat plochy
+// pÃ¸enesenÃ­ dat plochy
 		MAPITEM* srcitem = ((MAPPROG*)data)->Data;
 		MAPITEM* dstitem = Map[*index].Data()->Data;
 
@@ -2775,20 +2775,20 @@ void FileLoadMap()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení obrázkù
+// naÃ¨tenÃ­ obrÃ¡zkÃ¹
 
 void FileLoadPic()
 {
-// nalezení bufferu obrázkù
+// nalezenÃ­ bufferu obrÃ¡zkÃ¹
 	int inx = FileLoadIndex(SaveHead.piPic.Jmeno, BufPicID, 0);
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	BYTE* data = DatBuf;					// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	BYTE* data = DatBuf;					// ukazatel dat k naÃ¨tenÃ­
 
-// naètení hodnot z bufferu
+// naÃ¨tenÃ­ hodnot z bufferu
 	for (; num > 0; num--)
 	{
 
@@ -2799,11 +2799,11 @@ void FileLoadPic()
 			return;
 		}
 
-// pøíprava šíøky obrázku
+// pÃ¸Ã­prava Å¡Ã­Ã¸ky obrÃ¡zku
 		int width = ((PICPROG*)data)->Width;
 		if (width < 1) width = 1;
 
-// pøíprava vıšky obrázku
+// pÃ¸Ã­prava vÃ½Å¡ky obrÃ¡zku
 		int height = ((PICPROG*)data)->Height;
 		if (height < 1) height = 1;
 
@@ -2814,12 +2814,12 @@ void FileLoadPic()
 		}
 		data += SIZEOFPICPROG;
 
-// vytvoøení nového obrázku
+// vytvoÃ¸enÃ­ novÃ©ho obrÃ¡zku
 		*index = Picture.New(width, height);
 		if (*index < 0) return;
 		if (!Picture[*index].CopyWrite()) return;
 
-// pøenesení dat obrázku
+// pÃ¸enesenÃ­ dat obrÃ¡zku
 		int size;
 		if (DatVerze == 1)
 		{
@@ -2863,7 +2863,7 @@ void FileLoadPic()
 			KonvCopy(Picture[*index].Data()->Data, data, size);
 		}
 
-// komprese dat obrázku
+// komprese dat obrÃ¡zku
 		Picture[*index].Comp();
 
 // posun adresy dat
@@ -2877,20 +2877,20 @@ void FileLoadPic()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení sprajtù
+// naÃ¨tenÃ­ sprajtÃ¹
 
 void FileLoadSprite()
 {
-// nalezení bufferu sprajtù
+// nalezenÃ­ bufferu sprajtÃ¹
 	int inx = FileLoadIndex(SaveHead.piSprite.Jmeno, BufSprID, 0);
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	BYTE* data = DatBuf;					// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	BYTE* data = DatBuf;					// ukazatel dat k naÃ¨tenÃ­
 
-// naètení hodnot z bufferu
+// naÃ¨tenÃ­ hodnot z bufferu
 	for (; num > 0; num--)
 	{
 
@@ -2901,30 +2901,30 @@ void FileLoadSprite()
 			return;
 		}
 
-// pøíprava poètu fází sprajtu
+// pÃ¸Ã­prava poÃ¨tu fÃ¡zÃ­ sprajtu
 		int faze = ((SPRITEPROG*)data)->Faze;
 		if (faze < 1) faze = 1;
 
-// pøíprava poètu smìrù sprajtu
+// pÃ¸Ã­prava poÃ¨tu smÃ¬rÃ¹ sprajtu
 		int smer = ((SPRITEPROG*)data)->Smer;
 		if (smer < 1) smer = 1;
 
-// vytvoøení nového sprajtu
+// vytvoÃ¸enÃ­ novÃ©ho sprajtu
 		*index = Sprite.New(faze, smer);
 		if (*index < 0) return;
 		if (!Sprite[*index].CopyWrite()) return;
-		SPRITEDATA* sprite = Sprite[*index].Data();	// adresa dat nového sprajtu
+		SPRITEDATA* sprite = Sprite[*index].Data();	// adresa dat novÃ©ho sprajtu
 
-// poèet klidovıch fází
+// poÃ¨et klidovÃ½ch fÃ¡zÃ­
 		sprite->Klid = ((SPRITEPROG*)data)->Klid;
 		if (sprite->Klid < 1) sprite->Klid = 1;
 		if (sprite->Klid > faze) sprite->Klid = faze;
 
-// šíøka obrázku sprajtu
+// Å¡Ã­Ã¸ka obrÃ¡zku sprajtu
 		int width = ((SPRITEPROG*)data)->Width;
 		if (width < 1) width = 1;
 
-// vıška obrázku sprajtu
+// vÃ½Å¡ka obrÃ¡zku sprajtu
 		int height = ((SPRITEPROG*)data)->Height;
 		if (height < 1) height = 1;
 
@@ -2934,18 +2934,18 @@ void FileLoadSprite()
 			return;
 		}
 
-// prodleva mezi fázemi
+// prodleva mezi fÃ¡zemi
 		sprite->Delay = ((SPRITEPROG*)data)->Delay;
 		if (sprite->Delay < 0) sprite->Delay = 0;
 
-// hladina k pøekreslování
+// hladina k pÃ¸ekreslovÃ¡nÃ­
 		sprite->Level = ((SPRITEPROG*)data)->Level;
 
-// poèet fází na jednotkovou vzdálenost
+// poÃ¨et fÃ¡zÃ­ na jednotkovou vzdÃ¡lenost
 		sprite->Kroku = ((SPRITEPROG*)data)->Kroku;
 		if (sprite->Kroku < 0) sprite->Kroku = 0;
 
-// pøenesení obrázkù sprajtu
+// pÃ¸enesenÃ­ obrÃ¡zkÃ¹ sprajtu
 		BYTE* srcitem = ((SPRITEPROG*)data)->Data;
 		CPicture* dstitem = sprite->Data;
 
@@ -3015,20 +3015,20 @@ void FileLoadSprite()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení zvukù
+// naÃ¨tenÃ­ zvukÃ¹
 
 void FileLoadSound()
 {
-// nalezení bufferu zvukù
+// nalezenÃ­ bufferu zvukÃ¹
 	int inx = FileLoadIndex(SaveHead.piSound.Jmeno, BufSndID, 0);
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];	// poèet poloek k naètení
-	int* index = RemapIndex[inx];	// tabulka indexù poloek
-	BYTE* data = DatBuf;			// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];	// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];	// tabulka indexÃ¹ poloÅ¾ek
+	BYTE* data = DatBuf;			// ukazatel dat k naÃ¨tenÃ­
 
-// naètení hodnot z bufferu
+// naÃ¨tenÃ­ hodnot z bufferu
 	for (; num > 0; num--)
 	{
 
@@ -3039,7 +3039,7 @@ void FileLoadSound()
 			return;
 		}
 
-// pøíprava délky zvuku
+// pÃ¸Ã­prava dÃ©lky zvuku
 		int size0 = ((SOUNDPROG*)data)->Size;
 		int size = size0 + SIZEOFSOUNDPROG;
 		if ((size0 < 0) || (data + size > DatEnd))
@@ -3048,23 +3048,23 @@ void FileLoadSound()
 			return;
 		}
 
-// vytvoøení nového zvuku (malá rezerva pro pøekryv konce pøi MP3)
+// vytvoÃ¸enÃ­ novÃ©ho zvuku (malÃ¡ rezerva pro pÃ¸ekryv konce pÃ¸i MP3)
 		*index = Sound.New(size0 + 16);
 		if (*index < 0) return;
 		if (!Sound[*index].CopyWrite()) return;
 		SOUNDDATA* dstdata = Sound[*index].Data();
 		dstdata->Size -= 16;
 
-// pøenesení definice zvuku
+// pÃ¸enesenÃ­ definice zvuku
 		dstdata->Samples = ((SOUNDPROG*)data)->Samples;
 		dstdata->Format = ((SOUNDPROG*)data)->Format;
 		dstdata->Channels = ((SOUNDPROG*)data)->Channels;
 		dstdata->Bits = ((SOUNDPROG*)data)->Bits;
 
-// pøenesení dat zvuku
+// pÃ¸enesenÃ­ dat zvuku
 		MemCopy(dstdata->Data, ((SOUNDPROG*)data)->Data, size0);
 
-// velikost a kontrola záhlaví pro nestandardní formát
+// velikost a kontrola zÃ¡hlavÃ­ pro nestandardnÃ­ formÃ¡t
 		if (dstdata->Format != WAVE_FORMAT_PCM)
 		{
 			if (size0 < SIZEOFWAVEFORMATEX)
@@ -3084,7 +3084,7 @@ void FileLoadSound()
 			}
 		}
 
-// korekce dat standardního formátu
+// korekce dat standardnÃ­ho formÃ¡tu
 		if (dstdata->Format == WAVE_FORMAT_PCM)
 		{
 			if (dstdata->Samples < ((11025 + 22050)/2))
@@ -3120,20 +3120,20 @@ void FileLoadSound()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení hudby
+// naÃ¨tenÃ­ hudby
 
 void FileLoadMusic()
 {
-// nalezení bufferu hudby
+// nalezenÃ­ bufferu hudby
 	int inx = FileLoadIndex(SaveHead.piMusic.Jmeno, BufMusID, 0);
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	BYTE* data = DatBuf;					// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	BYTE* data = DatBuf;					// ukazatel dat k naÃ¨tenÃ­
 
-// naètení hodnot z bufferu
+// naÃ¨tenÃ­ hodnot z bufferu
 	for (; num > 0; num--)
 	{
 
@@ -3144,7 +3144,7 @@ void FileLoadMusic()
 			return;
 		}
 
-// pøíprava délky hudby
+// pÃ¸Ã­prava dÃ©lky hudby
 		int size = *(long*)data;
 		data += sizeof(long);
 		if ((size < 0) || (data + size > DatEnd))
@@ -3153,12 +3153,12 @@ void FileLoadMusic()
 			return;
 		}
 
-// vytvoøení nové hudby
+// vytvoÃ¸enÃ­ novÃ© hudby
 		*index = Music.New(size);
 		if (*index < 0) return;
 		if (!Music[*index].CopyWrite()) return;
 
-// pøenesení dat hudby
+// pÃ¸enesenÃ­ dat hudby
 		MemCopy(Music[*index].Data()->Data, data, size);
 
 // posun adresy dat
@@ -3172,26 +3172,26 @@ void FileLoadMusic()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení tabulky pro import funkcí
+// naÃ¨tenÃ­ tabulky pro import funkcÃ­
 
 void FileLoadImport()
 {
-// nalezení bufferu importu
+// nalezenÃ­ bufferu importu
 	int inx = FileLoadIndex(SaveHead.piImport.Jmeno, BufIntID, 0);
 	if (inx < 0) return;
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	char* data = (char*)DatBuf;			// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	char* data = (char*)DatBuf;			// ukazatel dat k naÃ¨tenÃ­
 
-// vynulování bufferu pøemapování indexù
+// vynulovÃ¡nÃ­ bufferu pÃ¸emapovÃ¡nÃ­ indexÃ¹
 	for (int i = 0; i < num; i++)
 	{
 		index[i] = IDF_COMMENT - IDF;
 	}
 
-// naètení textù z bufferu
+// naÃ¨tenÃ­ textÃ¹ z bufferu
 	for (; num > 0; num--)
 	{
 
@@ -3202,10 +3202,10 @@ void FileLoadImport()
 			return;
 		}
 
-// pøíprava délky hledaného textu
-		int len = *(BYTE*)data;			// délka textu
+// pÃ¸Ã­prava dÃ©lky hledanÃ©ho textu
+		int len = *(BYTE*)data;			// dÃ©lka textu
 		ASSERT(len >= 0);
-		data++;							// zaèátek textu
+		data++;							// zaÃ¨Ã¡tek textu
 
 // kontrola velikosti dat
 		if ((BYTE*)(data + len) > DatEnd)
@@ -3214,11 +3214,11 @@ void FileLoadImport()
 			return;
 		}
 
-// vyhledání funkce
+// vyhledÃ¡nÃ­ funkce
 		if (len > 0)
 		{
 
-// !!!!!!! pøechodné - importování starıch funkcí
+// !!!!!!! pÃ¸echodnÃ© - importovÃ¡nÃ­ starÃ½ch funkcÃ­
 
 			if ((len == 9) && MemCompare(data, "d3d_zbias", 9))
 			{
@@ -3255,37 +3255,37 @@ void FileLoadImport()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení programového bufferu
+// naÃ¨tenÃ­ programovÃ©ho bufferu
 
 void FileLoadProg(const char* name, int bufID)
 {
-// lokální promìnné
-	PROGITEM item;					// ukládaná poloka
+// lokÃ¡lnÃ­ promÃ¬nnÃ©
+	PROGITEM item;					// uklÃ¡danÃ¡ poloÅ¾ka
 	CBufProg* buf = BufProg + bufID; // buffer programu
 
-// nalezení bufferu programu
+// nalezenÃ­ bufferu programu
 	int inx = FileLoadIndex(name, bufID, SIZEOFPETPROG);
 	if (inx < 0) return;
 
-// pøíprava bufferu rodièù
-	int parmax = 1024;				// velikost bufferu rodièù
-	int parnum = 0;					// poèet rodièù v bufferu
-	int* parent = (int*)MemGet(1024*sizeof(int));	// buffer rodièù
+// pÃ¸Ã­prava bufferu rodiÃ¨Ã¹
+	int parmax = 1024;				// velikost bufferu rodiÃ¨Ã¹
+	int parnum = 0;					// poÃ¨et rodiÃ¨Ã¹ v bufferu
+	int* parent = (int*)MemGet(1024*sizeof(int));	// buffer rodiÃ¨Ã¹
 	if (parent == NULL) return;
-	BOOL* next = (BOOL*)MemGet(1024*sizeof(BOOL));	// buffer pøíznakù další poloky
+	BOOL* next = (BOOL*)MemGet(1024*sizeof(BOOL));	// buffer pÃ¸Ã­znakÃ¹ dalÅ¡Ã­ poloÅ¾ky
 	if (next == NULL)
 	{
 		MemFree(parent);
 		return;
 	}
-	parent[0] = -1;						// inicializace první poloky
+	parent[0] = -1;						// inicializace prvnÃ­ poloÅ¾ky
 
-// pøíprava ukazatelù
-	int num = RemapIndexNum[inx];		// poèet poloek k naètení
-	int* index = RemapIndex[inx];		// tabulka indexù poloek
-	PETPROG* data = (PETPROG*)DatBuf;		// ukazatel dat k naètení
+// pÃ¸Ã­prava ukazatelÃ¹
+	int num = RemapIndexNum[inx];		// poÃ¨et poloÅ¾ek k naÃ¨tenÃ­
+	int* index = RemapIndex[inx];		// tabulka indexÃ¹ poloÅ¾ek
+	PETPROG* data = (PETPROG*)DatBuf;		// ukazatel dat k naÃ¨tenÃ­
 
-// naètení poloek z bufferu
+// naÃ¨tenÃ­ poloÅ¾ek z bufferu
 	for (; num > 0; num--)
 	{
 
@@ -3298,16 +3298,16 @@ void FileLoadProg(const char* name, int bufID)
 		if (data->Param & PETPROG_INTERN)	item.Param |= PR_INTERN;
 		if (data->Param & PETPROG_OFF_DEP)	item.Param |= PR_OFF_DEP;
 
-// nastavení pøíznaku další poloky
+// nastavenÃ­ pÃ¸Ã­znaku dalÅ¡Ã­ poloÅ¾ky
 		next[parnum] = (data->Param & PETPROG_NEXT);
 
-// deklaraèní blok a index
+// deklaraÃ¨nÃ­ blok a index
 		int blok = data->RefBlok;
 		int n = data->RefIndex;
 		item.RefBlok = -1;
 		item.RefIndex = -1;
 
-// pøemapování deklarace
+// pÃ¸emapovÃ¡nÃ­ deklarace
 		if (((DWORD)blok < (DWORD)RemapBlokNum) &&
 			((DWORD)n < (DWORD)RemapIndexNum[blok]))
 		{
@@ -3315,14 +3315,14 @@ void FileLoadProg(const char* name, int bufID)
 			item.RefIndex = RemapIndex[blok][n];
 		}
 
-// pøi odkazu na interní prvek zmìna na buffer struktur nebo tøíd
+// pÃ¸i odkazu na internÃ­ prvek zmÃ¬na na buffer struktur nebo tÃ¸Ã­d
 		if (item.RefBlok == BufIntID)
 		{
 			item.RefBlok = ImportBlok[item.RefIndex];
 			item.RefIndex = ImportIndex[item.RefIndex];
 		}
 
-// zdìdìní parametrù
+// zdÃ¬dÃ¬nÃ­ parametrÃ¹
 		if (((DWORD)item.RefBlok < (DWORD)PROGBUFNUM) &&
 			BufProg[item.RefBlok].IsValid(item.RefIndex))
 		{
@@ -3342,7 +3342,7 @@ void FileLoadProg(const char* name, int bufID)
 		item.DstMask = BufProg[item.RefBlok][item.RefIndex].DstMask;
 		item.Param |= BufProg[item.RefBlok][item.RefIndex].Param & (PR_ONE | PR_INTERN | PR_NOMOVE | PR_SETPAR | PR_PARPAR);
 
-// korekce parametrù indexu seznamu
+// korekce parametrÃ¹ indexu seznamu
 		if ((item.Func == IDF_LIST_INDEX) ||
 			(item.Func == IDF_LIST_AUTO) ||
 			(item.Func == IDF_LIST_SIZE) ||
@@ -3358,19 +3358,19 @@ void FileLoadProg(const char* name, int bufID)
 			item.Param |= PR_INTERN;
 		}
 
-// v editoru se ruší interní pøíznak
+// v editoru se ruÅ¡Ã­ internÃ­ pÃ¸Ã­znak
 		if (bufID == BufEdiID)
 		{
 			item.Param &= ~PR_INTERN;
 		}
 
-// definièní blok a index
+// definiÃ¨nÃ­ blok a index
 		blok = data->DatBlok;
 		n = data->DatIndex;
 		item.DatBlok = -1;
 		item.DatIndex = -1;
 
-// pøemapování definice
+// pÃ¸emapovÃ¡nÃ­ definice
 		if (((DWORD)blok < (DWORD)RemapBlokNum) &&
 			((DWORD)n < (DWORD)RemapIndexNum[blok]))
 		{
@@ -3400,7 +3400,7 @@ void FileLoadProg(const char* name, int bufID)
 			}
 		}
 
-// vloení prvku do bufferu
+// vloÅ¾enÃ­ prvku do bufferu
 		*index = buf->Insert(&item, parent[parnum], -2);
 		if (*index < 0)
 		{
@@ -3409,7 +3409,7 @@ void FileLoadProg(const char* name, int bufID)
 			return;
 		}
 
-// pokud budou potomci, zvıšení èítaèe rodièù
+// pokud budou potomci, zvÃ½Å¡enÃ­ Ã¨Ã­taÃ¨e rodiÃ¨Ã¹
 		if (data->Param & PETPROG_CHILDS)
 		{
 			parnum++;
@@ -3438,7 +3438,7 @@ void FileLoadProg(const char* name, int bufID)
 			next[parnum] = TRUE;
 		}
 
-// sníení èítaèe rodièù
+// snÃ­Å¾enÃ­ Ã¨Ã­taÃ¨e rodiÃ¨Ã¹
 		else
 		{
 			while (!next[parnum] && (parnum > 0))
@@ -3447,105 +3447,105 @@ void FileLoadProg(const char* name, int bufID)
 			}
 		}
 
-// zvıšení ukazatelù
+// zvÃ½Å¡enÃ­ ukazatelÃ¹
 		data++;
 		index++;
 	}
 
 	if ((BYTE*)data != DatEnd) LoadError = TRUE;
 
-// zrušení bufferu rodièù
+// zruÅ¡enÃ­ bufferu rodiÃ¨Ã¹
 	MemFree(parent);
 	MemFree(next);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení programu
+// naÃ¨tenÃ­ programu
 
 void Load()
 {
-// kontrola, zda ji probíhá naèítání (nebo ukládání)
+// kontrola, zda jiÅ¾ probÃ­hÃ¡ naÃ¨Ã­tÃ¡nÃ­ (nebo uklÃ¡dÃ¡nÃ­)
 	if (Saving) return;
 
-// zapnutí pøíznaku naèítání
+// zapnutÃ­ pÃ¸Ã­znaku naÃ¨Ã­tÃ¡nÃ­
 	Saving = TRUE;
 
-// není chyba pøi naèítání
+// nenÃ­ chyba pÃ¸i naÃ¨Ã­tÃ¡nÃ­
 	LoadError = FALSE;
 
 #ifdef _LITE
 	LiteError = FALSE;
 #endif // _LITE
 
-// zapnutí kurzoru èekání
+// zapnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	BeginWaitCursor();
 
-// pøednastavení, e není ádnı blok (pro koncové nulování)
+// pÃ¸ednastavenÃ­, Å¾e nenÃ­ Å¾Ã¡dnÃ½ blok (pro koncovÃ© nulovÃ¡nÃ­)
 	RemapBlokNum = 0;
 
-// pøednastavení, e není buffer s ikonami
-	IconInx = -1;			// není buffer s ikonami
-	TextInx = -1;			// není buffer s texty
+// pÃ¸ednastavenÃ­, Å¾e nenÃ­ buffer s ikonami
+	IconInx = -1;			// nenÃ­ buffer s ikonami
+	TextInx = -1;			// nenÃ­ buffer s texty
 
-// vyprázdnìní bufferù (datové buffery jsou ji pøipraveny!)
+// vyprÃ¡zdnÃ¬nÃ­ bufferÃ¹ (datovÃ© buffery jsou jiÅ¾ pÃ¸ipraveny!)
 	BufObj.DelAll();
 	BufLoc.DelAll();
 	BufEdi.DelAll();
 
-// pøíprava jména souboru
+// pÃ¸Ã­prava jmÃ©na souboru
 	FileName = JmenoLoad;
 
-// otevøení souboru
+// otevÃ¸enÃ­ souboru
 	hFile = ::CreateFile(FileName, GENERIC_READ, FILE_SHARE_READ, NULL,
 				OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 
-// pokraèování jen pøi platném souboru
+// pokraÃ¨ovÃ¡nÃ­ jen pÃ¸i platnÃ©m souboru
 	if (hFile != INVALID_HANDLE_VALUE)
 	{
 
-// inicializace konverzní tabulky importù
+// inicializace konverznÃ­ tabulky importÃ¹
 		if (InitImportTab())
 		{
 
-// naètení záhlaví souboru
+// naÃ¨tenÃ­ zÃ¡hlavÃ­ souboru
 			if (FileLoadHead())
 			{
 
-// naètení palet
+// naÃ¨tenÃ­ palet
 				FileLoadPalet();
 
-// naètení èísel
+// naÃ¨tenÃ­ Ã¨Ã­sel
 				FileLoadReal();
 
-// naètení textù
+// naÃ¨tenÃ­ textÃ¹
 				FileLoadText();
 
-// naètení logickıch hodnot
+// naÃ¨tenÃ­ logickÃ½ch hodnot
 				FileLoadBool();
 
-// naètení ikon
+// naÃ¨tenÃ­ ikon
 				FileLoadIcon();
 
-// naètení ploch
+// naÃ¨tenÃ­ ploch
 				FileLoadMap();
 
-// naètení obrázkù
+// naÃ¨tenÃ­ obrÃ¡zkÃ¹
 				FileLoadPic();
 
-// naètení sprajtù
+// naÃ¨tenÃ­ sprajtÃ¹
 				FileLoadSprite();
 
-// naètení zvukù
+// naÃ¨tenÃ­ zvukÃ¹
 				FileLoadSound();
 
-// naètení hudby
+// naÃ¨tenÃ­ hudby
 				FileLoadMusic();
 
-// naètení tabulky importu funkcí
+// naÃ¨tenÃ­ tabulky importu funkcÃ­
 				FileLoadImport();
 
-// pøednastavení bufferu editoru (kvùli odkazùm z lokálního bufferu)
+// pÃ¸ednastavenÃ­ bufferu editoru (kvÃ¹li odkazÃ¹m z lokÃ¡lnÃ­ho bufferu)
 				int inx = FileLoadIndex(SaveHead.piProgram.Jmeno, BufEdiID, SIZEOFPETPROG);
 				if (inx >= 0)
 				{
@@ -3559,16 +3559,16 @@ void Load()
 					}
 				}
 
-// naètení bufferu lokálních funkcí
+// naÃ¨tenÃ­ bufferu lokÃ¡lnÃ­ch funkcÃ­
 				FileLoadProg(SaveHead.piLocal.Jmeno, BufLocID);
 
-// naètení bufferu globálních funkcí
+// naÃ¨tenÃ­ bufferu globÃ¡lnÃ­ch funkcÃ­
 				FileLoadProg(SaveHead.piGlobal.Jmeno, BufObjID);
 
-// naètení bufferu definice funkcí
+// naÃ¨tenÃ­ bufferu definice funkcÃ­
 				FileLoadProg(SaveHead.piProgram.Jmeno, BufEdiID);
 
-// reference ikon v plochách
+// reference ikon v plochÃ¡ch
 				int im;
 
 				for (im = BufObj.Max()-1; im >= 0; im--)
@@ -3593,10 +3593,10 @@ void Load()
 			}
 		}
 
-// uzavøení souboru
+// uzavÃ¸enÃ­ souboru
 		::CloseHandle(hFile);
 
-// chyba ètení souboru (je moné e bude hlásit poškození i pøi chybì pamìti)
+// chyba Ã¨tenÃ­ souboru (je moÅ¾nÃ© Å¾e bude hlÃ¡sit poÅ¡kozenÃ­ i pÃ¸i chybÃ¬ pamÃ¬ti)
 		if (LoadError)
 		{
 			::DialogBoxParam(
@@ -3608,7 +3608,7 @@ void Load()
 		}
 	}
 
-// chyba otevøení souboru
+// chyba otevÃ¸enÃ­ souboru
 	else
 	{
 		::DialogBoxParam(
@@ -3619,7 +3619,7 @@ void Load()
 			(LPARAM)IDN_OPENERR);
 	}
 
-// zrušení bufferù
+// zruÅ¡enÃ­ bufferÃ¹
 	for (int i = 0; i < RemapBlokNum; i++)
 	{
 		MemFree(RemapIndex[i]);		RemapIndex[i] = NULL;
@@ -3629,10 +3629,10 @@ void Load()
 	MemFree(RemapIndex);	RemapIndex = NULL;
 	MemFree(DatBuf);		DatBuf = NULL;
 
-// vypnutí kurzoru èekání
+// vypnutÃ­ kurzoru Ã¨ekÃ¡nÃ­
 	EndWaitCursor();
 
-// vypnutí pøíznaku naèítání
+// vypnutÃ­ pÃ¸Ã­znaku naÃ¨Ã­tÃ¡nÃ­
 	Saving = FALSE;
 }
 
@@ -3640,14 +3640,14 @@ void Load()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní tabulka okna editoru
+// inicializaÃ¨nÃ­ tabulka okna editoru
 
 const INITTREE InitTabEdi[] = {
 	0,			IDF_FNC,
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní tabulka okna lokálních objektù
+// inicializaÃ¨nÃ­ tabulka okna lokÃ¡lnÃ­ch objektÃ¹
 
 const INITTREE InitTabLoc[] = {
 	0,			IDF_FNC,
@@ -3664,7 +3664,7 @@ const INITTREE InitTabLoc0[] = {
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaèní tabulka okna globálních objektù
+// inicializaÃ¨nÃ­ tabulka okna globÃ¡lnÃ­ch objektÃ¹
 
 const INITTREE InitTabObj[] = {
 	0,			IDF_GROUP,
@@ -3677,13 +3677,13 @@ const INITTREE InitTabObj[] = {
 
 
 /////////////////////////////////////////////////////////////////////////////
-// kontrola programu po naètení s opravou (vrací FALSE=chyba pamìti)
+// kontrola programu po naÃ¨tenÃ­ s opravou (vracÃ­ FALSE=chyba pamÃ¬ti)
 
 BOOL ProgramCheck()
 {
 	int i;
 
-// zajištìní hlavní funkce v oknì editoru
+// zajiÅ¡tÃ¬nÃ­ hlavnÃ­ funkce v oknÃ¬ editoru
 	if (BufEdi.IsNotValid(0))
 	{
 		BufEdi.InitTab(InitTabEdi, sizeof(InitTabEdi)/sizeof(InitTabEdi[0]));
@@ -3692,7 +3692,7 @@ BOOL ProgramCheck()
 	}
 	ASSERT(BufEdi.First() == 0);
 
-// korekce ROOT poloek v editoru
+// korekce ROOT poloÅ¾ek v editoru
 	for (i = 0; BufEdi.IsValid(i); i = BufEdi[i].Next)
 	{
 		PROGITEM* item = &BufEdi[i];
@@ -3722,7 +3722,7 @@ BOOL ProgramCheck()
 				if (BufLoc.IsNotValid(ii)) return FALSE;
 
 				BufLoc[ii].DstMask = PR_ALLDATA;
-				BufLoc[ii].DatBlok = BufEdiID;				// hlavní lokální funkce
+				BufLoc[ii].DatBlok = BufEdiID;				// hlavnÃ­ lokÃ¡lnÃ­ funkce
 				BufLoc[ii].DatIndex = i;					// index funkce v editoru
 				BufLoc[ii].Param = PR_EXP | PR_NOMOVE;
 
@@ -3737,7 +3737,7 @@ BOOL ProgramCheck()
 				if (BufLoc.IsNotValid(ii)) return FALSE;
 
 				BufLoc[ii].DstMask = PR_ALLDATA;
-				BufLoc[ii].DatBlok = BufEdiID;				// hlavní lokální funkce
+				BufLoc[ii].DatBlok = BufEdiID;				// hlavnÃ­ lokÃ¡lnÃ­ funkce
 				BufLoc[ii].DatIndex = i;					// index funkce v editoru
 				BufLoc[ii].Param = PR_EXP | PR_NOMOVE;
 
@@ -3749,7 +3749,7 @@ BOOL ProgramCheck()
 
 	ASSERT(BufLoc.First() == 0);
 
-// korekce ROOT poloek v lokálním bufferu
+// korekce ROOT poloÅ¾ek v lokÃ¡lnÃ­m bufferu
 	for (i = 0; BufLoc.IsValid(i); i = BufLoc[i].Next)
 	{
 		PROGITEM* item = &BufLoc[i];
@@ -3788,22 +3788,22 @@ BOOL ProgramCheck()
 				if (!BufObj.InitTab(InitTabObj, sizeof(InitTabObj)/sizeof(InitTabObj[0]))) return FALSE;
 				if (BufObj.IsNotValid(ii)) return FALSE;
 
-				Icon.Load(IDN_MAINFRAME, 1);				// naètení ikony Petøíka
+				Icon.Load(IDN_MAINFRAME, 1);				// naÃ¨tenÃ­ ikony PetÃ¸Ã­ka
 				ASSERT(Icon.IsValid(FncNum));
 				BufObj[ii+1].Icon = FncNum;
 
-				Text.Add(Jmeno);								// pøidání jména programu
+				Text.Add(Jmeno);								// pÃ¸idÃ¡nÃ­ jmÃ©na programu
 				ASSERT(Text.IsValid(FncNum));
 				BufObj[ii+1].Name = FncNum;
 
-				BufObj[ii+1].DatBlok = BufLocID;				// odkaz na hlavní lokální definici
-				BufObj[ii+1].DatIndex = 0;						// index hlavní lokální definice
-				BufObj[ii+1].RefBlok = BufClsID;				// reference na buffer tøíd
-				BufObj[ii+1].RefIndex = CLASSFNCINDEX;			// reference na funkci v bufferu tøíd
+				BufObj[ii+1].DatBlok = BufLocID;				// odkaz na hlavnÃ­ lokÃ¡lnÃ­ definici
+				BufObj[ii+1].DatIndex = 0;						// index hlavnÃ­ lokÃ¡lnÃ­ definice
+				BufObj[ii+1].RefBlok = BufClsID;				// reference na buffer tÃ¸Ã­d
+				BufObj[ii+1].RefIndex = CLASSFNCINDEX;			// reference na funkci v bufferu tÃ¸Ã­d
 				BufCls[CLASSFNCINDEX].Refer++;
-				BufObj[ii+1].Param |= PR_NOMOVE;				// zákaz kopie hlavní funkce
+				BufObj[ii+1].Param |= PR_NOMOVE;				// zÃ¡kaz kopie hlavnÃ­ funkce
 
-				BufObj[ii].Param |= PR_NOMOVE | PR_EXP;		// zákaz kopie hlavní skupiny
+				BufObj[ii].Param |= PR_NOMOVE | PR_EXP;		// zÃ¡kaz kopie hlavnÃ­ skupiny
 				BufObj[ii].Name = Text.Load(IDN_ZAKLADNI_OBJEKTY);
 				BufObj[ii].RefBlok = BufStrID;
 				BufObj[ii].RefIndex = GroupIndex;
@@ -3811,9 +3811,9 @@ BOOL ProgramCheck()
 
 				BufObj[ii+2].Param |= PR_INTERN;
 				BufObj[ii+2].DatBlok = BufMapID;
-				BufObj[ii+2].DatIndex = Map.New(20, 15);		// nová plocha, plochu vymae
-				BufObj[ii+2].RefBlok = BufClsID;				// reference na buffer tøíd
-				BufObj[ii+2].RefIndex = CLASSMAPINDEX;			// reference na plochu v bufferu tøíd
+				BufObj[ii+2].DatIndex = Map.New(20, 15);		// novÃ¡ plocha, plochu vymaÅ¾e
+				BufObj[ii+2].RefBlok = BufClsID;				// reference na buffer tÃ¸Ã­d
+				BufObj[ii+2].RefIndex = CLASSMAPINDEX;			// reference na plochu v bufferu tÃ¸Ã­d
 				BufCls[CLASSMAPINDEX].Refer++;
 				BufObj[ii+2].DatIndex = 0;
 
@@ -3822,8 +3822,8 @@ BOOL ProgramCheck()
 				BufObj[ii+3].DatIndex = 0;
 				BufObj[ii+3].Icon = 0;
 				BufObj[ii+3].Name = 0;
-				BufObj[ii+3].RefBlok = BufClsID;				// reference na buffer tøíd
-				BufObj[ii+3].RefIndex = CLASSICONINDEX;		// reference na ikonu v bufferu tøíd
+				BufObj[ii+3].RefBlok = BufClsID;				// reference na buffer tÃ¸Ã­d
+				BufObj[ii+3].RefIndex = CLASSICONINDEX;		// reference na ikonu v bufferu tÃ¸Ã­d
 				BufCls[CLASSICONINDEX].Refer++;
 				ASSERT(Icon.IsValid(0));
 
@@ -3856,14 +3856,14 @@ BOOL ProgramCheck()
 				BufObj[ii].Icon = -1;
 				BufObj[ii].DatBlok = BufLocID;
 				BufObj[ii].DatIndex = i;
-				BufObj[ii].RefBlok = BufClsID;				// reference na buffer tøíd
-				BufObj[ii].RefIndex = CLASSFNCINDEX;			// reference na funkci v bufferu tøíd
+				BufObj[ii].RefBlok = BufClsID;				// reference na buffer tÃ¸Ã­d
+				BufObj[ii].RefIndex = CLASSFNCINDEX;			// reference na funkci v bufferu tÃ¸Ã­d
 				BufCls[CLASSFNCINDEX].Refer++;
 			}
 		}
 	}
 
-// korekce ROOT poloek v globálním bufferu
+// korekce ROOT poloÅ¾ek v globÃ¡lnÃ­m bufferu
 	for (i = 0; BufObj.IsValid(i); i = BufObj[i].Next)
 	{
 		PROGITEM* item = &BufObj[i];

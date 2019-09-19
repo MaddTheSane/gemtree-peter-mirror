@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*								Buffer cel˝ch ËÌsel							*
+*								Buffer cel√Ωch √®√≠sel							*
 *																			*
 \***************************************************************************/
 
@@ -13,53 +13,53 @@
 
 CBufInt::CBufInt()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 CBufInt::CBufInt(int num)
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
-	Num(num);				// vytvo¯enÌ bufferu index˘
-	Clear(-1);				// vymaz·nÌ bufferu
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
+	Num(num);				// vytvo√∏en√≠ bufferu index√π
+	Clear(-1);				// vymaz√°n√≠ bufferu
 }
 
 CBufInt::~CBufInt()
 {
-	DelAll();				// zruöenÌ bufferu
+	DelAll();				// zru≈°en√≠ bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CBufInt::Init()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 void CBufInt::Init(int num)
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
-	Num(num);				// vytvo¯enÌ bufferu index˘
-	Clear(-1);				// vymaz·nÌ bufferu
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
+	Num(num);				// vytvo√∏en√≠ bufferu index√π
+	Clear(-1);				// vymaz√°n√≠ bufferu
 }
 
 void CBufInt::Term()
 {
-	DelAll();				// zruöenÌ bufferu
+	DelAll();				// zru≈°en√≠ bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ nov˝ch dat (oddÏleno kv˘li lepöÌ optimalizaci)
+// vytvo√∏en√≠ nov√Ωch dat (odd√¨leno kv√πli lep≈°√≠ optimalizaci)
 
 void CBufInt::NewData()
 {
@@ -71,18 +71,18 @@ void CBufInt::NewData()
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ vöech poloûek v bufferu
+// zru≈°en√≠ v≈°ech polo≈æek v bufferu
 
 void CBufInt::DelAll()
 {
-	MemBuf(m_Data, 0);		// zruöenÌ bufferu dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ û·dn· poloûka v bufferu
+	MemBuf(m_Data, 0);		// zru≈°en√≠ bufferu dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ ≈æ√°dn√° polo≈æka v bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poËtu poloûek v bufferu (novÈ poloûky neinicializovanÈ)
+// nastaven√≠ po√®tu polo≈æek v bufferu (nov√© polo≈æky neinicializovan√©)
 
 void _fastcall CBufInt::Num(int num)
 {
@@ -98,7 +98,7 @@ void _fastcall CBufInt::Num(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vymaz·nÌ vöech poloûek v bufferu zadanou hodnotou
+// vymaz√°n√≠ v≈°ech polo≈æek v bufferu zadanou hodnotou
 
 void _fastcall CBufInt::Clear(const int clear)
 {
@@ -112,11 +112,11 @@ void _fastcall CBufInt::Clear(const int clear)
 
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutÌ poloûky (s kontrolou platnosti indexu)
+// poskytnut√≠ polo≈æky (s kontrolou platnosti indexu)
 
 int _fastcall CBufInt::Get(const int index) const
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		return m_Data[index];
 	}
@@ -125,11 +125,11 @@ int _fastcall CBufInt::Get(const int index) const
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poloûky (s kontrolou platnosti indexu)
+// nastaven√≠ polo≈æky (s kontrolou platnosti indexu)
 
 void _fastcall CBufInt::Set(const int index, const int data)
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		m_Data[index] = data;
 	}
@@ -137,11 +137,11 @@ void _fastcall CBufInt::Set(const int index, const int data)
 
 
 ////////////////////////////////////////////////////////////////////
-// vloûenÌ poloûky do bufferu na poûadovanou pozici (omezÌ index)
+// vlo≈æen√≠ polo≈æky do bufferu na po≈æadovanou pozici (omez√≠ index)
 
 void _fastcall CBufInt::Insert(int index, const int data)
 {
-// omezenÌ indexu
+// omezen√≠ indexu
 	if ((DWORD)index > (DWORD)m_Num)
 	{
 		if (index < 0) 
@@ -154,25 +154,25 @@ void _fastcall CBufInt::Insert(int index, const int data)
 		}
 	}
 
-// poËet poloûek k odsunu
+// po√®et polo≈æek k odsunu
 	int num = m_Num - index;
 
-// zv˝öenÌ poËtu poloûek v bufferu
+// zv√Ω≈°en√≠ po√®tu polo≈æek v bufferu
 	Num(m_Num + 1);
 
-// odsun poloûek
+// odsun polo≈æek
 	if (num > 0)
 	{
 		MemMove(m_Data + index + 1, m_Data + index, num*sizeof(int));
 	}
 
-// nastavenÌ poloûky
+// nastaven√≠ polo≈æky
 	m_Data[index] = data;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûek z konce bufferu
+// zru≈°en√≠ polo≈æek z konce bufferu
 
 void _fastcall CBufInt::Del(int num)
 {
@@ -186,11 +186,11 @@ void _fastcall CBufInt::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûky z bufferu (ostatnÌ poloûky se p¯isunou)
+// zru≈°en√≠ polo≈æky z bufferu (ostatn√≠ polo≈æky se p√∏isunou)
 
 void _fastcall CBufInt::DelItem(const int index)
 {
-	if (IsValid(index))					// je poloûka platn·?
+	if (IsValid(index))					// je polo≈æka platn√°?
 	{
 		m_Num--;
 		if (index < m_Num)
@@ -202,54 +202,54 @@ void _fastcall CBufInt::DelItem(const int index)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ poloûky (vracÌ index poloûky)
+// vytvo√∏en√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int CBufInt::New()
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result] = 0;			// inicializace poloûky (musÌ b˝t 0 == FALSE)
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result] = 0;			// inicializace polo≈æky (mus√≠ b√Ωt 0 == FALSE)
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// p¯id·nÌ poloûky (vracÌ index poloûky)
+// p√∏id√°n√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int _fastcall CBufInt::Add(const int data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result] = data;		// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result] = data;		// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// duplikace poloûky (s kontrolou platnosti indexu, vracÌ index prvnÌ poloûky)
+// duplikace polo≈æky (s kontrolou platnosti indexu, vrac√≠ index prvn√≠ polo≈æky)
 
 int _fastcall CBufInt::Dup(const int index)
 {
-	int result = NewItem();				// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();				// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
-		m_Data[result] = m_Data[index];	// kopie poloûky
+		m_Data[result] = m_Data[index];	// kopie polo≈æky
 	}
 	else
 	{
-		m_Data[result] = 0;				// inicializace neplatnÈ poloûky
+		m_Data[result] = 0;				// inicializace neplatn√© polo≈æky
 	}
 	return result;
 }
 
 int _fastcall CBufInt::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		int data = m_Data[index];
 
-		m_Data[result] = data;		// kopie poloûky
+		m_Data[result] = data;		// kopie polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -258,7 +258,7 @@ int _fastcall CBufInt::Dup(const int index, int num)
 	}
 	else
 	{
-		m_Data[result] = 0;		// inicializace neplatnÈ poloûky
+		m_Data[result] = 0;		// inicializace neplatn√© polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -270,18 +270,18 @@ int _fastcall CBufInt::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CBufInt& CBufInt::operator= (const CBufInt& src)
 {
-	m_Num = 0;					// zruöenÌ star˝ch dat
-	int index = 0;				// index naËÌtanÈ poloûky
-	int i = src.m_Num;			// velikost zdrojovÈho bufferu
+	m_Num = 0;					// zru≈°en√≠ star√Ωch dat
+	int index = 0;				// index na√®√≠tan√© polo≈æky
+	int i = src.m_Num;			// velikost zdrojov√©ho bufferu
 
-	for (; i > 0; i--)			// pro vöechny poloûky v bufferu
+	for (; i > 0; i--)			// pro v≈°echny polo≈æky v bufferu
 	{
-		Add(src[index]);	// kopie poloûky
-		index++;				// inkrementace ËtecÌho indexu
+		Add(src[index]);	// kopie polo≈æky
+		index++;				// inkrementace √®tec√≠ho indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;
@@ -290,7 +290,7 @@ const CBufInt& CBufInt::operator= (const CBufInt& src)
 
 /***************************************************************************\
 *																			*
-*							Buffer logick˝ch promÏnn˝ch						*
+*							Buffer logick√Ωch prom√¨nn√Ωch						*
 *																			*
 \***************************************************************************/
 
@@ -299,44 +299,44 @@ const CBufInt& CBufInt::operator= (const CBufInt& src)
 
 CBufBool::CBufBool()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 CBufBool::CBufBool(int num)
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
-	Num(num);				// vytvo¯enÌ bufferu
-	Clear(false);			// vymaz·nÌ bufferu
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
+	Num(num);				// vytvo√∏en√≠ bufferu
+	Clear(false);			// vymaz√°n√≠ bufferu
 }
 
 CBufBool::~CBufBool()
 {
-	DelAll();				// zruöenÌ bufferu
+	DelAll();				// zru≈°en√≠ bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CBufBool::Init()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 void CBufBool::Term()
 {
-	DelAll();				// zruöenÌ bufferu
+	DelAll();				// zru≈°en√≠ bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ nov˝ch dat (oddÏleno kv˘li lepöÌ optimalizaci)
+// vytvo√∏en√≠ nov√Ωch dat (odd√¨leno kv√πli lep≈°√≠ optimalizaci)
 
 void CBufBool::NewData()
 {
@@ -348,17 +348,17 @@ void CBufBool::NewData()
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ vöech poloûek v bufferu
+// zru≈°en√≠ v≈°ech polo≈æek v bufferu
 
 void CBufBool::DelAll()
 {
-	MemBuf(m_Data, 0);		// zruöenÌ bufferu dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ û·dn· poloûka v bufferu
+	MemBuf(m_Data, 0);		// zru≈°en√≠ bufferu dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ ≈æ√°dn√° polo≈æka v bufferu
 }
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poËtu poloûek v bufferu (novÈ poloûky neinicializovanÈ)
+// nastaven√≠ po√®tu polo≈æek v bufferu (nov√© polo≈æky neinicializovan√©)
 
 void _fastcall CBufBool::Num(int num)
 {
@@ -374,7 +374,7 @@ void _fastcall CBufBool::Num(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vymaz·nÌ vöech poloûek v bufferu zadanou hodnotou
+// vymaz√°n√≠ v≈°ech polo≈æek v bufferu zadanou hodnotou
 
 void _fastcall CBufBool::Clear(const bool clear)
 {
@@ -387,11 +387,11 @@ void _fastcall CBufBool::Clear(const bool clear)
 }
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutÌ poloûky (s kontrolou platnosti indexu)
+// poskytnut√≠ polo≈æky (s kontrolou platnosti indexu)
 
 bool _fastcall CBufBool::Get(const int index) const
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		return m_Data[index];
 	}
@@ -400,11 +400,11 @@ bool _fastcall CBufBool::Get(const int index) const
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poloûky (s kontrolou platnosti indexu)
+// nastaven√≠ polo≈æky (s kontrolou platnosti indexu)
 
 void _fastcall CBufBool::Set(const int index, const bool data)
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		m_Data[index] = data;
 	}
@@ -412,7 +412,7 @@ void _fastcall CBufBool::Set(const int index, const bool data)
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûek z konce bufferu
+// zru≈°en√≠ polo≈æek z konce bufferu
 
 void _fastcall CBufBool::Del(int num)
 {
@@ -426,54 +426,54 @@ void _fastcall CBufBool::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ poloûky (vracÌ index poloûky)
+// vytvo√∏en√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int CBufBool::New()
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result] = false;		// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result] = false;		// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// p¯id·nÌ poloûky (vracÌ index poloûky)
+// p√∏id√°n√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int _fastcall CBufBool::Add(const bool data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result] = data;		// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result] = data;		// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// duplikace poloûky (s kontrolou platnosti indexu, vracÌ index prvnÌ poloûky)
+// duplikace polo≈æky (s kontrolou platnosti indexu, vrac√≠ index prvn√≠ polo≈æky)
 
 int _fastcall CBufBool::Dup(const int index)
 {
-	int result = NewItem();				// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();				// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
-		m_Data[result] = m_Data[index];	// kopie poloûky
+		m_Data[result] = m_Data[index];	// kopie polo≈æky
 	}
 	else
 	{
-		m_Data[result] = false;			// inicializace neplatnÈ poloûky
+		m_Data[result] = false;			// inicializace neplatn√© polo≈æky
 	}
 	return result;
 }
 
 int _fastcall CBufBool::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		bool data = m_Data[index];
 
-		m_Data[result] = data;		// kopie poloûky
+		m_Data[result] = data;		// kopie polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -482,7 +482,7 @@ int _fastcall CBufBool::Dup(const int index, int num)
 	}
 	else
 	{
-		m_Data[result] = false;		// inicializace neplatnÈ poloûky
+		m_Data[result] = false;		// inicializace neplatn√© polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -494,18 +494,18 @@ int _fastcall CBufBool::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CBufBool& CBufBool::operator= (const CBufBool& src)
 {
-	m_Num = 0;					// zruöenÌ star˝ch dat
-	int index = 0;				// index naËÌtanÈ poloûky
-	int i = src.m_Num;			// velikost zdrojovÈho bufferu
+	m_Num = 0;					// zru≈°en√≠ star√Ωch dat
+	int index = 0;				// index na√®√≠tan√© polo≈æky
+	int i = src.m_Num;			// velikost zdrojov√©ho bufferu
 
-	for (; i > 0; i--)			// pro vöechny poloûky v bufferu
+	for (; i > 0; i--)			// pro v≈°echny polo≈æky v bufferu
 	{
-		Add(src[index]);	// kopie poloûky
-		index++;				// inkrementace ËtecÌho indexu
+		Add(src[index]);	// kopie polo≈æky
+		index++;				// inkrementace √®tec√≠ho indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;
@@ -513,29 +513,29 @@ const CBufBool& CBufBool::operator= (const CBufBool& src)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ logickÈ hodnoty ze souboru (naËÌt· do promÏnnÈ, TRUE=operace OK)
+// na√®ten√≠ logick√© hodnoty ze souboru (na√®√≠t√° do prom√¨nn√©, TRUE=operace OK)
 /*
 bool CBufBool::LoadFile(bool& data, CString jmeno)
 {
-// naËtenÌ textovÈho souboru
+// na√®ten√≠ textov√©ho souboru
 	CString txt;
 	if (!txt.LoadFile(jmeno)) return false;
 
-// odstranÏnÌ mezer a jin˝ch oddÏlovaË˘
+// odstran√¨n√≠ mezer a jin√Ωch odd√¨lova√®√π
 	txt.TrimLeft();
 	txt.TrimRight();
 
-// konverze na velk· pÌsmena
+// konverze na velk√° p√≠smena
 	txt.UpperCase();
 
-// pr·zdn˝ text je jako FALSE
+// pr√°zdn√Ω text je jako FALSE
 	if (txt.IsEmpty())
 	{
 		data = false;
 		return true;
 	}
 
-// nastavenÌ dat podle prvnÌho pÌsmene
+// nastaven√≠ dat podle prvn√≠ho p√≠smene
 	TCHAR znak = txt[0];
 	data = ((znak == 'T') ||
 			(znak == 'Y') ||
@@ -549,11 +549,11 @@ bool CBufBool::LoadFile(bool& data, CString jmeno)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uloûenÌ logickÈ hodnoty do souboru form·tu LOG (FALSE=chyba)
+// ulo≈æen√≠ logick√© hodnoty do souboru form√°tu LOG (FALSE=chyba)
 
 bool CBufBool::SaveFile(bool data, CString jmeno) const
 {
-// p¯Ìprava textu
+// p√∏√≠prava textu
 	CString txt;
 	if (data)
 	{
@@ -564,7 +564,7 @@ bool CBufBool::SaveFile(bool data, CString jmeno) const
 		txt = _T("false");
 	}
 
-// uloûenÌ textu do souboru
+// ulo≈æen√≠ textu do souboru
 	return txt.SaveFile(jmeno);
 }
 */

@@ -7,30 +7,30 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky dat hudby - 16 bajtù
+// struktura poloÅ¾ky dat hudby - 16 bajtÃ¹
 
 typedef struct MUSICDATA_
 {
-	long	Refer;					// (4) èítaè referencí
-	long	Size;					// (4) velikost dat (bajtù)
-	long	res;					// (4) ... rezerva (pro zarovnání)
+	long	Refer;					// (4) Ã¨Ã­taÃ¨ referencÃ­
+	long	Size;					// (4) velikost dat (bajtÃ¹)
+	long	res;					// (4) ... rezerva (pro zarovnÃ¡nÃ­)
 	BYTE*	Data;					// (4) ukazatel na data
 
 } MUSICDATA;
 
-// velikost poloky dat hudby (bez dat)
+// velikost poloÅ¾ky dat hudby (bez dat)
 #define SIZEOFMUSICDATA	(3*sizeof(long) + sizeof(BYTE*))
 
-extern MUSICDATA EmptyMusicData;		// data prázdné hudby
-extern	const CMusic	EmptyMusic;		// prázdná hudba
+extern MUSICDATA EmptyMusicData;		// data prÃ¡zdnÃ© hudby
+extern	const CMusic	EmptyMusic;		// prÃ¡zdnÃ¡ hudba
 
 /////////////////////////////////////////////////////////////////////////////
-// statické funkce
+// statickÃ© funkce
 
-// vytvoøení dat hudby (pøi chybì pamìti vrací NULL)
+// vytvoÃ¸enÃ­ dat hudby (pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ NULL)
 MUSICDATA* _fastcall NewMusicData(int size);
 
-// zrušení dat hudby (oddìleno kvùli lepší optimalizaci)
+// zruÅ¡enÃ­ dat hudby (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 void _fastcall DelMusicData(MUSICDATA* data);
 
 /////////////////////////////////////////////////////////////////////////////
@@ -39,14 +39,14 @@ void _fastcall DelMusicData(MUSICDATA* data);
 class CMusic
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
-	MUSICDATA*		pData;					// ukazatel na záhlaví hudby
+// promÃ¬nnÃ©
+	MUSICDATA*		pData;					// ukazatel na zÃ¡hlavÃ­ hudby
 
-// pøipojení dat hudby
+// pÃ¸ipojenÃ­ dat hudby
 	inline void attach(MUSICDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -55,7 +55,7 @@ private:
 		LongIncrement(&(data->Refer));
 	}
 
-// odpojení (a zrušení) dat hudby
+// odpojenÃ­ (a zruÅ¡enÃ­) dat hudby
 	inline void detach(MUSICDATA* data)
 	{
 		ASSERT(data != NULL);
@@ -68,48 +68,48 @@ private:
 	}
 
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
 // konstruktor a destruktor
-	CMusic();					// prázdná hudba o délce 0
+	CMusic();					// prÃ¡zdnÃ¡ hudba o dÃ©lce 0
 	CMusic(const CMusic& src);
 	CMusic(MUSICDATA* data);
 	~CMusic();
 
-// statickı konstruktor a destruktor
-	void Init();				// prázdná hudba o délce 0
+// statickÃ½ konstruktor a destruktor
+	void Init();				// prÃ¡zdnÃ¡ hudba o dÃ©lce 0
 	void _fastcall Init(const CMusic& src);
 	void _fastcall Init(MUSICDATA* data);
-	bool _fastcall Init(int size);		// pøi chybì pamìti vrací FALSE, hudba není vytvoøena
+	bool _fastcall Init(int size);		// pÃ¸i chybÃ¬ pamÃ¬ti vracÃ­ FALSE, hudba nenÃ­ vytvoÃ¸ena
 	void Term();
 
-// poskytnutí ukazatele na data
+// poskytnutÃ­ ukazatele na data
 	inline MUSICDATA* Data() const { return pData; };
 	inline BYTE* DataData() const { return pData->Data; };
 
-// poskytnutí velikosti dat hudby
+// poskytnutÃ­ velikosti dat hudby
 	inline int Size() const { return pData->Size; };
 
-// vyprázdnìní (uvolnìní dat) - pøipojí se standardní prázdná hudba
+// vyprÃ¡zdnÃ¬nÃ­ (uvolnÃ¬nÃ­ dat) - pÃ¸ipojÃ­ se standardnÃ­ prÃ¡zdnÃ¡ hudba
 	void Empty();
 
-// kopie do vlastního bufferu pøed modifikací
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// kopie do vlastnÃ­ho bufferu pÃ¸ed modifikacÃ­
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool CopyWrite();
 
-// vytvoøení nové hudby (pøipraveno k zápisu, data jsou náhodná)
-// pøi chybì pamìti vrátí FALSE, obsah bude nezmìnìn
+// vytvoÃ¸enÃ­ novÃ© hudby (pÃ¸ipraveno k zÃ¡pisu, data jsou nÃ¡hodnÃ¡)
+// pÃ¸i chybÃ¬ pamÃ¬ti vrÃ¡tÃ­ FALSE, obsah bude nezmÃ¬nÃ¬n
 	bool New(int size);
 
-// naètení hudby ze souboru (TRUE=operace OK)
+// naÃ¨tenÃ­ hudby ze souboru (TRUE=operace OK)
 	bool LoadFile(CText jmeno);
 
-// uloení do souboru formátu MID (FALSE=chyba)
+// uloÅ¾enÃ­ do souboru formÃ¡tu MID (FALSE=chyba)
 	bool SaveFile(CText jmeno) const;
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CMusic& operator= (const CMusic& src);
 	const CMusic& operator= (MUSICDATA* src);
 };
@@ -123,17 +123,17 @@ public:
 class CBufMusic : public CBuffer<CMusic>
 {
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
-// vytvoøení nové poloky (prázdné/obsah náhodnı) (vrací index poloky, <0 = chyba)
-// provádí záznam do UNDO bufferu
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky (prÃ¡zdnÃ©/obsah nÃ¡hodnÃ½) (vracÃ­ index poloÅ¾ky, <0 = chyba)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	inline int New() { return CBuffer<CMusic>::New(); }
 	int New(int size);
 
-// pøidání poloky (vrací index poloky, <0 = chyba)
-// provádí záznam do UNDO bufferu
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky, <0 = chyba)
+// provÃ¡dÃ­ zÃ¡znam do UNDO bufferu
 	inline int _fastcall Add(const CMusic& data) { return CBuffer<CMusic>::Add(data); }
 	int _fastcall Add(MUSICDATA* data);
 };

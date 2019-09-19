@@ -13,15 +13,15 @@ namespace EditText
 /////////////////////////////////////////////////////////////////////////////
 // parametry
 
-int		Index = -1;						// editovaná položka
-BOOL	Filling = FALSE;				// plnìní dat
-CText	TextRadek;						// text "øádek:"
+int		Index = -1;						// editovanÃ¡ poloÅ¾ka
+BOOL	Filling = FALSE;				// plnÃ¬nÃ­ dat
+CText	TextRadek;						// text "Ã¸Ã¡dek:"
 CText	TextPozice;						// text "pozice:"
 
-HFONT	TextFont0 = NULL;				// nastavený font
+HFONT	TextFont0 = NULL;				// nastavenÃ½ font
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení textu editoru
+// nastavenÃ­ textu editoru
 
 int RichEditData = 0;
 CText RichEditText;
@@ -40,25 +40,25 @@ DWORD CALLBACK EditStreamCallback(DWORD cookie, BYTE* buf, long num, long* bytes
 
 void SetEditText(CText text)
 {
-// vypnutí pøekreslování okna
+// vypnutÃ­ pÃ¸ekreslovÃ¡nÃ­ okna
 	::SendMessage(EditTextWnd, WM_SETREDRAW, FALSE, 0);
 
-// pøíprava textového proudu
+// pÃ¸Ã­prava textovÃ©ho proudu
 	RichEditText = text;
 	RichEditData = 0;
 	EDITSTREAM stream;
 	stream.pfnCallback = EditStreamCallback;
 
-// odeslání textového proudu
+// odeslÃ¡nÃ­ textovÃ©ho proudu
 	::SendMessage(EditTextWnd, EM_STREAMIN, SF_TEXT, (LPARAM)&stream);
 
-// obnovení pøekreslování okna
+// obnovenÃ­ pÃ¸ekreslovÃ¡nÃ­ okna
 	::SendMessage(EditTextWnd, WM_SETREDRAW, TRUE, 0);
 	::InvalidateRect(EditTextWnd, NULL, TRUE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// naètení textu editoru
+// naÃ¨tenÃ­ textu editoru
 
 DWORD CALLBACK InEditStreamCallback(DWORD cookie, BYTE* buf, long num, long* bytes)
 {
@@ -80,11 +80,11 @@ CText GetEditText()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// opakovaná inicializace po zmìnì jazyku
+// opakovanÃ¡ inicializace po zmÃ¬nÃ¬ jazyku
 
 void StartReInit()
 {
-// inicializace statických promìnných
+// inicializace statickÃ½ch promÃ¬nnÃ½ch
 	TextRadek.Load(IDT_RADEK);
 	TextRadek.Add(' ');
 
@@ -94,7 +94,7 @@ void StartReInit()
 	TextPozice.Add(txt);
 	TextPozice.Add(' ');
 
-// nastavení fontu
+// nastavenÃ­ fontu
 	HFONT oldfont = TextFont0;
 
 	TextFont0 = GetFont(&TextFont);
@@ -106,7 +106,7 @@ void StartReInit()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace pøi startu programu
+// inicializace pÃ¸i startu programu
 
 HINSTANCE RichEditLib = NULL;
 
@@ -118,16 +118,16 @@ void StartInit()
 	}		
 
 	EditTextWnd = ::CreateWindowEx(
-		WS_EX_CLIENTEDGE,				// rozšíøený styl
-		_T("RichEdit"),					// tøída
+		WS_EX_CLIENTEDGE,				// rozÅ¡Ã­Ã¸enÃ½ styl
+		_T("RichEdit"),					// tÃ¸Ã­da
 		NULL,							// text
 		WS_CHILD | ES_AUTOVSCROLL 
 			| ES_MULTILINE | ES_WANTRETURN | WS_VSCROLL, // styl
 		300,							// X
 		200,							// Y
-		100,							// šíøka
-		30,								// výška
-		MainFrame,						// rodiè
+		100,							// Å¡Ã­Ã¸ka
+		30,								// vÃ½Å¡ka
+		MainFrame,						// rodiÃ¨
 		NULL,							// ID
 		hInstance,						// instance
 		NULL);							// data
@@ -151,12 +151,12 @@ void StartInit()
 
 	::SendMessage(EditTextWnd, EM_FMTLINES, FALSE, 0);
 
-// inicializace statických promìnných
+// inicializace statickÃ½ch promÃ¬nnÃ½ch
 	StartReInit();
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení editace (musí být platný index!)
+// zahÃ¡jenÃ­ editace (musÃ­ bÃ½t platnÃ½ index!)
 
 void BegEdit(int index)
 {
@@ -164,10 +164,10 @@ void BegEdit(int index)
 	Index = index;
 	ASSERT(Text.IsValid(index));
 
-// zobrazení okna
+// zobrazenÃ­ okna
 	::ShowWindow(EditTextWnd, SW_SHOW);
 
-// nastavení textu
+// nastavenÃ­ textu
 	Filling = TRUE;
 	SetEditText(Text.GetTxt(index));
 	Filling = FALSE;
@@ -178,7 +178,7 @@ void BegEdit(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøesun editaèního pole
+// pÃ¸esun editaÃ¨nÃ­ho pole
 
 HDWP MoveEdit(HDWP hdwp)
 {
@@ -191,11 +191,11 @@ HDWP MoveEdit(HDWP hdwp)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// výbìr všeho
+// vÃ½bÃ¬r vÅ¡eho
 
 void SelectAll()
 {
-// výbìr všeho
+// vÃ½bÃ¬r vÅ¡eho
 	::SendMessage(EditTextWnd, EM_SETSEL, 0, (LPARAM)-1);
 
 // aktualizace voleb bloku
@@ -203,15 +203,15 @@ void SelectAll()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení bloku nebo znaku
+// zruÅ¡enÃ­ bloku nebo znaku
 
 void Delete()
 {
-// zjištìní oznaèeného úseku textu
+// zjiÅ¡tÃ¬nÃ­ oznaÃ¨enÃ©ho Ãºseku textu
 	CHARRANGE sel;
 	::SendMessage(EditTextWnd, EM_EXGETSEL, 0, (LPARAM)&sel);
 
-// není-li nic oznaèeno, ruší se znak za kurzorem (podhození klávesy DELETE)
+// nenÃ­-li nic oznaÃ¨eno, ruÅ¡Ã­ se znak za kurzorem (podhozenÃ­ klÃ¡vesy DELETE)
 	if (sel.cpMin == sel.cpMax)
 	{
 		::SendMessage(EditTextWnd, WM_KEYDOWN,	VK_DELETE, 0x01530001);
@@ -219,7 +219,7 @@ void Delete()
 	}
 	else
 
-// jinak zrušení oznaèeného úseku
+// jinak zruÅ¡enÃ­ oznaÃ¨enÃ©ho Ãºseku
 	{
 		::SendMessage(EditTextWnd, WM_CLEAR, 0, 0);
 	}
@@ -241,7 +241,7 @@ void Copy()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vystøížení bloku
+// vystÃ¸Ã­Å¾enÃ­ bloku
 
 void Cut()
 {
@@ -253,7 +253,7 @@ void Cut()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// navrácení bloku
+// navrÃ¡cenÃ­ bloku
 
 void Paste()
 {
@@ -269,7 +269,7 @@ void Paste()
 
 void UpdateClipboard()
 {
-// kontrola, zda je režim editace
+// kontrola, zda je reÅ¾im editace
 	if (!ProgMode) return;
 
 	if ((FocusBuf == BufEdiID) && (EditMode == BufTxtID))
@@ -304,7 +304,7 @@ void UpdateClipboard()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmìna textu
+// zmÃ¬na textu
 
 void OnChange()
 {

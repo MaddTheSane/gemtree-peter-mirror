@@ -3,7 +3,7 @@
 
 /***************************************************************************\
 *																			*
-*							Buffer re·ln˝ch ËÌsel							*
+*							Buffer re√°ln√Ωch √®√≠sel							*
 *																			*
 \***************************************************************************/
 
@@ -13,35 +13,35 @@
 
 CBufReal::CBufReal()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 CBufReal::~CBufReal()
 {
-	DelAll();				// zruöenÌ bufferu
+	DelAll();				// zru≈°en√≠ bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// statick˝ konstruktor a destruktor
+// statick√Ω konstruktor a destruktor
 
 void CBufReal::Init()
 {
-	m_Data = NULL;			// nenÌ buffer dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ buffer poloûek
+	m_Data = NULL;			// nen√≠ buffer dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ buffer polo≈æek
 }
 
 void CBufReal::Term()
 {
-	DelAll();				// zruöenÌ bufferu
+	DelAll();				// zru≈°en√≠ bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ nov˝ch dat (oddÏleno kv˘li lepöÌ optimalizaci)
+// vytvo√∏en√≠ nov√Ωch dat (odd√¨leno kv√πli lep≈°√≠ optimalizaci)
 
 void CBufReal::NewData()
 {
@@ -53,7 +53,7 @@ void CBufReal::NewData()
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poËtu poloûek v bufferu (novÈ poloûky neinicializovanÈ)
+// nastaven√≠ po√®tu polo≈æek v bufferu (nov√© polo≈æky neinicializovan√©)
 
 void _fastcall CBufReal::Num(int num)
 {
@@ -68,22 +68,22 @@ void _fastcall CBufReal::Num(int num)
 }
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ vöech poloûek v bufferu
+// zru≈°en√≠ v≈°ech polo≈æek v bufferu
 
 void CBufReal::DelAll()
 {
-	MemBuf(m_Data, 0);		// zruöenÌ bufferu dat
-	m_Num = 0;				// nenÌ û·dn· platn· poloûka
-	m_Max = 0;				// nenÌ û·dn· poloûka v bufferu
+	MemBuf(m_Data, 0);		// zru≈°en√≠ bufferu dat
+	m_Num = 0;				// nen√≠ ≈æ√°dn√° platn√° polo≈æka
+	m_Max = 0;				// nen√≠ ≈æ√°dn√° polo≈æka v bufferu
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// poskytnutÌ poloûky (s kontrolou platnosti indexu)
+// poskytnut√≠ polo≈æky (s kontrolou platnosti indexu)
 
 double _fastcall CBufReal::Get(const int index) const
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		return m_Data[index];
 	}
@@ -92,11 +92,11 @@ double _fastcall CBufReal::Get(const int index) const
 
 
 ////////////////////////////////////////////////////////////////////
-// nastavenÌ poloûky (s kontrolou platnosti indexu)
+// nastaven√≠ polo≈æky (s kontrolou platnosti indexu)
 
 void _fastcall CBufReal::Set(const int index, const double data)
 {
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		m_Data[index] = data;
 	}
@@ -104,11 +104,11 @@ void _fastcall CBufReal::Set(const int index, const double data)
 
 
 ////////////////////////////////////////////////////////////////////
-// vloûenÌ poloûky do bufferu na poûadovanou pozici (omezÌ index)
+// vlo≈æen√≠ polo≈æky do bufferu na po≈æadovanou pozici (omez√≠ index)
 
 void _fastcall CBufReal::Insert(int index, const double data)
 {
-// omezenÌ indexu
+// omezen√≠ indexu
 	if ((DWORD)index > (DWORD)m_Num)
 	{
 		if (index < 0) 
@@ -121,25 +121,25 @@ void _fastcall CBufReal::Insert(int index, const double data)
 		}
 	}
 
-// poËet poloûek k odsunu
+// po√®et polo≈æek k odsunu
 	int num = m_Num - index;
 
-// zv˝öenÌ poËtu poloûek v bufferu
+// zv√Ω≈°en√≠ po√®tu polo≈æek v bufferu
 	Num(m_Num + 1);
 
-// odsun poloûek
+// odsun polo≈æek
 	if (num > 0)
 	{
 		MemMove(m_Data + index + 1, m_Data + index, num*sizeof(double));
 	}
 
-// nastavenÌ poloûky
+// nastaven√≠ polo≈æky
 	m_Data[index] = data;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûek z konce bufferu
+// zru≈°en√≠ polo≈æek z konce bufferu
 
 void _fastcall CBufReal::Del(int num)
 {
@@ -153,11 +153,11 @@ void _fastcall CBufReal::Del(int num)
 
 
 ////////////////////////////////////////////////////////////////////
-// zruöenÌ poloûky z bufferu (ostatnÌ poloûky se p¯isunou)
+// zru≈°en√≠ polo≈æky z bufferu (ostatn√≠ polo≈æky se p√∏isunou)
 
 void _fastcall CBufReal::DelItem(const int index)
 {
-	if (IsValid(index))					// je poloûka platn·?
+	if (IsValid(index))					// je polo≈æka platn√°?
 	{
 		m_Num--;
 		if (index < m_Num)
@@ -168,54 +168,54 @@ void _fastcall CBufReal::DelItem(const int index)
 }
 
 ////////////////////////////////////////////////////////////////////
-// vytvo¯enÌ poloûky (vracÌ index poloûky)
+// vytvo√∏en√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int CBufReal::New()
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result] = 0;			// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result] = 0;			// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// p¯id·nÌ poloûky (vracÌ index poloûky)
+// p√∏id√°n√≠ polo≈æky (vrac√≠ index polo≈æky)
 
 int _fastcall CBufReal::Add(const double data)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
-	m_Data[result] = data;		// inicializace poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
+	m_Data[result] = data;		// inicializace polo≈æky
 	return result;
 }
 
 
 ////////////////////////////////////////////////////////////////////
-// duplikace poloûky (s kontrolou platnosti indexu, vracÌ index prvnÌ poloûky)
+// duplikace polo≈æky (s kontrolou platnosti indexu, vrac√≠ index prvn√≠ polo≈æky)
 
 int _fastcall CBufReal::Dup(const int index)
 {
-	int result = NewItem();				// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();				// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
-		m_Data[result] = m_Data[index];	// kopie poloûky
+		m_Data[result] = m_Data[index];	// kopie polo≈æky
 	}
 	else
 	{
-		m_Data[result] = 0;				// inicializace neplatnÈ poloûky
+		m_Data[result] = 0;				// inicializace neplatn√© polo≈æky
 	}
 	return result;
 }
 
 int _fastcall CBufReal::Dup(const int index, int num)
 {
-	int result = NewItem();		// vytvo¯enÌ novÈ poloûky
+	int result = NewItem();		// vytvo√∏en√≠ nov√© polo≈æky
 
-	if (IsValid(index))					// je index platn˝?
+	if (IsValid(index))					// je index platn√Ω?
 	{
 		double data = m_Data[index];
 
-		m_Data[result] = data;			// kopie poloûky
+		m_Data[result] = data;			// kopie polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -224,7 +224,7 @@ int _fastcall CBufReal::Dup(const int index, int num)
 	}
 	else
 	{
-		m_Data[result] = 0;		// inicializace neplatnÈ poloûky
+		m_Data[result] = 0;		// inicializace neplatn√© polo≈æky
 
 		for (num--; num > 0; num--)
 		{
@@ -236,51 +236,51 @@ int _fastcall CBufReal::Dup(const int index, int num)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// naËtenÌ ËÌsla ze souboru (naËÌt· do promÏnnÈ, true=operace OK)
+// na√®ten√≠ √®√≠sla ze souboru (na√®√≠t√° do prom√¨nn√©, true=operace OK)
 /*
 bool CBufReal::LoadFile(double& data, CString jmeno)
 {
-// naËtenÌ textovÈho souboru
+// na√®ten√≠ textov√©ho souboru
 	CString txt;
 	if (!txt.LoadFile(jmeno)) return false;
 
-// odstranÏnÌ mezer a jin˝ch oddÏlovaË˘
+// odstran√¨n√≠ mezer a jin√Ωch odd√¨lova√®√π
 	txt.TrimLeft();
 	txt.TrimRight();
 
-// naËtenÌ ËÌsla
+// na√®ten√≠ √®√≠sla
 	data = Double(txt);
 	return true;
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uloûenÌ ËÌsla do souboru form·tu NUM (false=chyba)
+// ulo≈æen√≠ √®√≠sla do souboru form√°tu NUM (false=chyba)
 
 bool CBufReal::SaveFile(double data, CString jmeno) const
 {
-// p¯Ìprava ËÌsla
+// p√∏√≠prava √®√≠sla
 	CString txt;
 	txt.Double(data);
 
-// uloûenÌ textu do souboru
+// ulo≈æen√≠ textu do souboru
 	return txt.SaveFile(jmeno);
 }
 */
 
 /////////////////////////////////////////////////////////////////////////////
-// oper·tor p¯i¯azenÌ
+// oper√°tor p√∏i√∏azen√≠
 
 const CBufReal& CBufReal::operator= (const CBufReal& src)
 {
-	m_Num = 0;					// zruöenÌ star˝ch dat
-	int index = 0;				// index naËÌtanÈ poloûky
-	int i = src.m_Num;			// velikost zdrojovÈho bufferu
+	m_Num = 0;					// zru≈°en√≠ star√Ωch dat
+	int index = 0;				// index na√®√≠tan√© polo≈æky
+	int i = src.m_Num;			// velikost zdrojov√©ho bufferu
 
-	for (; i > 0; i--)			// pro vöechny poloûky v bufferu
+	for (; i > 0; i--)			// pro v≈°echny polo≈æky v bufferu
 	{
-		Add(src[index]);	// kopie poloûky
-		index++;				// inkrementace ËtecÌho indexu
+		Add(src[index]);	// kopie polo≈æky
+		index++;				// inkrementace √®tec√≠ho indexu
 	}
 	ASSERT(m_Num == src.m_Num);
 	return *this;

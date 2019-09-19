@@ -6,186 +6,186 @@
 \***************************************************************************/
 
 /////////////////////////////////////////////////////////////////////////////
-// poloûka inicializaËnÌ tabulky funkcÌ
+// polo≈æka inicializa√®n√≠ tabulky funkc√≠
 
 typedef struct INITFUNC_ {
-	short	SrcMask;		// maska zdrojov˝ch vlastnostÌ
-	short	DstMask;		// maska cÌlov˝ch vlastnostÌ
+	short	SrcMask;		// maska zdrojov√Ωch vlastnost√≠
+	short	DstMask;		// maska c√≠lov√Ωch vlastnost√≠
 	short	Param;			// parametry
 	char*	Import;			// text pro import funkce
 } INITFUNC;
 
-// inicializaËnÌ tabulka funkcÌ
+// inicializa√®n√≠ tabulka funkc√≠
 extern	const INITFUNC InitTabFunc[];
 
 /////////////////////////////////////////////////////////////////////////////
-// editaËnÌ pole
+// edita√®n√≠ pole
 
-extern	int			FocusBuf;						// okno s fokusem (= ËÌslo bufferu, BufEdiID = editaËnÌ pole)
+extern	int			FocusBuf;						// okno s fokusem (= √®√≠slo bufferu, BufEdiID = edita√®n√≠ pole)
 
-extern	int			EditMode;						// aktivnÌ editaËnÌ pole (= ËÌslo bufferu)
-extern	int			EditBuf;						// editovan˝ buffer
-extern	int			EditItem;						// editovan· poloûka v bufferu
-extern	int			EditItemSprite;					// sprajt s editovanou ikonou (˙schova pro historii)
-extern	int			EditItemPic;					// editovan˝ obr·zek sprajtu (˙schova pro historii)
+extern	int			EditMode;						// aktivn√≠ edita√®n√≠ pole (= √®√≠slo bufferu)
+extern	int			EditBuf;						// editovan√Ω buffer
+extern	int			EditItem;						// editovan√° polo≈æka v bufferu
+extern	int			EditItemSprite;					// sprajt s editovanou ikonou (√∫schova pro historii)
+extern	int			EditItemPic;					// editovan√Ω obr√°zek sprajtu (√∫schova pro historii)
 
-extern	int			EditX;							// sou¯adnice X poË·tku editaËnÌho pole
-extern	int			EditY;							// sou¯adnice Y poË·tku editaËnÌho pole
-extern	int			EditWidth;						// öÌ¯ka editaËnÌho pole
-extern	int			EditHeight;						// v˝öka editaËnÌho pole
+extern	int			EditX;							// sou√∏adnice X po√®√°tku edita√®n√≠ho pole
+extern	int			EditY;							// sou√∏adnice Y po√®√°tku edita√®n√≠ho pole
+extern	int			EditWidth;						// ≈°√≠√∏ka edita√®n√≠ho pole
+extern	int			EditHeight;						// v√Ω≈°ka edita√®n√≠ho pole
 
-extern	int			ToolMode;						// aktivnÌ editaËnÌ mÛd Toolbaru (=ËÌslo bufferu)
+extern	int			ToolMode;						// aktivn√≠ edita√®n√≠ m√≥d Toolbaru (=√®√≠slo bufferu)
 
-extern	UINT		FocusTimer;						// ËasovaË pro nastavenÌ fokusu
-extern	int			FocusTimerN;					// ËÌtaË pro nastavenÌ fokusu
-
-/////////////////////////////////////////////////////////////////////////////
-// hl·öenÌ o zmÏnÏ adres·¯e
-
-extern	HANDLE		FunctionDirChange;				// hl·öenÌ o zmÏnÏ adres·¯e - funkce
-extern	HANDLE		NumberDirChange;				// hl·öenÌ o zmÏnÏ adres·¯e - ËÌsla
-extern	HANDLE		TextDirChange;					// hl·öenÌ o zmÏnÏ adres·¯e - text
-extern	HANDLE		BoolDirChange;					// hl·öenÌ o zmÏnÏ adres·¯e - logickÈ hodnoty
-extern	HANDLE		IconDirChange;					// hl·öenÌ o zmÏnÏ adres·¯e - ikony
-extern	HANDLE		MapDirChange;					// hl·öenÌ o zmÏnÏ adres·¯e - plochy
-extern	HANDLE		PictureDirChange;				// hl·öenÌ o zmÏnÏ adres·¯e - obr·zky
-extern	HANDLE		SpriteDirChange;				// hl·öenÌ o zmÏnÏ adres·¯e - sprajty
-extern	HANDLE		SoundDirChange;					// hl·öenÌ o zmÏnÏ adres·¯e - zvuk
-extern	HANDLE		MusicDirChange;					// hl·öenÌ o zmÏnÏ adres·¯e - hudba
-
-extern	HANDLE		FunctionDirChange2;				// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ funkce
-extern	HANDLE		NumberDirChange2;				// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ ËÌsla
-extern	HANDLE		TextDirChange2;					// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ text
-extern	HANDLE		BoolDirChange2;					// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ logickÈ hodnoty
-extern	HANDLE		IconDirChange2;					// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ ikony
-extern	HANDLE		MapDirChange2;					// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ plochy
-extern	HANDLE		PictureDirChange2;				// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ obr·zky
-extern	HANDLE		SpriteDirChange2;				// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ sprajty
-extern	HANDLE		SoundDirChange2;				// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ zvuk
-extern	HANDLE		MusicDirChange2;				// hl·öenÌ o zmÏnÏ adres·¯e - alternativnÌ hudba
-
-extern	int			ProgDirChangeIgnore;			// ËÌtaË pro ignorov·nÌ hl·öenÌ zmÏn po vlastnÌ zmÏnÏ
-
-extern	int			ProgStatusWidth;				// öÌ¯ka druhÈho pole programovÈho ¯·dku
-
-//#define MOUSEINV -100000							// neplatn· sou¯adnice myöi
-//extern	int			mX;								// sou¯adnice X myöi
-//extern	int			mY;								// sou¯adnice Y myöi
-
-extern	BOOL		Modi;							// p¯Ìznak modifikace souboru
+extern	UINT		FocusTimer;						// √®asova√® pro nastaven√≠ fokusu
+extern	int			FocusTimerN;					// √®√≠ta√® pro nastaven√≠ fokusu
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha kurzoru myöi
+// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e
 
-extern	int		MouseX;								// sou¯adnice X myöi
-extern	int		MouseY;								// sou¯adnice Y myöi
+extern	HANDLE		FunctionDirChange;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - funkce
+extern	HANDLE		NumberDirChange;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - √®√≠sla
+extern	HANDLE		TextDirChange;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - text
+extern	HANDLE		BoolDirChange;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - logick√© hodnoty
+extern	HANDLE		IconDirChange;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - ikony
+extern	HANDLE		MapDirChange;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - plochy
+extern	HANDLE		PictureDirChange;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - obr√°zky
+extern	HANDLE		SpriteDirChange;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - sprajty
+extern	HANDLE		SoundDirChange;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - zvuk
+extern	HANDLE		MusicDirChange;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - hudba
+
+extern	HANDLE		FunctionDirChange2;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ funkce
+extern	HANDLE		NumberDirChange2;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ √®√≠sla
+extern	HANDLE		TextDirChange2;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ text
+extern	HANDLE		BoolDirChange2;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ logick√© hodnoty
+extern	HANDLE		IconDirChange2;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ ikony
+extern	HANDLE		MapDirChange2;					// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ plochy
+extern	HANDLE		PictureDirChange2;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ obr√°zky
+extern	HANDLE		SpriteDirChange2;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ sprajty
+extern	HANDLE		SoundDirChange2;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ zvuk
+extern	HANDLE		MusicDirChange2;				// hl√°≈°en√≠ o zm√¨n√¨ adres√°√∏e - alternativn√≠ hudba
+
+extern	int			ProgDirChangeIgnore;			// √®√≠ta√® pro ignorov√°n√≠ hl√°≈°en√≠ zm√¨n po vlastn√≠ zm√¨n√¨
+
+extern	int			ProgStatusWidth;				// ≈°√≠√∏ka druh√©ho pole programov√©ho √∏√°dku
+
+//#define MOUSEINV -100000							// neplatn√° sou√∏adnice my≈°i
+//extern	int			mX;								// sou√∏adnice X my≈°i
+//extern	int			mY;								// sou√∏adnice Y my≈°i
+
+extern	BOOL		Modi;							// p√∏√≠znak modifikace souboru
+
+/////////////////////////////////////////////////////////////////////////////
+// obsluha kurzoru my≈°i
+
+extern	int		MouseX;								// sou√∏adnice X my≈°i
+extern	int		MouseY;								// sou√∏adnice Y my≈°i
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha editace ËÌsla
+// obsluha editace √®√≠sla
 
-extern	HWND	EditNumWnd;						// editaËnÌ okno ËÌsla
-
-/////////////////////////////////////////////////////////////////////////////
-// editace ËÌselnÈ poloûky plochy
-
-extern	HWND	EditMapNumWnd;					// editaËnÌ okno plochy (NULL=nenÌ)
+extern	HWND	EditNumWnd;						// edita√®n√≠ okno √®√≠sla
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha editace logick˝ch hodnot
+// editace √®√≠seln√© polo≈æky plochy
 
-extern	HWND	EditLogWnd;						// editaËnÌ okno logick˝ch hodnot
+extern	HWND	EditMapNumWnd;					// edita√®n√≠ okno plochy (NULL=nen√≠)
+
+/////////////////////////////////////////////////////////////////////////////
+// obsluha editace logick√Ωch hodnot
+
+extern	HWND	EditLogWnd;						// edita√®n√≠ okno logick√Ωch hodnot
 
 /////////////////////////////////////////////////////////////////////////////
 // obsluha editace textu
 
-extern	HWND	EditTextWnd;					// editaËnÌ okno textu
+extern	HWND	EditTextWnd;					// edita√®n√≠ okno textu
 
 /////////////////////////////////////////////////////////////////////////////
-// posuvnÌky pro editory
+// posuvn√≠ky pro editory
 
-extern	HWND	HScroll;						// horizont·lnÌ posuvnÌk
-extern	HWND	VScroll;						// vertik·lnÌ posuvnÌk
-extern	BOOL	HScrollDisp;					// je horizont·lnÌ posuvnÌk
-extern	BOOL	VScrollDisp;					// je vertik·lnÌ posuvnÌk
-#define	TRACKSIRKA 16							// öÌ¯ka posuvnÌku
+extern	HWND	HScroll;						// horizont√°ln√≠ posuvn√≠k
+extern	HWND	VScroll;						// vertik√°ln√≠ posuvn√≠k
+extern	BOOL	HScrollDisp;					// je horizont√°ln√≠ posuvn√≠k
+extern	BOOL	VScrollDisp;					// je vertik√°ln√≠ posuvn√≠k
+#define	TRACKSIRKA 16							// ≈°√≠√∏ka posuvn√≠ku
 
 /////////////////////////////////////////////////////////////////////////////
-// glob·lnÌ a lok·lnÌ promÏnnÈ
+// glob√°ln√≠ a lok√°ln√≠ prom√¨nn√©
 
-extern	BOOL		ProgMode;						// p¯Ìznak mÛdu editace
-//extern	HWND		EditName;						// editor jmÈna prvku
-//extern	HWND		EditFind;						// editor textu k hled·nÌ
-extern	int			ToolBarProgN;					// poËet z·kladnÌch prvk˘ panelu n·stroj˘
+extern	BOOL		ProgMode;						// p√∏√≠znak m√≥du editace
+//extern	HWND		EditName;						// editor jm√©na prvku
+//extern	HWND		EditFind;						// editor textu k hled√°n√≠
+extern	int			ToolBarProgN;					// po√®et z√°kladn√≠ch prvk√π panelu n√°stroj√π
 
-extern	HWND		TreeCls;						// okno t¯Ìd
-extern	HWND		TreeObj;						// okno glob·lnÌch objekt˘
-extern	HWND		TreeLoc;						// okno lok·lnÌch objekt˘
+extern	HWND		TreeCls;						// okno t√∏√≠d
+extern	HWND		TreeObj;						// okno glob√°ln√≠ch objekt√π
+extern	HWND		TreeLoc;						// okno lok√°ln√≠ch objekt√π
 extern	HWND		TreeEdi;						// okno editoru
 extern	HWND		TreeStr;						// okno struktur
 
-extern	HIMAGELIST	ProgImageList;					// seznam obr·zk˘
-extern	HIMAGELIST	ProgImageListMedium;			// seznam st¯ednÌch obr·zk˘
-extern	HIMAGELIST	ProgImageListSmall;				// seznam mal˝ch obr·zk˘
-extern	HIMAGELIST	ProgStateList;					// seznam stavov˝ch ikon
-extern	HIMAGELIST	ProgStateListMedium;			// seznam st¯ednÌch stavov˝ch ikon
-extern	HIMAGELIST	ProgStateListSmall;				// seznam mal˝ch stavov˝ch ikon
+extern	HIMAGELIST	ProgImageList;					// seznam obr√°zk√π
+extern	HIMAGELIST	ProgImageListMedium;			// seznam st√∏edn√≠ch obr√°zk√π
+extern	HIMAGELIST	ProgImageListSmall;				// seznam mal√Ωch obr√°zk√π
+extern	HIMAGELIST	ProgStateList;					// seznam stavov√Ωch ikon
+extern	HIMAGELIST	ProgStateListMedium;			// seznam st√∏edn√≠ch stavov√Ωch ikon
+extern	HIMAGELIST	ProgStateListSmall;				// seznam mal√Ωch stavov√Ωch ikon
 
 
-#define CLASSFNCINDEX		0		// index FNC v bufferu t¯Ìd
-#define CLASSICONINDEX		4		// index ICON v bufferu t¯Ìd
-#define CLASSMAPINDEX		5		// index MAP v bufferu t¯Ìd
-#define CLASSPICINDEX		6		// index BACK v bufferu t¯Ìd
-#define CLASSSPRITEINDEX	9		// index SPRITE v bufferu t¯Ìd
-
-/////////////////////////////////////////////////////////////////////////////
-// obsluha editace jmÈna prvku
-
-extern	BOOL		EditName;						// p¯Ìznak probÌhajÌcÌ editace
+#define CLASSFNCINDEX		0		// index FNC v bufferu t√∏√≠d
+#define CLASSICONINDEX		4		// index ICON v bufferu t√∏√≠d
+#define CLASSMAPINDEX		5		// index MAP v bufferu t√∏√≠d
+#define CLASSPICINDEX		6		// index BACK v bufferu t√∏√≠d
+#define CLASSSPRITEINDEX	9		// index SPRITE v bufferu t√∏√≠d
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaËnÌ buffery (p¯ipravujÌ se jen jednou p¯i startu programu)
+// obsluha editace jm√©na prvku
+
+extern	BOOL		EditName;						// p√∏√≠znak prob√≠haj√≠c√≠ editace
+
+/////////////////////////////////////////////////////////////////////////////
+// inicializa√®n√≠ buffery (p√∏ipravuj√≠ se jen jednou p√∏i startu programu)
 //
-// P¯i pouûÌv·nÌ buffer˘ se poËÌt· s tÌm, ûe poloûky jsou uloûeny po ¯adÏ
-// od zaË·tku bufferu, poËet poloûek odpovÌd· poËtu (a po¯adÌ) funkcÌ.
+// P√∏i pou≈æ√≠v√°n√≠ buffer√π se po√®√≠t√° s t√≠m, ≈æe polo≈æky jsou ulo≈æeny po √∏ad√¨
+// od za√®√°tku bufferu, po√®et polo≈æek odpov√≠d√° po√®tu (a po√∏ad√≠) funkc√≠.
 
-extern	const int	FncNum;							// poËet funkcÌ
-extern	CBufIcon	IconFnc;						// ikony funkcÌ
+extern	const int	FncNum;							// po√®et funkc√≠
+extern	CBufIcon	IconFnc;						// ikony funkc√≠
 
-extern	BOOL		PreviewPic;						// probÌh· preview obr·zku
+extern	BOOL		PreviewPic;						// prob√≠h√° preview obr√°zku
 
 /////////////////////////////////////////////////////////////////////////////
 // buffery
 
 extern	CBufProg	BufProg[PROGBUFNUM];			// buffery programu
-extern	CBufReal	Real;							// buffer re·ln˝ch ËÌsel
-extern	CBufMultiText	Text;							// buffer text˘
-extern	CBufBool	Bool;							// buffer logick˝ch promÏnn˝ch
+extern	CBufReal	Real;							// buffer re√°ln√Ωch √®√≠sel
+extern	CBufMultiText	Text;							// buffer text√π
+extern	CBufBool	Bool;							// buffer logick√Ωch prom√¨nn√Ωch
 extern	CBufIcon	Icon;							// buffer ikon
-extern	CBufIcon	IconState;						// buffer stavov˝ch ikon
+extern	CBufIcon	IconState;						// buffer stavov√Ωch ikon
 extern	CBufMap		Map;							// buffer ploch
-extern	CBufPic		Picture;						// buffer obr·zk˘
-extern	CBufSprite	Sprite;							// buffer sprajt˘
-extern	CBufSound	Sound;							// buffer zvuk˘
+extern	CBufPic		Picture;						// buffer obr√°zk√π
+extern	CBufSprite	Sprite;							// buffer sprajt√π
+extern	CBufSound	Sound;							// buffer zvuk√π
 extern	CBufMusic	Music;							// buffer hudby
 
 extern	CSprite		Sprite0;						// sprajt 0 (Petr)
 extern	CSprite		Sprite1;						// sprajt 1 (Petra)
-extern	CBufIcon	Icon1;							// buffer s 1 ikonou k zobrazenÌ
+extern	CBufIcon	Icon1;							// buffer s 1 ikonou k zobrazen√≠
 
 //#define		ICONNUM 31								// velikost bufferu ikon (pro TRUECOLOR max. 63!)
-//extern	CBufIcon	Icon16;							// buffer ikon s velikostÌ 16x16
-//extern	CBufIndex	Icon16List;						// buffer index˘ ikon s velikostÌ 16x16
-//extern	int			Icon16Next;						// p¯ÌötÌ ikona pro z·pis
-//extern	CBufIcon	Icon32;							// buffer ikon s velikostÌ 32x32
-//extern	CBufIndex	Icon32List;						// buffer index˘ ikon s velikostÌ 32x32
-//extern	int			Icon32Next;						// p¯ÌötÌ ikona pro z·pis
+//extern	CBufIcon	Icon16;							// buffer ikon s velikost√≠ 16x16
+//extern	CBufIndex	Icon16List;						// buffer index√π ikon s velikost√≠ 16x16
+//extern	int			Icon16Next;						// p√∏√≠≈°t√≠ ikona pro z√°pis
+//extern	CBufIcon	Icon32;							// buffer ikon s velikost√≠ 32x32
+//extern	CBufIndex	Icon32List;						// buffer index√π ikon s velikost√≠ 32x32
+//extern	int			Icon32Next;						// p√∏√≠≈°t√≠ ikona pro z√°pis
 
-#define	BufInt		BufProg[BufIntID]				// internÌ buffer
-#define	BufCls		BufProg[BufClsID]				// buffer t¯Ìd
-#define	BufObj		BufProg[BufObjID]				// glob·lnÌ buffer
-#define BufLoc		BufProg[BufLocID]				// lok·lnÌ buffer
-#define	BufEdi		BufProg[BufEdiID]				// editaËnÌ buffer
+#define	BufInt		BufProg[BufIntID]				// intern√≠ buffer
+#define	BufCls		BufProg[BufClsID]				// buffer t√∏√≠d
+#define	BufObj		BufProg[BufObjID]				// glob√°ln√≠ buffer
+#define BufLoc		BufProg[BufLocID]				// lok√°ln√≠ buffer
+#define	BufEdi		BufProg[BufEdiID]				// edita√®n√≠ buffer
 #define	BufStr		BufProg[BufStrID]				// buffer struktur
 
 extern	CBufUndo	Undo;							// buffer undo a redo
@@ -195,49 +195,49 @@ extern	int			GroupIndex;						// index do bufferu BufStr na IDF_GROUP
 /////////////////////////////////////////////////////////////////////////////
 // combobox panely
 
-extern	HWND		ToolEditIcon;					// panel n·stroj˘ editoru ikon
-extern	HWND		ToolEditIconWidth;				// panel n·stroj˘ volby öÌ¯ky
-extern	HWND		ToolEditMap;					// panel n·stroj˘ editoru ploch
+extern	HWND		ToolEditIcon;					// panel n√°stroj√π editoru ikon
+extern	HWND		ToolEditIconWidth;				// panel n√°stroj√π volby ≈°√≠√∏ky
+extern	HWND		ToolEditMap;					// panel n√°stroj√π editoru ploch
 
 /////////////////////////////////////////////////////////////////////////////
-// tabulky p¯Ìkaz˘ v COMBO boxu
+// tabulky p√∏√≠kaz√π v COMBO boxu
 
-extern	int ToolBarEditPicTools[];					// n·stroje EDITICON
-extern	int ToolBarEditPicWidths[];					// öÌ¯ky EDITICON
-extern	int ToolBarEditMapTools[];					// n·stroje EDITMAP
+extern	int ToolBarEditPicTools[];					// n√°stroje EDITICON
+extern	int ToolBarEditPicWidths[];					// ≈°√≠√∏ky EDITICON
+extern	int ToolBarEditMapTools[];					// n√°stroje EDITMAP
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ menu programu
+// nastaven√≠ menu programu
 
 void ProgSetMenu();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace po zmÏnÏ jazyku
+// aktualizace po zm√¨n√¨ jazyku
 
 void ProgReloadJazyk();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// prvnÌ inicializace p¯i startu programu (hlavnÌ okno i SELECT je jiû vytvo¯eno)
+// prvn√≠ inicializace p√∏i startu programu (hlavn√≠ okno i SELECT je ji≈æ vytvo√∏eno)
 
 void ProgStartInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ reûimu editace souboru
+// zah√°jen√≠ re≈æimu editace souboru
 
 void ProgInit();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ reûimu editace souboru
+// ukon√®en√≠ re≈æimu editace souboru
 
 void ProgTerm();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ sledov·nÌ zmÏn adres·¯e
+// zah√°jen√≠ sledov√°n√≠ zm√¨n adres√°√∏e
 
 void BeginDirChange(HANDLE* dir1, HANDLE* dir2, CText& path1, CText& path2);
 
@@ -249,19 +249,19 @@ void ProgUpdateInOut();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ editaËnÌho mÛdu Toolbar (podle ID bufferu, -1 = vypnout)
+// nastaven√≠ edita√®n√≠ho m√≥du Toolbar (podle ID bufferu, -1 = vypnout)
 
 void SetToolMode(int bufID);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ editaËnÌho mÛdu edÌtaËnÌho panelu (TRUE=OK)
+// nastaven√≠ edita√®n√≠ho m√≥du ed√≠ta√®n√≠ho panelu (TRUE=OK)
 
 BOOL SetEditMode(int bufID, int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ fokusu na okno editace
+// nastaven√≠ fokusu na okno editace
 
 void ProgSetFocus();
 
@@ -278,127 +278,127 @@ void ProgUpdateUndoRedo();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯ekreslenÌ okna
+// p√∏ekreslen√≠ okna
 
 void UpdateWnd(HWND wnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ nadpis˘ oken
+// vykreslen√≠ nadpis√π oken
 
 void ProgDispNadpis();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace zobrazenÌ jmÈna z·visl˝ch poloûek
+// aktualizace zobrazen√≠ jm√©na z√°visl√Ωch polo≈æek
 
 void AktNameTree(int bufID, CText& txt, int refBlok, int refIndex);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯ekreslenÌ strom˘
+// p√∏ekreslen√≠ strom√π
 
 void UpdateAllTree();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ fokusu na okno
+// nastaven√≠ fokusu na okno
 
 void ProgOnSetFocus(HWND hWnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ztr·ta fokusu z okna
+// ztr√°ta fokusu z okna
 
 //void ProgOnKillFocus(HWND hWnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmÏna velikosti okna
+// zm√¨na velikosti okna
 
 void ProgOnSize();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ nadpis˘ oken
+// vykreslen√≠ nadpis√π oken
 
 void ProgDispNadpis();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ okna
+// vykreslen√≠ okna
 
 void ProgOnPaint();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ informace o ikonÏ k zobrazenÌ
+// zji≈°t√¨n√≠ informace o ikon√¨ k zobrazen√≠
 
 void ProgOnGetDispInfo(HWND hWnd, TV_DISPINFO* tvd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ poloûky (nap¯. po hled·nÌ)
+// zobrazen√≠ polo≈æky (nap√∏. po hled√°n√≠)
 
 void DispItem(int bufID, int index);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ bufferu programu z handle okna (NULL = nenÌ)
+// zji≈°t√¨n√≠ bufferu programu z handle okna (NULL = nen√≠)
 
 CBufProg* BufProgFromHandle(HWND hWnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zjiötÏnÌ ID bufferu programu z handle okna (-1 = nenÌ)
+// zji≈°t√¨n√≠ ID bufferu programu z handle okna (-1 = nen√≠)
 
 int BufProgIDFromHandle(HWND hWnd);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ rozvinutÌ poloûky (vracÌ TRUE=z·kaz zmÏny)
+// zah√°jen√≠ rozvinut√≠ polo≈æky (vrac√≠ TRUE=z√°kaz zm√¨ny)
 
 BOOL ProgOnExpanding(HWND hWnd, TV_ITEM* tvi, BOOL expand);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmÏna rozvinutÌ poloûky
+// zm√¨na rozvinut√≠ polo≈æky
 
 void ProgOnExpand(HWND hWnd, TV_ITEM* tvi, BOOL expand);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmÏna vybranÈ poloûky
+// zm√¨na vybran√© polo≈æky
 
 void ProgOnSelChanged(HWND hWnd, NM_TREEVIEW* tv);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// posun myöi
+// posun my≈°i
 
 void ProgOnMouseMove(UINT flags, int x, int y);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// uvolnÏnÌ tlaËÌtka myöi
+// uvoln√¨n√≠ tla√®√≠tka my≈°i
 
 void ProgOnButtonUp(UINT keys, BOOL right);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// stisk tlaËÌtka myöi (vracÌ TRUE=obslouûeno)
+// stisk tla√®√≠tka my≈°i (vrac√≠ TRUE=obslou≈æeno)
 
 BOOL ProgOnButtonDown(UINT flags, int x, int y, BOOL right, BOOL dclick);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zvÏtöenÌ mÏ¯Ìtka zobrazenÌ
+// zv√¨t≈°en√≠ m√¨√∏√≠tka zobrazen√≠
 
 void ProgOnZoomIn();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zmenöenÌ mÏ¯Ìtka zobrazenÌ
+// zmen≈°en√≠ m√¨√∏√≠tka zobrazen√≠
 
 void ProgOnZoomOut();
 
@@ -407,7 +407,7 @@ void ProgOnZoomOut();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// dvojklik myöÌ - editace prvku
+// dvojklik my≈°√≠ - editace prvku
 
 void ProgOnDblClk(HWND hWnd);
 
@@ -421,88 +421,88 @@ void ProgOnEnter(HWND hWnd);
 /////////////////////////////////////////////////////////////////////////////
 // obsluha modifikace
 
-// zapnutÌ modifikace
+// zapnut√≠ modifikace
 void SetModi();
 
-// vypnutÌ modifikace
+// vypnut√≠ modifikace
 void ResModi();
 
-// podmÌnÏnÈ uloûenÌ p¯i modifikaci (TRUE=pokraËovat)
+// podm√≠n√¨n√© ulo≈æen√≠ p√∏i modifikaci (TRUE=pokra√®ovat)
 BOOL TestModi();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha zobrazenÌ kurzoru myöi (vracÌ TRUE=nastaveno)
+// obsluha zobrazen√≠ kurzoru my≈°i (vrac√≠ TRUE=nastaveno)
 
 BOOL ProgOnSetCursor();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯epnutÌ stavu LOCK prvku pod kurzorem
+// p√∏epnut√≠ stavu LOCK prvku pod kurzorem
 
 void ProgOnLock();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯epnutÌ stavu OFF prvku pod kurzorem
+// p√∏epnut√≠ stavu OFF prvku pod kurzorem
 
 void ProgOnOff();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯epnutÌ stavu DEF_NAME prvku pod kurzorem
+// p√∏epnut√≠ stavu DEF_NAME prvku pod kurzorem
 
 void ProgOnDefName();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯epnutÌ stavu DEF_ICON prvku pod kurzorem
+// p√∏epnut√≠ stavu DEF_ICON prvku pod kurzorem
 
 void ProgOnDefIcon();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace p¯epÌnaË˘ pro vybranou poloûku
+// aktualizace p√∏ep√≠na√®√π pro vybranou polo≈æku
 
 void ProgAktItem();
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace p¯Ìznak˘ LOCK a OFF buffer˘
+// aktualizace p√∏√≠znak√π LOCK a OFF buffer√π
 
 void UpdateLock();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ editace ikony prvku
+// zah√°jen√≠ editace ikony prvku
 
 void ProgOnEditIcon();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ/ukonËenÌ editace jmÈna prvku
+// zah√°jen√≠/ukon√®en√≠ editace jm√©na prvku
 
 void ProgOnEditName();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ editace jmÈna prvku (vracÌ TRUE=p¯eruöit editaci)
+// zah√°jen√≠ editace jm√©na prvku (vrac√≠ TRUE=p√∏eru≈°it editaci)
 
 BOOL ProgOnBeginLabelEdit(HWND hWnd, HTREEITEM hItem);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonËenÌ editace jmÈna prvku
+// ukon√®en√≠ editace jm√©na prvku
 
 void ProgOnEndLabelEdit(HWND hWnd, TV_ITEM* tvi);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha kl·vesy (vracÌ TRUE=zruöenÌ kl·vesy)
+// obsluha kl√°vesy (vrac√≠ TRUE=zru≈°en√≠ kl√°vesy)
 
 BOOL ProgOnKeyDown(HWND hWnd, int key, int data);
 
 
 /////////////////////////////////////////////////////////////////////////////
-// n·sledujÌcÌ deklarace
+// n√°sleduj√≠c√≠ deklarace
 
 void ProgOnRefNext();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯edeöl· deklarace
+// p√∏ede≈°l√° deklarace
 
 void ProgOnRefPrev();
 
@@ -513,7 +513,7 @@ void ProgOnRefPrev();
 void ProgOnRefDef();
 
 /////////////////////////////////////////////////////////////////////////////
-// hled·nÌ textu
+// hled√°n√≠ textu
 
 void ProgOnFind();
 void ProgOnFindNext();
@@ -521,32 +521,32 @@ void ProgOnFindPrev();
 
 
 /////////////////////////////////////////////////////////////////////////////
-// horizont·lnÌ posuvnÌk
+// horizont√°ln√≠ posuvn√≠k
 
 void ProgOnHScroll(int code, int pos);
 
 /////////////////////////////////////////////////////////////////////////////
-// vertik·lnÌ posuvnÌk
+// vertik√°ln√≠ posuvn√≠k
 
 void ProgOnVScroll(int code, int pos);
 
 /////////////////////////////////////////////////////////////////////////////
-// obsluha ËasovaËe (TRUE=obslouûeno)
+// obsluha √®asova√®e (TRUE=obslou≈æeno)
 
 BOOL ProgOnTimer(UINT timerID);
 
 /////////////////////////////////////////////////////////////////////////////
-// vstup znaku z kl·vesnice (TRUE=obslouûeno)
+// vstup znaku z kl√°vesnice (TRUE=obslou≈æeno)
 
 BOOL ProgOnChar(HWND hWnd, TCHAR znak);
 
 /////////////////////////////////////////////////////////////////////////////
-// v˝bÏr vöeho
+// v√Ωb√¨r v≈°eho
 
 void ProgOnAll();
 
 /////////////////////////////////////////////////////////////////////////////
-// zruöenÌ bloku
+// zru≈°en√≠ bloku
 
 void ProgOnDelete();
 
@@ -556,12 +556,12 @@ void ProgOnDelete();
 void ProgOnCopy();
 
 /////////////////////////////////////////////////////////////////////////////
-// vyst¯ÌûenÌ bloku
+// vyst√∏√≠≈æen√≠ bloku
 
 void ProgOnCut();
 
 /////////////////////////////////////////////////////////////////////////////
-// vloûenÌ bloku
+// vlo≈æen√≠ bloku
 
 void ProgOnPaste();
 
@@ -576,63 +576,63 @@ void ProgOnUndo();
 void ProgOnRedo();
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ fokusu na okno editoru s opoûdÏnÌm
+// nastaven√≠ fokusu na okno editoru s opo≈æd√¨n√≠m
 
 void SetFocusEdit();
 void SetFocusEditMode(int buf, int inx);
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazenÌ sou¯adnic grafickÈho editoru
+// zobrazen√≠ sou√∏adnic grafick√©ho editoru
 
 void DispMouseXY();
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslenÌ prvku (vracÌ TRUE=obslouûeno)
+// vykreslen√≠ prvku (vrac√≠ TRUE=obslou≈æeno)
 
 BOOL ProgOnDrawItem(DRAWITEMSTRUCT* di);
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavenÌ rozmÏr˘ obr·zku/plochy
+// nastaven√≠ rozm√¨r√π obr√°zku/plochy
 
 void ProgOnDimen();
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ/vypnutÌ rastru
+// zapnut√≠/vypnut√≠ rastru
 
 void ProgOnRastr();
 
 /////////////////////////////////////////////////////////////////////////////
-// start p¯ehr·v·nÌ
+// start p√∏ehr√°v√°n√≠
 
 void ProgOnPlay();
 
 /////////////////////////////////////////////////////////////////////////////
-// pozastavenÌ nahr·v·nÌ, p¯ehr·v·nÌ
+// pozastaven√≠ nahr√°v√°n√≠, p√∏ehr√°v√°n√≠
 
 void ProgOnPause();
 
 /////////////////////////////////////////////////////////////////////////////
-// zastavenÌ nahr·v·nÌ i p¯ehr·v·nÌ
+// zastaven√≠ nahr√°v√°n√≠ i p√∏ehr√°v√°n√≠
 
 void ProgOnStop();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯epnutÌ p¯Ìznaku opakov·nÌ
+// p√∏epnut√≠ p√∏√≠znaku opakov√°n√≠
 
 void ProgOnLoop();
 
 /////////////////////////////////////////////////////////////////////////////
-// start nahr·v·nÌ
+// start nahr√°v√°n√≠
 
 void ProgOnRecord();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evÌjenÌ zpÏt
+// p√∏ev√≠jen√≠ zp√¨t
 
 void ProgOnRew();
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯evÌjenÌ vp¯ed
+// p√∏ev√≠jen√≠ vp√∏ed
 
 void ProgOnFrw();
 
@@ -642,26 +642,26 @@ void ProgOnFrw();
 void ProgOnStart();
 
 /////////////////////////////////////////////////////////////////////////////
-// zapnutÌ reûimu preview obr·zku
+// zapnut√≠ re≈æimu preview obr√°zku
 
 void PreviewPicOn();
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutÌ reûimu preview obr·zku
+// vypnut√≠ re≈æimu preview obr√°zku
 
 void PreviewPicOff();
 
 /////////////////////////////////////////////////////////////////////////////
-// zastaveÚÌ preview, zah·jenÌ novÈho ËÌt·nÌ Ëasu
+// zastave√≤√≠ preview, zah√°jen√≠ nov√©ho √®√≠t√°n√≠ √®asu
 
 void PreviewStop();
 
 /////////////////////////////////////////////////////////////////////////////
-// zah·jenÌ preview p¯ehr·v·nÌ souboru pod kurzorem
+// zah√°jen√≠ preview p√∏ehr√°v√°n√≠ souboru pod kurzorem
 
 void PreviewStart();
 
 /////////////////////////////////////////////////////////////////////////////
-// nulov·nÌ p¯Ìznak˘ naËtenÌ obr·zk˘ pro preview
+// nulov√°n√≠ p√∏√≠znak√π na√®ten√≠ obr√°zk√π pro preview
 
 void PreviewPicNul();

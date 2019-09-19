@@ -8,7 +8,7 @@
 
 /***************************************************************************\
 *																			*
-*							3D rozhraní - DirectX 8							*
+*							3D rozhranÃ­ - DirectX 8							*
 *																			*
 \***************************************************************************/
 /////////////////////////////////////////////////////////////////////////////
@@ -21,20 +21,20 @@ typedef	IDirect3D8* (WINAPI *DIRECT3DCREATE8) (UINT SDKVersion);
 // data
 
 // Direct3D 8
-bool				D3DX8D3Test			= false;	// probìhl test rozhraní Direct3D 8
+bool				D3DX8D3Test			= false;	// probÃ¬hl test rozhranÃ­ Direct3D 8
 HINSTANCE			D3DX8Lib			= NULL;		// handle modulu D3D8.DLL
-DIRECT3DCREATE8		pDirect3DCreate8	= NULL;		// funkce Direct3DCreate8 (NULL=není)
-IDirect3D8*			D3DX8D3				= NULL;		// objekt Direct3D 8 (NULL=není)
+DIRECT3DCREATE8		pDirect3DCreate8	= NULL;		// funkce Direct3DCreate8 (NULL=nenÃ­)
+IDirect3D8*			D3DX8D3				= NULL;		// objekt Direct3D 8 (NULL=nenÃ­)
 
-// zaøízení Direct3DDev 8
-IDirect3DDevice8*	D3DX8Dev			= NULL;		// zaøízení Direct3DDev8
-D3DPRESENT_PARAMETERS	D3DX8Par;					// parametry zaøízení
-int						D3DX8RendWidth		= 0;	// aktuální šíøka renderovacího povrchu	
-int						D3DX8RendHeight		= 0;	// aktuální výška renderovacího povrchu	
+// zaÃ¸Ã­zenÃ­ Direct3DDev 8
+IDirect3DDevice8*	D3DX8Dev			= NULL;		// zaÃ¸Ã­zenÃ­ Direct3DDev8
+D3DPRESENT_PARAMETERS	D3DX8Par;					// parametry zaÃ¸Ã­zenÃ­
+int						D3DX8RendWidth		= 0;	// aktuÃ¡lnÃ­ Å¡Ã­Ã¸ka renderovacÃ­ho povrchu	
+int						D3DX8RendHeight		= 0;	// aktuÃ¡lnÃ­ vÃ½Å¡ka renderovacÃ­ho povrchu	
 
-BOOL				D3DX8VertCol		= -1;		// aktuální stav pøepínaèe barev z vrcholù (-1=neplatný)
+BOOL				D3DX8VertCol		= -1;		// aktuÃ¡lnÃ­ stav pÃ¸epÃ­naÃ¨e barev z vrcholÃ¹ (-1=neplatnÃ½)
 
-// tabulka typù zaøízení
+// tabulka typÃ¹ zaÃ¸Ã­zenÃ­
 int	D3DX8DevTab[D3DEVICES] =
 {
 	0,					// 0
@@ -57,27 +57,27 @@ D3DVIEWPORT8 D3DX8View = {
 	1				// MaxZ
 };
 
-// cílové souøadnice pro vykreslování v souøadnicích displeje
-RECT					D3DX8Dest;						// cílová oblast pro vykreslování
-D3DRECT					D3DX8Src;						// zdrojová oblast viewportu
+// cÃ­lovÃ© souÃ¸adnice pro vykreslovÃ¡nÃ­ v souÃ¸adnicÃ­ch displeje
+RECT					D3DX8Dest;						// cÃ­lovÃ¡ oblast pro vykreslovÃ¡nÃ­
+D3DRECT					D3DX8Src;						// zdrojovÃ¡ oblast viewportu
 
-IDirect3DVertexBuffer8*	D3DX8BackBuf = NULL;			// buffer pozadí scény
+IDirect3DVertexBuffer8*	D3DX8BackBuf = NULL;			// buffer pozadÃ­ scÃ©ny
 
-IDirect3DVertexBuffer8*	D3DX8ShadowBuf = NULL;			// buffer stínu
+IDirect3DVertexBuffer8*	D3DX8ShadowBuf = NULL;			// buffer stÃ­nu
 
-BOOL					D3DX8Clipping = -1;			// aktuální stav CLIPPING pøepínaèe
+BOOL					D3DX8Clipping = -1;			// aktuÃ¡lnÃ­ stav CLIPPING pÃ¸epÃ­naÃ¨e
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializace rozhraní Direct3D 8 (vrací TRUE=rozhraní je vytvoøeno)
+// inicializace rozhranÃ­ Direct3D 8 (vracÃ­ TRUE=rozhranÃ­ je vytvoÃ¸eno)
 
 bool D3DX8InitD3()
 {
-// test, zda inicializace již probìhla
+// test, zda inicializace jiÅ¾ probÃ¬hla
 	if (!D3DX8D3Test)
 	{
 		D3DX8D3Test = true;
 
-// inicializace funkce Direct3DCreate8 (mìní pøesnost koprocesoru!)
+// inicializace funkce Direct3DCreate8 (mÃ¬nÃ­ pÃ¸esnost koprocesoru!)
 		if (D3DX8Lib == NULL)
 		{
 			D3DX8Lib = ::LoadLibrary(_T("D3D8.DLL"));
@@ -89,30 +89,30 @@ bool D3DX8InitD3()
 			pDirect3DCreate8 = (DIRECT3DCREATE8)::GetProcAddress(D3DX8Lib, "Direct3DCreate8");
 		}
 
-// vytvoøení objektu Direct3D8
+// vytvoÃ¸enÃ­ objektu Direct3D8
 		if (pDirect3DCreate8 != NULL)
 		{
 			D3DX8D3 = pDirect3DCreate8(D3D_SDK_VERSION);
 		}
 	}
 
-// test, zda je objekt Direct3D 8 vytvoøen
+// test, zda je objekt Direct3D 8 vytvoÃ¸en
 	return (D3DX8D3 != NULL);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení rozhraní Direct3D 8
+// ukonÃ¨enÃ­ rozhranÃ­ Direct3D 8
 
 void D3DX8TermD3()
 {
-// zrušení objektu Direct3D 8
+// zruÅ¡enÃ­ objektu Direct3D 8
 	if (D3DX8D3 != NULL)
 	{
 		D3DX8D3->Release();
 		D3DX8D3 = NULL;
 	}
 	
-// uvolnìní knihovny D3D8.DLL
+// uvolnÃ¬nÃ­ knihovny D3D8.DLL
 	if (D3DX8Lib != NULL)
 	{
 		::FreeLibrary(D3DX8Lib);
@@ -120,12 +120,12 @@ void D3DX8TermD3()
 	}
 	pDirect3DCreate8 = NULL;
 
-// zrušení pøíznaku, že byla inicializace
+// zruÅ¡enÃ­ pÃ¸Ã­znaku, Å¾e byla inicializace
 	D3DX8D3Test = false;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení bufferu stínu
+// zruÅ¡enÃ­ bufferu stÃ­nu
 
 void D3DX8TermShadow()
 {
@@ -137,7 +137,7 @@ void D3DX8TermShadow()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení bufferu pozadí scény
+// zruÅ¡enÃ­ bufferu pozadÃ­ scÃ©ny
 
 void D3DX8TermBack()
 {
@@ -149,7 +149,7 @@ void D3DX8TermBack()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// výpoèet nových souøadnic zobrazené oblasti
+// vÃ½poÃ¨et novÃ½ch souÃ¸adnic zobrazenÃ© oblasti
 
 void D3DX8CalcView()
 {
@@ -167,7 +167,7 @@ void D3DX8CalcView()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení viewportu (vrací TRUE=operace OK)
+// nastavenÃ­ viewportu (vracÃ­ TRUE=operace OK)
 
 bool D3DX8SetView()
 {
@@ -177,20 +177,20 @@ bool D3DX8SetView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po zmìnì velikosti
+// aktualizace viewportu po zmÃ¬nÃ¬ velikosti
 
 void D3DX8SizeView()
 {
-// pøegenerování bufferu pozadí scény
+// pÃ¸egenerovÃ¡nÃ­ bufferu pozadÃ­ scÃ©ny
 	D3DX8TermBack();
 
-// pøegenerování bufferu stínù
+// pÃ¸egenerovÃ¡nÃ­ bufferu stÃ­nÃ¹
 	D3DX8TermShadow();
 
-// pøepoèet videportu
+// pÃ¸epoÃ¨et videportu
 	D3DX8CalcView();
 
-// resetování bufferù 2D obrázkù
+// resetovÃ¡nÃ­ bufferÃ¹ 2D obrÃ¡zkÃ¹
 	D3DFITEM* item = D3DF_Get(1);
 	int inx = item->Child;
 	while (inx > 1)
@@ -203,14 +203,14 @@ void D3DX8SizeView()
 		inx = item->Next;
 	}
 
-// zvìtšení bufferu
+// zvÃ¬tÅ¡enÃ­ bufferu
 	if ((D3DHeight > D3DX8RendHeight) || (D3DWidth > D3DX8RendWidth))
 	{
 		FPUDouble();
 		UserD3DDevice();
 	}
 
-// nastavení viewportu
+// nastavenÃ­ viewportu
 	else
 	{
 		if (D3DX8Dev != NULL)
@@ -221,7 +221,7 @@ void D3DX8SizeView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace viewportu po pøesunu
+// aktualizace viewportu po pÃ¸esunu
 
 void D3DX8MoveView()
 {
@@ -229,7 +229,7 @@ void D3DX8MoveView()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení bufferu pozadí scény, není-li vytvoøen
+// vytvoÃ¸enÃ­ bufferu pozadÃ­ scÃ©ny, nenÃ­-li vytvoÃ¸en
 
 struct BACKVERTEX
 {
@@ -287,7 +287,7 @@ void D3DX8InitBack()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení bufferu stínu, není-li vytvoøen
+// vytvoÃ¸enÃ­ bufferu stÃ­nu, nenÃ­-li vytvoÃ¸en
 
 struct SHADOWVERTEX
 {
@@ -341,14 +341,14 @@ void D3DX8InitShadow()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vytvoøení renderovacího zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// vytvoÃ¸enÃ­ renderovacÃ­ho zaÃ¸Ã­zenÃ­ (vracÃ­ TRUE=inicializace OK)
+// typ zaÃ¸Ã­zenÃ­: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
-D3DDISPLAYMODE D3DX8dm;		// aktuální mód displeje
+D3DDISPLAYMODE D3DX8dm;		// aktuÃ¡lnÃ­ mÃ³d displeje
 
 bool D3DX8InitDev(D3DDEVTYPE devtype, int vertproc, D3DFORMAT form)
 {
-// pøíprava parametrù
+// pÃ¸Ã­prava parametrÃ¹
 	MemFill(&D3DX8Par, sizeof(D3DX8Par), 0);
 	D3DX8Par.Windowed = TRUE;
 	D3DX8Par.BackBufferWidth = D3DWidth;
@@ -362,14 +362,14 @@ bool D3DX8InitDev(D3DDEVTYPE devtype, int vertproc, D3DFORMAT form)
 	D3DX8Par.AutoDepthStencilFormat = form;
 	D3DX8Par.BackBufferFormat = D3DX8dm.Format;
 
-// vytvoøení zaøízení
+// vytvoÃ¸enÃ­ zaÃ¸Ã­zenÃ­
 	if ( D3DX8D3->CreateDevice(
-				D3DADAPTER_DEFAULT,			// implicitní adaptér displeje
-				devtype,					// typ zaøízení
+				D3DADAPTER_DEFAULT,			// implicitnÃ­ adaptÃ©r displeje
+				devtype,					// typ zaÃ¸Ã­zenÃ­
 				MainFrame,					// okno
-				vertproc,					// zpracování vrcholù
+				vertproc,					// zpracovÃ¡nÃ­ vrcholÃ¹
 				&D3DX8Par,					// parametry
-				&D3DX8Dev) == D3D_OK)		// interface zaøízení
+				&D3DX8Dev) == D3D_OK)		// interface zaÃ¸Ã­zenÃ­
 	{
 		switch (form)
 		{
@@ -402,20 +402,20 @@ bool D3DX8InitDev(D3DDEVTYPE devtype, int vertproc, D3DFORMAT form)
 
 bool D3DX8InitDev2(D3DDEVTYPE devtype, D3DFORMAT form)
 {
-// kontrola formátu hloubkového bufferu
+// kontrola formÃ¡tu hloubkovÃ©ho bufferu
 	if (D3DX8D3->CheckDepthStencilMatch(
-				D3DADAPTER_DEFAULT,			// implicitní adaptér displeje
-				devtype,					// typ zaøízení
-				D3DX8dm.Format,				// formát displeje
-				D3DX8dm.Format,				// formát renderovacího povrchu
-				form) != D3D_OK) return false;	// formát hloubkového bufferu
+				D3DADAPTER_DEFAULT,			// implicitnÃ­ adaptÃ©r displeje
+				devtype,					// typ zaÃ¸Ã­zenÃ­
+				D3DX8dm.Format,				// formÃ¡t displeje
+				D3DX8dm.Format,				// formÃ¡t renderovacÃ­ho povrchu
+				form) != D3D_OK) return false;	// formÃ¡t hloubkovÃ©ho bufferu
 
 	return (D3DX8InitDev(devtype, D3DCREATE_SOFTWARE_VERTEXPROCESSING, form) ||
 			D3DX8InitDev(devtype, D3DCREATE_HARDWARE_VERTEXPROCESSING, form));
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zrušení renderovacího zaøízení
+// zruÅ¡enÃ­ renderovacÃ­ho zaÃ¸Ã­zenÃ­
 
 void D3DX8TermDev()
 {
@@ -431,26 +431,26 @@ void D3DX8TermDev()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení funkce zaøízení (vrací TRUE=inicializace OK)
-// typ zaøízení: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
+// zahÃ¡jenÃ­ funkce zaÃ¸Ã­zenÃ­ (vracÃ­ TRUE=inicializace OK)
+// typ zaÃ¸Ã­zenÃ­: 1=HAL,2=TnLHal,3=REF,4=RGB,5=MMX,6=Ramp,7=Null
 
 bool D3DX8Start(int type)
 {
-// kontrola platnosti zaøízení
+// kontrola platnosti zaÃ¸Ã­zenÃ­
 	if (D3DX8DevTab[type] == 0) return false;
-	D3DDEVTYPE devtype = (D3DDEVTYPE)D3DX8DevTab[type];	// typ zaøízení
+	D3DDEVTYPE devtype = (D3DDEVTYPE)D3DX8DevTab[type];	// typ zaÃ¸Ã­zenÃ­
 
-// zrušení starých objektù
+// zruÅ¡enÃ­ starÃ½ch objektÃ¹
 	D3DX8Stop();
 
-// inicializace rozhraní Direct3D
+// inicializace rozhranÃ­ Direct3D
 	if (!D3DX8InitD3()) return false;
 
-// zjištìní aktuálního módu displeje
+// zjiÅ¡tÃ¬nÃ­ aktuÃ¡lnÃ­ho mÃ³du displeje
 	D3DX8dm.Format = D3DFMT_R5G6B5;
 	D3DX8D3->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &D3DX8dm);
 
-// vytvoøení renderovacího zaøízení
+// vytvoÃ¸enÃ­ renderovacÃ­ho zaÃ¸Ã­zenÃ­
 	if (!(
 		D3DX8InitDev2(devtype, D3DFMT_D24S8) ||
 		D3DX8InitDev2(devtype, D3DFMT_D24X4S4) ||
@@ -460,26 +460,26 @@ bool D3DX8Start(int type)
 		D3DX8InitDev2(devtype, D3DFMT_D16)
 		)) return false;
 
-// nastavení viewportu
+// nastavenÃ­ viewportu
 	if (!D3DX8SetView())
 	{
 		D3DX8Stop();
 		return false;
 	}
 
-// inicializace adres funkcí zaøízení
-	pD3Stop = D3DX8Stop;			// ukonèení funkce zaøízení
-	pD3SizeView = D3DX8SizeView;	// aktualizace viewportu po zmìnì velikosti
-	pD3MoveView = D3DX8MoveView;	// aktualizace viewportu po pøesunu
-	pD3Disp = D3DX8Disp;			// zobrazení renderovacího bufferu
-	pD3Clear = D3DX8Clear;			// vymazání renderovací plochy
-	pD3AktProj = D3DX8AktProj;		// aktualizace projekèní matice
-	pD3AktView = D3DX8AktView;		// aktualizace pohledové matice
-	pD3Begin = D3DX8Begin;			// zahájení renderování scény
-	pD3End = D3DX8End;				// ukonèení renderování scény
-	pD3Render = D3DX8Render;		// vyrenderování jednoho objektu
-	pD3Reset = D3DX8Reset;			// resetování objektu pøed ukonèením ovladaèe
-	pD3SReset = D3DX8SReset;		// resetování stínu objektu pøed ukonèením ovladaèe
+// inicializace adres funkcÃ­ zaÃ¸Ã­zenÃ­
+	pD3Stop = D3DX8Stop;			// ukonÃ¨enÃ­ funkce zaÃ¸Ã­zenÃ­
+	pD3SizeView = D3DX8SizeView;	// aktualizace viewportu po zmÃ¬nÃ¬ velikosti
+	pD3MoveView = D3DX8MoveView;	// aktualizace viewportu po pÃ¸esunu
+	pD3Disp = D3DX8Disp;			// zobrazenÃ­ renderovacÃ­ho bufferu
+	pD3Clear = D3DX8Clear;			// vymazÃ¡nÃ­ renderovacÃ­ plochy
+	pD3AktProj = D3DX8AktProj;		// aktualizace projekÃ¨nÃ­ matice
+	pD3AktView = D3DX8AktView;		// aktualizace pohledovÃ© matice
+	pD3Begin = D3DX8Begin;			// zahÃ¡jenÃ­ renderovÃ¡nÃ­ scÃ©ny
+	pD3End = D3DX8End;				// ukonÃ¨enÃ­ renderovÃ¡nÃ­ scÃ©ny
+	pD3Render = D3DX8Render;		// vyrenderovÃ¡nÃ­ jednoho objektu
+	pD3Reset = D3DX8Reset;			// resetovÃ¡nÃ­ objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
+	pD3SReset = D3DX8SReset;		// resetovÃ¡nÃ­ stÃ­nu objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
 	pD3AktWireframe = D3DX8AktWireframe;
 	pD3AktLightOn = D3DX8AktLightOn;
 	pD3AktShades = D3DX8AktShades;
@@ -514,7 +514,7 @@ bool D3DX8Start(int type)
 	pD3Shadow = D3DX8Shadow;
 	pD3Shadows = D3DX8Shadows;
 
-// inicializace informací o zaøízení
+// inicializace informacÃ­ o zaÃ¸Ã­zenÃ­
 	D3DCAPS8 D3DCaps;
 
 	D3DX8Dev->GetDeviceCaps(&D3DCaps);
@@ -548,22 +548,22 @@ bool D3DX8Start(int type)
 	IsVertexFog = ((D3DCaps.RasterCaps & D3DPRASTERCAPS_FOGVERTEX) != 0) && isfog;
 	IsRangeFog = ((D3DCaps.RasterCaps & D3DPRASTERCAPS_FOGRANGE) != 0) && isfog;
 
-	D3DX8VertCol = -1;	// aktuální stav pøepínaèe barev z vrcholù (-1=neplatný)
+	D3DX8VertCol = -1;	// aktuÃ¡lnÃ­ stav pÃ¸epÃ­naÃ¨e barev z vrcholÃ¹ (-1=neplatnÃ½)
 
 	return true;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení funkce zaøízení
+// ukonÃ¨enÃ­ funkce zaÃ¸Ã­zenÃ­
 
 void D3DX8Stop()
 {
-	D3DX8TermDev();			// zrušení zaøízení
-	FPUDouble();			// návrat pøesnosti koprocesoru
+	D3DX8TermDev();			// zruÅ¡enÃ­ zaÃ¸Ã­zenÃ­
+	FPUDouble();			// nÃ¡vrat pÃ¸esnosti koprocesoru
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vymazání renderovací plochy
+// vymazÃ¡nÃ­ renderovacÃ­ plochy
 
 void D3DX8Clear()
 {
@@ -571,13 +571,13 @@ void D3DX8Clear()
 	if (D3DBackText >= 0)
 	{
 
-// vytvoøení bufferu pozadí scény
+// vytvoÃ¸enÃ­ bufferu pozadÃ­ scÃ©ny
 		D3DX8InitBack();
 
 		if (D3DX8BackBuf != NULL)
 		{
 
-// vypnutí barev vrcholù
+// vypnutÃ­ barev vrcholÃ¹
 			if (D3DX8VertCol != FALSE)
 			{
 				D3DX8VertCol = FALSE;
@@ -586,19 +586,19 @@ void D3DX8Clear()
 				D3DX8Dev->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 			}
 
-// renderování
+// renderovÃ¡nÃ­
 			D3DX8Dev->SetStreamSource(0, D3DX8BackBuf, sizeof(BACKVERTEX));
 			D3DX8Dev->SetVertexShader(D3DFVF_BACKVERTEX);
 			D3DX8Dev->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 		}
 
-// závìreèné vymazání Z bufferu
+// zÃ¡vÃ¬reÃ¨nÃ© vymazÃ¡nÃ­ Z bufferu
 		D3DX8Dev->Clear(1, &D3DX8Src, D3DCLEAR_ZBUFFER | (D3DSBufferClear ? D3DCLEAR_STENCIL : 0), 0, 1, 0);
 	}
 	else
 	{
 
-// pozadí se neinicializuje
+// pozadÃ­ se neinicializuje
 		if (D3DBackCol == (MAXDWORD-1))
 		{
 			if (D3DSBufferClear)
@@ -608,14 +608,14 @@ void D3DX8Clear()
 			return;
 		}
 
-// není textura, je barva - vymazání barvy i Z bufferu
+// nenÃ­ textura, je barva - vymazÃ¡nÃ­ barvy i Z bufferu
 		if (D3DBackCol != MAXDWORD)
 		{
 			D3DX8Dev->Clear(1, &D3DX8Src, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | (D3DSBufferClear ? D3DCLEAR_STENCIL : 0), D3DBackColRGB, 1, 0);
 		}
 		else
 
-// jinak pouze vymazání Z bufferu
+// jinak pouze vymazÃ¡nÃ­ Z bufferu
 		{
 			D3DX8Dev->Clear(1, &D3DX8Src, D3DCLEAR_ZBUFFER | (D3DSBufferClear ? D3DCLEAR_STENCIL : 0), 0, 1, 0);
 		}
@@ -623,19 +623,19 @@ void D3DX8Clear()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// zobrazení renderovacího bufferu
+// zobrazenÃ­ renderovacÃ­ho bufferu
 
 void D3DX8Disp()
 {
 	if (D3DX8Dev == NULL) return;
 
-// test ztraceného zaøízení
+// test ztracenÃ©ho zaÃ¸Ã­zenÃ­
 	HRESULT res = D3DX8Dev->TestCooperativeLevel();
 
 	if (res == D3D_OK)
 	{
 
-// zobrazení renderovacího bufferu
+// zobrazenÃ­ renderovacÃ­ho bufferu
 		D3DX8Dev->Present((RECT*)&D3DX8Src, &D3DX8Dest, MainFrame, NULL);
 	}
 	else
@@ -653,7 +653,7 @@ void D3DX8Disp()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace projekèní matice
+// aktualizace projekÃ¨nÃ­ matice
 
 void D3DX8AktProj()
 {
@@ -662,7 +662,7 @@ void D3DX8AktProj()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace pohledové matice
+// aktualizace pohledovÃ© matice
 
 void D3DX8AktView()
 {
@@ -671,7 +671,7 @@ void D3DX8AktView()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// zahájení renderování scény
+// zahÃ¡jenÃ­ renderovÃ¡nÃ­ scÃ©ny
 
 void D3DX8Begin()
 {
@@ -680,7 +680,7 @@ void D3DX8Begin()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// ukonèení renderování scény
+// ukonÃ¨enÃ­ renderovÃ¡nÃ­ scÃ©ny
 
 void D3DX8End()
 {
@@ -689,11 +689,11 @@ void D3DX8End()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderování jednoho objektu
+// vyrenderovÃ¡nÃ­ jednoho objektu
 
 void D3DX8Render(D3DFITEM* item)
 {
-// nastavení zdroje barev
+// nastavenÃ­ zdroje barev
 	BOOL vertcol = ((item->VertCol != NULL) && ((item->MatSource == MATSOURCE_OBJECT) || !D3DLightOnAkt));
 
 	if (vertcol != D3DX8VertCol)
@@ -714,7 +714,7 @@ void D3DX8Render(D3DFITEM* item)
 		}
 	}
 
-// pøíprava stupòù souøadnic
+// pÃ¸Ã­prava stupÃ²Ã¹ souÃ¸adnic
 	int stages = item->Stages;
 	float* textUV[MAX_STAGES];
 	int stage;
@@ -733,7 +733,7 @@ void D3DX8Render(D3DFITEM* item)
 		}
 	}
 
-// typ položky
+// typ poloÅ¾ky
 	bool isFlare = (item->Type == D3DFTYPE_LENSFLARE);
 	bool isPic = ((item->Type == D3DFTYPE_PICTURE) || isFlare);
 
@@ -759,10 +759,10 @@ void D3DX8Render(D3DFITEM* item)
 		itemtype |= D3DFVF_DIFFUSE;
 	}
 
-// pøegenerování bufferu pro LensFlare
+// pÃ¸egenerovÃ¡nÃ­ bufferu pro LensFlare
 	if (isFlare) D3DX8Reset(item);
 
-// vytvoøení bufferu vektorù (Data1), není-li ještì vytvoøen
+// vytvoÃ¸enÃ­ bufferu vektorÃ¹ (Data1), nenÃ­-li jeÅ¡tÃ¬ vytvoÃ¸en
 	if (item->Data1 == NULL)
 	{
 		IDirect3DVertexBuffer8* vertbuf = NULL;
@@ -877,7 +877,7 @@ void D3DX8Render(D3DFITEM* item)
 			}
 		}
 
-// aktualizace klonù
+// aktualizace klonÃ¹
 		D3DFITEM* item2 = item;
 
 		for (;;)
@@ -889,7 +889,7 @@ void D3DX8Render(D3DFITEM* item)
 		}
 	}
 
-// vytvoøení bufferu indexù, není-li ještì vytvoøen
+// vytvoÃ¸enÃ­ bufferu indexÃ¹, nenÃ­-li jeÅ¡tÃ¬ vytvoÃ¸en
 	if (item->Data2 == NULL)
 	{
 		D3DX8Dev->CreateIndexBuffer(item->FaceNum*3*sizeof(WORD),
@@ -914,7 +914,7 @@ void D3DX8Render(D3DFITEM* item)
 			}
 		}
 
-// aktualizace klonù
+// aktualizace klonÃ¹
 		D3DFITEM* item2 = item;
 
 		for (;;)
@@ -926,13 +926,13 @@ void D3DX8Render(D3DFITEM* item)
 		}
 	}
 
-// nastavení transformaèní matice
+// nastavenÃ­ transformaÃ¨nÃ­ matice
 	if (!isPic)
 	{
 		D3DX8Dev->SetTransform(D3DTS_WORLD, &item->MatrixWorld);
 	}
 
-// vyrenderování objektu
+// vyrenderovÃ¡nÃ­ objektu
 	IDirect3DVertexBuffer8* vertbuf = (IDirect3DVertexBuffer8*)(item->Data1);
 	IDirect3DIndexBuffer8* indbuf = (IDirect3DIndexBuffer8*)(item->Data2);
 
@@ -953,7 +953,7 @@ void D3DX8Render(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vyrenderování stínu
+// vyrenderovÃ¡nÃ­ stÃ­nu
 
 struct SVERTEX
 {
@@ -963,7 +963,7 @@ struct SVERTEX
 
 void D3DX8Shadow(D3DFITEM* item)
 {
-// nastavení zdroje barev
+// nastavenÃ­ zdroje barev
 	int itemsize;
 	int itemtype;
 
@@ -994,7 +994,7 @@ void D3DX8Shadow(D3DFITEM* item)
 		}
 	}
 
-// vytvoøení bufferu vektorù (Data3), není-li ještì vytvoøen
+// vytvoÃ¸enÃ­ bufferu vektorÃ¹ (Data3), nenÃ­-li jeÅ¡tÃ¬ vytvoÃ¸en
 	if ((item->Data3 == NULL) && (item->ShadowFan0 > 0))
 	{
 		IDirect3DVertexBuffer8* vertbuf = NULL;
@@ -1034,10 +1034,10 @@ void D3DX8Shadow(D3DFITEM* item)
 		}
 	}
 
-// nastavení transformaèní matice
+// nastavenÃ­ transformaÃ¨nÃ­ matice
 	D3DX8Dev->SetTransform(D3DTS_WORLD, &item->MatrixWorld);
 
-// vyrenderování objektu
+// vyrenderovÃ¡nÃ­ objektu
 	IDirect3DVertexBuffer8* vertbuf = (IDirect3DVertexBuffer8*)(item->Data3);
 
 	if (vertbuf != NULL)
@@ -1062,11 +1062,11 @@ void D3DX8Shadow(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování stínu objektu pøed ukonèením ovladaèe
+// resetovÃ¡nÃ­ stÃ­nu objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
 
 void D3DX8SReset(D3DFITEM* item)
 {
-// resetování bufferu stínù
+// resetovÃ¡nÃ­ bufferu stÃ­nÃ¹
 	if (item->Data3 != NULL)
 	{
 		((IDirect3DIndexBuffer8*)(item->Data3))->Release();
@@ -1075,11 +1075,11 @@ void D3DX8SReset(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování objektu pøed ukonèením ovladaèe
+// resetovÃ¡nÃ­ objektu pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
 
 void D3DX8Reset(D3DFITEM* item)
 {
-// resetování bufferu vrcholù
+// resetovÃ¡nÃ­ bufferu vrcholÃ¹
 	if (item->Data1 != NULL)
 	{
 		((IDirect3DVertexBuffer8*)(item->Data1))->Release();
@@ -1093,7 +1093,7 @@ void D3DX8Reset(D3DFITEM* item)
 		} while (item != item2);
 	}
 
-// resetování bufferu indexù
+// resetovÃ¡nÃ­ bufferu indexÃ¹
 	if (item->Data2 != NULL)
 	{
 		((IDirect3DIndexBuffer8*)(item->Data2))->Release();
@@ -1107,12 +1107,12 @@ void D3DX8Reset(D3DFITEM* item)
 		} while (item != item2);
 	}
 
-// resetování bufferu stínù
+// resetovÃ¡nÃ­ bufferu stÃ­nÃ¹
 	D3DX8SReset(item);
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè vyplòování ploch
+// aktualizovat pÃ¸epÃ­naÃ¨ vyplÃ²ovÃ¡nÃ­ ploch
 
 void D3DX8AktWireframe()
 {
@@ -1121,7 +1121,7 @@ void D3DX8AktWireframe()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè osvìtlení
+// aktualizovat pÃ¸epÃ­naÃ¨ osvÃ¬tlenÃ­
 
 void D3DX8AktLightOn()
 {
@@ -1130,7 +1130,7 @@ void D3DX8AktLightOn()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè plynulého stinování
+// aktualizovat pÃ¸epÃ­naÃ¨ plynulÃ©ho stinovÃ¡nÃ­
 
 void D3DX8AktShades()
 {
@@ -1139,7 +1139,7 @@ void D3DX8AktShades()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè odstraòování ploch
+// aktualizovat pÃ¸epÃ­naÃ¨ odstraÃ²ovÃ¡nÃ­ ploch
 
 void D3DX8AktCulling()
 {
@@ -1164,7 +1164,7 @@ void D3DX8AktCulling()
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zvìtšených textur
+// aktualizovat pÃ¸epÃ­naÃ¨ filtrace zvÃ¬tÅ¡enÃ½ch textur
 
 void D3DX8AktMagFilter(int stage)
 {
@@ -1173,7 +1173,7 @@ void D3DX8AktMagFilter(int stage)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizovat pøepínaè filtrace zmenšených a vzdálených textur
+// aktualizovat pÃ¸epÃ­naÃ¨ filtrace zmenÅ¡enÃ½ch a vzdÃ¡lenÃ½ch textur
 
 void D3DX8AktMinMipFilter(int stage)
 {
@@ -1194,7 +1194,7 @@ void D3DX8AktMinMipFilter(int stage)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace položky svìtla
+// aktualizace poloÅ¾ky svÃ¬tla
 
 void D3DX8AktLight(int inx, D3DLITEM* item)
 {
@@ -1213,7 +1213,7 @@ void D3DX8AktLight(int inx, D3DLITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení materiálu
+// nastavenÃ­ materiÃ¡lu
 
 void D3DX8SetMaterial(D3DMITEM* mat)
 {
@@ -1222,7 +1222,7 @@ void D3DX8SetMaterial(D3DMITEM* mat)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// resetování položky textury pøed ukonèením ovladaèe
+// resetovÃ¡nÃ­ poloÅ¾ky textury pÃ¸ed ukonÃ¨enÃ­m ovladaÃ¨e
 
 void D3DX8TextureRes(D3DTITEM* item)
 {
@@ -1235,7 +1235,7 @@ void D3DX8TextureRes(D3DTITEM* item)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení a zapnutí textury
+// nastavenÃ­ a zapnutÃ­ textury
 
 int tx8Width;
 int tx8Height;
@@ -1254,22 +1254,22 @@ bool _fastcall D3DX8TextCreate(D3DFORMAT f, BYTE* data, int mul)
 	tx8Tex = NULL;
 
 	return ((D3DX8Dev->CreateTexture(
-		tx8Width,							// šíøka textury
-		tx8Height,							// výška textury
-		tx8Mip,								// poèet generovaných úrovní
-		0,									// použití
-		f,									// formát
-		D3DPOOL_MANAGED,					// správa pamìti
+		tx8Width,							// Å¡Ã­Ã¸ka textury
+		tx8Height,							// vÃ½Å¡ka textury
+		tx8Mip,								// poÃ¨et generovanÃ½ch ÃºrovnÃ­
+		0,									// pouÅ¾itÃ­
+		f,									// formÃ¡t
+		D3DPOOL_MANAGED,					// sprÃ¡va pamÃ¬ti
 		&tx8Tex) == D3D_OK) &&
 		(tx8Tex != NULL));
 }
 
 void D3DX8TextureSet(D3DTITEM* item, int stage)
 {
-// data obrázku
+// data obrÃ¡zku
 	PICTUREDATA* picdata = item->Pic.Data();
 
-// vytvoøení textury
+// vytvoÃ¸enÃ­ textury
 	if (item->Data1 == NULL)
 	{
 		tx8Width = picdata->TextWidth;
@@ -1277,7 +1277,7 @@ void D3DX8TextureSet(D3DTITEM* item, int stage)
 		tx8Mip = picdata->TextMipMaps;
 		if (!IsMipMap || !item->Mips) tx8Mip = 1;
 
-		// omezení poètu úrovní - pøi vyšším stupni se prolínají ikony textury terénu
+		// omezenÃ­ poÃ¨tu ÃºrovnÃ­ - pÃ¸i vyÅ¡Å¡Ã­m stupni se prolÃ­najÃ­ ikony textury terÃ©nu
 		int mipmaps = item->MipMaps;
 		if (mipmaps > 0)
 		{
@@ -1336,7 +1336,7 @@ void D3DX8TextureSet(D3DTITEM* item, int stage)
 		}
 	}
 
-// nastavení textury
+// nastavenÃ­ textury
 	if (item->Data1 != NULL)
 	{
 		D3DX8Dev->SetTextureStageState(stage, D3DTSS_TEXCOORDINDEX, stage);
@@ -1346,7 +1346,7 @@ void D3DX8TextureSet(D3DTITEM* item, int stage)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// vypnutí textury
+// vypnutÃ­ textury
 
 void D3DX8TextureOff(int stage)
 {
@@ -1354,7 +1354,7 @@ void D3DX8TextureOff(int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace ambient osvìtlení
+// aktualizace ambient osvÃ¬tlenÃ­
 
 void D3DX8AktAmbient()
 {
@@ -1362,7 +1362,7 @@ void D3DX8AktAmbient()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// volná videopamì
+// volnÃ¡ videopamÃ¬Â
 
 int D3DX8Free()
 {
@@ -1405,7 +1405,7 @@ void D3DX8AktFog()
 }
 			  
 /////////////////////////////////////////////////////////////////////////////
-// zapnutí mlhy
+// zapnutÃ­ mlhy
 
 void D3DX8FogOn(BOOL on)
 {
@@ -1435,7 +1435,7 @@ void D3DX8AktState()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace blending operací objektu
+// aktualizace blending operacÃ­ objektu
 
 void D3DX8AktBlend(D3DFITEM* item)
 {
@@ -1448,7 +1448,7 @@ void D3DX8AktBlend(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// aktualizace referenèní úrovnì alfa
+// aktualizace referenÃ¨nÃ­ ÃºrovnÃ¬ alfa
 
 void D3DX8AktAlfa(D3DFITEM* item)
 {
@@ -1471,7 +1471,7 @@ void D3DX8AktAlfa(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení operace barev
+// nastavenÃ­ operace barev
 
 void D3DX8SetColorOp(int op, int arg1, int arg2, int stage)
 {
@@ -1481,7 +1481,7 @@ void D3DX8SetColorOp(int op, int arg1, int arg2, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení operace alfa
+// nastavenÃ­ operace alfa
 
 void D3DX8SetAlphaOp(int op, int arg1, int arg2, int stage)
 {
@@ -1491,7 +1491,7 @@ void D3DX8SetAlphaOp(int op, int arg1, int arg2, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení adresování textur
+// nastavenÃ­ adresovÃ¡nÃ­ textur
 
 void D3DX8SetAddress(int adru, int adrv, int stage)
 {
@@ -1500,7 +1500,7 @@ void D3DX8SetAddress(int adru, int adrv, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení barvy okolí textur
+// nastavenÃ­ barvy okolÃ­ textur
 
 //void D3DX8SetBorder(D3DFITEM* item, int stage)
 //{
@@ -1508,7 +1508,7 @@ void D3DX8SetAddress(int adru, int adrv, int stage)
 //}
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení zjemnìní vzdálených textur
+// nastavenÃ­ zjemnÃ¬nÃ­ vzdÃ¡lenÃ½ch textur
 
 void D3DX8SetBias(float bias, int stage)
 {
@@ -1516,7 +1516,7 @@ void D3DX8SetBias(float bias, int stage)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení barvy faktoru textur
+// nastavenÃ­ barvy faktoru textur
 
 void D3DX8SetTFactor(D3DFITEM* item)
 {
@@ -1524,7 +1524,7 @@ void D3DX8SetTFactor(D3DFITEM* item)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení Z funkce (1 až 8, v kódu DirectX, 0=vypnuto)
+// nastavenÃ­ Z funkce (1 aÅ¾ 8, v kÃ³du DirectX, 0=vypnuto)
 
 void D3DX8SetZFunc(int func)
 {
@@ -1541,7 +1541,7 @@ void D3DX8SetZFunc(int func)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení Z zápisu
+// nastavenÃ­ Z zÃ¡pisu
 
 void D3DX8SetZWrite(BOOL write)
 {
@@ -1549,7 +1549,7 @@ void D3DX8SetZWrite(BOOL write)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// povolení stencil operací
+// povolenÃ­ stencil operacÃ­
 
 void D3DX8SEnable(BOOL enable)
 {
@@ -1557,7 +1557,7 @@ void D3DX8SEnable(BOOL enable)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení stencil operací
+// nastavenÃ­ stencil operacÃ­
 
 void D3DX8SetSOp(int fail, int zfail, int zpass)
 {
@@ -1567,7 +1567,7 @@ void D3DX8SetSOp(int fail, int zfail, int zpass)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení stencil testu
+// nastavenÃ­ stencil testu
 
 void D3DX8SetSFunc(int func, int ref, DWORD mask)
 {
@@ -1577,7 +1577,7 @@ void D3DX8SetSFunc(int func, int ref, DWORD mask)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// nastavení zápisové masky do stencil bufferu
+// nastavenÃ­ zÃ¡pisovÃ© masky do stencil bufferu
 
 void D3DX8SetSMask(DWORD mask)
 {
@@ -1585,17 +1585,17 @@ void D3DX8SetSMask(DWORD mask)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// vykreslení stínù
+// vykreslenÃ­ stÃ­nÃ¹
 
 void D3DX8Shadows()
 {
-// vytvoøení bufferu stínù
+// vytvoÃ¸enÃ­ bufferu stÃ­nÃ¹
 	D3DX8InitShadow();
 
 	if (D3DX8ShadowBuf != NULL)
 	{
 
-// zapnutí barev vrcholù
+// zapnutÃ­ barev vrcholÃ¹
 		if (!D3DX8VertCol)
 		{
 			D3DX8VertCol = TRUE;
@@ -1606,7 +1606,7 @@ void D3DX8Shadows()
 
 		D3DX8Dev->SetTexture(0, NULL);
 
-// renderování
+// renderovÃ¡nÃ­
 		D3DX8Dev->SetStreamSource(0, D3DX8ShadowBuf, sizeof(SHADOWVERTEX));
 		D3DX8Dev->SetVertexShader(D3DFVF_SHADOWVERTEX);
 		D3DX8Dev->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
@@ -1615,4 +1615,4 @@ void D3DX8Shadows()
 
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------

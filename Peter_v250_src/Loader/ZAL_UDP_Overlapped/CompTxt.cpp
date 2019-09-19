@@ -7,43 +7,43 @@
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minimální velikost
+#pragma optimize("s", on)			// optimalizace na minimÃ¡lnÃ­ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad textového vırazu (vrací true = operace OK)
+// pÃ¸eklad textovÃ©ho vÃ½razu (vracÃ­ true = operace OK)
 
 bool _fastcall CompTxt(int index)
 {
-// adresa zdrojového prvku
+// adresa zdrojovÃ©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 
-// kontrola, zda je poloka vypnuta
+// kontrola, zda je poloÅ¾ka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vìtvení podle funkce
+// vÃ¬tvenÃ­ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_CAPTION:
-		CompAddItem(FGetCaption);		// naètení nadpisu okna
+		CompAddItem(FGetCaption);		// naÃ¨tenÃ­ nadpisu okna
 		return true;
 
 	case IDF_STATUS_LINE:
-		CompAddItem(FGetStatus);		// naètení textu stavového øádku
+		CompAddItem(FGetStatus);		// naÃ¨tenÃ­ textu stavovÃ©ho Ã¸Ã¡dku
 		return true;
 
 	case IDF_TEXT_CONST:
-		CompAddItem(FTextObj, Text.Dup(item->Name)); // textová konstanta
+		CompAddItem(FTextObj, Text.Dup(item->Name)); // textovÃ¡ konstanta
 		return true;
 
 //	case IDF_TEXT_LINE:
 //		{
 //			int i = Text.Dup(item->Name);
 //			Text[i].Add(Textcrlf, 2);
-//			CompAddItem(FTextObj, i);	 // textová konstanta
+//			CompAddItem(FTextObj, i);	 // textovÃ¡ konstanta
 //		}
 //		return true;
 		
@@ -52,7 +52,7 @@ bool _fastcall CompTxt(int index)
 		return true;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_TEXT);	// funkce s návratem textu
+		return CompFunc(index, IDF_TEXT);	// funkce s nÃ¡vratem textu
 
 	case IDF_TEXT:
 		if (item->RefBlok == BufObjID)
@@ -93,35 +93,35 @@ bool _fastcall CompTxt(int index)
 		return false;
 
 	case IDF_TEXT_LEFT:
-		CompAddItem(FTextLeft);				// levá èást textu
+		CompAddItem(FTextLeft);				// levÃ¡ Ã¨Ã¡st textu
 		CompNumSubPar(index, IDF_TEXT_LEFT_LEN, 1);
 		CompTxtSubPar(index, IDF_TEXT_INPUT);
 		return true;
 
 	case IDF_TEXT_RIGHT:
-		CompAddItem(FTextRight);				// pravá èást textu
+		CompAddItem(FTextRight);				// pravÃ¡ Ã¨Ã¡st textu
 		CompNumSubPar(index, IDF_TEXT_RIGHT_POS, 0);
 		CompTxtSubPar(index, IDF_TEXT_INPUT);
 		return true;
 
 	case IDF_TEXT_MID:
-		CompAddItem(FTextMid);				// støední èást textu
+		CompAddItem(FTextMid);				// stÃ¸ednÃ­ Ã¨Ã¡st textu
 		CompNumSubPar(index, IDF_TEXT_MID_POS, 0);
 		CompNumSubPar(index, IDF_TEXT_MID_LEN, 1);
 		CompTxtSubPar(index, IDF_TEXT_INPUT);
 		return true;
 
 	case IDF_TEXTLINE_GET:
-		CompAddItem(FTextlineGet);			// øádek textu
+		CompAddItem(FTextlineGet);			// Ã¸Ã¡dek textu
 		CompNumSubPar(index, IDF_TEXTLINE_INDEX, 0);
 		CompTxtSubPar(index, IDF_TEXT_INPUT);
 		return true;
 
 	case IDF_TEXT_ADD:
-		return CompTxtGrp(index, FTextAdd, FTextAdd1);	// souèet textù
+		return CompTxtGrp(index, FTextAdd, FTextAdd1);	// souÃ¨et textÃ¹
 
 	case IDF_DIALOG_TEXT:
-		CompAddItem(FDialogText);				// textovı dialog
+		CompAddItem(FDialogText);				// textovÃ½ dialog
 		CompTxtSubPar(index, IDF_DIALOG_BOX_CAPTION);
 		CompTxtSubPar(index, IDF_DIALOG_TEXT1);
 		CompTxtSubPar(index, IDF_DIALOG_TEXT2);
@@ -130,7 +130,7 @@ bool _fastcall CompTxt(int index)
 		return true;
 
 	case IDF_DIALOG_OPEN:
-		CompAddItem(FDialogOpen);				// dialog otevøení souboru
+		CompAddItem(FDialogOpen);				// dialog otevÃ¸enÃ­ souboru
 		CompTxtSubPar(index, IDF_DIALOG_BOX_CAPTION);
 		CompTxtSubPar(index, IDF_DIALOG_FILES);
 		CompTxtSubPar(index, IDF_DIALOG_EXT);
@@ -138,7 +138,7 @@ bool _fastcall CompTxt(int index)
 		return true;
 
 	case IDF_DIALOG_SAVE:
-		CompAddItem(FDialogSave);				// dialog uloení souboru
+		CompAddItem(FDialogSave);				// dialog uloÅ¾enÃ­ souboru
 		CompTxtSubPar(index, IDF_DIALOG_BOX_CAPTION);
 		CompTxtSubPar(index, IDF_DIALOG_FILES);
 		CompTxtSubPar(index, IDF_DIALOG_EXT);
@@ -146,95 +146,95 @@ bool _fastcall CompTxt(int index)
 		return true;
 
 	case IDF_DIALOG_FIND:
-		CompAddItem(FDialogFind);				// dialog nalezení textu
+		CompAddItem(FDialogFind);				// dialog nalezenÃ­ textu
 		return true;
 
 	case IDF_DIALOG_COLOR:
-		CompAddItem(FDialogColor);				// dialog vıbìru barvy
+		CompAddItem(FDialogColor);				// dialog vÃ½bÃ¬ru barvy
 		return true;
 
 	case IDF_TEXT_FORMAT:
-		return CompNumPar(index, FTextFormat); // pøevod èísla na text
+		return CompNumPar(index, FTextFormat); // pÃ¸evod Ã¨Ã­sla na text
 
 	case IDF_TEXT_FORMAT2:
-		return CompNumPar(index, FTextFormat2); // pøevod èísla na text 2 èíslice
+		return CompNumPar(index, FTextFormat2); // pÃ¸evod Ã¨Ã­sla na text 2 Ã¨Ã­slice
 
 	case IDF_TEXT_FORMATH:
-		return CompNumPar(index, FTextFormatH); // pøevod èísla na HEX text
+		return CompNumPar(index, FTextFormatH); // pÃ¸evod Ã¨Ã­sla na HEX text
 
 	case IDF_TEXT_LOWER:
-		return CompTxtPar(index, FTextLower); // pøevod na malá písmena
+		return CompTxtPar(index, FTextLower); // pÃ¸evod na malÃ¡ pÃ­smena
 
 	case IDF_TEXT_UPPER:
-		return CompTxtPar(index, FTextUpper); // pøevod na velká písmena
+		return CompTxtPar(index, FTextUpper); // pÃ¸evod na velkÃ¡ pÃ­smena
 
 	case IDF_CHAR:
-		return CompNumPar(index, FTextChar); // pøevod èísla na znak
+		return CompNumPar(index, FTextChar); // pÃ¸evod Ã¨Ã­sla na znak
 
 	case IDF_KLAV_CHAR_WAIT:
-		CompAddItem(FKeyCharWait);		// naètení znaku z klávesnice
+		CompAddItem(FKeyCharWait);		// naÃ¨tenÃ­ znaku z klÃ¡vesnice
 		return true;
 
 	case IDF_KLAV_CHAR:
-		CompAddItem(FKeyChar);			// vstup znaku z klávesnice
+		CompAddItem(FKeyChar);			// vstup znaku z klÃ¡vesnice
 		return true;
 
 	case IDF_FILE_ACT:
-		CompAddItem(FGetFileAct);		// aktivní adresáø
+		CompAddItem(FGetFileAct);		// aktivnÃ­ adresÃ¡Ã¸
 		return true;
 
 	case IDF_FILE_DISKLABEL:
-		CompAddItem(FGetDiskLabel);		// jméno disku
+		CompAddItem(FGetDiskLabel);		// jmÃ©no disku
 		return true;
 
 	case IDF_FILE_READ:
-		CompAddItem(FGetFileRead);		// jméno souboru pro ètení
+		CompAddItem(FGetFileRead);		// jmÃ©no souboru pro Ã¨tenÃ­
 		return true;
 
 	case IDF_FILE_WRITE:
-		CompAddItem(FGetFileWrite);		// jméno souboru pro zápisu
+		CompAddItem(FGetFileWrite);		// jmÃ©no souboru pro zÃ¡pisu
 		return true;
 
 	case IDF_FILE_TEXT0:
-		CompAddItem(FGetFileText0);		// naètení textu zakonèeného nulou
+		CompAddItem(FGetFileText0);		// naÃ¨tenÃ­ textu zakonÃ¨enÃ©ho nulou
 		return true;
 
 	case IDF_FILE_TEXTCR:
-		CompAddItem(FGetFileTextCR);	// naètení textu zakonèeného s CR
+		CompAddItem(FGetFileTextCR);	// naÃ¨tenÃ­ textu zakonÃ¨enÃ©ho s CR
 		return true;
 
 	case IDF_FILE_TEXTN:
-		CompAddItem(FGetFileTextN);		// naètení textu s pevnou délkou
+		CompAddItem(FGetFileTextN);		// naÃ¨tenÃ­ textu s pevnou dÃ©lkou
 		return true;
 
 	case IDF_DATETIME_DATEEUR:
-		return CompNumPar(index, FTimeDateEur);	// pøevod data na evropskı formát
+		return CompNumPar(index, FTimeDateEur);	// pÃ¸evod data na evropskÃ½ formÃ¡t
 
 	case IDF_DATETIME_DATEUSA:
-		return CompNumPar(index, FTimeDateUsa);	// pøevod data na americkı formát
+		return CompNumPar(index, FTimeDateUsa);	// pÃ¸evod data na americkÃ½ formÃ¡t
 
 	case IDF_DATETIME_DATEJAP:
-		return CompNumPar(index, FTimeDateJap);	// pøevod data na japonskı formát
+		return CompNumPar(index, FTimeDateJap);	// pÃ¸evod data na japonskÃ½ formÃ¡t
 
 	case IDF_DATETIME_TIME24:
-		return CompNumPar(index, FTimeTime24);	// pøevod èasu na formát 24
+		return CompNumPar(index, FTimeTime24);	// pÃ¸evod Ã¨asu na formÃ¡t 24
 
 	case IDF_DATETIME_TIME12:
-		return CompNumPar(index, FTimeTime12);	// pøevod èasu na formát 12
+		return CompNumPar(index, FTimeTime12);	// pÃ¸evod Ã¨asu na formÃ¡t 12
 
 	case IDF_CONSOLE_IN:
 		CompAddItem(FConsoleIn);				// vstup textu z konzoly
 		return true;
 
 	case IDF_COMMAND_LINE:
-		CompAddItem(FGetCommandLine);			// pøíkazovı øádek
+		CompAddItem(FGetCommandLine);			// pÃ¸Ã­kazovÃ½ Ã¸Ã¡dek
 		return true;
 
 	case IDF_COMMAND_PAR:
 		return CompNumPar(index, FCommandPar);	// parametr programu
 
 	case IDF_EXEC_NAME:
-		CompAddItem(FExecName);					// jméno programu
+		CompAddItem(FExecName);					// jmÃ©no programu
 		return true;
 
 	case IDF_WINDOW_TEXT:
@@ -242,7 +242,7 @@ bool _fastcall CompTxt(int index)
 		return true;
 
 	case IDF_FILE_LIST:
-		if (!CompTxtPar(index, FFileList))		// seznam souborù
+		if (!CompTxtPar(index, FFileList))		// seznam souborÃ¹
 		{
 			CompAddItem(FFileListAll);
 		}
@@ -253,11 +253,11 @@ bool _fastcall CompTxt(int index)
 #ifndef _MINI
 
 	case IDF_CONNECT_LIST:
-		CompAddItem(FConnectList);				// seznam spojení DirectPlay
+		CompAddItem(FConnectList);				// seznam spojenÃ­ DirectPlay
 		return true;
 
 	case IDF_CONNECT_ACT:
-		CompAddItem(FGetConnectAct);			// aktivní spojení DirectPlay
+		CompAddItem(FGetConnectAct);			// aktivnÃ­ spojenÃ­ DirectPlay
 		return true;
 
 	case IDF_GAME_LIST:
@@ -265,103 +265,103 @@ bool _fastcall CompTxt(int index)
 		return true;
 
 	case IDF_GAME_ACT:
-		CompAddItem(FGetGameAct);				// aktivní hra DirectPlay
+		CompAddItem(FGetGameAct);				// aktivnÃ­ hra DirectPlay
 		return true;
 
 	case IDF_PLAYER_LIST:
-		CompAddItem(FPlayerList);				// seznam hráèù DirectPlay
+		CompAddItem(FPlayerList);				// seznam hrÃ¡Ã¨Ã¹ DirectPlay
 		return true;
 
 	case IDF_PLAYER_ACT:
-		CompAddItem(FGetPlayerAct);				// aktivní hráè DirectPlay
+		CompAddItem(FGetPlayerAct);				// aktivnÃ­ hrÃ¡Ã¨ DirectPlay
 		return true;
 
 	case IDF_GAME_DATAT:
-		CompAddItem(FGetGameDataT);				// naètení textu z paketu
+		CompAddItem(FGetGameDataT);				// naÃ¨tenÃ­ textu z paketu
 		return true;
 
 	case IDF_GAME_IP:
-		CompAddItem(FGetGameIP);				// zjištìní IP poèítaèe
+		CompAddItem(FGetGameIP);				// zjiÅ¡tÃ¬nÃ­ IP poÃ¨Ã­taÃ¨e
 		return true;
 
 	case IDF_DDE_APP:
-		CompAddItem(FGetDDEApp);				// zjištìní seznamu aplikací
+		CompAddItem(FGetDDEApp);				// zjiÅ¡tÃ¬nÃ­ seznamu aplikacÃ­
 		return true;
 
 	case IDF_DDE_TOPIC:
-		CompAddItem(FGetDDETopic);				// zjištìní seznamu témat
+		CompAddItem(FGetDDETopic);				// zjiÅ¡tÃ¬nÃ­ seznamu tÃ©mat
 		return true;
 
 	case IDF_UDP_SEND_IP:
-		CompAddItem(FGetUDPSendIP);				// zjištìní vysílací IP adresy UDP
+		CompAddItem(FGetUDPSendIP);				// zjiÅ¡tÃ¬nÃ­ vysÃ­lacÃ­ IP adresy UDP
 		return true;
 
 	case IDF_UDP_REC_IP:
-		CompAddItem(FGetUDPRecIP);				// zjištìní pøijaté IP adresy UDP
+		CompAddItem(FGetUDPRecIP);				// zjiÅ¡tÃ¬nÃ­ pÃ¸ijatÃ© IP adresy UDP
 		return true;
 
 	case IDF_UDP_TEXT:
-		CompAddItem(FGetUDPText);				// pøíjem textu UDP
+		CompAddItem(FGetUDPText);				// pÃ¸Ã­jem textu UDP
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 	case IDF_USERFONT:
-		CompAddItem(FGetUserFont);				// zjištìní uivatelského fontu
+		CompAddItem(FGetUserFont);				// zjiÅ¡tÃ¬nÃ­ uÅ¾ivatelskÃ©ho fontu
 		return true;
 
 	case IDF_ENUMFONTS:
-		CompAddItem(FEnumFonts);				// zjištìní seznamu fontù
+		CompAddItem(FEnumFonts);				// zjiÅ¡tÃ¬nÃ­ seznamu fontÃ¹
 		return true;
 
 	case IDF_ALIAS:
-		CompAddItem(FGetAlias);					// naètení alias souboru
+		CompAddItem(FGetAlias);					// naÃ¨tenÃ­ alias souboru
 		return true;
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
-	case IDF_MEMORY_TEXT0:							// text zakonèenı nulou
+	case IDF_MEMORY_TEXT0:							// text zakonÃ¨enÃ½ nulou
 		CompAddItem(FGetMemoryText0);
 		return true;
 
-	case IDF_MEMORY_TEXT0P:							// ukazatel na text zakonèenı nulou
+	case IDF_MEMORY_TEXT0P:							// ukazatel na text zakonÃ¨enÃ½ nulou
 		CompAddItem(FGetMemoryText0P);
 		return true;
 
-	case IDF_MEMORY_TEXTN:							// text s pevnou délkou
+	case IDF_MEMORY_TEXTN:							// text s pevnou dÃ©lkou
 		CompAddItem(FGetMemoryTextN);
 		return true;
 
-	case IDF_INI_FILE:								// jméno konfiguraèního souboru
+	case IDF_INI_FILE:								// jmÃ©no konfiguraÃ¨nÃ­ho souboru
 		CompAddItem(FGetIniFile);
 		return true;
 
-	case IDF_INI_SECTION:							// jméno konfiguraèní sekce
+	case IDF_INI_SECTION:							// jmÃ©no konfiguraÃ¨nÃ­ sekce
 		CompAddItem(FGetIniSection);
 		return true;
 
-	case IDF_INI_VALUE:								// jméno konfiguraèního parametru
+	case IDF_INI_VALUE:								// jmÃ©no konfiguraÃ¨nÃ­ho parametru
 		CompAddItem(FGetIniValue);
 		return true;
 
-	case IDF_INI_STRING:							// ètení konfiguraèního textu
+	case IDF_INI_STRING:							// Ã¨tenÃ­ konfiguraÃ¨nÃ­ho textu
 		if (!CompTxtPar(index, FGetIniString))
 		{
 			CompAddItem(FGetIniString0);
 		}
 		return true;
 
-	case IDF_REG_SUBKEY:							// klíè registrù
+	case IDF_REG_SUBKEY:							// klÃ­Ã¨ registrÃ¹
 		CompAddItem(FGetRegSubkey);
 		return true;
 
-	case IDF_REG_VALUE:								// jméno poloky registru
+	case IDF_REG_VALUE:								// jmÃ©no poloÅ¾ky registru
 		CompAddItem(FGetRegValue);
 		return true;
 
-	case IDF_REG_STRING:							// ètení textu z registru
+	case IDF_REG_STRING:							// Ã¨tenÃ­ textu z registru
 		if (!CompTxtPar(index, FGetRegString))
 		{
 			CompAddItem(FGetRegString0);
@@ -369,47 +369,47 @@ bool _fastcall CompTxt(int index)
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
 	case IDF_COM_TEXT:
-		CompAddItem(FGetComText);				// naètení znaku z portu
+		CompAddItem(FGetComText);				// naÃ¨tenÃ­ znaku z portu
 		return true;
 
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 // --------------------- vypnuto pro MINI verzi --------------------
 #ifndef _MINI
 
 	case IDF_MIX_DEVICE:
-		CompAddItem(FGetMixDevice);				// zjištìní seznamu mixáních zaøízení
+		CompAddItem(FGetMixDevice);				// zjiÅ¡tÃ¬nÃ­ seznamu mixÃ¡Å¾nÃ­ch zaÃ¸Ã­zenÃ­
 		return true;
 
 	case IDF_MIX_LINE_DST:
-		CompAddItem(FGetMixLineDst);			// zjištìní seznamu cílovıch signálù
+		CompAddItem(FGetMixLineDst);			// zjiÅ¡tÃ¬nÃ­ seznamu cÃ­lovÃ½ch signÃ¡lÃ¹
 		return true;
 
 	case IDF_MIX_LINE_SRC:
-		CompAddItem(FGetMixLineSrc);			// zjištìní seznamu zdrojovıch signálù
+		CompAddItem(FGetMixLineSrc);			// zjiÅ¡tÃ¬nÃ­ seznamu zdrojovÃ½ch signÃ¡lÃ¹
 		return true;
 
 	case IDF_MIX_CONTROL:
-		CompAddItem(FGetMixControl);			// zjištìní seznamu ovládacích prvkù
+		CompAddItem(FGetMixControl);			// zjiÅ¡tÃ¬nÃ­ seznamu ovlÃ¡dacÃ­ch prvkÃ¹
 		return true;
 
 	case IDF_MIX_CONTROL_LIST:
-		CompAddItem(FGetMixCtrlList);			// zjištìní seznamu hodnot ovládacích prvkù
+		CompAddItem(FGetMixCtrlList);			// zjiÅ¡tÃ¬nÃ­ seznamu hodnot ovlÃ¡dacÃ­ch prvkÃ¹
 		return true;
 		
 #endif // _MINI
-// --------------------- konec vypnutí pro MINI verzi -------------------
+// --------------------- konec vypnutÃ­ pro MINI verzi -------------------
 
 	case IDF_DIRECT3D_MODE_LIST:
-		CompAddItem(FGet3DMode);				// zjištìní seznamu videomódù
+		CompAddItem(FGet3DMode);				// zjiÅ¡tÃ¬nÃ­ seznamu videomÃ³dÃ¹
 		return true;
 
 	case IDF_TEXT_BLOCK:						// blok textu
@@ -428,7 +428,7 @@ bool _fastcall CompTxt(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s textovım parametrem
+// pÃ¸eklad pÃ¸Ã­kazu s textovÃ½m parametrem
 
 bool CompTxtPar(int index, PROCCOM func)
 {
@@ -454,31 +454,31 @@ bool CompTxtPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// pøeklad pøíkazu s textovım podparametrem (hledanım podle identifikace)
+// pÃ¸eklad pÃ¸Ã­kazu s textovÃ½m podparametrem (hledanÃ½m podle identifikace)
 
 void CompTxtSubPar(int index, int idf)
 {
 // korekce identifikace funkce
 	idf -= IDF;
 
-// ukazatel vıchozího prvku
+// ukazatel vÃ½chozÃ­ho prvku
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda má poloka nìjaké potomky
+// kontrola, zda mÃ¡ poloÅ¾ka nÃ¬jakÃ© potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus pøes všechny potomky
+// cyklus pÃ¸es vÅ¡echny potomky
 		do {
 
-// adresa dalšího potomka
+// adresa dalÅ¡Ã­ho potomka
 			index += posun;
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledanı prvek - naètení prvku
+// test, zda to je hledanÃ½ prvek - naÃ¨tenÃ­ prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompTxt(index + 1))
@@ -486,13 +486,13 @@ void CompTxtSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro pøíští prvek
+// posun pro pÃ¸Ã­Å¡tÃ­ prvek
 			posun = item2->Items;
 
-// dokud je další potomek
+// dokud je dalÅ¡Ã­ potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// pouije se implicitní hodnota - prázdnı text
+// pouÅ¾ije se implicitnÃ­ hodnota - prÃ¡zdnÃ½ text
 	CompAddItem(FTextEmpty);
 }

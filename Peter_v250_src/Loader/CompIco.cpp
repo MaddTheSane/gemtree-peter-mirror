@@ -7,48 +7,48 @@
 *																			*
 \***************************************************************************/
 
-#pragma optimize("s", on)			// optimalizace na minim·lnÌ velikost
+#pragma optimize("s", on)			// optimalizace na minim√°ln√≠ velikost
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad v˝razu s ikonou (vracÌ true = operace OK)
+// p√∏eklad v√Ωrazu s ikonou (vrac√≠ true = operace OK)
 
 bool _fastcall CompIco(int index)
 {
-// adresa zdrojovÈho prvku
+// adresa zdrojov√©ho prvku
 	if ((DWORD)index >= (DWORD)BufEdiN) return false;
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 	int refinx = item->RefIndex;
 
-// kontrola, zda je poloûka vypnuta
+// kontrola, zda je polo≈æka vypnuta
 	if ((item->Param & (PETPROG_OFF | PETPROG_OFF_DEP)) != 0) return false;
 
-// vÏtvenÌ podle funkce
+// v√¨tven√≠ podle funkce
 	switch (item->Func + IDF)
 	{
 	case IDF_PREDMET:
-		CompAddItem(FPredmet);				// p¯edmÏt p¯ed Pet¯Ìkem
+		CompAddItem(FPredmet);				// p√∏edm√¨t p√∏ed Pet√∏√≠kem
 		return true;
 
 	case IDF_PREDMET_POZ:
-		CompAddItem(FPredmetPoz);			// p¯edmÏt pod Pet¯Ìkem
+		CompAddItem(FPredmetPoz);			// p√∏edm√¨t pod Pet√∏√≠kem
 		return true;
 
 	case IDF_PETRA_PREDMET:
-		CompAddItem(FPredmet2);				// p¯edmÏt p¯ed Petrou
+		CompAddItem(FPredmet2);				// p√∏edm√¨t p√∏ed Petrou
 		return true;
 
 	case IDF_PETRA_PREDMET_POZ:
-		CompAddItem(FPredmet2Poz);			// p¯edmÏt pod Petrou
+		CompAddItem(FPredmet2Poz);			// p√∏edm√¨t pod Petrou
 		return true;
 
 	case IDF_OKRAJ:
-		CompAddItem(FIconEmpty);			// pr·zdn· ikona
+		CompAddItem(FIconEmpty);			// pr√°zdn√° ikona
 		return true;
 
 	case IDF_FNC:
-		return CompFunc(index, IDF_ICON);	// funkce s n·vratem ikony
+		return CompFunc(index, IDF_ICON);	// funkce s n√°vratem ikony
 
 	case IDF_MAP_ICON:
 		CompAddItem(FGetMapIcon);			// ikona z plochy
@@ -58,7 +58,7 @@ bool _fastcall CompIco(int index)
 		return true;
 
 	case IDF_NONE:
-	case IDF_ICON:							// promÏnn· ikony
+	case IDF_ICON:							// prom√¨nn√° ikony
 		if (item->RefBlok == BufObjID)
 		{
 			if ((DWORD)refinx >= (DWORD)BufObjN) return false;
@@ -101,11 +101,11 @@ bool _fastcall CompIco(int index)
 		return true;
 
 	case IDF_FILE_ICON:
-		CompAddItem(FGetFileIcon);			// naËtenÌ ikony
+		CompAddItem(FGetFileIcon);			// na√®ten√≠ ikony
 		return true;
 
 	case IDF_ICON_GET:
-		CompAddItem(FIconGet);					// naËtenÌ ikony
+		CompAddItem(FIconGet);					// na√®ten√≠ ikony
 		CompNumSubPar(index, IDF_PIC_BLOCK_X, 0);
 		CompNumSubPar(index, IDF_PIC_BLOCK_Y, 0);
 		return true;
@@ -117,7 +117,7 @@ bool _fastcall CompIco(int index)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad p¯Ìkazu s parametrem ikony
+// p√∏eklad p√∏√≠kazu s parametrem ikony
 
 bool CompIcoPar(int index, PROCCOM func)
 {
@@ -143,31 +143,31 @@ bool CompIcoPar(int index, PROCCOM func, int data, int list)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// p¯eklad p¯Ìkazu s podparametrem ikony (hledan˝m podle identifikace)
+// p√∏eklad p√∏√≠kazu s podparametrem ikony (hledan√Ωm podle identifikace)
 
 void CompIcoSubPar(int index, int idf)
 {
 // korekce identifikace funkce
 	idf -= IDF;
 
-// ukazatel v˝chozÌho prvku
+// ukazatel v√Ωchoz√≠ho prvku
 	PETPROG*	item = BufEdi + index;
 	PETPROG2*	item2 = BufEdi2 + index;
 
-// kontrola, zda m· poloûka nÏjakÈ potomky
+// kontrola, zda m√° polo≈æka n√¨jak√© potomky
 	if (item->Param & PETPROG_CHILDS)
 	{
 		int posun = 1;
 
-// cyklus p¯es vöechny potomky
+// cyklus p√∏es v≈°echny potomky
 		do {
 
-// adresa dalöÌho potomka
+// adresa dal≈°√≠ho potomka
 			index += posun;
 			item += posun;
 			item2 += posun;
 
-// test, zda to je hledan˝ prvek - naËtenÌ prvku
+// test, zda to je hledan√Ω prvek - na√®ten√≠ prvku
 			if ((item->Func == idf) &&
 				(item->Param & PETPROG_CHILDS) && 
 				CompIco(index + 1))
@@ -175,13 +175,13 @@ void CompIcoSubPar(int index, int idf)
 				return;
 			}
 
-// posun pro p¯ÌötÌ prvek
+// posun pro p√∏√≠≈°t√≠ prvek
 			posun = item2->Items;
 
-// dokud je dalöÌ potomek
+// dokud je dal≈°√≠ potomek
 		} while (item->Param & PETPROG_NEXT);
 	}
 
-// pouûije se implicitnÌ hodnota - pr·zdn·
+// pou≈æije se implicitn√≠ hodnota - pr√°zdn√°
 	CompAddItem(FIconEmpty);
 }

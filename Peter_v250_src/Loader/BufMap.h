@@ -7,83 +7,83 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura jednoho prvku dat plochy - 8 bajtù
+// struktura jednoho prvku dat plochy - 8 bajtÃ¹
 
 typedef struct MAPITEM_
 {
-	CIcon	Icon;					// (4) ikona (pøi provádìní programu)
-	DWORD	Param;					// (4) parametry políèka
-									//		bit 0 a bit 9 ........ (10 bitù) hodnota 1 (0 a 1023)
-									//		bit 10 a bit 19 ...... (10 bitù) hodnota 2 (0 a 1023)
-									//		bit 20 a bit 26 ...... (7 bitù) hodnota 3 (0 a 127)
-									//		bit 27 a bit 31 ...... (5 bitù) pøíznaky 1 a 5
+	CIcon	Icon;					// (4) ikona (pÃ¸i provÃ¡dÃ¬nÃ­ programu)
+	DWORD	Param;					// (4) parametry polÃ­Ã¨ka
+									//		bit 0 aÅ¾ bit 9 ........ (10 bitÃ¹) hodnota 1 (0 aÅ¾ 1023)
+									//		bit 10 aÅ¾ bit 19 ...... (10 bitÃ¹) hodnota 2 (0 aÅ¾ 1023)
+									//		bit 20 aÅ¾ bit 26 ...... (7 bitÃ¹) hodnota 3 (0 aÅ¾ 127)
+									//		bit 27 aÅ¾ bit 31 ...... (5 bitÃ¹) pÃ¸Ã­znaky 1 aÅ¾ 5
 } MAPITEM;
 
 #define SIZEOFMAPITEM	(sizeof(long) + sizeof(CIcon))	// velikost jednoho prvku plochy
 
 /////////////////////////////////////////////////////////////////////////////
-// struktura poloky dat plochy - 12 bajtù + data
+// struktura poloÅ¾ky dat plochy - 12 bajtÃ¹ + data
 
 typedef struct MAPDATA_
 {
-	long		Refer;					// (4) èítaè referencí na plochu
-	long		Width;					// (4) šíøka plochy v políèkách
-	long		Height;					// (4) vıška plochy v políèkách
+	long		Refer;					// (4) Ã¨Ã­taÃ¨ referencÃ­ na plochu
+	long		Width;					// (4) Å¡Ã­Ã¸ka plochy v polÃ­Ã¨kÃ¡ch
+	long		Height;					// (4) vÃ½Å¡ka plochy v polÃ­Ã¨kÃ¡ch
 	MAPITEM		Data[1];				// data plochy (zleva doprava a zdola nahoru)
 } MAPDATA;
 
 // parametry:
-#define	MAP_VALUE1_MASK		0x000003FF		// maska hodnoty 1 políèka
-#define MAP_VALUE1_ROT		0				// poèet rotací pro hodnotu 1 políèka
-#define MAP_VALUE1_MAX		1023			// maximální hodnota pro hodnotu 1 políèka
-#define MAP_VALUE2_MASK		0x000FFC00		// maska hodnoty 2 políèka
-#define MAP_VALUE2_ROT		10				// poèet rotací pro hodnotu 2 políèka
-#define MAP_VALUE2_MAX		1023			// maximální hodnota pro hodnotu 2 políèka
-#define MAP_VALUE3_MASK		0x07F00000		// maska hodnoty 3 políèka
-#define MAP_VALUE3_ROT		20				// poèet rotací pro hodnotu 3 políèka
-#define MAP_VALUE3_MAX		127				// maximální hodnota pro hodnotu 3 políèka
+#define	MAP_VALUE1_MASK		0x000003FF		// maska hodnoty 1 polÃ­Ã¨ka
+#define MAP_VALUE1_ROT		0				// poÃ¨et rotacÃ­ pro hodnotu 1 polÃ­Ã¨ka
+#define MAP_VALUE1_MAX		1023			// maximÃ¡lnÃ­ hodnota pro hodnotu 1 polÃ­Ã¨ka
+#define MAP_VALUE2_MASK		0x000FFC00		// maska hodnoty 2 polÃ­Ã¨ka
+#define MAP_VALUE2_ROT		10				// poÃ¨et rotacÃ­ pro hodnotu 2 polÃ­Ã¨ka
+#define MAP_VALUE2_MAX		1023			// maximÃ¡lnÃ­ hodnota pro hodnotu 2 polÃ­Ã¨ka
+#define MAP_VALUE3_MASK		0x07F00000		// maska hodnoty 3 polÃ­Ã¨ka
+#define MAP_VALUE3_ROT		20				// poÃ¨et rotacÃ­ pro hodnotu 3 polÃ­Ã¨ka
+#define MAP_VALUE3_MAX		127				// maximÃ¡lnÃ­ hodnota pro hodnotu 3 polÃ­Ã¨ka
 
-// zachovat poøadí hodnot pøepínaèù - pouívá se pøi zobrazení
-#define MAP_FLAG1			0x08000000		// pøíznak 1
-#define MAP_FLAG2			0x10000000		// pøíznak 2
-#define MAP_FLAG3			0x20000000		// pøíznak 3
-#define MAP_FLAG4			0x40000000		// pøíznak 4
-#define MAP_FLAG5			0x80000000		// pøíznak 5
+// zachovat poÃ¸adÃ­ hodnot pÃ¸epÃ­naÃ¨Ã¹ - pouÅ¾Ã­vÃ¡ se pÃ¸i zobrazenÃ­
+#define MAP_FLAG1			0x08000000		// pÃ¸Ã­znak 1
+#define MAP_FLAG2			0x10000000		// pÃ¸Ã­znak 2
+#define MAP_FLAG3			0x20000000		// pÃ¸Ã­znak 3
+#define MAP_FLAG4			0x40000000		// pÃ¸Ã­znak 4
+#define MAP_FLAG5			0x80000000		// pÃ¸Ã­znak 5
 
-#define SIZEOFMAPDATA	(3*sizeof(long))	// velikost poloky dat plochy (bez dat)
+#define SIZEOFMAPDATA	(3*sizeof(long))	// velikost poloÅ¾ky dat plochy (bez dat)
 
-//#define MAPMAXWIDTH 0x1000					// maximální šíøka plochy
-//#define MAPMAXHEIGHT 0x1000					// maximální vıška plochy
+//#define MAPMAXWIDTH 0x1000					// maximÃ¡lnÃ­ Å¡Ã­Ã¸ka plochy
+//#define MAPMAXHEIGHT 0x1000					// maximÃ¡lnÃ­ vÃ½Å¡ka plochy
 
 
 /////////////////////////////////////////////////////////////////////////////
-// popisovaè plochy v souboru (20 B)
+// popisovaÃ¨ plochy v souboru (20 B)
 
 typedef struct MAPFILE_
 {
-	char	Ident[4];				// (4) identifikátor (= "PMAP")
+	char	Ident[4];				// (4) identifikÃ¡tor (= "PMAP")
 	DWORD	Param;					// (4) parametry - nastaveno na 0
-	long	Width;					// (4) šíøka plochy
-	long	Height;					// (4) vıška plochy
-	long	Colors;					// (4) poèet palet v tabulce
+	long	Width;					// (4) Å¡Ã­Ã¸ka plochy
+	long	Height;					// (4) vÃ½Å¡ka plochy
+	long	Colors;					// (4) poÃ¨et palet v tabulce
 	RGBQUAD	ColorTab[1];			// (4) tabulka palet
 } MAPFILE;
 
-// Za popisovaèem následuje:
-//		- tabulka palet (formát RGBQUAD)
-//		- (4) poèet definovanıch ikon
-//		- definice ikon ve formátu:
-//				- (4) délka textu ve znacích
-//				- text jména ikony
+// Za popisovaÃ¨em nÃ¡sleduje:
+//		- tabulka palet (formÃ¡t RGBQUAD)
+//		- (4) poÃ¨et definovanÃ½ch ikon
+//		- definice ikon ve formÃ¡tu:
+//				- (4) dÃ©lka textu ve znacÃ­ch
+//				- text jmÃ©na ikony
 //				- (ICONSIZE) ikona
-//		- definice plochy ve formátu MAPITEM
+//		- definice plochy ve formÃ¡tu MAPITEM
 
 #define SIZEOFMAPFILE (4*sizeof(char) + sizeof(DWORD) + 3*sizeof(long))
 
-// statická inicializace plch
+// statickÃ¡ inicializace plch
 
 void InitMap();
-extern MAPDATA* EmptyMapData;				// data prázdné plochy
+extern MAPDATA* EmptyMapData;				// data prÃ¡zdnÃ© plochy
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -92,14 +92,14 @@ extern MAPDATA* EmptyMapData;				// data prázdné plochy
 class CMap
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné - pouze ukazatel na data
-	MAPDATA*		pData;			// ukazatel na záhlaví plochy
+// promÃ¬nnÃ© - pouze ukazatel na data
+	MAPDATA*		pData;			// ukazatel na zÃ¡hlavÃ­ plochy
 
-// pøipojení dat
+// pÃ¸ipojenÃ­ dat
 	inline void Attach(MAPDATA* data)
 	{
 		ASSERT(data);
@@ -107,7 +107,7 @@ private:
 		LongIncrement(&(data->Refer));
 	}
 
-// odpojení (a zrušení) dat
+// odpojenÃ­ (a zruÅ¡enÃ­) dat
 	inline void Detach()
 	{
 		ASSERT(pData);
@@ -128,16 +128,16 @@ private:
 		}
 	}
 
-// vytvoøení nového bufferu - starı buffer musí bıt odpojen!
+// vytvoÃ¸enÃ­ novÃ©ho bufferu - starÃ½ buffer musÃ­ bÃ½t odpojen!
 	inline void NewBuffer(int width, int height)
 	{
 		ASSERT((width > 0) && (height > 0));
 		if (width <= 0) width = 1;
 		if (height <= 0) height = 1;
 		MAPDATA* data = (MAPDATA*)MemGet(SIZEOFMAPDATA + width*height*SIZEOFMAPITEM);
-		data->Refer = 1;				// poèet referencí
-		data->Width = width;			// šíøka
-		data->Height = height;			// vıška
+		data->Refer = 1;				// poÃ¨et referencÃ­
+		data->Width = width;			// Å¡Ã­Ã¸ka
+		data->Height = height;			// vÃ½Å¡ka
 
 		MAPITEM* item = data->Data;
 		for (int i = width*height; i > 0; i--)
@@ -148,49 +148,49 @@ private:
 		pData = data;					// adresa dat
 	}
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
 // konstruktor a destruktor
-	CMap();								// standardní konstruktor
-	CMap(const CMap& src);				// kopírovací konstruktor
-	CMap(int width, int height);		// konstruktor s vytvoøením obrázku
-	~CMap();							// standardní destruktor
+	CMap();								// standardnÃ­ konstruktor
+	CMap(const CMap& src);				// kopÃ­rovacÃ­ konstruktor
+	CMap(int width, int height);		// konstruktor s vytvoÃ¸enÃ­m obrÃ¡zku
+	~CMap();							// standardnÃ­ destruktor
 
-// statickı konstruktor a destruktor
-	void Init();						// statickı konstruktor
-	void Init(MAPDATA* data);			// statickı konstruktor se zadáním dat
-	void Init(int width, int height);	// statickı konstruktor s vytvoøením obrázku
-	void Term();						// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();						// statickÃ½ konstruktor
+	void Init(MAPDATA* data);			// statickÃ½ konstruktor se zadÃ¡nÃ­m dat
+	void Init(int width, int height);	// statickÃ½ konstruktor s vytvoÃ¸enÃ­m obrÃ¡zku
+	void Term();						// statickÃ½ destruktor
 
-// poskytnutí ukazatele na data
+// poskytnutÃ­ ukazatele na data
 	inline MAPDATA* Data() const { return pData; };
 	inline MAPITEM* DataData() const { return pData->Data; };
 
-// poskytnutí šíøky plochy
+// poskytnutÃ­ Å¡Ã­Ã¸ky plochy
 	inline int Width() const { return pData->Width; };
 
-// poskytnutí vıšky plochy
+// poskytnutÃ­ vÃ½Å¡ky plochy
 	inline int Height() const { return pData->Height; };
 
-// poskytnutí velikosti dat plochy (bez záhlaví)
+// poskytnutÃ­ velikosti dat plochy (bez zÃ¡hlavÃ­)
 	inline int Size() const { return (pData->Height * pData->Width * SIZEOFMAPITEM); };
 
-// vymazání obsahu plochy (naplnìní ikonami 0, vynulované parametry)
+// vymazÃ¡nÃ­ obsahu plochy (naplnÃ¬nÃ­ ikonami 0, vynulovanÃ© parametry)
 	void Clear();
 
-// kopie do vlastního bufferu pøed modifikací
+// kopie do vlastnÃ­ho bufferu pÃ¸ed modifikacÃ­
 	void CopyWrite();
 
-// vyprázdnìní plochy (uvolnìní dat)
+// vyprÃ¡zdnÃ¬nÃ­ plochy (uvolnÃ¬nÃ­ dat)
 	void Empty();
 
-// test, zda je plocha prázdná
+// test, zda je plocha prÃ¡zdnÃ¡
 	inline BOOL IsEmpty() { return ((DWORD)pData == (DWORD)EmptyMapData); };
 	inline BOOL IsNotEmpty() { return ((DWORD)pData != (DWORD)EmptyMapData); };
 
-// vytvoøení nové plochy (pøipraveno k zápisu, data jsou náhodná)
+// vytvoÃ¸enÃ­ novÃ© plochy (pÃ¸ipraveno k zÃ¡pisu, data jsou nÃ¡hodnÃ¡)
 	void New(int width, int height);
 
 // kontrola platnosti offsetu prvku
@@ -207,7 +207,7 @@ public:
 	inline BOOL IsNotValid(const int x, const int y) const
 		{ return (((DWORD)x >= (DWORD)pData->Width) || ((DWORD)y >= (DWORD)pData->Height)); };
 
-// poskytnutí pøístupu k prvku (bez kontroly offsetu/indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k prvku (bez kontroly offsetu/indexu)
 	inline MAPITEM& operator[] (const int off) 
 		{ ASSERT(IsValid(off)); return pData->Data[off]; }
 
@@ -226,18 +226,18 @@ public:
 	inline const MAPITEM& At(const int x, const int y) const
 		{ ASSERT(IsValid(x, y)); return pData->Data[x + y*pData->Width]; }
 
-// poskytnutí prvku (s kontrolou platnosti offsetu/indexu)
+// poskytnutÃ­ prvku (s kontrolou platnosti offsetu/indexu)
 	const MAPITEM& _fastcall Get(const int off) const;
 	const MAPITEM& _fastcall Get(const int x, const int y) const;
 
-// nastavení prvku (s kontrolou platnosti offsetu/indexu)
+// nastavenÃ­ prvku (s kontrolou platnosti offsetu/indexu)
 	void _fastcall Set(const int off, const MAPITEM& data);
 	void _fastcall Set(const int x, const int y, const MAPITEM& data);
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CMap& operator= (const CMap& src);
 
-// operátory porovnání
+// operÃ¡tory porovnÃ¡nÃ­
 	friend inline BOOL operator==(const CMap& s1, const CMap& s2)
 		{ return (DWORD)s1.pData == (DWORD)s2.pData; };
 
@@ -254,32 +254,32 @@ public:
 class CBufMap
 {
 
-// ------------------------- interní promìnné a funkce ----------------------
+// ------------------------- internÃ­ promÃ¬nnÃ© a funkce ----------------------
 
 private:
 
-// promìnné
+// promÃ¬nnÃ©
 	CMap*		m_Data;		// ukazatel na data
-	int			m_Num;		// poèet platnıch poloek v bufferu
-	int			m_Max;		// velikost bufferu (poloek)
+	int			m_Num;		// poÃ¨et platnÃ½ch poloÅ¾ek v bufferu
+	int			m_Max;		// velikost bufferu (poloÅ¾ek)
 
-// vytvoøení nové poloky
+// vytvoÃ¸enÃ­ novÃ© poloÅ¾ky
 	inline int NewItem()
 	{
-		int i = m_Num;				// poèet poloek
-		if (i >= m_Max)				// není další poloka?
+		int i = m_Num;				// poÃ¨et poloÅ¾ek
+		if (i >= m_Max)				// nenÃ­ dalÅ¡Ã­ poloÅ¾ka?
 		{
-			NewData();				// vytvoøení novıch dat
+			NewData();				// vytvoÃ¸enÃ­ novÃ½ch dat
 		}
 
 		m_Num = i + 1;
 		return i;
 	};
 
-// vytvoøení novıch dat (oddìleno kvùli lepší optimalizaci)
+// vytvoÃ¸enÃ­ novÃ½ch dat (oddÃ¬leno kvÃ¹li lepÅ¡Ã­ optimalizaci)
 	void NewData();
 
-// ---------------------------- veøejné funkce ------------------------------
+// ---------------------------- veÃ¸ejnÃ© funkce ------------------------------
 
 public:
 
@@ -287,30 +287,30 @@ public:
 	CBufMap();
 	~CBufMap();
 
-// statickı konstruktor a destruktor
-	void Init();			// statickı konstruktor
-	void Term();			// statickı destruktor
+// statickÃ½ konstruktor a destruktor
+	void Init();			// statickÃ½ konstruktor
+	void Term();			// statickÃ½ destruktor
 
-// zrušení všech poloek v bufferu (ukládání zaène opìt po øadì od zaèátku)
+// zruÅ¡enÃ­ vÅ¡ech poloÅ¾ek v bufferu (uklÃ¡dÃ¡nÃ­ zaÃ¨ne opÃ¬t po Ã¸adÃ¬ od zaÃ¨Ã¡tku)
 	void DelAll();
 
-// poskytnutí bufferu dat
+// poskytnutÃ­ bufferu dat
 	inline CMap* Data() const { return m_Data; };
 
-// poskytnutí poètu platnıch poloek v bufferu
+// poskytnutÃ­ poÃ¨tu platnÃ½ch poloÅ¾ek v bufferu
 	inline int Num() const { return m_Num; };
 
-// poskytnutí velikosti bufferu
+// poskytnutÃ­ velikosti bufferu
 	inline int Max() const { return m_Max; };
 
-// kontrola platnosti poloky
+// kontrola platnosti poloÅ¾ky
 	inline BOOL IsValid(const int index) const
 		{ return ((DWORD)index < (DWORD)m_Num); };
 
 	inline BOOL IsNotValid(const int index) const
 		{ return ((DWORD)index >= (DWORD)m_Num); };
 
-// poskytnutí pøístupu k poloce (bez kontroly indexu)
+// poskytnutÃ­ pÃ¸Ã­stupu k poloÅ¾ce (bez kontroly indexu)
 	inline CMap& operator[] (const int index)
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
@@ -323,31 +323,31 @@ public:
 	inline const CMap& At(const int index) const
 		{ ASSERT(IsValid(index)); return m_Data[index]; }
 
-// poskytnutí poloky (s kontrolou platnosti indexu)
+// poskytnutÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	const CMap& _fastcall Get(const int index) const;
 
-// nastavení poloky (s kontrolou platnosti indexu)
+// nastavenÃ­ poloÅ¾ky (s kontrolou platnosti indexu)
 	void _fastcall Set(const int index, const CMap& data);
 
-// vyprázdnìní poloky (bez jejího zrušení - jen pro uvolnìní dat)
+// vyprÃ¡zdnÃ¬nÃ­ poloÅ¾ky (bez jejÃ­ho zruÅ¡enÃ­ - jen pro uvolnÃ¬nÃ­ dat)
 	void _fastcall Empty(const int index);
 
-// zrušení poloek z konce bufferu
+// zruÅ¡enÃ­ poloÅ¾ek z konce bufferu
 	void _fastcall Del(int num);
 
-// vytvoøení prázdné poloky (vrací index poloky)
+// vytvoÃ¸enÃ­ prÃ¡zdnÃ© poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int New();
-	int New(int width, int height); // plochu vymae ikonami 0
+	int New(int width, int height); // plochu vymaÅ¾e ikonami 0
 
-// pøidání poloky (vrací index poloky)
+// pÃ¸idÃ¡nÃ­ poloÅ¾ky (vracÃ­ index poloÅ¾ky)
 	int _fastcall Add(const CMap& data);
 	int _fastcall Add(MAPDATA* data);
 
-// duplikace poloky (s kontrolou platnosti indexu, vrací index první poloky)
+// duplikace poloÅ¾ky (s kontrolou platnosti indexu, vracÃ­ index prvnÃ­ poloÅ¾ky)
 	int _fastcall Dup(const int index);
 	int _fastcall Dup(const int index, int num);
 
-// operátor pøiøazení
+// operÃ¡tor pÃ¸iÃ¸azenÃ­
 	const CBufMap& operator= (const CBufMap& src);
 };
 
