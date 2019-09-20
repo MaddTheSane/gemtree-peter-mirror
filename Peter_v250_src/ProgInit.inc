@@ -1,6 +1,6 @@
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaËnÌ tabulka funkcÌ
+// inicializaƒçn√≠ tabulka funkc√≠
 
 const INITFUNC InitTabFunc[] = {
 	PR_COMMAND | PR_ICON,	PR_ICON,	PR_ONE | PR_SETPAR,				"empty",				// IDF_NONE
@@ -817,7 +817,7 @@ const INITFUNC InitTabFunc[] = {
 	PR_COMMAND,				PR_EXPRES,	PR_SETPAR,						"d3d_object_delete",	// IDF_DIRECT3D_OBJECT_DELETE
 	PR_COMMAND | PR_BOOL,	PR_BOOL,	PR_ONE | PR_SETPAR,				"d3d_visible",			// IDF_DIRECT3D_VISIBLE
 	PR_COMMAND,				PR_EXPRES,	PR_SETPAR,						"d3d_link",				// IDF_DIRECT3D_LINK
-	PR_COMMAND,				PR_TEXT,	PR_ONE | PR_SETPAR | PR_LITE,	"d3d_save",				// IDF_DIRECT3D_SAVE	 // zatÌm zruöeno
+	PR_COMMAND,				PR_TEXT,	PR_ONE | PR_SETPAR | PR_LITE,	"d3d_save",				// IDF_DIRECT3D_SAVE	 // zat√≠m zru≈°eno
 	0,						0,			PR_NOMOVE,						"d3d_trans_group",		// IDF_DIRECT3D_TRANS_GROUP
 	PR_COMMAND | PR_EXPRES,	PR_EXPRES,	PR_ONE | PR_SETPAR,				"d3d_scale_x",			// IDF_DIRECT3D_SCALE_X
 	PR_COMMAND | PR_EXPRES,	PR_EXPRES,	PR_ONE | PR_SETPAR,				"d3d_scale_y",			// IDF_DIRECT3D_SCALE_Y
@@ -872,9 +872,9 @@ const INITFUNC InitTabFunc[] = {
 	PR_COMMAND | PR_EXPRES,	PR_EXPRES,	PR_ONE | PR_SETPAR,				"d3d_view_back",		// IDF_DIRECT3D_VIEW_BACK
 	PR_COMMAND | PR_BOOL,	PR_BOOL,	PR_ONE | PR_SETPAR,				"d3d_upper",			// IDF_DIRECT3D_UPPER
 	PR_COMMAND | PR_BOOL,	PR_BOOL,	PR_ONE | PR_SETPAR,				"d3d_lower",			// IDF_DIRECT3D_LOWER
-	PR_EXPRES,				0,			PR_PARPAR | PR_LITE,			"d3d_pick",				// IDF_DIRECT3D_PICK  // zatÌm zruöeno
-	0,						PR_EXPRES,	PR_ONE | PR_NOMOVE | PR_LITE,	"d3d_pick_x",			// IDF_DIRECT3D_PICK_X  // zatÌm zruöeno
-	0,						PR_EXPRES,	PR_ONE | PR_NOMOVE | PR_LITE,	"d3d_pick_y",			// IDF_DIRECT3D_PICK_Y  // zatÌm zruöeno
+	PR_EXPRES,				0,			PR_PARPAR | PR_LITE,			"d3d_pick",				// IDF_DIRECT3D_PICK  // zat√≠m zru≈°eno
+	0,						PR_EXPRES,	PR_ONE | PR_NOMOVE | PR_LITE,	"d3d_pick_x",			// IDF_DIRECT3D_PICK_X  // zat√≠m zru≈°eno
+	0,						PR_EXPRES,	PR_ONE | PR_NOMOVE | PR_LITE,	"d3d_pick_y",			// IDF_DIRECT3D_PICK_Y  // zat√≠m zru≈°eno
 	PR_COMMAND | PR_BOOL,	PR_BOOL,	PR_ONE | PR_SETPAR,				"d3d_minfilter",		// IDF_DIRECT3D_MINFILTER
 	PR_EXPRES,				PR_PIC,		PR_ONE | PR_SETPAR,				"d3d_2dobject",			// IDF_DIRECT3D_2DOBJECT
 	PR_EXPRES,				PR_PIC,		PR_ONE | PR_SETPAR,				"d3d_terrain",			// IDF_DIRECT3D_TERRAIN
@@ -1051,7 +1051,7 @@ const INITFUNC InitTabFunc[] = {
 
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaËnÌ tabulka okna struktur
+// inicializaƒçn√≠ tabulka okna struktur
 
 const INITTREE InitTabStr[] = {
 
@@ -1769,9 +1769,9 @@ NOREFER |			4,			IDF_COLOR,
 				3,			IDF_DIRECT3D_VIEW_BACK,
 				3,			IDF_DIRECT3D_PROJECTION,
 				3,			IDF_DIRECT3D_RENDER,
-//				3,			IDF_DIRECT3D_PICK,	 // zatÌm zruöeno
-//					4,			IDF_DIRECT3D_PICK_X,  // zatÌm zruöeno
-//					4,			IDF_DIRECT3D_PICK_Y,  // zatÌm zruöeno
+//				3,			IDF_DIRECT3D_PICK,	 // zat√≠m zru≈°eno
+//					4,			IDF_DIRECT3D_PICK_X,  // zat√≠m zru≈°eno
+//					4,			IDF_DIRECT3D_PICK_Y,  // zat√≠m zru≈°eno
 			2,			IDF_DIRECT3D_NEW_GROUP,
 				3,			IDF_DIRECT3D_EMPTY,
 				3,			IDF_DIRECT3D_WALL,
@@ -1806,7 +1806,7 @@ NOREFER |			4,			IDF_COLOR,
 				3,			IDF_DIRECT3D_INVERT,
 				3,			IDF_DIRECT3D_NORM,
 				3,			IDF_DIRECT3D_NORMALS,
-//				3,			IDF_DIRECT3D_SAVE,	 // zatÌm zruöeno
+//				3,			IDF_DIRECT3D_SAVE,	 // zat√≠m zru≈°eno
 				3,			IDF_DIRECT3D_LEVEL,
 					4,			IDF_DIRECT3D_LEVEL_X,
 					4,			IDF_DIRECT3D_LEVEL_Y,
@@ -2134,7 +2134,7 @@ NOREFER |		3,			IDF_TEXT_CONST,
 			2,			IDF_FILE_DISKLABEL,
 			2,			IDF_FILE_DISKSERIAL,
 
-// !!! po p¯id·nÌ prvku do skupiny sÌtÏ aktualizovat rozliöenÌ pro MINI zavadÏË !!!
+// !!! po p≈ôid√°n√≠ prvku do skupiny s√≠tƒõ aktualizovat rozli≈°en√≠ pro MINI zavadƒõƒç !!!
 	0,			IDF_NET_GROUP,
 		1,			IDF_COM_GROUP,
 			2,			IDF_COM_OPEN,
@@ -2209,13 +2209,13 @@ NOREFER |		3,			IDF_TEXT_CONST,
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// inicializaËnÌ tabulka okna t¯Ìd
+// inicializaƒçn√≠ tabulka okna t≈ô√≠d
 
-//#define CLASSFNCINDEX		0		// index FNC v bufferu t¯Ìd
-//#define CLASSICONINDEX	4		// index ICON v bufferu t¯Ìd
-//#define CLASSMAPINDEX		5		// index MAP v bufferu t¯Ìd
-//#define CLASSPICINDEX		6		// index BACK v bufferu t¯Ìd
-//#define CLASSSPRITEINDEX	9		// index SPRITE v bufferu t¯Ìd
+//#define CLASSFNCINDEX		0		// index FNC v bufferu t≈ô√≠d
+//#define CLASSICONINDEX	4		// index ICON v bufferu t≈ô√≠d
+//#define CLASSMAPINDEX		5		// index MAP v bufferu t≈ô√≠d
+//#define CLASSPICINDEX		6		// index BACK v bufferu t≈ô√≠d
+//#define CLASSSPRITEINDEX	9		// index SPRITE v bufferu t≈ô√≠d
 
 const INITTREE InitTabCls[] = {
 	0,			IDF_FNC,
